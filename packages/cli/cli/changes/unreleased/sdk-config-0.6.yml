@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Upgrade to SDK Config 0.6 and omit defaulted optional fields from SDK Config payloads sent to local and remote generators.
+  type: fix
