@@ -370,6 +370,12 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  go-nullable-date-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: legacy-nullable-alias-pointers
+      customConfig:
+        legacyNullableAliasPointers: true
   go-nullable-wire-tests:
     - outputFolder: .
       customConfig:

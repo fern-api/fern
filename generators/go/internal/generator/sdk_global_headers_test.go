@@ -26,6 +26,7 @@ func newHeaderTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fileWrite
 		true,  // serverURLVariables
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
+		false, // legacyNullableAliasPointers
 		userAgentConfig{},
 		UnionVersionUnspecified,
 		"",
