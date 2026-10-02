@@ -216,6 +216,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // provider scheme we keep the existing eager behavior.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
 
+        const requiredCredentialChecks = this.getRequiredCredentialChecks({ isEndpointSecurity, anyAuthMultiScheme });
+        if (requiredCredentialChecks.length > 0) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(`${requiredCredentialChecks.join("\n")}\n`);
+                })
+            );
+        }
+
         if (isEndpointSecurity) {
             // Under endpoint-security every provider-based scheme may be routed to by
             // some endpoint, so instantiate each one (rather than picking a single
@@ -406,6 +415,41 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         );
 
         return method;
+    }
+
+    /**
+     * Under `requireAuthCredentials`, raises `ArgumentError` from the constructor when a
+     * mandatory bearer or header credential is neither passed nor set in its environment
+     * variable, instead of sending an empty auth header on every request.
+     */
+    private getRequiredCredentialChecks({
+        isEndpointSecurity,
+        anyAuthMultiScheme
+    }: {
+        isEndpointSecurity: boolean;
+        anyAuthMultiScheme: boolean;
+    }): string[] {
+        if (this.context.customConfig.requireAuthCredentials !== true || isEndpointSecurity || anyAuthMultiScheme) {
+            return [];
+        }
+        const checks: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            let paramName: string;
+            let envVar: string | undefined;
+            if (scheme.type === "bearer") {
+                paramName = this.context.getBearerTokenParameterName(scheme.token);
+                envVar = scheme.tokenEnvVar;
+            } else if (scheme.type === "header") {
+                paramName = this.context.getCredentialParameterName(scheme.name);
+                envVar = scheme.headerEnvVar;
+            } else {
+                continue;
+            }
+            const hint =
+                envVar != null ? `pass ${paramName}: or set the ${envVar} environment variable` : `pass ${paramName}:`;
+            checks.push(`raise ArgumentError, "${paramName} is required; ${hint}" if ${paramName}.to_s.empty?`);
+        }
+        return checks;
     }
 
     /**
