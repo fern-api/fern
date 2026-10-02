@@ -179,8 +179,8 @@ module <%= gem_namespace %>
             next if value.nil? && field.optional && !field.nullable
 
             if value.is_a?(::Array)
-              value = value.map { |item| item.respond_to?(:to_h) ? item.to_h : item }
-            elsif value.respond_to?(:to_h)
+              value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
+            elsif !value.nil? && value.respond_to?(:to_h)
               value = value.to_h
             end
 

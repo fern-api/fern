@@ -31,6 +31,7 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "base_url",
     "environment",
     "max_retries",
+    "timeout",
     "token",
     "client",
     "request_options",
@@ -158,6 +159,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             docs: "The default maximum number of retries for failed requests."
         });
         parameters.push(maxRetriesParameter);
+
+        parameters.push(
+            ruby.parameters.keyword({
+                name: "timeout",
+                type: ruby.Type.class_({ name: "Float" }),
+                initializer: ruby.TypeLiteral.float(60.0),
+                docs: "The default timeout in seconds for each request."
+            })
+        );
 
         // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
         // `app_info` keyword whose product token is appended to the User-Agent header.
@@ -399,7 +409,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // and the RawClient simply resolves no auth headers.
                     writer.writeLine(`auth_provider: @auth_provider,`);
                 }
-                writer.writeLine(`max_retries: max_retries`);
+                writer.writeLine(`max_retries: max_retries,`);
+                writer.writeLine(`timeout: timeout`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })

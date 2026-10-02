@@ -88,7 +88,10 @@ export class HttpEndpointGenerator {
             );
         }
 
-        if (requestBodyCodeBlock?.code != null) {
+        // When the page property lives in the request body, the body has to be rebuilt from
+        // `params` on every page, so any body preparation moves into the pagination block.
+        const pagesThroughRequestBody = this.getBodyPageProperty(endpoint) != null;
+        if (requestBodyCodeBlock?.code != null && !pagesThroughRequestBody) {
             statements.push(requestBodyCodeBlock.code);
         }
 
@@ -246,17 +249,16 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
-                                    )
+                                    value: ruby.codeblock(this.getPagePropertyRead(endpoint.pagination.page))
                                 })
                             ],
                             block: [
                                 ["next_cursor"],
                                 [
-                                    ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_cursor`
-                                    ),
+                                    ruby.codeblock(this.getPagePropertyWrite(endpoint.pagination.page, "next_cursor")),
+                                    ...(pagesThroughRequestBody && requestBodyCodeBlock?.code != null
+                                        ? [requestBodyCodeBlock.code]
+                                        : []),
                                     ...requestStatements
                                 ]
                             ]
@@ -275,9 +277,7 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
-                                    )
+                                    value: ruby.codeblock(this.getPagePropertyRead(endpoint.pagination.page))
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
@@ -307,9 +307,10 @@ export class HttpEndpointGenerator {
                             block: [
                                 ["next_page"],
                                 [
-                                    ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_page`
-                                    ),
+                                    ruby.codeblock(this.getPagePropertyWrite(endpoint.pagination.page, "next_page")),
+                                    ...(pagesThroughRequestBody && requestBodyCodeBlock?.code != null
+                                        ? [requestBodyCodeBlock.code]
+                                        : []),
                                     ...requestStatements
                                 ]
                             ]
@@ -350,6 +351,82 @@ export class HttpEndpointGenerator {
             codeExample,
             statements
         });
+    }
+
+    /**
+     * Returns the page property of a cursor or offset paginated endpoint when it is sent in the
+     * request body (e.g. `$request.cursor` or `$request.options.offset`), rather than as a
+     * query parameter.
+     */
+    private getBodyPageProperty(endpoint: FernIr.HttpEndpoint): FernIr.RequestProperty | undefined {
+        const pagination = endpoint.pagination;
+        if (pagination == null || (pagination.type !== "cursor" && pagination.type !== "offset")) {
+            return undefined;
+        }
+        return pagination.page.property.type === "body" ? pagination.page : undefined;
+    }
+
+    /**
+     * The Ruby expression reading the page property's initial value. Query parameters are read from
+     * the query bag by wire name; body properties are read from the normalized `params` hash, walking
+     * through any enclosing objects, which may be hashes or model instances.
+     */
+    private getPagePropertyRead(page: FernIr.RequestProperty): string {
+        if (page.property.type === "query") {
+            return `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(page.property.name)}"]`;
+        }
+        const leaf = this.case.snakeSafe(page.property.name);
+        const path = (page.propertyPath ?? []).map((item) => this.case.snakeSafe(item.name));
+        if (path.length === 0) {
+            return `${PARAMS_VN}[:${leaf}]`;
+        }
+        const [first, ...rest] = path;
+        let container = `${PARAMS_VN}[:${first}]`;
+        for (const name of rest) {
+            container = `${this.getNormalizeKeysReference()}(${container}.to_h)[:${name}]`;
+        }
+        return `${this.getNormalizeKeysReference()}(${container}.to_h)[:${leaf}]`;
+    }
+
+    /**
+     * The Ruby statement assigning the next page value to the page property. Body properties nested
+     * inside objects are written by rebuilding each enclosing object as a hash, so the caller's
+     * values are never mutated and an omitted parent object is created.
+     */
+    private getPagePropertyWrite(page: FernIr.RequestProperty, value: string): string {
+        if (page.property.type === "query") {
+            return `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(page.property.name)}"] = ${value}`;
+        }
+        const leaf = this.case.snakeSafe(page.property.name);
+        const path = (page.propertyPath ?? []).map((item) => this.case.snakeSafe(item.name));
+        if (path.length === 0) {
+            return `${PARAMS_VN}[:${leaf}] = ${value}`;
+        }
+        const normalizeKeys = this.getNormalizeKeysReference();
+        const build = (hash: string, remaining: string[], depth: number): string => {
+            const [next, ...rest] = remaining;
+            if (next == null) {
+                return `${hash}.merge(${leaf}: ${value})`;
+            }
+            const variable = `level${depth}`;
+            return `${hash}.then { |${variable}| ${variable}.merge(${next}: ${build(
+                `${normalizeKeys}(${variable}[:${next}].to_h)`,
+                rest,
+                depth + 1
+            )}) }`;
+        };
+        const [first, ...rest] = path;
+        return `${PARAMS_VN}[:${first}] = ${build(`${normalizeKeys}(${PARAMS_VN}[:${first}].to_h)`, rest, 1)}`;
+    }
+
+    /** Whether the endpoint returns its successful response body as a raw string (text, bytes, or a file download). */
+    private returnsRawResponseBody(endpoint: FernIr.HttpEndpoint): boolean {
+        const type = endpoint.response?.body?.type;
+        return type === "text" || type === "bytes" || type === "fileDownload";
+    }
+
+    private getNormalizeKeysReference(): string {
+        return `${this.context.getRootModuleName()}::Internal::Types::Utils.normalize_keys`;
     }
 
     /**
@@ -497,6 +574,9 @@ export class HttpEndpointGenerator {
                     elseBody: errorBody
                 })
             );
+        } else if (this.returnsRawResponseBody(endpoint)) {
+            statements.push(ruby.codeblock(`return ${HTTP_RESPONSE_VN}.body if ${CODE_VN}.between?(200, 299)\n`));
+            statements.push(errorBody);
         } else {
             statements.push(ruby.codeblock(`return if ${CODE_VN}.between?(200, 299)\n`));
             statements.push(errorBody);

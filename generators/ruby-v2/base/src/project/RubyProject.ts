@@ -275,6 +275,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 ? "[408, 429, 502, 503, 504].freeze"
                 : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
         rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+        rendered = rendered.replace(
+            /\{\{RETRYABLE_5XX_STATUSES\}\}/g,
+            retryStatusCodes === "recommended" ? "[502, 503, 504]" : "[500, 502, 503, 504, 521, 522, 524]"
+        );
+        rendered = rendered.replace(
+            /\{\{NON_RETRYABLE_5XX_STATUSES\}\}/g,
+            retryStatusCodes === "recommended" ? "[500, 501, 505, 510, 521, 522, 524, 599]" : "[501, 505, 510, 599]"
+        );
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }

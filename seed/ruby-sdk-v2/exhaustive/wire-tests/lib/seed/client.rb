@@ -5,9 +5,10 @@ module Seed
     # @param token [String]
     # @param base_url [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Float]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, max_retries: 5)
+    def initialize(token:, base_url: nil, max_retries: 5, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
@@ -15,7 +16,8 @@ module Seed
           "X-Fern-Language" => "Ruby",
           Authorization: "Bearer #{token}"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 
