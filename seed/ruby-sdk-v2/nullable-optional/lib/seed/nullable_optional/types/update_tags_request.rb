@@ -10,7 +10,7 @@ module Seed
 
         field :categories, -> { Internal::Types::Array[String] }, optional: true, nullable: false
 
-        field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: false
+        field :labels, -> { Internal::Types::Array[String] }, optional: true, nullable: true
       end
     end
   end

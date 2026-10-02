@@ -161,6 +161,7 @@ module <%= gem_namespace %>
           # Resolve auth headers once per request (not per retry) so token-based
           # providers refresh at most once here; static providers are cheap.
           auth_headers = resolve_auth_headers
+          timeout = request_timeout(request)
           attempt = 0
           response = nil
 
@@ -174,12 +175,16 @@ module <%= gem_namespace %>
             )
 
             conn = connect(url)
-            conn.open_timeout = @timeout
-            conn.read_timeout = @timeout
-            conn.write_timeout = @timeout
-            conn.continue_timeout = @timeout
+            conn.open_timeout = timeout
+            conn.read_timeout = timeout
+            conn.write_timeout = timeout
+            conn.continue_timeout = timeout
 
-            response = conn.request(http_request)
+            begin
+              response = conn.request(http_request)
+            rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout => e
+              raise <%= gem_namespace %>::Errors::TimeoutError, e.message
+            end
 
             break unless should_retry?(response, attempt<% if (requestLevelMaxRetries) { %>, max_retries: request.max_retries<% } %>)
 
@@ -189,6 +194,14 @@ module <%= gem_namespace %>
           end
 
           response
+        end
+
+        # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
+        # @return [Float] The request's `timeout_in_seconds` option, or the client-level timeout.
+        def request_timeout(request)
+          options = request.request_options || {}
+          timeout = options.key?(:timeout_in_seconds) ? options[:timeout_in_seconds] : options["timeout_in_seconds"]
+          (timeout.nil? ? @timeout : timeout).to_f
         end
 
         # The client-level header names that `additional_headers` must not replace: every default

@@ -270,11 +270,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             })
         });
 
-        const retryStatusCodesArray =
+        const retryStatuses =
             retryStatusCodes === "recommended"
-                ? "[408, 429, 502, 503, 504].freeze"
-                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
-        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+                ? [408, 429, 502, 503, 504]
+                : [408, 429, 500, 502, 503, 504, 521, 522, 524];
+        const tested5xxStatuses = [500, 501, 502, 503, 504, 505, 510, 521, 522, 524, 599];
+        const toRubyArray = (statuses: number[]) => `[${statuses.join(", ")}]`;
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, `${toRubyArray(retryStatuses)}.freeze`);
+        rendered = rendered.replace(
+            /\{\{RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => retryStatuses.includes(status)))
+        );
+        rendered = rendered.replace(
+            /\{\{NON_RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => !retryStatuses.includes(status)))
+        );
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
