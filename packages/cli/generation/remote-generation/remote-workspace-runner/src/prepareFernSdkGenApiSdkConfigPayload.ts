@@ -67,6 +67,8 @@ export function prepareFernSdkGenApiSdkConfigPayload({
         },
         source: sdkConfigSourceFromArchive(sourceArchive)
     });
+    // The injected mapper validates this as an SdkConfigV1Document. Serialize that sparse document
+    // directly because parsing it again would materialize schema defaults before transport.
     return {
         payloadKind: "sdk-config-v1",
         body: Buffer.from(JSON.stringify(mapped.sdkConfig), "utf8"),
