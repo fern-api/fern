@@ -9,4 +9,11 @@ export interface LibraryOutputConfiguration {
      * Example: ./static/sdk-docs
      */
     path: string;
+    /**
+     * Whether to write the auto-generated per-module/per-symbol MDX pages and
+     * `_navigation.yml`. Set to `false` when composing pages by hand with
+     * `<LibrarySymbol />`; the library IR is still persisted to
+     * `<path>/.fern/library-ir.json`. Defaults to `true`.
+     */
+    pages?: boolean;
 }

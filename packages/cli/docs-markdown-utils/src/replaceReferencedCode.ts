@@ -80,6 +80,19 @@ function extractLines(content: string, linesParam: string): string {
     return extractedLines.join("\n");
 }
 
+/**
+ * Returns a backtick fence long enough to wrap `content` without being terminated
+ * by any run of backticks that appears inside it (minimum of three).
+ */
+function getCodeFence(content: string): string {
+    const longest = (content.match(/`+/g) ?? []).reduce((max, run) => Math.max(max, run.length), 0);
+    return "`".repeat(Math.max(3, longest + 1));
+}
+
+function getLineNumber(source: string, index: number): number {
+    return source.slice(0, index).split("\n").length;
+}
+
 const CODE_TAG_REGEX = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
 
 /**
@@ -156,7 +169,10 @@ export async function replaceReferencedCode({
 
     const regex = new RegExp(CODE_TAG_REGEX.source, CODE_TAG_REGEX.flags);
 
-    let newMarkdown = markdown;
+    // Rebuilt from source ranges so that each replacement lands on the exact tag
+    // that produced it, even when identical tags appear more than once.
+    let newMarkdown = "";
+    let cursor = 0;
 
     // while match is found, replace the match with the content of the referenced markdown file
     let match: RegExpExecArray | null;
@@ -185,14 +201,14 @@ export async function replaceReferencedCode({
                             context.logger.warn(
                                 `Failed to fetch code from URL "${src}" (status ${response.status}) referenced in ${absolutePathToMarkdownFile}`
                             );
-                            break;
+                            continue;
                         }
                         replacement = await response.text();
                     } catch (e) {
                         context.logger.warn(
                             `Failed to fetch code from URL "${src}" referenced in ${absolutePathToMarkdownFile}: ${e}`
                         );
-                        break;
+                        continue;
                     }
                 }
 
@@ -299,19 +315,22 @@ export async function replaceReferencedCode({
                 }
             }
 
-            // TODO: if the code content includes ```, add more backticks to avoid conflicts
-            replacement = `\`\`\`${metastring}\n${replacement}\n\`\`\``;
+            const fence = getCodeFence(replacement);
+            replacement = `${fence}${metastring}\n${replacement}\n${fence}`;
             replacement = replacement
                 .split("\n")
                 .map((line) => indent + line)
                 .join("\n");
             replacement = replacement + "\n"; // add newline after the code block
-            newMarkdown = newMarkdown.replace(matchString, replacement);
+            newMarkdown += markdown.slice(cursor, match.index) + replacement;
+            cursor = match.index + matchString.length;
         } catch (e) {
-            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
-            break;
+            const line = getLineNumber(markdown, match.index);
+            context.logger.warn(
+                `[${absolutePathToMarkdownFile}:${line}] Failed to read code file "${src}" referenced by <Code src>: ${e instanceof Error ? e.message : String(e)}`
+            );
         }
     }
 
-    return newMarkdown;
+    return newMarkdown + markdown.slice(cursor);
 }

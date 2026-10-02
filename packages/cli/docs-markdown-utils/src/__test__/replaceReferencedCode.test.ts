@@ -188,6 +188,98 @@ describe("replaceReferencedCode", () => {
         }
     });
 
+    it("should keep processing later <Code> tags when an earlier file is missing", async () => {
+        const markdown = `
+            <Code src="../snippets/missing.py" />
+            <Code src="../snippets/present.py" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/present.py")) {
+                    return "print('ok')";
+                }
+                throw new Error(`ENOENT: no such file ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            <Code src="../snippets/missing.py" />
+            \`\`\`py title={"present.py"}
+            print('ok')
+            \`\`\`
+
+        `);
+    });
+
+    it("should use a longer fence when the file contains triple backticks", async () => {
+        const markdown = `
+            <Code src="../snippets/README.md" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async () => "# Usage\n\n```python\nimport cuopt\n```\n\nDone. ````"
+        });
+
+        expect(result).toBe(`
+            \`\`\`\`\`md title={"README.md"}
+            # Usage
+            
+            \`\`\`python
+            import cuopt
+            \`\`\`
+            
+            Done. \`\`\`\`
+            \`\`\`\`\`
+
+        `);
+    });
+
+    it("should replace the exact occurrence when identical tags fail then succeed", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/same.py" />
+            <Code src="https://example.com/snippets/same.py" />
+        `;
+
+        const originalFetch = globalThis.fetch;
+        let calls = 0;
+        globalThis.fetch = vi.fn(() => {
+            calls++;
+            return Promise.resolve(
+                calls === 1
+                    ? ({ ok: false, status: 503 } as Response)
+                    : ({ ok: true, text: () => Promise.resolve("print('second')") } as Response)
+            );
+        }) as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context
+            });
+
+            expect(result).toBe(`
+            <Code src="https://example.com/snippets/same.py" />
+            \`\`\`py title={"same.py"}
+            print('second')
+            \`\`\`
+
+        `);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
     it("should override language when language property is present", async () => {
         const markdown = `
             <Code src="../snippets/test.py" language="python" />

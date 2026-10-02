@@ -3,6 +3,7 @@ import {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -170,7 +171,8 @@ export async function runPreviewServer({
             translationNavigationOverlays,
             collectedFileIds,
             docsWorkspacePath,
-            markdownFilesToPathName
+            markdownFilesToPathName,
+            renderLibrarySymbol
         } = result;
 
         if (translationPages == null || Object.keys(translationPages).length === 0) {
@@ -240,9 +242,16 @@ export async function runPreviewServer({
                             fileLoader: localeAwareFileLoader
                         });
 
+                        const symbolsResolved = await replaceLibrarySymbols({
+                            markdown: codeResolved,
+                            absolutePathToMarkdownFile,
+                            context,
+                            renderSymbol: renderLibrarySymbol
+                        });
+
                         // Transform @/ prefix imports to relative paths
                         const importsResolved = transformAtPrefixImports({
-                            markdown: codeResolved,
+                            markdown: symbolsResolved,
                             absolutePathToFernFolder: docsWorkspacePath,
                             absolutePathToMarkdownFile,
                             context

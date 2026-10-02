@@ -13,6 +13,7 @@ import {
     getTranslatedAnnouncement,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -1067,9 +1068,16 @@ export async function publishDocs({
                                         fileLoader: localeAwareFileLoader
                                     });
 
+                                    const symbolsResolved = await replaceLibrarySymbols({
+                                        markdown: codeResolved,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        renderSymbol: resolver.getLibrarySymbolRenderer()
+                                    });
+
                                     // Transform @/ prefix imports to relative paths
                                     const importsResolved = transformAtPrefixImports({
-                                        markdown: codeResolved,
+                                        markdown: symbolsResolved,
                                         absolutePathToFernFolder: docsWorkspacePath,
                                         absolutePathToMarkdownFile,
                                         context

@@ -1,0 +1,13 @@
+instances: []
+navigation:
+  - page: Python API
+    path: ./pages/reference/python-api.mdx
+  - library: cuopt-python
+    title: Generated Python Reference
+libraries:
+  cuopt-python:
+    input:
+      git: https://github.com/acme/cuopt
+    output:
+      path: ./static/python
+    lang: python
