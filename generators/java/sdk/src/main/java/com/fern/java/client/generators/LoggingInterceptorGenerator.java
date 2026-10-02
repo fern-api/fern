@@ -33,7 +33,8 @@ import java.util.stream.Collectors;
 
 public final class LoggingInterceptorGenerator extends AbstractFileGenerator {
 
-    private static final String SENSITIVE_HEADERS_END = "\n    ));";
+    private static final String SENSITIVE_HEADERS_START = "SENSITIVE_HEADERS = new HashSet<>(Arrays.asList(";
+    private static final String SENSITIVE_HEADERS_END = "));";
 
     public LoggingInterceptorGenerator(ClientGeneratorContext clientGeneratorContext) {
         super(
@@ -66,8 +67,9 @@ public final class LoggingInterceptorGenerator extends AbstractFileGenerator {
         if (authHeaders.isEmpty()) {
             return contents;
         }
-        int end = contents.indexOf(SENSITIVE_HEADERS_END);
-        if (end < 0) {
+        int start = contents.indexOf(SENSITIVE_HEADERS_START);
+        int end = start < 0 ? -1 : contents.lastIndexOf('"', contents.indexOf(SENSITIVE_HEADERS_END, start)) + 1;
+        if (end <= start) {
             throw new IllegalStateException("Could not find SENSITIVE_HEADERS in LoggingInterceptor.java");
         }
         String additions = authHeaders.stream()
