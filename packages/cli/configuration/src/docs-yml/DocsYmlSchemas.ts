@@ -69,7 +69,10 @@ export const Availability = z.enum([
     "in-development",
     "pre-release",
     "deprecated",
-    "beta"
+    "beta",
+    "alpha",
+    "preview",
+    "legacy"
 ]);
 
 export const VersionAvailability = z.enum(["deprecated", "ga", "stable", "beta"]);
@@ -904,6 +907,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         availability: Availability.optional(),
         "skip-slug": z.boolean().optional(),
         alphabetized: z.boolean().optional(),
+        "sort-by-availability": z.array(Availability).optional(),
         flattened: z.boolean().optional(),
         paginated: z.boolean().optional(),
         playground: PlaygroundSettings.optional()

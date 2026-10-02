@@ -38,6 +38,10 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         availability: Availability.optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         alphabetized: core.serialization.boolean().optional(),
+        sortByAvailability: core.serialization.property(
+            "sort-by-availability",
+            core.serialization.list(Availability).optional(),
+        ),
         flattened: core.serialization.boolean().optional(),
         paginated: core.serialization.boolean().optional(),
         playground: PlaygroundSettings.optional(),
@@ -65,6 +69,7 @@ export declare namespace ApiReferenceConfiguration {
         availability?: Availability.Raw | null;
         "skip-slug"?: boolean | null;
         alphabetized?: boolean | null;
+        "sort-by-availability"?: Availability.Raw[] | null;
         flattened?: boolean | null;
         paginated?: boolean | null;
         playground?: PlaygroundSettings.Raw | null;

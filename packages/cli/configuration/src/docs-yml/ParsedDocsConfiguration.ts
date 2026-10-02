@@ -439,6 +439,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
         alphabetized: boolean;
+        sortByAvailability: Availability[] | undefined;
         flattened: boolean;
         paginated: boolean;
         playground: PlaygroundSettings | undefined;
