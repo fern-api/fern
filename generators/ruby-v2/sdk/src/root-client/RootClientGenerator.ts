@@ -429,11 +429,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         isEndpointSecurity: boolean;
         anyAuthMultiScheme: boolean;
     }): string[] {
-        if (
-            this.context.customConfig.requireAuthCredentials !== true ||
-            isEndpointSecurity ||
-            anyAuthMultiScheme
-        ) {
+        if (this.context.customConfig.requireAuthCredentials !== true || isEndpointSecurity || anyAuthMultiScheme) {
             return [];
         }
         const checks: string[] = [];
