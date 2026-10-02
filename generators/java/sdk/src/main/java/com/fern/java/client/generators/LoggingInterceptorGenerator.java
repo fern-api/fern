@@ -18,6 +18,7 @@ package com.fern.java.client.generators;
 
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.http.HttpHeader;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedResourcesJavaFile;
@@ -29,12 +30,16 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class LoggingInterceptorGenerator extends AbstractFileGenerator {
 
     private static final String SENSITIVE_HEADERS_START = "SENSITIVE_HEADERS = new HashSet<>(Arrays.asList(";
     private static final String SENSITIVE_HEADERS_END = "));";
+    private static final Pattern CREDENTIAL_HEADER_NAME =
+            Pattern.compile("secret|token|password|credential|api[-_]?key|client[-_]?id");
 
     public LoggingInterceptorGenerator(ClientGeneratorContext clientGeneratorContext) {
         super(
@@ -56,11 +61,18 @@ public final class LoggingInterceptorGenerator extends AbstractFileGenerator {
     }
 
     private String addAuthHeadersToSensitiveHeaders(String contents) {
-        Set<String> authHeaders = generatorContext.getIr().getAuth().getSchemes().stream()
+        Stream<String> authSchemeHeaders = generatorContext.getIr().getAuth().getSchemes().stream()
                 .map(AuthScheme::getHeader)
                 .flatMap(Optional::stream)
                 .map(HeaderAuthScheme::getName)
+                .map(NameUtils::getWireValue);
+        Stream<String> credentialGlobalHeaders = generatorContext.getIr().getHeaders().stream()
+                .map(HttpHeader::getName)
                 .map(NameUtils::getWireValue)
+                .filter(header -> CREDENTIAL_HEADER_NAME
+                        .matcher(header.toLowerCase(Locale.ROOT))
+                        .find());
+        Set<String> authHeaders = Stream.concat(authSchemeHeaders, credentialGlobalHeaders)
                 .map(header -> header.toLowerCase(Locale.ROOT))
                 .filter(header -> !contents.contains("\"" + header + "\""))
                 .collect(Collectors.toCollection(LinkedHashSet::new));

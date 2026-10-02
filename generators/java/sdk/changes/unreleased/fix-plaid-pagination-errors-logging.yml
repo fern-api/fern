@@ -6,7 +6,7 @@
     nested offset and cursor pagination builds an omitted parent options object so the page advances;
     pagination compiles with `collapse-optional-nullable: true` when the cursor is `OptionalNullable`;
     `4XX`/`5XX` wildcard error responses map to their typed errors, with exact status codes taking precedence;
-    header auth scheme headers from the API definition are redacted in debug logs;
+    header auth scheme headers and credential-like global headers (for example `PLAID-CLIENT-ID`) are redacted in debug logs;
     cancelling an async `CompletableFuture` cancels the underlying OkHttp call;
     the README environment example uses the generated constant name (for example `Environment.PRODUCTION`);
     and `reference.md` shows `LocalDate` for date parameters when `use-local-date-for-dates` is enabled.
