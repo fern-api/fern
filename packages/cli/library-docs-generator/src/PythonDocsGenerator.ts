@@ -12,6 +12,8 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
+import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
+import { dirname, join, relative } from "path";
 import { moduleHasPage, moduleIsPackage, renderModulePage } from "./renderers/ModuleRenderer.js";
 import { moduleIsPrivate } from "./utils/modulePages.js";
 import { buildTypeLinkData, createModuleFileLinker, type RenderContext } from "./utils/TypeLinkResolver.js";
@@ -56,9 +58,19 @@ export function generate(options: GenerateOptions): GenerateResult {
     const { validPaths, pathAliases, publicPaths, packageModules } = buildTypeLinkData(ir);
     const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases, publicPaths };
 
-    // Stage 2: Render pages and stream to disk
-    const writer = new MdxFileWriter(outputDir);
-    renderModuleTree(ir.rootModule, ctx, packageModules, writer, "");
+    // Stage 2: Render pages into a staging directory, then swap it in. The generator owns
+    // the library's page tree, so the previous tree is replaced wholesale (a module that
+    // switches between `<name>.mdx` and `<name>/index.mdx` must not leave the old file
+    // behind) but only once every page has been written successfully.
+    mkdirSync(outputDir, { recursive: true });
+    const stagingDir = mkdtempSync(join(outputDir, ".library-docs-"));
+    const writer = new MdxFileWriter(stagingDir);
+    try {
+        renderModuleTree(ir.rootModule, ctx, packageModules, writer, "");
+        swapIntoPlace(join(stagingDir, slug), join(outputDir, slug), join(stagingDir, ".previous"));
+    } finally {
+        rmSync(stagingDir, { recursive: true, force: true });
+    }
 
     // Stage 3: Build navigation tree
     const navigation = buildNavigation(ir.rootModule, slug);
@@ -74,10 +86,37 @@ export function generate(options: GenerateOptions): GenerateResult {
     return {
         navigation,
         rootPageId,
-        writtenFiles: [...writerResult.writtenFiles, navigationFilePath],
+        writtenFiles: [
+            ...writerResult.writtenFiles.map((file) => join(outputDir, relative(stagingDir, file))),
+            navigationFilePath
+        ],
         pageCount: writerResult.pageCount,
         navigationFilePath
     };
+}
+
+/**
+ * Replace `target` with `staged` without a window where neither exists: the previous
+ * tree is renamed aside to `backup` (same filesystem), the staged tree renamed in, and
+ * the backup restored if that fails.
+ */
+function swapIntoPlace(staged: string, target: string, backup: string): void {
+    const hadPrevious = existsSync(target);
+    if (hadPrevious) {
+        renameSync(target, backup);
+    }
+    if (!existsSync(staged)) {
+        return;
+    }
+    try {
+        mkdirSync(dirname(target), { recursive: true });
+        renameSync(staged, target);
+    } catch (error) {
+        if (hadPrevious) {
+            renameSync(backup, target);
+        }
+        throw error;
+    }
 }
 
 /**

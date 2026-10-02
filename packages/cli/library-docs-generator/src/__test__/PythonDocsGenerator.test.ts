@@ -1,5 +1,5 @@
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -351,6 +351,74 @@ describe("generate()", () => {
         const api = readFileSync(join(tmpDir, "ref/pkg/api.mdx"), "utf-8");
         expect(api).toContain("./index.mdx#pkg-_impl-Model");
         expect(api).not.toContain("_impl.mdx");
+    });
+
+    it("replaces stale output from a previous layout on regeneration", () => {
+        const asPackage = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        functions: [makeFunction({ name: "g", path: "pkg.sub.g" })]
+                    })
+                ]
+            })
+        );
+        generate({ ir: asPackage, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+        expect(existsSync(join(tmpDir, "ref/pkg/index.mdx"))).toBe(true);
+
+        const asLeaf = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "_sub",
+                        path: "pkg._sub",
+                        functions: [makeFunction({ name: "g", path: "pkg._sub.g" })]
+                    })
+                ]
+            })
+        );
+        const result = generate({ ir: asLeaf, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        expect(result.rootPageId).toBe("ref/pkg.mdx");
+        expect(result.navigation).toEqual([]);
+        expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/pkg"))).toBe(false);
+    });
+
+    it("keeps the previous output when generation fails midway", () => {
+        const good = makeIr(
+            makeModule({ name: "pkg", path: "pkg", functions: [makeFunction({ name: "f", path: "pkg.f" })] })
+        );
+        generate({ ir: good, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+        const before = readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8");
+
+        const broken = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "g", path: "pkg.g" })],
+                submodules: [
+                    makeModule({
+                        name: "sub",
+                        path: "pkg.sub",
+                        classes: [makeClass({ name: "Bad", path: "pkg.sub.Bad", methods: undefined })]
+                    })
+                ]
+            })
+        );
+        expect(() => generate({ ir: broken, outputDir: tmpDir, slug: "ref", title: "Pkg" })).toThrow();
+
+        expect(readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8")).toBe(before);
+        expect(existsSync(join(tmpDir, "ref/pkg"))).toBe(false);
+        expect(readdirSync(tmpDir).filter((entry) => entry.startsWith(".library-docs-"))).toEqual([]);
     });
 
     it("links private definitions to an equal-depth public re-export", () => {

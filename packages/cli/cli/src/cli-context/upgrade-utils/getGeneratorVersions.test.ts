@@ -109,6 +109,36 @@ describe("generator upgrade version reporting", () => {
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
+    it("treats configured latest as already tracking latest without discovery", async () => {
+        h.sdkGenApiEnabled = true;
+        h.loadGeneratorsConfiguration.mockResolvedValue({
+            groups: [
+                {
+                    groupName: "production",
+                    generators: [{ name: "fernapi/fern-typescript-node-sdk", version: "latest" }]
+                }
+            ]
+        });
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        const result = await getLatestGeneratorVersions({ cliContext, project });
+
+        expect(fetchMock).not.toHaveBeenCalled();
+        expect(h.askToLogin).not.toHaveBeenCalled();
+        expect(result).toEqual({
+            type: "singleApi",
+            versions: {
+                production: {
+                    "fernapi/fern-typescript-node-sdk": {
+                        previousVersion: "latest",
+                        latestVersion: "latest"
+                    }
+                }
+            }
+        });
+    });
+
     it("rejects channels before an SDK Gen API list lookup", async () => {
         h.sdkGenApiEnabled = true;
         const fetchMock = vi.fn();
