@@ -5,6 +5,7 @@ package com.seed.pagination.resources.users;
 
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
@@ -43,62 +44,154 @@ public class AsyncUsersClient {
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithCursorPagination() {
-        return this.rawClient.listWithCursorPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithCursorPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithCursorPagination(RequestOptions requestOptions) {
-        return this.rawClient.listWithCursorPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithCursorPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithCursorPagination(
             ListUsersCursorPaginationRequest request) {
-        return this.rawClient.listWithCursorPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithCursorPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithCursorPagination(
             ListUsersCursorPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithCursorPagination(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithCursorPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination() {
-        return this.rawClient.listWithMixedTypeCursorPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithMixedTypeCursorPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
             RequestOptions requestOptions) {
-        return this.rawClient.listWithMixedTypeCursorPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithMixedTypeCursorPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest request) {
-        return this.rawClient.listWithMixedTypeCursorPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithMixedTypeCursorPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithMixedTypeCursorPagination(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithMixedTypeCursorPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyCursorPagination() {
-        return this.rawClient.listWithBodyCursorPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyCursorPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyCursorPagination(RequestOptions requestOptions) {
-        return this.rawClient.listWithBodyCursorPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyCursorPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request) {
-        return this.rawClient.listWithBodyCursorPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyCursorPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyCursorPagination(
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithBodyCursorPagination(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyCursorPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -107,7 +200,15 @@ public class AsyncUsersClient {
      * when getNextPage() is called with a different cursor value.
      */
     public CompletableFuture<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination() {
-        return this.rawClient.listWithTopLevelBodyCursorPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithTopLevelBodyCursorPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -117,9 +218,15 @@ public class AsyncUsersClient {
      */
     public CompletableFuture<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
             RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithTopLevelBodyCursorPagination(requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithTopLevelBodyCursorPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -129,7 +236,15 @@ public class AsyncUsersClient {
      */
     public CompletableFuture<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
             ListUsersTopLevelBodyCursorPaginationRequest request) {
-        return this.rawClient.listWithTopLevelBodyCursorPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithTopLevelBodyCursorPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -139,238 +254,612 @@ public class AsyncUsersClient {
      */
     public CompletableFuture<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
             ListUsersTopLevelBodyCursorPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithTopLevelBodyCursorPagination(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithTopLevelBodyCursorPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPagination() {
-        return this.rawClient.listWithOffsetPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPagination(RequestOptions requestOptions) {
-        return this.rawClient.listWithOffsetPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPagination(
             ListUsersOffsetPaginationRequest request) {
-        return this.rawClient.listWithOffsetPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPagination(
             ListUsersOffsetPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithOffsetPagination(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination() {
-        return this.rawClient.listWithDoubleOffsetPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithDoubleOffsetPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination(RequestOptions requestOptions) {
-        return this.rawClient.listWithDoubleOffsetPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithDoubleOffsetPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination(
             ListUsersDoubleOffsetPaginationRequest request) {
-        return this.rawClient.listWithDoubleOffsetPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithDoubleOffsetPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithDoubleOffsetPagination(
             ListUsersDoubleOffsetPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithDoubleOffsetPagination(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithDoubleOffsetPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyOffsetPagination() {
-        return this.rawClient.listWithBodyOffsetPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyOffsetPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyOffsetPagination(RequestOptions requestOptions) {
-        return this.rawClient.listWithBodyOffsetPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyOffsetPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request) {
-        return this.rawClient.listWithBodyOffsetPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyOffsetPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithBodyOffsetPagination(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithBodyOffsetPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination() {
-        return this.rawClient.listWithOffsetStepPagination().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetStepPagination();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination(RequestOptions requestOptions) {
-        return this.rawClient.listWithOffsetStepPagination(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetStepPagination(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest request) {
-        return this.rawClient.listWithOffsetStepPagination(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetStepPagination(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOffsetStepPagination(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetStepPagination(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage() {
-        return this.rawClient.listWithOffsetPaginationHasNextPage().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPaginationHasNextPage();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
             RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOffsetPaginationHasNextPage(requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPaginationHasNextPage(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
             ListWithOffsetPaginationHasNextPageRequest request) {
-        return this.rawClient.listWithOffsetPaginationHasNextPage(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPaginationHasNextPage(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOffsetPaginationHasNextPage(
             ListWithOffsetPaginationHasNextPageRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithOffsetPaginationHasNextPage(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOffsetPaginationHasNextPage(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResults() {
-        return this.rawClient.listWithExtendedResults().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResults();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResults(RequestOptions requestOptions) {
-        return this.rawClient.listWithExtendedResults(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResults(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResults(ListUsersExtendedRequest request) {
-        return this.rawClient.listWithExtendedResults(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResults(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResults(
             ListUsersExtendedRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithExtendedResults(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResults(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData() {
-        return this.rawClient.listWithExtendedResultsAndOptionalData().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResultsAndOptionalData();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
             RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithExtendedResultsAndOptionalData(requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResultsAndOptionalData(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
             ListUsersExtendedRequestForOptionalData request) {
-        return this.rawClient.listWithExtendedResultsAndOptionalData(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResultsAndOptionalData(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithExtendedResultsAndOptionalData(
             ListUsersExtendedRequestForOptionalData request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listWithExtendedResultsAndOptionalData(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithExtendedResultsAndOptionalData(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernames() {
-        return this.rawClient.listUsernames().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernames();
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernames(RequestOptions requestOptions) {
-        return this.rawClient.listUsernames(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernames(requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernames(ListUsernamesRequest request) {
-        return this.rawClient.listUsernames(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernames(request);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernames(
             ListUsernamesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listUsernames(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernames(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernamesWithOptionalResponse() {
-        return this.rawClient.listUsernamesWithOptionalResponse().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernamesWithOptionalResponse();
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
             RequestOptions requestOptions) {
-        return this.rawClient.listUsernamesWithOptionalResponse(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernamesWithOptionalResponse(requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
             ListUsernamesWithOptionalResponseRequest request) {
-        return this.rawClient.listUsernamesWithOptionalResponse(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernamesWithOptionalResponse(request);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
             ListUsernamesWithOptionalResponseRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .listUsernamesWithOptionalResponse(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listUsernamesWithOptionalResponse(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig() {
-        return this.rawClient.listWithGlobalConfig().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listWithGlobalConfig();
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(RequestOptions requestOptions) {
-        return this.rawClient.listWithGlobalConfig(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listWithGlobalConfig(requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(ListWithGlobalConfigRequest request) {
-        return this.rawClient.listWithGlobalConfig(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listWithGlobalConfig(request);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithGlobalConfig(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.listWithGlobalConfig(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData() {
-        return this.rawClient.listWithOptionalData().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOptionalData();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData(RequestOptions requestOptions) {
-        return this.rawClient.listWithOptionalData(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOptionalData(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData(ListUsersOptionalDataRequest request) {
-        return this.rawClient.listWithOptionalData(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOptionalData(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData(
             ListUsersOptionalDataRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithOptionalData(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithOptionalData(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData() {
-        return this.rawClient.listWithAliasedData().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithAliasedData();
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData(RequestOptions requestOptions) {
-        return this.rawClient.listWithAliasedData(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithAliasedData(requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData(ListUsersAliasedDataRequest request) {
-        return this.rawClient.listWithAliasedData(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithAliasedData(request);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData(
             ListUsersAliasedDataRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithAliasedData(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> rawFuture =
+                this.rawClient.listWithAliasedData(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -86,7 +86,7 @@ import com.seed.multiUrlEnvironment.core.Environment;
 
 SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
-    .environment(Environment.Production)
+    .environment(Environment.PRODUCTION)
     .build();
 ```
 
