@@ -59,7 +59,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -106,7 +110,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersMixedTypePaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersMixedTypePaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -149,7 +157,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -199,7 +211,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -258,7 +274,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -317,7 +337,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -361,7 +385,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -416,7 +444,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -471,7 +503,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -518,7 +554,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersExtendedResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersExtendedResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -565,7 +605,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersExtendedOptionalListResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersExtendedOptionalListResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -612,7 +656,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Types::UsernameCursor.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Types::UsernameCursor.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -659,7 +707,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Types::UsernameCursor.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Types::UsernameCursor.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -707,7 +759,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::UsernameContainer.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::UsernameContainer.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -755,7 +811,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersOptionalDataPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersOptionalDataPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
@@ -810,7 +870,11 @@ module Seed
           end
           code = response.code.to_i
           if code.between?(200, 299)
-            parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersAliasedDataPaginationResponse.load(response.body))
+            begin
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Users::Types::ListUsersAliasedDataPaginationResponse.load(response.body))
+            rescue ::JSON::ParserError
+              raise Seed::Errors::ResponseError.new(response.body, code: code)
+            end
             [parsed_response, response]
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)

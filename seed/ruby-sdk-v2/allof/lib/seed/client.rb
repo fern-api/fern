@@ -34,7 +34,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::RuleTypeSearchResponse.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::RuleTypeSearchResponse.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -72,7 +76,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::RuleResponse.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::RuleResponse.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -105,7 +113,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::UserSearchResponse.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::UserSearchResponse.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -138,7 +150,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::CombinedEntity.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::CombinedEntity.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -171,7 +187,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::Organization.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::Organization.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -194,6 +214,8 @@ module Seed
     #     species: "species",
     #     family: "family",
     #     genus: "genus",
+    #     common_name: "commonName",
+    #     watering_frequency: "daily",
     #     sun_exposure: "full"
     #   )
     #
@@ -214,7 +236,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::PlantStrict.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::PlantStrict.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -233,7 +259,11 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @example
-    #   client.create_tree(id: "id")
+    #   client.create_tree(
+    #     id: "id",
+    #     tree_name: "treeName",
+    #     tree_species: "treeSpecies"
+    #   )
     #
     # @return [Seed::Types::TreeRecord]
     def create_tree(request_options: {}, **params)
@@ -252,7 +282,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::TreeRecord.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::TreeRecord.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)

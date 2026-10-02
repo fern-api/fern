@@ -77,7 +77,12 @@ export const BaseRubyCustomConfigSchema = z.object({
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents
     // the aliased model. Disabled by default because callers of a published gem may
     // already read that Hash by key.
-    coerceAliasResponses: z.boolean().optional()
+    coerceAliasResponses: z.boolean().optional(),
+    // Opt-in: when auth is mandatory, the client constructor raises `ArgumentError` if a
+    // bearer or header credential is neither passed nor set in its environment variable.
+    // Disabled by default because constructing a client without credentials currently
+    // succeeds and only fails once a request reaches the server.
+    requireAuthCredentials: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

@@ -43,7 +43,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::Foo.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::Foo.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -66,7 +70,8 @@ module Seed
     #     x_idempotency_key: "X-Idempotency-Key",
     #     nullable_text: "nullable_text",
     #     nullable_number: 1.1,
-    #     non_nullable_text: "non_nullable_text"
+    #     non_nullable_text: "non_nullable_text",
+    #     required_nullable_text: "required_nullable_text"
     #   )
     #
     # @return [Seed::Types::Foo]
@@ -94,7 +99,11 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        (response.body.to_s.empty? ? nil : Seed::Types::Foo.load(response.body))
+        begin
+          (response.body.to_s.empty? ? nil : Seed::Types::Foo.load(response.body))
+        rescue ::JSON::ParserError
+          raise Seed::Errors::ResponseError.new(response.body, code: code)
+        end
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)

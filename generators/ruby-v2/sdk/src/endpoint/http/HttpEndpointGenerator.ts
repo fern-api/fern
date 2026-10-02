@@ -22,6 +22,8 @@ export const HTTP_RESPONSE_VN = "response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
 export const ERROR_CLASS_VN = "error_class";
+export const ERROR_BODY_VN = "error_body";
+export const ERROR_TYPES_VN = "error_types";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -455,8 +457,29 @@ export class HttpEndpointGenerator {
                 `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
             );
 
+            const errorBodyTypes = this.getErrorBodyTypes(endpoint);
+            if (errorBodyTypes.length === 0) {
+                ruby.raise({
+                    errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                }).write(writer);
+                return;
+            }
+            writer.writeLine(`${ERROR_TYPES_VN} = {`);
+            writer.indent();
+            errorBodyTypes.forEach(({ matcher, typeId }, index) => {
+                writer.write(`${matcher} => `);
+                writer.writeNode(this.context.getReferenceToTypeId(typeId));
+                writer.writeLine(index < errorBodyTypes.length - 1 ? "," : "");
+            });
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine(
+                `${ERROR_BODY_VN} = ${rootModuleName}::Errors::ResponseError.load_error_body(${CODE_VN}, ${HTTP_RESPONSE_VN}.body, ${ERROR_TYPES_VN})`
+            );
             ruby.raise({
-                errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                errorClass: ruby.codeblock(
+                    `${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, body: ${ERROR_BODY_VN})`
+                )
             }).write(writer);
         });
 
@@ -587,6 +610,8 @@ export class HttpEndpointGenerator {
         typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
+        writer.writeLine("begin");
+        writer.indent();
         if (storeInVariable) {
             writer.write("parsed_response = ");
         }
@@ -598,6 +623,55 @@ export class HttpEndpointGenerator {
             })
         );
         writer.newLine();
+        writer.dedent();
+        writer.writeLine("rescue ::JSON::ParserError");
+        writer.indent();
+        writer.writeLine(
+            `raise ${this.context.getRootModuleName()}::Errors::ResponseError.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`
+        );
+        writer.dedent();
+        writer.writeLine("end");
+    }
+
+    /**
+     * Status matchers (`404`, `400..499`) paired with the named body type of each error the
+     * endpoint declares, exact statuses before wildcards so the most specific one wins.
+     */
+    private getErrorBodyTypes(endpoint: FernIr.HttpEndpoint): { matcher: string; typeId: FernIr.TypeId }[] {
+        const exact: { matcher: string; typeId: FernIr.TypeId }[] = [];
+        const wildcard: { matcher: string; typeId: FernIr.TypeId }[] = [];
+        const seen = new Set<string>();
+        for (const responseError of endpoint.errors) {
+            const declaration = this.context.ir.errors[responseError.error.errorId];
+            const typeId = declaration?.type != null ? this.getNamedTypeId(declaration.type) : undefined;
+            if (declaration == null || typeId == null) {
+                continue;
+            }
+            const matcher = declaration.isWildcardStatusCode
+                ? `(${declaration.statusCode}..${declaration.statusCode + 99})`
+                : `${declaration.statusCode}`;
+            if (seen.has(matcher)) {
+                continue;
+            }
+            seen.add(matcher);
+            (declaration.isWildcardStatusCode ? wildcard : exact).push({ matcher, typeId });
+        }
+        return [...exact, ...wildcard];
+    }
+
+    private getNamedTypeId(typeReference: FernIr.TypeReference): FernIr.TypeId | undefined {
+        if (typeReference.type === "named") {
+            return typeReference.typeId;
+        }
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "optional") {
+                return this.getNamedTypeId(typeReference.container.optional);
+            }
+            if (typeReference.container.type === "nullable") {
+                return this.getNamedTypeId(typeReference.container.nullable);
+            }
+        }
+        return undefined;
     }
 
     private generateEnhancedDocstring({

@@ -78,6 +78,9 @@ fixtures:
     - outputFolder: respect-auth-scheme-names
       customConfig:
         respectAuthSchemeNames: true
+    - outputFolder: require-auth-credentials
+      customConfig:
+        requireAuthCredentials: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:

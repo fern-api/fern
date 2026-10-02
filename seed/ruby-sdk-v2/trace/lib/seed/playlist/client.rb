@@ -59,7 +59,11 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+          begin
+            (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+          rescue ::JSON::ParserError
+            raise Seed::Errors::ResponseError.new(response.body, code: code)
+          end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -114,7 +118,11 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Playlist::Types::Playlist], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          begin
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Playlist::Types::Playlist], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          rescue ::JSON::ParserError
+            raise Seed::Errors::ResponseError.new(response.body, code: code)
+          end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -155,10 +163,18 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+          begin
+            (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+          rescue ::JSON::ParserError
+            raise Seed::Errors::ResponseError.new(response.body, code: code)
+          end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            404 => Seed::Playlist::Types::PlaylistIDNotFoundErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
@@ -204,10 +220,18 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+          begin
+            (response.body.to_s.empty? ? nil : Seed::Playlist::Types::Playlist.load(response.body))
+          rescue ::JSON::ParserError
+            raise Seed::Errors::ResponseError.new(response.body, code: code)
+          end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            404 => Seed::Playlist::Types::PlaylistIDNotFoundErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
