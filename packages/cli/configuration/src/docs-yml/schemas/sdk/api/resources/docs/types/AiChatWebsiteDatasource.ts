@@ -5,4 +5,6 @@ export interface AiChatWebsiteDatasource {
     url: string;
     /** An optional display name for this datasource. This helps users understand where the information is coming from when Ask Fern cites content from this source. */
     title?: string;
+    /** The site locale every page of this website belongs to (e.g. `ja`). When set, all pages are indexed into that locale's Ask Fern index instead of relying on per-page locale detection. */
+    locale?: string;
 }
