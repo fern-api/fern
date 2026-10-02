@@ -88,44 +88,47 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             return buildResponse();
         });
 
-        await expect(
-            runRemoteGenerationForGenerator({
-                projectConfig: { organization: "acme" } as never,
-                organization: "acme",
-                workspace: workspace() as never,
-                interactiveTaskContext: context() as never,
-                generatorInvocation,
-                version: "1.2.3",
-                audiences: { type: "all" },
-                shouldLogS3Url: false,
-                token: { value: "token" } as never,
-                whitelabel: undefined,
-                replay: undefined,
-                irVersionOverride: undefined,
-                absolutePathToPreview: undefined,
-                isPreview: true,
-                readme: undefined,
-                fernignorePath: undefined,
-                dynamicIrOnly: false,
-                retryRateLimited: false,
-                requireEnvVars: true,
-                specsTarGzBuffer: sourceArchive.buffer,
-                sdkGenApiSourceArchive: sourceArchive,
-                sdkGenApiRoute: prepared.route,
-                sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
-                sdkGenApiBatch: { run } as never,
-                sdkGenApiTargetIdSeed: "0",
-                mapFernGroupToSdkConfig: () => ({
-                    diagnostics: [],
-                    sdkConfig: validateSdkConfigV1({
-                        schemaVersion: "sdk-config/v1",
-                        sdkName: "Petstore",
-                        source: { specs: [{ id: "source-0", type: "openapi", path: "fern/specs/openapi0.json" }] },
-                        targets: [{ language: "mcp", output: { delivery: "files" } }]
-                    })
+        const parameters = {
+            projectConfig: { organization: "acme" } as never,
+            organization: "acme",
+            workspace: workspace() as never,
+            interactiveTaskContext: context() as never,
+            generatorInvocation,
+            version: "1.2.3",
+            audiences: { type: "all" },
+            shouldLogS3Url: false,
+            token: { value: "token" } as never,
+            whitelabel: undefined,
+            replay: undefined,
+            irVersionOverride: undefined,
+            absolutePathToPreview: undefined,
+            isPreview: true,
+            readme: undefined,
+            fernignorePath: undefined,
+            dynamicIrOnly: false,
+            retryRateLimited: false,
+            requireEnvVars: true,
+            specsTarGzBuffer: sourceArchive.buffer,
+            sdkGenApiSourceArchive: sourceArchive,
+            sdkGenApiRoute: prepared.route,
+            sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
+            sdkGenApiBatch: { run } as never,
+            sdkGenApiTargetIdSeed: "0",
+            mapFernGroupToSdkConfig: () => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "Petstore",
+                    source: { specs: [{ id: "source-0", type: "openapi", path: "fern/specs/openapi0.json" }] },
+                    targets: [{ language: "mcp", output: { delivery: "files" } }]
                 })
             })
-        ).resolves.toMatchObject({ actualVersion: "1.2.3" });
+        };
+
+        await expect(runRemoteGenerationForGenerator(parameters)).resolves.toMatchObject({ actualVersion: "1.2.3" });
+        await expect(runRemoteGenerationForGenerator({ ...parameters, generateFullProject: true })).rejects.toThrow(
+            "sdk-gen-api does not yet support full-project generation from SDK Config"
+        );
         expect(run).toHaveBeenCalledTimes(1);
     });
 

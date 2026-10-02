@@ -372,6 +372,15 @@ async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promi
             }
         }
     }
+    if (
+        (await doesPathExist(join(outputPath, RelativeFilePath.of("package-lock.json")))) ||
+        (await doesPathExist(join(outputPath, RelativeFilePath.of("npm-shrinkwrap.json"))))
+    ) {
+        return ["npm"];
+    }
+    if (await doesPathExist(join(outputPath, RelativeFilePath.of("yarn.lock")))) {
+        return ["npx", "--yes", "yarn"];
+    }
     return ["npx", "--yes", "pnpm"];
 }
 

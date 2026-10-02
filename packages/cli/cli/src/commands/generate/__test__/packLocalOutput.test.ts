@@ -192,6 +192,31 @@ describe("packLocalOutputForGroup", () => {
         expect(commands[1]).toBe("npx --yes yarn run build");
     });
 
+    it("uses npm when an existing typescript project has a package-lock", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({ name: "acme", version: "1.0.0", scripts: { build: "tsc" } })
+        );
+        await writeFile(path.join(outputDir, "package-lock.json"), "{}");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe("npm install");
+        expect(commands[1]).toBe("npm run build");
+    });
+
     it("fails typescript packaging when tsc fails and no output was emitted", async () => {
         await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ name: "acme" }));
         await writeFile(path.join(outputDir, "tsconfig.json"), "{}");

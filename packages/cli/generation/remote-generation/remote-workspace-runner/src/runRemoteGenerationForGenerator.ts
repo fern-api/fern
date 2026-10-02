@@ -306,6 +306,13 @@ export async function runRemoteGenerationForGenerator({
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
+        if (generateFullProject === true && sdkGenApiRoute.payloadKind === "sdk-config-v1") {
+            return interactiveTaskContext.failAndThrow(
+                "sdk-gen-api does not yet support full-project generation from SDK Config",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
         const candidate = {
             generatorInvocation,
             sdkVersion: resolvedVersion,
