@@ -4,7 +4,7 @@ module Seed
   class Client
     # @param base_url [String, nil]
     # @param max_retries [Integer]
-    # @param timeout [Float]
+    # @param timeout [Numeric]
     #
     # @return [void]
     def initialize(base_url: nil, max_retries: 2, timeout: 60)

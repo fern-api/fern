@@ -6,11 +6,13 @@
   type: fix
 - summary: |
     Nil values are no longer serialized as `{}` (`nil.to_h`), and `optional<nullable<T>>`
-    fields keep their nullable metadata so explicit `nil` values are preserved.
+    fields keep their nullable metadata so explicit `nil` values are preserved, while
+    omitted optional fields are still left out of the request.
   type: fix
 - summary: |
     Add a `timeout:` option to the root client and honor `request_options[:timeout_in_seconds]`
-    per request. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
+    per request (an explicit `0` is respected). The timeout also applies to OAuth and inferred-auth
+    token requests. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
     README timeout snippets now show the real API.
   type: fix
 - summary: |

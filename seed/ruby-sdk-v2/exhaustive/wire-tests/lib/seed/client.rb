@@ -5,7 +5,7 @@ module Seed
     # @param token [String]
     # @param base_url [String, nil]
     # @param max_retries [Integer]
-    # @param timeout [Float]
+    # @param timeout [Numeric]
     #
     # @return [void]
     def initialize(token:, base_url: nil, max_retries: 5, timeout: 60)

@@ -163,8 +163,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         parameters.push(
             ruby.parameters.keyword({
                 name: "timeout",
-                type: ruby.Type.class_({ name: "Float" }),
-                initializer: ruby.TypeLiteral.float(60.0),
+                type: ruby.Type.class_({ name: "Numeric" }),
+                initializer: ruby.TypeLiteral.integer(60),
                 docs: "The default timeout in seconds for each request."
             })
         );
@@ -593,7 +593,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine(`},`);
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -755,7 +756,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             writer.writeLine(`"X-Fern-Language" => "Ruby"`);
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine(`},`);
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();

@@ -85,8 +85,9 @@ module Seed
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.
         # @return [Float] The request's `timeout_in_seconds` option, or the client-level timeout.
         def request_timeout(request)
-          options = request.request_options
-          (options&.dig(:timeout_in_seconds) || options&.dig("timeout_in_seconds") || @timeout).to_f
+          options = request.request_options || {}
+          timeout = options.key?(:timeout_in_seconds) ? options[:timeout_in_seconds] : options["timeout_in_seconds"]
+          (timeout.nil? ? @timeout : timeout).to_f
         end
 
         # The client-level header names that `additional_headers` must not replace: every default

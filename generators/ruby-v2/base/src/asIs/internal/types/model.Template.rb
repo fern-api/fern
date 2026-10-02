@@ -108,6 +108,7 @@ module <%= gem_namespace %>
             method_name = :"#{name}="
 
             define_method(method_name) do |val|
+              @explicit_fields[name] = true
               @data[name] = val
             end
           end
@@ -137,6 +138,7 @@ module <%= gem_namespace %>
         # @return [self]
         def initialize(values = {})
           @data = {}
+          @explicit_fields = {}
 
           values = Utils.symbolize_keys(values.dup)
 
@@ -145,6 +147,7 @@ module <%= gem_namespace %>
             [field.api_name.to_sym, field_name].uniq.each do |key|
               next unless values.key?(key)
 
+              @explicit_fields[field_name] = true
               candidate = values.delete(key)
               value = candidate if value.nil?
             end
@@ -173,10 +176,11 @@ module <%= gem_namespace %>
             # If there is a value present in the data, use that value
             # If there is a `nil` value present in the data, and it is optional but NOT nullable, exclude key altogether
             # If there is a `nil` value present in the data, and it is optional and nullable, use the nil value
+            # only when it was explicitly provided; an omitted optional field is excluded
 
             value = @data[name]
 
-            next if value.nil? && field.optional && !field.nullable
+            next if value.nil? && field.optional && (!field.nullable || !@explicit_fields&.key?(name))
 
             if value.is_a?(::Array)
               value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
