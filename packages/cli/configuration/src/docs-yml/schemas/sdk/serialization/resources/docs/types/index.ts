@@ -44,6 +44,7 @@ export * from "./ColorConfig.js";
 export * from "./ColorsConfiguration.js";
 export * from "./ColorThemedConfig.js";
 export * from "./ContentAlignment.js";
+export * from "./ContentSecurityPolicyConfig.js";
 export * from "./CssConfig.js";
 export * from "./CustomDomain.js";
 export * from "./CustomPageAction.js";

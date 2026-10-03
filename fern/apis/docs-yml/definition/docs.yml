@@ -164,6 +164,23 @@ types:
           Origins that may embed your docs in an iframe, e.g. `https://app.example.com` or `https://*.example.com`.
           Each entry is added to the `frame-ancestors` directive of the Content-Security-Policy header.
 
+  ContentSecurityPolicyConfig:
+    properties:
+      style-hashes:
+        type: optional<list<string>>
+        docs: |
+          CSP hash sources (`sha256-…`, `sha384-…` or `sha512-…`) for inline `<style>` elements that your
+          custom JavaScript or third-party widgets insert, e.g. `sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=`.
+          Setting this key (even to an empty list) enforces a strict `style-src` without `'unsafe-inline'` on
+          every page, including pages with custom JavaScript or integrations. Inline styles whose hash is not
+          listed are blocked. Up to 16 hashes.
+      allow-eval:
+        type: optional<boolean>
+        docs: |
+          Whether `script-src` includes `'unsafe-eval'`. By default it is included only on sites with custom
+          JavaScript or Google Tag Manager. Set to `false` to drop it everywhere; scripts that call `eval` or
+          `new Function` (e.g. GTM Custom HTML tags) will then fail.
+
   AgentsConfig:
     properties:
       page-directive:
@@ -1164,6 +1181,10 @@ types:
           - `grouped`: Messages are shown as a single parent entry with nested variants.
 
           @default: flat
+      content-security-policy:
+        type: optional<ContentSecurityPolicyConfig>
+        docs: |
+          Opt-ins that tighten the Content-Security-Policy header of your docs site.
       embedding:
         type: optional<EmbeddingConfig>
         docs: |

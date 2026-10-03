@@ -99,6 +99,8 @@ export interface DocsSettingsConfig {
      * @default: flat
      */
     websocketOneofDisplay?: FernDocsConfig.WebSocketOneofDisplay;
+    /** Opt-ins that tighten the Content-Security-Policy header of your docs site. */
+    contentSecurityPolicy?: FernDocsConfig.ContentSecurityPolicyConfig;
     /**
      * Controls which third-party sites may embed your documentation in an iframe.
      * By default only your docs site itself (and the Fern dashboard) may frame it.
