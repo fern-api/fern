@@ -88,7 +88,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             return buildResponse();
         });
 
-        const parameters = {
+        const parameters: Parameters<typeof runRemoteGenerationForGenerator>[0] = {
             projectConfig: { organization: "acme" } as never,
             organization: "acme",
             workspace: workspace() as never,
