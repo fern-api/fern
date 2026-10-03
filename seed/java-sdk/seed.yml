@@ -391,6 +391,7 @@ fixtures:
     - customConfig:
         use-default-request-parameter-values: true
         collapse-optional-nullable: true
+        enable-wire-tests: true
       outputFolder: default
   java-default-timeout:
     - customConfig:

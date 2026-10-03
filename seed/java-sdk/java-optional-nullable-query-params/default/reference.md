@@ -30,25 +30,13 @@ client.search(
     SearchRequest
         .builder()
         .query(
-            OptionalNullable.of("")
+            OptionalNullable.of("query")
         )
-        .limit(
-            OptionalNullable.of(1)
+        .sortOrders(
+            Arrays.asList(SortOrder.ASC, SortOrder.DESC)
         )
-        .includeArchived(
-            OptionalNullable.of(true)
-        )
-        .sortOrder(
-            OptionalNullable.of(SortOrder.ASC)
-        )
-        .optionalWithoutDefault(
-            OptionalNullable.of("optionalWithoutDefault")
-        )
-        .regularOptional(
-            OptionalNullable.of("default-value")
-        )
-        .regularOptionalNoDefault(
-            OptionalNullable.of("regularOptionalNoDefault")
+        .tags(
+            Arrays.asList("tag1", "tag2")
         )
         .build()
 );
@@ -115,6 +103,22 @@ client.search(
 <dd>
 
 **regularOptionalNoDefault:** `Optional<String>` — Another optional nullable without default for comparison
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sortOrders:** `Optional<SortOrder>` — Optional array of enum values
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `Optional<String>` — Optional array of string values
     
 </dd>
 </dl>

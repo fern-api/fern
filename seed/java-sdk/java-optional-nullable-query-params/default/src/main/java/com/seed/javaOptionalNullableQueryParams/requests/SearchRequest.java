@@ -5,6 +5,7 @@ package com.seed.javaOptionalNullableQueryParams.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,9 @@ import com.seed.javaOptionalNullableQueryParams.core.NullableNonemptyFilter;
 import com.seed.javaOptionalNullableQueryParams.core.ObjectMappers;
 import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
 import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,6 +27,10 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SearchRequest.Builder.class)
 public final class SearchRequest {
+    private final Optional<List<SortOrder>> sortOrders;
+
+    private final Optional<List<String>> tags;
+
     private final OptionalNullable<String> query;
 
     private final OptionalNullable<Integer> limit;
@@ -41,6 +48,8 @@ public final class SearchRequest {
     private final Map<String, Object> additionalProperties;
 
     private SearchRequest(
+            Optional<List<SortOrder>> sortOrders,
+            Optional<List<String>> tags,
             OptionalNullable<String> query,
             OptionalNullable<Integer> limit,
             OptionalNullable<Boolean> includeArchived,
@@ -49,6 +58,8 @@ public final class SearchRequest {
             OptionalNullable<String> regularOptional,
             OptionalNullable<String> regularOptionalNoDefault,
             Map<String, Object> additionalProperties) {
+        this.sortOrders = sortOrders;
+        this.tags = tags;
         this.query = query;
         this.limit = limit;
         this.includeArchived = includeArchived;
@@ -57,6 +68,28 @@ public final class SearchRequest {
         this.regularOptional = regularOptional;
         this.regularOptionalNoDefault = regularOptionalNoDefault;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Optional array of enum values
+     */
+    @JsonIgnore
+    public Optional<List<SortOrder>> getSortOrders() {
+        if (sortOrders == null) {
+            return Optional.empty();
+        }
+        return sortOrders;
+    }
+
+    /**
+     * @return Optional array of string values
+     */
+    @JsonIgnore
+    public Optional<List<String>> getTags() {
+        if (tags == null) {
+            return Optional.empty();
+        }
+        return tags;
     }
 
     /**
@@ -144,6 +177,18 @@ public final class SearchRequest {
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sortOrders")
+    private Optional<List<SortOrder>> _getSortOrders() {
+        return sortOrders;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("tags")
+    private Optional<List<String>> _getTags() {
+        return tags;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("query")
     private OptionalNullable<String> _getQuery() {
         return query;
@@ -197,7 +242,9 @@ public final class SearchRequest {
     }
 
     private boolean equalTo(SearchRequest other) {
-        return query.equals(other.query)
+        return sortOrders.equals(other.sortOrders)
+                && tags.equals(other.tags)
+                && query.equals(other.query)
                 && limit.equals(other.limit)
                 && includeArchived.equals(other.includeArchived)
                 && sortOrder.equals(other.sortOrder)
@@ -209,6 +256,8 @@ public final class SearchRequest {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.sortOrders,
+                this.tags,
                 this.query,
                 this.limit,
                 this.includeArchived,
@@ -229,6 +278,10 @@ public final class SearchRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<List<SortOrder>> sortOrders = Optional.empty();
+
+        private Optional<List<String>> tags = Optional.empty();
+
         private OptionalNullable<String> query = OptionalNullable.absent();
 
         private OptionalNullable<Integer> limit = OptionalNullable.absent();
@@ -249,6 +302,8 @@ public final class SearchRequest {
         private Builder() {}
 
         public Builder from(SearchRequest other) {
+            sortOrders(other.getSortOrders());
+            tags(other.getTags());
             query(other.getQuery());
             limit(other.getLimit());
             includeArchived(other.getIncludeArchived());
@@ -256,6 +311,66 @@ public final class SearchRequest {
             optionalWithoutDefault(other.getOptionalWithoutDefault());
             regularOptional(other.getRegularOptional());
             regularOptionalNoDefault(other.getRegularOptionalNoDefault());
+            return this;
+        }
+
+        /**
+         * <p>Optional array of enum values</p>
+         */
+        @JsonSetter(value = "sortOrders", nulls = Nulls.SKIP)
+        public Builder sortOrders(Optional<List<SortOrder>> sortOrders) {
+            this.sortOrders = sortOrders;
+            return this;
+        }
+
+        public Builder sortOrders(List<SortOrder> sortOrders) {
+            this.sortOrders = Optional.ofNullable(sortOrders);
+            return this;
+        }
+
+        public Builder sortOrders(Nullable<List<SortOrder>> sortOrders) {
+            if (sortOrders.isNull()) {
+                this.sortOrders = null;
+            } else if (sortOrders.isEmpty()) {
+                this.sortOrders = Optional.empty();
+            } else {
+                this.sortOrders = Optional.of(sortOrders.get());
+            }
+            return this;
+        }
+
+        public Builder sortOrders(SortOrder sortOrders) {
+            this.sortOrders = Optional.of(Collections.singletonList(sortOrders));
+            return this;
+        }
+
+        /**
+         * <p>Optional array of string values</p>
+         */
+        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+        public Builder tags(Optional<List<String>> tags) {
+            this.tags = tags;
+            return this;
+        }
+
+        public Builder tags(List<String> tags) {
+            this.tags = Optional.ofNullable(tags);
+            return this;
+        }
+
+        public Builder tags(Nullable<List<String>> tags) {
+            if (tags.isNull()) {
+                this.tags = null;
+            } else if (tags.isEmpty()) {
+                this.tags = Optional.empty();
+            } else {
+                this.tags = Optional.of(tags.get());
+            }
+            return this;
+        }
+
+        public Builder tags(String tags) {
+            this.tags = Optional.of(Collections.singletonList(tags));
             return this;
         }
 
@@ -499,6 +614,8 @@ public final class SearchRequest {
 
         public SearchRequest build() {
             return new SearchRequest(
+                    sortOrders,
+                    tags,
                     query,
                     limit,
                     includeArchived,
