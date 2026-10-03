@@ -18,6 +18,7 @@ export const PageActionOptions: core.serialization.ObjectSchema<
     claudeCode: core.serialization.property("claude-code", core.serialization.boolean().optional()),
     cursor: core.serialization.boolean().optional(),
     mcp: core.serialization.boolean().optional(),
+    mcpAuth: core.serialization.property("mcp-auth", core.serialization.boolean().optional()),
     vscode: core.serialization.boolean().optional(),
     custom: core.serialization.list(CustomPageAction).optional(),
     skills: SkillsPageActionConfig.optional(),
@@ -33,6 +34,7 @@ export declare namespace PageActionOptions {
         "claude-code"?: boolean | null;
         cursor?: boolean | null;
         mcp?: boolean | null;
+        "mcp-auth"?: boolean | null;
         vscode?: boolean | null;
         custom?: CustomPageAction.Raw[] | null;
         skills?: SkillsPageActionConfig.Raw | null;

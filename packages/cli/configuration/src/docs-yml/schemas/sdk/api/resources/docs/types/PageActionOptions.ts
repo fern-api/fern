@@ -62,6 +62,15 @@ export interface PageActionOptions {
      */
     mcp?: boolean;
     /**
+     * Opts this docs site into the authenticated MCP endpoint (`/_mcp/authed/server`) and its
+     * OAuth metadata documents, letting MCP clients log in through the site's existing SSO or
+     * password auth and receive results scoped to that user's roles. Only applies to docs sites
+     * that have authentication configured; the public MCP endpoint is unaffected.
+     *
+     * @default: false
+     */
+    mcpAuth?: boolean;
+    /**
      * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
      *
      * @default: false

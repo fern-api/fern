@@ -1688,6 +1688,9 @@
                 "mcp": {
                   "type": "boolean"
                 },
+                "mcp-auth": {
+                  "type": "boolean"
+                },
                 "vscode": {
                   "type": "boolean"
                 },

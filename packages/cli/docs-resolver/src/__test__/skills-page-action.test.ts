@@ -27,6 +27,7 @@ function makeParsedPageActions(
             claudeCode: true,
             vscode: false,
             mcp: true,
+            mcpAuth: false,
             custom: [],
             skills
         }
