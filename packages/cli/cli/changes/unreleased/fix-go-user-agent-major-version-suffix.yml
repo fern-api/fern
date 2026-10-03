@@ -1,0 +1,6 @@
+- summary: |
+    The Go SDK `User-Agent` header (and the `{packageName}` variable of the `user-agent`
+    template) now carries the `/vN` module path suffix the Go generator appends from
+    major version 2 on, so `User-Agent` and `X-Fern-SDK-Name` agree
+    (e.g. `github.com/acme/acme-go/v2/2.0.0`).
+  type: fix
