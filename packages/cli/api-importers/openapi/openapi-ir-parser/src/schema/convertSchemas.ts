@@ -1397,6 +1397,7 @@ export function convertSchemaObject(
                 (schema.properties == null || hasNoProperties(schema)) &&
                 filteredAllOfs.length === 1 &&
                 filteredAllOfs[0] != null &&
+                !isVariantOfDiscriminatedBase({ schema, element: filteredAllOfs[0], context }) &&
                 (schema.additionalProperties == null || schema.additionalProperties === false)
             ) {
                 // If we end up with a single element, we short-circuit and convert it directly.
@@ -1434,6 +1435,7 @@ export function convertSchemaObject(
                 (schema.properties == null || hasNoProperties(schema)) &&
                 filteredAllOfObjects.length === 1 &&
                 filteredAllOfObjects[0] != null &&
+                !isVariantOfDiscriminatedBase({ schema, element: filteredAllOfObjects[0], context }) &&
                 (schema.additionalProperties == null || schema.additionalProperties === false)
             ) {
                 // Try to short-circuit again.
@@ -1784,6 +1786,48 @@ function maybeInjectDescriptionOrGroupName(
         });
     }
     return schema;
+}
+
+// Resolved discriminator mapping targets per base schema, so the variants of one union do not
+// each re-resolve the whole mapping. Weak, so it does not outlive the parse.
+const discriminatedVariantsByBase = new WeakMap<OpenAPIV3.SchemaObject, ReadonlySet<OpenAPIV3.SchemaObject>>();
+
+// isVariantOfDiscriminatedBase returns true if `schema` is one of the variants named in the
+// discriminator mapping of the schema that `element` references. Such a variant is a subtype of
+// the base, not an alias: short-circuiting it would make it an alias of its own union, which the
+// IR then emits as a `singleProperty` variant. Requiring a mapping entry keeps this narrow, so
+// `{allOf: [$ref X], nullable: true}` still collapses to a reference to X.
+// Membership is by object identity: `resolveSchemaReference` returns the stored document object,
+// and `convertSchemaObject` does not copy `schema` on any path that reaches an allOf. An
+// unresolvable mapping target never matches and leaves the short-circuit in place.
+function isVariantOfDiscriminatedBase({
+    schema,
+    element,
+    context
+}: {
+    schema: OpenAPIV3.SchemaObject;
+    element: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+    context: SchemaParserContext;
+}): boolean {
+    if (!isReferenceObject(element)) {
+        return false;
+    }
+    const base = context.resolveSchemaReference(element);
+    const mapping = base.discriminator?.mapping;
+    if (mapping == null) {
+        return false;
+    }
+    let variants = discriminatedVariantsByBase.get(base);
+    if (variants == null) {
+        const resolved = new Set<OpenAPIV3.SchemaObject>();
+        for (const target of Object.values(mapping)) {
+            // a mapping value is either a reference or a bare schema name
+            const $ref = target.startsWith("#/") ? target : `${SCHEMA_REFERENCE_PREFIX}${target}`;
+            resolved.add(context.resolveSchemaReference({ $ref }));
+        }
+        discriminatedVariantsByBase.set(base, (variants = resolved));
+    }
+    return variants.has(schema);
 }
 
 // isValidAllOfObject returns true if the given allOf is a valid object according to the following:
