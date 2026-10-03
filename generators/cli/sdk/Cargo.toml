@@ -70,7 +70,7 @@ bytes = "1"
 clap = { version = "4", features = ["derive", "string", "env"] }
 clap_complete = "4"
 clap_mangen = "0.2"
-hmac = "0.12"
+hmac = "0.13"
 dotenvy = "0.15"
 futures-util = "0.3"
 httpdate = "1"
