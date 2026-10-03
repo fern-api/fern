@@ -7,6 +7,9 @@ import type * as SeedUndiscriminatedUnions from "../../../index.js";
  * represented in the IR and generated code.
  */
 export type UnionWithBaseProperties =
-    | SeedUndiscriminatedUnions.NamedMetadata
+    | (SeedUndiscriminatedUnions.NamedMetadata & {
+          id: string;
+          category?: string | undefined;
+      })
     | SeedUndiscriminatedUnions.OptionalMetadata
     | undefined;
