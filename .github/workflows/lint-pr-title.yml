@@ -54,6 +54,7 @@ jobs:
             ir
             cli-v2
             cli-generator
+            wizard
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
