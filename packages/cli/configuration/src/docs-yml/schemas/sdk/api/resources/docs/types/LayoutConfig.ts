@@ -94,6 +94,8 @@ export interface LayoutConfig {
     hideNavLinks?: boolean;
     /** If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter. */
     hideFeedback?: boolean;
+    /** If `hide-codeblock-feedback` is set to true, the "report incorrect code" button will not be rendered on code blocks. A `CodeBlock` or `CodeGroup` can override this with its `showFeedback` prop. */
+    hideCodeblockFeedback?: boolean;
     /** If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages. */
     mobileToc?: boolean;
     /**
