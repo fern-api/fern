@@ -10,6 +10,7 @@ import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { booleanHeaderValue } from "../utils/booleanHeaderValue.js";
 import {
     getMultipleBaseUrlsTemplatedEnvironment,
     getServerVariableOptions,
@@ -434,7 +435,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             if (param.header != null && (!endpointSecurity || param.isGlobalHeader)) {
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
-                    value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                    value: this.getHeaderValue({
+                        prefix: param.header.prefix,
+                        parameterName: param.name,
+                        isBoolean: this.isBoolean(param.typeReference),
+                        mayBeString: param.environmentVariable != null
+                    })
                 });
             }
         }
@@ -452,7 +458,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 // Variables backed by an environment variable can be instantiated in-line.
                 headerEntries.push({
                     key: php.codeblock(`'${param.header.name}'`),
-                    value: this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                    value: this.getHeaderValue({
+                        prefix: param.header.prefix,
+                        parameterName: param.name,
+                        isBoolean: this.isBoolean(param.typeReference),
+                        mayBeString: true
+                    })
                 });
             }
         }
@@ -609,10 +620,16 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             anyAuthMultiScheme ||
                             (param.isGlobalHeader && param.isOptional && param.clientDefault == null))
                     ) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         writer.writeNodeStatement(
-                            this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                            this.getHeaderValue({
+                                prefix: param.header.prefix,
+                                parameterName: param.name,
+                                isBoolean: this.isBoolean(param.typeReference),
+                                // a client default or environment variable arrives as a wire string
+                                mayBeString: param.clientDefault != null || param.environmentVariable != null
+                            })
                         );
                         writer.endControlFlow();
                     }
@@ -621,13 +638,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     if (param.header != null) {
                         writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
-                        if (param.value.type === "boolean") {
-                            writer.writeTextStatement(`$${param.name} ? 'true' : 'false'`);
-                        } else {
-                            writer.writeNodeStatement(
-                                this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                            );
-                        }
+                        writer.writeNodeStatement(
+                            this.getHeaderValue({
+                                prefix: param.header.prefix,
+                                parameterName: param.name,
+                                isBoolean: param.value.type === "boolean"
+                            })
+                        );
                         writer.endControlFlow();
                     }
                 }
@@ -1487,12 +1504,23 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getHeaderValue({
         prefix,
-        parameterName
+        parameterName,
+        isBoolean = false,
+        mayBeString = false
     }: {
         prefix: string | undefined;
         parameterName: string;
+        isBoolean?: boolean;
+        mayBeString?: boolean;
     }): php.CodeBlock {
+        if (isBoolean) {
+            return php.codeblock(booleanHeaderValue({ reference: `$${parameterName}`, mayBeString }));
+        }
         return php.codeblock(prefix != null ? `"${prefix} $${parameterName}"` : `$${parameterName}`);
+    }
+
+    private isBoolean(typeReference: FernIr.TypeReference): boolean {
+        return this.context.isEquivalentToPrimitive({ typeReference, primitive: FernIr.PrimitiveTypeV1.Boolean });
     }
 
     private getAuthParameterTypeReference({
