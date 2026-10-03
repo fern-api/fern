@@ -83,6 +83,13 @@ components:
       type: object
       additionalProperties:
         $ref: "#/components/schemas/AliasInlineValue"
+    AliasMapListInline:
+      title: AliasMapListInline
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          $ref: "#/components/schemas/AliasInlineValue"
     AliasSetInline:
       title: AliasSetInline
       type: array
@@ -135,6 +142,13 @@ components:
           items:
             $ref: "#/components/schemas/RootType1FooListItem"
           description: lorem ipsum
+        fooListMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: "#/components/schemas/RootType1FooListMapItem"
+          description: lorem ipsum
         fooSet:
           type: array
           items:
@@ -148,6 +162,7 @@ components:
         - bar
         - fooMap
         - fooList
+        - fooListMap
         - fooSet
         - ref
     RootType1FooMapValue:
@@ -166,6 +181,20 @@ components:
         - ref
     RootType1FooListItem:
       title: RootType1FooListItem
+      type: object
+      description: lorem ipsum
+      properties:
+        foo:
+          type: string
+          description: lorem ipsum
+        ref:
+          $ref: "#/components/schemas/ReferenceType"
+          description: lorem ipsum
+      required:
+        - foo
+        - ref
+    RootType1FooListMapItem:
+      title: RootType1FooListMapItem
       type: object
       description: lorem ipsum
       properties:

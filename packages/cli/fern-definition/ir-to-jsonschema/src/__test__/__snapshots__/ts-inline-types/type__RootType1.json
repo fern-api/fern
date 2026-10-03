@@ -23,6 +23,16 @@
       },
       "description": "lorem ipsum"
     },
+    "fooListMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/RootType1FooListMapItem"
+        }
+      },
+      "description": "lorem ipsum"
+    },
     "fooSet": {
       "type": "array",
       "items": {
@@ -41,6 +51,7 @@
     "bar",
     "fooMap",
     "fooList",
+    "fooListMap",
     "fooSet",
     "ref"
   ],
@@ -144,6 +155,25 @@
       "description": "lorem ipsum"
     },
     "RootType1FooListItem": {
+      "type": "object",
+      "properties": {
+        "foo": {
+          "type": "string",
+          "description": "lorem ipsum"
+        },
+        "ref": {
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
+        }
+      },
+      "required": [
+        "foo",
+        "ref"
+      ],
+      "additionalProperties": false,
+      "description": "lorem ipsum"
+    },
+    "RootType1FooListMapItem": {
       "type": "object",
       "properties": {
         "foo": {

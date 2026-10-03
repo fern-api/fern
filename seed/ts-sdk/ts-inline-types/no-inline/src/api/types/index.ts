@@ -1,6 +1,7 @@
 export * from "./AliasInlineValue.js";
 export * from "./AliasListInline.js";
 export * from "./AliasMapInline.js";
+export * from "./AliasMapListInline.js";
 export * from "./AliasSetInline.js";
 export * from "./DiscriminatedUnion1.js";
 export * from "./DiscriminatedUnion1InlineType1.js";
@@ -11,6 +12,7 @@ export * from "./ReferenceType.js";
 export * from "./RequestTypeInlineType1.js";
 export * from "./RootType1.js";
 export * from "./RootType1FooListItem.js";
+export * from "./RootType1FooListMapItem.js";
 export * from "./RootType1FooMapValue.js";
 export * from "./RootType1FooSetItem.js";
 export * from "./RootType1InlineType1.js";
