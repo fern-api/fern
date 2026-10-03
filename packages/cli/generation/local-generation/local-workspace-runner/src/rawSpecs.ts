@@ -810,11 +810,42 @@ function assertGeneratorSelectionOutcomes({
 const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set(Object.keys(SDK_CONFIG_IMPORT_SETTING_MAPPERS));
 const DEFAULT_OPENAPI_SETTINGS = getOpenAPISettings();
 
+// generators.yml spec setting that produces each effective import setting SDK Config cannot carry yet,
+// so the error names the key the customer actually declared. Delete entries as mappers are added.
+const GENERATORS_YML_SETTING_NAMES: Partial<Record<keyof OpenAPISettings, string>> = {
+    optionalAdditionalProperties: "optional-additional-properties",
+    useReadVariantForResponses: "use-read-variant-for-responses",
+    inlinePathParameters: "inline-path-parameters",
+    useBytesForBinaryResponse: "use-bytes-for-binary-response",
+    respectForwardCompatibleEnums: "respect-forward-compatible-enums",
+    respectOptionalRequestBody: "respect-optional-request-body",
+    filter: "filter",
+    defaultFormParameterEncoding: "default-form-parameter-encoding",
+    exampleGeneration: "example-generation",
+    additionalPropertiesDefaultsTo: "additional-properties-defaults-to",
+    preserveSingleSchemaOneOf: "preserve-single-schema-oneof",
+    preserveOneOfInAllOf: "preserve-one-of-in-all-of",
+    anyOfSiblingPropertiesAsObject: "any-of-sibling-properties-as-object",
+    resolveAliases: "resolve-aliases",
+    groupEnvironmentsByHost: "group-environments-by-host",
+    multiServerStrategy: "multi-server-strategy",
+    inferDefaultEnvironment: "infer-default-environment",
+    removeDiscriminantsFromSchemas: "remove-discriminants-from-schemas",
+    inferForwardCompatible: "infer-forward-compatible",
+    coerceConstsTo: "coerce-consts-to",
+    shouldInferDiscriminatedUnionBaseProperties: "infer-discriminated-union-base-properties",
+    respectParameterContent: "respect-parameter-content",
+    respectPerSpecBasePath: "respect-per-spec-base-path",
+    respectOperationIdWordBoundaries: "respect-operation-id-word-boundaries",
+    namespacedErrors: "namespaced-errors"
+};
+
 /** Rejects effective Fern import behavior that the downstream SDK Config contract cannot carry. */
 export function validateSdkConfigImportSettings(
     specs: Spec[],
     sdkConfig: { clientPathParameterStyle?: "inline" | "wrapped" | "language-default" } = {}
 ): void {
+    const violations: string[] = [];
     for (const spec of specs) {
         if (spec.type !== "openapi") {
             continue;
@@ -838,10 +869,16 @@ export function validateSdkConfigImportSettings(
             ) {
                 continue;
             }
-            throw new Error(
-                `SDK Config v1 cannot preserve effective OpenAPI import setting ${key}=${JSON.stringify(value)} for ${spec.absoluteFilepath}. Remove that setting or use a pre-cutover generator version until the shared SDK Config contract supports it.`
+            const declaredKey = Reflect.get(GENERATORS_YML_SETTING_NAMES, key);
+            violations.push(
+                `SDK Config v1 cannot preserve effective OpenAPI import setting ${key}=${JSON.stringify(value)}${declaredKey == null ? "" : ` (generators.yml: ${declaredKey})`} for ${spec.absoluteFilepath}.`
             );
         }
+    }
+    if (violations.length > 0) {
+        throw new Error(
+            `${violations.join("\n")}\nRemove ${violations.length === 1 ? "that setting" : "those settings"} or use a pre-cutover generator version until the shared SDK Config contract supports ${violations.length === 1 ? "it" : "them"}.`
+        );
     }
 }
 
