@@ -230,7 +230,8 @@ export class Type extends AstNode {
                     writer.write("?");
                 }
                 this.internalType.value.write(writer, { comment });
-                if (isUnion && !this.unionHasOptional(internalType.types)) {
+                // mixed already includes null, and PHP rejects `mixed|null`.
+                if (isUnion && !this.unionHasMixed(internalType.types) && !this.unionHasOptional(internalType.types)) {
                     writer.write("|");
                     writer.writeNode(Type.null());
                 }
@@ -500,7 +501,7 @@ export class Type extends AstNode {
         const uniqueTypes = this.getUniqueTypes({ types: unionTypes, comment, writer });
         const types = this.unwrapOptionalTypes(uniqueTypes);
 
-        const hasMixed = types.filter((type) => type.underlyingType().internalType.type === "mixed").length > 0;
+        const hasMixed = this.unionHasMixed(types);
         if (hasMixed && !comment) {
             writer.write("mixed");
             return;
@@ -602,6 +603,10 @@ export class Type extends AstNode {
             result.push(Type.null());
         }
         return result;
+    }
+
+    private unionHasMixed(types: Type[]): boolean {
+        return types.some((type) => type.underlyingType().internalType.type === "mixed");
     }
 
     /**
