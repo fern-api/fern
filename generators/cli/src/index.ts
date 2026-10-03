@@ -10,13 +10,21 @@ export {
 } from "./copySpecs.js";
 export {
     DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
+    DEFAULT_LINUX_PACKAGES_BRANCH,
+    DEFAULT_LINUX_PACKAGES_SIGNING_KEY_ENV_VAR,
+    DEFAULT_LINUX_PACKAGES_TOKEN_ENV_VAR,
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliCustomConfig,
     type FernCliDistributionConfig,
     type FernCliGitHubAppConfig,
     type FernCliHomebrewConfig,
+    type FernCliLinuxPackagesConfig,
     type FernCliScoopConfig,
     getCustomConfig,
+    LINUX_PACKAGE_FORMATS,
+    type LinuxPackageFormat,
+    linuxPackageFormats,
+    linuxPackagesUrl,
     type ResolvedChannelAuth,
     resolveChannelAuth
 } from "./customConfig.js";
@@ -26,6 +34,13 @@ export {
     type DetectedAuthBinding,
     detectAuthBindings
 } from "./detectAuth.js";
+export {
+    constructLinuxPackagesJobYaml,
+    LINUX_PACKAGES_JOB,
+    type LinuxPackagesJobArgs,
+    type LinuxPackagesJobYamlArgs,
+    linuxPackageName
+} from "./emitLinuxPackagesWorkflow.js";
 export { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";

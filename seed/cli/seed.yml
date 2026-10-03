@@ -163,6 +163,17 @@ fixtures:
       outputFolder: github-distribution-app
       outputMode: github
       outputVersion: "1.0.0"
+    # Signed APT + DNF/YUM repository publishing. Pins the
+    # `publish-linux-packages` job in `release.yml` and the README's APT and
+    # DNF stanzas. Outside those two files the output must match
+    # `github-distribution`.
+    - customConfig:
+        distribution:
+          linuxPackages:
+            repository: acme/packages
+      outputFolder: github-distribution-linux-packages
+      outputMode: github
+      outputVersion: "1.0.0"
     # Opt-in wire tests — emits `wiremock/wire-test-cases.json` and
     # `tests/wire_test.rs`. seed's `cargo test --all-features` compiles and
     # runs the emitted suite (in-process wiremock, no docker), so this is the

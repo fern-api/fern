@@ -2,8 +2,9 @@ import { Block, BlockMerger, ReadmeParser } from "@fern-api/generator-cli/readme
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
-import type { FernCliDistributionConfig } from "./customConfig.js";
+import { type FernCliDistributionConfig, linuxPackageFormats, linuxPackagesUrl } from "./customConfig.js";
 import type { DetectedAuthBinding } from "./detectAuth.js";
+import { linuxPackageName } from "./emitLinuxPackagesWorkflow.js";
 import { toEnvVarPrefix } from "./identity.js";
 import { TEMPLATE_PACKAGE_NAME } from "./patchCargoToml.js";
 import type { ResolvedNpmPublishInfo } from "./resolveOutputConfig.js";
@@ -282,6 +283,36 @@ function generateInstallation(args: {
             "> Scoop installs the x64 build. It runs on ARM64 Windows under emulation.",
             ""
         );
+    }
+
+    if (distribution?.linuxPackages != null) {
+        const url = linuxPackagesUrl(distribution.linuxPackages);
+        const formats = linuxPackageFormats(distribution.linuxPackages);
+        const packageName = linuxPackageName(binaryName);
+        if (formats.includes("deb")) {
+            const keyring = `/usr/share/keyrings/${packageName}-archive-keyring.gpg`;
+            sections.push(
+                "### APT (Debian / Ubuntu)",
+                "",
+                "```bash",
+                `curl -fsSL ${url}/gpg.key | sudo gpg --dearmor -o ${keyring}`,
+                `echo "deb [signed-by=${keyring}] ${url}/deb stable main" | sudo tee /etc/apt/sources.list.d/${packageName}.list`,
+                `sudo apt update && sudo apt install ${packageName}`,
+                "```",
+                ""
+            );
+        }
+        if (formats.includes("rpm")) {
+            sections.push(
+                "### DNF / YUM (Fedora / RHEL / Amazon Linux)",
+                "",
+                "```bash",
+                `sudo curl -fsSL -o /etc/yum.repos.d/${packageName}.repo ${url}/rpm/${packageName}.repo`,
+                `sudo dnf install ${packageName}`,
+                "```",
+                ""
+            );
+        }
     }
 
     sections.push(
