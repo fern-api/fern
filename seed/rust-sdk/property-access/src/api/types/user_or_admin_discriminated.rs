@@ -23,7 +23,7 @@ pub enum UserOrAdminDiscriminated {
 
     #[serde(rename = "empty")]
     #[non_exhaustive]
-    Empty {},
+    Empty { normal: String, foo: Foo },
 
     /// Catch-all variant for unrecognized discriminant values.
     /// If the server sends a discriminant not recognized by the current SDK
@@ -41,8 +41,8 @@ impl UserOrAdminDiscriminated {
         Self::Admin { admin, normal, foo }
     }
 
-    pub fn empty() -> Self {
-        Self::Empty {}
+    pub fn empty(normal: String, foo: Foo) -> Self {
+        Self::Empty { normal, foo }
     }
 
     pub fn unknown(value: serde_json::Value) -> Self {

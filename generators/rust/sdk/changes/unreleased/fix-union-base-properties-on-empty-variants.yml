@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A discriminated union with base properties now emits those properties on variants
+    that have no own properties (a `noProperties` variant, or an inlined object with no
+    fields), and the `noProperties` constructor accepts them. Previously such a variant
+    was generated as `Variant {}` while its constructor and getters referenced the base
+    properties, so the generated crate failed to compile (E0559/E0026).
+  type: fix
