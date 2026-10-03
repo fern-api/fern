@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A query parameter typed as a map (an OpenAPI `type: object` with `additionalProperties`) is now
+    exploded, as the OpenAPI defaults `style: form, explode: true` require: every entry is sent as its own
+    parameter (`?category=books&createdDate%3Agte=2023-01-01`) instead of in bracket notation under the
+    parameter name (`?filter[category]=books`). Nested levels stay bracketed. This changes the wire format
+    of such parameters. A declared object keeps its current encoding.
+  type: fix

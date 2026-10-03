@@ -413,7 +413,7 @@ describe("GeneratedQueryParams", () => {
             expect(text).toMatchSnapshot();
         });
 
-        it("stringifies map<string, string> by default", () => {
+        it("explodes map<string, string> by default", () => {
             const mapType = FernIr.TypeReference.container(
                 FernIr.ContainerType.map({
                     keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -431,7 +431,8 @@ describe("GeneratedQueryParams", () => {
             const firstStmt = statements[0];
             assert(firstStmt != null, "expected at least one statement");
             const text = getTextOfTsNode(firstStmt);
-            expect(text).toContain("toString");
+            expect(text).toContain("...metadata");
+            expect(text).not.toContain("toString");
             expect(text).toMatchSnapshot();
         });
 
@@ -538,13 +539,23 @@ describe("GeneratedQueryParams", () => {
                 return getTextOfTsNode(firstStmt);
             }
 
-            it("still stringifies map<string, MyObject> when the flag is disabled", () => {
+            it("explodes map<string, MyObject> through the serde layer when the flag is disabled", () => {
                 const text = generate("metadata", mapOf(myObjectType), {
                     includeSerdeLayer: true,
                     deepObjectMapQueryParameters: false
                 });
-                expect(text).toContain("toString");
-                expect(text).not.toContain("jsonOrThrow");
+                expect(text).toContain("...serializers.record.jsonOrThrow(metadata)");
+                expect(text).not.toContain("toString");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("explodes optional<map<string, MyObject>> behind a null guard when the flag is disabled", () => {
+                const text = generate(
+                    "metadata",
+                    FernIr.TypeReference.container(FernIr.ContainerType.optional(mapOf(myObjectType))),
+                    { includeSerdeLayer: true, deepObjectMapQueryParameters: false }
+                );
+                expect(text).toContain("...(metadata != null ? serializers.record.jsonOrThrow(metadata) : metadata)");
                 expect(text).toMatchSnapshot();
             });
 
@@ -636,6 +647,23 @@ describe("GeneratedQueryParams", () => {
                 // branch must too, otherwise the same param encodes two different ways.
                 expect(text).not.toContain("toString");
                 expect(text).not.toContain("jsonOrThrow");
+                expect(text).toMatchSnapshot();
+            });
+
+            it("does not spread an allowMultiple map<string, string> when the flag is disabled", () => {
+                const mockContext = createMockContext({
+                    includeSerdeLayer: true,
+                    deepObjectMapQueryParameters: false
+                });
+                const generator = new GeneratedQueryParams({
+                    queryParameters: [createQueryParameter("m", mapOf(stringType), { allowMultiple: true })],
+                    referenceToQueryParameterProperty: defaultReferenceToQueryParameterProperty
+                });
+                const firstStmt = generator.getBuildStatements(mockContext)[0];
+                assert(firstStmt != null, "expected at least one statement");
+                const text = getTextOfTsNode(firstStmt);
+                // The value may be a list of maps: spreading it would put its indexes on the wire.
+                expect(text).not.toContain("...m");
                 expect(text).toMatchSnapshot();
             });
 

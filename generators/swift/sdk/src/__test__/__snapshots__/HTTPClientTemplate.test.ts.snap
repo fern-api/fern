@@ -160,11 +160,10 @@ final class HTTPClient: Swift.Sendable {
             )
         }
         if !requestQueryParams.isEmpty {
-            let baseItems: [Foundation.URLQueryItem] = requestQueryParams.compactMap { key, value in
-                guard let unwrapped = value else { return nil }
-                let stringValue = unwrapped.toString()
-                guard !stringValue.isEmpty else { return nil }
-                return Foundation.URLQueryItem(name: key, value: stringValue)
+            let baseItems: [Foundation.URLQueryItem] = requestQueryParams.flatMap {
+                key, value -> [Foundation.URLQueryItem] in
+                guard let unwrapped = value else { return [] }
+                return unwrapped.toQueryItems(name: key)
             }
             if !baseItems.isEmpty {
                 components.queryItems = baseItems
