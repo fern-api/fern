@@ -4,7 +4,7 @@ import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { collectWellKnownSkillsFiles } from "../utils/collectWellKnownSkillsFiles.js";
+import { collectWellKnownSkillsFiles } from "../collectWellKnownSkillsFiles.js";
 
 describe("collectWellKnownSkillsFiles", () => {
     let fernFolder: AbsoluteFilePath;
