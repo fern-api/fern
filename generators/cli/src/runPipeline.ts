@@ -337,6 +337,17 @@ export async function runPipeline(args: {
                               customConfig.packageIdentity?.description ??
                               defaultCrateDescription(ir.apiDisplayName ?? binaryName)
                       }
+                    : undefined,
+            docker:
+                distribution?.docker != null
+                    ? {
+                          binaryName,
+                          docker: distribution.docker,
+                          license: customConfig.packageIdentity?.license,
+                          description:
+                              customConfig.packageIdentity?.description ??
+                              defaultCrateDescription(ir.apiDisplayName ?? binaryName)
+                      }
                     : undefined
         });
     }
