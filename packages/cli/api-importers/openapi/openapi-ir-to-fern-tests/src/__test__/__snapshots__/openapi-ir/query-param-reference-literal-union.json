@@ -1,0 +1,291 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Query Parameter Reference Literal Union",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listResources",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "Filter resources by their parent identifier.",
+          "name": "parent.id",
+          "schema": {
+            "generatedName": "ListResourcesRequestParentId",
+            "value": {
+              "value": {
+                "generatedName": "ListResourcesRequestParentId",
+                "schemas": [
+                  {
+                    "generatedName": "ListResourcesRequestParentIdZero",
+                    "schema": "ConstrainedIdentifier",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  {
+                    "value": {
+                      "value": "none",
+                      "type": "string"
+                    },
+                    "generatedName": "ListResourcesRequestParentIdNone",
+                    "type": "literal"
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "undiscriminated"
+              },
+              "type": "oneOf"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Filter resources by a required parent identifier.",
+          "name": "required-parent.id",
+          "schema": {
+            "generatedName": "ListResourcesRequestRequiredParentId",
+            "schema": "IdentifierOrNone",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Filter resources by a mixed value.",
+          "name": "mixed.value",
+          "schema": {
+            "generatedName": "ListResourcesRequestMixedValue",
+            "schema": "IntegerOrNone",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Filter resources by a constrained value.",
+          "name": "constrained.value",
+          "schema": {
+            "generatedName": "ListResourcesRequestConstrainedValue",
+            "schema": "ConstrainedStringOrNone",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "ListResourcesRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/resources",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "parent.id",
+              "value": {
+                "value": {
+                  "value": "deadbeef",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "required-parent.id",
+              "value": {
+                "value": {
+                  "value": "deadbeef",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mixed.value",
+              "value": {
+                "value": {
+                  "value": "none",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "constrained.value",
+              "value": {
+                "value": {
+                  "value": "none",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            }
+          ],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "ConstrainedIdentifier": {
+        "schema": {
+          "pattern": "^[a-f0-9]{8}$",
+          "example": "deadbeef",
+          "type": "string"
+        },
+        "generatedName": "ConstrainedIdentifier",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "IdentifierOrNone": {
+        "value": {
+          "generatedName": "IdentifierOrNone",
+          "schemas": [
+            {
+              "generatedName": "IdentifierOrNoneZero",
+              "schema": "ConstrainedIdentifier",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            {
+              "value": {
+                "value": "none",
+                "type": "string"
+              },
+              "generatedName": "IdentifierOrNoneNone",
+              "type": "literal"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "IntegerOrNone": {
+        "value": {
+          "generatedName": "IntegerOrNone",
+          "schemas": [
+            {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "IntegerOrNoneZero",
+              "groupName": [],
+              "type": "primitive"
+            },
+            {
+              "value": {
+                "value": "none",
+                "type": "string"
+              },
+              "generatedName": "IntegerOrNoneNone",
+              "type": "literal"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      },
+      "ConstrainedStringOrNone": {
+        "value": {
+          "generatedName": "ConstrainedStringOrNone",
+          "schemas": [
+            {
+              "schema": {
+                "pattern": "^[A-Z]{3}$",
+                "type": "string"
+              },
+              "generatedName": "ConstrainedStringOrNoneZero",
+              "groupName": [],
+              "type": "primitive"
+            },
+            {
+              "value": {
+                "value": "none",
+                "type": "string"
+              },
+              "generatedName": "ConstrainedStringOrNoneNone",
+              "type": "literal"
+            }
+          ],
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "undiscriminated"
+        },
+        "type": "oneOf"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
