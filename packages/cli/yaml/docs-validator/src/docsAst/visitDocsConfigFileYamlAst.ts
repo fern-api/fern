@@ -1,4 +1,4 @@
-import { DocsConfigurationWithResolvedRedirects, docsYml } from "@fern-api/configuration-loader";
+import { DocsConfigurationWithResolvedRedirects, docsYml, isRemoteCssUrl } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
@@ -156,16 +156,18 @@ export async function visitDocsConfigFileYamlAst({
                 // multiple CSS files
                 await Promise.all(
                     css.map((stylesheet, idx) =>
-                        visitFilepath({
-                            absoluteFilepathToConfiguration,
-                            rawUnresolvedFilepath: stylesheet,
-                            visitor,
-                            nodePath: ["css", `${idx}`],
-                            willBeUploaded: false
-                        })
+                        isRemoteCssUrl(stylesheet)
+                            ? Promise.resolve()
+                            : visitFilepath({
+                                  absoluteFilepathToConfiguration,
+                                  rawUnresolvedFilepath: stylesheet,
+                                  visitor,
+                                  nodePath: ["css", `${idx}`],
+                                  willBeUploaded: false
+                              })
                     )
                 );
-            } else {
+            } else if (!isRemoteCssUrl(css)) {
                 await visitFilepath({
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: css,

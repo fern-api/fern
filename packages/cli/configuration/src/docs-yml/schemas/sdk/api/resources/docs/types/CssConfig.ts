@@ -14,5 +14,13 @@
  *   - "path/to/css/file.css"
  *   - "path/to/another/css/file.css"
  * ```
+ *
+ * or, a remote stylesheet (e.g. from a CDN), which is fetched and inlined when the docs are generated:
+ *
+ * ```yaml
+ * css:
+ *   - "path/to/css/file.css"
+ *   - "https://cdn.example.com/path/to/file.css"
+ * ```
  */
 export type CssConfig = string | string[];
