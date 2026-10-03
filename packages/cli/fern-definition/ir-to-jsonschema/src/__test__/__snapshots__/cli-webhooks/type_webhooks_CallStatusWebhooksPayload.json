@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "CallSid": {
+      "type": "string"
+    },
+    "CallStatus": {
+      "$ref": "#/definitions/webhooks.CallStatusWebhooksPayloadCallStatus"
+    }
+  },
+  "required": [
+    "CallSid",
+    "CallStatus"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "webhooks.CallStatusWebhooksPayloadCallStatus": {
+      "type": "string",
+      "enum": [
+        "ringing",
+        "in-progress",
+        "completed"
+      ]
+    }
+  }
+}
