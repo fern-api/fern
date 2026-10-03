@@ -279,4 +279,93 @@ describe("requestWithRetries", () => {
         expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60000);
         expect(response.status).toBe(200);
     });
+
+    describe("refreshAuth", () => {
+        beforeEach(() => {
+            setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                process.nextTick(callback);
+                return null as any;
+            });
+        });
+
+        it.each([401, 403])("should not retry %i when refreshAuth is not provided", async (status) => {
+            mockFetch.mockResolvedValue(new Response("", { status }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 3);
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+            expect(response.status).toBe(status);
+        });
+
+        it.each([401, 403])("should call refreshAuth and retry on %i", async (status) => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch
+                .mockResolvedValueOnce(new Response("", { status }))
+                .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 3, { refreshAuth });
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(refreshAuth).toHaveBeenCalledTimes(1);
+            expect(mockFetch).toHaveBeenCalledTimes(2);
+            expect(response.status).toBe(200);
+        });
+
+        it("should refresh before each retry and stop after maxRetries", async () => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch.mockResolvedValue(new Response("", { status: 401 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, { refreshAuth });
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(refreshAuth).toHaveBeenCalledTimes(2);
+            expect(mockFetch).toHaveBeenCalledTimes(3);
+            expect(response.status).toBe(401);
+        });
+
+        it("should share the retry budget with other retryable status codes", async () => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch
+                .mockResolvedValueOnce(new Response("", { status: 503 }))
+                .mockResolvedValueOnce(new Response("", { status: 401 }))
+                .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, { refreshAuth });
+            await vi.runAllTimersAsync();
+            const response = await responsePromise;
+
+            expect(refreshAuth).toHaveBeenCalledTimes(1);
+            expect(mockFetch).toHaveBeenCalledTimes(3);
+            expect(response.status).toBe(200);
+        });
+
+        it("should not call refreshAuth for non-auth status codes", async () => {
+            const refreshAuth = vi.fn().mockResolvedValue(undefined);
+            mockFetch
+                .mockResolvedValueOnce(new Response("", { status: 500 }))
+                .mockResolvedValueOnce(new Response("", { status: 200 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, { refreshAuth });
+            await vi.runAllTimersAsync();
+            await responsePromise;
+
+            expect(refreshAuth).not.toHaveBeenCalled();
+        });
+
+        it("should propagate refreshAuth errors", async () => {
+            const refreshAuth = vi.fn().mockRejectedValue(new Error("token endpoint down"));
+            mockFetch.mockResolvedValue(new Response("", { status: 401 }));
+
+            const responsePromise = requestWithRetries(() => mockFetch(), 2, { refreshAuth });
+            responsePromise.catch(() => undefined);
+            await vi.runAllTimersAsync();
+
+            await expect(responsePromise).rejects.toThrow("token endpoint down");
+            expect(mockFetch).toHaveBeenCalledTimes(1);
+        });
+    });
 });

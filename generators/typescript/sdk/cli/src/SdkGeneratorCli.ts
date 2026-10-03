@@ -119,7 +119,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             websocketHandlerMode: parsed?.websocketHandlerMode ?? "replace",
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
-            generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false
+            generateReactQueryHooks: parsed?.generateReactQueryHooks ?? false,
+            refreshOnFailedAuth: parsed?.["refresh-on-failed-auth"] ?? false
         };
 
         if (parsed?.serdeLayer != null && parsed?.noSerdeLayer != null) {
@@ -306,7 +307,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 optionalAuth: customConfig.optionalAuth,
                 guardProcessEnvAccess: customConfig.guardProcessEnvAccess,
                 websocketHandlerMode: customConfig.websocketHandlerMode,
-                generateReactQueryHooks: customConfig.generateReactQueryHooks
+                generateReactQueryHooks: customConfig.generateReactQueryHooks,
+                refreshOnFailedAuth: customConfig.refreshOnFailedAuth
             }
         });
         const typescriptProject = await sdkGenerator.generate();

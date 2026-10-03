@@ -100,4 +100,5 @@ export interface SdkCustomConfig {
     websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;
+    refreshOnFailedAuth: boolean;
 }

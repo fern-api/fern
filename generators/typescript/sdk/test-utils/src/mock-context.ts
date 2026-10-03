@@ -118,6 +118,7 @@ export function createMockGeneratedSdkClientClass(opts?: {
         getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
         getAlwaysSendAuth: () => opts?.alwaysSendAuth ?? false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
+        getReferenceToRefreshAuthHeaders: () => undefined,
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;

@@ -40,6 +40,11 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
+        /**
+         * Returns fresh auth headers. When provided, a 401 or 403 response triggers a call to this
+         * function and the request is retried with the returned headers, within the `maxRetries` budget.
+         */
+        refreshAuthHeaders?: () => Promise<Record<string, string>>;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -153,6 +158,20 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
     return newHeaders;
 }
 
+function getRefreshAuth(
+    refreshAuthHeaders: Fetcher.Args["refreshAuthHeaders"],
+    headers: Headers,
+): (() => Promise<void>) | undefined {
+    if (refreshAuthHeaders == null) {
+        return undefined;
+    }
+    return async () => {
+        for (const [key, value] of Object.entries(await refreshAuthHeaders())) {
+            headers.set(key, value);
+        }
+    };
+}
+
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     let url = args.url;
     if (args.queryString != null && args.queryString.length > 0) {
@@ -195,6 +214,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.responseType === "streaming" || args.responseType === "sse",
                 ),
             args.maxRetries,
+            { refreshAuth: getRefreshAuth(args.refreshAuthHeaders, headers) },
         );
 
         if (response.status >= 200 && response.status < 400) {

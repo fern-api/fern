@@ -257,7 +257,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     isAsync: true,
                     parameters: [
                         {
-                            name: "{ endpointMetadata }",
+                            name: "{ endpointMetadata, forceRefresh }",
                             type: getTextOfTsNode(
                                 ts.factory.createTypeLiteralNode([
                                     ts.factory.createPropertySignature(
@@ -265,6 +265,12 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                                         "endpointMetadata",
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                         context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    ),
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "forceRefresh",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
                                     )
                                 ])
                             ),
@@ -333,7 +339,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
             if (provider == null) {
                 throw new Error(\`Internal error: auth provider not found for scheme: \${schemeKey}\`);
             }
-            const authRequest = await provider.getAuthRequest({ endpointMetadata });
+            const authRequest = await provider.getAuthRequest({ endpointMetadata, forceRefresh });
             Object.assign(combinedHeaders, authRequest.headers);
         }
 

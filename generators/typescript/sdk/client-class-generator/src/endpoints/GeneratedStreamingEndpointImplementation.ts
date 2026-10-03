@@ -319,7 +319,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                : undefined
+                : undefined,
+            refreshAuthHeaders: this.generatedSdkClientClass.getReferenceToRefreshAuthHeaders({
+                context,
+                endpoint: this.endpoint
+            })
         };
 
         const statements: ts.Statement[] = [

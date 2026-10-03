@@ -24,8 +24,10 @@ export class RoutingAuthProvider implements core.AuthProvider {
 
     public async getAuthRequest({
         endpointMetadata,
+        forceRefresh,
     }: {
         endpointMetadata?: core.EndpointMetadata;
+        forceRefresh?: boolean;
     } = {}): Promise<core.AuthRequest> {
         const security = endpointMetadata?.security;
 
@@ -68,7 +70,7 @@ export class RoutingAuthProvider implements core.AuthProvider {
             if (provider == null) {
                 throw new Error(`Internal error: auth provider not found for scheme: ${schemeKey}`);
             }
-            const authRequest = await provider.getAuthRequest({ endpointMetadata });
+            const authRequest = await provider.getAuthRequest({ endpointMetadata, forceRefresh });
             Object.assign(combinedHeaders, authRequest.headers);
         }
 

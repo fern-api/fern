@@ -28,6 +28,7 @@ export interface Fetcher {
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
                 logging: "logging";
+                refreshAuthHeaders: "refreshAuthHeaders";
             };
         };
         Error: {
@@ -161,6 +162,7 @@ export declare namespace Fetcher {
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "binary-response";
         duplex?: ts.Expression;
         endpointMetadata?: ts.Expression;
+        refreshAuthHeaders?: ts.Expression;
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
         queryString?: ts.Expression;
@@ -236,7 +238,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 timeoutInSeconds: "timeoutInSeconds",
                 endpointMetadata: "endpointMetadata",
                 fetchFn: "fetchFn",
-                logging: "logging"
+                logging: "logging",
+                refreshAuthHeaders: "refreshAuthHeaders"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -359,6 +362,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             if (args.logging != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
+                );
+            }
+            if (args.refreshAuthHeaders != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.refreshAuthHeaders,
+                        args.refreshAuthHeaders
+                    )
                 );
             }
 

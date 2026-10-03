@@ -88,6 +88,7 @@ function createMockClientClass(): any {
         hasAuthProvider: () => false,
         getGenerateEndpointMetadata: () => false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
+        getReferenceToRefreshAuthHeaders: () => undefined,
         getEnvironment: () => undefined
     };
 }
