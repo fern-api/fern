@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `HttpResponse` gains `statusCode()` next to `body()` and `headers()`, matching the status
+    the raw response of the other generators already exposes.
+  type: feat

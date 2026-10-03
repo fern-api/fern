@@ -8,10 +8,13 @@ public final class <%= httpResponseClassName%><T> {
 
     private final T body;
 
+    private final int statusCode;
+
     private final Map<String, List<String>> headers;
 
     public <%= httpResponseClassName%>(T body, Response rawResponse) {
         this.body = body;
+        this.statusCode = rawResponse.code();
 
         Map<String, List<String>> headers = new HashMap<>();
         rawResponse.headers().forEach(header -> {
@@ -24,6 +27,10 @@ public final class <%= httpResponseClassName%><T> {
 
     public T body() {
         return this.body;
+    }
+
+    public int statusCode() {
+        return this.statusCode;
     }
 
     public Map<String, List<String>> headers() {
