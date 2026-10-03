@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The v3 OpenAPI importer now reads `x-fern-availability: generally-available`, the documented spelling,
+    as generally available. It was dropped before, so the endpoint lost its GA tag and a
+    `generally-available` annotation next to a `$ref` no longer overrode a deprecated schema.
+  type: fix
