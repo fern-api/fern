@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getRoutingSchemes } from "../auth/RoutingAuthProviderGenerator.js";
 import { getClientCredentialsOrThrow } from "../oauth/getClientCredentials.js";
 import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
+import { getWithRawResponseMethod } from "../raw-client/withRawResponse.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import {
@@ -296,6 +297,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     endpoint
                 });
                 class_.addMethods(methods);
+            }
+            if (service.endpoints.length > 0) {
+                class_.addMethod(
+                    getWithRawResponseMethod({
+                        context: this.context,
+                        rawClassReference: this.context.getRawRootClientClassReference()
+                    })
+                );
             }
         }
 
