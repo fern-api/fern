@@ -966,7 +966,10 @@ export class WireTestGenerator {
             const testId = mapping.request.headers?.["X-Test-Id"]?.equalTo;
             if (testId != null) {
                 if (mappingsByTestId[testId] != null) {
-                    throw new Error(`Duplicate WireMock mapping for wire test ID "${testId}"`);
+                    this.context.logger.warn(
+                        `Duplicate WireMock mapping for wire test ID "${testId}"; keeping the first mapping`
+                    );
+                    continue;
                 }
                 mappingsByTestId[testId] = mapping;
                 continue;
