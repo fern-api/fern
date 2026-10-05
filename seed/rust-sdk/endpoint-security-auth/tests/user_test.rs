@@ -16,6 +16,11 @@ async fn test_user_get_with_bearer_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_bearer_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_bearer(None).await;
@@ -52,6 +57,11 @@ async fn test_user_get_with_api_key_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_api_key_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_api_key(None).await;
@@ -88,6 +98,11 @@ async fn test_user_get_with_o_auth_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_o_auth_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_o_auth(None).await;
@@ -124,6 +139,11 @@ async fn test_user_get_with_basic_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_basic_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_basic(None).await;
@@ -160,6 +180,11 @@ async fn test_user_get_with_inferred_auth_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_inferred_auth_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_inferred_auth(None).await;
@@ -190,6 +215,11 @@ async fn test_user_get_with_any_auth_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_any_auth_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_any_auth(None).await;
@@ -226,6 +256,11 @@ async fn test_user_get_with_all_auth_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_user_get_with_all_auth_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client.user.get_with_all_auth(None).await;

@@ -16,6 +16,11 @@ async fn test_auth_get_token_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_auth_get_token_with_wiremock".to_string(),
+    );
     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 
     let result = client

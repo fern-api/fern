@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "1f338a6b-67d2-4d39-a88b-5ffc988c0ddb",
+      "name": "echo - default - test_root_echo_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_root_echo_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1f338a6b-67d2-4d39-a88b-5ffc988c0ddb",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "84443a97-a042-44d9-b597-c9c4943af730",
       "name": "createType - default",
       "request": {
@@ -43,6 +74,37 @@
       "uuid": "84443a97-a042-44d9-b597-c9c4943af730",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b6b2ac4f-1d87-4b72-89c6-39cb64ca4232",
+      "name": "createType - default - test_root_create_type_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_root_create_type_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"primitive\",\n  \"value\": \"value\",\n  \"label\": \"label\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b6b2ac4f-1d87-4b72-89c6-39cb64ca4232",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -89,6 +151,45 @@
       }
     },
     {
+      "id": "58eda3ce-f788-4ff7-abc2-19770be0feb6",
+      "name": "getException - default - test_file_notification_service_get_exception_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/file/notification/{notificationId}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_file_notification_service_get_exception_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "notificationId": {
+            "equalTo": "notification-hsy129x"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"generic\",\n  \"exceptionType\": \"Unavailable\",\n  \"exceptionMessage\": \"This component is unavailable!\",\n  \"exceptionStacktrace\": \"<logs>\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "58eda3ce-f788-4ff7-abc2-19770be0feb6",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "a430abe8-03a0-48c9-97d3-345f8f18e526",
       "name": "getFile - default",
       "request": {
@@ -115,6 +216,45 @@
       "uuid": "a430abe8-03a0-48c9-97d3-345f8f18e526",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "27d92dee-b155-4bac-8d51-e1cb331c17f0",
+      "name": "getFile - default - test_file_service_get_file_throws_not_found_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/file/{filename}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_file_service_get_file_throws_not_found_error_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "filename": {
+            "equalTo": "file.txt"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "\"A file with that name was not found!\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "27d92dee-b155-4bac-8d51-e1cb331c17f0",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -161,6 +301,84 @@
       }
     },
     {
+      "id": "00f031d1-4911-4fd1-a97b-dd51398e3b05",
+      "name": "check - Example0 - test_health_service_check_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/check/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_health_service_check_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id-2sdx82h"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "null",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "00f031d1-4911-4fd1-a97b-dd51398e3b05",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "eda27423-7334-4038-bfdf-67e457770354",
+      "name": "check - Example2 - test_health_service_check_example2_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/check/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_health_service_check_example2_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id-3tey93i"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "null",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "eda27423-7334-4038-bfdf-67e457770354",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "693eae56-0081-4c61-9b8b-1bacf7598867",
       "name": "ping - Example0",
       "request": {
@@ -182,6 +400,41 @@
       "uuid": "693eae56-0081-4c61-9b8b-1bacf7598867",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "72852a53-e194-494b-903c-55768c57457c",
+      "name": "ping - Example0 - test_health_service_ping_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/ping",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_health_service_ping_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "72852a53-e194-494b-903c-55768c57457c",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -224,6 +477,42 @@
       }
     },
     {
+      "id": "17d32d5f-f06d-4f25-810d-53e8c2d4262d",
+      "name": "getMovie - default - test_service_get_movie_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/movie/{movieId}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_service_get_movie_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "movieId": {
+            "equalTo": "movie-c06a4ad7"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"movie-c06a4ad7\",\n  \"prequel\": \"movie-cv9b914f\",\n  \"title\": \"The Boy and the Heron\",\n  \"from\": \"Hayao Miyazaki\",\n  \"rating\": 8,\n  \"type\": \"movie\",\n  \"tag\": \"tag-wf9as23d\",\n  \"metadata\": {\n    \"actors\": [\n      \"Christian Bale\",\n      \"Florence Pugh\",\n      \"Willem Dafoe\"\n    ],\n    \"releaseDate\": \"2023-12-08\",\n    \"ratings\": {\n      \"rottenTomatoes\": 97,\n      \"imdb\": 7.6\n    }\n  },\n  \"revenue\": 1000000\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "17d32d5f-f06d-4f25-810d-53e8c2d4262d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "d6fce3a2-5f5b-4d72-93c8-bc46ea0e4b75",
       "name": "createMovie - default",
       "request": {
@@ -240,6 +529,37 @@
       "uuid": "d6fce3a2-5f5b-4d72-93c8-bc46ea0e4b75",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8654f78e-3173-47b3-abcc-28174e358d30",
+      "name": "createMovie - default - test_service_create_movie_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/movie",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_service_create_movie_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"movie-c06a4ad7\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8654f78e-3173-47b3-abcc-28174e358d30",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -285,6 +605,46 @@
       "postServeActions": []
     },
     {
+      "id": "2c0d806b-864c-4f33-90f6-ad67daff38c8",
+      "name": "getMetadata - default - test_service_get_metadata_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/metadata",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_service_get_metadata_with_wiremock"
+          }
+        },
+        "queryParameters": {
+          "shallow": {
+            "equalTo": "false"
+          },
+          "tag": {
+            "equalTo": "development"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"html\",\n  \"extra\": {\n    \"version\": \"0.0.1\",\n    \"tenancy\": \"test\"\n  },\n  \"tags\": [\n    \"development\",\n    \"public\"\n  ],\n  \"value\": \"<head>...</head>\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2c0d806b-864c-4f33-90f6-ad67daff38c8",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "b527ed65-aa21-448e-8e5a-409ba88bd508",
       "name": "createBigEntity - default",
       "request": {
@@ -301,6 +661,37 @@
       "uuid": "b527ed65-aa21-448e-8e5a-409ba88bd508",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "af4df6b1-1171-455c-9d10-95e17374ecba",
+      "name": "createBigEntity - default - test_service_create_big_entity_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/big-entity",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_service_create_big_entity_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"response\": {\n    \"key\": \"value\"\n  },\n  \"identifiers\": [\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    },\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "af4df6b1-1171-455c-9d10-95e17374ecba",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -335,9 +726,71 @@
           }
         }
       }
+    },
+    {
+      "id": "2be58eb7-61a3-4932-9424-3ef4503aa0cc",
+      "name": "refreshToken - default - test_service_refresh_token_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/refresh-token",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_service_refresh_token_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "null",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2be58eb7-61a3-4932-9424-3ef4503aa0cc",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "cc323a30-6fad-4b1e-9557-144c9ef02d80",
+      "name": "refreshToken - default - test_service_refresh_token_2_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/refresh-token",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_service_refresh_token_2_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "null",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cc323a30-6fad-4b1e-9557-144c9ef02d80",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 11
+    "total": 24
   }
 }

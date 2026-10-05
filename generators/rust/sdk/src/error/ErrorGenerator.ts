@@ -692,6 +692,26 @@ export class ErrorGenerator {
         return MatchArm.withExpression(Pattern.wildcard(), httpConstruction);
     }
 
+    /**
+     * Returns the `ApiError` variant that `from_response` builds for a response with the given
+     * status code and JSON body, or undefined when no declared error uses that status code.
+     */
+    public getErrorVariantNameForResponse(statusCode: number, body: unknown): string | undefined {
+        const errors = this.groupErrorsByStatusCode().get(statusCode) ?? [];
+        const [firstError] = errors;
+        if (firstError == null) {
+            return undefined;
+        }
+        if (errors.length > 1 && body != null && typeof body === "object" && !Array.isArray(body)) {
+            const discriminant = (body as Record<string, unknown>)[this.getErrorDiscriminantWireName()];
+            const match = errors.find((error) => this.getErrorVariantName(error) === discriminant);
+            if (match != null) {
+                return this.getErrorVariantName(match);
+            }
+        }
+        return this.getErrorVariantName(firstError);
+    }
+
     // Helper methods for creating attributes
     private createDeriveAttribute(derives: string[]): Attribute {
         return new Attribute({

@@ -7,6 +7,7 @@ import { Module, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "../utils/index.js";
+import { ErrorGenerator } from "../error/ErrorGenerator.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
@@ -23,10 +24,25 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
  * - Practicality (strings for complex Rust expressions)
  * - Compatibility (FernIr.dynamic snippets produce strings)
  */
+interface WireTestCase {
+    endpoint: FernIr.HttpEndpoint;
+    /** The IR example this test covers; undefined when the endpoint only has dynamic examples. */
+    example: FernIr.ExampleEndpointCall | undefined;
+    dynamicExample: FernIr.dynamic.EndpointExample;
+    testName: string;
+    /** The `ApiError` variant expected for error examples. */
+    expectedErrorVariant: string | undefined;
+}
+
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+    private errorGenerator: ErrorGenerator;
+    private wireTestSetupGenerator: WireTestSetupGenerator;
+    private testCasesByService: Map<string, WireTestCase[]>;
+    private testIdsByExample = new Map<FernIr.ExampleEndpointCall, string>();
+    private wireMockMappingsByTestId: Record<string, WireMockMapping>;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
     constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
@@ -40,7 +56,17 @@ export class WireTestGenerator {
             ir: convertIr(dynamicIr),
             config: this.context.config
         });
-        this.wireMockConfigContent = this.getWireMockConfigContent();
+        this.errorGenerator = new ErrorGenerator(context);
+        this.testCasesByService = this.planTestCases();
+        // Each test sends its name as the X-Test-Id header, which selects the WireMock mapping
+        // serving that test's example response.
+        this.wireTestSetupGenerator = new WireTestSetupGenerator(context, ir, {
+            getExampleTestId: ({ example }) =>
+                this.testIdsByExample.get(example as unknown as FernIr.ExampleEndpointCall)
+        });
+        const { mappingsByTestId, defaultMappings } = this.indexWireMockMappings();
+        this.wireMockMappingsByTestId = mappingsByTestId;
+        this.wireMockConfigContent = defaultMappings;
     }
 
     // =============================================================================
@@ -48,57 +74,231 @@ export class WireTestGenerator {
     // =============================================================================
 
     public async generate(): Promise<void> {
-        const endpointsByService = this.groupEndpointsByService();
-
-        for (const [serviceName, endpoints] of endpointsByService.entries()) {
-            const endpointsWithExamples = endpoints.filter((endpoint) => {
-                const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-                return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
+        for (const [serviceName, testCases] of this.testCasesByService.entries()) {
+            // Without a per-example mapping only the first example's test can run against the
+            // endpoint's default mapping (e.g. bytes endpoints, which mock-utils skips).
+            const testedEndpointIds = new Set<string>();
+            const runnableTestCases = testCases.filter((testCase) => {
+                const isFirstForEndpoint = !testedEndpointIds.has(testCase.endpoint.id);
+                testedEndpointIds.add(testCase.endpoint.id);
+                return isFirstForEndpoint || this.wireMockMappingsByTestId[testCase.testName] != null;
             });
-
-            if (endpointsWithExamples.length === 0) {
+            if (runnableTestCases.length === 0) {
                 continue;
             }
 
-            const serviceTestFile = await this.generateServiceTestFile(serviceName, endpointsWithExamples);
+            const serviceTestFile = await this.generateServiceTestFile(serviceName, runnableTestCases);
             this.context.project.addSourceFiles(serviceTestFile);
         }
 
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
-        new WireTestSetupGenerator(this.context, this.context.ir).generate();
+        this.wireTestSetupGenerator.generate();
+    }
+
+    // =============================================================================
+    // TEST CASE SELECTION
+    // =============================================================================
+
+    private planTestCases(): Map<string, WireTestCase[]> {
+        const testCasesByService = new Map<string, WireTestCase[]>();
+        const usedTestNames = new Set<string>();
+
+        for (const service of Object.values(this.context.ir.services)) {
+            const serviceName = this.getFormattedServiceName(service);
+            const testCases = testCasesByService.get(serviceName) ?? [];
+            for (const endpoint of service.endpoints) {
+                testCases.push(...this.planEndpointTestCases(endpoint, serviceName, usedTestNames));
+            }
+            testCasesByService.set(serviceName, testCases);
+        }
+
+        return testCasesByService;
+    }
+
+    /**
+     * Selects the examples to test for an endpoint: all user-specified examples (or the first
+     * autogenerated success example when there are none), plus one autogenerated error example per
+     * error when no user example covers an error. Error examples for errors the SDK's error parser
+     * cannot produce (e.g. shadowed by another error with the same status code) are skipped.
+     */
+    private planEndpointTestCases(
+        endpoint: FernIr.HttpEndpoint,
+        serviceName: string,
+        usedTestNames: Set<string>
+    ): WireTestCase[] {
+        const dynamicExamples = this.dynamicIr.endpoints[endpoint.id]?.examples ?? [];
+        const firstDynamicExample = dynamicExamples[0];
+        if (firstDynamicExample == null) {
+            return [];
+        }
+
+        const toSelected = (examples: Array<{ example?: FernIr.ExampleEndpointCall }>, kind: "user" | "auto") =>
+            examples.flatMap((wrapper, index) =>
+                wrapper.example != null
+                    ? [
+                          {
+                              example: wrapper.example,
+                              dynamicExampleId: wrapper.example.id ?? `${endpoint.id}-${kind}-${index}`
+                          }
+                      ]
+                    : []
+            );
+        const userExamples = toSelected(endpoint.userSpecifiedExamples, "user");
+        const autogeneratedExamples = toSelected(endpoint.autogeneratedExamples, "auto");
+        const isError = ({ example }: { example: FernIr.ExampleEndpointCall }) => example.response.type === "error";
+
+        const selected = [...userExamples];
+        if (userExamples.length === 0) {
+            const firstSuccessExample = autogeneratedExamples.find((example) => !isError(example));
+            if (firstSuccessExample != null) {
+                selected.push(firstSuccessExample);
+            }
+        }
+        const includeAutogeneratedErrors =
+            this.context.customConfig.wireTestsFallbackToAutoGeneratedErrorExamples !== false;
+        if (includeAutogeneratedErrors && !userExamples.some(isError)) {
+            const seenErrorIds = new Set<string>();
+            for (const autogeneratedExample of autogeneratedExamples) {
+                const response = autogeneratedExample.example.response;
+                if (response.type !== "error" || seenErrorIds.has(response.error.errorId)) {
+                    continue;
+                }
+                seenErrorIds.add(response.error.errorId);
+                selected.push(autogeneratedExample);
+            }
+        }
+
+        // An endpoint whose auth the SDK cannot satisfy fails before sending a request, so only
+        // its first example is tested.
+        const isUnsatisfiable =
+            this.context.isEndpointSecurity() && this.classifyEndpointAuth(endpoint).kind === "unsatisfiable";
+
+        const baseTestName = this.getTestFunctionName(endpoint, serviceName);
+        const testCases: WireTestCase[] = [];
+        if (selected.length === 0) {
+            // No IR examples to pair with: keep the single test for the first dynamic example.
+            testCases.push({
+                endpoint,
+                example: undefined,
+                dynamicExample: firstDynamicExample,
+                testName: this.getUniqueTestName(baseTestName, "", usedTestNames),
+                expectedErrorVariant: undefined
+            });
+            return testCases;
+        }
+
+        for (const [index, { example, dynamicExampleId }] of selected.entries()) {
+            if (isUnsatisfiable && index > 0) {
+                break;
+            }
+            // Same pairing as before multi-example support: first test example with first dynamic example.
+            const dynamicExample =
+                dynamicExamples.find((candidate) => candidate.id === dynamicExampleId) ??
+                (index === 0 ? firstDynamicExample : undefined);
+            if (dynamicExample == null) {
+                this.context.logger.debug(
+                    `Skipping example ${dynamicExampleId} of endpoint ${endpoint.id}: no matching dynamic example`
+                );
+                continue;
+            }
+
+            let expectedErrorVariant: string | undefined;
+            if (example.response.type === "error") {
+                expectedErrorVariant = this.getExpectedErrorVariant(example.response);
+                if (expectedErrorVariant == null) {
+                    this.context.logger.debug(
+                        `Skipping error example ${dynamicExampleId} of endpoint ${endpoint.id}: the SDK does not parse it into its declared error`
+                    );
+                    continue;
+                }
+            }
+
+            const suffix =
+                expectedErrorVariant != null
+                    ? `throws_${this.context.case.snakeSafe(expectedErrorVariant)}`
+                    : testCases.length > 0 && example.name != null
+                      ? this.context.case.snakeSafe(example.name)
+                      : "";
+            const testName = this.getUniqueTestName(baseTestName, suffix, usedTestNames);
+            if (!isUnsatisfiable) {
+                this.testIdsByExample.set(example, testName);
+            }
+            testCases.push({
+                endpoint,
+                example,
+                dynamicExample,
+                testName,
+                expectedErrorVariant
+            });
+        }
+
+        return testCases;
+    }
+
+    /**
+     * Mirrors `ApiError::from_response`: the error is dispatched on the IR-declared status code of
+     * the example's error, and errors sharing that status code are told apart by the body's
+     * discriminant (falling back to the first). Returns undefined when the parser produces a
+     * different error than the example's, so the example is skipped.
+     */
+    private getExpectedErrorVariant(response: FernIr.ExampleEndpointErrorResponse): string | undefined {
+        const errorDeclaration = this.context.ir.errors[response.error.errorId];
+        if (errorDeclaration == null || errorDeclaration.statusCode < 400) {
+            return undefined;
+        }
+        const variant = this.errorGenerator.getErrorVariantNameForResponse(
+            errorDeclaration.statusCode,
+            response.body?.jsonExample
+        );
+        if (variant !== this.context.case.pascalSafe(errorDeclaration.name.name)) {
+            return undefined;
+        }
+        return variant;
+    }
+
+    private getUniqueTestName(baseTestName: string, suffix: string, usedTestNames: Set<string>): string {
+        const sanitizedSuffix = suffix
+            .toLowerCase()
+            .replace(/[^a-z0-9_]/g, "_")
+            .replace(/_+/g, "_")
+            .replace(/^_|_$/g, "");
+        const stem = sanitizedSuffix.length > 0 ? `${baseTestName}_${sanitizedSuffix}` : baseTestName;
+        let testName = `${stem}_with_wiremock`;
+        let counter = 2;
+        while (usedTestNames.has(testName)) {
+            testName = `${stem}_${counter++}_with_wiremock`;
+        }
+        usedTestNames.add(testName);
+        return testName;
     }
 
     // =============================================================================
     // FILE GENERATION
     // =============================================================================
 
-    private async generateServiceTestFile(serviceName: string, endpoints: FernIr.HttpEndpoint[]): Promise<RustFile> {
-        const endpointTestCases = new Map<string, { snippet: string; endpoint: FernIr.HttpEndpoint }>();
+    private async generateServiceTestFile(serviceName: string, testCases: WireTestCase[]): Promise<RustFile> {
+        const testCasesWithSnippets: Array<{
+            testCase: WireTestCase;
+            snippet: string;
+        }> = [];
 
-        for (const endpoint of endpoints) {
-            const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-            if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = this.getDynamicEndpointExample(endpoint);
-                if (firstExample) {
-                    try {
-                        const snippet = await this.generateSnippetForExample(firstExample, endpoint.id);
-                        endpointTestCases.set(endpoint.id, { snippet, endpoint });
-                    } catch (error) {
-                        this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                        continue;
-                    }
-                }
+        for (const testCase of testCases) {
+            try {
+                const snippet = await this.generateSnippetForExample(testCase.dynamicExample, testCase.endpoint.id);
+                testCasesWithSnippets.push({ testCase, snippet });
+            } catch (error) {
+                this.context.logger.warn(
+                    `Failed to generate snippet for endpoint ${testCase.endpoint.id} (${testCase.testName}): ${error}`
+                );
             }
         }
 
         // Detect which imports are needed based on snippet content
-        const allSnippets = Array.from(endpointTestCases.values())
-            .map((tc) => tc.snippet)
-            .join("\n");
+        const allSnippets = testCasesWithSnippets.map((tc) => tc.snippet).join("\n");
         const needsBase64Import = allSnippets.includes("base64::engine::general_purpose::STANDARD");
         const needsBigIntImport = allSnippets.includes("BigInt::parse_bytes");
 
-        const testModule = this.buildTestModule(serviceName, endpointTestCases, needsBase64Import, needsBigIntImport);
+        const testModule = this.buildTestModule(testCasesWithSnippets, needsBase64Import, needsBigIntImport);
 
         return new RustFile({
             filename: `${serviceName}_test.rs`,
@@ -112,8 +312,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private buildTestModule(
-        serviceName: string,
-        endpointTestCases: Map<string, { snippet: string; endpoint: FernIr.HttpEndpoint }>,
+        testCases: Array<{ testCase: WireTestCase; snippet: string }>,
         needsBase64Import: boolean,
         needsBigIntImport: boolean
     ): Module {
@@ -123,9 +322,8 @@ export class WireTestGenerator {
         rawDeclarations.push("mod wire_test_utils;");
         rawDeclarations.push("");
 
-        // Add test functions (no longer need inline helper functions - they're in wire_test_utils)
-        for (const { snippet, endpoint } of endpointTestCases.values()) {
-            const testFunction = this.generateEndpointTestFunction(endpoint, snippet, serviceName);
+        for (const { testCase, snippet } of testCases) {
+            const testFunction = this.generateEndpointTestFunction(testCase, snippet);
             if (testFunction) {
                 rawDeclarations.push(testFunction);
                 rawDeclarations.push("");
@@ -161,14 +359,15 @@ export class WireTestGenerator {
     // TEST FUNCTION GENERATION (Structured Approach)
     // =============================================================================
 
-    private generateEndpointTestFunction(endpoint: FernIr.HttpEndpoint, snippet: string, serviceName: string): string | null {
+    private generateEndpointTestFunction(testCase: WireTestCase, snippet: string): string | null {
+        const { endpoint, testName } = testCase;
         try {
-            const testName = this.getTestFunctionName(endpoint, serviceName);
             const clientSetup = this.parseClientConstructor(snippet);
             const clientCall = this.parseClientCallFromSnippet(snippet);
 
-            const basePath = this.buildBasePath(endpoint);
-            const queryParamsMap = this.buildQueryParamsMap(endpoint);
+            const wiremockMapping = this.getWireMockMapping(testCase);
+            const basePath = this.buildBasePath(endpoint, wiremockMapping, testCase.dynamicExample);
+            const queryParamsMap = this.buildQueryParamsMap(testCase.dynamicExample);
 
             // In endpoint-security mode each endpoint routes only its declared scheme(s).
             // Classify the endpoint so we can assert on the exact set of auth headers sent
@@ -194,7 +393,7 @@ export class WireTestGenerator {
             // that per-endpoint routing (not credential availability) determines which auth
             // header is sent.
             if (clientSetup) {
-                const setupLines = this.processClientSetupLines(clientSetup, isEndpointSecurity);
+                const setupLines = this.processClientSetupLines(clientSetup, testName, isEndpointSecurity);
                 lines.push(...setupLines);
                 lines.push(``);
             }
@@ -226,7 +425,11 @@ export class WireTestGenerator {
                 );
             } else {
                 // Assertion
-                lines.push(`    assert!(result.is_ok(), "Client method call should succeed");`);
+                if (testCase.expectedErrorVariant != null) {
+                    lines.push(...this.buildErrorAssertionLines(testCase.expectedErrorVariant, wiremockMapping));
+                } else {
+                    lines.push(`    assert!(result.is_ok(), "Client method call should succeed");`);
+                }
                 lines.push(``);
 
                 // Verify request count using centralized wire_test_utils module
@@ -251,6 +454,55 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Asserts the call fails with the `ApiError` variant `from_response` builds for the mocked
+     * error response, including the `message` it parses from the served body.
+     */
+    private buildErrorAssertionLines(variant: string, wiremockMapping: WireMockMapping): string[] {
+        const expectedMessage = this.getExpectedErrorMessage(wiremockMapping.response.body);
+        const lines: string[] = [];
+        lines.push(`    assert!(result.is_err(), "Client method call should fail with ApiError::${variant}");`);
+        lines.push(`    match result {`);
+        if (expectedMessage != null) {
+            lines.push(`        Err(ApiError::${variant} { message, .. }) => {`);
+            lines.push(`            assert_eq!(message, ${this.toRustStringLiteral(expectedMessage)});`);
+            lines.push(`        }`);
+        } else {
+            lines.push(`        Err(ApiError::${variant} { .. }) => {}`);
+        }
+        lines.push(`        Err(other) => panic!("Expected ApiError::${variant}, got {:?}", other),`);
+        lines.push(`        Ok(_) => panic!("Expected ApiError::${variant}, got a successful response"),`);
+        lines.push(`    }`);
+        return lines;
+    }
+
+    /**
+     * Mirrors how `from_response` fills `message`: the body's string `message` property when the
+     * body is JSON ("Unknown error" when absent), otherwise the raw body.
+     */
+    private getExpectedErrorMessage(body: string | undefined): string | undefined {
+        if (body == null) {
+            return undefined;
+        }
+        let parsed: unknown;
+        try {
+            parsed = JSON.parse(body);
+        } catch {
+            return body;
+        }
+        if (parsed != null && typeof parsed === "object" && !Array.isArray(parsed)) {
+            const message = (parsed as Record<string, unknown>).message;
+            if (typeof message === "string") {
+                return message;
+            }
+        }
+        return "Unknown error";
+    }
+
+    private toRustStringLiteral(value: string): string {
+        return JSON.stringify(value).replace(/\\u([0-9a-fA-F]{4})/g, "\\u{$1}");
     }
 
     // =============================================================================
@@ -369,7 +621,7 @@ export class WireTestGenerator {
      * 2. Skips the original base_url field
      * 3. Adds base_url override after struct creation
      */
-    private processClientSetupLines(clientSetup: string, isEndpointSecurity = false): string[] {
+    private processClientSetupLines(clientSetup: string, testId: string, isEndpointSecurity = false): string[] {
         const lines: string[] = [];
         const setupLines = clientSetup.split("\n");
         let inConfigStruct = false;
@@ -409,6 +661,12 @@ export class WireTestGenerator {
                     if (this.context.hasMultipleBaseUrls()) {
                         lines.push(`    config.environment = None;`);
                     }
+                    // Error examples (e.g. 429/5xx) must not be retried
+                    lines.push(`    config.max_retries = 0;`);
+                    // Selects the WireMock mapping serving this test's example
+                    lines.push(
+                        `    config.custom_headers.insert("X-Test-Id".to_string(), ${this.toRustStringLiteral(testId)}.to_string());`
+                    );
                     inConfigStruct = false;
                 } else {
                     lines.push(`    ${trimmedLine}`);
@@ -592,24 +850,12 @@ export class WireTestGenerator {
      * 1. Try wiremock mapping pathParameters first (preferred)
      * 2. Fall back to FernIr.dynamic endpoint example pathParameters
      */
-    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
-        let basePath =
-            endpoint.fullPath.head +
-            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
-
-        if (!basePath.startsWith("/")) {
-            basePath = `/${basePath}`;
-        }
-
-        const mappingKey = this.wiremockMappingKey({
-            requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
-        });
-
-        const wiremockMapping = this.wireMockConfigContent[mappingKey];
-        if (!wiremockMapping) {
-            throw GeneratorError.internalError(`No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}"`);
-        }
+    private buildBasePath(
+        endpoint: FernIr.HttpEndpoint,
+        wiremockMapping: WireMockMapping,
+        dynamicExample: FernIr.dynamic.EndpointExample
+    ): string {
+        let basePath = this.getEndpointPathTemplate(endpoint);
 
         // Try to get path parameters from wiremock mapping first
         if (wiremockMapping.request.pathParameters && Object.keys(wiremockMapping.request.pathParameters).length > 0) {
@@ -617,19 +863,45 @@ export class WireTestGenerator {
                 const pathParam = paramValue as { equalTo: string };
                 basePath = basePath.replace(`{${paramName}}`, pathParam.equalTo);
             });
-        } else {
+        } else if (dynamicExample.pathParameters) {
             // Fallback: Get path parameters from FernIr.dynamic endpoint example
-            const dynamicExample = this.getDynamicEndpointExample(endpoint);
-            if (dynamicExample?.pathParameters) {
-                Object.entries(dynamicExample.pathParameters).forEach(([paramName, paramValue]) => {
-                    if (paramValue != null) {
-                        basePath = basePath.replace(`{${paramName}}`, String(paramValue));
-                    }
-                });
-            }
+            Object.entries(dynamicExample.pathParameters).forEach(([paramName, paramValue]) => {
+                if (paramValue != null) {
+                    basePath = basePath.replace(`{${paramName}}`, String(paramValue));
+                }
+            });
         }
 
         return basePath;
+    }
+
+    private getEndpointPathTemplate(endpoint: FernIr.HttpEndpoint): string {
+        const basePath =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
+        return basePath.startsWith("/") ? basePath : `/${basePath}`;
+    }
+
+    /**
+     * The mapping serving this test's response: its per-example mapping, or else the endpoint's
+     * default mapping.
+     */
+    private getWireMockMapping(testCase: WireTestCase): WireMockMapping {
+        const perExampleMapping = this.wireMockMappingsByTestId[testCase.testName];
+        if (perExampleMapping != null) {
+            return perExampleMapping;
+        }
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: testCase.endpoint.method,
+            requestUrlPathTemplate: this.getEndpointPathTemplate(testCase.endpoint)
+        });
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+        if (!wiremockMapping) {
+            throw GeneratorError.internalError(
+                `No wiremock mapping found for endpoint ${testCase.endpoint.id} and mappingKey "${mappingKey}"`
+            );
+        }
+        return wiremockMapping;
     }
 
     /**
@@ -637,10 +909,8 @@ export class WireTestGenerator {
      *
      * Returns "None" if no query params, otherwise Some(HashMap::from([...]))
      */
-    private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
-
-        if (!dynamicEndpointExample?.queryParameters) {
+    private buildQueryParamsMap(dynamicEndpointExample: FernIr.dynamic.EndpointExample): string {
+        if (!dynamicEndpointExample.queryParameters) {
             return "None";
         }
 
@@ -673,15 +943,7 @@ export class WireTestGenerator {
         const endpointName = this.context.case.snakeSafe(endpoint.name);
         // Normalize service name to avoid double underscores (e.g., endpoints_union_ -> endpoints_union)
         const normalizedServiceName = serviceName.replace(/_+$/, "");
-        return `test_${normalizedServiceName}_${endpointName}_with_wiremock`;
-    }
-
-    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
-        const example = this.dynamicIr.endpoints[endpoint.id];
-        if (!example) {
-            return null;
-        }
-        return example.examples?.[0] ?? null;
+        return `test_${normalizedServiceName}_${endpointName}`;
     }
 
     private async generateSnippetForExample(
@@ -703,17 +965,6 @@ export class WireTestGenerator {
         return response.snippet;
     }
 
-    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
-        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
-
-        for (const service of Object.values(this.context.ir.services)) {
-            const serviceName = this.getFormattedServiceName(service);
-            endpointsByService.set(serviceName, service.endpoints);
-        }
-
-        return endpointsByService;
-    }
-
     private getFormattedServiceName(service: FernIr.HttpService): string {
         return service.name?.fernFilepath?.allParts?.map((part) => this.context.case.snakeSafe(part)).join("_") || "root";
     }
@@ -728,16 +979,27 @@ export class WireTestGenerator {
         return `${requestMethod} - ${requestUrlPathTemplate}`;
     }
 
-    private getWireMockConfigContent(): Record<string, WireMockMapping> {
-        const out: Record<string, WireMockMapping> = {};
-        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
-        for (const mapping of wiremockStubMapping.mappings) {
+    private indexWireMockMappings(): {
+        mappingsByTestId: Record<string, WireMockMapping>;
+        defaultMappings: Record<string, WireMockMapping>;
+    } {
+        const mappingsByTestId: Record<string, WireMockMapping> = {};
+        const defaultMappings: Record<string, WireMockMapping> = {};
+        for (const mapping of this.wireTestSetupGenerator.getWireMockConfig().mappings) {
+            const testId = mapping.request.headers?.["X-Test-Id"]?.equalTo;
+            if (testId != null) {
+                mappingsByTestId[testId] = mapping;
+                continue;
+            }
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
                 requestUrlPathTemplate: mapping.request.urlPathTemplate
             });
-            out[key] = mapping;
+            if (mapping.name.endsWith("(bytes fallback)") && defaultMappings[key] != null) {
+                continue;
+            }
+            defaultMappings[key] = mapping;
         }
-        return out;
+        return { mappingsByTestId, defaultMappings };
     }
 }

@@ -13,6 +13,11 @@ async fn test_endpoints_put_add_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_put_add_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client.endpoints.put.add(&"id".to_string(), None).await;

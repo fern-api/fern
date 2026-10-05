@@ -31,9 +31,44 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "a323595c-aa62-4242-827d-1ddc37da9f63",
+      "name": "getDummy - default - test_dummy_get_dummy_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/dummy",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_dummy_get_dummy_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a323595c-aa62-4242-827d-1ddc37da9f63",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }
