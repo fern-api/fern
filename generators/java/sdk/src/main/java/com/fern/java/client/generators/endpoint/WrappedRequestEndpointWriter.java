@@ -306,8 +306,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
             requestBodyCodeBlock
                     .addStatement("$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
-                    .beginControlFlow(
-                            "if ($N.isPresent() || $L)", variableToJsonify, hasBodyPropertiesCodeBlock());
+                    .beginControlFlow("if ($N.isPresent() || $L)", variableToJsonify, hasBodyPropertiesCodeBlock());
         }
         CodeBlock requestBodyContentType = CodeBlock.of(
                 "$T.$L",

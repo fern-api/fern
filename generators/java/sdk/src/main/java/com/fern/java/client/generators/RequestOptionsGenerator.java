@@ -473,9 +473,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
     }
 
     private void addBodyPropertyBuilders(TypeSpec.Builder builder) {
-        CodeBlock javadoc = CodeBlock.of("Adds a property to the JSON or form-urlencoded request body, keyed by its wire name. "
-                + "It overrides any request body property with the same key, and is sent as the whole body for "
-                + "endpoints without one. Multipart (file upload) bodies are not supported.\n");
+        CodeBlock javadoc = CodeBlock.builder()
+                .add("Adds a property to the JSON or form-urlencoded request body, keyed by its wire name. ")
+                .add("It overrides any request body property with the same key, and is sent as the whole body ")
+                .add("for endpoints without one. Multipart (file upload) bodies are not supported.\n")
+                .build();
         builder.addMethod(MethodSpec.methodBuilder("addBodyProperty")
                 .addJavadoc(javadoc)
                 .addModifiers(Modifier.PUBLIC)

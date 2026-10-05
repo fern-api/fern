@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import okhttp3.RequestBody;
 import okio.Buffer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -43,12 +44,15 @@ class BodyPropertiesTest {
 
     private static final String PACKAGE = "com.seed.plants.core";
 
-    private static final String OBJECT_MAPPERS_SOURCE = "import com.fasterxml.jackson.databind.ObjectMapper;\n"
-            + "import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;\n"
-            + "public final class ObjectMappers {\n"
-            + "    public static final ObjectMapper JSON_MAPPER = new ObjectMapper().registerModule(new Jdk8Module());\n"
-            + "    private ObjectMappers() {}\n"
-            + "}\n";
+    private static final String OBJECT_MAPPERS_SOURCE = String.join(
+            "\n",
+            "import com.fasterxml.jackson.databind.ObjectMapper;",
+            "import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;",
+            "public final class ObjectMappers {",
+            "    public static final ObjectMapper JSON_MAPPER = new ObjectMapper().registerModule(new Jdk8Module());",
+            "    private ObjectMappers() {}",
+            "}",
+            "");
 
     private static Class<?> bodyPropertiesClass;
     private static Class<?> objectMappersClass;
@@ -128,14 +132,14 @@ class BodyPropertiesTest {
     void merge_serializesNestedAndNullValues() throws Exception {
         Map<String, Object> nested = new LinkedHashMap<>();
         nested.put("soil", Map.of("ph", 6.5));
-        nested.put("tags", List.of("indoor", "low-light"));
-        Map<String, Object> extras = new LinkedHashMap<>();
-        extras.put("care", nested);
-        extras.put("watered_at", null);
+        nested.put("tags", List.of("indoor"));
+        assertThat(toJson(merge(Map.of("name", "fern"), Map.of("care", nested))))
+                .isEqualTo("{\"name\":\"fern\",\"care\":{\"soil\":{\"ph\":6.5},\"tags\":[\"indoor\"]}}");
 
-        assertThat(toJson(merge(Map.of("name", "fern"), extras)))
-                .isEqualTo("{\"name\":\"fern\",\"care\":{\"soil\":{\"ph\":6.5},\"tags\":[\"indoor\",\"low-light\"]},"
-                        + "\"watered_at\":null}");
+        Map<String, Object> nullValue = new LinkedHashMap<>();
+        nullValue.put("watered_at", null);
+        assertThat(toJson(merge(Map.of("name", "fern"), nullValue)))
+                .isEqualTo("{\"name\":\"fern\",\"watered_at\":null}");
     }
 
     @Test
@@ -160,14 +164,14 @@ class BodyPropertiesTest {
 
     @Test
     void toRequestBody_withoutBodyProperties_returnsFallback() throws Exception {
-        okhttp3.RequestBody fallback = okhttp3.RequestBody.create("", null);
+        RequestBody fallback = RequestBody.create("", null);
         assertThat(toRequestBody(null, fallback)).isSameAs(fallback);
         assertThat(toRequestBody(Map.of(), null)).isNull();
     }
 
     @Test
     void toRequestBody_withBodyProperties_sendsJsonObject() throws Exception {
-        okhttp3.RequestBody requestBody = toRequestBody(Map.of("species", "monstera"), null);
+        RequestBody requestBody = toRequestBody(Map.of("species", "monstera"), null);
         Buffer buffer = new Buffer();
         requestBody.writeTo(buffer);
         assertThat(buffer.readUtf8()).isEqualTo("{\"species\":\"monstera\"}");
@@ -183,9 +187,11 @@ class BodyPropertiesTest {
         extras.put("height_cm", 45);
         extras.put("beta_flag", "true");
 
-        Map<String, Object> merged = mergeFormParams(formParams, extras);
-        assertThat(merged).containsExactly(
-                Map.entry("name", "fern"), Map.entry("height_cm", 45), Map.entry("beta_flag", "true"));
+        Map<String, Object> expected = new LinkedHashMap<>();
+        expected.put("name", "fern");
+        expected.put("height_cm", 45);
+        expected.put("beta_flag", "true");
+        assertThat(mergeFormParams(formParams, extras)).containsExactlyEntriesOf(expected);
         assertThat(mergeFormParams(null, Map.of("species", "monstera")))
                 .containsExactly(Map.entry("species", "monstera"));
         assertThat(mergeFormParams(formParams, null)).isEqualTo(formParams);
@@ -215,23 +221,20 @@ class BodyPropertiesTest {
         return invoke("merge", new Class<?>[] {Object.class, Map.class}, body, bodyProperties);
     }
 
-    private static okhttp3.RequestBody toRequestBody(Map<String, Object> bodyProperties, okhttp3.RequestBody fallback)
+    private static RequestBody toRequestBody(Map<String, Object> props, RequestBody fallback) throws Exception {
+        return invoke("toRequestBody", new Class<?>[] {Map.class, RequestBody.class}, props, fallback);
+    }
+
+    private static Map<String, Object> mergeFormParams(Map<String, Object> params, Map<String, Object> extras)
             throws Exception {
-        return (okhttp3.RequestBody)
-                invoke("toRequestBody", new Class<?>[] {Map.class, okhttp3.RequestBody.class}, bodyProperties, fallback);
+        return invoke("mergeFormParams", new Class<?>[] {Map.class, Map.class}, params, extras);
     }
 
     @SuppressWarnings("unchecked")
-    private static Map<String, Object> mergeFormParams(Map<String, Object> formParams, Map<String, Object> extras)
-            throws Exception {
-        return (Map<String, Object>)
-                invoke("mergeFormParams", new Class<?>[] {Map.class, Map.class}, formParams, extras);
-    }
-
-    private static Object invoke(String name, Class<?>[] parameterTypes, Object... args) throws Exception {
+    private static <T> T invoke(String name, Class<?>[] parameterTypes, Object... args) throws Exception {
         Method method = bodyPropertiesClass.getMethod(name, parameterTypes);
         try {
-            return method.invoke(null, args);
+            return (T) method.invoke(null, args);
         } catch (InvocationTargetException e) {
             throw (Exception) e.getCause();
         }

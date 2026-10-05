@@ -1286,8 +1286,8 @@ public abstract class AbstractEndpointWriter {
     }
 
     /**
-     * The request body for an endpoint without one: a JSON body made of the request options' body properties, if
-     * any, for every method OkHttp allows a body for, and otherwise what such endpoints have always sent.
+     * The request body for an endpoint without one: a JSON body made of the request options' body properties, if any,
+     * for every method OkHttp allows a body for, and otherwise what such endpoints have always sent.
      */
     protected final CodeBlock noRequestBodyCodeBlock(HttpMethod method) {
         if (requiresRequestBody(method)) {
@@ -1299,8 +1299,7 @@ public abstract class AbstractEndpointWriter {
                     "");
         }
         if (method.equals(HttpMethod.DELETE)) {
-            return CodeBlock.of(
-                    "$T.toRequestBody($L, null)", bodyPropertiesClassName(), bodyPropertiesCodeBlock());
+            return CodeBlock.of("$T.toRequestBody($L, null)", bodyPropertiesClassName(), bodyPropertiesCodeBlock());
         }
         return CodeBlock.of("null");
     }
