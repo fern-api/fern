@@ -8,7 +8,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "../utils/index.js";
 import { ErrorGenerator } from "../error/ErrorGenerator.js";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
+import { BYTES_FALLBACK_NAME_SUFFIX, WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
  * Generates WireMock-based integration tests for Rust SDK.
@@ -41,6 +41,9 @@ export class WireTestGenerator {
     private errorGenerator: ErrorGenerator;
     private wireTestSetupGenerator: WireTestSetupGenerator;
     private testCasesByService: Map<string, WireTestCase[]>;
+    // Keyed by endpoint and example id, so lookups do not depend on object identity of the IR passed to mock-utils.
+    private testIdsByExampleKey = new Map<string, string>();
+    // Fallback for examples without an id.
     private testIdsByExample = new Map<FernIr.ExampleEndpointCall, string>();
     private wireMockMappingsByTestId: Record<string, WireMockMapping>;
     private wireMockConfigContent: Record<string, WireMockMapping>;
@@ -61,8 +64,10 @@ export class WireTestGenerator {
         // Each test sends its name as the X-Test-Id header, which selects the WireMock mapping
         // serving that test's example response.
         this.wireTestSetupGenerator = new WireTestSetupGenerator(context, ir, {
-            getExampleTestId: ({ example }) =>
-                this.testIdsByExample.get(example as unknown as FernIr.ExampleEndpointCall)
+            getExampleTestId: ({ endpoint, example }) =>
+                example.id != null
+                    ? this.testIdsByExampleKey.get(this.getExampleKey(endpoint.id, example.id))
+                    : this.testIdsByExample.get(example as unknown as FernIr.ExampleEndpointCall)
         });
         const { mappingsByTestId, defaultMappings } = this.indexWireMockMappings();
         this.wireMockMappingsByTestId = mappingsByTestId;
@@ -221,7 +226,11 @@ export class WireTestGenerator {
                       : "";
             const testName = this.getUniqueTestName(baseTestName, suffix, usedTestNames);
             if (!isUnsatisfiable) {
-                this.testIdsByExample.set(example, testName);
+                if (example.id != null) {
+                    this.testIdsByExampleKey.set(this.getExampleKey(endpoint.id, example.id), testName);
+                } else {
+                    this.testIdsByExample.set(example, testName);
+                }
             }
             testCases.push({
                 endpoint,
@@ -254,6 +263,10 @@ export class WireTestGenerator {
             return undefined;
         }
         return variant;
+    }
+
+    private getExampleKey(endpointId: string, exampleId: string): string {
+        return `${endpointId}:${exampleId}`;
     }
 
     private getUniqueTestName(baseTestName: string, suffix: string, usedTestNames: Set<string>): string {
@@ -995,7 +1008,7 @@ export class WireTestGenerator {
                 requestMethod: mapping.request.method,
                 requestUrlPathTemplate: mapping.request.urlPathTemplate
             });
-            if (mapping.name.endsWith("(bytes fallback)") && defaultMappings[key] != null) {
+            if (mapping.name.endsWith(BYTES_FALLBACK_NAME_SUFFIX) && defaultMappings[key] != null) {
                 continue;
             }
             defaultMappings[key] = mapping;

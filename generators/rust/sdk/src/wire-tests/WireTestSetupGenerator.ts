@@ -15,6 +15,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
  * Generates setup files for wire testing, specifically docker-compose configuration
  * to spin up WireMock for testing against.
  */
+export const BYTES_FALLBACK_NAME_SUFFIX = " (bytes fallback)";
+
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
@@ -265,7 +267,7 @@ export class WireTestSetupGenerator {
                 const fallback: WireMockMapping = {
                     ...sibling,
                     id: `${sibling.id.slice(0, -4)}fb00`,
-                    name: `${sibling.name} (bytes fallback)`,
+                    name: `${sibling.name}${BYTES_FALLBACK_NAME_SUFFIX}`,
                     uuid: `${sibling.uuid.slice(0, -4)}fb00`,
                     priority: 5,
                     request: {
