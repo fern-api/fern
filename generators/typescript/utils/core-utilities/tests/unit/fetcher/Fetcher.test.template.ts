@@ -366,6 +366,50 @@ describe("Test fetcherImpl", () => {
             expect(global.fetch).toHaveBeenCalledTimes(1);
         });
 
+        it("should not retry a 401 when the request body is a stream", async () => {
+            mockFetchResponses(new Response("", { status: 401 }), new Response(JSON.stringify({}), { status: 200 }));
+            const refresh = jest.fn().mockResolvedValue({ Authorization: "Bearer new-token" });
+
+            const result = await fetcherImpl({
+                url: "https://example.com/upload",
+                method: "POST",
+                headers: { Authorization: "Bearer old-token" },
+                body: stream.Readable.from(["chunk"]),
+                requestType: "bytes",
+                duplex: "half",
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: { Authorization: "Bearer old-token" }, refresh },
+            });
+
+            expect(result.ok).toBe(false);
+            if (!result.ok) {
+                expect(result.error).toMatchObject({ reason: "status-code", statusCode: 401 });
+            }
+            expect(refresh).not.toHaveBeenCalled();
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+        });
+
+        it("should retry a 401 when the request body is a buffer", async () => {
+            mockFetchResponses(new Response("", { status: 401 }), new Response(JSON.stringify({}), { status: 200 }));
+            const refresh = jest.fn().mockResolvedValue({ Authorization: "Bearer new-token" });
+
+            const result = await fetcherImpl({
+                url: "https://example.com/upload",
+                method: "POST",
+                headers: { Authorization: "Bearer old-token" },
+                body: new Uint8Array([1, 2, 3]),
+                requestType: "bytes",
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: { Authorization: "Bearer old-token" }, refresh },
+            });
+
+            expect(result.ok).toBe(true);
+            expect(refresh).toHaveBeenCalledTimes(1);
+            expect(sentAuthorization).toEqual(["Bearer old-token", "Bearer new-token"]);
+        });
+
         it("should return 401 as an error when authRefresh is not set", async () => {
             global.fetch = jest.fn().mockResolvedValue(new Response("", { status: 401 }));
 

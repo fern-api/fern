@@ -6,4 +6,5 @@
     refreshes auth before each retry. OAuth and inferred auth providers bypass their cached token and fetch a
     new one, and supplier-based credentials (e.g. a bearer token supplier) are re-read, so a token rotated
     before it expires is picked up. If refreshing auth fails, that error is thrown and the request is not retried.
+    Requests with a stream body (e.g. a stream upload) can't be resent, so their 401/403 is returned as is.
   type: feat

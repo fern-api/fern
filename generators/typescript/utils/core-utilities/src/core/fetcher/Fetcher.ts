@@ -196,6 +196,18 @@ function createAuthHeadersRefresher(authRefresh: Fetcher.AuthRefresh, headers: H
     };
 }
 
+/** Stream bodies are consumed by the first attempt, so a request with one can't be resent. */
+function isReplayableBody(body: BodyInit | undefined): boolean {
+    if (body == null || typeof body !== "object") {
+        return true;
+    }
+    if (typeof ReadableStream !== "undefined" && body instanceof ReadableStream) {
+        return false;
+    }
+    const maybeStream = body as { pipe?: unknown; [Symbol.asyncIterator]?: unknown };
+    return typeof maybeStream.pipe !== "function" && typeof maybeStream[Symbol.asyncIterator] !== "function";
+}
+
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     let url = args.url;
     if (args.queryString != null && args.queryString.length > 0) {
@@ -238,7 +250,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.responseType === "streaming" || args.responseType === "sse",
                 ),
             args.maxRetries,
-            args.authRefresh != null ? createAuthHeadersRefresher(args.authRefresh, headers) : undefined,
+            args.authRefresh != null && isReplayableBody(requestBody)
+                ? createAuthHeadersRefresher(args.authRefresh, headers)
+                : undefined,
         );
 
         if (response.status >= 200 && response.status < 400) {
