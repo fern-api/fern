@@ -1,9 +1,9 @@
 from typing import List
 
-import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
-
 from fern_python.codegen import AST, SourceFile
+
+import fern.ir.resources as ir_types
 
 
 class ErrorGenerator:

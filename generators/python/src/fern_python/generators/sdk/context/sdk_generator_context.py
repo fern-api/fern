@@ -2,7 +2,6 @@ import typing
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional
 
-import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import has_xml_types
 from ...context.pydantic_generator_context_impl import PydanticGeneratorContextImpl
 from ..core_utilities.core_utilities import CoreUtilities
@@ -10,8 +9,6 @@ from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (
     TypeDeclarationReferencer,
 )
-from fern.generator_exec import GeneratorConfig
-
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
 from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
@@ -19,6 +16,9 @@ from fern_python.generators.sdk.declaration_referencers.root_client_declaration_
 )
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 from fern_python.utils import get_wire_value
+
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorConfig
 
 
 def _get_auth_header_names(ir: ir_types.IntermediateRepresentation) -> List[str]:

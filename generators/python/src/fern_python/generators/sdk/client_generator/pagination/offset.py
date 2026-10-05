@@ -1,8 +1,6 @@
 from typing import Optional
 
-import fern.ir.resources as ir_types
 from .abstract_paginator import PaginationSnippetConfig, Paginator
-
 from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.request_properties import (
     request_property_to_name,
@@ -10,6 +8,8 @@ from fern_python.generators.sdk.client_generator.request_properties import (
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.utils.name_resolver import resolve_name
+
+import fern.ir.resources as ir_types
 
 
 class OffsetPagination(Paginator):
@@ -69,7 +69,7 @@ class OffsetPagination(Paginator):
         writer.write(f"self.{self._config.endpoint_name}(")
         for parameter in self._config.parameters:
             if parameter.name == rewritten_parameter_name:
-                self._write_next_page_value(writer=writer, parameter_name=parameter.name)
+                self._write_next_page_value(writer=writer, parameter=parameter)
             else:
                 writer.write(parameter.name)
             writer.write(", ")
@@ -77,14 +77,15 @@ class OffsetPagination(Paginator):
         for named_parameter in self._config.named_parameters:
             writer.write(f"{named_parameter.name}=")
             if named_parameter.name == rewritten_parameter_name:
-                self._write_next_page_value(writer=writer, parameter_name=named_parameter.name)
+                self._write_next_page_value(writer=writer, parameter=named_parameter)
             else:
                 writer.write(named_parameter.name)
             writer.write(", ")
         writer.write(")")
         writer.write_line("")
 
-    def _write_next_page_value(self, *, writer: AST.NodeWriter, parameter_name: str) -> None:
+    def _write_next_page_value(self, *, writer: AST.NodeWriter, parameter: AST.FunctionParameter) -> None:
+        parameter_name = parameter.name
         property_path = self.offset.page.property_path or []
         if not property_path:
             # The offset parameter is normalized to an integer before the request is made.
@@ -101,7 +102,12 @@ class OffsetPagination(Paginator):
         writer.write_node(
             AST.Expression(self._context.core_utilities.get_reference_to_pagination_helper("get_nested_page_value"))
         )
-        writer.write(f"({parameter_name}, {keys_literal}, {default}) + {self.get_step()})")
+        writer.write(f"({parameter_name}, {keys_literal}, {default}) + {self.get_step()}")
+        if parameter.type_hint is not None:
+            # Lets the helper build an omitted container through its model so field aliases apply.
+            writer.write(", ")
+            writer.write_node(parameter.type_hint)
+        writer.write(")")
 
     def get_step(self) -> str:
         if self.offset.step is not None and self._context.custom_config.offset_semantics == "item-index":

@@ -1,7 +1,8 @@
-from typing import Optional
+from typing import Dict, Optional
 
 import pydantic
 from core_utilities.sdk.pagination import get_nested_page_value, with_nested_page_value
+from core_utilities.shared.pydantic_utilities import UniversalBaseModel
 
 
 class _Options(pydantic.BaseModel):
@@ -34,3 +35,29 @@ def test_with_nested_page_value_updates_models() -> None:
     updated = with_nested_page_value(_Options(count=5, offset=0), ["offset"], 5)
     assert isinstance(updated, _Options)
     assert updated.count == 5 and updated.offset == 5
+
+
+class _AliasedOptions(UniversalBaseModel):
+    page_offset: Optional[int] = pydantic.Field(alias="pageOffset", default=None)
+    count: Optional[int] = None
+
+
+class _AliasedRequest(UniversalBaseModel):
+    opts: Optional[_AliasedOptions] = None
+
+
+def test_with_nested_page_value_builds_omitted_model_container_with_aliases() -> None:
+    created = with_nested_page_value(None, ["page_offset"], 5, Optional[_AliasedOptions])
+    assert isinstance(created, _AliasedOptions)
+    assert created.dict(by_alias=True, exclude_unset=True) == {"pageOffset": 5}
+    assert with_nested_page_value(..., ["page_offset"], 5, Optional[_AliasedOptions]) == created
+
+
+def test_with_nested_page_value_builds_missing_nested_model_with_aliases() -> None:
+    updated = with_nested_page_value(_AliasedRequest(), ["opts", "page_offset"], 5)
+    assert isinstance(updated.opts, _AliasedOptions)
+    assert updated.dict(by_alias=True, exclude_unset=True) == {"opts": {"pageOffset": 5}}
+
+
+def test_with_nested_page_value_keeps_dicts_for_non_model_container_types() -> None:
+    assert with_nested_page_value(None, ["offset"], 1, Optional[Dict[str, int]]) == {"offset": 1}

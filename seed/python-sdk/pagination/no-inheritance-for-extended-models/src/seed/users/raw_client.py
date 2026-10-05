@@ -464,7 +464,10 @@ class RawUsersClient:
                 _has_next = len(_items or []) > 0
                 _get_next = lambda: self.list_with_body_offset_pagination(
                     pagination=with_nested_page_value(
-                        pagination, ["page"], get_nested_page_value(pagination, ["page"], 1) + 1
+                        pagination,
+                        ["page"],
+                        get_nested_page_value(pagination, ["page"], 1) + 1,
+                        typing.Optional[WithPage],
                     ),
                     request_options=request_options,
                 )
@@ -1453,7 +1456,10 @@ class AsyncRawUsersClient:
                 async def _get_next():
                     return await self.list_with_body_offset_pagination(
                         pagination=with_nested_page_value(
-                            pagination, ["page"], get_nested_page_value(pagination, ["page"], 1) + 1
+                            pagination,
+                            ["page"],
+                            get_nested_page_value(pagination, ["page"], 1) + 1,
+                            typing.Optional[WithPage],
                         ),
                         request_options=request_options,
                     )

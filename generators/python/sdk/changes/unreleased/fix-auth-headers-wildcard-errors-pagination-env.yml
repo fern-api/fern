@@ -12,11 +12,13 @@
 - summary: |
     Fix offset pagination when the offset is an omitted body parameter (no more `OMIT + 1`), and
     advance nested offsets such as `$request.options.offset` on each page, creating `options` when
-    it was omitted and preserving its other fields.
+    it was omitted (through its model, so aliased fields keep their wire names) and preserving its
+    other fields.
   type: fix
 - summary: |
     Read environment-variable-backed client parameters (e.g. API keys) when the client is
-    constructed instead of when the module is imported.
+    constructed instead of when the module is imported. Passing `api_key=None` explicitly now
+    falls back to the environment variable, the same as omitting the argument.
   type: fix
 - summary: |
     Generate README.md for GitHub output even when no snippet path is configured (e.g. `fern generate --local`),

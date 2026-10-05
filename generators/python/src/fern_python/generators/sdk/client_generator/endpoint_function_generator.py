@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import fern.ir.resources as ir_types
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .generated_root_client import GeneratedRootClient
@@ -12,7 +11,6 @@ from .request_body_parameters import (
     InlinedRequestBodyParameters,
     ReferencedRequestBodyParameters,
 )
-
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
@@ -61,6 +59,8 @@ from fern_python.utils.name_resolver import (
     resolve_name,
     resolve_name_preserving_underscores,
 )
+
+import fern.ir.resources as ir_types
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [

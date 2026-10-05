@@ -1,8 +1,6 @@
 from typing import Any, Callable, List, Optional, Sequence, Tuple
 
-import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
-
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
 from fern_python.external_dependencies.pydantic import Pydantic
@@ -33,6 +31,8 @@ from fern_python.generators.sdk.client_generator.streaming.utilities import (
     StreamingParameterType,
 )
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 class EndpointResponseCodeWriter:

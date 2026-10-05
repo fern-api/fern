@@ -186,6 +186,11 @@ class CoreUtilities:
             if self._retry_status_codes == "recommended"
             else "response.status_code >= 500 or response.status_code in [429, 408, 409]"
         )
+        auth_headers_placeholder = "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()  # {{AUTH_HEADERS}}"
+        http_client_source = os.path.join(self._resolve_core_utilities_path("http_client.py"), "http_client.py")
+        with open(http_client_source, "r") as http_client_file:
+            if auth_headers_placeholder not in http_client_file.read():
+                raise RuntimeError(f"{http_client_source} is missing the {{{{AUTH_HEADERS}}}} placeholder line")
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -196,7 +201,7 @@ class CoreUtilities:
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
             string_replacements={
                 "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
-                "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()  # {{AUTH_HEADERS}}": (
+                auth_headers_placeholder: (
                     f"_AUTH_HEADERS: typing.FrozenSet[str] = frozenset({{{', '.join(json.dumps(name) for name in self._auth_header_names)}}})"
                     if len(self._auth_header_names) > 0
                     else "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()"
