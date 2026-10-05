@@ -26,9 +26,7 @@ import java.nio.charset.StandardCharsets;
 public final class BodyPropertiesGenerator extends AbstractFileGenerator {
 
     public BodyPropertiesGenerator(ClientGeneratorContext clientGeneratorContext) {
-        super(
-                clientGeneratorContext.getPoetClassNameFactory().getBodyPropertiesClassName(),
-                clientGeneratorContext);
+        super(clientGeneratorContext.getPoetClassNameFactory().getBodyPropertiesClassName(), clientGeneratorContext);
     }
 
     @Override
