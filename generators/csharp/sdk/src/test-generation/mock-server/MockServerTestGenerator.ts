@@ -12,8 +12,9 @@ type ServiceId = FernIr.ServiceId;
 
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
 import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-import { BaseMockServerTestGenerator } from "./BaseMockServerTestGenerator.js";
+import { generateMockServerClientInstantiation } from "./generateMockServerClientInstantiation.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
@@ -27,7 +28,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private readonly classReference: ast.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
-    private readonly baseMockServerTestGenerator: BaseMockServerTestGenerator;
+    private rootClientGenerator: RootClientGenerator | undefined;
 
     constructor(
         context: SdkGeneratorContext,
@@ -45,7 +46,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpointGenerator = new HttpEndpointGenerator({ context });
         this.mockEndpointGenerator = new MockEndpointGenerator(context);
-        this.baseMockServerTestGenerator = new BaseMockServerTestGenerator(context);
+    }
+
+    private getRootClientGenerator(): RootClientGenerator {
+        this.rootClientGenerator ??= new RootClientGenerator(this.context);
+        return this.rootClientGenerator;
     }
 
     public override shouldGenerate(): boolean {
@@ -145,7 +150,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
                     clientVariableName = "client";
                     writer.write("var client = ");
                     writer.writeNodeStatement(
-                        this.baseMockServerTestGenerator.generateClientInstantiation(sdkVariableClientOptions)
+                        generateMockServerClientInstantiation({
+                            context: this.context,
+                            rootClientGenerator: this.getRootClientGenerator(),
+                            additionalClientOptions: sdkVariableClientOptions
+                        })
                     );
                     writer.newLine();
                 }

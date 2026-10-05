@@ -1104,12 +1104,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     /**
-     * Rebuilds the environment base URL(s) from the API's URL template(s) when the user
-     * sets any server URL variable (e.g. region/edge) at construction time. Each `{id}`
-     * placeholder is substituted with the provided value, falling back to the variable's
-     * IR default when omitted. Emits nothing when the API declares no server variables.
-     */
-    /**
      * String SDK variables that declare an `env` fall back to that environment variable when
      * not set on the client options. Missing values are reported by the endpoints that need
      * them so clients that never touch a bound endpoint still construct.
@@ -1125,6 +1119,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
     }
 
+    /**
+     * Rebuilds the environment base URL(s) from the API's URL template(s) when the user
+     * sets any server URL variable (e.g. region/edge) at construction time. Each `{id}`
+     * placeholder is substituted with the provided value, falling back to the variable's
+     * IR default when omitted. Emits nothing when the API declares no server variables.
+     */
     private writeServerVariableInterpolation(writer: Writer): void {
         const config = this.context.ir.environments;
         const options = getServerVariableOptions(config, this.case, this.settings.serverUrlVariables);
