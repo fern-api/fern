@@ -5,14 +5,18 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getLatestGeneratorVersion,
-    ROOT_API_FILENAME
+    ROOT_API_FILENAME,
+    SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
+import { loadOpenAPI } from "@fern-api/workspace-loader";
+import { type SdkConfigV1Document, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 
 import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
 import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
@@ -46,16 +50,40 @@ export async function createFernWorkspace({
 export async function createOpenAPIWorkspace({
     directoryOfWorkspace,
     openAPIFilePath,
+    openAPIUrl,
     cliVersion,
-    context
+    context,
+    useSdkConfig,
+    sdkName = "api"
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
+    openAPIUrl?: string;
     cliVersion: string;
     context: TaskContext;
+    useSdkConfig: boolean;
+    sdkName?: string;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
+    }
+    if (useSdkConfig) {
+        const openAPISource =
+            openAPIUrl == null
+                ? {
+                      path: await materializeOpenAPI({
+                          directoryOfWorkspace,
+                          openAPIFilePath,
+                          context
+                      })
+                  }
+                : { url: openAPIUrl };
+        await writeSdkConfiguration({
+            filepath: join(directoryOfWorkspace, RelativeFilePath.of(SDK_CONFIG_FILENAME)),
+            sdkName,
+            openAPISource
+        });
+        return;
     }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
@@ -70,17 +98,29 @@ export async function createOpenAPIWorkspace({
 export async function createDefaultOpenAPIWorkspace({
     directoryOfWorkspace,
     cliVersion,
-    context
+    context,
+    useSdkConfig,
+    sdkName = "api"
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
+    useSdkConfig: boolean;
+    sdkName?: string;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace, { recursive: true });
     }
     const openApiFilePath = join(directoryOfWorkspace, RelativeFilePath.of("openapi.yml"));
     await writeFile(openApiFilePath, SAMPLE_OPENAPI);
+    if (useSdkConfig) {
+        await writeSdkConfiguration({
+            filepath: join(directoryOfWorkspace, RelativeFilePath.of(SDK_CONFIG_FILENAME)),
+            sdkName,
+            openAPISource: { path: "./openapi.yml" }
+        });
+        return;
+    }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
@@ -89,6 +129,68 @@ export async function createDefaultOpenAPIWorkspace({
             specs: [{ openapi: "openapi.yml" }]
         }
     });
+}
+
+async function materializeOpenAPI({
+    directoryOfWorkspace,
+    openAPIFilePath,
+    context
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    openAPIFilePath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<string> {
+    const openAPIFileName = getOpenAPIFileName(openAPIFilePath);
+    const bundled = await loadOpenAPI({
+        context,
+        absolutePathToOpenAPI: openAPIFilePath,
+        absolutePathToOpenAPIOverrides: undefined,
+        absolutePathToOpenAPIOverlays: undefined
+    });
+    const contents =
+        openAPIFileName === "openapi.json"
+            ? `${JSON.stringify(bundled, null, 2)}\n`
+            : yaml.dump(bundled, { lineWidth: -1, noRefs: true });
+    await writeFile(join(directoryOfWorkspace, RelativeFilePath.of(openAPIFileName)), contents);
+    return `./${openAPIFileName}`;
+}
+
+function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
+    return path.extname(openAPIFilePath).toLowerCase() === ".json" ? "openapi.json" : "openapi.yml";
+}
+
+async function writeSdkConfiguration({
+    filepath,
+    sdkName,
+    openAPISource
+}: {
+    filepath: AbsoluteFilePath;
+    sdkName: string;
+    openAPISource: { path: string } | { url: string };
+}): Promise<void> {
+    const config: SdkConfigV1Document = validateSdkConfigV1({
+        schemaVersion: "sdk-config/v1",
+        sdkName,
+        source: {
+            specs: [
+                {
+                    id: sdkName,
+                    type: "openapi",
+                    ...openAPISource
+                }
+            ]
+        },
+        targets: [
+            {
+                language: "typescript",
+                output: {
+                    delivery: "files",
+                    path: "../sdks/typescript"
+                }
+            }
+        ]
+    });
+    await writeFile(filepath, yaml.dump(config, { lineWidth: -1, noRefs: true }));
 }
 
 async function getDefaultGeneratorsConfiguration({

@@ -2,10 +2,11 @@ import {
     APIS_DIRECTORY,
     DEFAULT_API_WORKSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
-    GENERATORS_CONFIGURATION_FILENAME
+    GENERATORS_CONFIGURATION_FILENAME,
+    SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir } from "fs/promises";
 import fs from "fs-extra";
@@ -18,15 +19,27 @@ export async function initializeAPI({
     organization,
     versionOfCli,
     openApiPath,
+    openApiUrl,
     useFernDefinition,
+    useSdkConfig,
     context
 }: {
     organization: string | undefined;
     versionOfCli: string;
     openApiPath: AbsoluteFilePath | undefined;
+    openApiUrl?: string;
     useFernDefinition: boolean;
+    useSdkConfig: boolean;
     context: TaskContext;
 }): Promise<void> {
+    if (useSdkConfig && useFernDefinition) {
+        context.failAndThrow(
+            "Fern Definition initialization is not supported by this version of fern init. Run `fern init` to use the sample OpenAPI definition, or `fern init --openapi <path-or-url>` to use your own OpenAPI specification.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+
     const { absolutePathToFernDirectory } = await createFernDirectoryAndWorkspace({
         organization,
         versionOfCli,
@@ -37,12 +50,16 @@ export async function initializeAPI({
         absolutePathToFernDirectory,
         taskContext: context
     });
+    const sdkName = directoryOfWorkspace === absolutePathToFernDirectory ? "api" : path.basename(directoryOfWorkspace);
     if (openApiPath != null) {
         await createOpenAPIWorkspace({
             directoryOfWorkspace,
             openAPIFilePath: openApiPath,
+            openAPIUrl: openApiUrl,
             cliVersion: versionOfCli,
-            context
+            context,
+            useSdkConfig,
+            sdkName
         });
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
@@ -56,7 +73,9 @@ export async function initializeAPI({
         await createDefaultOpenAPIWorkspace({
             directoryOfWorkspace,
             cliVersion: versionOfCli,
-            context
+            context,
+            useSdkConfig,
+            sdkName
         });
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
@@ -111,28 +130,17 @@ async function getDirectoryOfNewAPIWorkspace({
             await fs.move(inlinedDefinitionDirectory, workspaceDefinitionDirectory);
         }
 
-        const inlinedGeneratorsYml: AbsoluteFilePath = join(
-            absolutePathToFernDirectory,
-            RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
-        );
-        if (await doesPathExist(inlinedGeneratorsYml)) {
-            const workspaceGeneratorsYml: AbsoluteFilePath = join(
-                apiWorkspaceDirectory,
-                RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
-            );
-            await fs.move(inlinedGeneratorsYml, workspaceGeneratorsYml);
-        }
-
-        const inlinedOpenApiYml: AbsoluteFilePath = join(
-            absolutePathToFernDirectory,
-            RelativeFilePath.of("openapi.yml")
-        );
-        if (await doesPathExist(inlinedOpenApiYml)) {
-            const workspaceOpenApiYml: AbsoluteFilePath = join(
-                apiWorkspaceDirectory,
-                RelativeFilePath.of("openapi.yml")
-            );
-            await fs.move(inlinedOpenApiYml, workspaceOpenApiYml);
+        for (const filename of [
+            GENERATORS_CONFIGURATION_FILENAME,
+            SDK_CONFIG_FILENAME,
+            "openapi.yml",
+            "openapi.json"
+        ]) {
+            await moveWorkspaceFileIfPresent({
+                filename,
+                from: absolutePathToFernDirectory,
+                to: apiWorkspaceDirectory
+            });
         }
 
         const newApiDirectory = join(
@@ -176,9 +184,24 @@ async function hasInlinedOpenAPIWorkspace({
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
 }): Promise<boolean> {
-    const pathToGeneratorsYml: AbsoluteFilePath = join(
-        absolutePathToFernDirectory,
-        RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
-    );
-    return await doesPathExist(pathToGeneratorsYml);
+    const [hasGeneratorsConfiguration, hasSdkConfiguration] = await Promise.all([
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(SDK_CONFIG_FILENAME)))
+    ]);
+    return hasGeneratorsConfiguration || hasSdkConfiguration;
+}
+
+async function moveWorkspaceFileIfPresent({
+    filename,
+    from,
+    to
+}: {
+    filename: string;
+    from: AbsoluteFilePath;
+    to: AbsoluteFilePath;
+}): Promise<void> {
+    const source = join(from, RelativeFilePath.of(filename));
+    if (await doesPathExist(source)) {
+        await fs.move(source, join(to, RelativeFilePath.of(filename)));
+    }
 }
