@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Accept an `async_token` callable on the async root client when OAuth client credentials are
+    configured with a token override. Previously only a synchronous `token` callable could be
+    supplied in token mode, so resolving the token blocked the event loop on every request. The
+    async client now exposes `async_token: Optional[Callable[[], Awaitable[str]]]`, adds a
+    constructor overload for it, and forwards it to `AsyncClientWrapper`.
+  type: fix
+- summary: |
+    When `async_token` is set on an async client, the synchronous `token` is no longer resolved
+    for async requests. `AsyncClientWrapper.async_get_headers()` now calls
+    `get_headers(include_token=False)` and uses only the awaited token, so a blocking `token`
+    callable never runs on the event loop.
+  type: fix

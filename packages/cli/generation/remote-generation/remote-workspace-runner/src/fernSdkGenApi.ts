@@ -818,6 +818,7 @@ export interface FernSdkGenApiBuildParameters {
     organization: string;
     cliVersion: string | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    resolvedGeneratorVersion?: string;
     sdkGenApiRoute?: GenerationConfigRoute;
     sdkName?: string;
     sdkVersion: string;
@@ -1099,6 +1100,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         specsTarGzBuffer: first.specsTarGzBuffer,
         targets: participants.map((participant) => ({
             generatorInvocation: participant.generatorInvocation,
+            resolvedGeneratorVersion: participant.resolvedGeneratorVersion,
             sdkGenApiRoute: participant.sdkGenApiRoute,
             sdkName: participant.sdkName,
             sdkVersion: participant.sdkVersion,
@@ -1595,7 +1597,8 @@ export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCo
 
 function resolveFernGeneratorWireVersion(
     route: GenerationConfigRoute | undefined,
-    invocation: generatorsYml.GeneratorInvocation
+    invocation: generatorsYml.GeneratorInvocation,
+    resolvedGeneratorVersion?: string
 ): string | undefined {
     if (route == null) {
         return invocation.version;
@@ -1606,7 +1609,7 @@ function resolveFernGeneratorWireVersion(
     if (!isGeneratorVersionForUnpinnedRoute(route, invocation.version)) {
         throw unpinnedRouteVersionMismatchError(route, invocation.version);
     }
-    return undefined;
+    return resolvedGeneratorVersion;
 }
 
 function unpinnedRouteVersionMismatchError(route: GenerationConfigRoute, invocationVersion: string): Error {
@@ -1617,9 +1620,13 @@ function unpinnedRouteVersionMismatchError(route: GenerationConfigRoute, invocat
 
 function resolveFernGeneratorVersionKey(
     route: GenerationConfigRoute | undefined,
-    invocation: generatorsYml.GeneratorInvocation
+    invocation: generatorsYml.GeneratorInvocation,
+    resolvedGeneratorVersion?: string
 ): string {
-    return resolveFernGeneratorWireVersion(route, invocation) ?? UNPINNED_FERN_GENERATOR_VERSION_KEY;
+    return (
+        resolveFernGeneratorWireVersion(route, invocation, resolvedGeneratorVersion) ??
+        UNPINNED_FERN_GENERATOR_VERSION_KEY
+    );
 }
 
 function compareFernSdkGenApiParticipants(
@@ -1956,6 +1963,7 @@ export function createFernSdkGenApiRequest({
     organization,
     cliVersion,
     generatorInvocation,
+    resolvedGeneratorVersion,
     sdkGenApiRoute,
     sdkName,
     sdkVersion,
@@ -1970,6 +1978,7 @@ export function createFernSdkGenApiRequest({
     organization: string;
     cliVersion: string | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    resolvedGeneratorVersion?: string;
     sdkGenApiRoute?: GenerationConfigRoute;
     sdkName?: string;
     sdkVersion: string;
@@ -1988,6 +1997,7 @@ export function createFernSdkGenApiRequest({
         targets: [
             {
                 generatorInvocation,
+                resolvedGeneratorVersion,
                 sdkGenApiRoute,
                 sdkName,
                 sdkVersion,
@@ -2014,6 +2024,7 @@ export function createFernSdkGenApiBatchRequest({
     specsTarGzBuffer: Buffer;
     targets: Array<{
         generatorInvocation: generatorsYml.GeneratorInvocation;
+        resolvedGeneratorVersion?: string;
         sdkGenApiRoute?: GenerationConfigRoute;
         sdkName?: string;
         sdkVersion: string;
@@ -2046,6 +2057,7 @@ export function createFernSdkGenApiBatchRequest({
         (
             {
                 generatorInvocation,
+                resolvedGeneratorVersion,
                 sdkGenApiRoute,
                 sdkName,
                 sdkVersion,
@@ -2070,8 +2082,16 @@ export function createFernSdkGenApiBatchRequest({
             // SDK Config is the package configuration authority. Legacy output-derived package
             // identity must not overwrite a customer-edited SDK Config document.
             const packageConfig = payload.payloadKind === "fern-runtime-bundle" ? output.package : payload.package;
-            const fernGeneratorVersion = resolveFernGeneratorWireVersion(sdkGenApiRoute, generatorInvocation);
-            const fernGeneratorVersionKey = resolveFernGeneratorVersionKey(sdkGenApiRoute, generatorInvocation);
+            const fernGeneratorVersion = resolveFernGeneratorWireVersion(
+                sdkGenApiRoute,
+                generatorInvocation,
+                resolvedGeneratorVersion
+            );
+            const fernGeneratorVersionKey = resolveFernGeneratorVersionKey(
+                sdkGenApiRoute,
+                generatorInvocation,
+                resolvedGeneratorVersion
+            );
             const targetId = createHash("sha256")
                 .update(
                     `${apiName}:${generatorInvocation.name}:${fernGeneratorVersionKey}:${targetIdSeed ?? index.toString()}`

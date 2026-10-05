@@ -37,6 +37,22 @@ func (d *DocumentItem) UnmarshalJSON(data []byte) error {
 		d.String = valueString
 		return nil
 	}
+	if internal.MatchesObjectKeys(data, []string{"text"}, []string{"text"}) {
+		valueDocumentObject := new(DocumentObject)
+		if err := json.Unmarshal(data, &valueDocumentObject); err == nil {
+			d.typ = "DocumentObject"
+			d.DocumentObject = valueDocumentObject
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"text"}) {
+		valueDocumentObject := new(DocumentObject)
+		if err := json.Unmarshal(data, &valueDocumentObject); err == nil {
+			d.typ = "DocumentObject"
+			d.DocumentObject = valueDocumentObject
+			return nil
+		}
+	}
 	valueDocumentObject := new(DocumentObject)
 	if err := json.Unmarshal(data, &valueDocumentObject); err == nil {
 		d.typ = "DocumentObject"

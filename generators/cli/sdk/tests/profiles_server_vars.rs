@@ -162,6 +162,7 @@ fn transport_knobs_are_settable_and_shown_on_a_profile() {
             "profiles",
             "set",
             "corp",
+            "--yes",
             "REGIONAL_TIMEOUT_SECS=45",
             "REGIONAL_PROXY=http://proxy.corp:3128",
             "REGIONAL_CA_BUNDLE=/etc/ssl/corp.pem",
@@ -230,7 +231,7 @@ fn transport_knobs_are_settable_and_shown_on_a_profile() {
 #[serial]
 fn an_unknown_prefixed_key_lists_the_transport_knobs_as_settable() {
     with_temp_home(|| {
-        let (code, output) = run(&["regional", "profiles", "set", "corp", "REGIONAL_TIMEOUT=45"]);
+        let (code, output) = run(&["regional", "profiles", "set", "corp", "--yes", "REGIONAL_TIMEOUT=45"]);
         assert_ne!(code, 0, "{output}");
         for var in [
             "REGIONAL_TIMEOUT_SECS",

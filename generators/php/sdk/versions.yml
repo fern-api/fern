@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.24.2
+  changelogEntry:
+    - summary: |
+        Fix `JsonSerializableType::jsonDeserialize` throwing `Unexpected non-string type for date.`
+        when a `#[Date]`-annotated property receives an explicit JSON `null`. Nullable date and
+        date-time fields now deserialize `null` to `null`, matching how omitted keys and the
+        serializer already behave; non-string, non-null values are still rejected.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 2.24.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 2.24.0
   changelogEntry:
     - summary: |

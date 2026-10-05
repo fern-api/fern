@@ -13,7 +13,7 @@
 
 import type { CppTypedefIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta } from "../context.js";
-import { getShortName } from "../context.js";
+import { getShortName, getTypedefSyntax } from "../context.js";
 import {
     renderDescriptionBlocksDeduped,
     renderSeeAlso,
@@ -21,8 +21,18 @@ import {
     renderSegmentsTrimmed,
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
-import { isSfinaeParam, renderClassTemplateParams } from "./ParamRenderer.js";
-import { normalizeAngleBracketSpacing, renderBareCodeBlock } from "./SignatureRenderer.js";
+import {
+    isSfinaeParam,
+    parseFunctionPointerType,
+    renderClassTemplateParams,
+    renderTypedefParams
+} from "./ParamRenderer.js";
+import {
+    buildTypeInfoLinks,
+    normalizeAngleBracketSpacing,
+    renderBareCodeBlock,
+    renderLinkedCodeBlock
+} from "./SignatureRenderer.js";
 import {
     formatTemplateParam,
     renderDocstringCallouts,
@@ -59,14 +69,31 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
         }
     }
 
-    // Using declaration
     const shortName = getShortName(typedef.path);
     const underlyingType = typedef.typeInfo?.display
         ? normalizeAngleBracketSpacing(typedef.typeInfo.display)
         : "/* unspecified */";
-    parts.push(`using ${shortName} = ${underlyingType};`);
+    if (getTypedefSyntax() === "c" && renderableParams.length === 0) {
+        parts.push(formatCTypedef(shortName, underlyingType));
+    } else {
+        parts.push(`using ${shortName} = ${underlyingType};`);
+    }
 
     return parts.join("\n");
+}
+
+/**
+ * Plain-C declaration syntax:
+ *   typedef void *cuOptOptimizationProblem;
+ *   typedef void (*cuOptCallback)(const float *solution, void *user_data);
+ */
+function formatCTypedef(name: string, underlyingType: string): string {
+    const fnPtr = parseFunctionPointerType(underlyingType);
+    if (fnPtr) {
+        return `typedef ${fnPtr.returnType} (*${name})(${fnPtr.params.join(", ")});`;
+    }
+    const separator = /[*&]$/.test(underlyingType) ? "" : " ";
+    return `typedef ${underlyingType}${separator}${name};`;
 }
 
 // ---------------------------------------------------------------------------
@@ -99,7 +126,8 @@ export function renderTypedefPage(typedef: CppTypedefIr, meta: CompoundMeta): st
         // Signature
         const signature = formatTypedefSignature(typedef);
         sections.push("");
-        sections.push(renderBareCodeBlock(signature));
+        const links = buildTypeInfoLinks(typedef.typeInfo, [typedef.name, getShortName(typedef.path)]);
+        sections.push(renderLinkedCodeBlock(signature, links));
 
         // Description blocks
         if (docstring?.description && docstring.description.length > 0) {
@@ -123,6 +151,13 @@ export function renderTypedefPage(typedef: CppTypedefIr, meta: CompoundMeta): st
                 sections.push("");
                 sections.push(tplParams);
             }
+        }
+
+        // Function-pointer parameters
+        const params = renderTypedefParams(typedef, docstring);
+        if (params) {
+            sections.push("");
+            sections.push(params);
         }
 
         // See also

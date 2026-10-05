@@ -1,4 +1,37 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.98.4
+  changelogEntry:
+    - summary: |
+        Restore WebSocket retries after connection errors and timeouts, and allow manual reconnect after retry exhaustion.
+        Internal socket cleanup now emits close notifications without consulting `shouldReconnect`, which continues to
+        control server-initiated closes. Error retries and manual reconnects respect explicit `close()`, abort signals,
+        and retry limits.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 3.98.3
+  changelogEntry:
+    - summary: |
+        Redact the API's own credential headers in debug request logs. The generated `SENSITIVE_HEADERS`
+        set in `core/fetcher/Fetcher.ts` now also includes every header an auth scheme writes to (custom
+        header auth names such as `PLAID-SECRET`, custom OAuth token headers, and inferred-auth headers),
+        plus global, service, and endpoint headers whose names identify them as credentials (e.g. `PLAID-CLIENT-ID`).
+        Previously only a static list of conventional names (`Authorization`, `X-API-Key`, ...) was redacted,
+        so custom-named auth headers, including request-level overrides, were logged in plaintext when debug
+        logging was enabled.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 3.98.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 3.98.1
   changelogEntry:
     - summary: |

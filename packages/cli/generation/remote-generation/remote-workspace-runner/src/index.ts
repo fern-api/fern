@@ -1,5 +1,10 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 export type { FernSdkGenApiPublishCredentialSource } from "./directPublishCredentials.js";
+export {
+    discoverLatestSdkGenApiGeneratorVersions,
+    discoverSdkGenApiGeneratorVersions,
+    type SdkGenApiGeneratorVersions
+} from "./discoverSdkGenApiGeneratorVersions.js";
 export type {
     FernSdkConfigV1Payload,
     FernSdkGenApiPackageConfig,
@@ -45,6 +50,7 @@ export {
     runRemoteGenerationForAPIWorkspace
 } from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForDocsWorkspace } from "./runRemoteGenerationForDocsWorkspace.js";
+export { selectGeneratorConfigRoute } from "./sdk-gen-client/index.js";
 export {
     FERN_GENERATOR_LATEST_VERSION,
     isGeneratorVersionForUnpinnedRoute,

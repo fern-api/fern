@@ -97,7 +97,7 @@ fn one_assignment_reaches_every_scheme_that_reads_the_variable() {
     // cannot guess. One `set` covers all of them.
     with_clean_env(|| {
         let (code, output) = run(&[
-            "multi", "profiles", "set", "prod",
+            "multi", "profiles", "set", "prod", "--yes",
             "MULTI_ACCOUNT_SID=AC1111",
             "MULTI_AUTH_TOKEN=tok1",
         ]);
@@ -114,8 +114,8 @@ fn one_assignment_reaches_every_scheme_that_reads_the_variable() {
 #[serial]
 fn two_profiles_get_independent_credentials() {
     with_clean_env(|| {
-        run(&["multi", "profiles", "set", "prod", "MULTI_ACCOUNT_SID=AC1111", "MULTI_AUTH_TOKEN=t1"]);
-        run(&["multi", "profiles", "set", "acme", "MULTI_ACCOUNT_SID=AC9999", "MULTI_AUTH_TOKEN=t2"]);
+        run(&["multi", "profiles", "set", "prod", "--yes", "MULTI_ACCOUNT_SID=AC1111", "MULTI_AUTH_TOKEN=t1"]);
+        run(&["multi", "profiles", "set", "acme", "--yes", "MULTI_ACCOUNT_SID=AC9999", "MULTI_AUTH_TOKEN=t2"]);
         assert_eq!(logged_in("prod"), vec![true, true, true]);
         assert_eq!(logged_in("acme"), vec![true, true, true]);
 
@@ -141,9 +141,9 @@ fn setting_one_half_later_does_not_discard_the_other() {
     // would leave half a credential, which satisfies nothing and reports
     // `logged_in: false` with no obvious cause.
     with_clean_env(|| {
-        run(&["multi", "profiles", "set", "prod", "MULTI_ACCOUNT_SID=AC1111"]);
+        run(&["multi", "profiles", "set", "prod", "--yes", "MULTI_ACCOUNT_SID=AC1111"]);
         assert_eq!(logged_in("prod"), vec![false, false, false], "half is not enough");
-        run(&["multi", "profiles", "set", "prod", "MULTI_AUTH_TOKEN=tok1"]);
+        run(&["multi", "profiles", "set", "prod", "--yes", "MULTI_AUTH_TOKEN=tok1"]);
         assert_eq!(logged_in("prod"), vec![true, true, true], "the halves should merge");
     });
 }
@@ -152,7 +152,7 @@ fn setting_one_half_later_does_not_discard_the_other() {
 #[serial]
 fn a_server_variable_is_settable_by_its_env_var_name() {
     with_clean_env(|| {
-        let (code, output) = run(&["multi", "profiles", "set", "au", "MULTI_REGION=au1"]);
+        let (code, output) = run(&["multi", "profiles", "set", "au", "--yes", "MULTI_REGION=au1"]);
         assert_eq!(code, 0, "{output}");
         let (code, listed) = run(&["multi", "profiles", "list", "--format", "json"]);
         assert_eq!(code, 0, "{listed}");
@@ -166,7 +166,7 @@ fn an_unknown_key_is_rejected_with_a_suggestion() {
     // The failure `--set` validation exists to prevent: a key that looks right,
     // is stored, and does nothing.
     with_clean_env(|| {
-        let (code, output) = run(&["multi", "profiles", "set", "prod", "MULTI_ACCOUNT_SI=AC1"]);
+        let (code, output) = run(&["multi", "profiles", "set", "prod", "--yes", "MULTI_ACCOUNT_SI=AC1"]);
         assert_ne!(code, 0, "{output}");
         assert!(output.contains("MULTI_ACCOUNT_SID"), "should suggest the real name: {output}");
     });
@@ -179,7 +179,7 @@ fn nothing_is_applied_when_a_later_assignment_is_invalid() {
     // rejects the third must not leave the first two applied.
     with_clean_env(|| {
         let (code, output) = run(&[
-            "multi", "profiles", "set", "prod",
+            "multi", "profiles", "set", "prod", "--yes",
             "MULTI_REGION=au1",
             "MULTI_NONSENSE=x",
         ]);
@@ -193,7 +193,7 @@ fn nothing_is_applied_when_a_later_assignment_is_invalid() {
 #[serial]
 fn a_malformed_assignment_explains_the_expected_shape() {
     with_clean_env(|| {
-        let (code, output) = run(&["multi", "profiles", "set", "prod", "MULTI_REGION"]);
+        let (code, output) = run(&["multi", "profiles", "set", "prod", "--yes", "MULTI_REGION"]);
         assert_ne!(code, 0, "{output}");
         assert!(output.contains("KEY=VALUE"), "{output}");
     });
@@ -224,7 +224,7 @@ fn env_credentials_are_reported_as_fallback_never_as_an_override() {
             "{bare}"
         );
 
-        run(&["multi", "profiles", "set", "prod", "MULTI_ACCOUNT_SID=AC1", "MULTI_AUTH_TOKEN=t"]);
+        run(&["multi", "profiles", "set", "prod", "--yes", "MULTI_ACCOUNT_SID=AC1", "MULTI_AUTH_TOKEN=t"]);
         run(&["multi", "profiles", "use", "prod"]);
         let stored = current();
         std::env::remove_var("MULTI_ACCOUNT_SID");
@@ -234,5 +234,40 @@ fn env_credentials_are_reported_as_fallback_never_as_an_override() {
             "the stored credential wins, so env is not a fallback: {stored}"
         );
         assert!(stored.get("credential_overridden_by_env").is_none(), "{stored}");
+    });
+}
+
+#[test]
+#[serial]
+fn yes_creates_a_missing_profile_without_asking() {
+    with_clean_env(|| {
+        let (code, output) = run(&[
+            "multi", "profiles", "set", "prod", "--yes",
+            "MULTI_ACCOUNT_SID=AC1111",
+            "MULTI_AUTH_TOKEN=tok1",
+        ]);
+        assert_eq!(code, 0, "{output}");
+        assert_eq!(logged_in("prod"), vec![true, true, true]);
+    });
+}
+
+#[test]
+#[serial]
+fn a_missing_profile_is_refused_without_yes_when_stdin_is_not_a_tty() {
+    // Nobody can answer the create-or-use question under a script or an
+    // agent, so the command fails instead of creating the profile unasked.
+    with_clean_env(|| {
+        run(&["multi", "profiles", "create", "production"]);
+        let (code, output) = run(&[
+            "multi", "profiles", "set", "productio",
+            "MULTI_ACCOUNT_SID=AC1111",
+            "MULTI_AUTH_TOKEN=tok1",
+        ]);
+        assert_ne!(code, 0, "{output}");
+        assert!(output.contains("Did you mean `production`?"), "{output}");
+        assert!(output.contains("--yes"), "{output}");
+        let (_, listed) = run(&["multi", "profiles", "list", "--format", "json"]);
+        assert!(!listed.contains("\"productio\""), "nothing may be created: {listed}");
+        assert!(!listed.contains("AC1111"), "nothing may be written: {listed}");
     });
 }

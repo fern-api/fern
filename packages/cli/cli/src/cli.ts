@@ -914,7 +914,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     choices: ["host", "docker"] as const,
                     default: "host" as const,
                     description:
-                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
+                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed. Docker mode forwards HTTP(S)_PROXY/NO_PROXY and, for Java, gives Gradle a persistent cache under ~/.fern/gradle-docker-home plus the host's gradle.properties and init.d (from GRADLE_USER_HOME or ~/.gradle)."
                 })
                 .option("package-only", {
                     boolean: true,
@@ -2328,7 +2328,8 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 })
                 .option("id", {
                     type: "string",
-                    description: "The preview ID to delete. Resolves the URL from the organization in fern.config.json."
+                    description:
+                        "The preview ID to delete. Resolves the URL from the organization in fern.config.json and the instance basepaths in docs.yml."
                 })
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
@@ -2797,6 +2798,12 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "number",
                     description: "Indentation width in spaces (default: 2)",
                     default: 2
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: [] as string[],
+                    description: "Only export endpoints, webhooks, and types for the provided audiences"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2813,7 +2820,8 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath),
-                indent: argv.indent
+                indent: argv.indent,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
             });
         }
     );
@@ -2899,7 +2907,7 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create one SDK Config v1 file from one or more compatible Fern SDK groups",
+        "Migrate legacy Fern SDK generator groups to SDK Config v1",
         (yargs) =>
             yargs
                 .option("group", {
@@ -2907,6 +2915,12 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     array: true,
                     description:
                         "SDK group to migrate; repeat --group for groups that resolve to the same API and use distinct target languages"
+                })
+                .option("language", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "SDK language to migrate from the selected groups; repeat --language to migrate multiple languages, or omit to migrate every compatible language"
                 })
                 .option("api", {
                     type: "string",
@@ -2917,12 +2931,12 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     alias: "o",
                     nargs: 1,
                     description:
-                        'Path to write SDK Config v1 YAML; defaults to sdk-config.yml beside generators.yml, or use "-" for stdout'
+                        "SDK Config v1 path to create or merge; defaults to sdk-config.yml beside the legacy generators configuration"
                 })
-                .option("force", {
+                .option("dry-run", {
                     type: "boolean",
                     default: false,
-                    description: "Replace an existing output file"
+                    description: "Validate and display the proposed file operations without changing files"
                 })
                 .option("strict", {
                     type: "boolean",
@@ -2940,8 +2954,9 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 cliContext,
                 args: {
                     api: argv.api,
-                    force: argv.force,
+                    dryRun: argv.dryRun,
                     group: argv.group,
+                    language: argv.language,
                     output: argv.output,
                     strict: argv.strict
                 }

@@ -1,4 +1,212 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.145.0
+  changelogEntry:
+    - summary: |
+        `fern export` now accepts a repeatable `--audience` flag. When set, the exported OpenAPI spec only
+        includes the endpoints, webhooks, environments, and schemas required for those audiences
+        (e.g. `fern export openapi.yml --audience public`).
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.144.3
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --preview --id <id> --no-prompt` no longer asks for
+        confirmation when the preview ID already exists, so an existing preview can
+        be overwritten non-interactively (as `--force` and CI environments already
+        allowed).
+      type: fix
+    - summary: |
+        Fix several gaps in docs translation navigation overlays: the `display-name`
+        of a changelog tab is now applied; overlays can now translate `link` labels,
+        `api` reference titles, API package titles and endpoint titles (via the api
+        node's `layout`); positional matching of sections/pages no longer shifts after
+        a sibling that was matched by an explicit slug; API layout `section` overlays
+        now apply to their API package nodes; endpoint overlays match by HTTP method
+        when it is unique among siblings; and multi-segment explicit overlay slugs
+        (e.g. `customization/voice`) now match. Overlay endpoint titles are no longer
+        reverted to the translated spec's endpoint name when that name is unchanged
+        from the default locale.
+      type: fix
+    - summary: |
+        Translated OpenAPI specs now fall back to the v2 parser when the v3 parser
+        fails, matching the default-locale API build, instead of falling back to the
+        untranslated API definition. Translated specs are also built when
+        `experimental.openapi-parser-v3` is disabled.
+      type: fix
+    - summary: |
+        Pages served in a translated locale with default-locale content (no
+        translated source file, or an API without a translated spec) are now
+        published as `noindex`, so they are excluded from that locale's sitemap and
+        `llms.txt` instead of being indexed as the locale.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 5.144.2
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` prints non-fatal library-docs parser warnings (e.g. a skipped Cython module).
+      type: fix
+    - summary: |
+        Python library docs: fix 404 links to empty submodules and to private modules, emit cross-page
+        links as relative `.mdx` references so generated folders work under any navigation section,
+        use the shortest public import path in signatures, and link types named in docstring
+        `Parameters`/`Returns` sections to their class pages.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 5.144.1
+  changelogEntry:
+    - summary: |
+        Resolve generators.yml `latest` to an exact generator version before preparing and submitting SDK Gen API runtime bundles.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.144.0
+  changelogEntry:
+    - summary: |
+        C/C++ library docs now render pages for documented preprocessor macros (`#define`),
+        listed under a `macros/` folder and in group pages. Set
+        `config.include-undocumented-macros: true` on a `lang: cpp` library to also render
+        macros without a doc comment (include guards are never emitted, Doxygen drops them).
+      type: feat
+    - summary: |
+        C/C++ library docs: function-pointer typedef pages now list their documented
+        parameters, `@param[in]`/`[out]`/`[in,out]` directions are shown on parameter
+        fields, Doxygen `@verbatim` blocks render as preformatted code, and plain-C
+        libraries use `typedef` declaration syntax instead of C++ `using`. Regenerating
+        replaces the previous C/C++ page tree so pages for removed entities no longer linger.
+      type: fix
+    - summary: |
+        C/C++ library docs: `\ref`, `@see`, `@return` and auto-linked references to functions,
+        typedefs and enums documented inside a Doxygen `\defgroup` now render as links to the
+        generated pages. Previously these group-scoped references were emitted as plain text
+        because their `group__*` refids could not be decoded.
+      type: fix
+    - summary: |
+        C/C++ library docs: unqualified member references inside a namespace now resolve
+        against the enclosing scopes; function-pointer parameters of callback typedefs are
+        documented; and libraries with C++-only root members (`constexpr`, scoped enums,
+        `noexcept`) keep `using` typedef syntax.
+      type: fix
+    - summary: |
+        C/C++ library docs: typedef and enum names referenced inside function, typedef
+        and variable signature code blocks now link to their generated pages (previously
+        only class/struct references and the parameter list were linked).
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.7
+  changelogEntry:
+    - summary: |
+        Stop auto-uppercasing "Map" in generated titles. API Reference navigation
+        subpackages without an explicit display-name (e.g. groups created via
+        `x-fern-sdk-group-name`), webhook ids, GraphQL namespace titles, and
+        tag-description-page headings now render "Map"/"Map Test" instead of
+        "MAP"/"MAP Test".
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.6
+  changelogEntry:
+    - summary: |
+        Docs `snippets:` entries and SDK dynamic IR uploads now resolve a generator's package name
+        from its generator config (`config.package_name`, `config.packageName`, `config["package-name"]`,
+        `config.module.path`) when there is no registry publish target, so github-only SDKs
+        (`github: mode: pull-request` with no `output: pypi/npm` block) are matched instead of being
+        reported as an unknown package. The config lookup previously only read the raw YAML, which
+        is not populated on the normal loader path; it now reads the resolved config first. This also
+        makes `--local`, `sdk-preview` and the "version already exists" check see config-only package
+        names they previously missed. Docs snippet matching now also considers generators from the
+        other API workspaces in the fern folder when the referenced API workspace has no SDK
+        generators (e.g. docs point at a docs-only `api-name` while SDKs are generated from a
+        sibling workspace). Docs snippet version lookup selects the generator whose package matches
+        the `snippets:` entry instead of the first generator for the language. Skip paths log the
+        reason at debug level.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.5
+  changelogEntry:
+    - summary: |
+        Preserve distinct PyPI usernames and passwords when configuring generator publishing credentials.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 5.143.4
+  changelogEntry:
+    - summary: |
+        Generate configured README and API reference files for legacy SDK generators routed through SDK Gen API.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.3
+  changelogEntry:
+    - summary: |
+        `fern docs preview delete --id` now loads the docs workspace and deletes the preview at each
+        `instances[].url` basepath, so previews built from a docs.yml instance with a path
+        (e.g. `acme.docs.buildwithfern.com/reference`) no longer fail with "Domain not registered".
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.2
+  changelogEntry:
+    - summary: |
+        `fern.config.json` now rejects a `version` that is not an exact semver version, `*`, or `latest`.
+        Previously any string was accepted and forwarded to `npx fern-api@<version>` during version
+        redirection, so specs like `file:`, `npm:`, git, or URL specs could make the CLI install and run
+        an arbitrary package.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.1
+  changelogEntry:
+    - summary: |
+        Make `fern generate --package` / `--package-only` more reliable for Java SDKs on restricted networks.
+        Docker mode now gives the `gradle` toolchain container a persistent dependency cache
+        (`~/.fern/gradle-docker-home`), layers in the host's `gradle.properties` and `init.d` (from
+        `GRADLE_USER_HOME` or `~/.gradle`) and forwards `HTTP(S)_PROXY`/`NO_PROXY`; the Java build consults a
+        Maven Central mirror before Maven Central / the Gradle plugin portal to avoid HTTP 429 rate limits
+        (override with `FERN_MAVEN_CENTRAL_MIRROR=<url>` or disable with `FERN_MAVEN_CENTRAL_MIRROR=off`);
+        host mode prefers the generated `./gradlew` wrapper over a global `gradle`. Packaging now fails
+        instead of silently doing nothing when no generator in the group writes to `local-file-system`.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 5.143.0
+  changelogEntry:
+    - summary: |
+        Make `fern sdk migrate` apply reversible group and language level migrations, preserve rollback YAML in `generators.legacy.yml`, merge compatible SDK Config targets, and support dry runs.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.142.0
+  changelogEntry:
+    - summary: |
+        `experimental.external-sitemaps` entries may now be objects with a `url` and an
+        optional `locale`, e.g. `- url: https://help.example.com/sitemap.xml` /
+        `locale: nl`. When set, every page in that sitemap is indexed into the search
+        index of that site locale instead of relying on per-URL language detection.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.141.2
+  changelogEntry:
+    - summary: |
+        Reject `fern generate --sdk-config` when a selected target pins a generator version from before that language's SDK Config cutover.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 5.141.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 5.141.0
   changelogEntry:
     - summary: |

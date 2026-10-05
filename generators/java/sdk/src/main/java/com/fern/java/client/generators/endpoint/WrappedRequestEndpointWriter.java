@@ -353,112 +353,13 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.beginControlFlow("try");
         for (FileUploadProperty fileUploadProperty : fileUploadRequest.properties()) {
             if (fileUploadProperty instanceof JsonFileUploadProperty) {
-                EnrichedObjectProperty jsonProperty = ((JsonFileUploadProperty) fileUploadProperty).objectProperty();
-                Optional<FileUploadBodyPropertyEncoding> style = ((JsonFileUploadProperty) fileUploadProperty)
-                        .rawProperty()
-                        .getStyle();
-                boolean isOptional = typeNameIsOptional(jsonProperty.poetTypeName());
-                boolean formStyle = style.isPresent() && style.get().equals(FileUploadBodyPropertyEncoding.FORM);
-                boolean isCollection = ((JsonFileUploadProperty) fileUploadProperty)
-                        .rawProperty()
-                        .getValueType()
-                        .visit(new TypeReferenceIsCollection(clientGeneratorContext));
-
-                CodeBlock addDataPart;
-
-                if (formStyle) {
-                    addDataPart = CodeBlock.of(
-                            "$T.addFormDataPart($L, $S, $L, false)",
-                            clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                            variables.getMultipartBodyPropertiesName(),
-                            jsonProperty.wireKey().get(),
-                            requestParameterName + "." + jsonProperty.getterProperty().name + "()"
-                                    + (isOptional ? ".get()" : ""));
-                } else {
-                    // Determine if this type needs JSON serialization or can use simple string conversion.
-                    // Simple types (strings, primitives, enums) should NOT be JSON-serialized in multipart
-                    // form data because writeValueAsString() wraps strings in quotes.
-                    boolean needsJsonSerialization = ((JsonFileUploadProperty) fileUploadProperty)
-                            .rawProperty()
-                            .getValueType()
-                            .visit(new TypeReferenceNeedsJsonSerialization(clientGeneratorContext));
-
-                    CodeBlock.Builder dataPartBuilder = CodeBlock.builder();
-                    String writeValueParameter = requestParameterName + "." + jsonProperty.getterProperty().name + "()"
-                            + (isOptional ? ".get()" : "");
-
-                    if (isCollection) {
-                        String collection = writeValueParameter;
-                        // Only way a collection is named is being an alias.
-                        boolean collectionIsAlias = ((JsonFileUploadProperty) fileUploadProperty)
-                                .rawProperty()
-                                .getValueType()
-                                .isNamed();
-                        if (clientGeneratorContext.getCustomConfig().wrappedAliases() && collectionIsAlias) {
-                            collection += ".get()";
-                        }
-                        writeValueParameter = "item";
-                        dataPartBuilder.add("$L.forEach($L -> {\n", collection, writeValueParameter);
-                        dataPartBuilder.indent();
-                        if (needsJsonSerialization) {
-                            dataPartBuilder.beginControlFlow("try");
-                        }
-                    }
-
-                    if (needsJsonSerialization) {
-                        dataPartBuilder.add(
-                                "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
-                                variables.getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                generatedObjectMapper.getClassName(),
-                                generatedObjectMapper.jsonMapperStaticField().name,
-                                writeValueParameter);
-                    } else if (isCollection) {
-                        // For collection items of simple types, use String.valueOf()
-                        dataPartBuilder.add(
-                                "$L.addFormDataPart($S, $T.valueOf($L));\n",
-                                variables.getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                String.class,
-                                writeValueParameter);
-                    } else {
-                        // For non-collection simple types, use PoetTypeNameStringifier
-                        TypeName rawTypeName = jsonProperty.poetTypeName();
-                        if (isOptional) {
-                            rawTypeName = ((ParameterizedTypeName) rawTypeName).typeArguments.get(0);
-                        }
-                        dataPartBuilder.add(
-                                "$L.addFormDataPart($S, $L)",
-                                variables.getMultipartBodyPropertiesName(),
-                                jsonProperty.wireKey().get(),
-                                PoetTypeNameStringifier.stringify(writeValueParameter, rawTypeName));
-                    }
-
-                    if (isCollection) {
-                        if (needsJsonSerialization) {
-                            dataPartBuilder.endControlFlow();
-                            dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
-                            dataPartBuilder.add(
-                                    "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
-                            dataPartBuilder.endControlFlow();
-                        }
-                        dataPartBuilder.unindent();
-                        dataPartBuilder.add("})");
-                    }
-
-                    addDataPart = dataPartBuilder.build();
-                }
-
-                if (isOptional) {
-                    requestBodyCodeBlock.beginControlFlow(
-                            "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty());
-                }
-
-                requestBodyCodeBlock.addStatement(addDataPart);
-
-                if (isOptional) {
-                    requestBodyCodeBlock.endControlFlow();
-                }
+                addJsonFileUploadFormDataParts(
+                        clientGeneratorContext,
+                        generatedObjectMapper,
+                        variables.getMultipartBodyPropertiesName(),
+                        requestParameterName,
+                        (JsonFileUploadProperty) fileUploadProperty,
+                        requestBodyCodeBlock);
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
@@ -524,6 +425,118 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)
                 .endControlFlow();
+    }
+
+    static void addJsonFileUploadFormDataParts(
+            ClientGeneratorContext clientGeneratorContext,
+            GeneratedObjectMapper generatedObjectMapper,
+            String multipartBodyPropertiesName,
+            String requestParameterName,
+            JsonFileUploadProperty jsonFileUploadProperty,
+            CodeBlock.Builder requestBodyCodeBlock) {
+        EnrichedObjectProperty jsonProperty = jsonFileUploadProperty.objectProperty();
+        Optional<FileUploadBodyPropertyEncoding> style =
+                jsonFileUploadProperty.rawProperty().getStyle();
+        boolean isOptional = typeNameIsOptional(jsonProperty.poetTypeName());
+        boolean formStyle = style.isPresent() && style.get().equals(FileUploadBodyPropertyEncoding.FORM);
+        boolean isCollection = jsonFileUploadProperty
+                .rawProperty()
+                .getValueType()
+                .visit(new TypeReferenceIsCollection(clientGeneratorContext));
+
+        CodeBlock addDataPart;
+
+        if (formStyle) {
+            addDataPart = CodeBlock.of(
+                    "$T.addFormDataPart($L, $S, $L, false)",
+                    clientGeneratorContext.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                    multipartBodyPropertiesName,
+                    jsonProperty.wireKey().get(),
+                    requestParameterName + "." + jsonProperty.getterProperty().name + "()"
+                            + (isOptional ? ".get()" : ""));
+        } else {
+            // Determine if this type needs JSON serialization or can use simple string conversion.
+            // Simple types (strings, primitives, enums) should NOT be JSON-serialized in multipart
+            // form data because writeValueAsString() wraps strings in quotes.
+            boolean needsJsonSerialization = jsonFileUploadProperty
+                    .rawProperty()
+                    .getValueType()
+                    .visit(new TypeReferenceNeedsJsonSerialization(clientGeneratorContext));
+
+            CodeBlock.Builder dataPartBuilder = CodeBlock.builder();
+            String writeValueParameter = requestParameterName + "." + jsonProperty.getterProperty().name + "()"
+                    + (isOptional ? ".get()" : "");
+
+            if (isCollection) {
+                String collection = writeValueParameter;
+                // Only way a collection is named is being an alias.
+                boolean collectionIsAlias =
+                        jsonFileUploadProperty.rawProperty().getValueType().isNamed();
+                if (clientGeneratorContext.getCustomConfig().wrappedAliases() && collectionIsAlias) {
+                    collection += ".get()";
+                }
+                writeValueParameter = "item";
+                dataPartBuilder.add("$L.forEach($L -> {\n", collection, writeValueParameter);
+                dataPartBuilder.indent();
+                if (needsJsonSerialization) {
+                    dataPartBuilder.beginControlFlow("try");
+                }
+            }
+
+            if (needsJsonSerialization) {
+                dataPartBuilder.add(
+                        "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))" + (isCollection ? ";\n" : ""),
+                        multipartBodyPropertiesName,
+                        jsonProperty.wireKey().get(),
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        writeValueParameter);
+            } else if (isCollection) {
+                // For collection items of simple types, use String.valueOf()
+                dataPartBuilder.add(
+                        "$L.addFormDataPart($S, $T.valueOf($L));\n",
+                        multipartBodyPropertiesName,
+                        jsonProperty.wireKey().get(),
+                        String.class,
+                        writeValueParameter);
+            } else {
+                // For non-collection simple types, use PoetTypeNameStringifier
+                TypeName rawTypeName = jsonProperty.poetTypeName();
+                if (isOptional) {
+                    rawTypeName = ((ParameterizedTypeName) rawTypeName).typeArguments.get(0);
+                }
+                dataPartBuilder.add(
+                        "$L.addFormDataPart($S, $L)",
+                        multipartBodyPropertiesName,
+                        jsonProperty.wireKey().get(),
+                        PoetTypeNameStringifier.stringify(writeValueParameter, rawTypeName));
+            }
+
+            if (isCollection) {
+                if (needsJsonSerialization) {
+                    dataPartBuilder.endControlFlow();
+                    dataPartBuilder.beginControlFlow("catch ($T e)", JsonProcessingException.class);
+                    dataPartBuilder.add(
+                            "throw new $T($S, e);\n", RuntimeException.class, "Failed to write value as JSON");
+                    dataPartBuilder.endControlFlow();
+                }
+                dataPartBuilder.unindent();
+                dataPartBuilder.add("})");
+            }
+
+            addDataPart = dataPartBuilder.build();
+        }
+
+        if (isOptional) {
+            requestBodyCodeBlock.beginControlFlow(
+                    "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty());
+        }
+
+        requestBodyCodeBlock.addStatement(addDataPart);
+
+        if (isOptional) {
+            requestBodyCodeBlock.endControlFlow();
+        }
     }
 
     private void initializeUrlFormEncodedBody(

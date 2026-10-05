@@ -60,18 +60,20 @@ export interface LocalParserConfig {
     branch?: string;
     /** Contents of a Doxyfile, used only by the C++ parser. */
     doxyfileContent?: string;
+    /** Also emit `#define`s without a doc comment; C++ parser only. */
+    includeUndocumentedMacros?: boolean;
 }
 
 /**
- * Runs a library parser Docker image locally and returns the parsed IR.
+ * Runs a library parser Docker image locally and returns the parser's result.
  *
  * The container contract mirrors the server-side parsers:
  *   - the library source is mounted read-only at `/repo`
  *   - parser configuration is mounted read-only at `/input/config.json`
- *   - the container writes `{ ir, metadata }` to `/output/ir.json`
+ *   - the container writes `{ ir, metadata, warnings? }` to `/output/ir.json`
  *
- * Returns the unwrapped `ir` (matching the remote download path); callers are
- * responsible for validating its shape (see `validateLibraryIr` in `orchestrate`).
+ * Returns the parsed `ir.json` (the same shape the remote download path receives);
+ * callers unwrap and validate it (see `unwrapParserResult` / `validateLibraryIr` in `orchestrate`).
  */
 export async function runLocalParser({
     context,
@@ -100,7 +102,8 @@ export async function runLocalParser({
                 packagePath: config.packagePath,
                 sourceUrl: config.sourceUrl,
                 branch: config.branch,
-                doxyfileContent: config.doxyfileContent
+                doxyfileContent: config.doxyfileContent,
+                includeUndocumentedMacros: config.includeUndocumentedMacros
             })
         );
 
@@ -131,8 +134,7 @@ export async function runLocalParser({
             });
         }
 
-        const result = JSON.parse(irContents) as { ir?: unknown };
-        return result.ir;
+        return JSON.parse(irContents);
     } finally {
         await configFile.cleanup();
         await outputDir.cleanup();

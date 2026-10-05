@@ -263,6 +263,22 @@ func (u *UploadDocumentResponse) GetDocumentUploadResult() *DocumentUploadResult
 }
 
 func (u *UploadDocumentResponse) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"author", "id", "tags", "title"}, []string{}) {
+		valueDocumentMetadata := new(DocumentMetadata)
+		if err := json.Unmarshal(data, &valueDocumentMetadata); err == nil {
+			u.typ = "DocumentMetadata"
+			u.DocumentMetadata = valueDocumentMetadata
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"fileId", "status"}, []string{}) {
+		valueDocumentUploadResult := new(DocumentUploadResult)
+		if err := json.Unmarshal(data, &valueDocumentUploadResult); err == nil {
+			u.typ = "DocumentUploadResult"
+			u.DocumentUploadResult = valueDocumentUploadResult
+			return nil
+		}
+	}
 	valueDocumentMetadata := new(DocumentMetadata)
 	if err := json.Unmarshal(data, &valueDocumentMetadata); err == nil {
 		u.typ = "DocumentMetadata"

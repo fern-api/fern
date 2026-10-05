@@ -242,6 +242,12 @@ var (
 	externalPaymentScheduleBaseFieldDescription          = big.NewInt(1 << 5)
 )
 
+// externalPaymentScheduleBaseNullableFields maps the wire names of ExternalPaymentScheduleBase's nullable fields (required or optional) to their field bits.
+var externalPaymentScheduleBaseNullableFields = map[string]*big.Int{
+	"end_date":            externalPaymentScheduleBaseFieldEndDate,
+	"adjusted_start_date": externalPaymentScheduleBaseFieldAdjustedStartDate,
+}
+
 // Nullable parent with `additionalProperties`; nothing is required here.
 type ExternalPaymentScheduleBase struct {
 	Interval             *PaymentScheduleInterval `json:"interval,omitempty" url:"interval,omitempty"`
@@ -381,6 +387,13 @@ func (e *ExternalPaymentScheduleBase) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, externalPaymentScheduleBaseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		e.require(presentFields)
+	}
 	e.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -426,8 +439,8 @@ var (
 	externalPaymentScheduleGetFieldDescription          = big.NewInt(1 << 5)
 )
 
-// externalPaymentScheduleGetRequiredNullableFields maps the wire names of ExternalPaymentScheduleGet's required, nullable fields to their field bits.
-var externalPaymentScheduleGetRequiredNullableFields = map[string]*big.Int{
+// externalPaymentScheduleGetNullableFields maps the wire names of ExternalPaymentScheduleGet's nullable fields (required or optional) to their field bits.
+var externalPaymentScheduleGetNullableFields = map[string]*big.Int{
 	"adjusted_start_date": externalPaymentScheduleGetFieldAdjustedStartDate,
 	"end_date":            externalPaymentScheduleGetFieldEndDate,
 }
@@ -571,7 +584,7 @@ func (e *ExternalPaymentScheduleGet) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, externalPaymentScheduleGetRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, externalPaymentScheduleGetNullableFields)
 	if err != nil {
 		return err
 	}
@@ -619,6 +632,12 @@ var (
 	identifiableFieldExternalRef = big.NewInt(1 << 1)
 	identifiableFieldNote        = big.NewInt(1 << 2)
 )
+
+// identifiableNullableFields maps the wire names of Identifiable's nullable fields (required or optional) to their field bits.
+var identifiableNullableFields = map[string]*big.Int{
+	"external_ref": identifiableFieldExternalRef,
+	"note":         identifiableFieldNote,
+}
 
 type Identifiable struct {
 	ID          string  `json:"id" url:"id"`
@@ -702,6 +721,13 @@ func (i *Identifiable) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	i.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, identifiableNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		i.require(presentFields)
+	}
 	i.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -761,6 +787,13 @@ var (
 	plantBaseFieldSpecies           = big.NewInt(1 << 3)
 	plantBaseFieldWateringFrequency = big.NewInt(1 << 4)
 )
+
+// plantBaseNullableFields maps the wire names of PlantBase's nullable fields (required or optional) to their field bits.
+var plantBaseNullableFields = map[string]*big.Int{
+	"external_ref": plantBaseFieldExternalRef,
+	"note":         plantBaseFieldNote,
+	"species":      plantBaseFieldSpecies,
+}
 
 // Middle of a three-level allOf chain; defines nothing required.
 type PlantBase struct {
@@ -875,6 +908,13 @@ func (p *PlantBase) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	p.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantBaseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		p.require(presentFields)
+	}
 	p.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -912,8 +952,8 @@ var (
 	plantDetailsFieldLegacyTag = big.NewInt(1 << 3)
 )
 
-// plantDetailsRequiredNullableFields maps the wire names of PlantDetails's required, nullable fields to their field bits.
-var plantDetailsRequiredNullableFields = map[string]*big.Int{
+// plantDetailsNullableFields maps the wire names of PlantDetails's nullable fields (required or optional) to their field bits.
+var plantDetailsNullableFields = map[string]*big.Int{
 	"nickname": plantDetailsFieldNickname,
 }
 
@@ -1020,7 +1060,7 @@ func (p *PlantDetails) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	p.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantDetailsRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantDetailsNullableFields)
 	if err != nil {
 		return err
 	}
@@ -1064,6 +1104,11 @@ var (
 	plantMetadataFieldNickname  = big.NewInt(1 << 1)
 	plantMetadataFieldLegacyTag = big.NewInt(1 << 2)
 )
+
+// plantMetadataNullableFields maps the wire names of PlantMetadata's nullable fields (required or optional) to their field bits.
+var plantMetadataNullableFields = map[string]*big.Int{
+	"nickname": plantMetadataFieldNickname,
+}
 
 // Parent with a readOnly property and property-level metadata. Inlined into
 // `PlantCreate` (request body) and `PlantDetails` (response type) because the
@@ -1157,6 +1202,13 @@ func (p *PlantMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	p.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantMetadataNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		p.require(presentFields)
+	}
 	p.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1198,10 +1250,11 @@ var (
 	plantRecordFieldNote              = big.NewInt(1 << 5)
 )
 
-// plantRecordRequiredNullableFields maps the wire names of PlantRecord's required, nullable fields to their field bits.
-var plantRecordRequiredNullableFields = map[string]*big.Int{
+// plantRecordNullableFields maps the wire names of PlantRecord's nullable fields (required or optional) to their field bits.
+var plantRecordNullableFields = map[string]*big.Int{
 	"external_ref": plantRecordFieldExternalRef,
 	"species":      plantRecordFieldSpecies,
+	"note":         plantRecordFieldNote,
 }
 
 // Grandchild requiring `external_ref` (defined on the grandparent) and
@@ -1339,7 +1392,7 @@ func (p *PlantRecord) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	p.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantRecordRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, plantRecordNullableFields)
 	if err != nil {
 		return err
 	}
@@ -1391,12 +1444,13 @@ var (
 	transactionFieldIsoCurrencyCode      = big.NewInt(1 << 9)
 )
 
-// transactionRequiredNullableFields maps the wire names of Transaction's required, nullable fields to their field bits.
-var transactionRequiredNullableFields = map[string]*big.Int{
+// transactionNullableFields maps the wire names of Transaction's nullable fields (required or optional) to their field bits.
+var transactionNullableFields = map[string]*big.Int{
 	"account_owner":          transactionFieldAccountOwner,
 	"pending_transaction_id": transactionFieldPendingTransactionID,
 	"authorized_date":        transactionFieldAuthorizedDate,
 	"transaction_code":       transactionFieldTransactionCode,
+	"merchant_name":          transactionFieldMerchantName,
 	"iso_currency_code":      transactionFieldIsoCurrencyCode,
 }
 
@@ -1598,7 +1652,7 @@ func (t *Transaction) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, transactionRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, transactionNullableFields)
 	if err != nil {
 		return err
 	}
@@ -1649,9 +1703,12 @@ var (
 	transactionBaseFieldIsoCurrencyCode      = big.NewInt(1 << 6)
 )
 
-// transactionBaseRequiredNullableFields maps the wire names of TransactionBase's required, nullable fields to their field bits.
-var transactionBaseRequiredNullableFields = map[string]*big.Int{
-	"iso_currency_code": transactionBaseFieldIsoCurrencyCode,
+// transactionBaseNullableFields maps the wire names of TransactionBase's nullable fields (required or optional) to their field bits.
+var transactionBaseNullableFields = map[string]*big.Int{
+	"pending_transaction_id": transactionBaseFieldPendingTransactionID,
+	"account_owner":          transactionBaseFieldAccountOwner,
+	"merchant_name":          transactionBaseFieldMerchantName,
+	"iso_currency_code":      transactionBaseFieldIsoCurrencyCode,
 }
 
 // Defines nullable properties without requiring them.
@@ -1803,7 +1860,7 @@ func (t *TransactionBase) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, transactionBaseRequiredNullableFields)
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, transactionBaseNullableFields)
 	if err != nil {
 		return err
 	}

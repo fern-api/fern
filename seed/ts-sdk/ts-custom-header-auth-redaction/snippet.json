@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/accounts/get",
+                "method": "POST",
+                "identifier_override": "endpoint_accounts.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsCustomHeaderAuthRedactionClient } from \"@fern/ts-custom-header-auth-redaction\";\n\nconst client = new SeedTsCustomHeaderAuthRedactionClient({ baseUrl: \"YOUR_BASE_URL\", secret: \"YOUR_SECRET\", clientId: \"YOUR_CLIENT_ID\", version: \"YOUR_VERSION\" });\nawait client.accounts.get({\n    access_token: \"access-sandbox-1\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

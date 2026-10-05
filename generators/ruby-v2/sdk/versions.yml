@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        The README's Environments example for a multi-URL SDK passes the environment constant through
+        the client's `environment:` keyword instead of `base_url:`. With more than one URL per
+        environment the constant is a hash of URLs, and `base_url:` expects a string, so the example
+        built a client that could not make a request. Single-URL SDKs keep `base_url:`.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.28.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 1.28.1
   changelogEntry:
     - summary: |

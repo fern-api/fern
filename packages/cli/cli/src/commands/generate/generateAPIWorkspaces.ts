@@ -1,3 +1,4 @@
+import path from "node:path";
 import { createOrganizationIfDoesNotExist, FernToken, getToken } from "@fern-api/auth";
 import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
@@ -7,7 +8,8 @@ import { Project } from "@fern-api/project-loader";
 import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
-    getFernSdkGenApiLanguage
+    getFernSdkGenApiLanguage,
+    selectGeneratorConfigRoute
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
@@ -18,10 +20,11 @@ import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
-import { loadSdkConfigV1 } from "./loadSdkConfigV1.js";
+import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkConfigV1.js";
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
+import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
@@ -49,6 +52,7 @@ interface PreparedSdkConfigGeneration extends WorkspaceGeneration {
 interface SdkConfigWorkspaceOwner {
     absoluteFilePath: AbsoluteFilePath;
     workspaceName: string | undefined;
+    getAbsoluteFilePaths?: () => AbsoluteFilePath[];
 }
 
 export async function generateAPIWorkspaces({
@@ -388,10 +392,40 @@ async function prepareSdkConfigGenerations({
                 preview,
                 targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
             );
+            if (sdkConfigPath != null) {
+                const selectedTargetIndexes =
+                    targetNames != null
+                        ? new Set(loaded.config.targets.map((_, index) => index))
+                        : getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex });
+                const selectedTargets = loaded.config.targets.filter((_, index) => selectedTargetIndexes.has(index));
+                for (const target of selectedTargets) {
+                    if (target.generatorVersion == null) {
+                        continue;
+                    }
+                    const generatorId = getSdkConfigGeneratorName(target.language);
+                    const language = generatorId == null ? undefined : getFernSdkGenApiLanguage(generatorId);
+                    if (generatorId == null || language == null) {
+                        continue;
+                    }
+                    const route = selectGeneratorConfigRoute({
+                        generatorId,
+                        language,
+                        requestedVersion: target.generatorVersion
+                    });
+                    if (route.configKind === "legacy-fern") {
+                        return cliContext.failAndThrow(
+                            `--sdk-config cannot be used with ${generatorId} ${target.generatorVersion} because SDK Config support starts at ${route.cutoverVersion}. Use ${route.cutoverVersion} or later, or remove --sdk-config and configure the pre-cutover generator in generators.yml.`,
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                }
+            }
             const created = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
                     sdkConfig: loaded.config,
                     absolutePathToConfig: loaded.absolutePath,
+                    sourceRoot: resolveSourceRoot(candidate.owner, loaded.absolutePath),
                     cliVersion: cliContext.environment.packageVersion,
                     workspaceName: candidate.owner?.workspaceName,
                     context
@@ -422,6 +456,39 @@ async function prepareSdkConfigGenerations({
         await Promise.all(prepared.map(({ cleanup }) => cleanup()));
         return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
     }
+}
+
+function resolveSourceRoot(
+    owner: SdkConfigWorkspaceOwner | undefined,
+    absolutePathToConfig: string
+): string | undefined {
+    if (owner?.getAbsoluteFilePaths == null) {
+        return undefined;
+    }
+    return owner
+        .getAbsoluteFilePaths()
+        .reduce<string>(
+            (boundary, absoluteFilePath) => commonAncestor(boundary, absoluteFilePath),
+            path.dirname(path.resolve(absolutePathToConfig))
+        );
+}
+
+function commonAncestor(candidateRoot: string, candidatePath: string): string {
+    const resolvedPath = path.resolve(candidatePath);
+    let root = path.resolve(candidateRoot);
+    while (!isWithin(root, resolvedPath)) {
+        const parent = path.dirname(root);
+        if (parent === root) {
+            return root;
+        }
+        root = parent;
+    }
+    return root;
+}
+
+function isWithin(directory: string, candidate: string): boolean {
+    const relativePath = path.relative(directory, candidate);
+    return relativePath === "" || (!relativePath.startsWith(`..${path.sep}`) && relativePath !== "..");
 }
 
 function validateUniqueLanguageOwnership({

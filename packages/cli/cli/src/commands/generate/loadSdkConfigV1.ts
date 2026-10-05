@@ -24,7 +24,7 @@ export interface LoadedSdkConfigV1 {
     payload: FernSdkConfigV1Payload;
 }
 
-interface SdkConfigGeneratorSelection {
+export interface SdkConfigGeneratorSelection {
     generatorName?: string;
     generatorIndex?: number;
     targetNames?: never;
@@ -151,7 +151,10 @@ export async function loadSdkConfigV1(
     }
 }
 
-function getGeneratorSelectedTargetIndexes(config: SdkConfigV1, selection: SdkConfigGeneratorSelection): Set<number> {
+export function getGeneratorSelectedTargetIndexes(
+    config: SdkConfigV1,
+    selection: SdkConfigGeneratorSelection
+): Set<number> {
     if (selection.generatorIndex != null) {
         if (selection.generatorIndex < 0 || selection.generatorIndex >= config.targets.length) {
             throw new Error(

@@ -1,4 +1,89 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.65.1
+  changelogEntry:
+    - summary: |
+        The generated README's client snippets use the configured client constructor (`clientName`,
+        `exportedClientName`, `clientConstructorName`) instead of always writing `client.NewClient`,
+        and the Environments section of a multi-URL SDK passes the environment through
+        `option.WithEnvironment` instead of `option.WithBaseURL`, which takes a string and does not
+        compile against an environment struct.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.65.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `legacyNullableAliasPointers` custom config option. When enabled, optional or
+        nullable fields that reference an alias which already renders as a Go pointer
+        (e.g. `type DiscoveryURL = *string`) keep the outer pointer (`*DiscoveryURL`), matching
+        SDKs generated before v1.46.1. Field types, setters, and code snippets all use the legacy
+        shape. The option is off by default, so existing output is unchanged.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.64.3
+  changelogEntry:
+    - summary: |
+        Restore pointer types for optional fields that reference a nullable list, map, or
+        `unknown` alias (for example a `type: [object, "null"]` schema with
+        `additionalProperties`, or a `type: [array, "null"]` schema). Since 1.46.1 these
+        fields were generated as bare values (`Metadata MetadataAlias`) instead of
+        pointers (`Metadata *MetadataAlias`), which was a breaking change for existing
+        SDKs. The double-pointer guard now only applies to aliases that actually render
+        as Go pointers (nullable primitives, enums, objects, and unions). Dynamic snippets
+        now render `&Alias{...}` literals for these fields (including aliases of such
+        aliases), take the address of `unknown` alias values, and no longer emit `&&` for
+        aliases that already render as pointers.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 1.64.2
+  changelogEntry:
+    - summary: |
+        Return a completed HTTP response instead of discarding it when the request
+        context is canceled after the response has been fully received but before
+        it is decoded. `Caller.Call` previously re-checked `ctx.Err()` at that point
+        and returned `context.Canceled` / `context.DeadlineExceeded` with a nil
+        response, which dropped valid responses that had already been buffered (for
+        example by a logging `http.RoundTripper` that ends its scope before
+        returning). Calls canceled before the request is sent, and calls whose
+        response body cannot be read to completion once the context ends, continue
+        to fail with the context's error, and a canceled context still never
+        triggers a retry.
+      type: fix
+    - summary: |
+        Fix undiscriminated union deserialization so JSON objects are matched to the correct object
+        member. Previously, the first object member always won because object `UnmarshalJSON` accepts
+        unknown keys and doesn't enforce required keys, so values like `{"ends_with": [...]}` were
+        decoded as an earlier member and silently corrupted on re-serialization. Object members
+        (including aliases to objects) that don't allow extra properties are now only selected when
+        the JSON keys are a subset of the member's properties and include all of its required
+        properties, and permissive object members no longer shadow a later member that matches
+        exactly. If no member matches exactly, object members whose required keys are present are
+        tried next, and the previous behavior is kept as the final fallback.
+      type: fix
+    - summary: |
+        Preserve explicit `null` on optional nullable (`optional<nullable<T>>`) object
+        properties across a JSON decode/re-encode round trip. Previously only required
+        nullable properties were tracked on decode, so a response field such as
+        `"holder_category": null` was dropped when the value was marshaled again.
+        Fields absent from the input remain absent, and plain `optional<T>` fields are
+        unaffected. The generated `<type>RequiredNullableFields` map is renamed to
+        `<type>NullableFields`, and generated SDKs now include an optional-nullable
+        round-trip test for each affected type.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 1.64.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
 - version: 1.64.0
   changelogEntry:
     - summary: |

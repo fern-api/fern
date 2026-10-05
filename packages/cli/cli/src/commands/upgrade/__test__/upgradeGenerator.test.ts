@@ -597,6 +597,43 @@ groups:
         ]);
     });
 
+    it.each([
+        true,
+        false
+    ])("treats latest as already up to date without direct upgrade discovery when SDK Gen API enabled=%s", async (sdkGenApiEnabled) => {
+        const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: latest\n`;
+        const { getPathToGeneratorsConfiguration, getLatestGeneratorVersion } = await import(
+            "@fern-api/configuration-loader"
+        );
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+        vi.stubEnv("FERN_USE_SDK_GEN_API", sdkGenApiEnabled ? "true" : "false");
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "1.0.0",
+            organization: "test-org"
+        });
+
+        expect(fetchMock).not.toHaveBeenCalled();
+        expect(getLatestGeneratorVersion).not.toHaveBeenCalled();
+        expect(sdkGenApiHelpers.askToLogin).not.toHaveBeenCalled();
+        expect(result.appliedUpgrades).toEqual([]);
+        expect(result.alreadyUpToDate).toEqual([
+            { generatorName: "fernapi/fern-typescript-sdk", groupName: "production", version: "latest" }
+        ]);
+        expect(result.updatedConfiguration).toContain("version: latest");
+    });
+
     it("adds SDK Gen API context to network errors", async () => {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
         vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("connection refused")));
@@ -758,7 +795,6 @@ groups:
     it.each([
         ["configured", "not-a-version", "1.2.3"],
         ["candidate", "1.2.3", "not-a-version"],
-        ["candidate with latest configured", "latest", "not-a-version"],
         ["equal malformed", "not-a-version", "not-a-version"]
     ])("fails actionably for malformed %s version", async (_kind, currentVersion, candidateVersion) => {
         const yamlContent = `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: ${currentVersion}\n`;

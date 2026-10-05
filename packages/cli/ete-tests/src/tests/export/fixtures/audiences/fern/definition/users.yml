@@ -1,0 +1,27 @@
+types:
+  User:
+    properties:
+      id: string
+      name: string
+  AdminUser:
+    properties:
+      id: string
+      secret: string
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    get:
+      audiences: [public]
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: string
+      response: User
+    getAdmin:
+      audiences: [internal]
+      method: GET
+      path: /admin/{id}
+      path-parameters:
+        id: string
+      response: AdminUser
