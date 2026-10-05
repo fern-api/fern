@@ -378,7 +378,10 @@ export class WireMock {
         // with a non-primitive type (e.g., an object or named type), default to an empty JSON object.
         // This prevents WireMock from returning a JSON string (e.g., `""`) that cannot be
         // unmarshaled into a complex struct in strongly-typed languages like Go.
-        if (bodyObj === "" && endpoint.response?.body?.type === "json") {
+        // Per-example error mappings are excluded: the success response type says nothing about the error
+        // body, and serving `{}` there would let clients parse a typed error the example doesn't have.
+        const isPerExampleError = testId != null && example?.response?.type === "error";
+        if (bodyObj === "" && !isPerExampleError && endpoint.response?.body?.type === "json") {
             const responseValue = endpoint.response.body.value;
             if (responseValue.type === "response") {
                 const responseBodyType = responseValue.responseBodyType;
