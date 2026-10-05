@@ -143,9 +143,11 @@ public class AsyncSeedVariablesClientBuilder {
      * @param builder The ClientOptions.Builder to configure
      */
     protected void setVariables(ClientOptions.Builder builder) {
-        if (this.rootVariable != null) {
-            builder.rootVariable(this.rootVariable);
+        if (this.rootVariable == null) {
+            throw new IllegalStateException(
+                    "rootVariable is required. Pass it to the builder or set the ROOT_VARIABLE environment variable.");
         }
+        builder.rootVariable(this.rootVariable);
     }
 
     /**
@@ -239,12 +241,7 @@ public class AsyncSeedVariablesClientBuilder {
      * }
      * }</pre>
      */
-    protected void validateConfiguration() {
-        if (this.rootVariable == null) {
-            throw new IllegalStateException(
-                    "rootVariable is required. Pass it to the builder or set the ROOT_VARIABLE environment variable.");
-        }
-    }
+    protected void validateConfiguration() {}
 
     public AsyncSeedVariablesClient build() {
         validateConfiguration();
