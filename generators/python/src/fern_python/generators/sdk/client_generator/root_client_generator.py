@@ -1847,11 +1847,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if not self._context.custom_config.refresh_auth_on_failed_permissions:
             return []
         # Cached token providers are invalidated; callable credentials are re-read on every attempt.
-        if len(token_provider_var_names) == 1:
+        if not token_provider_var_names:
+            refresh_auth = "lambda: None"
+        elif len(token_provider_var_names) == 1:
             refresh_auth = f"{token_provider_var_names[0]}.invalidate"
         else:
             invalidations = ", ".join(f"{name}.invalidate()" for name in token_provider_var_names)
-            refresh_auth = f"lambda: ({invalidations})" if invalidations else "lambda: None"
+            refresh_auth = f"lambda: ({invalidations})"
         return [(ClientWrapperGenerator.REFRESH_AUTH_PARAMETER_NAME, AST.Expression(refresh_auth))]
 
     def _get_client_wrapper_kwargs(
