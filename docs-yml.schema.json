@@ -7252,7 +7252,7 @@
           }
         }
       ],
-      "description": "The `css` object allows you to customize the appearance of your docs site by injecting custom CSS, i.e.\n\n```yaml\ncss: \"path/to/css/file.css\"\n```\n\nor, multiple files:\n\n```yaml\ncss:\n  - \"path/to/css/file.css\"\n  - \"path/to/another/css/file.css\"\n```"
+      "description": "The `css` object allows you to customize the appearance of your docs site by injecting custom CSS, i.e.\n\n```yaml\ncss: \"path/to/css/file.css\"\n```\n\nor, multiple files:\n\n```yaml\ncss:\n  - \"path/to/css/file.css\"\n  - \"path/to/another/css/file.css\"\n```\n\nor, a remote stylesheet (e.g. from a CDN), which is fetched and inlined when the docs are generated:\n\n```yaml\ncss:\n  - \"path/to/css/file.css\"\n  - \"https://cdn.example.com/path/to/file.css\"\n```"
     },
     "docs.JsScriptStrategy": {
       "type": "string",
