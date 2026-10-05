@@ -713,6 +713,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             // path params come from a wrapped request (e.g., request.Region).
             const pathParamLocalVars: Record<string, string> = {};
             for (const pathParameter of endpoint.allPathParameters) {
+                if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                    continue;
+                }
                 if (pathParameter.clientDefault != null && isPlainStringType(pathParameter.valueType)) {
                     const ref = signature.pathParameterReferences[getOriginalName(pathParameter.name)];
                     if (ref != null) {

@@ -859,14 +859,20 @@ export class EndpointSnippetGenerator {
             inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? true
         };
 
-        const includePathParamsInRequest = this.context.includePathParametersInWrappedRequest({
-            request,
-            inlinePathParameters
-        });
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        // Path parameters bound to an SDK variable live on the client, so a wrapper that would
+        // only have carried bound path parameters is omitted by the SDK (mirrors
+        // SdkGeneratorContext.includePathParametersInWrappedRequest).
+        const hasPerCallPathParameters = pathParameters.some((parameter) => parameter.variable == null);
+        const includePathParamsInRequest =
+            hasPerCallPathParameters &&
+            this.context.includePathParametersInWrappedRequest({
+                request,
+                inlinePathParameters
+            });
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: go.StructField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
             pathParameterFields.push(
                 ...this.getPathParameters({
@@ -891,7 +897,13 @@ export class EndpointSnippetGenerator {
         }
 
         const requestArg: go.AstNode | undefined = this.context.needsRequestParameter({
-            request,
+            request: {
+                ...request,
+                metadata: {
+                    includePathParameters: includePathParamsInRequest,
+                    onlyPathParameters: request.metadata?.onlyPathParameters ?? false
+                }
+            },
             inlinePathParameters,
             inlineFileProperties
         })
