@@ -114,11 +114,12 @@ export class WireTestGenerator {
                 const isFirstExample = index === 0;
                 // The first example falls back to the first dynamic example, as before multi-example support.
                 const dynamicExample =
-                    dynamicExamples.find((example) => example.id === testExample.dynamicExampleId) ??
-                    (isFirstExample ? dynamicExamples[0] : undefined);
+                    (testExample.dynamicExampleId != null
+                        ? dynamicExamples.find((example) => example.id === testExample.dynamicExampleId)
+                        : undefined) ?? (isFirstExample ? dynamicExamples[0] : undefined);
                 if (dynamicExample == null) {
                     this.context.logger.debug(
-                        `Skipping wire test for example ${testExample.dynamicExampleId} of endpoint ${endpoint.id}: no dynamic example`
+                        `Skipping wire test for example ${testExample.testId} of endpoint ${endpoint.id}: no dynamic example`
                     );
                     continue;
                 }
@@ -140,7 +141,7 @@ export class WireTestGenerator {
                     });
                 } catch (error) {
                     this.context.logger.warn(
-                        `Failed to generate snippet for example ${testExample.dynamicExampleId} of endpoint ${endpoint.id}: ${error}`
+                        `Failed to generate snippet for example ${testExample.testId} of endpoint ${endpoint.id}: ${error}`
                     );
                 }
             }
