@@ -829,7 +829,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .convertToTypeName(true, variableDeclaration.getType()),
                             variableName)
                     .addModifiers(Modifier.PRIVATE);
-            variableDeclaration.getEnvVar().ifPresent(envVar -> variableField.initializer("System.getenv($S)", envVar));
+            variableDeclaration
+                    .getEnvVar()
+                    .ifPresent(envVar -> variableField.initializer("$T.getenv($S)", System.class, envVar));
             clientBuilder.addField(variableField.build());
         });
 
