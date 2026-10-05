@@ -64,7 +64,7 @@ import Trace
                 ])
             )
         ]
-        let response = try await client.v2.v3.problem.getLightweightProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.v2.v3.problem.getLightweightProblems(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -1181,7 +1181,7 @@ import Trace
                 isPublic: true
             )
         ]
-        let response = try await client.v2.v3.problem.getProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.v2.v3.problem.getProblems(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -1752,7 +1752,7 @@ import Trace
         )
         let response = try await client.v2.v3.problem.getLatestProblem(
             problemId: "problemId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -2325,7 +2325,7 @@ import Trace
         let response = try await client.v2.v3.problem.getProblemVersion(
             problemId: "problemId",
             problemVersion: "1",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

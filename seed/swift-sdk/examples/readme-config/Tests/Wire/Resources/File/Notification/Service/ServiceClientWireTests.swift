@@ -34,43 +34,7 @@ import Examples
         )
         let response = try await client.file.notification.service.getException(
             notificationId: "notification-hsy129x",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getException2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "type": "generic",
-                  "exceptionType": "exceptionType",
-                  "exceptionMessage": "exceptionMessage",
-                  "exceptionStacktrace": "exceptionStacktrace"
-                }
-                """#.utf8
-            )
-        )
-        let client = ExamplesClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Exception.generic(
-            .init(
-                exceptionType: "exceptionType",
-                exceptionMessage: "exceptionMessage",
-                exceptionStacktrace: "exceptionStacktrace",
-                additionalProperties: [
-                    "type": JSONValue.string("generic")
-                ]
-            )
-        )
-        let response = try await client.file.notification.service.getException(
-            notificationId: "notificationId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

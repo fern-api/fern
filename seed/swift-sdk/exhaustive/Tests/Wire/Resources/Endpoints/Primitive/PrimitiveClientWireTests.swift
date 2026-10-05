@@ -20,7 +20,7 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.primitive.getAndReturnString(
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -42,7 +42,7 @@ import Exhaustive
         let expectedResponse = 1
         let response = try await client.endpoints.primitive.getAndReturnInt(
             request: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -64,7 +64,7 @@ import Exhaustive
         let expectedResponse = 1000000
         let response = try await client.endpoints.primitive.getAndReturnLong(
             request: 1000000,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -86,7 +86,7 @@ import Exhaustive
         let expectedResponse = 1.1
         let response = try await client.endpoints.primitive.getAndReturnDouble(
             request: 1.1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -108,7 +108,7 @@ import Exhaustive
         let expectedResponse = true
         let response = try await client.endpoints.primitive.getAndReturnBool(
             request: true,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -130,7 +130,7 @@ import Exhaustive
         let expectedResponse = try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
         let response = try await client.endpoints.primitive.getAndReturnDatetime(
             request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -152,7 +152,7 @@ import Exhaustive
         let expectedResponse = CalendarDate("2023-01-15")!
         let response = try await client.endpoints.primitive.getAndReturnDate(
             request: CalendarDate("2023-01-15")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -174,7 +174,7 @@ import Exhaustive
         let expectedResponse = UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!
         let response = try await client.endpoints.primitive.getAndReturnUuid(
             request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -196,7 +196,7 @@ import Exhaustive
         let expectedResponse = "SGVsbG8gd29ybGQh"
         let response = try await client.endpoints.primitive.getAndReturnBase64(
             request: "SGVsbG8gd29ybGQh",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

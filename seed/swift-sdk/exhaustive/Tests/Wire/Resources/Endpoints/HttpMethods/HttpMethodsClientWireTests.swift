@@ -20,7 +20,7 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.httpMethods.testGet(
             id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -86,7 +86,7 @@ import Exhaustive
             request: ObjectWithRequiredField(
                 string: "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -153,7 +153,7 @@ import Exhaustive
             request: ObjectWithRequiredField(
                 string: "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -239,7 +239,7 @@ import Exhaustive
                 ],
                 bigint: "1000000"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -261,7 +261,7 @@ import Exhaustive
         let expectedResponse = true
         let response = try await client.endpoints.httpMethods.testDelete(
             id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

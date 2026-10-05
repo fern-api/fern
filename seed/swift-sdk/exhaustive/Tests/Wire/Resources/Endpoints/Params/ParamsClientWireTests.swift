@@ -20,7 +20,7 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.getWithPath(
             param: "param",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -42,9 +42,81 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.getWithInlinePath(
             param: "param",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func getWithQuery1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.endpoints.params.getWithQuery(
+            query: "query",
+            number: 1,
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
+    @Test func getWithAllowMultipleQuery1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.endpoints.params.getWithAllowMultipleQuery(
+            query: [
+                "query"
+            ],
+            number: [
+                1
+            ],
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
+    @Test func getWithPathAndQuery1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.endpoints.params.getWithPathAndQuery(
+            param: "param",
+            query: "query",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
+    @Test func getWithInlinePathAndQuery1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.endpoints.params.getWithInlinePathAndQuery(
+            param: "param",
+            query: "query",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
     }
 
     @Test func modifyWithPath1() async throws -> Void {
@@ -65,7 +137,7 @@ import Exhaustive
         let response = try await client.endpoints.params.modifyWithPath(
             param: "param",
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -88,7 +160,7 @@ import Exhaustive
         let response = try await client.endpoints.params.modifyWithInlinePath(
             param: "param",
             request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -115,7 +187,7 @@ import Exhaustive
         let response = try await client.endpoints.params.uploadWithPath(
             param: "upload-path",
             request: Data("data".utf8),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -182,7 +254,7 @@ import Exhaustive
             request: ObjectWithRequiredField(
                 string: "string"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -204,7 +276,7 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.getWithBooleanPath(
             param: "true",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -226,8 +298,40 @@ import Exhaustive
         let expectedResponse = "string"
         let response = try await client.endpoints.params.getWithPathAndErrors(
             param: "param",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func getWithPathAndErrorsThrowsBadRequestBody() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            statusCode: 400,
+            body: Foundation.Data(
+                #"""
+                {
+                  "message": "message"
+                }
+                """#.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        do {
+            _ = try await client.endpoints.params.getWithPathAndErrors(
+                param: "param",
+                requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+            )
+            Issue.record("Expected ExhaustiveError.httpError with status code 400")
+        } catch ExhaustiveError.httpError(let httpError) {
+            #expect(httpError.statusCode == 400)
+            let body = try #require(httpError.body)
+            #expect(body.code == 400)
+            #expect(body.type == nil)
+            #expect(body.message == "message")
+        }
     }
 }

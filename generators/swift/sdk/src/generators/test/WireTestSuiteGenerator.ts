@@ -64,6 +64,7 @@ export class WireTestSuiteGenerator {
     }
 
     private generateTestFunctions(): swift.Method[] {
+        const usedTestFunctionNames = new Set<string>();
         return (this.service?.endpoints ?? []).flatMap((endpoint) => {
             const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
                 ir: this.dynamicIr,
@@ -77,7 +78,8 @@ export class WireTestSuiteGenerator {
                 endpoint,
                 endpointSnippetGenerator,
                 dynamicIr: this.dynamicIr,
-                sdkGeneratorContext: this.sdkGeneratorContext
+                sdkGeneratorContext: this.sdkGeneratorContext,
+                usedTestFunctionNames
             }).generateTestFunctionsForEndpoint();
         });
     }

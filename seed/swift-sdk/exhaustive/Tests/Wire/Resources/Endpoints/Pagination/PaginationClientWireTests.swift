@@ -41,7 +41,7 @@ import Exhaustive
         let response = try await client.endpoints.pagination.listItems(
             cursor: "cursor",
             limit: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
