@@ -223,7 +223,8 @@ export function generateIntermediateRepresentation({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
                       id: key,
                       name: rootApiFileContext.casingsGenerator.generateName(key),
-                      type: rootApiFileContext.parseTypeReference(variable)
+                      type: rootApiFileContext.parseTypeReference(variable),
+                      envVar: typeof variable !== "string" ? variable.env : undefined
                   }))
                 : [],
         globalParameters:

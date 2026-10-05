@@ -1,4 +1,4 @@
-import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir";
+import { PrimitiveSchemaValue, SdkVariable } from "@fern-api/openapi-ir";
 import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
@@ -9,7 +9,7 @@ import { FernOpenAPIExtension } from "./fernExtensions.js";
 export function getVariableDefinitions(
     document: OpenAPIV3.Document,
     preserveSchemaIds: boolean
-): Record<string, PrimitiveSchema> {
+): Record<string, SdkVariable> {
     const variables = getExtension<Record<string, OpenAPIV3.SchemaObject>>(
         document,
         FernOpenAPIExtension.SDK_VARIABLES
@@ -25,20 +25,23 @@ export function getVariableDefinitions(
                 return [
                     variableName,
                     {
-                        nameOverride: undefined,
-                        generatedName: getGeneratedTypeName([variableName], preserveSchemaIds),
-                        title: schema.title,
-                        schema: PrimitiveSchemaValue.string({
-                            default: getDefaultAsString(schema),
-                            pattern: schema.pattern,
-                            format: schema.format,
-                            minLength: schema.minLength,
-                            maxLength: schema.maxLength
-                        }),
-                        description: schema.description,
-                        availability: undefined,
-                        namespace: undefined,
-                        groupName: undefined
+                        schema: {
+                            nameOverride: undefined,
+                            generatedName: getGeneratedTypeName([variableName], preserveSchemaIds),
+                            title: schema.title,
+                            schema: PrimitiveSchemaValue.string({
+                                default: getDefaultAsString(schema),
+                                pattern: schema.pattern,
+                                format: schema.format,
+                                minLength: schema.minLength,
+                                maxLength: schema.maxLength
+                            }),
+                            description: schema.description,
+                            availability: undefined,
+                            namespace: undefined,
+                            groupName: undefined
+                        },
+                        envVar: getVariableEnvVar(variableName, schema)
                     }
                 ];
             } else {
@@ -49,4 +52,18 @@ export function getVariableDefinitions(
             }
         })
     );
+}
+
+function getVariableEnvVar(variableName: string, schema: OpenAPIV3.SchemaObject): string | undefined {
+    const envVar = getExtension<unknown>(schema, FernOpenAPIExtension.SDK_VARIABLE_ENV);
+    if (envVar == null) {
+        return undefined;
+    }
+    if (typeof envVar !== "string" || envVar.length === 0) {
+        throw new CliError({
+            message: `Variable ${variableName} has invalid ${FernOpenAPIExtension.SDK_VARIABLE_ENV}: expected a non-empty string but got ${JSON.stringify(envVar)}`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return envVar;
 }
