@@ -164,6 +164,26 @@ func TestCall(t *testing.T) {
 			},
 		},
 		{
+			description: "POST body properties override declared fields",
+			giveMethod:  http.MethodPost,
+			giveHeader: http.Header{
+				"X-API-Status": []string{"success"},
+			},
+			giveRequest: &InternalTestRequest{
+				Id: "123",
+			},
+			giveBodyProperties: map[string]interface{}{
+				"id":  "456",
+				"key": "value",
+			},
+			wantResponse: &InternalTestResponse{
+				Id: "456",
+				ExtraBodyProperties: map[string]interface{}{
+					"key": "value",
+				},
+			},
+		},
+		{
 			description: "GET extra query parameters",
 			giveMethod:  http.MethodGet,
 			giveHeader: http.Header{
@@ -737,5 +757,162 @@ func TestNewRequestBodyFormURLEncoded(t *testing.T) {
 
 		assert.Equal(t, "test_client_id", values.Get("client_id"))
 		assert.Equal(t, "test_client_secret", values.Get("client_secret"))
+	})
+}
+
+// BodyPropertiesTestRequest is a request with both required and optional fields.
+type BodyPropertiesTestRequest struct {
+	Name     string                 `json:"name"`
+	Model    *string                `json:"model,omitempty"`
+	Settings map[string]interface{} `json:"settings,omitempty"`
+}
+
+// nullTestRequest is a request that serializes to the JSON null value.
+type nullTestRequest struct{}
+
+func (nullTestRequest) MarshalJSON() ([]byte, error) {
+	return []byte("null"), nil
+}
+
+func readRequestBody(t *testing.T, reader io.Reader) string {
+	require.NotNil(t, reader)
+	body, err := io.ReadAll(reader)
+	require.NoError(t, err)
+	return string(body)
+}
+
+func TestNewRequestBodyWithBodyProperties(t *testing.T) {
+	t.Run("without body properties marshals request unchanged", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{Name: "voice"}
+		reader, err := newRequestBody(request, nil, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("adds new properties after declared properties", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{Name: "voice"}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"beta_flag": true,
+			"another":   1,
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice","another":1,"beta_flag":true}`, readRequestBody(t, reader))
+	})
+
+	t.Run("overrides a set field in place", func(t *testing.T) {
+		model := "v1"
+		request := &BodyPropertiesTestRequest{Name: "voice", Model: &model}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"name": "override",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"override","model":"v1"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("overrides an unset omitempty field", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{Name: "voice"}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"model": "v2",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice","model":"v2"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("overrides with explicit null", func(t *testing.T) {
+		model := "v1"
+		request := &BodyPropertiesTestRequest{Name: "voice", Model: &model}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"model": nil,
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice","model":null}`, readRequestBody(t, reader))
+	})
+
+	t.Run("replaces nested values without deep merging", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{
+			Name: "voice",
+			Settings: map[string]interface{}{
+				"stability": 0.5,
+				"style":     0.1,
+			},
+		}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"settings": map[string]interface{}{
+				"stability": 0.9,
+			},
+			"metadata": map[string]interface{}{
+				"tags": []interface{}{"a", "b"},
+			},
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(
+			t,
+			`{"name":"voice","settings":{"stability":0.9},"metadata":{"tags":["a","b"]}}`,
+			readRequestBody(t, reader),
+		)
+	})
+
+	t.Run("nil request uses body properties as the body", func(t *testing.T) {
+		reader, err := newRequestBody(nil, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("typed nil request uses body properties as the body", func(t *testing.T) {
+		var request *BodyPropertiesTestRequest
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("nil request without body properties has no body", func(t *testing.T) {
+		reader, err := newRequestBody(nil, nil, contentType)
+		require.NoError(t, err)
+		assert.Nil(t, reader)
+	})
+
+	t.Run("request that serializes to null uses body properties as the body", func(t *testing.T) {
+		reader, err := newRequestBody(nullTestRequest{}, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("non-object request is sent unchanged", func(t *testing.T) {
+		reader, err := newRequestBody([]string{"a", "b"}, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `["a","b"]`, readRequestBody(t, reader))
+	})
+
+	t.Run("io.Reader request is sent unchanged", func(t *testing.T) {
+		reader, err := newRequestBody(bytes.NewBufferString("raw"), map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, "raw", readRequestBody(t, reader))
+	})
+
+	t.Run("form URL encoded body properties override declared fields", func(t *testing.T) {
+		request := &FormURLEncodedTestRequest{
+			ClientID:     "test_client_id",
+			ClientSecret: "test_client_secret",
+		}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"client_id": "override",
+			"audience":  "api",
+		}, contentTypeFormURLEncoded)
+		require.NoError(t, err)
+		values, err := url.ParseQuery(readRequestBody(t, reader))
+		require.NoError(t, err)
+		assert.Equal(t, "override", values.Get("client_id"))
+		assert.Equal(t, "test_client_secret", values.Get("client_secret"))
+		assert.Equal(t, "api", values.Get("audience"))
 	})
 }

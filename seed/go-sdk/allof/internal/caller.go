@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"sort"
 	"strings"
 
 	"github.com/allof/fern/core"
@@ -203,6 +204,11 @@ func newRequest(
 }
 
 // newRequestBody returns a new io.Reader that represents the HTTP request body.
+//
+// Body properties are merged into JSON object and form URL encoded bodies, overriding
+// any properties of the same name. Requests that are already an io.Reader (e.g.
+// multipart file uploads and raw bytes) are sent as-is, so body properties are not
+// applied to them.
 func newRequestBody(request interface{}, bodyProperties map[string]interface{}, reqContentType string) (io.Reader, error) {
 	if isNil(request) {
 		if len(bodyProperties) == 0 {
@@ -224,11 +230,116 @@ func newRequestBody(request interface{}, bodyProperties map[string]interface{}, 
 	if reqContentType == contentTypeFormURLEncoded {
 		return newFormURLEncodedRequestBody(request, bodyProperties)
 	}
-	requestBytes, err := MarshalJSONWithExtraProperties(request, bodyProperties)
+	requestBytes, err := marshalJSONWithBodyProperties(request, bodyProperties)
 	if err != nil {
 		return nil, err
 	}
 	return bytes.NewReader(requestBytes), nil
+}
+
+// marshalJSONWithBodyProperties marshals the request to JSON and merges the given
+// body properties into the top level of the resulting JSON object. Body properties
+// override any properties of the same name. A request that serializes to null is
+// replaced by the body properties, and other non-object JSON values are returned
+// unchanged because there's nothing to merge them into.
+func marshalJSONWithBodyProperties(request interface{}, bodyProperties map[string]interface{}) ([]byte, error) {
+	requestBytes, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(bodyProperties) == 0 {
+		return requestBytes, nil
+	}
+	trimmed := bytes.TrimSpace(requestBytes)
+	if bytes.Equal(trimmed, []byte("null")) {
+		return json.Marshal(bodyProperties)
+	}
+	if len(trimmed) == 0 || trimmed[0] != '{' {
+		return requestBytes, nil
+	}
+	keys, values, err := decodeJSONObject(trimmed)
+	if err != nil {
+		return nil, err
+	}
+	var buffer bytes.Buffer
+	buffer.WriteByte('{')
+	writeProperty := func(key string, value []byte) error {
+		if buffer.Len() > 1 {
+			buffer.WriteByte(',')
+		}
+		keyBytes, err := json.Marshal(key)
+		if err != nil {
+			return err
+		}
+		buffer.Write(keyBytes)
+		buffer.WriteByte(':')
+		buffer.Write(value)
+		return nil
+	}
+	writeBodyProperty := func(key string) error {
+		valueBytes, err := json.Marshal(bodyProperties[key])
+		if err != nil {
+			return err
+		}
+		return writeProperty(key, valueBytes)
+	}
+	written := make(map[string]struct{}, len(bodyProperties))
+	for _, key := range keys {
+		if _, ok := bodyProperties[key]; ok {
+			if err := writeBodyProperty(key); err != nil {
+				return nil, err
+			}
+			written[key] = struct{}{}
+			continue
+		}
+		if err := writeProperty(key, values[key]); err != nil {
+			return nil, err
+		}
+	}
+	extraKeys := make([]string, 0, len(bodyProperties))
+	for key := range bodyProperties {
+		if _, ok := written[key]; !ok {
+			extraKeys = append(extraKeys, key)
+		}
+	}
+	sort.Strings(extraKeys)
+	for _, key := range extraKeys {
+		if err := writeBodyProperty(key); err != nil {
+			return nil, err
+		}
+	}
+	buffer.WriteByte('}')
+	return buffer.Bytes(), nil
+}
+
+// decodeJSONObject decodes the top-level properties of the given JSON object,
+// preserving the order in which the keys appear.
+func decodeJSONObject(data []byte) ([]string, map[string]json.RawMessage, error) {
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	if _, err := decoder.Token(); err != nil {
+		return nil, nil, err
+	}
+	var keys []string
+	values := make(map[string]json.RawMessage)
+	for decoder.More() {
+		token, err := decoder.Token()
+		if err != nil {
+			return nil, nil, err
+		}
+		key, ok := token.(string)
+		if !ok {
+			return nil, nil, fmt.Errorf("expected JSON object key, got %v", token)
+		}
+		var value json.RawMessage
+		if err := decoder.Decode(&value); err != nil {
+			return nil, nil, err
+		}
+		if _, exists := values[key]; !exists {
+			keys = append(keys, key)
+		}
+		values[key] = value
+	}
+	return keys, values, nil
 }
 
 // newFormURLEncodedBody returns a new io.Reader that represents a form URL encoded body
