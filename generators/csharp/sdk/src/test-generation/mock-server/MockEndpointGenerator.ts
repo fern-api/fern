@@ -50,12 +50,51 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /** Whether the mock server responds to an error example with the example's error body (as `mockResponse`). */
-    public hasMockErrorResponseBody(example: ExampleEndpointCall): boolean {
-        return (
+    public hasMockErrorResponseBody(endpoint: HttpEndpoint, example: ExampleEndpointCall): boolean {
+        return example.response.type === "error" && this.getMockResponse(endpoint, example).responseSupported;
+    }
+
+    private getMockResponse(
+        endpoint: HttpEndpoint,
+        example: ExampleEndpointCall
+    ): {
+        jsonExampleResponse: unknown;
+        responseBodyType: string | undefined;
+        statusCode: number;
+        responseSupported: boolean;
+        respondWithEmptyErrorObject: boolean;
+    } {
+        let jsonExampleResponse: unknown | undefined = undefined;
+        if (example.response.type === "error") {
+            jsonExampleResponse =
+                example.response.body != null
+                    ? this.filterExampleTypeReference(example.response.body, { filterWriteOnly: true })
+                    : undefined;
+        } else {
+            if (example.response.value.type !== "body") {
+                throw GeneratorError.internalError("Unexpected response type");
+            }
+            const responseValue = example.response.value.value;
+            jsonExampleResponse =
+                responseValue != null
+                    ? this.filterExampleTypeReference(responseValue, { filterWriteOnly: true })
+                    : undefined;
+        }
+        // error responses are always parsed as JSON by the generated client
+        const responseBodyType = example.response.type === "error" ? "json" : endpoint.response?.body?.type;
+        const statusCode = getMockResponseStatusCode({ context: this.context, endpoint, example });
+        // whether or not we support this response type in this generator; the example json may
+        // have a response that we can return, but our generated method actually returns void
+        const responseSupported =
+            jsonExampleResponse != null &&
+            !isBodilessStatusCode(statusCode) &&
+            (responseBodyType === "json" || responseBodyType === "text");
+        // the client deserializes bodiless error responses as `object`, which needs valid JSON
+        const respondWithEmptyErrorObject =
             example.response.type === "error" &&
-            example.response.body != null &&
-            this.filterExampleTypeReference(example.response.body, { filterWriteOnly: true }) != null
-        );
+            jsonExampleResponse == null &&
+            this.context.ir.errors[example.response.error.errorId]?.type == null;
+        return { jsonExampleResponse, responseBodyType, statusCode, responseSupported, respondWithEmptyErrorObject };
     }
 
     public generateForExamples(
@@ -66,37 +105,13 @@ export class MockEndpointGenerator extends WithGeneration {
         return this.csharp.codeblock((writer) => {
             examples.forEach((example, index) => {
                 const suffix = examples.length === 1 ? "" : `_${index}`;
-                let jsonExampleResponse: unknown | undefined = undefined;
-                const isErrorResponse = example.response.type === "error";
-                if (example.response.type === "error") {
-                    jsonExampleResponse =
-                        example.response.body != null
-                            ? this.filterExampleTypeReference(example.response.body, { filterWriteOnly: true })
-                            : undefined;
-                } else {
-                    if (example.response.value.type !== "body") {
-                        throw GeneratorError.internalError("Unexpected response type");
-                    }
-                    const responseValue = example.response.value.value;
-                    jsonExampleResponse =
-                        responseValue != null
-                            ? this.filterExampleTypeReference(responseValue, { filterWriteOnly: true })
-                            : undefined;
-                }
-                // error responses are always parsed as JSON by the generated client
-                const responseBodyType = isErrorResponse ? "json" : endpoint.response?.body?.type;
-                const statusCode = getMockResponseStatusCode({ context: this.context, endpoint, example });
-                // whether or not we support this response type in this generator; the example json may
-                // have a response that we can return, but our generated method actually returns void
-                const responseSupported =
-                    jsonExampleResponse != null &&
-                    !isBodilessStatusCode(statusCode) &&
-                    (responseBodyType === "json" || responseBodyType === "text");
-                // the client deserializes bodiless error responses as `object`, which needs valid JSON
-                const respondWithEmptyErrorObject =
-                    example.response.type === "error" &&
-                    jsonExampleResponse == null &&
-                    this.context.ir.errors[example.response.error.errorId]?.type == null;
+                const {
+                    jsonExampleResponse,
+                    responseBodyType,
+                    statusCode,
+                    responseSupported,
+                    respondWithEmptyErrorObject
+                } = this.getMockResponse(endpoint, example);
 
                 const requestContentType = getContentTypeFromRequestBody(endpoint);
                 // For form-urlencoded requests, we don't need the requestJson variable

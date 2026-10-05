@@ -103,7 +103,10 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         });
         const testNames = this.getTestNames();
         this.testExamples.forEach(({ example, expectedError }, index) => {
-            const testName = testNames[index] ?? `MockServerTest_${index + 1}`;
+            const testName = testNames[index];
+            if (testName == null) {
+                throw GeneratorError.internalError("Missing mock server test name");
+            }
             if (expectedError != null) {
                 testClass.addTestMethod({
                     name: testName,
@@ -297,7 +300,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
             }
             writer.writeTextStatement(")!");
             writer.writeTextStatement(`Assert.That(exception.StatusCode, Is.EqualTo(${expectedError.statusCode}))`);
-            if (this.mockEndpointGenerator.hasMockErrorResponseBody(example)) {
+            if (this.mockEndpointGenerator.hasMockErrorResponseBody(this.endpoint, example)) {
                 if (expectedError.isBaseApiException) {
                     writer.writeTextStatement("Assert.That(exception.Body, Is.EqualTo(mockResponse))");
                 } else {
