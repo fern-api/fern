@@ -42,57 +42,7 @@ import Literal
                     ]
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func send2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "message": "message",
-                  "status": 1,
-                  "success": true
-                }
-                """#.utf8
-            )
-        )
-        let client = LiteralClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SendResponse(
-            message: "message",
-            status: 1,
-            success: true
-        )
-        let response = try await client.reference.send(
-            request: SendRequest(
-                prompt: .youAreAHelpfulAssistant,
-                query: "query",
-                stream: false,
-                ending: .ending,
-                context: .youreSuperWise,
-                maybeContext: .youreSuperWise,
-                containerObject: ContainerObject(
-                    nestedObjects: [
-                        NestedObjectWithLiterals(
-                            literal1: .literal1,
-                            literal2: .literal2,
-                            strProp: "strProp"
-                        ),
-                        NestedObjectWithLiterals(
-                            literal1: .literal1,
-                            literal2: .literal2,
-                            strProp: "strProp"
-                        )
-                    ]
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

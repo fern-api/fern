@@ -22,7 +22,7 @@ import Unions
         let expectedResponse = UnionWithTime.date(CalendarDate("1994-01-01")!)
         let response = try await client.types.get(
             id: "date-example",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -46,31 +46,7 @@ import Unions
         let expectedResponse = UnionWithTime.datetime(try! Date("1994-01-01T01:01:01Z", strategy: .iso8601))
         let response = try await client.types.get(
             id: "datetime-example",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func get3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "type": "value",
-                  "value": 1
-                }
-                """#.utf8
-            )
-        )
-        let client = UnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = UnionWithTime.value(1)
-        let response = try await client.types.get(
-            id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -93,7 +69,7 @@ import Unions
             request: UnionWithTime.date(
                 CalendarDate("1994-01-01")!
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -116,30 +92,7 @@ import Unions
             request: UnionWithTime.datetime(
                 try! Date("1994-01-01T01:01:01Z", strategy: .iso8601)
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func update3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                true
-                """#.utf8
-            )
-        )
-        let client = UnionsClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = true
-        let response = try await client.types.update(
-            request: UnionWithTime.value(
-                1
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

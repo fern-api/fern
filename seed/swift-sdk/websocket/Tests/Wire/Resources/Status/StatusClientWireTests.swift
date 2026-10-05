@@ -21,7 +21,7 @@ import Websocket
         let expectedResponse = StatusResponse(
             status: "status"
         )
-        let response = try await client.status.getStatus(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.status.getStatus(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

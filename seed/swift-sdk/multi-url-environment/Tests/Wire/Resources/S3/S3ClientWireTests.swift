@@ -19,7 +19,7 @@ import MultiUrlEnvironment
         let expectedResponse = "string"
         let response = try await client.s3.getPresignedUrl(
             request: .init(s3Key: "s3Key"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

@@ -22,31 +22,7 @@ import Api
                 name: "name",
                 parentId: "parent_id"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func upload2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                string
-                """#.utf8
-            )
-        )
-        let client = ApiClient(
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.files.upload(
-            request: .init(
-                name: "name",
-                parentId: "parent_id"
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

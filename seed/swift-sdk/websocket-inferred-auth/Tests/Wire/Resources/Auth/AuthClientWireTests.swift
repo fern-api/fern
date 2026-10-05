@@ -32,7 +32,7 @@ import WebsocketAuth
                 grantType: .clientCredentials,
                 scope: "scope"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -67,7 +67,7 @@ import WebsocketAuth
                 grantType: .refreshToken,
                 scope: "scope"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

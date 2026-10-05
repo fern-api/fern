@@ -29,7 +29,7 @@ import CrossPackageTypeNames
                 ))
             ))
         )
-        let response = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

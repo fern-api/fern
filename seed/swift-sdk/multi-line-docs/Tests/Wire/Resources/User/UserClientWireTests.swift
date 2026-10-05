@@ -3,6 +3,21 @@ import Testing
 import MultiLineDocs
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
+    @Test func getUser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = MultiLineDocsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.user.getUser(
+            userId: "userId",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
@@ -30,7 +45,7 @@ import MultiLineDocs
                 name: "name",
                 age: 1
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

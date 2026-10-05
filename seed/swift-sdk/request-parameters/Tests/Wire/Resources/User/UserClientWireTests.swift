@@ -3,6 +3,69 @@ import Testing
 import RequestParameters
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
+    @Test func createUsername1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = RequestParametersClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.user.createUsername(
+            tags: [
+                "tags",
+                "tags"
+            ],
+            request: .init(
+                username: "username",
+                password: "password",
+                name: "test"
+            ),
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
+    @Test func createUsernameWithReferencedType1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = RequestParametersClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.user.createUsernameWithReferencedType(
+            tags: [
+                "tags",
+                "tags"
+            ],
+            request: CreateUsernameBody(
+                username: "username",
+                password: "password",
+                name: "test"
+            ),
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
+    @Test func createUsernameOptional1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = RequestParametersClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        try await client.user.createUsernameOptional(
+            request: .value(CreateUsernameBodyOptionalProperties(
+
+            )),
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
+    }
+
     @Test func getUsername1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
@@ -94,7 +157,7 @@ import RequestParameters
             ],
             longParam: 1000000,
             bigIntParam: "1000000",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

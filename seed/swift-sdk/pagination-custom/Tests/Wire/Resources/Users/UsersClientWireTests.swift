@@ -61,7 +61,7 @@ import Pagination
         let response = try await client.users.listWithCustomPager(
             limit: 1,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
