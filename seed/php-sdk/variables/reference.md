@@ -20,21 +20,6 @@ $client->service->post();
 </dd>
 </dl>
 
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$endpointParam:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
 
 </dd>
 </dl>

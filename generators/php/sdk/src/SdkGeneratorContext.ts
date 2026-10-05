@@ -9,6 +9,7 @@ import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_
 import { RawClient } from "./core/RawClient.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { PsrHttpClient } from "./external/PsrHttpClient.js";
+import { getOAuthTokenRequestProperties } from "./oauth/oauthTokenRequestProperties.js";
 import { PhpGeneratorAgent } from "./PhpGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
@@ -555,6 +556,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                     break;
                 case "oauth":
                     names.push("clientId", "clientSecret");
+                    if (scheme.configuration.type === "clientCredentials") {
+                        names.push(
+                            ...getOAuthTokenRequestProperties(
+                                this,
+                                scheme.configuration.tokenEndpoint.requestProperties
+                            ).map((property) => property.parameterName)
+                        );
+                    }
                     break;
                 case "inferred":
                     names.push(...this.getInferredAuthParameterNames(scheme));
@@ -748,7 +757,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             return false;
         }
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
-        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+        const hasUnboundPathParameters = endpoint.allPathParameters.some(
+            (pathParameter) => this.getSdkVariableForPathParameter(pathParameter) == null
+        );
+        return hasUnboundPathParameters && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
