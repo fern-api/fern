@@ -45,6 +45,12 @@ describe("buildOrgTokensCsv", () => {
         expect(csv).toContain("'=cmd");
     });
 
+    it("preserves multiline names verbatim inside a quoted cell", () => {
+        const csv = buildOrgTokensCsv([token({ description: "line one\nline two" })]);
+
+        expect(csv).toContain('"line one\nline two"');
+    });
+
     it("leaves signed numbers as values rather than neutralizing them", () => {
         const csv = buildOrgTokensCsv([token({ description: "-12.5" })]);
 

@@ -58,21 +58,21 @@ async function lookupAuth0OrgId(
 }
 
 /**
- * Escape a CSV cell: quote cells containing commas/quotes/newlines (RFC 4180),
- * render tabs/newlines as escape sequences so rows stay on one line, and prefix
- * a leading `'` on text a spreadsheet would read as a formula. Signed numbers
- * (`-12`, `+4.5%`) are left alone since a spreadsheet reads them as values.
+ * Escape a CSV cell: quote cells containing commas, quotes, or control
+ * whitespace per RFC 4180 (embedded newlines/tabs are preserved verbatim), and
+ * prefix a leading `'` on text a spreadsheet would read as a formula. Signed
+ * numbers (`-12`, `+4.5%`) are left alone since a spreadsheet reads them as
+ * values.
  */
 function escapeCsvCell(value: string | null | undefined): string {
     if (value == null) {
         return "";
     }
     const raw = /^[=+\-@\t\r]/.test(value) && !/^[+-](?:\d+(?:[.,]\d+)*%?)?$/.test(value) ? `'${value}` : value;
-    const normalized = raw.replace(/\r/g, "\\r").replace(/\n/g, "\\n").replace(/\t/g, "\\t");
-    if (normalized.includes('"') || normalized.includes(",")) {
-        return `"${normalized.replace(/"/g, '""')}"`;
+    if (/[",\n\r\t]/.test(raw)) {
+        return `"${raw.replace(/"/g, '""')}"`;
     }
-    return normalized;
+    return raw;
 }
 
 /**
@@ -118,11 +118,11 @@ export async function listOrgTokens({
         }));
 
         if (json) {
-            process.stdout.write(JSON.stringify(tokens, null, 2) + "\n");
+            cliContext.writeJsonToStdout(tokens);
             return;
         }
         if (csv) {
-            process.stdout.write(buildOrgTokensCsv(tokens) + "\n");
+            cliContext.writeTextToStdout(buildOrgTokensCsv(tokens) + "\n");
             return;
         }
         if (tokens.length === 0) {
@@ -178,16 +178,14 @@ export async function createOrgToken({
         }
 
         if (json) {
-            process.stdout.write(
-                JSON.stringify({ tokenId: response.body.tokenId, token: response.body.token }, null, 2) + "\n"
-            );
+            cliContext.writeJsonToStdout({ tokenId: response.body.tokenId, token: response.body.token });
             return;
         }
-        context.logger.info(chalk.green("Token created successfully."));
-        context.logger.info(`  Token ID: ${response.body.tokenId}`);
-        context.logger.info("  Save this token now. You won't be able to see it again.");
-        // The secret goes to stdout unadorned so it is pipeable.
-        process.stdout.write(response.body.token + "\n");
+        cliContext.stderr.info(chalk.green("Token created successfully."));
+        cliContext.stderr.info(`  Token ID: ${response.body.tokenId}`);
+        cliContext.stderr.info("  Save this token now. You won't be able to see it again.");
+        // The secret alone goes to stdout so it is pipeable.
+        cliContext.writeTextToStdout(response.body.token + "\n");
     });
 }
 
@@ -210,9 +208,9 @@ export async function revokeOrgToken({
         }
 
         if (json) {
-            process.stdout.write(JSON.stringify({ success: true, tokenId }, null, 2) + "\n");
+            cliContext.writeJsonToStdout({ success: true, tokenId });
             return;
         }
-        context.logger.info(chalk.green(`Token "${tokenId}" has been revoked.`));
+        cliContext.stderr.info(chalk.green(`Token "${tokenId}" has been revoked.`));
     });
 }
