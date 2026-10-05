@@ -556,7 +556,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             if (isOptional) {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.isPresent())", propertyGetter)
-                        .addStatement("formParams.put($S, $L.get())", property.wireKey().get(), propertyGetter)
+                        .addStatement(
+                                "formParams.put($S, $L.get())",
+                                property.wireKey().get(),
+                                propertyGetter)
                         .endControlFlow();
             } else {
                 requestBodyCodeBlock.addStatement(

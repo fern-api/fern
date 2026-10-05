@@ -87,8 +87,8 @@ class BodyPropertiesTest {
         if (exitCode != 0) {
             throw new IllegalStateException("Failed to compile core utility resources");
         }
-        URLClassLoader classLoader = new URLClassLoader(
-                new URL[] {classesDir.toUri().toURL()}, BodyPropertiesTest.class.getClassLoader());
+        URLClassLoader classLoader =
+                new URLClassLoader(new URL[] {classesDir.toUri().toURL()}, BodyPropertiesTest.class.getClassLoader());
         bodyPropertiesClass = classLoader.loadClass(PACKAGE + ".BodyProperties");
         objectMappersClass = classLoader.loadClass(PACKAGE + ".ObjectMappers");
     }
@@ -242,7 +242,8 @@ class BodyPropertiesTest {
 
     private static String toJson(Object value) throws Exception {
         Object mapper = objectMappersClass.getField("JSON_MAPPER").get(null);
-        return (String) mapper.getClass().getMethod("writeValueAsString", Object.class).invoke(mapper, value);
+        return (String)
+                mapper.getClass().getMethod("writeValueAsString", Object.class).invoke(mapper, value);
     }
 
     private static Object toTree(Object value) throws Exception {

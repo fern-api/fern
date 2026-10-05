@@ -64,19 +64,3 @@ project(":spring") {
         }
     }
 }
-
-// TEMP DEBUG (to be reverted): surface the build failure as a GitHub annotation since job logs aren't reachable.
-gradle.buildFinished { result ->
-    if (result.failure != null && System.getenv("GITHUB_ACTIONS") != null) {
-        def msgs = []
-        def collect
-        collect = { Throwable t ->
-            if (t == null) return
-            msgs << t.getClass().getName() + ": " + t.getMessage()
-            if (t.metaClass.respondsTo(t, "getCauses")) { t.getCauses().each { collect(it) } } else { collect(t.getCause()) }
-        }
-        collect(result.failure)
-        def text = msgs.join("\n").take(60000).replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
-        println "::error title=gradle-debug::" + text
-    }
-}
