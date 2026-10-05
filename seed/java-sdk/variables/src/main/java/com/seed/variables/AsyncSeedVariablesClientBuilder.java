@@ -30,7 +30,7 @@ public class AsyncSeedVariablesClientBuilder {
 
     private Optional<LogConfig> logging = Optional.empty();
 
-    private String rootVariable;
+    private String rootVariable = System.getenv("ROOT_VARIABLE");
 
     public AsyncSeedVariablesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -239,7 +239,12 @@ public class AsyncSeedVariablesClientBuilder {
      * }
      * }</pre>
      */
-    protected void validateConfiguration() {}
+    protected void validateConfiguration() {
+        if (this.rootVariable == null) {
+            throw new IllegalStateException(
+                    "rootVariable is required. Pass it to the builder or set the ROOT_VARIABLE environment variable.");
+        }
+    }
 
     public AsyncSeedVariablesClient build() {
         validateConfiguration();
