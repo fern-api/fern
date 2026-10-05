@@ -37,6 +37,7 @@ function extractEmittedHelperSource(): string {
             omitFernHeaders: false,
             includePlatformHeaders: false,
             allowUserAgentAppInfo: true,
+            allowCustomHttpClient: false,
             defaultMaxRetries: 2,
             endpointSecurity: false,
             requestLevelMaxRetries: false

@@ -86,7 +86,13 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Opt-in: a 2xx response whose body is not valid JSON raises `Errors::ResponseError`
     // instead of `JSON::ParserError`. Disabled by default because callers may already
     // rescue `JSON::ParserError`.
-    wrapInvalidJsonResponses: z.boolean().optional()
+    wrapInvalidJsonResponses: z.boolean().optional(),
+    // Opt-in: expose an optional `http_client` client keyword. The object must respond to
+    // `request(url, http_request)` (a URI and a Net::HTTPGenericRequest) and return a
+    // Net::HTTPResponse; it replaces the SDK's own Net::HTTP transport so callers can add
+    // proxies, custom TLS, connection reuse, or request/response interceptors. Retries still
+    // wrap the custom client. Disabled by default so existing output is byte-identical.
+    allowCustomHttpClient: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

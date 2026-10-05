@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.145.1
+  changelogEntry:
+    - summary: |
+        `fern docs dev` no longer reports a false `api-section-has-definition` error for every `api:`
+        navigation item. The dev server validates docs without loading API workspaces, so the check
+        is now skipped there; `fern check` and `fern generate --docs` still run it.
+      type: fix
+    - summary: |
+        Upgrade to SDK Config 0.6 and omit defaulted optional fields from SDK Config payloads sent to local and remote generators.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.145.0
+  changelogEntry:
+    - summary: |
+        `fern export` now accepts a repeatable `--audience` flag. When set, the exported OpenAPI spec only
+        includes the endpoints, webhooks, environments, and schemas required for those audiences
+        (e.g. `fern export openapi.yml --audience public`).
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.144.3
   changelogEntry:
     - summary: |
