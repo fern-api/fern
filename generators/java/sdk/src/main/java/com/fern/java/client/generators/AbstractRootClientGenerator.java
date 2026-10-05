@@ -2323,15 +2323,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         oauthTokenSupplierClassName,
                         oauthTokenSupplierClassName,
                         oauthConstructorArgs.build());
+                String authInvalidatorCall =
+                        clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()
+                                ? ".addAuthInvalidator(oAuthTokenSupplier::invalidate)"
+                                : "";
                 credentialsBuildMethod.addStatement(
-                        "$T finalOptions = $T.Builder.from(baseOptions).addHeader($S, oAuthTokenSupplier)"
-                                + (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()
-                                        ? ".addAuthInvalidator(oAuthTokenSupplier::invalidate)"
-                                        : "")
-                                + ".build()",
+                        "$T finalOptions = $T.Builder.from(baseOptions).addHeader($S, oAuthTokenSupplier)$L.build()",
                         generatedClientOptions.getClassName(),
                         generatedClientOptions.getClassName(),
-                        tokenHeader);
+                        tokenHeader,
+                        authInvalidatorCall);
                 credentialsBuildMethod.addStatement("return new $T(finalOptions)", className());
 
                 credentialsAuthBuilder.addMethod(credentialsBuildMethod.build());

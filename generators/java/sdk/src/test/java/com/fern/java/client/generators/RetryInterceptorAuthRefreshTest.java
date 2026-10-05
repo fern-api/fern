@@ -215,6 +215,18 @@ class RetryInterceptorAuthRefreshTest {
     }
 
     @Test
+    void removesAuthHeaderThatRefreshNoLongerProvides() throws Exception {
+        List<String> sent = new ArrayList<>();
+        Interceptor.Chain chain =
+                chain(request(() -> java.util.Collections.singletonMap("Authorization", null)), sent, 401, 200);
+
+        Response response = newInterceptor(2).intercept(chain);
+
+        assertThat(response.code()).isEqualTo(200);
+        assertThat(sent).containsExactly("Bearer old", null);
+    }
+
+    @Test
     void doesNotSendRequestAgainWhenRefreshFails() throws Exception {
         List<String> sent = new ArrayList<>();
         Interceptor.Chain chain = chain(

@@ -71,22 +71,22 @@ public final class RetryInterceptorGenerator extends AbstractFileGenerator {
                 contents,
                 "        Optional<Duration> nextBackoff = backoff.nextBackoff(response);\n",
                 "        Optional<Duration> nextBackoff = backoff.nextBackoff(response);\n"
-                        + "        Request request = chain.request();\n");
+                        + "        Request retryRequest = chain.request();\n");
         contents = replaceOnce(
                 contents,
                 "                callTimeout.ifPresent(AsyncTimeout::enter);\n            }\n",
                 "                callTimeout.ifPresent(AsyncTimeout::enter);\n            }\n"
-                        + "            if (shouldRefreshAuth(request, response.code())) {\n"
-                        + "                request = refreshAuth(request, response);\n"
+                        + "            if (shouldRefreshAuth(retryRequest, response.code())) {\n"
+                        + "                retryRequest = refreshAuth(retryRequest, response);\n"
                         + "            }\n");
         contents = replaceOnce(
                 contents,
                 "                nextResponse = chain.proceed(chain.request());\n",
-                "                nextResponse = chain.proceed(request);\n");
+                "                nextResponse = chain.proceed(retryRequest);\n");
         contents = replaceOnce(
                 contents,
                 "            if (shouldRetry(response.code())) {\n                nextBackoff = backoff.nextBackoff(response);\n",
-                "            if (shouldRetry(response.code()) || shouldRefreshAuth(request, response.code())) {\n"
+                "            if (shouldRetry(response.code()) || shouldRefreshAuth(retryRequest, response.code())) {\n"
                         + "                nextBackoff = backoff.nextBackoff(response);\n");
         contents = replaceOnce(
                 contents,
@@ -125,6 +125,8 @@ public final class RetryInterceptorGenerator extends AbstractFileGenerator {
             "        refreshedHeaders.forEach((name, value) -> {",
             "            if (value != null) {",
             "                builder.header(name, value);",
+            "            } else {",
+            "                builder.removeHeader(name);",
             "            }",
             "        });",
             "        return builder.build();",
