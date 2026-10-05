@@ -32,6 +32,42 @@
       }
     },
     {
+      "id": "a875ca3b-992d-4275-888f-4d8fb044869d",
+      "name": "get - default - bigunion.get.0",
+      "request": {
+        "urlPathTemplate": "/bigunion/{id}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "bigunion.get.0"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"normalSweet\",\n  \"value\": \"value\",\n  \"id\": \"id\",\n  \"created-at\": \"2024-01-15T09:30:00Z\",\n  \"archived-at\": \"2024-01-15T09:30:00Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a875ca3b-992d-4275-888f-4d8fb044869d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "b512b590-3d02-4a21-bd0d-b20388dba9f3",
       "name": "update - default",
       "request": {
@@ -58,6 +94,37 @@
       }
     },
     {
+      "id": "9b1b3ae7-b11e-4635-9bd7-c3a45959bfe3",
+      "name": "update - default - bigunion.update.0",
+      "request": {
+        "urlPathTemplate": "/bigunion",
+        "method": "PATCH",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "bigunion.update.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9b1b3ae7-b11e-4635-9bd7-c3a45959bfe3",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "f08d1bf3-46e1-482b-a8f0-39c16c3a2d84",
       "name": "update-many - default",
       "request": {
@@ -74,6 +141,37 @@
       "uuid": "f08d1bf3-46e1-482b-a8f0-39c16c3a2d84",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8d561296-c609-441f-870a-1be392443397",
+      "name": "update-many - default - bigunion.update_many.0",
+      "request": {
+        "urlPathTemplate": "/bigunion/many",
+        "method": "PATCH",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "bigunion.update_many.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8d561296-c609-441f-870a-1be392443397",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -115,6 +213,42 @@
       }
     },
     {
+      "id": "068ac3c6-8aff-4c16-82de-56ec0618baa5",
+      "name": "get - default - union.get.0",
+      "request": {
+        "urlPathTemplate": "/{id}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "union.get.0"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"circle\",\n  \"radius\": 1.1,\n  \"id\": \"id\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "068ac3c6-8aff-4c16-82de-56ec0618baa5",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "7b5d90dc-ff29-4059-a8d7-e30f4286d795",
       "name": "update - default",
       "request": {
@@ -139,9 +273,40 @@
           }
         }
       }
+    },
+    {
+      "id": "ea21d49b-47f6-4ece-a216-06375ad7d510",
+      "name": "update - default - union.update.0",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "PATCH",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "union.update.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ea21d49b-47f6-4ece-a216-06375ad7d510",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 5
+    "total": 10
   }
 }

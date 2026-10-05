@@ -4,6 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WireTestExampleSelector } from "./WireTestExampleSelector.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -13,9 +14,16 @@ export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    private readonly exampleSelector: WireTestExampleSelector;
+
+    constructor(
+        context: SdkGeneratorContext,
+        ir: FernIr.IntermediateRepresentation,
+        exampleSelector: WireTestExampleSelector
+    ) {
         this.context = context;
         this.ir = ir;
+        this.exampleSelector = exampleSelector;
     }
 
     /**
@@ -30,12 +38,33 @@ export class WireTestSetupGenerator {
         this.generatePytestPluginFile();
     }
 
-    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+    public static getWiremockConfigContent(
+        ir: FernIr.IntermediateRepresentation,
+        exampleSelector?: WireTestExampleSelector
+    ): WireMockStubMapping {
         // ir-sdk versions may differ between python-sdk and mock-utils. The newer IR only adds
         // optional fields and OAuth configuration variants that WireMock ignores, but the added
         // union variants stop the two IntermediateRepresentations from overlapping structurally,
         // so the assertion has to go through `unknown`.
-        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
+        const stubMapping = new WireMock().convertToWireMock(
+            ir as unknown as Parameters<WireMock["convertToWireMock"]>[0],
+            exampleSelector != null
+                ? {
+                      getExampleTestId: ({ service, endpoint, example }) =>
+                          exampleSelector.getTestId(
+                              service as unknown as FernIr.HttpService,
+                              endpoint as unknown as FernIr.HttpEndpoint,
+                              example as unknown as FernIr.ExampleEndpointCall
+                          )
+                  }
+                : {}
+        );
+        for (const mapping of stubMapping.mappings) {
+            if (mapping.response.status === 204 || mapping.response.status === 205) {
+                delete mapping.response.body;
+            }
+        }
+        return stubMapping;
     }
 
     /**
@@ -152,7 +181,7 @@ export class WireTestSetupGenerator {
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir, this.exampleSelector);
 
         // mock-utils always generates datetime values using Date.toISOString() which includes
         // ".000Z". We need to normalize these based on the datetime_milliseconds config and
@@ -245,6 +274,9 @@ export class WireTestSetupGenerator {
         const clientImport = this.getClientImport();
         const clientConstructorParams = this.buildClientConstructorParams();
         const environmentSetup = this.buildEnvironmentSetup();
+        // Disable retries so error examples (e.g. 429/5xx) are asserted on the first response.
+        // The generated client renames the kwarg when another constructor parameter is named max_retries.
+        const maxRetriesParamName = /^\s*max_retries=/m.test(clientConstructorParams) ? "_max_retries" : "max_retries";
         // The per-endpoint auth-header assertion helper (and its `re`/`List` imports) is
         // only used by endpoint-security wire tests, so it is emitted only in that mode to
         // avoid introducing an unused helper into every other fixture's conftest.
@@ -304,12 +336,14 @@ def get_client(test_id: str) -> ${clientClassName}:
         return ${clientClassName}(
             ${environmentSetup.paramDynamic},
             headers=test_headers,
+            ${maxRetriesParamName}=0,
 ${clientConstructorParams}
         )
 
     return ${clientClassName}(
         ${environmentSetup.paramDynamic},
         httpx_client=httpx.Client(headers=test_headers),
+        ${maxRetriesParamName}=0,
 ${clientConstructorParams}
     )
 

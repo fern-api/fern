@@ -1,8 +1,11 @@
 import datetime
 import uuid
 
+import pytest
 from .conftest import get_client, verify_request_count
 
+from seed.core.jsonable_encoder import jsonable_encoder
+from seed.general_errors import BadRequestBody
 from seed.types.object import ObjectWithOptionalField
 
 
@@ -29,6 +32,35 @@ def test_inlinedRequests_post_with_object_bodyand_response() -> None:
             bigint="1000000",
         ),
     )
+    verify_request_count(test_id, "POST", "/req-bodies/object", None, 1)
+
+
+def test_inlinedRequests_post_with_object_bodyand_response_throws_bad_request_body() -> None:
+    """Test postWithObjectBodyandResponse endpoint error response (BadRequestBody) with WireMock"""
+    test_id = "inlined_requests.post_with_object_bodyand_response.1"
+    client = get_client(test_id)
+    with pytest.raises(BadRequestBody) as exc_info:
+        client.inlined_requests.post_with_object_bodyand_response(
+            string="string",
+            integer=1,
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=datetime.date.fromisoformat("2023-01-15"),
+                uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                base64="SGVsbG8gd29ybGQh",
+                list_=["list", "list"],
+                set_=["set"],
+                map_={1: "map"},
+                bigint="1000000",
+            ),
+        )
+    assert exc_info.value.status_code == 400
+    assert jsonable_encoder(exc_info.value.body) == {"message": "message"}
     verify_request_count(test_id, "POST", "/req-bodies/object", None, 1)
 
 
