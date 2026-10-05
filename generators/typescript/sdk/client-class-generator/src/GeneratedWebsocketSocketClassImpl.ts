@@ -546,22 +546,13 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isAsync: true,
             returnType: `Promise<${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}>`,
             statements: [
-                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState === ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState.OPEN) {`,
-                `    return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`,
-                "}",
-                "return new Promise((resolve, reject) => {",
-                `    this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", () => {`,
-                `        resolve(this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME});`,
-                "    });",
-                "",
-                `    this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", (event: unknown) => {`,
-                "        reject(event);",
-                "    });",
-                "});"
+                `await this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.waitForOpen();`,
+                `return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`
             ],
             docs: [
                 {
-                    description: "Returns a promise that resolves when the websocket is open."
+                    description:
+                        "Returns a promise that resolves when the websocket is open, and rejects if it errors or closes before opening."
                 }
             ]
         };
