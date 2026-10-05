@@ -8,6 +8,7 @@ use Seed\Endpoints\Params\Requests\GetWithQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
 use Seed\Endpoints\Params\Requests\CreateWithBodyAndQuery;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
+use Seed\Exceptions\SeedApiException;
 
 class EndpointsParamsWireTest extends WireMockTestCase
 {
@@ -268,6 +269,35 @@ class EndpointsParamsWireTest extends WireMockTestCase
 
     /**
      */
+    public function testGetWithPathAndErrorsThrowsBadRequestBody(): void {
+        $testId = 'endpoints.params.get_with_path_and_errors.1';
+        try {
+            $this->client->endpoints->params->getWithPath(
+                'param',
+                [
+                    'headers' => [
+                        'X-Test-Id' => 'endpoints.params.get_with_path_and_errors.1',
+                    ],
+                ],
+            );
+            $this->fail('Expected SeedApiException to be thrown');
+        } catch (SeedApiException $exception) {
+            $this->assertSame(400, $exception->getCode());
+            $body = $exception->getBody();
+            $this->assertIsString($body);
+            $this->assertJsonStringEqualsJsonString('{"message":"message"}', $body);
+        }
+        $this->verifyRequestCount(
+            $testId,
+            "GET",
+            "/params/path/param",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     protected function setUp(): void {
         parent::setUp();
         $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
@@ -275,6 +305,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
             token: 'test-token',
         options: [
             'baseUrl' => $wiremockUrl,
+            'maxRetries' => 0,
         ],
         );
     }

@@ -47,6 +47,7 @@ class EndpointsUnionWireTest extends WireMockTestCase
             token: 'test-token',
         options: [
             'baseUrl' => $wiremockUrl,
+            'maxRetries' => 0,
         ],
         );
     }
