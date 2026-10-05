@@ -331,6 +331,23 @@ describe("Test fetcherImpl", () => {
             expect(sentAuthorization).toEqual(["Bearer request-override", "Bearer request-override"]);
         });
 
+        it("should keep a caller-supplied auth header when the initial auth headers were empty", async () => {
+            mockFetchResponses(new Response("", { status: 401 }), new Response(JSON.stringify({}), { status: 200 }));
+            const refresh = jest.fn().mockResolvedValue({ Authorization: "Bearer new-token" });
+
+            await fetcherImpl({
+                url: "https://example.com/resource",
+                method: "GET",
+                headers: { Authorization: "Bearer request-override" },
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: {}, refresh },
+            });
+
+            expect(refresh).toHaveBeenCalledTimes(1);
+            expect(sentAuthorization).toEqual(["Bearer request-override", "Bearer request-override"]);
+        });
+
         it("should throw the refresh error without retrying the request", async () => {
             global.fetch = jest.fn().mockResolvedValue(new Response("", { status: 401 }));
             const refreshError = new Error("token endpoint failed");

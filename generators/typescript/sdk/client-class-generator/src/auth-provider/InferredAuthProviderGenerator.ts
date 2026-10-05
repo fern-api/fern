@@ -336,7 +336,12 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                               this.refreshAuthOnFailedPermissions
                                   ? `
         if (${FORCE_REFRESH_ARG_NAME}) {
-            this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
+            // Let an in-flight token request settle first so concurrent refreshes share one new request.
+            const staleAuthRequestPromise = this.${AUTH_REQUEST_PROMISE_FIELD_NAME};
+            await staleAuthRequestPromise?.catch(() => undefined);
+            if (this.${AUTH_REQUEST_PROMISE_FIELD_NAME} === staleAuthRequestPromise) {
+                this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
+            }
         }`
                                   : ""
                           }

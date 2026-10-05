@@ -181,16 +181,14 @@ function createAuthHeadersRefresher(authRefresh: Fetcher.AuthRefresh, headers: H
         } catch (error) {
             throw new AuthRefreshFailure(error);
         }
-        const overriddenHeaders = new Set<string>();
         for (const [key, value] of Object.entries(currentAuthHeaders)) {
             if (headers.get(key) === value) {
                 headers.delete(key);
-            } else {
-                overriddenHeaders.add(key.toLowerCase());
             }
         }
+        // Any header still present was supplied by the caller and takes precedence.
         for (const [key, value] of Object.entries(refreshedAuthHeaders)) {
-            if (!overriddenHeaders.has(key.toLowerCase())) {
+            if (!headers.has(key)) {
                 headers.set(key, value);
             }
         }

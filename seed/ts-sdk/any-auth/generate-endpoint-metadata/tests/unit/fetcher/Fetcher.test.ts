@@ -259,4 +259,123 @@ describe("Test fetcherImpl", () => {
             expect(body.bodyUsed).toBe(true);
         }
     });
+
+    describe("authRefresh", () => {
+        beforeEach(() => {
+            vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+                process.nextTick(callback);
+                return null as any;
+            });
+        });
+
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
+        // Header values captured at call time; the retry loop reuses the same Headers instance.
+        let sentAuthorization: (string | null)[];
+        let sentTestHeader: (string | null)[];
+
+        function mockFetchResponses(...responses: Response[]): void {
+            sentAuthorization = [];
+            sentTestHeader = [];
+            const fetchMock = vi.fn(async (_url: string, init: RequestInit) => {
+                const headers = new Headers(init.headers);
+                sentAuthorization.push(headers.get("Authorization"));
+                sentTestHeader.push(headers.get("X-Test"));
+                return responses[Math.min(sentAuthorization.length, responses.length) - 1];
+            });
+            global.fetch = fetchMock as unknown as typeof fetch;
+        }
+
+        it("should retry a 401 with refreshed auth headers", async () => {
+            mockFetchResponses(
+                new Response("", { status: 401 }),
+                new Response(JSON.stringify({ data: "test" }), { status: 200 }),
+            );
+            const refresh = vi.fn().mockResolvedValue({ Authorization: "Bearer new-token" });
+
+            const result = await fetcherImpl({
+                url: "https://example.com/resource",
+                method: "GET",
+                headers: { Authorization: "Bearer old-token", "X-Test": "x-test-header" },
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: { Authorization: "Bearer old-token" }, refresh },
+            });
+
+            expect(result.ok).toBe(true);
+            expect(refresh).toHaveBeenCalledTimes(1);
+            expect(global.fetch).toHaveBeenCalledTimes(2);
+            expect(sentAuthorization).toEqual(["Bearer old-token", "Bearer new-token"]);
+            expect(sentTestHeader).toEqual(["x-test-header", "x-test-header"]);
+        });
+
+        it("should keep auth headers overridden by the caller", async () => {
+            mockFetchResponses(new Response("", { status: 403 }), new Response(JSON.stringify({}), { status: 200 }));
+            const refresh = vi.fn().mockResolvedValue({ Authorization: "Bearer new-token" });
+
+            await fetcherImpl({
+                url: "https://example.com/resource",
+                method: "GET",
+                headers: { Authorization: "Bearer request-override" },
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: { Authorization: "Bearer old-token" }, refresh },
+            });
+
+            expect(refresh).toHaveBeenCalledTimes(1);
+            expect(sentAuthorization).toEqual(["Bearer request-override", "Bearer request-override"]);
+        });
+
+        it("should keep a caller-supplied auth header when the initial auth headers were empty", async () => {
+            mockFetchResponses(new Response("", { status: 401 }), new Response(JSON.stringify({}), { status: 200 }));
+            const refresh = vi.fn().mockResolvedValue({ Authorization: "Bearer new-token" });
+
+            await fetcherImpl({
+                url: "https://example.com/resource",
+                method: "GET",
+                headers: { Authorization: "Bearer request-override" },
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: {}, refresh },
+            });
+
+            expect(refresh).toHaveBeenCalledTimes(1);
+            expect(sentAuthorization).toEqual(["Bearer request-override", "Bearer request-override"]);
+        });
+
+        it("should throw the refresh error without retrying the request", async () => {
+            global.fetch = vi.fn().mockResolvedValue(new Response("", { status: 401 }));
+            const refreshError = new Error("token endpoint failed");
+            const refresh = vi.fn().mockRejectedValue(refreshError);
+
+            await expect(
+                fetcherImpl({
+                    url: "https://example.com/resource",
+                    method: "GET",
+                    headers: { Authorization: "Bearer old-token" },
+                    maxRetries: 2,
+                    responseType: "json",
+                    authRefresh: { headers: { Authorization: "Bearer old-token" }, refresh },
+                }),
+            ).rejects.toBe(refreshError);
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+        });
+
+        it("should return 401 as an error when authRefresh is not set", async () => {
+            global.fetch = vi.fn().mockResolvedValue(new Response("", { status: 401 }));
+
+            const result = await fetcherImpl({
+                url: "https://example.com/resource",
+                method: "GET",
+                headers: { Authorization: "Bearer old-token" },
+                maxRetries: 2,
+                responseType: "json",
+            });
+
+            expect(result.ok).toBe(false);
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+        });
+    });
 });
