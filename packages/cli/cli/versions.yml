@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.145.0
+  changelogEntry:
+    - summary: |
+        `fern export` now accepts a repeatable `--audience` flag. When set, the exported OpenAPI spec only
+        includes the endpoints, webhooks, environments, and schemas required for those audiences
+        (e.g. `fern export openapi.yml --audience public`).
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.144.3
   changelogEntry:
     - summary: |
