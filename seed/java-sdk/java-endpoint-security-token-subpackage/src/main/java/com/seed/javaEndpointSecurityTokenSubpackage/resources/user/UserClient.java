@@ -41,6 +41,22 @@ public class UserClient {
         return this.rawClient.getWithApiKeyOrOAuth(requestOptions).body();
     }
 
+    public List<User> getWithBearer() {
+        return this.rawClient.getWithBearer().body();
+    }
+
+    public List<User> getWithBearer(RequestOptions requestOptions) {
+        return this.rawClient.getWithBearer(requestOptions).body();
+    }
+
+    public List<User> getWithBasic() {
+        return this.rawClient.getWithBasic().body();
+    }
+
+    public List<User> getWithBasic(RequestOptions requestOptions) {
+        return this.rawClient.getWithBasic(requestOptions).body();
+    }
+
     public List<User> getAnonymous() {
         return this.rawClient.getAnonymous().body();
     }
