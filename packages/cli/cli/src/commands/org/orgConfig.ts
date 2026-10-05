@@ -12,7 +12,7 @@ interface OrgConfigResponse {
     orgId: string;
     cliVersionMin?: string;
     cliVersionMax?: string;
-    updatedAt: string;
+    updatedAt?: string;
 }
 
 export interface OrgCliVersionBounds {
@@ -135,22 +135,21 @@ export async function getOrgConfig({
             return;
         }
 
-        if (data.cliVersionMin == null && data.cliVersionMax == null) {
-            context.logger.info(`No org-level CLI config set for "${orgId}".`);
+        const bounds = { min: data.cliVersionMin, max: data.cliVersionMax };
+        if (bounds.min == null && bounds.max == null) {
+            context.logger.info(`Org "${orgId}" has no Fern CLI version policy set.`);
             return;
         }
-        const { cliVersionMin, cliVersionMax } = data;
-        if (cliVersionMin != null && cliVersionMin === cliVersionMax) {
-            context.logger.info(`Fern CLI pinned to ${chalk.green(cliVersionMin)}`);
-        } else if (cliVersionMin != null && cliVersionMax != null) {
-            context.logger.info(
-                `Fern CLI must be between ${chalk.green(cliVersionMin)} and ${chalk.green(cliVersionMax)}`
-            );
-        } else if (cliVersionMin != null) {
-            context.logger.info(`Fern CLI must be at least ${chalk.green(cliVersionMin)}`);
-        } else if (cliVersionMax != null) {
-            context.logger.info(`Fern CLI must be at most ${chalk.green(cliVersionMax)}`);
+        const updated = data.updatedAt != null ? ` (updated ${data.updatedAt.slice(0, 10)})` : "";
+        const currentVersion = cliContext.environment.packageVersion;
+        let status = "";
+        try {
+            const { reason } = clampVersionToOrgBounds(currentVersion, bounds);
+            status = ` This CLI (${currentVersion}) ${reason == null ? "meets" : "does not meet"} this policy.`;
+        } catch {
+            // Unparseable version (e.g. a local dev build): skip the status line.
         }
+        context.logger.info(`${describeOrgBounds(orgId, bounds, chalk.green)}${updated}.${status}`);
     });
 }
 
