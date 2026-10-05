@@ -37,6 +37,7 @@ const DOCKER_GRADLE_USER_HOME = "/fern-gradle-home";
  * cache locks that a containerized Gradle cannot ask it to release, which deadlocks the build.
  */
 const DOCKER_GRADLE_USER_HOME_ON_HOST = RelativeFilePath.of(".fern/gradle-docker-home");
+const LEGACY_PNPM_VERSION = "9.15.9";
 /** Files from the host's Gradle user home mirrored (read-only) into the container's, e.g. mirror/proxy settings. */
 const GRADLE_USER_HOME_CONFIG_ENTRIES = ["gradle.properties", "init.d"];
 
@@ -370,6 +371,12 @@ async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promi
             if (packageManager === "yarn" || packageManager.startsWith("yarn@")) {
                 return ["npx", "--yes", "yarn"];
             }
+            if (packageManager === "pnpm") {
+                return ["npx", "--yes", `pnpm@${LEGACY_PNPM_VERSION}`];
+            }
+            if (packageManager.startsWith("pnpm@")) {
+                return ["npx", "--yes", packageManager];
+            }
         }
     }
     if (
@@ -381,7 +388,9 @@ async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promi
     if (await doesPathExist(join(outputPath, RelativeFilePath.of("yarn.lock")))) {
         return ["npx", "--yes", "yarn"];
     }
-    return ["npx", "--yes", "pnpm"];
+    // Legacy generated SDKs omit packageManager. Pin their known-compatible pnpm instead of
+    // inheriting breaking install-policy changes from the latest release.
+    return ["npx", "--yes", `pnpm@${LEGACY_PNPM_VERSION}`];
 }
 
 /**
