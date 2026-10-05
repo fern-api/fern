@@ -5,6 +5,7 @@ package com.seed.objectsWithImports.resources.optional;
 
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.RequestOptions;
+import com.seed.objectsWithImports.core.SeedObjectsWithImportsHttpResponse;
 import com.seed.objectsWithImports.resources.optional.types.DeployParams;
 import com.seed.objectsWithImports.resources.optional.types.DeployResponse;
 import com.seed.objectsWithImports.resources.optional.types.SendOptionalBodyRequest;
@@ -30,37 +31,100 @@ public class AsyncOptionalClient {
     }
 
     public CompletableFuture<String> sendOptionalBody() {
-        return this.rawClient.sendOptionalBody().thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture = this.rawClient.sendOptionalBody();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalBody(RequestOptions requestOptions) {
-        return this.rawClient.sendOptionalBody(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalBody(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalBody(Optional<Map<String, Object>> request) {
-        return this.rawClient.sendOptionalBody(request).thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalBody(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalBody(
             Optional<Map<String, Object>> request, RequestOptions requestOptions) {
-        return this.rawClient.sendOptionalBody(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalBody(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalTypedBody() {
-        return this.rawClient.sendOptionalTypedBody().thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalTypedBody();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalTypedBody(RequestOptions requestOptions) {
-        return this.rawClient.sendOptionalTypedBody(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalTypedBody(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalTypedBody(Optional<SendOptionalBodyRequest> request) {
-        return this.rawClient.sendOptionalTypedBody(request).thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalTypedBody(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> sendOptionalTypedBody(
             Optional<SendOptionalBodyRequest> request, RequestOptions requestOptions) {
-        return this.rawClient.sendOptionalTypedBody(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> rawFuture =
+                this.rawClient.sendOptionalTypedBody(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -68,9 +132,15 @@ public class AsyncOptionalClient {
      * This should not generate wire tests expecting {} when Optional.empty() is passed.
      */
     public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(String actionId, String id) {
-        return this.rawClient
-                .sendOptionalNullableWithAllOptionalProperties(actionId, id)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>> rawFuture =
+                this.rawClient.sendOptionalNullableWithAllOptionalProperties(actionId, id);
+        CompletableFuture<DeployResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -79,9 +149,15 @@ public class AsyncOptionalClient {
      */
     public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
             String actionId, String id, RequestOptions requestOptions) {
-        return this.rawClient
-                .sendOptionalNullableWithAllOptionalProperties(actionId, id, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>> rawFuture =
+                this.rawClient.sendOptionalNullableWithAllOptionalProperties(actionId, id, requestOptions);
+        CompletableFuture<DeployResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -90,9 +166,15 @@ public class AsyncOptionalClient {
      */
     public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
             String actionId, String id, Optional<DeployParams> request) {
-        return this.rawClient
-                .sendOptionalNullableWithAllOptionalProperties(actionId, id, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>> rawFuture =
+                this.rawClient.sendOptionalNullableWithAllOptionalProperties(actionId, id, request);
+        CompletableFuture<DeployResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -101,8 +183,14 @@ public class AsyncOptionalClient {
      */
     public CompletableFuture<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
             String actionId, String id, Optional<DeployParams> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>> rawFuture =
+                this.rawClient.sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions);
+        CompletableFuture<DeployResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

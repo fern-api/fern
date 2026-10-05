@@ -10,7 +10,7 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListWithPathPaginationAsync();
+        await client.Users.ListWithUriPaginationAsync();
     }
 
 }

@@ -25,13 +25,13 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
     end
 
     it "retries on retryable 5xx statuses" do
-      [500, 502, 503, 504, 521, 522, 524].each do |status|
+      {{RETRYABLE_5XX_STATUSES}}.each do |status|
         assert client.should_retry?(make_response(status), 0), "expected retry for status #{status}"
       end
     end
 
     it "does not retry on non-retryable 5xx statuses" do
-      [501, 505, 510, 599].each do |status|
+      {{NON_RETRYABLE_5XX_STATUSES}}.each do |status|
         refute client.should_retry?(make_response(status), 0), "expected no retry for status #{status}"
       end
     end

@@ -217,6 +217,10 @@ fixtures:
         enable-wire-tests: true
         offset-semantics: "item-index"
       outputFolder: item-index-semantics
+    - customConfig:
+        enable-wire-tests: true
+        collapse-optional-nullable: true
+      outputFolder: collapse-optional-nullable
   java-multi-env-url-templating:
     - customConfig: null
       outputFolder: no-custom-config

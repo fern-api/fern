@@ -783,6 +783,19 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(waitMethod!.returnType).toContain("ReconnectingWebSocket");
         });
+
+        it("delegates to the socket's waitForOpen so close and abort settle the promise", () => {
+            const impl = createImpl();
+            const context = createMockContext();
+            impl.writeToFile(context);
+
+            const classStructure = context._addedClasses[0] as {
+                methods: { name: string; statements: string[] }[];
+            };
+            const waitMethod = classStructure.methods.find((m: { name: string }) => m.name === "waitForOpen");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - method is always generated
+            expect(waitMethod!.statements).toEqual(["await this.socket.waitForOpen();", "return this.socket;"]);
+        });
     });
 
     describe("assertSocketIsOpen method", () => {

@@ -10,9 +10,9 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListUsernamesAsync(
-            new SeedPagination.ListUsernamesRequest {
-                StartingAfter = "starting_after"
+        await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
+            new SeedPagination.ListUsersExtendedRequestForOptionalData {
+                Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
             }
         );
     }

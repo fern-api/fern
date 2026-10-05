@@ -41,7 +41,13 @@ module Seed
           (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            404 => Seed::Commons::Types::ErrorBody,
+            400 => Seed::Commons::Types::ErrorBody,
+            500 => Seed::Commons::Types::ErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
@@ -76,7 +82,14 @@ module Seed
           (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            429 => Seed::Commons::Types::ErrorBody,
+            500 => Seed::Commons::Types::ErrorBody,
+            404 => Seed::Commons::Types::ErrorBody,
+            400 => Seed::Commons::Types::ErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
@@ -111,7 +124,14 @@ module Seed
           (response.body.to_s.empty? ? nil : Seed::Simple::Types::FooResponse.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            429 => Seed::Commons::Types::ErrorBody,
+            500 => Seed::Commons::Types::ErrorBody,
+            404 => Seed::Commons::Types::ErrorBody,
+            400 => Seed::Commons::Types::ErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
     end

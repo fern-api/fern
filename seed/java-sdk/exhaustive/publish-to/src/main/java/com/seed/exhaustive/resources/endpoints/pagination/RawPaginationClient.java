@@ -109,9 +109,11 @@ public class RawPaginationClient {
                 List<ObjectWithRequiredField> result = parsedResponse.getItems();
                 return new SeedExhaustiveHttpResponse<>(
                         new SyncPagingIterable<ObjectWithRequiredField>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> listItems(
-                                                nextRequest, requestOptions)
-                                        .body()),
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> listItems(nextRequest, requestOptions).body()),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

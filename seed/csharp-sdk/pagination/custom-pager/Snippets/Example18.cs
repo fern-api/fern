@@ -10,12 +10,10 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListWithOffsetPaginationAsync(
-            new SeedPagination.ListUsersOffsetPaginationRequest {
-                Page = 1,
-                PerPage = 1,
-                Order = SeedPagination.Order.Asc,
-                StartingAfter = "starting_after"
+        await client.Users.ListWithTopLevelBodyCursorPaginationAsync(
+            new ListUsersTopLevelBodyCursorPaginationRequest {
+                Cursor = "cursor",
+                Filter = "filter"
             }
         );
     }

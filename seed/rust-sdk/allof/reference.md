@@ -263,9 +263,9 @@ async fn main() {
                 species: "species".to_string(),
                 family: "family".to_string(),
                 genus: "genus".to_string(),
+                common_name: "commonName".to_string(),
+                watering_frequency: PlantBaseWateringFrequency::Daily,
                 sun_exposure: PlantPostSunExposure::Full,
-                common_name: None,
-                watering_frequency: None,
                 planted_at: None,
                 soil_type: None,
             },
@@ -283,6 +283,22 @@ async fn main() {
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**common_name:** `String` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**watering_frequency:** `PlantBaseWateringFrequency` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -353,10 +369,12 @@ async fn main() {
     client
         .create_tree(
             &TreeRecord {
-                tree_base_fields: TreeBase {
+                tree_identifiable_fields: TreeIdentifiable {
                     id: "id".to_string(),
                     ..Default::default()
                 },
+                tree_name: "treeName".to_string(),
+                tree_species: "treeSpecies".to_string(),
                 ..Default::default()
             },
             None,

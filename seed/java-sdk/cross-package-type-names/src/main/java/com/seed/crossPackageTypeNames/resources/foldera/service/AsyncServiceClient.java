@@ -5,6 +5,7 @@ package com.seed.crossPackageTypeNames.resources.foldera.service;
 
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse;
 import com.seed.crossPackageTypeNames.resources.foldera.service.types.Response;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,25 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Response> getDirectThread() {
-        return this.rawClient.getDirectThread().thenApply(response -> response.body());
+        CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<Response>> rawFuture = this.rawClient.getDirectThread();
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Response> getDirectThread(RequestOptions requestOptions) {
-        return this.rawClient.getDirectThread(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<Response>> rawFuture =
+                this.rawClient.getDirectThread(requestOptions);
+        CompletableFuture<Response> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

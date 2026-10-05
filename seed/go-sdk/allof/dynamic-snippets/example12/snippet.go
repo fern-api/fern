@@ -16,6 +16,8 @@ func do() {
     )
     request := &fern.TreeRecord{
         ID: "id",
+        TreeName: "treeName",
+        TreeSpecies: "treeSpecies",
     }
     client.CreateTree(
         context.TODO(),

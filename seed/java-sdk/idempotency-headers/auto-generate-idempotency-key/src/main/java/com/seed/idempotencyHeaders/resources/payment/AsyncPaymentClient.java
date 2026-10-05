@@ -6,6 +6,7 @@ package com.seed.idempotencyHeaders.resources.payment;
 import com.seed.idempotencyHeaders.core.ClientOptions;
 import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.RequestOptions;
+import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersHttpResponse;
 import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -28,18 +29,48 @@ public class AsyncPaymentClient {
     }
 
     public CompletableFuture<UUID> create(CreatePaymentRequest request) {
-        return this.rawClient.create(request).thenApply(response -> response.body());
+        CompletableFuture<SeedIdempotencyHeadersHttpResponse<UUID>> rawFuture = this.rawClient.create(request);
+        CompletableFuture<UUID> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UUID> create(CreatePaymentRequest request, IdempotentRequestOptions requestOptions) {
-        return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedIdempotencyHeadersHttpResponse<UUID>> rawFuture =
+                this.rawClient.create(request, requestOptions);
+        CompletableFuture<UUID> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> delete(String paymentId) {
-        return this.rawClient.delete(paymentId).thenApply(response -> response.body());
+        CompletableFuture<SeedIdempotencyHeadersHttpResponse<Void>> rawFuture = this.rawClient.delete(paymentId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> delete(String paymentId, RequestOptions requestOptions) {
-        return this.rawClient.delete(paymentId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedIdempotencyHeadersHttpResponse<Void>> rawFuture =
+                this.rawClient.delete(paymentId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

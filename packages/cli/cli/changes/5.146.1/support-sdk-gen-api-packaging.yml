@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support building package artifacts from SDKs generated through SDK Gen API with `fern generate --package`, including pnpm-based TypeScript projects.
+  type: fix

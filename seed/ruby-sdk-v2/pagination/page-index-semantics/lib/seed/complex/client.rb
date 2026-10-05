@@ -36,15 +36,14 @@ module Seed
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[index]
-        body_params = params.except(*path_param_names)
-
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :conversations,
-          initial_cursor: query_params["starting_after"]
+          initial_cursor: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:starting_after]
         ) do |next_cursor|
-          query_params["starting_after"] = next_cursor
+          params[:pagination] = Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h).merge(starting_after: next_cursor)
+          path_param_names = %i[index]
+          body_params = params.except(*path_param_names)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

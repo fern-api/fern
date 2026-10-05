@@ -85,6 +85,10 @@ Style/Documentation:
 Style/Lambda:
   EnforcedStyle: literal
 
+# Docstrings come from API definitions and often start with words like "Note:".
+Style/CommentAnnotation:
+  Enabled: false
+
 Minitest/MultipleAssertions:
   Enabled: false
 

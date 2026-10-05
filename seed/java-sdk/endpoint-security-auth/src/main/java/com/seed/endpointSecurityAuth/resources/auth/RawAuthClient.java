@@ -4,6 +4,7 @@
 package com.seed.endpointSecurityAuth.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.endpointSecurityAuth.core.BodyProperties;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
 import com.seed.endpointSecurityAuth.core.EndpointMetadata;
 import com.seed.endpointSecurityAuth.core.MediaTypes;
@@ -50,7 +51,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedEndpointSecurityAuthException("Failed to serialize request", e);
         }

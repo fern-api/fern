@@ -1,0 +1,146 @@
+openapi: 3.1.0
+info:
+  title: openapi-wildcard-errors
+  version: 0.0.0
+paths:
+  /items:
+    post:
+      operationId: items_createItem
+      tags:
+        - Items
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+        '400':
+          description: ClientRequestError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: ServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      summary: Create an item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  examples:
+                    - name
+              required:
+                - name
+            examples:
+              Example1:
+                value:
+                  name: name
+  /items/{item_id}:
+    get:
+      operationId: items_getItem
+      tags:
+        - Items
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: item_id
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    name: name
+        '400':
+          description: ClientRequestError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemNotFound'
+        '500':
+          description: ServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      summary: Get an item
+components:
+  schemas:
+    Item:
+      title: Item
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+            - id
+        name:
+          type: string
+          examples:
+            - name
+      required:
+        - id
+        - name
+    ItemNotFound:
+      title: ItemNotFound
+      type: object
+      properties:
+        item_id:
+          type: string
+      required:
+        - item_id
+    ApiError:
+      title: ApiError
+      type: object
+      description: The shared error body returned for every 4XX and 5XX status.
+      properties:
+        error_type:
+          type: string
+        error_code:
+          type: string
+        error_message:
+          type: string
+        request_id:
+          type:
+            - string
+            - 'null'
+      required:
+        - error_type
+        - error_code
+        - error_message
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

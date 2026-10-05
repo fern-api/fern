@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.65.3
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `String()` instead of JSON, and `ToXml()` prepends the
+        `<?xml version="1.0" encoding="UTF-8"?>` declaration. Use
+        `ToXmlElement().ToXml()` to serialize without the declaration.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.65.2
+  changelogEntry:
+    - summary: |
+        `option.WithBodyProperties` now overrides generated request fields that share the same wire-format key
+        instead of returning a `cannot add extra property` error, so you can force or replace any JSON or form URL
+        encoded request body property. The generated README documents the option in a new "Additional Body
+        Properties" section, including that it isn't applied to multipart file upload or raw byte requests.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 1.65.1
   changelogEntry:
     - summary: |

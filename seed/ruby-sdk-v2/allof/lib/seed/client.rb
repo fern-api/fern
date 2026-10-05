@@ -194,6 +194,8 @@ module Seed
     #     species: "species",
     #     family: "family",
     #     genus: "genus",
+    #     common_name: "commonName",
+    #     watering_frequency: "daily",
     #     sun_exposure: "full"
     #   )
     #
@@ -233,7 +235,11 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @example
-    #   client.create_tree(id: "id")
+    #   client.create_tree(
+    #     id: "id",
+    #     tree_name: "treeName",
+    #     tree_species: "treeSpecies"
+    #   )
     #
     # @return [Seed::Types::TreeRecord]
     def create_tree(request_options: {}, **params)

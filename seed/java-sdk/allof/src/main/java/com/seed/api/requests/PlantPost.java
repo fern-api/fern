@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
-import com.seed.api.types.IPlantBase;
 import com.seed.api.types.IPlantStrict;
 import com.seed.api.types.PlantBaseWateringFrequency;
 import com.seed.api.types.PlantPostSunExposure;
@@ -24,16 +23,16 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PlantPost.Builder.class)
-public final class PlantPost implements IPlantBase, IPlantStrict {
-    private final Optional<String> commonName;
-
-    private final Optional<PlantBaseWateringFrequency> wateringFrequency;
-
+public final class PlantPost implements IPlantStrict {
     private final String species;
 
     private final String family;
 
     private final String genus;
+
+    private final String commonName;
+
+    private final PlantBaseWateringFrequency wateringFrequency;
 
     private final PlantPostSunExposure sunExposure;
 
@@ -44,38 +43,24 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
     private final Map<String, Object> additionalProperties;
 
     private PlantPost(
-            Optional<String> commonName,
-            Optional<PlantBaseWateringFrequency> wateringFrequency,
             String species,
             String family,
             String genus,
+            String commonName,
+            PlantBaseWateringFrequency wateringFrequency,
             PlantPostSunExposure sunExposure,
             Optional<String> plantedAt,
             Optional<String> soilType,
             Map<String, Object> additionalProperties) {
-        this.commonName = commonName;
-        this.wateringFrequency = wateringFrequency;
         this.species = species;
         this.family = family;
         this.genus = genus;
+        this.commonName = commonName;
+        this.wateringFrequency = wateringFrequency;
         this.sunExposure = sunExposure;
         this.plantedAt = plantedAt;
         this.soilType = soilType;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return The common name of the plant.
-     */
-    @JsonProperty("commonName")
-    @java.lang.Override
-    public Optional<String> getCommonName() {
-        return commonName;
-    }
-
-    @JsonProperty("wateringFrequency")
-    public Optional<PlantBaseWateringFrequency> getWateringFrequency() {
-        return wateringFrequency;
     }
 
     /**
@@ -103,6 +88,19 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
     @java.lang.Override
     public String getGenus() {
         return genus;
+    }
+
+    /**
+     * @return The common name of the plant.
+     */
+    @JsonProperty("commonName")
+    public String getCommonName() {
+        return commonName;
+    }
+
+    @JsonProperty("wateringFrequency")
+    public PlantBaseWateringFrequency getWateringFrequency() {
+        return wateringFrequency;
     }
 
     /**
@@ -141,11 +139,11 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
     }
 
     private boolean equalTo(PlantPost other) {
-        return commonName.equals(other.commonName)
-                && wateringFrequency.equals(other.wateringFrequency)
-                && species.equals(other.species)
+        return species.equals(other.species)
                 && family.equals(other.family)
                 && genus.equals(other.genus)
+                && commonName.equals(other.commonName)
+                && wateringFrequency.equals(other.wateringFrequency)
                 && sunExposure.equals(other.sunExposure)
                 && plantedAt.equals(other.plantedAt)
                 && soilType.equals(other.soilType);
@@ -154,11 +152,11 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.commonName,
-                this.wateringFrequency,
                 this.species,
                 this.family,
                 this.genus,
+                this.commonName,
+                this.wateringFrequency,
                 this.sunExposure,
                 this.plantedAt,
                 this.soilType);
@@ -193,7 +191,18 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
         /**
          * <p>The botanical genus.</p>
          */
-        SunExposureStage genus(@NotNull String genus);
+        CommonNameStage genus(@NotNull String genus);
+    }
+
+    public interface CommonNameStage {
+        /**
+         * <p>The common name of the plant.</p>
+         */
+        WateringFrequencyStage commonName(@NotNull String commonName);
+    }
+
+    public interface WateringFrequencyStage {
+        SunExposureStage wateringFrequency(@NotNull PlantBaseWateringFrequency wateringFrequency);
     }
 
     public interface SunExposureStage {
@@ -211,17 +220,6 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
-         * <p>The common name of the plant.</p>
-         */
-        _FinalStage commonName(Optional<String> commonName);
-
-        _FinalStage commonName(String commonName);
-
-        _FinalStage wateringFrequency(Optional<PlantBaseWateringFrequency> wateringFrequency);
-
-        _FinalStage wateringFrequency(PlantBaseWateringFrequency wateringFrequency);
-
-        /**
          * <p>Date the plant was planted.</p>
          */
         _FinalStage plantedAt(Optional<String> plantedAt);
@@ -237,22 +235,29 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SpeciesStage, FamilyStage, GenusStage, SunExposureStage, _FinalStage {
+    public static final class Builder
+            implements SpeciesStage,
+                    FamilyStage,
+                    GenusStage,
+                    CommonNameStage,
+                    WateringFrequencyStage,
+                    SunExposureStage,
+                    _FinalStage {
         private String species;
 
         private String family;
 
         private String genus;
 
+        private String commonName;
+
+        private PlantBaseWateringFrequency wateringFrequency;
+
         private PlantPostSunExposure sunExposure;
 
         private Optional<String> soilType = Optional.empty();
 
         private Optional<String> plantedAt = Optional.empty();
-
-        private Optional<PlantBaseWateringFrequency> wateringFrequency = Optional.empty();
-
-        private Optional<String> commonName = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -261,11 +266,11 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
 
         @java.lang.Override
         public Builder from(PlantPost other) {
-            commonName(other.getCommonName());
-            wateringFrequency(other.getWateringFrequency());
             species(other.getSpecies());
             family(other.getFamily());
             genus(other.getGenus());
+            commonName(other.getCommonName());
+            wateringFrequency(other.getWateringFrequency());
             sunExposure(other.getSunExposure());
             plantedAt(other.getPlantedAt());
             soilType(other.getSoilType());
@@ -300,8 +305,26 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
          */
         @java.lang.Override
         @JsonSetter("genus")
-        public SunExposureStage genus(@NotNull String genus) {
+        public CommonNameStage genus(@NotNull String genus) {
             this.genus = Objects.requireNonNull(genus, "genus must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The common name of the plant.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("commonName")
+        public WateringFrequencyStage commonName(@NotNull String commonName) {
+            this.commonName = Objects.requireNonNull(commonName, "commonName must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("wateringFrequency")
+        public SunExposureStage wateringFrequency(@NotNull PlantBaseWateringFrequency wateringFrequency) {
+            this.wateringFrequency = Objects.requireNonNull(wateringFrequency, "wateringFrequency must not be null");
             return this;
         }
 
@@ -357,46 +380,13 @@ public final class PlantPost implements IPlantBase, IPlantStrict {
         }
 
         @java.lang.Override
-        public _FinalStage wateringFrequency(PlantBaseWateringFrequency wateringFrequency) {
-            this.wateringFrequency = Optional.ofNullable(wateringFrequency);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "wateringFrequency", nulls = Nulls.SKIP)
-        public _FinalStage wateringFrequency(Optional<PlantBaseWateringFrequency> wateringFrequency) {
-            this.wateringFrequency = wateringFrequency;
-            return this;
-        }
-
-        /**
-         * <p>The common name of the plant.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage commonName(String commonName) {
-            this.commonName = Optional.ofNullable(commonName);
-            return this;
-        }
-
-        /**
-         * <p>The common name of the plant.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "commonName", nulls = Nulls.SKIP)
-        public _FinalStage commonName(Optional<String> commonName) {
-            this.commonName = commonName;
-            return this;
-        }
-
-        @java.lang.Override
         public PlantPost build() {
             return new PlantPost(
-                    commonName,
-                    wateringFrequency,
                     species,
                     family,
                     genus,
+                    commonName,
+                    wateringFrequency,
                     sunExposure,
                     plantedAt,
                     soilType,

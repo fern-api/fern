@@ -66,6 +66,7 @@ await client.UpdateFooAsync(
         NullableText = "nullable_text",
         NullableNumber = 1.1,
         NonNullableText = "non_nullable_text",
+        RequiredNullableText = "required_nullable_text",
     }
 );
 ```
