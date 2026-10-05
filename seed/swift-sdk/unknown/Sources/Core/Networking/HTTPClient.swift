@@ -136,6 +136,7 @@ final class HTTPClient: Swift.Sendable {
 
         // Set body
         request.httpBody = try buildRequestBody(
+            method: method,
             requestBody: requestBody,
             requestOptions: requestOptions
         )
@@ -246,12 +247,14 @@ final class HTTPClient: Swift.Sendable {
     }
 
     private func buildRequestBody(
+        method: HTTP.Method,
         requestBody: HTTP.RequestBody?,
         requestOptions: RequestOptions? = nil
     ) throws -> Foundation.Data? {
         let additionalBodyParameters = mergedAdditionalBodyParameters(requestOptions: requestOptions)
         guard let requestBody else {
-            if additionalBodyParameters.isEmpty {
+            // URLSession rejects GET/HEAD requests that carry a body, so additional body parameters are not applied.
+            if additionalBodyParameters.isEmpty || method == .get || method == .head {
                 return nil
             }
             return try encodeAdditionalBodyParameters(.object(additionalBodyParameters))

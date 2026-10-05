@@ -32,7 +32,8 @@ public struct RequestOptions {
     ///
     /// Values are merged after the request model is serialized and take precedence over generated fields with the same key,
     /// as well as over `additionalBodyParameters` entries with the same key.
-    /// If the endpoint has no request body, a JSON object body is created from these properties.
+    /// If the endpoint has no request body, a JSON object body is created from these properties, except for GET and HEAD
+    /// requests, which are sent without a body.
     /// Bodies that do not serialize to a JSON object (e.g. arrays), multipart form data, and raw `Data` bodies are left unchanged.
     let additionalBodyProperties: [Swift.String: JSONValue]?
 

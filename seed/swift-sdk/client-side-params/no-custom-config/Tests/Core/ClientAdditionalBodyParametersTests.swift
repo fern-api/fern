@@ -163,6 +163,36 @@ import Testing
         return try decodeJSONObjectBody(of: request)
     }
 
+    @Test func testAdditionalBodyPropertiesAreNotSentForGetRequests() async throws {
+        let stub = HTTPStub()
+        stub.setResponse(body: Foundation.Data("{}".utf8))
+        let additionalBodyParameters: [String: String]? = ["fernExtraString": "beta"]
+        let additionalBodyProperties: [String: JSONValue]? = ["fernExtraBool": true]
+
+        let client = ClientSideParamsClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+
+        do {
+            _ = try await client.service.listResources(
+                page: 1,
+                perPage: 1,
+                sort: "created_at",
+                order: "desc",
+                includeTotals: true,
+                fields: "fields",
+                search: "search",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers, additionalBodyParameters: additionalBodyParameters, additionalBodyProperties: additionalBodyProperties)
+            )
+
+        } catch {
+        }
+        let request = try #require(stub.takeLastRequest())
+        try #require(readBody(of: request) == nil)
+    }
+
     private func decodeJSONObjectBody(of request: Networking.URLRequest) throws -> [String: JSONValue]? {
         guard let body = readBody(of: request), !body.isEmpty else {
             return nil

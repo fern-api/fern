@@ -194,7 +194,8 @@ export class TemplateDataGenerator {
         const moduleSymbol = this.context.project.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
         const jsonBodyEndpoint = this.getSampleEndpoint(this.getEndpointWithJsonObjectBody());
         const noBodyEndpoint = this.getSampleEndpoint(this.getEndpointWithoutBody());
-        if (!jsonBodyEndpoint && !noBodyEndpoint) {
+        const getEndpoint = this.getSampleEndpoint(this.getGetOrHeadEndpointWithoutBody());
+        if (!jsonBodyEndpoint && !noBodyEndpoint && !getEndpoint) {
             return null;
         }
         const renderEndpoint = (sampleEndpoint: SampleEndpoint | null) => {
@@ -211,12 +212,15 @@ export class TemplateDataGenerator {
         };
         const jsonBody = renderEndpoint(jsonBodyEndpoint);
         const noBody = renderEndpoint(noBodyEndpoint);
+        const getNoBody = renderEndpoint(getEndpoint);
         return {
             moduleName: moduleSymbol.name,
             jsonBodyClientDeclaration: jsonBody.clientDeclaration,
             jsonBodyEndpointCall: jsonBody.endpointCall,
             noBodyClientDeclaration: noBody.clientDeclaration,
-            noBodyEndpointCall: noBody.endpointCall
+            noBodyEndpointCall: noBody.endpointCall,
+            getNoBodyClientDeclaration: getNoBody.clientDeclaration,
+            getNoBodyEndpointCall: getNoBody.endpointCall
         };
     }
 
@@ -419,6 +423,17 @@ export class TemplateDataGenerator {
                 endpoint.requestBody == null &&
                 endpoint.method !== FernIr.HttpMethod.Get &&
                 endpoint.method !== FernIr.HttpMethod.Head
+        );
+    }
+
+    /**
+     * Finds a GET or HEAD endpoint without a request body. Additional body parameters are not applied to these.
+     */
+    private getGetOrHeadEndpointWithoutBody() {
+        return this.findEndpoint(
+            (endpoint) =>
+                endpoint.requestBody == null &&
+                (endpoint.method === FernIr.HttpMethod.Get || endpoint.method === FernIr.HttpMethod.Head)
         );
     }
 
