@@ -2300,6 +2300,10 @@ func (f *fileWriter) WriteClient(
 		for _, svp := range endpoint.SDKVariablePathParameters {
 			if !svp.IsString {
 				f.P(svp.VarExpr, " := ", receiver, ".options.", svp.OptionName)
+				f.P("var ", svp.VarExpr, "Zero ", svp.GoType)
+				f.P("if options.", svp.OptionName, " != ", svp.VarExpr, "Zero {")
+				f.P(svp.VarExpr, " = options.", svp.OptionName)
+				f.P("}")
 				continue
 			}
 			f.P(svp.VarExpr, " := options.", svp.OptionName)
@@ -3585,6 +3589,7 @@ type sdkVariablePathParameter struct {
 	VarExpr    string // Go local variable (e.g., "_targetAccountSid")
 	OptionName string // RequestOptions field name (e.g., "TargetAccountSid")
 	IsString   bool   // Whether the "" zero-value check and env var fallback apply
+	GoType     string // Go type of the variable, used for the zero-value check of non-string variables
 	ErrMessage string // Error message when the variable is unset
 }
 
@@ -3678,6 +3683,7 @@ func (f *fileWriter) endpointFromIR(
 			VarExpr:    localVar,
 			OptionName: sdkVariable.optionName,
 			IsString:   isStringType(sdkVariable.variable.Type),
+			GoType:     sdkVariable.goType,
 			ErrMessage: sdkVariable.missingErrorMessage(),
 		})
 		return localVar, nil

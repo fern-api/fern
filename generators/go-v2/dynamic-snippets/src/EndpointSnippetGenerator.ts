@@ -379,8 +379,9 @@ export class EndpointSnippetGenerator {
             parameters: boundParameters,
             values: snippet.pathParameters ?? {}
         });
-        for (const [index, parameter] of boundParameters.entries()) {
-            const instance = instances[index];
+        const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
+        for (const parameter of boundParameters) {
+            const instance = instancesByWireValue.get(parameter.name.wireValue);
             const variableId = parameter.variable;
             if (instance == null || variableId == null || seen.has(variableId)) {
                 continue;

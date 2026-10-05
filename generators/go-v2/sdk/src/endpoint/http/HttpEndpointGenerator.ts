@@ -779,6 +779,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.write(`${localVar} := `);
                 writer.writeNode(clientValue);
                 writer.newLine();
+                writer.write(`var ${localVar}Zero `);
+                writer.writeNode(this.context.goTypeMapper.convert({ reference: sdkVariable.variable.type }));
+                writer.newLine();
+                writer.writeLine(`if options.${sdkVariable.fieldName} != ${localVar}Zero {`);
+                writer.indent();
+                writer.writeLine(`${localVar} = options.${sdkVariable.fieldName}`);
+                writer.dedent();
+                writer.writeLine("}");
                 continue;
             }
             writer.writeLine(`${localVar} := options.${sdkVariable.fieldName}`);

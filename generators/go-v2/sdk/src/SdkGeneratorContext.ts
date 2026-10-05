@@ -27,6 +27,8 @@ export interface SdkVariableOption {
 }
 
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public readonly caller: Caller;
     public readonly streamer: Streamer;
     public readonly endpointGenerator: EndpointGenerator;
@@ -820,7 +822,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
      * x-fern-sdk-variable), each paired with the client option it is exposed under.
      */
     public getSdkVariableOptions(): SdkVariableOption[] {
-        return this.ir.variables.map((variable) => {
+        if (this.sdkVariableOptions != null) {
+            return this.sdkVariableOptions;
+        }
+        this.sdkVariableOptions = this.ir.variables.map((variable) => {
             const { fieldName, localName } = getSdkVariableNames({
                 pascal: this.caseConverter.pascalUnsafe(variable.name),
                 camel: this.caseConverter.camelSafe(variable.name)
@@ -832,6 +837,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 isString: isPlainStringType(variable.type)
             };
         });
+        this.sdkVariableOptionsById = new Map(
+            this.sdkVariableOptions.map((option) => [option.variable.id, option] as const)
+        );
+        return this.sdkVariableOptions;
     }
 
     /**
@@ -843,7 +852,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (pathParameter.variable == null) {
             return undefined;
         }
-        return this.getSdkVariableOptions().find((option) => option.variable.id === pathParameter.variable);
+        this.getSdkVariableOptions();
+        return this.sdkVariableOptionsById?.get(pathParameter.variable);
     }
 
     private fileUploadRequestHasProperties(fileUploadRequest: FernIr.FileUploadRequest): boolean {
