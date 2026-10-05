@@ -1,3 +1,4 @@
+import enum
 import importlib.util
 import sys
 from pathlib import Path
@@ -15,6 +16,7 @@ def test_fallback_str_enum_str_returns_value(flavor: str, monkeypatch: pytest.Mo
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+    assert module.StrEnum is not getattr(enum, "StrEnum", None)
 
     class MarketplaceId(module.StrEnum):  # type: ignore[name-defined, misc]
         WALMART_US = "WALMART_US"
