@@ -65,6 +65,9 @@ fixtures:
     - customConfig:
         prefer_explicit_auth: true
       outputFolder: prefer-explicit-auth
+    - customConfig:
+        refresh_auth_on_failed_permissions: true
+      outputFolder: refresh-auth-on-failed-permissions
   basic-auth-pw-omitted:
     - customConfig:
         enable_wire_tests: true

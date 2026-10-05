@@ -189,6 +189,8 @@ class ClientWrapperGenerator:
     ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME = "async_auth_headers"
     ASYNC_AUTH_HEADERS_MEMBER_NAME = "_async_auth_headers"
 
+    REFRESH_AUTH_PARAMETER_NAME = "refresh_auth"
+
     APP_INFO_PARAMETER_NAME = "app_info"
     APP_INFO_MEMBER_NAME = "_app_info"
     APPEND_APP_INFO_HELPER_NAME = "_append_app_info_to_user_agent"
@@ -452,6 +454,7 @@ class ClientWrapperGenerator:
             literal_headers=literal_headers,
         )
 
+        named_parameters.extend(self._get_refresh_auth_named_parameters())
         named_parameters.append(
             AST.NamedFunctionParameter(
                 name=ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
@@ -523,6 +526,7 @@ class ClientWrapperGenerator:
                 )
             )
 
+        named_parameters.extend(self._get_refresh_auth_named_parameters())
         named_parameters.append(
             AST.NamedFunctionParameter(
                 name=ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
@@ -861,6 +865,7 @@ class ClientWrapperGenerator:
                     base_max_retries=AST.Expression(f"self.{ClientWrapperGenerator.GET_MAX_RETRIES_METHOD_NAME}()"),
                     async_base_headers=AST.Expression(f"self.{ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME}"),
                     logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
+                    refresh_auth=self._get_refresh_auth_argument(),
                 )
             )
 
@@ -910,10 +915,30 @@ class ClientWrapperGenerator:
                     is_async=is_async,
                     base_max_retries=AST.Expression(f"self.{ClientWrapperGenerator.GET_MAX_RETRIES_METHOD_NAME}()"),
                     logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
+                    refresh_auth=self._get_refresh_auth_argument(),
                 )
             )
 
         return _write_derived_client_wrapper_constructor_body
+
+    def _refresh_auth_on_failed_permissions(self) -> bool:
+        return self._context.custom_config.refresh_auth_on_failed_permissions
+
+    def _get_refresh_auth_named_parameters(self) -> List[AST.NamedFunctionParameter]:
+        if not self._refresh_auth_on_failed_permissions():
+            return []
+        return [
+            AST.NamedFunctionParameter(
+                name=ClientWrapperGenerator.REFRESH_AUTH_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.any())),
+                initializer=AST.Expression(AST.TypeHint.none()),
+            )
+        ]
+
+    def _get_refresh_auth_argument(self) -> Optional[AST.Expression]:
+        if not self._refresh_auth_on_failed_permissions():
+            return None
+        return AST.Expression(ClientWrapperGenerator.REFRESH_AUTH_PARAMETER_NAME)
 
     def _get_named_parameters(
         self,

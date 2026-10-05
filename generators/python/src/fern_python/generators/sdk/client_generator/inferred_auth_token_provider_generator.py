@@ -100,8 +100,20 @@ class InferredAuthTokenProviderGenerator:
         )
         if has_expiry:
             class_declaration.add_method(self._get_expires_at_function_declaration())
+        if self._context.custom_config.refresh_auth_on_failed_permissions:
+            class_declaration.add_method(
+                self._get_invalidate_function_declaration(member_name=self._get_cached_headers_member_name())
+            )
 
         return class_declaration
+
+    def _get_invalidate_function_declaration(self, *, member_name: str) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="invalidate",
+            docstring=None,
+            signature=AST.FunctionSignature(return_type=AST.TypeHint.none()),
+            body=AST.CodeWriter(f"self.{member_name} = None"),
+        )
 
     def _get_constructor_parameters(
         self, *, credential_properties: List[CredentialProperty], is_async: bool

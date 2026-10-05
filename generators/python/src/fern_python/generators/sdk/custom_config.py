@@ -306,6 +306,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # false, where OAuth env vars win over explicitly provided basic auth.
     prefer_explicit_auth: bool = False
 
+    # When true, a 401 or 403 response is retried with the SDK's normal retry policy
+    # (max retries and backoff), refreshing auth before each retry: cached OAuth and
+    # inferred-auth tokens are invalidated, and callable credentials are re-resolved.
+    refresh_auth_on_failed_permissions: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -339,6 +344,10 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["prefer_explicit_auth"] = obj.pop("prefer-explicit-auth")
             if "preferExplicitAuth" in obj and "prefer_explicit_auth" not in obj:
                 obj["prefer_explicit_auth"] = obj.pop("preferExplicitAuth")
+            if "refresh-auth-on-failed-permissions" in obj and "refresh_auth_on_failed_permissions" not in obj:
+                obj["refresh_auth_on_failed_permissions"] = obj.pop("refresh-auth-on-failed-permissions")
+            if "refreshAuthOnFailedPermissions" in obj and "refresh_auth_on_failed_permissions" not in obj:
+                obj["refresh_auth_on_failed_permissions"] = obj.pop("refreshAuthOnFailedPermissions")
 
         obj = super().parse_obj(obj)
 

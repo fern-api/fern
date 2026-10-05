@@ -95,8 +95,20 @@ class OAuthTokenProviderGenerator:
         )
         if self._has_expires_in_property(client_credentials):
             class_declaration.add_method(self._get_expires_at_function_declaration())
+        if self._context.custom_config.refresh_auth_on_failed_permissions:
+            class_declaration.add_method(
+                self._get_invalidate_function_declaration(member_name=self._get_access_token_member_name())
+            )
 
         return class_declaration
+
+    def _get_invalidate_function_declaration(self, *, member_name: str) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name="invalidate",
+            docstring=None,
+            signature=AST.FunctionSignature(return_type=AST.TypeHint.none()),
+            body=AST.CodeWriter(f"self.{member_name} = None"),
+        )
 
     def _get_constructor_parameters(
         self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
