@@ -86,7 +86,13 @@ export class WireTestGenerator {
             const runnableTestCases = testCases.filter((testCase) => {
                 const isFirstForEndpoint = !testedEndpointIds.has(testCase.endpoint.id);
                 testedEndpointIds.add(testCase.endpoint.id);
-                return isFirstForEndpoint || this.wireMockMappingsByTestId[testCase.testName] != null;
+                if (isFirstForEndpoint || this.wireMockMappingsByTestId[testCase.testName] != null) {
+                    return true;
+                }
+                this.context.logger.debug(
+                    `Skipping wire test ${testCase.testName} of endpoint ${testCase.endpoint.id}: no per-example WireMock mapping`
+                );
+                return false;
             });
             if (runnableTestCases.length === 0) {
                 continue;
@@ -196,13 +202,21 @@ export class WireTestGenerator {
             if (isUnsatisfiable && index > 0) {
                 break;
             }
-            // Same pairing as before multi-example support: first test example with first dynamic example.
-            const dynamicExample =
-                dynamicExamples.find((candidate) => candidate.id === dynamicExampleId) ??
-                (index === 0 ? firstDynamicExample : undefined);
+            const matchedDynamicExample = dynamicExamples.find((candidate) => candidate.id === dynamicExampleId);
+            // Same pairing as before multi-example support: the first test may use the first dynamic
+            // example, but only against the endpoint's default mapping, since that dynamic example
+            // need not match this example's per-example stub.
+            const usesPositionalFallback = matchedDynamicExample == null && index === 0;
+            const dynamicExample = matchedDynamicExample ?? (usesPositionalFallback ? firstDynamicExample : undefined);
             if (dynamicExample == null) {
                 this.context.logger.debug(
                     `Skipping example ${dynamicExampleId} of endpoint ${endpoint.id}: no matching dynamic example`
+                );
+                continue;
+            }
+            if (usesPositionalFallback && example.response.type === "error") {
+                this.context.logger.debug(
+                    `Skipping error example ${dynamicExampleId} of endpoint ${endpoint.id}: no matching dynamic example for its per-example stub`
                 );
                 continue;
             }
@@ -225,7 +239,7 @@ export class WireTestGenerator {
                       ? this.context.case.snakeSafe(example.name)
                       : "";
             const testName = this.getUniqueTestName(baseTestName, suffix, usedTestNames);
-            if (!isUnsatisfiable) {
+            if (!isUnsatisfiable && !usesPositionalFallback) {
                 if (example.id != null) {
                     this.testIdsByExampleKey.set(this.getExampleKey(endpoint.id, example.id), testName);
                 } else {
