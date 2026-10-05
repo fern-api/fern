@@ -6,6 +6,9 @@ import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
 
+// The v3 dev path skips loading API workspaces, so these rules would flag every `api:` section.
+const RULES_REQUIRING_API_WORKSPACES = ["api-section-has-definition"];
+
 export async function previewDocsWorkspace({
     loadProject,
     cliContext,
@@ -67,7 +70,7 @@ export async function previewDocsWorkspace({
                             logSummary: false,
                             apiWorkspaces: [],
                             ossWorkspaces: await filterOssWorkspaces(project),
-                            excludeRules
+                            excludeRules: [...excludeRules, ...RULES_REQUIRING_API_WORKSPACES]
                         });
                     } else {
                         await validateDocsWorkspaceWithoutExiting({
@@ -116,7 +119,7 @@ export async function previewDocsWorkspace({
                         logSummary: false,
                         apiWorkspaces: [],
                         ossWorkspaces: await filterOssWorkspaces(project),
-                        excludeRules
+                        excludeRules: [...excludeRules, ...RULES_REQUIRING_API_WORKSPACES]
                     });
                 } else {
                     await validateDocsWorkspaceWithoutExiting({
