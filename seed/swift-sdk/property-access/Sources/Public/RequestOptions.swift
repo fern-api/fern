@@ -22,12 +22,19 @@ public struct RequestOptions {
     /// Additional query parameters to include in the request URL. These are merged with any parameters generated from the request model.
     let additionalQueryParameters: [Swift.String: Swift.String]?
 
+    /// Additional string-valued properties to merge into the JSON request body, keyed by their wire-format (JSON) names.
+    ///
+    /// Values are sent as JSON strings. Use `additionalBodyProperties` to send other JSON values (booleans, numbers, arrays, objects, or `null`).
+    /// See `additionalBodyProperties` for how these properties are merged into the request body.
+    let additionalBodyParameters: [Swift.String: Swift.String]?
+
     /// Additional properties to merge into the JSON request body, keyed by their wire-format (JSON) names.
     ///
-    /// Values are merged after the request model is serialized and take precedence over generated fields with the same key.
+    /// Values are merged after the request model is serialized and take precedence over generated fields with the same key,
+    /// as well as over `additionalBodyParameters` entries with the same key.
     /// If the endpoint has no request body, a JSON object body is created from these properties.
     /// Bodies that do not serialize to a JSON object (e.g. arrays), multipart form data, and raw `Data` bodies are left unchanged.
-    let additionalBodyParameters: [Swift.String: JSONValue]?
+    let additionalBodyProperties: [Swift.String: JSONValue]?
 
     public init(
         apiKey: Swift.String? = nil,
@@ -36,7 +43,8 @@ public struct RequestOptions {
         maxRetries: Swift.Int? = nil,
         additionalHeaders: [Swift.String: Swift.String]? = nil,
         additionalQueryParameters: [Swift.String: Swift.String]? = nil,
-        additionalBodyParameters: [Swift.String: JSONValue]? = nil
+        additionalBodyParameters: [Swift.String: Swift.String]? = nil,
+        additionalBodyProperties: [Swift.String: JSONValue]? = nil
     ) {
         self.apiKey = apiKey
         self.token = token
@@ -45,5 +53,6 @@ public struct RequestOptions {
         self.additionalHeaders = additionalHeaders
         self.additionalQueryParameters = additionalQueryParameters
         self.additionalBodyParameters = additionalBodyParameters
+        self.additionalBodyProperties = additionalBodyProperties
     }
 }

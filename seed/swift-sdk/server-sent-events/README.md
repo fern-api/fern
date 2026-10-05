@@ -131,11 +131,11 @@ try await client.completions.stream(..., requestOptions: .init(
 
 ### Additional Body Properties
 
-If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyParameters` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties. Multipart and raw binary request bodies are not modified.
+If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyProperties` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties. Multipart and raw binary request bodies are not modified. The `additionalBodyParameters` request option accepts string values only and is merged the same way; if both options set the same key, `additionalBodyProperties` wins.
 
 ```swift
 try await client.completions.stream(..., requestOptions: .init(
-    additionalBodyParameters: [
+    additionalBodyProperties: [
         "beta_feature": true, 
         "beta_options": ["mode": "fast"]
     ]

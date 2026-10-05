@@ -286,7 +286,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                                                 methodName: "init",
                                                 arguments_: [
                                                     swift.functionArgument({
-                                                        label: "additionalBodyParameters",
+                                                        label: "additionalBodyProperties",
                                                         value: swift.Expression.dictionaryLiteral({
                                                             entries: [
                                                                 [

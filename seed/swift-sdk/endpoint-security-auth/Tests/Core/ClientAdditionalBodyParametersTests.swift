@@ -3,9 +3,9 @@ import Foundation
 import Testing
 
 @Suite("Client Additional Body Parameters Tests") struct ClientAdditionalBodyParametersTests {
-    @Test func testAdditionalBodyParametersAreMergedIntoJSONBody() async throws {
-        let baselineBody = try #require(try await captureJSONBody(additionalBodyParameters: nil))
-        let additionalBodyParameters: [String: JSONValue] = [
+    @Test func testAdditionalBodyPropertiesAreMergedIntoJSONBody() async throws {
+        let baselineBody = try #require(try await captureJSONBody())
+        let additionalBodyProperties: [String: JSONValue] = [
             "fernExtraString": "beta",
             "fernExtraBool": true,
             "fernExtraNumber": 42,
@@ -16,30 +16,70 @@ import Testing
             ],
         ]
         let mergedBody = try #require(
-            try await captureJSONBody(additionalBodyParameters: additionalBodyParameters))
-        let expectedBody = baselineBody.merging(additionalBodyParameters) { _, extra in extra }
+            try await captureJSONBody(additionalBodyProperties: additionalBodyProperties))
+        let expectedBody = baselineBody.merging(additionalBodyProperties) { _, extra in extra }
         try #require(mergedBody == expectedBody)
     }
 
-    @Test func testAdditionalBodyParametersOverrideGeneratedFields() async throws {
-        let baselineBody = try #require(try await captureJSONBody(additionalBodyParameters: nil))
+    @Test func testAdditionalBodyPropertiesOverrideGeneratedFields() async throws {
+        let baselineBody = try #require(try await captureJSONBody())
         let overriddenKey = try #require(baselineBody.keys.sorted().first)
         let mergedBody = try #require(
-            try await captureJSONBody(additionalBodyParameters: [overriddenKey: "fern-override"]))
+            try await captureJSONBody(additionalBodyProperties: [overriddenKey: "fern-override"]))
         var expectedBody = baselineBody
         expectedBody[overriddenKey] = "fern-override"
         try #require(mergedBody == expectedBody)
     }
 
-    @Test func testEmptyAdditionalBodyParametersLeaveJSONBodyUnchanged() async throws {
-        let baselineBody = try await captureJSONBody(additionalBodyParameters: nil)
-        let bodyWithEmptyAdditionalParameters = try await captureJSONBody(additionalBodyParameters: [:])
-        try #require(baselineBody == bodyWithEmptyAdditionalParameters)
+    @Test func testEmptyAdditionalBodyPropertiesLeaveJSONBodyUnchanged() async throws {
+        let baselineBody = try await captureJSONBody()
+        let bodyWithEmptyAdditionalProperties = try await captureJSONBody(
+            additionalBodyParameters: [:], additionalBodyProperties: [:])
+        try #require(baselineBody == bodyWithEmptyAdditionalProperties)
     }
 
-    private func captureJSONBody(additionalBodyParameters: [String: JSONValue]?) async throws
-        -> [String: JSONValue]?
-    {
+    @Test func testAdditionalBodyParametersAreMergedAsJSONStrings() async throws {
+        let baselineBody = try #require(try await captureJSONBody())
+        let additionalBodyParameters: [String: String] = [
+            "fernExtraString": "beta",
+            "fernExtraFlag": "true",
+        ]
+        let mergedBody = try #require(
+            try await captureJSONBody(additionalBodyParameters: additionalBodyParameters))
+        let expectedBody = baselineBody.merging(additionalBodyParameters.mapValues(JSONValue.string)) { _, extra in
+            extra
+        }
+        try #require(mergedBody == expectedBody)
+    }
+
+    @Test func testAdditionalBodyParametersOverrideGeneratedFields() async throws {
+        let baselineBody = try #require(try await captureJSONBody())
+        let overriddenKey = try #require(baselineBody.keys.sorted().first)
+        let mergedBody = try #require(
+            try await captureJSONBody(additionalBodyParameters: [overriddenKey: "fern-override"]))
+        var expectedBody = baselineBody
+        expectedBody[overriddenKey] = .string("fern-override")
+        try #require(mergedBody == expectedBody)
+    }
+
+    @Test func testAdditionalBodyPropertiesTakePrecedenceOverAdditionalBodyParameters() async throws {
+        let baselineBody = try #require(try await captureJSONBody())
+        let mergedBody = try #require(
+            try await captureJSONBody(
+                additionalBodyParameters: ["fernShared": "from-parameters", "fernOnlyParameters": "a"],
+                additionalBodyProperties: ["fernShared": true, "fernOnlyProperties": 1]
+            ))
+        var expectedBody = baselineBody
+        expectedBody["fernShared"] = .bool(true)
+        expectedBody["fernOnlyParameters"] = .string("a")
+        expectedBody["fernOnlyProperties"] = .number(1)
+        try #require(mergedBody == expectedBody)
+    }
+
+    private func captureJSONBody(
+        additionalBodyParameters: [String: String]? = nil,
+        additionalBodyProperties: [String: JSONValue]? = nil
+    ) async throws -> [String: JSONValue]? {
         let stub = HTTPStub()
         stub.setResponse(body: Foundation.Data("{}".utf8))
 
@@ -57,7 +97,7 @@ import Testing
                     audience: .httpsApiExampleCom,
                     grantType: .clientCredentials
                 ),
-                requestOptions: RequestOptions(additionalHeaders: stub.headers, additionalBodyParameters: additionalBodyParameters)
+                requestOptions: RequestOptions(additionalHeaders: stub.headers, additionalBodyParameters: additionalBodyParameters, additionalBodyProperties: additionalBodyProperties)
             )
 
         } catch {

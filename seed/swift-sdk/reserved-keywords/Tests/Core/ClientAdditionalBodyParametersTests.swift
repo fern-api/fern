@@ -4,23 +4,29 @@ import Testing
 
 @Suite("Client Additional Body Parameters Tests") struct ClientAdditionalBodyParametersTests {
 
-    @Test func testAdditionalBodyParametersCreateBodyWhenEndpointHasNoBody() async throws {
-        let additionalBodyParameters: [String: JSONValue] = [
+    @Test func testAdditionalBodyPropertiesCreateBodyWhenEndpointHasNoBody() async throws {
+        let additionalBodyProperties: [String: JSONValue] = [
             "fernExtraString": "beta",
             "fernExtraNested": ["enabled": true, "values": [1, 2, 3]],
         ]
-        let body = try await captureNoBodyEndpointBody(additionalBodyParameters: additionalBodyParameters)
-        try #require(body == additionalBodyParameters)
+        let body = try await captureNoBodyEndpointBody(additionalBodyProperties: additionalBodyProperties)
+        try #require(body == additionalBodyProperties)
     }
 
-    @Test func testNoBodyIsSentWithoutAdditionalBodyParameters() async throws {
-        let body = try await captureNoBodyEndpointBody(additionalBodyParameters: nil)
+    @Test func testAdditionalBodyParametersCreateBodyWhenEndpointHasNoBody() async throws {
+        let body = try await captureNoBodyEndpointBody(additionalBodyParameters: ["fernExtraString": "beta"])
+        try #require(body == ["fernExtraString": .string("beta")])
+    }
+
+    @Test func testNoBodyIsSentWithoutAdditionalBodyProperties() async throws {
+        let body = try await captureNoBodyEndpointBody()
         try #require(body == nil)
     }
 
-    private func captureNoBodyEndpointBody(additionalBodyParameters: [String: JSONValue]?) async throws
-        -> [String: JSONValue]?
-    {
+    private func captureNoBodyEndpointBody(
+        additionalBodyParameters: [String: String]? = nil,
+        additionalBodyProperties: [String: JSONValue]? = nil
+    ) async throws -> [String: JSONValue]? {
         let stub = HTTPStub()
         stub.setResponse(body: Foundation.Data("{}".utf8))
 
@@ -32,7 +38,7 @@ import Testing
         do {
             _ = try await client.package.test(
                 for: "for",
-                requestOptions: RequestOptions(additionalHeaders: stub.headers, additionalBodyParameters: additionalBodyParameters)
+                requestOptions: RequestOptions(additionalHeaders: stub.headers, additionalBodyParameters: additionalBodyParameters, additionalBodyProperties: additionalBodyProperties)
             )
 
         } catch {

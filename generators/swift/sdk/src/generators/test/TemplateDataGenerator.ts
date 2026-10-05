@@ -241,6 +241,10 @@ export class TemplateDataGenerator {
                             swift.functionArgument({
                                 label: "additionalBodyParameters",
                                 value: swift.Expression.reference("additionalBodyParameters")
+                            }),
+                            swift.functionArgument({
+                                label: "additionalBodyProperties",
+                                value: swift.Expression.reference("additionalBodyProperties")
                             })
                         ]
                     })

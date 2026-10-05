@@ -252,7 +252,7 @@ final class HTTPClient: Swift.Sendable {
         requestBody: HTTP.RequestBody?,
         requestOptions: RequestOptions? = nil
     ) throws -> Foundation.Data? {
-        let additionalBodyParameters = requestOptions?.additionalBodyParameters ?? [:]
+        let additionalBodyParameters = mergedAdditionalBodyParameters(requestOptions: requestOptions)
         guard let requestBody else {
             if additionalBodyParameters.isEmpty {
                 return nil
@@ -283,6 +283,13 @@ final class HTTPClient: Swift.Sendable {
             // Multipart form data bodies are sent as-is; additional body parameters are not applied.
             return multipartData.data()
         }
+    }
+
+    /// Combines \`additionalBodyParameters\` (sent as JSON strings) and \`additionalBodyProperties\`;
+    /// \`additionalBodyProperties\` wins when both set the same key.
+    private func mergedAdditionalBodyParameters(requestOptions: RequestOptions?) -> [Swift.String: JSONValue] {
+        let stringParameters = (requestOptions?.additionalBodyParameters ?? [:]).mapValues(JSONValue.string)
+        return stringParameters.merging(requestOptions?.additionalBodyProperties ?? [:]) { _, property in property }
     }
 
     /// Merges additional body parameters into an encoded JSON body. Additional parameters take precedence
