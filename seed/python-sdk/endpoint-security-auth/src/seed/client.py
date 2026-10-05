@@ -89,9 +89,9 @@ class SeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -108,9 +108,9 @@ class SeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -125,9 +125,9 @@ class SeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("MY_CLIENT_SECRET"),
@@ -143,6 +143,9 @@ class SeedEndpointSecurityAuth:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("MY_API_KEY")
+        username = username if username is not None else os.getenv("MY_USERNAME")
+        password = password if password is not None else os.getenv("MY_PASSWORD")
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
@@ -356,9 +359,9 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -375,9 +378,9 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -393,9 +396,9 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -410,9 +413,9 @@ class AsyncSeedEndpointSecurityAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
-        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_USERNAME"),
-        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("MY_PASSWORD"),
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         client_id: typing.Optional[str] = os.getenv("MY_CLIENT_ID"),
@@ -429,6 +432,9 @@ class AsyncSeedEndpointSecurityAuth:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("MY_API_KEY")
+        username = username if username is not None else os.getenv("MY_USERNAME")
+        password = password if password is not None else os.getenv("MY_PASSWORD")
         if token is not None or async_token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,

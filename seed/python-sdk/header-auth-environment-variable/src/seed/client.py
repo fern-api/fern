@@ -62,7 +62,7 @@ class SeedHeaderTokenEnvironmentVariable:
         self,
         *,
         base_url: str,
-        header_token_auth: typing.Optional[str] = os.getenv("HEADER_TOKEN_ENV_VAR"),
+        header_token_auth: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -74,6 +74,7 @@ class SeedHeaderTokenEnvironmentVariable:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        header_token_auth = header_token_auth if header_token_auth is not None else os.getenv("HEADER_TOKEN_ENV_VAR")
         if header_token_auth is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in header_token_auth or setting HEADER_TOKEN_ENV_VAR"
@@ -170,7 +171,7 @@ class AsyncSeedHeaderTokenEnvironmentVariable:
         self,
         *,
         base_url: str,
-        header_token_auth: typing.Optional[str] = os.getenv("HEADER_TOKEN_ENV_VAR"),
+        header_token_auth: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -182,6 +183,7 @@ class AsyncSeedHeaderTokenEnvironmentVariable:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        header_token_auth = header_token_auth if header_token_auth is not None else os.getenv("HEADER_TOKEN_ENV_VAR")
         if header_token_auth is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in header_token_auth or setting HEADER_TOKEN_ENV_VAR"
