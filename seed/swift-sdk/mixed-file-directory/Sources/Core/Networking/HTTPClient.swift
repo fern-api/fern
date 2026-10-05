@@ -135,12 +135,10 @@ final class HTTPClient: Swift.Sendable {
         }
 
         // Set body
-        if let requestBody = requestBody {
-            request.httpBody = buildRequestBody(
-                requestBody: requestBody,
-                requestOptions: requestOptions
-            )
-        }
+        request.httpBody = try buildRequestBody(
+            requestBody: requestBody,
+            requestOptions: requestOptions
+        )
 
         return request
     }
@@ -248,22 +246,80 @@ final class HTTPClient: Swift.Sendable {
     }
 
     private func buildRequestBody(
-        requestBody: HTTP.RequestBody,
+        requestBody: HTTP.RequestBody?,
         requestOptions: RequestOptions? = nil
-    ) -> Foundation.Data {
+    ) throws -> Foundation.Data? {
+        let additionalBodyParameters = requestOptions?.additionalBodyParameters ?? [:]
+        guard let requestBody else {
+            if additionalBodyParameters.isEmpty {
+                return nil
+            }
+            return try encodeAdditionalBodyParameters(.object(additionalBodyParameters))
+        }
         switch requestBody {
         case .jsonEncodable(let encodableBody):
+            let encodedBody: Foundation.Data
             do {
-                return try jsonEncoder.encode(encodableBody)
+                encodedBody = try jsonEncoder.encode(encodableBody)
             } catch {
                 preconditionFailure(
                     "Failed to encode request body: \(error) - this indicates an unexpected error in the SDK."
                 )
             }
+            if additionalBodyParameters.isEmpty {
+                return encodedBody
+            }
+            return try mergeAdditionalBodyParameters(
+                additionalBodyParameters,
+                into: encodedBody
+            )
         case .data(let dataBody):
+            // Raw data bodies are sent as-is; additional body parameters are not applied.
             return dataBody
         case .multipartFormData(let multipartData):
+            // Multipart form data bodies are sent as-is; additional body parameters are not applied.
             return multipartData.data()
+        }
+    }
+
+    /// Merges additional body parameters into an encoded JSON body. Additional parameters take precedence
+    /// over existing keys. Bodies that are `null` are replaced with the additional parameters, and bodies that
+    /// are not JSON objects (e.g. arrays or primitives) are returned unchanged.
+    private func mergeAdditionalBodyParameters(
+        _ additionalBodyParameters: [Swift.String: JSONValue],
+        into encodedBody: Foundation.Data
+    ) throws -> Foundation.Data {
+        let decodedBody = try? Foundation.JSONSerialization.jsonObject(
+            with: encodedBody,
+            options: [.fragmentsAllowed]
+        )
+        if decodedBody is Foundation.NSNull {
+            return try encodeAdditionalBodyParameters(.object(additionalBodyParameters))
+        }
+        guard var bodyObject = decodedBody as? [Swift.String: Any] else {
+            return encodedBody
+        }
+        for (key, value) in additionalBodyParameters {
+            bodyObject[key] = try Foundation.JSONSerialization.jsonObject(
+                with: encodeAdditionalBodyParameters(value),
+                options: [.fragmentsAllowed]
+            )
+        }
+        do {
+            return try Foundation.JSONSerialization.data(
+                withJSONObject: bodyObject,
+                options: [.withoutEscapingSlashes]
+            )
+        } catch {
+            throw MixedFileDirectoryError.encodingError(error)
+        }
+    }
+
+    private func encodeAdditionalBodyParameters(_ value: JSONValue) throws -> Foundation.Data {
+        do {
+            return try jsonEncoder.encode(value)
+        } catch {
+            throw MixedFileDirectoryError.encodingError(error)
         }
     }
 

@@ -1,0 +1,9 @@
+- summary: |
+    The `additionalBodyParameters` request option is now applied to requests. Its values are merged
+    into the serialized JSON request body using wire-format keys, overriding generated fields on
+    collision, and create a JSON body when the endpoint has none. Multipart and raw `Data` bodies are
+    left unchanged. The option's type is widened from `[String: String]` to `[String: JSONValue]` so
+    booleans, numbers, arrays, objects, and `null` can be sent; `JSONValue` now supports string,
+    integer, float, boolean, array, and dictionary literals, so existing string-literal call sites
+    keep compiling.
+  type: feat

@@ -15,6 +15,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Timeouts](#timeouts)
   - [Custom Networking Client](#custom-networking-client)
 - [Contributing](#contributing)
@@ -111,6 +112,19 @@ If you would like to send additional query string parameters as part of the requ
 try await client.bigunion.get(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Additional Body Properties
+
+If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyParameters` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties. Multipart and raw binary request bodies are not modified.
+
+```swift
+try await client.bigunion.get(..., requestOptions: .init(
+    additionalBodyParameters: [
+        "beta_feature": true, 
+        "beta_options": ["mode": "fast"]
     ]
 ))
 ```

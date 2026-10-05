@@ -25,6 +25,11 @@ features:
     description: |
       If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
+  - id: ADDITIONAL_BODY_PROPERTIES
+    advanced: true
+    description: |
+      If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyParameters` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties. Multipart and raw binary request bodies are not modified.
+
   - id: RETRIES
     advanced: true
     description: |
