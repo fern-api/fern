@@ -435,7 +435,9 @@ export class WireMock {
         const exampleName = example?.name != null ? getOriginalName(example.name) : "default";
         const name =
             testId != null ? `${endpointName} - ${exampleName} - ${testId}` : `${endpointName} - ${exampleName}`;
-        const uuid = this.deterministicUUIDv4(`${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}`);
+        const uuid = this.deterministicUUIDv4(
+            `${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}${testId != null ? `-${testId}` : ""}`
+        );
 
         // Only add body patterns when there are both SSE and non-SSE endpoints for the same URL path
         // This allows WireMock to differentiate between streaming and non-streaming requests
