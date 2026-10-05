@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Unnamed OpenAPI error response examples (`example:` rather than `examples:`) are now named after the
+    response's `description` instead of a generated `{tag}_{operationId}_error_example` identifier.
+  type: fix

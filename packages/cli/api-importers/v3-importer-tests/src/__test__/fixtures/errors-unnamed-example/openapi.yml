@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Plant API
+servers:
+  - url: https://api.plants.com
+components:
+  schemas:
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+        status:
+          type: integer
+  responses:
+    BadRequest:
+      description: |
+        Bad Request - The request was missing required parameters.
+
+        See the problem details for more information.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            title: Bad Request
+            status: 400
+    NotFound:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          examples:
+            PlantNotFound:
+              summary: Plant does not exist
+              value:
+                title: Not Found
+                status: 404
+paths:
+  /plants/{plantId}:
+    get:
+      operationId: getPlant
+      tags:
+        - Plants
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A plant
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          description: ""
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+              example:
+                title: Internal Server Error
+                status: 500
