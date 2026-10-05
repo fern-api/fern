@@ -12,6 +12,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static readonly ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
+    private static readonly ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId =
+        "ADDITIONAL_BODY_PROPERTIES";
     private static readonly CUSTOM_NETWORKING_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId =
         "CUSTOM_NETWORKING_CLIENT";
     private static readonly ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
@@ -57,6 +59,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID] =
+            this.buildAdditionalBodyPropertiesSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutsSnippets();
         snippets[ReadmeSnippetBuilder.CUSTOM_NETWORKING_CLIENT_FEATURE_ID] = this.buildCustomNetworkingClientSnippets();
         if (this.context.ir.environments != null) {
@@ -240,6 +244,65 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                                                                     swift.Expression.stringLiteral(
                                                                         "custom_query_param_value"
                                                                     )
+                                                                ]
+                                                            ],
+                                                            multiline: true
+                                                        })
+                                                    })
+                                                ],
+                                                multiline: true
+                                            })
+                                        })
+                                    ]
+                                })
+                            )
+                        )
+                    )
+                ]);
+            }
+        );
+    }
+
+    private buildAdditionalBodyPropertiesSnippets(): string[] {
+        return this.getEndpointIdsForFeature(ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID).map(
+            (endpointId) => {
+                const endpoint = this.endpointsById[endpointId];
+                if (endpoint == null) {
+                    throw GeneratorError.internalError(`Internal error; missing endpoint ${endpointId}`);
+                }
+                return SwiftFile.getRawContents([
+                    swift.Statement.expressionStatement(
+                        swift.Expression.try(
+                            swift.Expression.await(
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference("client"),
+                                    methodName:
+                                        this.context.getEndpointMethodDetails(endpoint).fullyQualifiedMethodName,
+                                    arguments_: [
+                                        swift.functionArgument({ value: swift.Expression.rawValue("...") }),
+                                        swift.functionArgument({
+                                            label: "requestOptions",
+                                            value: swift.Expression.contextualMethodCall({
+                                                methodName: "init",
+                                                arguments_: [
+                                                    swift.functionArgument({
+                                                        label: "additionalBodyProperties",
+                                                        value: swift.Expression.dictionaryLiteral({
+                                                            entries: [
+                                                                [
+                                                                    swift.Expression.stringLiteral("beta_feature"),
+                                                                    swift.Expression.boolLiteral(true)
+                                                                ],
+                                                                [
+                                                                    swift.Expression.stringLiteral("beta_options"),
+                                                                    swift.Expression.dictionaryLiteral({
+                                                                        entries: [
+                                                                            [
+                                                                                swift.Expression.stringLiteral("mode"),
+                                                                                swift.Expression.stringLiteral("fast")
+                                                                            ]
+                                                                        ]
+                                                                    })
                                                                 ]
                                                             ],
                                                             multiline: true
