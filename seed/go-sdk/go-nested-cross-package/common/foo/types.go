@@ -47,10 +47,12 @@ func (b *BaseType) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BaseType) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

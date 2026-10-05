@@ -1,10 +1,49 @@
 package internal
 
 import (
+	"encoding/json"
 	"math/big"
 	"reflect"
 	"strings"
 )
+
+// ExplicitFieldsFromJSON returns the bitmask of the fields whose wire name is
+// present as a key in the given JSON object (including keys set to null), using
+// the given wire name to field bit mapping. Keys are matched exactly first and
+// then case-insensitively, mirroring encoding/json. Keys that don't appear in
+// the mapping are ignored. Returns nil if none of the mapped keys are present.
+func ExplicitFieldsFromJSON(data []byte, fields map[string]*big.Int) (*big.Int, error) {
+	if len(fields) == 0 {
+		return nil, nil
+	}
+	var keys map[string]json.RawMessage
+	if err := json.Unmarshal(data, &keys); err != nil {
+		return nil, err
+	}
+	var result *big.Int
+	for key, field := range fields {
+		if !hasJSONKey(keys, key) {
+			continue
+		}
+		if result == nil {
+			result = new(big.Int)
+		}
+		result.Or(result, field)
+	}
+	return result, nil
+}
+
+func hasJSONKey(keys map[string]json.RawMessage, key string) bool {
+	if _, ok := keys[key]; ok {
+		return true
+	}
+	for candidate := range keys {
+		if strings.EqualFold(candidate, key) {
+			return true
+		}
+	}
+	return false
+}
 
 // HandleExplicitFields processes a struct to remove `omitempty` from
 // fields that have been explicitly set (as indicated by their corresponding bit in explicitFields).

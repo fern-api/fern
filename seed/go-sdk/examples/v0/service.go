@@ -22,10 +22,12 @@ type GetMetadataRequest struct {
 }
 
 func (g *GetMetadataRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetXAPIVersion sets the XAPIVersion field and marks it as non-optional;

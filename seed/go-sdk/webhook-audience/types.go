@@ -38,10 +38,12 @@ func (n *NoAudiencePayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NoAudiencePayload) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (p *PrivatePayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PrivatePayload) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetSecret sets the Secret field and marks it as non-optional;
@@ -206,10 +210,12 @@ func (p *PublicPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PublicPayload) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;

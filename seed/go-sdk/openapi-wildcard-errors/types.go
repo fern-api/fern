@@ -9,7 +9,6 @@ import (
 	big "math/big"
 )
 
-// The shared error body returned for every 4XX and 5XX status.
 var (
 	aPIErrorFieldErrorType    = big.NewInt(1 << 0)
 	aPIErrorFieldErrorCode    = big.NewInt(1 << 1)
@@ -17,6 +16,7 @@ var (
 	aPIErrorFieldRequestID    = big.NewInt(1 << 3)
 )
 
+// The shared error body returned for every 4XX and 5XX status.
 type APIError struct {
 	ErrorType    string  `json:"error_type" url:"error_type"`
 	ErrorCode    string  `json:"error_code" url:"error_code"`

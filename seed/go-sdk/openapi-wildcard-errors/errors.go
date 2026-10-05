@@ -30,6 +30,13 @@ func (c *ClientRequestError) Unwrap() error {
 	return c.APIError
 }
 
+func (c *ClientRequestError) GetBody() *APIError {
+	if c == nil {
+		return nil
+	}
+	return c.Body
+}
+
 // Item not found
 type NotFoundError struct {
 	*core.APIError
@@ -54,6 +61,13 @@ func (n *NotFoundError) Unwrap() error {
 	return n.APIError
 }
 
+func (n *NotFoundError) GetBody() *ItemNotFound {
+	if n == nil {
+		return nil
+	}
+	return n.Body
+}
+
 // Server error
 type ServerError struct {
 	*core.APIError
@@ -75,4 +89,11 @@ func (s *ServerError) MarshalJSON() ([]byte, error) {
 
 func (s *ServerError) Unwrap() error {
 	return s.APIError
+}
+
+func (s *ServerError) GetBody() *APIError {
+	if s == nil {
+		return nil
+	}
+	return s.Body
 }
