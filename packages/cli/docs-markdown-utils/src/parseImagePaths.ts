@@ -1201,13 +1201,25 @@ export function replaceImagePathsAndUrls(
             );
         };
 
+        const astNodes: { node: Parameters<typeof isMdxJsxElement>[0]; start: number; end: number }[] = [];
         visit(tree, nodeTypeFilter, (node) => {
-            if (node.position == null) {
-                return;
+            if (node.position != null) {
+                const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
+                astNodes.push({ node, start, end: start + length });
             }
-            const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
-            const original = content.slice(start, start + length);
-            let replaced = original;
+            return CONTINUE;
+        });
+
+        // Each node is rewritten as a whole, so its edit must absorb the edits already made inside
+        // it (by the streaming scanner or a nested node); overlapping edits corrupt the output.
+        // Reversed pre-order handles children before their parents.
+        for (const { node, start, end } of astNodes.reverse()) {
+            const original = content.slice(start, end);
+            const innerEdits = edits.filter((edit) => edit.start >= start && edit.end <= end);
+            let replaced = applyEdits(
+                original,
+                innerEdits.map((edit) => ({ ...edit, start: edit.start - start, end: edit.end - start }))
+            );
 
             function replaceSrc(src: string | undefined) {
                 const imageSrc = mapImage(src);
@@ -1261,11 +1273,11 @@ export function replaceImagePathsAndUrls(
             }
 
             if (replaced !== original) {
-                edits.push({ start, end: start + length, replacement: replaced });
+                const outerEdits = edits.filter((edit) => !innerEdits.includes(edit));
+                edits.length = 0;
+                edits.push(...outerEdits, { start, end, replacement: replaced });
             }
-
-            return CONTINUE;
-        });
+        }
     }
 
     const replacedContent = applyEdits(content, edits);

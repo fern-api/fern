@@ -1739,3 +1739,28 @@ describe("angle bracket delimited destinations", () => {
         expect(result.trim()).toBe("[other page](</docs/other>)");
     });
 });
+
+describe("AST fallback with streaming scanner edits inside the same node", () => {
+    it("does not corrupt content after a node whose src the scanner already replaced", () => {
+        // The Card icon expression forces the AST fallback, which also rewrites the Showcase node.
+        const page = [
+            '<Card icon={<img src="path/to/icon.png" />} />',
+            "",
+            "<Tabs>",
+            '<Tab title="A">',
+            '  <Showcase image={<img src="path/to/image.png" alt="A" />}>',
+            "    Body",
+            "  </Showcase>",
+            "</Tab>",
+            "</Tabs>"
+        ].join("\n");
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/icon.png"), "icon-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "image-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toBe(
+            page.replace("path/to/icon.png", "file:icon-id").replace("path/to/image.png", "file:image-id") + "\n"
+        );
+    });
+});

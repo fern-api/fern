@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern generate --docs` corrupting MDX pages that mix JSX image expressions like
+    `icon={<img src="..." />}` with other components that have local image paths. Text after
+    those components (such as a closing `</Tab>`) was deleted, so the page failed to compile and
+    rendered as raw text.
+  type: fix
