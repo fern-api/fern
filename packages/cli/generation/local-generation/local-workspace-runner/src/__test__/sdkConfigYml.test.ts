@@ -7,6 +7,7 @@ import { buildSdkConfigIrFromSdkConfig } from "../postman/buildSdkConfigIrFromSd
 import { loadSdkConfig } from "../postman/loadSdkConfig.js";
 import { collectOnPremSourceSpecs } from "../postman/onPremSourceSpecs.js";
 import { resolveSdkConfigIr } from "../postman/resolveSdkConfigIr.js";
+import { serializeSdkConfigIrForGenerator } from "../postman/serializeSdkConfigIrForGenerator.js";
 import type { RawSpecsManifest } from "../rawSpecs.js";
 
 /**
@@ -169,6 +170,30 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
             expect(built.sdkConfigIr.client.timeoutMs).toBe(30_000);
             expect(built.sdkConfigIr.generation.includeWatermark).toBe(true);
             expect(built.sdkConfigIr.docs.includeApiReference).toBe(true);
+        }
+    });
+
+    it("omits defaulted optional fields from the generator wire payload", async () => {
+        const built = build(await loadFixture());
+        expect(built.success).toBe(true);
+        if (built.success) {
+            const wire = JSON.parse(Buffer.from(serializeSdkConfigIrForGenerator(built.sdkConfigIr)).toString("utf8"));
+            expect(wire.generation).not.toHaveProperty("generateFullProject");
+        }
+    });
+
+    it("preserves active optional fields in the generator wire payload", async () => {
+        const sdkConfig = await loadFixture(
+            SDK_CONFIG_YML.replace(
+                "generation:\n  includeWatermark: true",
+                "generation:\n  includeWatermark: true\n  generateFullProject: true"
+            )
+        );
+        const built = build(sdkConfig);
+        expect(built.success).toBe(true);
+        if (built.success) {
+            const wire = JSON.parse(Buffer.from(serializeSdkConfigIrForGenerator(built.sdkConfigIr)).toString("utf8"));
+            expect(wire.generation).toHaveProperty("generateFullProject", true);
         }
     });
 

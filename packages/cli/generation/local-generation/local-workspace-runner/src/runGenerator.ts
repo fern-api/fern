@@ -42,6 +42,7 @@ import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConf
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
 import { resolveSdkConfigIr } from "./postman/resolveSdkConfigIr.js";
+import { serializeSdkConfigIrForGenerator } from "./postman/serializeSdkConfigIrForGenerator.js";
 import { collectRawSpecs, type RawSpecsManifest } from "./rawSpecs.js";
 
 export interface GeneratorRunResponse {
@@ -325,7 +326,7 @@ export async function writeFilesToDiskAndRunGenerator({
         for (const warning of built.warnings) {
             context.logger.warn(warning);
         }
-        await writeFile(absolutePathToWriteConfigJson, JSON.stringify(built.sdkConfigIr, undefined, 4));
+        await writeFile(absolutePathToWriteConfigJson, serializeSdkConfigIrForGenerator(built.sdkConfigIr));
         context.logger.debug(`Wrote SDK Config IR for ${generatorInvocation.name} to ${absolutePathToWriteConfigJson}`);
     }
 
