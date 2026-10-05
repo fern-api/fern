@@ -95,6 +95,7 @@ import {
     unsetOrgCliVersion,
     warnIfVersionOutsideOrgBounds
 } from "./commands/org/orgConfig.js";
+import { createOrgToken, listOrgTokens, revokeOrgToken } from "./commands/org/orgTokens.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
@@ -4145,6 +4146,73 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         }
                     )
                     .demandCommand(1, "Specify what to unset, e.g. `fern org unset cli-version`."),
+            () => {
+                /* handled by subcommand */
+            }
+        );
+
+        yargs.command(
+            "token",
+            "Manage organization API keys",
+            (tokenYargs) =>
+                tokenYargs
+                    .command(
+                        "list",
+                        "List API keys for the organization",
+                        (y) =>
+                            y
+                                .option("org", {
+                                    type: "string",
+                                    description: "Override org ID (defaults to the org in fern.config.json)"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" })
+                                .option("csv", { type: "boolean", description: "Output as CSV" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token list" });
+                            await listOrgTokens({ cliContext, org: argv.org, json: argv.json, csv: argv.csv });
+                        }
+                    )
+                    .command(
+                        "create",
+                        "Create an API key for the organization",
+                        (y) =>
+                            y
+                                .option("org", {
+                                    type: "string",
+                                    description: "Override org ID (defaults to the org in fern.config.json)"
+                                })
+                                .option("description", {
+                                    type: "string",
+                                    description: "Name/description for the key"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token create" });
+                            await createOrgToken({
+                                cliContext,
+                                org: argv.org,
+                                description: argv.description,
+                                json: argv.json
+                            });
+                        }
+                    )
+                    .command(
+                        "revoke <token-id>",
+                        "Revoke an organization API key",
+                        (y) =>
+                            y
+                                .positional("token-id", {
+                                    type: "string",
+                                    demandOption: true,
+                                    description: "Token ID to revoke"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token revoke" });
+                            await revokeOrgToken({ cliContext, tokenId: argv.tokenId, json: argv.json });
+                        }
+                    )
+                    .demandCommand(1, "Specify a token command, e.g. `fern org token list`."),
             () => {
                 /* handled by subcommand */
             }
