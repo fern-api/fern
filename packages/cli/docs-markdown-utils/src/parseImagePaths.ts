@@ -911,252 +911,129 @@ export function replaceImagePathsAndUrls(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    // Use streaming scanner for all pages (O(n) character scan instead of full MDX parse).
-    // Falls back to AST parse only for pages with complex JSX expressions like src={getUrl(...)}.
-    const edits: Edit[] = [];
-    let hasUnhandledExpressions = false;
-    let i = 0;
-    const len = content.length;
+    // Single O(n) character scan instead of a full MDX parse. Each edit replaces exactly one path.
+    function scanForEdits(content: string): Edit[] {
+        const edits: Edit[] = [];
+        let i = 0;
+        const len = content.length;
 
-    while (i < len) {
-        if (i === 0 || content[i - 1] === "\n") {
-            const fenceEnd = findCodeFenceEnd(content, i);
-            if (fenceEnd != null) {
-                i = fenceEnd;
-                continue;
-            }
-        }
-
-        if (content[i] === "`" && content[i - 1] !== "\\") {
-            const inlineCodeEnd = findInlineCodeEnd(content, i);
-            if (inlineCodeEnd != null) {
-                i = inlineCodeEnd;
-                continue;
-            }
-            i++;
-            continue;
-        }
-
-        if (content[i] === "!" && content[i + 1] === "[") {
-            const result = parseMarkdownImage(content, i, metadata);
-            if (result) {
-                const imageSrc = mapImage(result.src);
-                if (imageSrc) {
-                    edits.push({
-                        start: result.edit.start,
-                        end: result.edit.end,
-                        replacement: result.originalUrl.replace(result.rawSrc, imageSrc)
-                    });
-                }
-                i = result.nextIndex;
-                continue;
-            }
-        } else if (content[i] === "[" && content[i - 1] !== "!") {
-            const labelEnd = findLabelEnd(content, i);
-            let j = labelEnd ?? len;
-            if (labelEnd != null && content[labelEnd + 1] === "(") {
-                j = labelEnd + 2;
-                const urlStart = j;
-                let parenDepth = 1;
-                while (j < len && parenDepth > 0) {
-                    if (content[j] === "\\") {
-                        j += 2;
-                    } else if (content[j] === "(") {
-                        parenDepth++;
-                        j++;
-                    } else if (content[j] === ")") {
-                        parenDepth--;
-                        j++;
-                    } else {
-                        j++;
-                    }
-                }
-                if (parenDepth !== 0) {
-                    i++;
+        while (i < len) {
+            if (i === 0 || content[i - 1] === "\n") {
+                const fenceEnd = findCodeFenceEnd(content, i);
+                if (fenceEnd != null) {
+                    i = fenceEnd;
                     continue;
                 }
-                const urlEnd = j - 1;
-                const href = content.slice(urlStart, urlEnd).trim();
-                const destination = splitDestinationAndTitle(href);
-                const hrefTitle = href.slice(destination.length);
-                const { path: hrefPath, wrapped } = unwrapDelimitedDestination(destination);
-                const trimmedHref = trimAnchor(hrefPath) ?? hrefPath;
-                const hrefAnchor = trimmedHref !== hrefPath ? hrefPath.slice(trimmedHref.length) : "";
-                const replacedHref = getReplacedHref({
-                    href: trimmedHref,
-                    markdownFilesToPathName,
-                    metadata
-                });
-                if (replacedHref && replacedHref.type === "replace") {
-                    const slug = replacedHref.slug + hrefAnchor;
-                    edits.push({
-                        start: urlStart,
-                        end: urlEnd,
-                        replacement: (wrapped ? `<${slug}>` : slug) + hrefTitle
-                    });
+            }
+
+            if (content[i] === "`" && content[i - 1] !== "\\") {
+                const inlineCodeEnd = findInlineCodeEnd(content, i);
+                if (inlineCodeEnd != null) {
+                    i = inlineCodeEnd;
+                    continue;
                 }
-                i = j;
+                i++;
                 continue;
             }
-        } else if (isJsxTagStart(content, i)) {
-            const limit = findScanLimit(content, i);
-            // Edits collected while scanning are discarded unless the tag is properly terminated.
-            const editsBeforeTag = edits.length;
-            let j = i + 1;
-            while (j < limit && content[j] !== ">" && content[j] !== " " && content[j] !== "\n") {
-                j++;
-            }
-            while (j < limit && content[j] !== ">") {
-                while (j < limit && (content[j] === " " || content[j] === "\n")) {
-                    j++;
+
+            if (content[i] === "!" && content[i + 1] === "[") {
+                const result = parseMarkdownImage(content, i, metadata);
+                if (result) {
+                    const imageSrc = mapImage(result.src);
+                    if (imageSrc) {
+                        edits.push({
+                            start: result.edit.start,
+                            end: result.edit.end,
+                            replacement: result.originalUrl.replace(result.rawSrc, imageSrc)
+                        });
+                    }
+                    i = result.nextIndex;
+                    continue;
                 }
-                const attrStart = j;
-                while (
-                    j < limit &&
-                    content[j] !== "=" &&
-                    content[j] !== ">" &&
-                    content[j] !== " " &&
-                    content[j] !== "\n"
-                ) {
-                    j++;
-                }
-                const attrName = content.slice(attrStart, j).trim();
-                // Detect JSX spread attributes like {...{src: "path"}}
-                if (attrName.startsWith("{")) {
-                    hasUnhandledExpressions = true;
-                    // Skip past the closing }
-                    let braceDepth = 0;
-                    j = attrStart;
-                    while (j < limit) {
-                        if (content[j] === "{") {
-                            braceDepth++;
-                        } else if (content[j] === "}") {
-                            braceDepth--;
-                            if (braceDepth === 0) {
-                                j++;
-                                break;
-                            }
-                        } else if (content[j] === '"' || content[j] === "'") {
-                            const q = content[j];
+            } else if (content[i] === "[" && content[i - 1] !== "!") {
+                const labelEnd = findLabelEnd(content, i);
+                let j = labelEnd ?? len;
+                if (labelEnd != null && content[labelEnd + 1] === "(") {
+                    j = labelEnd + 2;
+                    const urlStart = j;
+                    let parenDepth = 1;
+                    while (j < len && parenDepth > 0) {
+                        if (content[j] === "\\") {
+                            j += 2;
+                        } else if (content[j] === "(") {
+                            parenDepth++;
                             j++;
-                            while (j < limit && content[j] !== q) {
-                                if (content[j] === "\\") {
-                                    j++;
-                                }
-                                j++;
-                            }
+                        } else if (content[j] === ")") {
+                            parenDepth--;
+                            j++;
+                        } else {
+                            j++;
                         }
-                        j++;
                     }
+                    if (parenDepth !== 0) {
+                        i++;
+                        continue;
+                    }
+                    const urlEnd = j - 1;
+                    const href = content.slice(urlStart, urlEnd).trim();
+                    const destination = splitDestinationAndTitle(href);
+                    const hrefTitle = href.slice(destination.length);
+                    const { path: hrefPath, wrapped } = unwrapDelimitedDestination(destination);
+                    const trimmedHref = trimAnchor(hrefPath) ?? hrefPath;
+                    const hrefAnchor = trimmedHref !== hrefPath ? hrefPath.slice(trimmedHref.length) : "";
+                    const replacedHref = getReplacedHref({
+                        href: trimmedHref,
+                        markdownFilesToPathName,
+                        metadata
+                    });
+                    if (replacedHref && replacedHref.type === "replace") {
+                        const slug = replacedHref.slug + hrefAnchor;
+                        edits.push({
+                            start: urlStart,
+                            end: urlEnd,
+                            replacement: (wrapped ? `<${slug}>` : slug) + hrefTitle
+                        });
+                    }
+                    i = j;
                     continue;
                 }
-                if (content[j] === "=") {
+            } else if (isJsxTagStart(content, i)) {
+                const limit = findScanLimit(content, i);
+                // Edits collected while scanning are discarded unless the tag is properly terminated.
+                const editsBeforeTag = edits.length;
+                let j = i + 1;
+                while (j < limit && content[j] !== ">" && content[j] !== " " && content[j] !== "\n") {
                     j++;
+                }
+                while (j < limit && content[j] !== ">") {
                     while (j < limit && (content[j] === " " || content[j] === "\n")) {
                         j++;
                     }
-                    // Handle plain quotes: attr="value" or attr='value'
-                    // Also handle JSX expression: attr={'value'} or attr={"value"}
-                    const isCurlyWrapped = content[j] === "{";
-                    if (isCurlyWrapped) {
-                        j++; // skip {
-                        while (j < limit && (content[j] === " " || content[j] === "\n")) {
-                            j++;
-                        }
-                    }
-                    if (content[j] === '"' || content[j] === "'") {
-                        const quote = content[j];
+                    const attrStart = j;
+                    while (
+                        j < limit &&
+                        content[j] !== "=" &&
+                        content[j] !== ">" &&
+                        content[j] !== " " &&
+                        content[j] !== "\n"
+                    ) {
                         j++;
-                        const valueStart = j;
-                        while (j < limit && content[j] !== quote) {
-                            if (content[j] === "\\") {
-                                j += 2;
-                            } else {
-                                j++;
-                            }
-                        }
-                        const value = content.slice(valueStart, j);
-                        j++; // skip closing quote
-                        if (isCurlyWrapped) {
-                            while (j < limit && (content[j] === " " || content[j] === "\n")) {
-                                j++;
-                            }
-                            if (j < limit && content[j] === "}") {
-                                j++; // skip }
-                            }
-                        }
-                        if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
-                            const trimmedValue = trimAnchor(value);
-                            const anchor =
-                                trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
-                            const imageSrc = mapImage(trimmedValue ?? value);
-                            if (imageSrc) {
-                                edits.push({
-                                    start: valueStart,
-                                    end: valueStart + value.length,
-                                    replacement: imageSrc + anchor
-                                });
-                            }
-                        } else if (attrName === "href") {
-                            const trimmedHrefValue = trimAnchor(value) ?? value;
-                            const hrefAnchorSuffix =
-                                trimmedHrefValue !== value ? value.slice(trimmedHrefValue.length) : "";
-                            const replacedHref = getReplacedHref({
-                                href: trimmedHrefValue,
-                                markdownFilesToPathName,
-                                metadata
-                            });
-                            if (replacedHref && replacedHref.type === "replace") {
-                                edits.push({
-                                    start: valueStart,
-                                    end: valueStart + value.length,
-                                    replacement: replacedHref.slug + hrefAnchorSuffix
-                                });
-                            }
-                        }
-                    } else if (isCurlyWrapped && attrName === "links" && content[j] === "{") {
-                        // `<CodeBlock links={{"Type": "./types.mdx#anchor"}}>` emitted by the library-docs
-                        // generators: resolve each `.md`/`.mdx` value like an href.
-                        const objectStart = j;
-                        const objectEnd = findBalancedBraceEnd(content, objectStart, limit);
-                        if (objectEnd === undefined) {
-                            edits.length = editsBeforeTag;
-                            break;
-                        }
-                        const replacement = replaceMarkdownLinksInJsonObject(
-                            content.slice(objectStart, objectEnd),
-                            (href) => {
-                                const trimmedHref = trimAnchor(href) ?? href;
-                                const anchorSuffix = trimmedHref !== href ? href.slice(trimmedHref.length) : "";
-                                const replacedHref = getReplacedHref({
-                                    href: trimmedHref,
-                                    markdownFilesToPathName,
-                                    metadata
-                                });
-                                return replacedHref?.type === "replace" ? replacedHref.slug + anchorSuffix : undefined;
-                            }
-                        );
-                        if (replacement !== undefined) {
-                            edits.push({ start: objectStart, end: objectEnd, replacement });
-                        }
-                        j = objectEnd;
-                        while (j < limit && (content[j] === " " || content[j] === "\n")) {
-                            j++;
-                        }
-                        if (j < limit && content[j] === "}") {
-                            j++; // skip }
-                        }
-                    } else if (isCurlyWrapped && (attrName === "src" || attrName === "icon" || attrName === "href")) {
-                        // Complex JSX expression (e.g. src={getUrl(...)}, spread attrs)
-                        // that the streaming scanner can't resolve — flag for AST fallback
-                        hasUnhandledExpressions = true;
+                    }
+                    const attrName = content.slice(attrStart, j).trim();
+                    // Detect JSX spread attributes like {...{src: "path"}}
+                    if (attrName.startsWith("{")) {
                         // Skip past the closing }
-                        let braceDepth = 1;
-                        while (j < limit && braceDepth > 0) {
+                        let braceDepth = 0;
+                        j = attrStart;
+                        while (j < limit) {
                             if (content[j] === "{") {
                                 braceDepth++;
                             } else if (content[j] === "}") {
                                 braceDepth--;
+                                if (braceDepth === 0) {
+                                    j++;
+                                    break;
+                                }
                             } else if (content[j] === '"' || content[j] === "'") {
                                 const q = content[j];
                                 j++;
@@ -1169,118 +1046,141 @@ export function replaceImagePathsAndUrls(
                             }
                             j++;
                         }
+                        continue;
+                    }
+                    if (content[j] === "=") {
+                        j++;
+                        while (j < limit && (content[j] === " " || content[j] === "\n")) {
+                            j++;
+                        }
+                        // Handle plain quotes: attr="value" or attr='value'
+                        // Also handle JSX expression: attr={'value'} or attr={"value"}
+                        const braceStart = j;
+                        const isCurlyWrapped = content[j] === "{";
+                        if (isCurlyWrapped) {
+                            j++; // skip {
+                            while (j < limit && (content[j] === " " || content[j] === "\n")) {
+                                j++;
+                            }
+                        }
+                        if (content[j] === '"' || content[j] === "'") {
+                            const quote = content[j];
+                            j++;
+                            const valueStart = j;
+                            while (j < limit && content[j] !== quote) {
+                                if (content[j] === "\\") {
+                                    j += 2;
+                                } else {
+                                    j++;
+                                }
+                            }
+                            const value = content.slice(valueStart, j);
+                            j++; // skip closing quote
+                            if (isCurlyWrapped) {
+                                while (j < limit && (content[j] === " " || content[j] === "\n")) {
+                                    j++;
+                                }
+                                if (j < limit && content[j] === "}") {
+                                    j++; // skip }
+                                }
+                            }
+                            if (attrName === "src" || (attrName === "icon" && isLocalIconReference(value))) {
+                                const trimmedValue = trimAnchor(value);
+                                const anchor =
+                                    trimmedValue && value !== trimmedValue ? value.slice(trimmedValue.length) : "";
+                                const imageSrc = mapImage(trimmedValue ?? value);
+                                if (imageSrc) {
+                                    edits.push({
+                                        start: valueStart,
+                                        end: valueStart + value.length,
+                                        replacement: imageSrc + anchor
+                                    });
+                                }
+                            } else if (attrName === "href") {
+                                const trimmedHrefValue = trimAnchor(value) ?? value;
+                                const hrefAnchorSuffix =
+                                    trimmedHrefValue !== value ? value.slice(trimmedHrefValue.length) : "";
+                                const replacedHref = getReplacedHref({
+                                    href: trimmedHrefValue,
+                                    markdownFilesToPathName,
+                                    metadata
+                                });
+                                if (replacedHref && replacedHref.type === "replace") {
+                                    edits.push({
+                                        start: valueStart,
+                                        end: valueStart + value.length,
+                                        replacement: replacedHref.slug + hrefAnchorSuffix
+                                    });
+                                }
+                            }
+                        } else if (isCurlyWrapped && attrName === "links" && content[j] === "{") {
+                            // `<CodeBlock links={{"Type": "./types.mdx#anchor"}}>` emitted by the library-docs
+                            // generators: resolve each `.md`/`.mdx` value like an href.
+                            const objectStart = j;
+                            const objectEnd = findBalancedBraceEnd(content, objectStart, limit);
+                            if (objectEnd === undefined) {
+                                edits.length = editsBeforeTag;
+                                break;
+                            }
+                            const replacement = replaceMarkdownLinksInJsonObject(
+                                content.slice(objectStart, objectEnd),
+                                (href) => {
+                                    const trimmedHref = trimAnchor(href) ?? href;
+                                    const anchorSuffix = trimmedHref !== href ? href.slice(trimmedHref.length) : "";
+                                    const replacedHref = getReplacedHref({
+                                        href: trimmedHref,
+                                        markdownFilesToPathName,
+                                        metadata
+                                    });
+                                    return replacedHref?.type === "replace"
+                                        ? replacedHref.slug + anchorSuffix
+                                        : undefined;
+                                }
+                            );
+                            if (replacement !== undefined) {
+                                edits.push({ start: objectStart, end: objectEnd, replacement });
+                            }
+                            j = objectEnd;
+                            while (j < limit && (content[j] === " " || content[j] === "\n")) {
+                                j++;
+                            }
+                            if (j < limit && content[j] === "}") {
+                                j++; // skip }
+                            }
+                        } else if (isCurlyWrapped) {
+                            // An expression like `icon={<img src="./a.png" />}` is scanned like page content,
+                            // so tags nested inside it are rewritten too.
+                            const braceEnd = findBalancedBraceEnd(content, braceStart, limit);
+                            if (braceEnd === undefined) {
+                                edits.length = editsBeforeTag;
+                                break;
+                            }
+                            for (const edit of scanForEdits(content.slice(braceStart + 1, braceEnd - 1))) {
+                                edits.push({
+                                    ...edit,
+                                    start: edit.start + braceStart + 1,
+                                    end: edit.end + braceStart + 1
+                                });
+                            }
+                            j = braceEnd;
+                        }
                     }
                 }
-            }
-            if (j >= limit || content[j] !== ">") {
-                edits.length = editsBeforeTag;
-                i++;
+                if (j >= limit || content[j] !== ">") {
+                    edits.length = editsBeforeTag;
+                    i++;
+                    continue;
+                }
+                j++;
+                i = j;
                 continue;
             }
-            j++;
-            i = j;
-            continue;
+            i++;
         }
-        i++;
+        return edits;
     }
 
-    // If the streaming scanner encountered complex JSX expressions it couldn't resolve,
-    // fall back to AST parse to handle them (e.g. src={getUrl(...)}, spread attributes).
-    // This path is rarely hit (~0% of pages) so it doesn't affect overall performance.
-    if (hasUnhandledExpressions) {
-        const tree = parseMarkdownToTree(content);
-        const lineStarts = precomputeLineStarts(content);
-
-        const nodeTypeFilter = (node: unknown): boolean => {
-            const n = node as { type?: string };
-            return (
-                n.type === "mdxJsxFlowElement" ||
-                n.type === "mdxJsxTextElement" ||
-                n.type === "mdxFlowExpression" ||
-                n.type === "mdxTextExpression"
-            );
-        };
-
-        const astNodes: { node: Parameters<typeof isMdxJsxElement>[0]; start: number; end: number }[] = [];
-        visit(tree, nodeTypeFilter, (node) => {
-            if (node.position != null) {
-                const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
-                astNodes.push({ node, start, end: start + length });
-            }
-            return CONTINUE;
-        });
-
-        // Each node is rewritten as a whole, so its edit must absorb the edits already made inside
-        // it (by the streaming scanner or a nested node); overlapping edits corrupt the output.
-        // Reversed pre-order handles children before their parents.
-        for (const { node, start, end } of [...astNodes].reverse()) {
-            const innerEdits = edits.filter((edit) => edit.start >= start && edit.end <= end);
-            const innerEditSet = new Set(innerEdits);
-            const original = applyEdits(
-                content.slice(start, end),
-                innerEdits.map((edit) => ({ ...edit, start: edit.start - start, end: edit.end - start }))
-            );
-            let replaced = original;
-
-            function replaceSrc(src: string | undefined) {
-                const imageSrc = mapImage(src);
-                if (src && imageSrc) {
-                    replaced = replaced.replace(src, imageSrc);
-                }
-            }
-
-            function replaceHref(href: string | undefined) {
-                const replacedHref = getReplacedHref({ href, markdownFilesToPathName, metadata });
-                if (href != null && replacedHref != null && replacedHref.type === "replace") {
-                    replaced = replaced.replace(href, replacedHref.slug);
-                }
-            }
-
-            function walkEstreeForSrcAndHref(estree: EstreeNode) {
-                walkEstreeJsxAttributes(estree, {
-                    src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
-                    icon: (attr) => {
-                        const icon = trimAnchor(extractSingleLiteral(attr.value));
-                        if (isLocalIconReference(icon)) {
-                            replaceSrc(icon);
-                        }
-                    },
-                    href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
-                });
-            }
-
-            if (isMdxJsxElement(node)) {
-                node.attributes.forEach((attr) => {
-                    if (
-                        isMdxJsxAttribute(attr) &&
-                        typeof attr.value !== "string" &&
-                        attr.value != null &&
-                        attr.value.data?.estree
-                    ) {
-                        // Skip simple string literals — already handled by the streaming scanner.
-                        // Only process complex expressions (functions, identifiers, concatenation).
-                        if (extractSingleLiteral(attr.value.data.estree) != null) {
-                            return;
-                        }
-                        walkEstreeForSrcAndHref(attr.value.data.estree);
-                    } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
-                        walkEstreeForSrcAndHref(attr.data.estree);
-                    }
-                });
-            }
-
-            if (isMdxExpression(node) && node.data?.estree) {
-                walkEstreeForSrcAndHref(node.data.estree);
-            }
-
-            if (replaced !== original) {
-                const outerEdits = edits.filter((edit) => !innerEditSet.has(edit));
-                edits.length = 0;
-                edits.push(...outerEdits, { start, end, replacement: replaced });
-            }
-        }
-    }
-
+    const edits = scanForEdits(content);
     const replacedContent = applyEdits(content, edits);
 
     return requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data));

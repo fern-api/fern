@@ -1357,7 +1357,7 @@ describe("streaming scanner curly-brace src handling", () => {
     });
 });
 
-describe("AST fallback for complex JSX expressions", () => {
+describe("complex JSX expressions", () => {
     it("should leave src={variable} unchanged", () => {
         const page = "<img src={pathToImage} />";
         const fileIds = new Map([
@@ -1374,8 +1374,6 @@ describe("AST fallback for complex JSX expressions", () => {
             [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "fn-wrap-id"]
         ]);
         const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
-        // The function call prevents extractSingleLiteral from returning a value,
-        // so the AST fallback correctly skips this attribute
         expect(result).toContain("src={getUrl(");
     });
 
@@ -1392,7 +1390,6 @@ describe("AST fallback for complex JSX expressions", () => {
         const fileIds = new Map([
             [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "spread-id"]
         ]);
-        // Should not throw — the spread triggers AST fallback which handles it via estree walking
         const result = replaceImagePathsAndUrls(page, fileIds, {}, PATHS, CONTEXT);
         expect(result).toBeDefined();
     });
@@ -1740,9 +1737,8 @@ describe("angle bracket delimited destinations", () => {
     });
 });
 
-describe("AST fallback with streaming scanner edits inside the same node", () => {
-    it("does not corrupt content after a node whose src the scanner already replaced", () => {
-        // The Card icon expression forces the AST fallback, which also rewrites the Showcase node.
+describe("image paths nested in JSX expressions", () => {
+    it("replaces paths in nested tags without corrupting the surrounding content", () => {
         const page = [
             '<Card icon={<img src="path/to/icon.png" />} />',
             "",
