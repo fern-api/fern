@@ -1,7 +1,7 @@
 import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { getSdkVariableOptionName, ruby } from "@fern-api/ruby-ast";
+import { getSdkVariableOptionNames, ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
@@ -361,6 +361,32 @@ export class EndpointSnippetGenerator {
      * snippet carries no value, the keyword is omitted so the client falls back to the
      * variable's environment variable.
      */
+
+    /** Keywords the root client already uses for credentials and global headers (mirrors the SDK generator). */
+    private getSdkVariableReservedOptionNames(endpoint: FernIr.dynamic.Endpoint): string[] {
+        const names: string[] = [];
+        for (const header of this.context.ir.headers ?? []) {
+            names.push(header.name.name.snakeCase.safeName);
+        }
+        const auth = endpoint.auth;
+        switch (auth?.type) {
+            case "basic":
+                names.push(auth.username.snakeCase.safeName, auth.password.snakeCase.safeName);
+                break;
+            case "bearer":
+                names.push(auth.token.snakeCase.safeName);
+                break;
+            case "header":
+                names.push(auth.header.name.name.snakeCase.safeName);
+                break;
+            case "oauth":
+                names.push(auth.clientId.snakeCase.safeName, auth.clientSecret.snakeCase.safeName);
+                break;
+            default:
+                break;
+        }
+        return names;
+    }
     private getRootClientSdkVariableArgs({
         endpoint,
         snippet
@@ -376,6 +402,11 @@ export class EndpointSnippetGenerator {
         if (boundParameters.length === 0) {
             return [];
         }
+        const variables = this.context.ir.variables ?? [];
+        const optionNames = getSdkVariableOptionNames(
+            variables.map((variable) => this.context.getPropertyName(variable.name)),
+            this.getSdkVariableReservedOptionNames(endpoint)
+        );
         const args: ruby.KeywordArgument[] = [];
         const seen = new Set<string>();
         this.context.errors.scope("PathParameters");
@@ -392,18 +423,13 @@ export class EndpointSnippetGenerator {
                 continue;
             }
             seen.add(variableId);
-            const variable = (this.context.ir.variables ?? []).find((candidate) => candidate.id === variableId);
-            const name = variable?.name ?? parameter.name.name;
+            const variableIndex = variables.findIndex((candidate) => candidate.id === variableId);
+            const optionName = optionNames[variableIndex] ?? this.context.getPropertyName(parameter.name.name);
             const value = this.context.dynamicTypeLiteralMapper.convert(instance);
             if (ruby.TypeLiteral.isNop(value)) {
                 continue;
             }
-            args.push(
-                ruby.keywordArgument({
-                    name: getSdkVariableOptionName(this.context.getPropertyName(name)),
-                    value
-                })
-            );
+            args.push(ruby.keywordArgument({ name: optionName, value }));
         }
         this.context.errors.unscope();
         return args;

@@ -230,9 +230,14 @@ export class WireTestGenerator {
      * endpoint, so seed the client with the value from the first example that provides one.
      */
     private buildSdkVariableParamsForSetup(endpoints: FernIr.HttpEndpoint[]): string[] {
+        const options = this.context.getSdkVariableOptions();
+        if (options.length === 0) {
+            return [];
+        }
+        const exampleValues = this.collectSdkVariableExampleValues(endpoints);
         const params: string[] = [];
-        for (const option of this.context.getSdkVariableOptions()) {
-            const value = this.findSdkVariableExampleValue(option.variable.id, endpoints);
+        for (const option of options) {
+            const value = exampleValues.get(option.variable.id);
             if (value != null) {
                 params.push(`${option.optionName}: ${JSON.stringify(value)}`);
             }
@@ -240,23 +245,32 @@ export class WireTestGenerator {
         return params;
     }
 
-    private findSdkVariableExampleValue(variableId: string, endpoints: FernIr.HttpEndpoint[]): unknown {
+    /** First example value per SDK variable id, collected in a single pass over the endpoints. */
+    private collectSdkVariableExampleValues(endpoints: FernIr.HttpEndpoint[]): Map<string, unknown> {
+        const values = new Map<string, unknown>();
         for (const endpoint of endpoints) {
+            const boundParameters = endpoint.allPathParameters.filter(
+                (pathParameter) => pathParameter.variable != null
+            );
+            if (boundParameters.length === 0) {
+                continue;
+            }
             const example = this.getDynamicEndpointExample(endpoint);
             if (example?.pathParameters == null) {
                 continue;
             }
-            for (const pathParameter of endpoint.allPathParameters) {
-                if (pathParameter.variable !== variableId) {
+            for (const pathParameter of boundParameters) {
+                const variableId = pathParameter.variable;
+                if (variableId == null || values.has(variableId)) {
                     continue;
                 }
                 const value = example.pathParameters[getOriginalName(pathParameter.name)];
                 if (value != null) {
-                    return value;
+                    values.set(variableId, value);
                 }
             }
         }
-        return undefined;
+        return values;
     }
 
     /**

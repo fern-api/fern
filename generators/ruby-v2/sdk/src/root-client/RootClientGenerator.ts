@@ -1562,6 +1562,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 reservedNames.add(this.getGlobalHeaderOptionName(header));
             }
         }
+        for (const option of this.context.getSdkVariableOptions()) {
+            reservedNames.add(option.optionName);
+        }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;

@@ -1,7 +1,7 @@
 import { GeneratorError, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
-import { ClassReference, getSdkVariableOptionName, ruby } from "@fern-api/ruby-ast";
+import { ClassReference, getSdkVariableOptionNames, ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -17,8 +17,10 @@ const ROOT_TYPES_FOLDER = "types";
 
 export interface SdkVariableOption {
     variable: FernIr.VariableDeclaration;
-    /** The keyword exposed on the root client and the (un-prefixed) instance variable name. */
+    /** The keyword exposed on the root client. */
     optionName: string;
+    /** The instance variable (including `@`) the value is stored in on every generated client. */
+    instanceVariable: string;
     isString: boolean;
 }
 
@@ -561,11 +563,22 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
      */
     public getSdkVariableOptions(): SdkVariableOption[] {
         if (this.sdkVariableOptions == null) {
-            this.sdkVariableOptions = this.ir.variables.map((variable) => ({
-                variable,
-                optionName: getSdkVariableOptionName(this.caseConverter.snakeSafe(variable.name)),
-                isString: this.isStringTypeReference(variable.type)
-            }));
+            const optionNames = getSdkVariableOptionNames(
+                this.ir.variables.map((variable) => this.caseConverter.snakeSafe(variable.name)),
+                this.getSdkVariableReservedOptionNames()
+            );
+            const reservedInstanceVariables = this.getSdkVariableReservedInstanceVariableNames();
+            this.sdkVariableOptions = this.ir.variables.map((variable, index) => {
+                const optionName = optionNames[index] ?? this.caseConverter.snakeSafe(variable.name);
+                return {
+                    variable,
+                    optionName,
+                    instanceVariable: reservedInstanceVariables.has(optionName)
+                        ? `@sdk_variable_${optionName}`
+                        : `@${optionName}`,
+                    isString: this.isStringTypeReference(variable.type)
+                };
+            });
         }
         return this.sdkVariableOptions;
     }
@@ -597,7 +610,49 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
     }
 
     public getSdkVariableInstanceVariable(option: SdkVariableOption): string {
-        return `@${option.optionName}`;
+        return option.instanceVariable;
+    }
+
+    /** Initializer keywords already claimed by credentials and global headers on the root client. */
+    private getSdkVariableReservedOptionNames(): string[] {
+        const names: string[] = [];
+        for (const header of this.ir.headers) {
+            names.push(this.caseConverter.snakeSafe(header.name));
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    names.push(this.getBearerTokenParameterName(scheme.token));
+                    break;
+                case "basic":
+                    names.push(
+                        this.getCredentialParameterName(scheme.username),
+                        this.getCredentialParameterName(scheme.password)
+                    );
+                    break;
+                case "header":
+                    names.push(this.getCredentialParameterName(scheme.name));
+                    break;
+                case "oauth":
+                    names.push("client_id", "client_secret");
+                    break;
+                default:
+                    break;
+            }
+        }
+        return names;
+    }
+
+    /**
+     * Instance variables generated clients already use (`@raw_client`, memoized subpackage client
+     * getters, ...). An SDK variable whose keyword matches one is stored under `@sdk_variable_<name>`.
+     */
+    private getSdkVariableReservedInstanceVariableNames(): Set<string> {
+        const names = new Set<string>(["raw_client", "client", "base_url", "environment"]);
+        for (const subpackage of Object.values(this.ir.subpackages)) {
+            names.add(this.caseConverter.snakeSafe(subpackage.name));
+        }
+        return names;
     }
 
     /** Raises a clear `ArgumentError` when a bound SDK variable was neither passed nor resolved from the env. */
@@ -609,7 +664,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         const message =
             `The \`${option.optionName}\` SDK variable is required. Pass \`${option.optionName}:\` to ` +
             `${this.getRootModuleName()}::${this.getRootClientClassName()}.new${envHint}.`;
-        return `raise ArgumentError, "${message}" if ${this.getSdkVariableInstanceVariable(option)}.nil?`;
+        return `raise ArgumentError, "${escapeRubyDoubleQuotedString(message)}" if ${this.getSdkVariableInstanceVariable(option)}.nil?`;
     }
 
     private isStringTypeReference(reference: FernIr.TypeReference): boolean {
@@ -655,4 +710,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         }
         return undefined;
     }
+}
+
+/** Escapes a value for embedding in a double-quoted Ruby string literal (no interpolation). */
+function escapeRubyDoubleQuotedString(value: string): string {
+    return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/#/g, "\\#");
 }
