@@ -49,11 +49,15 @@ function createRootPathParameter(opts: { name: string; clientDefault?: FernIr.Li
     };
 }
 
-function createVariable(opts: { name: string; envVar?: string }): FernIr.VariableDeclaration {
+function createVariable(opts: {
+    name: string;
+    envVar?: string;
+    type?: FernIr.TypeReference;
+}): FernIr.VariableDeclaration {
     return {
         id: opts.name,
         name: casingsGenerator.generateName(opts.name),
-        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+        type: opts.type ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         envVar: opts.envVar,
         docs: undefined
     };
@@ -224,10 +228,10 @@ function createMockContext(opts?: {
             }
         },
         type: {
-            resolveTypeReference: () => ({
-                type: "primitive",
-                primitive: { v1: "STRING", v2: undefined }
-            })
+            resolveTypeReference: (typeReference: FernIr.TypeReference) =>
+                typeReference.type === "primitive"
+                    ? { type: "primitive", primitive: typeReference.primitive }
+                    : { type: "primitive", primitive: { v1: "STRING", v2: undefined } }
         },
         versionContext: {
             getGeneratedVersion: () => {
@@ -363,6 +367,29 @@ describe("BaseClientTypeGenerator", () => {
                 'throw new Error("rootVariable is required. Pass it to the client or set the ROOT_VARIABLE environment variable.");'
             );
             expect(normalizeFunction).toContain("rootVariable: _rootVariable,");
+        });
+
+        it("ignores envVar on non-string variables", () => {
+            const ir = createIR({
+                variables: [
+                    createVariable({
+                        name: "rootVariable",
+                        envVar: "ROOT_VARIABLE",
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ]
+            });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("_rootVariable");
+            const normalizedType = context._captured.statements.find((s: string) =>
+                s.includes("export type NormalizedClientOptions<")
+            );
+            expect(normalizedType).not.toContain("rootVariable");
         });
 
         it("adds the resolved variable to NormalizedClientOptions", () => {

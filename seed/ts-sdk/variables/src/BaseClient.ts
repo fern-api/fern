@@ -7,7 +7,7 @@ export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    /** Falls back to the ROOT_VARIABLE environment variable when not passed to the client. Defaults to the ROOT_VARIABLE environment variable when not provided. */
+    /** Falls back to the ROOT_VARIABLE environment variable when not passed to the client. */
     rootVariable?: string;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;

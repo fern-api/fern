@@ -7,7 +7,14 @@ import { ts } from "ts-morph";
 import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
+import { hasEnvVarFallback } from "./sdkVariables.js";
 import { getServerVariableOptions, urlTemplateToTemplateLiteral } from "./serverVariables.js";
+
+interface SdkVariableEnvFallbacks {
+    section: string;
+    returnFields: string;
+    normalizedTypeFields: string;
+}
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
@@ -394,7 +401,7 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
-        const sdkVariableFallbacks = this.getSdkVariableEnvFallbacks();
+        const sdkVariableFallbacks = this.getSdkVariableEnvFallbacks(context);
         const serverVariableInterpolation = this.getServerVariableInterpolation(context);
         const emitBaseUrlSection =
             this.ir.environments?.baseUrlEnvVar != null && !serverVariableInterpolation.declaresBaseUrl;
@@ -580,29 +587,36 @@ ${entries.join("\n")}
         return "\n" + lines.join("\n");
     }
 
+    private sdkVariableEnvFallbacks: SdkVariableEnvFallbacks | undefined;
+
     /**
-     * SDK variables that declare an `envVar` are optional client options. Resolves each one
+     * String SDK variables that declare an `envVar` are optional client options. Resolves each one
      * (explicit option first, then the environment variable) inside `normalizeClientOptions`
      * and fails fast when neither is set, so generated paths never interpolate `undefined`.
      */
-    private getSdkVariableEnvFallbacks(): { section: string; returnFields: string; normalizedTypeFields: string } {
+    private getSdkVariableEnvFallbacks(context: FileContext): SdkVariableEnvFallbacks {
+        if (this.sdkVariableEnvFallbacks != null) {
+            return this.sdkVariableEnvFallbacks;
+        }
         const sections: string[] = [];
         const returnFields: string[] = [];
         const normalizedTypeFields: string[] = [];
         for (const variable of this.ir.variables) {
-            if (variable.envVar == null) {
+            if (!hasEnvVarFallback(variable, context.type)) {
                 continue;
             }
-            const propertyKey = getPropertyKey(this.caseConverter.camelUnsafe(variable.name));
-            const localName = `_${this.caseConverter.camelUnsafe(variable.name)}`;
+            const propertyName = this.caseConverter.camelUnsafe(variable.name);
+            const propertyKey = getPropertyKey(propertyName);
+            const optionAccess = propertyKey === propertyName ? `.${propertyName}` : `[${propertyKey}]`;
+            const localName = `_${propertyName}`;
             const envValue = emitEnvVarValue({
                 envConstant: JSON.stringify(variable.envVar),
                 guarded: this.guardProcessEnvAccess
             });
             const errorMessage = JSON.stringify(
-                `${propertyKey} is required. Pass it to the client or set the ${variable.envVar} environment variable.`
+                `${propertyName} is required. Pass it to the client or set the ${variable.envVar} environment variable.`
             );
-            sections.push(`    const ${localName} = ${OPTIONS_PARAMETER_NAME}?.${propertyKey} ?? ${envValue};
+            sections.push(`    const ${localName} = ${OPTIONS_PARAMETER_NAME}?${optionAccess} ?? ${envValue};
     if (${localName} == null) {
         throw new Error(${errorMessage});
     }
@@ -611,11 +625,12 @@ ${entries.join("\n")}
             returnFields.push(`\n        ${propertyKey}: ${localName},`);
             normalizedTypeFields.push(`\n    ${propertyKey}: string;`);
         }
-        return {
+        this.sdkVariableEnvFallbacks = {
             section: sections.join(""),
             returnFields: returnFields.join(""),
             normalizedTypeFields: normalizedTypeFields.join("")
         };
+        return this.sdkVariableEnvFallbacks;
     }
 
     private shouldGenerateAuthCode(): boolean {
@@ -629,7 +644,7 @@ ${entries.join("\n")}
             ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
             : "";
 
-        const sdkVariableFields = this.getSdkVariableEnvFallbacks().normalizedTypeFields;
+        const sdkVariableFields = this.getSdkVariableEnvFallbacks(context).normalizedTypeFields;
 
         let typesCode = `
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {

@@ -3,7 +3,11 @@ import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { BaseClientContext, FileContext } from "@fern-typescript/contexts";
-import { endpointUtils, getServerVariableOptions } from "@fern-typescript/sdk-client-class-generator";
+import {
+    endpointUtils,
+    getServerVariableOptions,
+    hasEnvVarFallback
+} from "@fern-typescript/sdk-client-class-generator";
 import {
     type InterfaceDeclarationStructure,
     type OptionalKind,
@@ -233,18 +237,18 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);
+            const hasEnvFallback = hasEnvVarFallback(variable, context.type);
             const variableDocs: string[] = [];
             if (variable.docs != null) {
                 variableDocs.push(variable.docs);
-            }
-            if (variable.envVar != null) {
+            } else if (hasEnvFallback) {
                 variableDocs.push(`Defaults to the ${variable.envVar} environment variable when not provided.`);
             }
             properties.push({
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.getOptionNameForVariable(variable)),
                 type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
-                hasQuestionToken: variableType.isOptional || variable.envVar != null,
+                hasQuestionToken: variableType.isOptional || hasEnvFallback,
                 docs: variableDocs.length > 0 ? [variableDocs.join(" ")] : undefined
             });
         }
