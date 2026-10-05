@@ -59,11 +59,12 @@ function getVariableEnvVar(variableName: string, schema: OpenAPIV3.SchemaObject)
     if (envVar == null) {
         return undefined;
     }
-    if (typeof envVar !== "string" || envVar.length === 0) {
+    const trimmed = typeof envVar === "string" ? envVar.trim() : undefined;
+    if (trimmed == null || trimmed.length === 0) {
         throw new CliError({
             message: `Variable ${variableName} has invalid ${FernOpenAPIExtension.SDK_VARIABLE_ENV}: expected a non-empty string but got ${JSON.stringify(envVar)}`,
             code: CliError.Code.ValidationError
         });
     }
-    return envVar;
+    return trimmed;
 }
