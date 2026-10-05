@@ -103,7 +103,7 @@ export class WireTestGenerator {
                 let example = dynamicExamples.find(
                     (dynamicExample) => dynamicExample.id === testExample.dynamicExampleId
                 );
-                if (example == null && index === 0) {
+                if (example == null && index === 0 && testExample.expectedError == null) {
                     example = dynamicExamples[0];
                 }
                 if (example == null) {
