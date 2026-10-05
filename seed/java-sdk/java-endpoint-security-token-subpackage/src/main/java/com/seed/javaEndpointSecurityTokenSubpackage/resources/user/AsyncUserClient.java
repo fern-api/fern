@@ -5,6 +5,7 @@ package com.seed.javaEndpointSecurityTokenSubpackage.resources.user;
 
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ClientOptions;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.RequestOptions;
+import com.seed.javaEndpointSecurityTokenSubpackage.core.SeedJavaEndpointSecurityTokenSubpackageHttpResponse;
 import com.seed.javaEndpointSecurityTokenSubpackage.resources.user.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,26 +28,122 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<List<User>> getWithOAuth() {
-        return this.rawClient.getWithOAuth().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithOAuth();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getWithOAuth(RequestOptions requestOptions) {
-        return this.rawClient.getWithOAuth(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithOAuth(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getWithApiKeyOrOAuth() {
-        return this.rawClient.getWithApiKeyOrOAuth().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithApiKeyOrOAuth();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getWithApiKeyOrOAuth(RequestOptions requestOptions) {
-        return this.rawClient.getWithApiKeyOrOAuth(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithApiKeyOrOAuth(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBearer() {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBearer();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBearer(RequestOptions requestOptions) {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBearer(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBasic() {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBasic();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBasic(RequestOptions requestOptions) {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBasic(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getAnonymous() {
-        return this.rawClient.getAnonymous().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getAnonymous();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getAnonymous(RequestOptions requestOptions) {
-        return this.rawClient.getAnonymous(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getAnonymous(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

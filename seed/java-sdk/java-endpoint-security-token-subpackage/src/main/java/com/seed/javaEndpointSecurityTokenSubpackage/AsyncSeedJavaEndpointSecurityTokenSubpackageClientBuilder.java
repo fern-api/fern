@@ -4,6 +4,8 @@
 package com.seed.javaEndpointSecurityTokenSubpackage;
 
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ApiKeyAuthProvider;
+import com.seed.javaEndpointSecurityTokenSubpackage.core.BasicAuthProvider;
+import com.seed.javaEndpointSecurityTokenSubpackage.core.BearerAuthProvider;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ClientOptions;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.Environment;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.LogConfig;
@@ -40,6 +42,10 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
     private Optional<List<String>> permissions = Optional.empty();
 
     private String apiKey = System.getenv("MY_API_KEY");
+
+    private String username = System.getenv("MY_USERNAME");
+
+    private String password = System.getenv("MY_PASSWORD");
 
     private Environment environment;
 
@@ -114,6 +120,12 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
      */
     public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder apiKey(String apiKey) {
         this.apiKey = apiKey;
+        return this;
+    }
+
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
         return this;
     }
 
@@ -240,7 +252,7 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
                     ClientOptions.builder().environment(this.environment);
             TokenClient oauthAuthClient = new TokenClient(oauthClientOptionsBuilder.build());
             routingBuilder.addAuthProvider(
-                    "OAuth",
+                    "clientCredentialsAuth",
                     new OAuthAuthProvider(() -> this.clientId, () -> this.clientSecret, oauthAuthClient),
                     "Please provide clientId and clientSecret via .clientId()/.clientSecret() or set MY_CLIENT_ID and MY_CLIENT_SECRET environment variables");
         }
@@ -249,6 +261,18 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
                     "ApiKey",
                     new ApiKeyAuthProvider(() -> this.apiKey),
                     "Please provide apiKey via .apiKey() or set MY_API_KEY environment variable");
+        }
+        if (this.token != null) {
+            routingBuilder.addAuthProvider(
+                    "tokenAuth",
+                    new BearerAuthProvider(() -> this.token),
+                    "Please provide token via .token() or set MY_TOKEN environment variable");
+        }
+        if (this.username != null && this.password != null) {
+            routingBuilder.addAuthProvider(
+                    "passwordAuth",
+                    new BasicAuthProvider(() -> this.username, () -> this.password),
+                    "Please provide credentials via .credentials() or set MY_USERNAME and MY_PASSWORD environment variables");
         }
         builder.authProvider(routingBuilder.build());
     }

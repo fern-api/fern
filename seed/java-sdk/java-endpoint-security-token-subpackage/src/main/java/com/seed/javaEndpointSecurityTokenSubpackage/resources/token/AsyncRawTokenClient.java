@@ -4,6 +4,7 @@
 package com.seed.javaEndpointSecurityTokenSubpackage.resources.token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.javaEndpointSecurityTokenSubpackage.core.BodyProperties;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ClientOptions;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.EndpointMetadata;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.MediaTypes;
@@ -55,7 +56,9 @@ public class AsyncRawTokenClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedJavaEndpointSecurityTokenSubpackageException("Failed to serialize request", e);
         }
@@ -83,7 +86,8 @@ public class AsyncRawTokenClient {
         }
         CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -111,6 +115,11 @@ public class AsyncRawTokenClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
                         "Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
