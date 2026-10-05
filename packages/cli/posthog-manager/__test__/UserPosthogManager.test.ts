@@ -17,7 +17,8 @@ vi.mock("@fern-api/cli-telemetry", () => ({
 }));
 
 vi.mock("@fern-api/core", () => ({
-    createVenusService: vi.fn()
+    createVenusService: vi.fn(),
+    detectCodingAgent: () => undefined
 }));
 
 vi.mock("@fern-api/fs-utils", () => ({

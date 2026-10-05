@@ -32,6 +32,7 @@ class CoreUtilities:
         has_webhook_signature_verification: bool = False,
         generates_idempotency_key: bool = False,
         has_streaming_endpoints: bool = False,
+        has_xml_types: bool = False,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -57,6 +58,7 @@ class CoreUtilities:
         self._has_webhook_signature_verification = has_webhook_signature_verification
         self._stream_abstraction = custom_config.stream_abstraction
         self._has_streaming_endpoints = has_streaming_endpoints
+        self._has_xml_types = has_xml_types
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -301,6 +303,17 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
+
+        if self._has_xml_types:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="xml_utilities.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="xml_utilities"),
+                ),
+                exports=set(),
+            )
 
         if self._has_standard_paginated_endpoints:
             self._copy_file_to_project(

@@ -31,10 +31,12 @@ type GetFooRequest struct {
 }
 
 func (g *GetFooRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetOptionalBaz sets the OptionalBaz field and marks it as non-optional;
@@ -71,6 +73,12 @@ var (
 	fooFieldNullableRequiredBar = big.NewInt(1 << 2)
 	fooFieldRequiredBar         = big.NewInt(1 << 3)
 )
+
+// fooNullableFields maps the wire names of Foo's nullable fields (required or optional) to their field bits.
+var fooNullableFields = map[string]*big.Int{
+	"nullable_bar":          fooFieldNullableBar,
+	"nullable_required_bar": fooFieldNullableRequiredBar,
+}
 
 type Foo struct {
 	Bar                 *string `json:"bar,omitempty" url:"bar,omitempty"`
@@ -121,10 +129,12 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Foo) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetBar sets the Bar field and marks it as non-optional;
@@ -167,6 +177,13 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, fooNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		f.require(presentFields)
+	}
 	f.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -198,10 +215,11 @@ func (f *Foo) String() string {
 }
 
 var (
-	updateFooRequestFieldXIdempotencyKey = big.NewInt(1 << 0)
-	updateFooRequestFieldNullableText    = big.NewInt(1 << 1)
-	updateFooRequestFieldNullableNumber  = big.NewInt(1 << 2)
-	updateFooRequestFieldNonNullableText = big.NewInt(1 << 3)
+	updateFooRequestFieldXIdempotencyKey      = big.NewInt(1 << 0)
+	updateFooRequestFieldNullableText         = big.NewInt(1 << 1)
+	updateFooRequestFieldNullableNumber       = big.NewInt(1 << 2)
+	updateFooRequestFieldNonNullableText      = big.NewInt(1 << 3)
+	updateFooRequestFieldRequiredNullableText = big.NewInt(1 << 4)
 )
 
 type UpdateFooRequest struct {
@@ -212,16 +230,20 @@ type UpdateFooRequest struct {
 	NullableNumber *float64 `json:"nullable_number,omitempty" url:"-"`
 	// Regular non-nullable field
 	NonNullableText *string `json:"non_nullable_text,omitempty" url:"-"`
+	// Must be sent, but may be null to clear the value
+	RequiredNullableText *string `json:"required_nullable_text,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (u *UpdateFooRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetXIdempotencyKey sets the XIdempotencyKey field and marks it as non-optional;
@@ -250,6 +272,13 @@ func (u *UpdateFooRequest) SetNullableNumber(nullableNumber *float64) {
 func (u *UpdateFooRequest) SetNonNullableText(nonNullableText *string) {
 	u.NonNullableText = nonNullableText
 	u.require(updateFooRequestFieldNonNullableText)
+}
+
+// SetRequiredNullableText sets the RequiredNullableText field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateFooRequest) SetRequiredNullableText(requiredNullableText *string) {
+	u.RequiredNullableText = requiredNullableText
+	u.require(updateFooRequestFieldRequiredNullableText)
 }
 
 func (u *UpdateFooRequest) UnmarshalJSON(data []byte) error {

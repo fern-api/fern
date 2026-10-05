@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A union member whose discriminant value collides with a JavaScript built-in
+    no longer has the disambiguation prefix applied to the string literal.
+    A branch with `condition_type: "Date"` emitted
+    `conditionType: "globalThis.Date"` — so the property could not be typed
+    without a cast, since the API expects `"Date"`, and with `noSerdeLayer:
+    false` the serializer's inferred discriminant no longer matched the declared
+    literal and the package failed to compile. Qualification exists to
+    disambiguate a shadowed *type reference*; a literal is a value, and
+    rewriting one changes what the SDK sends. String literals are now skipped,
+    which also covers builder expressions and visitor signatures, where the same
+    rewrite could reach an object literal. Type references are unaffected: a
+    sibling property typed `Date` still becomes `globalThis.Date`.
+  type: fix

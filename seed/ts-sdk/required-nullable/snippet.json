@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/required-nullable\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.updateFoo(\"id\", {\n    \"X-Idempotency-Key\": \"X-Idempotency-Key\",\n    nullable_text: \"nullable_text\",\n    nullable_number: 1.1,\n    non_nullable_text: \"non_nullable_text\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/required-nullable\";\n\nconst client = new SeedApiClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.updateFoo(\"id\", {\n    \"X-Idempotency-Key\": \"X-Idempotency-Key\",\n    nullable_text: \"nullable_text\",\n    nullable_number: 1.1,\n    non_nullable_text: \"non_nullable_text\",\n    required_nullable_text: \"required_nullable_text\"\n});\n"
             }
         }
     ],

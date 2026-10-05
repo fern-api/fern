@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UserIndex: integer
+  User:
+    properties:
+      id: string
+      blocked: boolean
+  UserAlias: User
+  SearchResult:
+    discriminated: false
+    union:
+      - list<User>
+      - User
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    get:
+      method: GET
+      path: /{id}
+      path-parameters:
+        id: string
+      response: User
+    list:
+      method: GET
+      path: ""
+      response: list<User>
+    byIndex:
+      method: GET
+      path: /by-index
+      response: map<integer, User>
+    metadata:
+      method: GET
+      path: /metadata
+      response: map<string, unknown>
+    byAlias:
+      method: GET
+      path: /by-alias
+      response: map<UserIndex, User>
+    tags:
+      method: GET
+      path: /tags
+      response: set<string>
+    count:
+      method: GET
+      path: /count
+      response: integer
+    raw:
+      method: GET
+      path: /raw
+      response: unknown
+    search:
+      method: GET
+      path: /search
+      response: optional<SearchResult>
+    maybeUser:
+      method: GET
+      path: /maybe-user
+      response: nullable<User>
+    maybeList:
+      method: GET
+      path: /maybe-list
+      response: optional<list<User>>
+    maybeCount:
+      method: GET
+      path: /maybe-count
+      response: optional<integer>
+    maybeAlias:
+      method: GET
+      path: /maybe-alias
+      response: optional<UserAlias>
+    aliasUser:
+      method: GET
+      path: /alias-user
+      response: UserAlias

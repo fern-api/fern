@@ -4,16 +4,20 @@ import * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ProtobufEncoding } from "./ProtobufEncoding.js";
+import { XmlEncoding } from "./XmlEncoding.js";
 
 export const Encoding: core.serialization.Schema<serializers.Encoding.Raw, FernOpenapiIr.Encoding> = core.serialization
     .union("type", {
         protobuf: ProtobufEncoding,
+        xml: XmlEncoding,
     })
     .transform<FernOpenapiIr.Encoding>({
         transform: (value) => {
             switch (value.type) {
                 case "protobuf":
                     return FernOpenapiIr.Encoding.protobuf(value);
+                case "xml":
+                    return FernOpenapiIr.Encoding.xml(value);
                 default:
                     return value as FernOpenapiIr.Encoding;
             }
@@ -22,9 +26,13 @@ export const Encoding: core.serialization.Schema<serializers.Encoding.Raw, FernO
     });
 
 export declare namespace Encoding {
-    export type Raw = Encoding.Protobuf;
+    export type Raw = Encoding.Protobuf | Encoding.Xml;
 
     export interface Protobuf extends ProtobufEncoding.Raw {
         type: "protobuf";
+    }
+
+    export interface Xml extends XmlEncoding.Raw {
+        type: "xml";
     }
 }

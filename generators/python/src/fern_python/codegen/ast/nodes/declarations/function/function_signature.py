@@ -14,12 +14,16 @@ class FunctionSignature(AstNode):
         include_args: bool = False,
         named_parameters: Optional[Sequence[NamedFunctionParameter]] = None,
         include_kwargs: bool = False,
+        kwargs_name: str = "kwargs",
+        kwargs_type_hint: Optional[TypeHint] = None,
         return_type: Optional[Union[TypeHint, str]] = None,
     ):
         self.parameters = parameters or []
         self.include_args = include_args
         self.named_parameters = named_parameters or []
         self.include_kwargs = include_kwargs
+        self.kwargs_name = kwargs_name
+        self.kwargs_type_hint = kwargs_type_hint if kwargs_type_hint is not None else TypeHint.any()
         self.return_type = return_type
 
     def has_arguments(self) -> bool:
@@ -31,6 +35,8 @@ class FunctionSignature(AstNode):
             metadata.update(parameter.get_metadata())
         for named_parameter in self.named_parameters:
             metadata.update(named_parameter.get_metadata())
+        if self.include_kwargs:
+            metadata.update(self.kwargs_type_hint.get_metadata())
         if self.return_type is not None and isinstance(self.return_type, AstNode):
             metadata.update(self.return_type.get_metadata())
         return metadata
@@ -72,8 +78,8 @@ class FunctionSignature(AstNode):
         if self.include_kwargs:
             if just_wrote_parameter:
                 writer.write(", ")
-            writer.write("**kwargs: ")
-            writer.write_node(TypeHint.any())
+            writer.write(f"**{self.kwargs_name}: ")
+            writer.write_node(self.kwargs_type_hint)
             just_wrote_parameter = True
 
         writer.write(")")

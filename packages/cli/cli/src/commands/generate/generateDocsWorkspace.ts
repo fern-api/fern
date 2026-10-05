@@ -75,7 +75,8 @@ export async function generateDocsWorkspace({
     strictBrokenLinks,
     disableTemplates,
     noPrompt,
-    skipUpload
+    skipUpload,
+    includePrivate = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -88,6 +89,8 @@ export async function generateDocsWorkspace({
     disableTemplates: boolean | undefined;
     noPrompt?: boolean;
     skipUpload: boolean | undefined;
+    /** Include `x-twilio.docsVisibility: private` elements in the published API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -140,8 +143,8 @@ export async function generateDocsWorkspace({
         }
     }
 
-    // When --id is provided and we're not in CI and not --force, check if the preview already exists
-    if (previewId != null && !isCI() && !force) {
+    // When --id is provided and we're not in CI, --force, or --no-prompt, check if the preview already exists
+    if (previewId != null && !isCI() && !force && !noPrompt) {
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
@@ -229,7 +232,8 @@ export async function generateDocsWorkspace({
             skipUpload,
             cliVersion: cliContext.environment.packageVersion,
             ciSource: detectCISource(),
-            deployerAuthor: detectDeployerAuthor()
+            deployerAuthor: detectDeployerAuthor(),
+            docsVisibility: includePrivate ? "private" : "public"
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);

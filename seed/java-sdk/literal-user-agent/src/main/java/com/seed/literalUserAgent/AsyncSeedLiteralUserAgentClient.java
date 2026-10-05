@@ -7,7 +7,7 @@ import com.seed.literalUserAgent.core.ClientOptions;
 import com.seed.literalUserAgent.core.RequestOptions;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedLiteralUserAgentClient {
+public class AsyncSeedLiteralUserAgentClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedLiteralUserAgentClient rawClient;
@@ -30,6 +30,15 @@ public class AsyncSeedLiteralUserAgentClient {
 
     public CompletableFuture<String> ping(RequestOptions requestOptions) {
         return this.rawClient.ping(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedLiteralUserAgentClientBuilder builder() {

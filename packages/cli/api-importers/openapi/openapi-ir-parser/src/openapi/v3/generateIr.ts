@@ -49,6 +49,7 @@ import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
 import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
+import { applyTwilioVisibility } from "./extensions/twilioVisibility.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
@@ -67,6 +68,7 @@ export function generateIr({
     source: Source;
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
+    openApi = applyTwilioVisibility({ document: openApi, options, logger: taskContext.logger });
     openApi = runResolutions({ openapi: openApi });
 
     // Reset title collision tracker for this document processing
@@ -395,6 +397,7 @@ export function generateIr({
                 return {
                     generatedName: error.generatedName,
                     nameOverride: error.nameOverride,
+                    isWildcardStatusCode: error.isWildcardStatusCode,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
                     source: error.source,
@@ -412,12 +415,25 @@ export function generateIr({
 
     const groupInfo = getFernGroups({ document: openApi, context });
 
+    const baseUrlEnv = getExtension<unknown>(openApi, FernOpenAPIExtension.BASE_URL_ENV);
+    let validatedBaseUrlEnv: string | undefined;
+    if (baseUrlEnv != null) {
+        if (typeof baseUrlEnv === "string" && baseUrlEnv.length > 0) {
+            validatedBaseUrlEnv = baseUrlEnv;
+        } else {
+            taskContext.logger.warn(
+                `Expected a non-empty string value for ${FernOpenAPIExtension.BASE_URL_ENV}; ignoring.`
+            );
+        }
+    }
+
     const ir: OpenApiIntermediateRepresentation = {
         apiVersion: getFernVersion({
             context,
             document: openApi
         }),
         specVersion: openApi.info.version != null && openApi.info.version.length > 0 ? openApi.info.version : undefined,
+        baseUrlEnv: validatedBaseUrlEnv,
         basePath:
             fernBasePathParsed != null &&
             (!options.respectPerSpecBasePath || fernBasePathParsed.pathParameters.length > 0)

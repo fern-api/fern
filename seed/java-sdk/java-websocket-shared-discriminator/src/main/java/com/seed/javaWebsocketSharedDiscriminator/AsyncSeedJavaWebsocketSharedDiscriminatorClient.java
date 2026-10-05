@@ -8,7 +8,7 @@ import com.seed.javaWebsocketSharedDiscriminator.core.Suppliers;
 import com.seed.javaWebsocketSharedDiscriminator.resources.realtime.AsyncRealtimeClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedJavaWebsocketSharedDiscriminatorClient {
+public class AsyncSeedJavaWebsocketSharedDiscriminatorClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncRealtimeClient> realtimeClient;
@@ -20,6 +20,15 @@ public class AsyncSeedJavaWebsocketSharedDiscriminatorClient {
 
     public AsyncRealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaWebsocketSharedDiscriminatorClientBuilder builder() {

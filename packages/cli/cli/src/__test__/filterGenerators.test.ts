@@ -74,6 +74,24 @@ describe("filterGenerators", () => {
             }
         });
 
+        it("preserves an SDK Config target index when filtering duplicate generators", () => {
+            const sdkConfigGenerators = generators.map((generator, sdkConfigTargetIndex) => ({
+                ...generator,
+                sdkConfigTargetIndex
+            }));
+            const result = filterGenerators({
+                generators: sdkConfigGenerators,
+                generatorIndex: 2,
+                generatorName: undefined,
+                groupName: "sdk"
+            });
+
+            expect(result.ok).toBe(true);
+            if (result.ok) {
+                expect(result.generators[0]?.sdkConfigTargetIndex).toBe(2);
+            }
+        });
+
         it("returns error for out-of-bounds index", () => {
             const result = filterGenerators({
                 generators,

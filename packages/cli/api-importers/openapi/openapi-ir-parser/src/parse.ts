@@ -48,6 +48,7 @@ export function parse({
     let ir: OpenApiIntermediateRepresentation = {
         apiVersion: undefined,
         specVersion: undefined,
+        baseUrlEnv: undefined,
         title: undefined,
         description: undefined,
         basePath: undefined,
@@ -447,6 +448,7 @@ function merge(
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
             specVersion: ir1.specVersion ?? ir2.specVersion,
+            baseUrlEnv: ir1.baseUrlEnv ?? ir2.baseUrlEnv,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: mergedBasePath.basePath,
@@ -620,6 +622,7 @@ function merge(
         return {
             apiVersion: ir1.apiVersion ?? ir2.apiVersion,
             specVersion: ir1.specVersion ?? ir2.specVersion,
+            baseUrlEnv: ir1.baseUrlEnv ?? ir2.baseUrlEnv,
             title: ir1.title ?? ir2.title,
             description: ir1.description ?? ir2.description,
             basePath: mergedBasePath.basePath,
@@ -684,6 +687,7 @@ function merge(
     return {
         apiVersion: ir1.apiVersion ?? ir2.apiVersion,
         specVersion: ir1.specVersion ?? ir2.specVersion,
+        baseUrlEnv: ir1.baseUrlEnv ?? ir2.baseUrlEnv,
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
         basePath: mergedBasePath.basePath,

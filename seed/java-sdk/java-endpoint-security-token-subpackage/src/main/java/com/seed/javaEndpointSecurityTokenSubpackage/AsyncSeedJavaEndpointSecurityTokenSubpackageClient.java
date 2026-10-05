@@ -9,7 +9,7 @@ import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.AsyncTokenCl
 import com.seed.javaEndpointSecurityTokenSubpackage.resources.user.AsyncUserClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedJavaEndpointSecurityTokenSubpackageClient {
+public class AsyncSeedJavaEndpointSecurityTokenSubpackageClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncTokenClient> tokenClient;
@@ -28,6 +28,15 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClient {
 
     public AsyncUserClient user() {
         return this.userClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

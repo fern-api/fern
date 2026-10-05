@@ -932,6 +932,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     schema: convertSchemaToSchemaWithExample(property.schema.value),
                     audiences: [],
                     conflict: {},
+                    xml: undefined,
                     generatedName: property.key,
                     nameOverride: undefined,
                     availability: undefined,

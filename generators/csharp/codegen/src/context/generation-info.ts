@@ -719,6 +719,25 @@ export class Generation {
                 origin: this.model.staticExplicit("DateTimeSerializer"),
                 namespace: this.namespaces.core
             }),
+        /** Utility methods for XML serialization/deserialization */
+        XmlUtils: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlUtils"),
+                namespace: this.namespaces.core
+            }),
+        /** Generic XML element used to carry unknown child elements */
+        XmlElement: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlElement"),
+                namespace: this.namespaces.publicCore,
+                isReferenceType: true
+            }),
+        /** Interface implemented by XML-encoded models */
+        IXmlNode: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("IXmlNode"),
+                namespace: this.namespaces.publicCore
+            }),
         /** Utility methods for JSON serialization/deserialization */
         JsonUtils: () =>
             this.csharp.classReference({

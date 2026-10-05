@@ -114,10 +114,26 @@ export interface OpenApiSettingsSchema extends GeneratorsYml.BaseApiSettingsSche
      */
     "respect-per-spec-base-path"?: boolean;
     /**
+     * If true, operation ids are split on every word boundary (camelCase transitions and digits)
+     * when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
+     * are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields
+     * `listFolderMembers` rather than `listfoldermembers`).
+     * This changes endpoint names, and therefore SDK method names and docs URLs.
+     * Defaults to false.
+     */
+    "respect-operation-id-word-boundaries"?: boolean;
+
+    /**
      * If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared
      * within, that namespace instead of the endpoint's namespace. Lets error types be scoped per
      * namespace while endpoints and other types stay at the root.
      * Defaults to false.
      */
     "namespaced-errors"?: boolean;
+    /**
+     * Standardize the body of every 4xx/5xx response on a single schema (for example an
+     * RFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a
+     * per-spec overlay that rewrites each error response by hand.
+     */
+    "error-responses"?: GeneratorsYml.OpenApiErrorResponsesSchema;
 }

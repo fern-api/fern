@@ -2358,12 +2358,17 @@ pub async fn execute_method(
         // the server returns) rather than masking the original failure.
         // Disable retries when the body is a streamed stdin or multipart
         // body — those can't be replayed on a second attempt.
-        let default_retries = RetriesConfig::default();
+        // `--retries N` / `<NAME>_RETRIES` / the active profile override the
+        // spec's `max_attempts`. Resolved into an owned config because the
+        // override has to outlive the borrow of `method.retries`.
+        let default_retries = crate::openapi::discovery::with_retries_override(
+            method.retries.as_ref().unwrap_or(&RetriesConfig::default()),
+        );
         let retries_cfg =
             if binary_body_is_stdin(binary_body_path) || multipart_has_stdin(&multipart_parts) {
                 None
             } else {
-                Some(method.retries.as_ref().unwrap_or(&default_retries))
+                Some(&default_retries)
             };
 
         // Auto Idempotency-Key: generate once before the retry loop so the

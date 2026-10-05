@@ -218,6 +218,23 @@ describe("applyTranslatedApiTitlesToNavTree", () => {
         expect(child.title).toBe("List");
     });
 
+    it("keeps an overlay-translated title when the translated endpoint name is unchanged", () => {
+        const baseApis = {
+            [API_ID]: makeApi({ rootEndpoints: [{ id: "list", name: "List", originalEndpointId: "ep.list" }] })
+        };
+        const translatedApis = {
+            [API_ID]: makeApi({ rootEndpoints: [{ id: "list", name: "List", originalEndpointId: "ep.list" }] })
+        };
+        const root = {
+            type: "root",
+            child: { type: "endpoint", endpointId: "ep.list", apiDefinitionId: API_ID, title: "一覧" }
+        };
+
+        const result = applyTranslatedApiTitlesToNavTree(asRoot(root), baseApis, translatedApis);
+        const child = (result as unknown as { child: { title: string } }).child;
+        expect(child.title).toBe("一覧");
+    });
+
     it("ignores nodes whose apiDefinitionId does not match any translated API", () => {
         const baseApis = {
             [API_ID]: makeApi({ rootEndpoints: [{ id: "list", name: "List", originalEndpointId: "ep.list" }] })

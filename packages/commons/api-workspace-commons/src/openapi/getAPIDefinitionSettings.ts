@@ -74,7 +74,9 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     ignoreTags: "ignoreTags",
     respectParameterContent: "respectParameterContent",
     respectPerSpecBasePath: "respectPerSpecBasePath",
-    namespacedErrors: "namespacedErrors"
+    respectOperationIdWordBoundaries: "respectOperationIdWordBoundaries",
+    namespacedErrors: "namespacedErrors",
+    errorResponses: "errorResponses"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

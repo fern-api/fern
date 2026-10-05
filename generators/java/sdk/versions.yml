@@ -1,4 +1,146 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.23.2
+  changelogEntry:
+    - summary: |
+        Fix `InputStream` upload overloads on multipart endpoints that have
+        non-file form fields. The overloads now take the generated request
+        object and serialize every companion multipart field alongside the
+        streamed file, instead of silently dropping them. The unused
+        `File`-typed parameter (including `Optional<File>`) is also removed
+        from these signatures. When the file property is inlined onto the
+        request object (`inline-file-properties: true`) and companion fields
+        exist, the stream overloads are no longer generated, since the file
+        cannot be separated from the request object.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 4.23.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 4.23.0
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now carry inline Javadoc on their user-facing API: the class itself gets the
+        type description, every `Builder` setter overload gets the property description, and child appenders
+        (`say.break_(...)`, `response.say(...)`) document the child element plus `@param`/`@return`.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 4.22.3
+  changelogEntry:
+    - summary: |
+        Honor `package-prefix` and `package-layout` for `local-file-system` output when the CLI
+        requests a full project (e.g. `--generate-tests`, `--package`, or self-hosted SDKs).
+        Previously these were dropped when converting the local-file-system config, so the root
+        package fell back to `com.<org>.<api>` instead of the configured prefix. Full-project local
+        output now also writes sources at their full package path (`src/main/java/com/acme/...`)
+        instead of stripping the prefix from the directory.
+      type: fix
+  createdAt: "2026-09-26"
+  irVersion: 67
+- version: 4.22.2
+  changelogEntry:
+    - summary: |
+        `RetryInterceptor` now applies the client `timeout` to each attempt individually instead of to the
+        whole retry loop. Previously a `Retry-After` wait as long as the timeout (e.g. `Retry-After: 60`
+        with the default 60s timeout) cancelled the call during the backoff sleep and surfaced
+        `IOException: Canceled` instead of retrying or returning the received 429. The call timeout is
+        paused while waiting for the backoff and restarted for each retry attempt, so a call that retries
+        may now take up to `timeout * (maxRetries + 1)` plus the backoff waits.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 4.22.1
+  changelogEntry:
+    - summary: |
+        Closing the root client (or `ClientOptions.close()`) now disconnects any WebSocket clients that are still
+        connected before the SDK-owned OkHttp dispatcher is shut down, so they stop reconnecting cleanly instead of
+        failing asynchronously with `InterruptedIOException: executor rejected`. `ClientOptions` exposes `isClosed()`;
+        WebSocket connect/reconnect attempts made after close, as well as `OkHttpWebSocketFactory.create(...)` when
+        constructed with a closed-check, fail fast with `IllegalStateException("root client has been closed")`.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+    - summary: |
+        Fix the generated `ReconnectingWebSocketListener` connection-timeout message, which was missing the
+        closing parenthesis after the retry attempt number (e.g. `... milliseconds (retry attempt #2`).
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        `RetryInterceptor` no longer discards an API response it has already received (e.g. a 429)
+        when a later retry attempt fails, such as when the call timeout expires mid-retry. The
+        previous response is buffered and returned instead of surfacing a generic `IOException`.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 4.21.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Generated root clients (sync and async) now implement `AutoCloseable`. `close()` shuts down
+        the underlying `OkHttpClient`'s dispatcher executor and evicts its connection pool, but only
+        when the SDK created that `OkHttpClient` itself — a client supplied via `Builder.httpClient(...)`
+        is left running, since the caller owns its lifecycle. This lets short-lived applications (e.g.
+        CLIs, or code that finishes after using WebSockets) release the client's background threads
+        instead of relying on JVM shutdown.
+      type: feat
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Object types with xml encoding metadata (e.g. TwiML defined via OpenAPI `xml` objects) now
+        implement `XmlSerializable` with `toXml()` and a static `fromXml(String)` parser, backed by new
+        core `XmlWriter`/`XmlReader` utilities. Builders gain per-child-element methods
+        (e.g. `Response.builder().say(...)`) and undiscriminated child unions dispatch `fromXml` by
+        element name. `Builder.fromXml(String)` returns a populated builder, unknown child elements are
+        preserved as `XmlElement`s (readable via `getAdditionalChildren()`, addable via `addChild(...)`)
+        and round-tripped by `toXml()`, and very large objects that use a builder-based constructor also
+        get `fromXml`. Types without xml metadata are unchanged.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 4.19.3
+  changelogEntry:
+    - summary: |
+        Generated `ReconnectingWebSocketListener` now acknowledges peer-initiated close frames by
+        overriding `onClosing`, so OkHttp completes the close handshake and `onClosed` (and the
+        public disconnect lifecycle) fires for server-initiated closes. A no-status close (local
+        sentinel 1005) is acknowledged with 1000, since 1005 is not a wire-valid close code.
+        The reconnect decision is exposed as a `protected boolean shouldReconnectAfterClose(WebSocket, int, String)`
+        hook (default unchanged: `code != 1000`) so resource-specific subclasses can treat a
+        protocol-established terminal close as final. Adds `send(String, Consumer<WebSocket>)` /
+        `sendBinary(ByteString, Consumer<WebSocket>)` overloads that report which socket directly
+        accepted a message (not invoked for queued or dropped messages).
+      type: fix
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 4.19.2
   changelogEntry:
     - summary: |

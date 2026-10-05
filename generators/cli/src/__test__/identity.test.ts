@@ -1,10 +1,11 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
 import { deriveBinaryName, toEnvVarPrefix, toKebabCase } from "../identity.js";
 import type { IrSummary } from "../ir.js";
 
 const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => ({
     apiDisplayName,
-    auth: { schemes: [] },
+    auth: { requirement: FernIr.AuthSchemesRequirement.All, schemes: [] },
     globalParameters: [],
     headers: [],
     services: {},

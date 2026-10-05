@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`IfElse > writes a negated if with an else branch 1`] = `
+"unless params[:foo].nil?
+  first = 1
+else
+  second = 2
+end
+"
+`;
+
+exports[`IfElse > writes a negated multi-statement if in explicit unless/end form 1`] = `
+"unless params[:foo].nil?
+  first = 1
+  second = 2
+end
+"
+`;
+
+exports[`IfElse > writes a negated single-statement if as an unless modifier 1`] = `
+"body.add(name: :foo) unless params[:foo].nil?
+"
+`;
+
+exports[`IfElse > writes a single-statement if in modifier form 1`] = `
+"body.add(name: :foo) if params[:foo]
+"
+`;

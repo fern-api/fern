@@ -8,7 +8,7 @@ import com.seed.serverSentEventsResumable.core.Suppliers;
 import com.seed.serverSentEventsResumable.resources.completions.AsyncCompletionsClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedServerSentEventsResumableClient {
+public class AsyncSeedServerSentEventsResumableClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncCompletionsClient> completionsClient;
@@ -20,6 +20,15 @@ public class AsyncSeedServerSentEventsResumableClient {
 
     public AsyncCompletionsClient completions() {
         return this.completionsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedServerSentEventsResumableClientBuilder builder() {

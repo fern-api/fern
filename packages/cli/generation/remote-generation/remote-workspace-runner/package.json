@@ -16,6 +16,20 @@
       "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
       "default": "./lib/index.js"
+    },
+    "./direct-publish-credentials": {
+      "development": "./src/directPublishCredentials.ts",
+      "source": "./src/directPublishCredentials.ts",
+      "types": "./lib/directPublishCredentials.d.ts",
+      "import": "./lib/directPublishCredentials.js",
+      "default": "./lib/directPublishCredentials.js"
+    },
+    "./sdk-gen-api-version-discovery": {
+      "development": "./src/discoverSdkGenApiGeneratorVersions.ts",
+      "source": "./src/discoverSdkGenApiGeneratorVersions.ts",
+      "types": "./lib/discoverSdkGenApiGeneratorVersions.d.ts",
+      "import": "./lib/discoverSdkGenApiGeneratorVersions.js",
+      "default": "./lib/discoverSdkGenApiGeneratorVersions.js"
     }
   },
   "main": "lib/index.js",
@@ -61,6 +75,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-fern/generator-exec-sdk": "catalog:",
+    "@postman/sdk-config": "catalog:",
     "axios": "catalog:",
     "chalk": "catalog:",
     "form-data": "catalog:",
@@ -68,6 +83,7 @@
     "js-yaml": "catalog:",
     "lodash-es": "catalog:",
     "mime-types": "catalog:",
+    "semver": "catalog:",
     "terminal-link": "catalog:",
     "tmp-promise": "catalog:",
     "url-join": "catalog:",
@@ -79,6 +95,7 @@
     "@types/lodash-es": "catalog:",
     "@types/mime-types": "catalog:",
     "@types/node": "catalog:",
+    "@types/semver": "catalog:",
     "@types/url-join": "^4.0.3",
     "@types/yauzl": "catalog:",
     "@types/yazl": "catalog:",

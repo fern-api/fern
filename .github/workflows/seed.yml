@@ -1088,7 +1088,7 @@ jobs:
           done
 
           # Check if we got any results
-          HISTORY_COUNT=$(ls -d benchmark-baseline-results/history/*/ 2>/dev/null | wc -l)
+          HISTORY_COUNT=$(find benchmark-baseline-results/history -mindepth 1 -maxdepth 1 -type d | wc -l)
           if [ "$HISTORY_COUNT" -eq 0 ]; then
             echo "::warning::No baseline artifacts found across ${RUN_COUNT} runs. Artifacts may have expired."
             echo "Trigger the benchmark-baseline workflow to generate fresh baselines."
@@ -1339,7 +1339,7 @@ jobs:
           done
 
           # Check if we got any results
-          HISTORY_COUNT=$(ls -d docs-baseline-results/history/*/ 2>/dev/null | wc -l)
+          HISTORY_COUNT=$(find docs-baseline-results/history -mindepth 1 -maxdepth 1 -type d | wc -l)
           if [ "$HISTORY_COUNT" -eq 0 ]; then
             echo "::warning::No docs baseline artifacts found across ${RUN_COUNT} runs."
             rm -f docs-baseline-results/_metadata.json

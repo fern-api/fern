@@ -43,6 +43,7 @@ export function createRootApiFileAstVisitorForRules({
         ...createAstNodeVisitor("file"),
         ...createAstNodeVisitor("oauth"),
         ...createAstNodeVisitor("defaultEnvironment"),
+        ...createAstNodeVisitor("baseUrlEnv"),
         ...createAstNodeVisitor("environment"),
         ...createAstNodeVisitor("errorDiscrimination"),
         ...createAstNodeVisitor("errorReference"),

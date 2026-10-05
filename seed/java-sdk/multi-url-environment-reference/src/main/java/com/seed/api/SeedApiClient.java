@@ -10,7 +10,7 @@ import com.seed.api.resources.files.FilesClient;
 import com.seed.api.resources.items.ItemsClient;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ItemsClient> itemsClient;
@@ -36,6 +36,15 @@ public class SeedApiClient {
 
     public FilesClient files() {
         return this.filesClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

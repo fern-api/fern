@@ -6,7 +6,7 @@ package com.seed.alias;
 import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.RequestOptions;
 
-public class SeedAliasClient {
+public class SeedAliasClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedAliasClient rawClient;
@@ -29,6 +29,15 @@ public class SeedAliasClient {
 
     public void get(String typeId, RequestOptions requestOptions) {
         this.rawClient.get(typeId, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedAliasClientBuilder builder() {

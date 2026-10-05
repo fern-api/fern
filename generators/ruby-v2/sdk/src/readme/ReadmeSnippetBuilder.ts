@@ -163,7 +163,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
 
                 ${this.rootPackageName} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
-                    base_url: ${this.getEnvironmentNameExample()}
+                    ${this.getEnvironmentKeyword()}: ${this.getEnvironmentNameExample()}
                 )
             ${closeMardownRubySnippet}`);
         }
@@ -430,6 +430,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getEnvironmentURLExample(): string {
         return '"https://example.com"';
+    }
+
+    /**
+     * A single-URL environment constant is a string the client takes as `base_url`. A multi-URL
+     * environment constant is a hash with one URL per service, which the client takes through its
+     * `environment` keyword; passed as `base_url` it would be used where a URL string is expected.
+     */
+    private getEnvironmentKeyword(): string {
+        return this.context.isMultipleBaseUrlsEnvironment() ? "environment" : "base_url";
     }
 
     private getEnvironmentNameExample(): string | undefined {

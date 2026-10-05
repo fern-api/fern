@@ -10,7 +10,7 @@ import com.seed.crossPackageTypeNames.resources.folderd.FolderDClient;
 import com.seed.crossPackageTypeNames.resources.foo.FooClient;
 import java.util.function.Supplier;
 
-public class SeedCrossPackageTypeNamesClient {
+public class SeedCrossPackageTypeNamesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<FolderAClient> folderAClient;
@@ -36,6 +36,15 @@ public class SeedCrossPackageTypeNamesClient {
 
     public FooClient foo() {
         return this.fooClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedCrossPackageTypeNamesClientBuilder builder() {

@@ -67,6 +67,7 @@ import { VersionDeclarationReferencer } from "./declaration-referencers/VersionD
 import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/WebhooksHelperDeclarationReferencer.js";
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { getSensitiveHeaders } from "./getSensitiveHeaders.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
 import { ReactQueryGenerator } from "./react-query/ReactQueryGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
@@ -84,7 +85,7 @@ const WHITELABEL_FILE_HEADER = `//  This file was auto-generated from our API De
 
 interface WebhookVerificationEntry {
     config: FernIr.WebhookSignatureVerification;
-    webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
+    webhookNames: FernIr.WebhookName[];
 }
 
 export interface ResolvedNaming {
@@ -121,6 +122,7 @@ export declare namespace SdkGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         outputEsm: boolean;
+        esmOnly: boolean;
         outputJsr: boolean;
         allowCustomFetcher: boolean;
         generateWebSocketClients: boolean;
@@ -185,6 +187,7 @@ export declare namespace SdkGenerator {
         alwaysSendAuth: boolean;
         optionalAuth: boolean;
         guardProcessEnvAccess: boolean;
+        websocketHandlerMode: "replace" | "accumulate";
         generateReactQueryHooks: boolean;
     }
 }
@@ -348,13 +351,16 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             customPagerName: config.customPagerName,
             maxRetries: config.maxRetries ?? undefined,
-            additionalSensitiveHeaders: this.intermediateRepresentation.auth.schemes.flatMap((scheme) =>
-                scheme.type === "oauth" &&
-                scheme.configuration.type === "clientCredentials" &&
-                scheme.configuration.tokenHeader != null
-                    ? [scheme.configuration.tokenHeader]
-                    : []
-            )
+            additionalSensitiveHeaders: getSensitiveHeaders({
+                auth: this.intermediateRepresentation.auth,
+                headers: [
+                    ...this.intermediateRepresentation.headers,
+                    ...Object.values(this.intermediateRepresentation.services).flatMap((service) => [
+                        ...service.headers,
+                        ...service.endpoints.flatMap((endpoint) => endpoint.headers)
+                    ])
+                ]
+            })
         });
 
         const apiDirectory: ExportedDirectory[] = [
@@ -507,7 +513,8 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             enableInlineTypes: config.enableInlineTypes,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
-            caseConverter
+            caseConverter,
+            useBigInt: config.useBigInt
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -583,6 +590,7 @@ export class SdkGenerator {
             omitFernHeaders: config.omitFernHeaders,
             includePlatformHeaders: config.includePlatformHeaders,
             allowUserAgentAppInfo: config.allowUserAgentAppInfo,
+            guardProcessEnvAccess: config.guardProcessEnvAccess,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             caseConverter: this.case
@@ -591,7 +599,8 @@ export class SdkGenerator {
             intermediateRepresentation,
             retainOriginalCasing: config.retainOriginalCasing,
             omitUndefined: config.omitUndefined,
-            skipResponseValidation: config.skipResponseValidation
+            skipResponseValidation: config.skipResponseValidation,
+            websocketHandlerMode: config.websocketHandlerMode
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -659,7 +668,8 @@ export class SdkGenerator {
             linter: config.linter,
             autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null,
             idempotencyKeyHeaderName:
-                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key"
+                intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key",
+            esModulePackage: config.esmOnly || config.outputEsm
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -836,6 +846,7 @@ export class SdkGenerator {
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
+                  esmOnly: this.config.esmOnly,
                   outputJsr: this.config.outputJsr,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
@@ -991,6 +1002,9 @@ export class SdkGenerator {
     private generateTypeSchemas(): { generated: boolean } {
         let generated = false;
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
+            if (this.typeResolver.isXmlDependentType(typeDeclaration)) {
+                continue;
+            }
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -1712,7 +1726,22 @@ export class SdkGenerator {
                         components: verification.payloadFormat.components,
                         delimiter: verification.payloadFormat.delimiter,
                         bodySort: verification.payloadFormat.bodySort
-                    }
+                    },
+                    bodyHashBinding:
+                        verification.bodyHashBinding == null
+                            ? null
+                            : {
+                                  algorithm: verification.bodyHashBinding.algorithm,
+                                  encoding: verification.bodyHashBinding.encoding,
+                                  location: verification.bodyHashBinding.location
+                              },
+                    notificationUrlNormalization:
+                        verification.notificationUrlNormalization == null
+                            ? null
+                            : {
+                                  portVariants: verification.notificationUrlNormalization.portVariants,
+                                  legacyQueryEncoding: verification.notificationUrlNormalization.legacyQueryEncoding
+                              }
                 });
             case "asymmetric": {
                 const keySource =
@@ -1747,6 +1776,15 @@ export class SdkGenerator {
     } {
         const grouped = new Map<string, WebhookVerificationEntry>();
 
+        // The API-wide scheme (api.settings.webhook-signature) is always the default helper,
+        // even when the definition models no webhooks.
+        const apiWideConfig = this.intermediateRepresentation.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig != null) {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeVerificationKey(apiWideConfig), apiWideEntry);
+        }
+
         for (const webhookGroup of Object.values(this.intermediateRepresentation.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification == null) {
@@ -1770,12 +1808,14 @@ export class SdkGenerator {
         }
 
         // Pick the most frequent config as the default (ties broken by insertion order)
-        let defaultEntry: WebhookVerificationEntry | undefined;
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
         let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                maxCount = entry.webhookNames.length;
-                defaultEntry = entry;
+        if (defaultEntry == null) {
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
             }
         }
 
@@ -1808,6 +1848,9 @@ export class SdkGenerator {
         // Generate named override helpers
         for (const overrideEntry of overrideEntries) {
             const [firstWebhookName] = overrideEntry.webhookNames;
+            if (firstWebhookName == null) {
+                continue;
+            }
             const className = `${this.case.pascalSafe(firstWebhookName)}WebhooksHelper`;
             const overrideReferencer = new WebhooksHelperDeclarationReferencer({
                 containingDirectory: [],

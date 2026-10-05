@@ -17,12 +17,22 @@ export interface DocsConfigFileAstNodeTypes {
     };
     markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
     version: { version: docsYml.RawSchemas.VersionConfig };
-    versionFile: { path: string; content: unknown };
-    productFile: { path: string; content: unknown };
+    versionFile: {
+        path: string;
+        content: unknown;
+        version: docsYml.RawSchemas.VersionConfig;
+        /** Set when the version is nested under a product's `versions`. */
+        product?: docsYml.RawSchemas.InternalProduct;
+    };
+    productFile: { path: string; content: unknown; product: docsYml.RawSchemas.InternalProduct };
     apiSection: {
         config: docsYml.RawSchemas.ApiReferenceConfiguration;
         workspace: AbstractAPIWorkspace<unknown>;
         context: TaskContext;
+    };
+    unresolvedApiSection: {
+        config: docsYml.RawSchemas.ApiReferenceConfiguration;
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     };
     permissions: docsYml.RawSchemas.WithPermissions;
 }

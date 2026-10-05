@@ -9,7 +9,7 @@ import com.seed.api.requests.GetPlantRequest;
 import com.seed.api.types.Plant;
 import java.util.List;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -66,6 +66,15 @@ public class SeedApiClient {
      */
     public Plant getPlant(String plantId, GetPlantRequest request, RequestOptions requestOptions) {
         return this.rawClient.getPlant(plantId, request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedApiClientBuilder builder() {

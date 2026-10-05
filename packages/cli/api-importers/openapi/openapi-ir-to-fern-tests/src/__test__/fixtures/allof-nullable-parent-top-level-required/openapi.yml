@@ -1,0 +1,78 @@
+openapi: 3.0.1
+info:
+  title: Payment Schedules
+  version: 1.0.0
+paths:
+  /payment_initiation/payment/get:
+    get:
+      operationId: getPaymentSchedule
+      responses:
+        "200":
+          description: The payment schedule
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExternalPaymentScheduleGet"
+  /payment_initiation/payment/create:
+    post:
+      operationId: createPaymentSchedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExternalPaymentScheduleRequest"
+      responses:
+        "200":
+          description: Created
+components:
+  schemas:
+    PaymentScheduleInterval:
+      type: string
+      enum:
+        - WEEKLY
+        - MONTHLY
+    ExternalPaymentScheduleBase:
+      title: ExternalPaymentScheduleBase
+      type: object
+      additionalProperties: true
+      nullable: true
+      properties:
+        interval:
+          $ref: "#/components/schemas/PaymentScheduleInterval"
+        interval_execution_day:
+          type: integer
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+          nullable: true
+        adjusted_start_date:
+          type: string
+          format: date
+          nullable: true
+        description:
+          type: string
+    ExternalPaymentScheduleGet:
+      title: ExternalPaymentScheduleGet
+      nullable: true
+      allOf:
+        - $ref: "#/components/schemas/ExternalPaymentScheduleBase"
+        - type: object
+      required:
+        - adjusted_start_date
+        - end_date
+        - interval
+        - interval_execution_day
+        - start_date
+    ExternalPaymentScheduleRequest:
+      title: ExternalPaymentScheduleRequest
+      allOf:
+        - $ref: "#/components/schemas/ExternalPaymentScheduleBase"
+        - type: object
+      required:
+        - start_date
+        - interval
+        - interval_execution_day

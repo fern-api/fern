@@ -6,5 +6,5 @@ client = Seed::MyClient.new(
 )
 
 client.endpoints.object.get_and_return_with_unknown_field(unknown: {
-  key: "value"
+  "$ref" => "https://example.com/schema"
 })

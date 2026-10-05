@@ -41,6 +41,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.OmitFernHeaders,
 		config.IncludePlatformHeaders,
 		config.AllowUserAgentAppInfo,
+		config.LegacyNullableAliasPointers,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

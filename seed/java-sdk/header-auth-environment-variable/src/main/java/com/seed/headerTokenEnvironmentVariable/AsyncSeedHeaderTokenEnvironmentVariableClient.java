@@ -8,7 +8,7 @@ import com.seed.headerTokenEnvironmentVariable.core.Suppliers;
 import com.seed.headerTokenEnvironmentVariable.resources.service.AsyncServiceClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedHeaderTokenEnvironmentVariableClient {
+public class AsyncSeedHeaderTokenEnvironmentVariableClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class AsyncSeedHeaderTokenEnvironmentVariableClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedHeaderTokenEnvironmentVariableClientBuilder builder() {

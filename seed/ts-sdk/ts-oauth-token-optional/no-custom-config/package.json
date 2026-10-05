@@ -33,6 +33,17 @@
             },
             "default": "./dist/cjs/api/resources/auth/exports.js"
         },
+        "./simple": {
+            "import": {
+                "types": "./dist/esm/api/resources/simple/exports.d.mts",
+                "default": "./dist/esm/api/resources/simple/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/simple/exports.d.ts",
+                "default": "./dist/cjs/api/resources/simple/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/simple/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

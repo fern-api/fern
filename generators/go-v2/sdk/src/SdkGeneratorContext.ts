@@ -339,6 +339,26 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    /**
+     * Returns the Go expression used as the ErrorCodes map key for the given error:
+     * the literal status code for concrete errors, or the internal wildcard constant
+     * (matching any 4XX/5XX status without a concrete entry) for wildcard errors.
+     */
+    public getErrorCodesKey({
+        errorDeclaration,
+        writer
+    }: {
+        errorDeclaration: FernIr.ErrorDeclaration;
+        writer: go.Writer;
+    }): string {
+        if (errorDeclaration.isWildcardStatusCode !== true) {
+            return errorDeclaration.statusCode.toString();
+        }
+        const alias = writer.addImport(this.getInternalImportPath());
+        const constant = errorDeclaration.statusCode >= 500 ? "ServerErrorWildcard" : "ClientErrorWildcard";
+        return `${alias}.${constant}`;
+    }
+
     public getCoreApiErrorTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "APIError",
@@ -634,8 +654,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
      * pager. These endpoints opt in with the enableRequestBodyPagination configuration option, and
      * otherwise generate a delegating endpoint.
      *
-     * Nested page properties remain unsupported; advancing the page would require allocating the
-     * intermediate objects that the caller may have left unset.
+     * Nested page properties (e.g. `cursor: $request.options.cursor`) shipped without a pager even with
+     * enableRequestBodyPagination set, so they additionally opt in with
+     * enableNestedRequestBodyPagination to keep the return types of existing endpoints stable.
      */
     public isUnsupportedRequestBodyPaginationEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         if (!this.isPaginationWithRequestBodyEndpoint(endpoint)) {
@@ -644,6 +665,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         if (this.customConfig.enableRequestBodyPagination !== true) {
             return true;
         }
+        if (!this.hasNestedPageProperty(endpoint)) {
+            return false;
+        }
+        return this.customConfig.enableNestedRequestBodyPagination !== true;
+    }
+
+    private hasNestedPageProperty(endpoint: FernIr.HttpEndpoint): boolean {
         const pagination = this.getPagination(endpoint);
         if (pagination == null) {
             return false;
@@ -945,6 +973,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {
@@ -956,6 +987,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public hasWebhookBodyHashBinding(): boolean {
+        const apiWide = this.ir.sdkConfig.webhookSignatureVerification;
+        if (apiWide?.type === "hmac" && apiWide.bodyHashBinding != null) {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 const verification = webhook.signatureVerification;

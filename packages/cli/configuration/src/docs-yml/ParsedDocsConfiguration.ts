@@ -6,9 +6,12 @@ import {
     AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
+    ApiSpecImportSettings,
     Availability,
     DocsInstance,
+    EmbeddingConfig,
     ExperimentalConfig,
+    ExternalSitemap,
     LibraryLanguage,
     PlaygroundSettings,
     Target,
@@ -43,15 +46,17 @@ export interface ParsedPageActionsConfig {
 }
 
 // TODO(kafkas): Remove this when we upgrade the fdr-sdk to latest
-interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language"> {
+interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSettingsConfig, "language" | "search"> {
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
+    embedding: EmbeddingConfig | undefined;
+    showHeadersInExamples: boolean | undefined;
     search:
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
-              externalSitemaps: string[] | undefined;
+              externalSitemaps: ExternalSitemap[] | undefined;
           }
         | undefined;
 }
@@ -241,6 +246,8 @@ export interface VersionedDocsNavigation {
 export interface ProductGroupDocsNavigation {
     type: "productgroup";
     products: ProductInfo[];
+    /** Site-level changelog shared by all products, slugged off the root rather than any product. */
+    changelog: DocsNavigationItem.Changelog | undefined;
 }
 
 export interface VersionInfo
@@ -417,6 +424,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         apiName: string | undefined;
+        specs: ParsedApiSpecConfiguration[] | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
         availability: Availability | undefined;
@@ -483,6 +491,17 @@ export declare namespace DocsNavigationItem {
         swift: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
+
+export interface ParsedApiSpecConfiguration {
+    type: ApiSpecType;
+    absolutePath: AbsoluteFilePath;
+    namespace: string | undefined;
+    absoluteOverlayPaths: AbsoluteFilePath[];
+    absoluteOverridePaths: AbsoluteFilePath[];
+    settings: ApiSpecImportSettings | undefined;
+}
+
+export type ApiSpecType = "openapi" | "asyncapi" | "graphql";
 
 export declare namespace ParsedApiReferenceLayoutItem {
     export interface Section
@@ -657,6 +676,10 @@ export interface AnnouncementOverlay {
 export type NavigationItemOverlay =
     | NavigationItemOverlay.Page
     | NavigationItemOverlay.Section
+    | NavigationItemOverlay.Link
+    | NavigationItemOverlay.ApiReference
+    | NavigationItemOverlay.ApiPackage
+    | NavigationItemOverlay.Endpoint
     | NavigationItemOverlay.Tab
     | NavigationItemOverlay.Variant;
 
@@ -671,6 +694,33 @@ export declare namespace NavigationItemOverlay {
         title: string | undefined;
         slug: string | undefined;
         contents: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ link: "Translated label" }` — matched positionally among sibling links. */
+    export interface Link {
+        type: "link";
+        title: string | undefined;
+    }
+    /** `{ api: "Translated title", slug?: ..., layout?: [...] }` */
+    export interface ApiReference {
+        type: "apiReference";
+        title: string | undefined;
+        slug: string | undefined;
+        layout: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ <package-name>: { title?: ..., slug?: ..., contents?: [...] } }` inside an `api` layout. */
+    export interface ApiPackage {
+        type: "apiPackage";
+        packageName: string;
+        title: string | undefined;
+        slug: string | undefined;
+        contents: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ endpoint: "POST /path", title?: ..., slug?: ... }` inside an `api` layout. */
+    export interface Endpoint {
+        type: "endpoint";
+        endpoint: string;
+        title: string | undefined;
+        slug: string | undefined;
     }
     export interface Tab {
         type: "tab";

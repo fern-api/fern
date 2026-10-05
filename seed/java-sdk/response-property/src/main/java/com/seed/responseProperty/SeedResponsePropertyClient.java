@@ -8,7 +8,7 @@ import com.seed.responseProperty.core.Suppliers;
 import com.seed.responseProperty.resources.service.ServiceClient;
 import java.util.function.Supplier;
 
-public class SeedResponsePropertyClient {
+public class SeedResponsePropertyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class SeedResponsePropertyClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedResponsePropertyClientBuilder builder() {

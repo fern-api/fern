@@ -11,7 +11,7 @@ import com.seed.inferredAuthExplicit.resources.nestednoauth.NestedNoAuthClient;
 import com.seed.inferredAuthExplicit.resources.simple.SimpleClient;
 import java.util.function.Supplier;
 
-public class SeedInferredAuthExplicitClient {
+public class SeedInferredAuthExplicitClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AuthClient> authClient;
@@ -44,6 +44,15 @@ public class SeedInferredAuthExplicitClient {
 
     public SimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedInferredAuthExplicitClientBuilder builder() {

@@ -7,7 +7,7 @@ import com.seed.propertyAccess.core.ClientOptions;
 import com.seed.propertyAccess.core.RequestOptions;
 import com.seed.propertyAccess.types.User;
 
-public class SeedPropertyAccessClient {
+public class SeedPropertyAccessClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedPropertyAccessClient rawClient;
@@ -30,6 +30,15 @@ public class SeedPropertyAccessClient {
 
     public User createUser(User request, RequestOptions requestOptions) {
         return this.rawClient.createUser(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedPropertyAccessClientBuilder builder() {

@@ -7,8 +7,8 @@ pub struct RuleTypeSearchResponse {
     #[serde(default)]
     pub paging: PagingCursors,
     /// Current page of results from the requested resource.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub results: Option<Vec<RuleType>>,
+    #[serde(default)]
+    pub results: Vec<RuleType>,
 }
 
 impl RuleTypeSearchResponse {
@@ -38,10 +38,11 @@ impl RuleTypeSearchResponseBuilder {
     /// Consumes the builder and constructs a [`RuleTypeSearchResponse`].
     /// This method will fail if any of the following fields are not set:
     /// - [`paging`](RuleTypeSearchResponseBuilder::paging)
+    /// - [`results`](RuleTypeSearchResponseBuilder::results)
     pub fn build(self) -> Result<RuleTypeSearchResponse, BuildError> {
         Ok(RuleTypeSearchResponse {
             paging: self.paging.ok_or_else(|| BuildError::missing_field("paging"))?,
-            results: self.results,
+            results: self.results.ok_or_else(|| BuildError::missing_field("results"))?,
         })
     }
 }

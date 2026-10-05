@@ -27,6 +27,9 @@ export function visitRootApiFileYamlAst(contents: RootApiFileSchema, visitor: Pa
         },
         docs: noop,
         headers: noop,
+        "base-url-env": (baseUrlEnv) => {
+            visitor.baseUrlEnv?.(baseUrlEnv, ["base-url-env"]);
+        },
         environments: (environments) => {
             if (environments == null) {
                 return;

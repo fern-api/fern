@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTsPaginationUriRequestParamsClient } from \"@fern/ts-pagination-uri-request-params\";\n\nconst client = new SeedTsPaginationUriRequestParamsClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithUriPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithUriPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedTsPaginationUriRequestParamsClient } from \"@fern/ts-pagination-uri-request-params\";\n\nconst client = new SeedTsPaginationUriRequestParamsClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithUriPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithUriPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTsPaginationUriRequestParamsClient } from \"@fern/ts-pagination-uri-request-params\";\n\nconst client = new SeedTsPaginationUriRequestParamsClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithPathPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithPathPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedTsPaginationUriRequestParamsClient } from \"@fern/ts-pagination-uri-request-params\";\n\nconst client = new SeedTsPaginationUriRequestParamsClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithPathPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithPathPagination(\"acct_1\", {\n    filter: \"name\",\n    page_size: 2\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTsPaginationUriRequestParamsClient } from \"@fern/ts-pagination-uri-request-params\";\n\nconst client = new SeedTsPaginationUriRequestParamsClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.searchWithUriPagination(\"acct_1\", {\n    query: \"alice\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.searchWithUriPagination(\"acct_1\", {\n    query: \"alice\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+                "client": "import { SeedTsPaginationUriRequestParamsClient } from \"@fern/ts-pagination-uri-request-params\";\n\nconst client = new SeedTsPaginationUriRequestParamsClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.searchWithUriPagination(\"acct_1\", {\n    query: \"alice\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.searchWithUriPagination(\"acct_1\", {\n    query: \"alice\"\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
             }
         }
     ],

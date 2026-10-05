@@ -1,4 +1,245 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.65.1
+  changelogEntry:
+    - summary: |
+        The generated README's client snippets use the configured client constructor (`clientName`,
+        `exportedClientName`, `clientConstructorName`) instead of always writing `client.NewClient`,
+        and the Environments section of a multi-URL SDK passes the environment through
+        `option.WithEnvironment` instead of `option.WithBaseURL`, which takes a string and does not
+        compile against an environment struct.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.65.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `legacyNullableAliasPointers` custom config option. When enabled, optional or
+        nullable fields that reference an alias which already renders as a Go pointer
+        (e.g. `type DiscoveryURL = *string`) keep the outer pointer (`*DiscoveryURL`), matching
+        SDKs generated before v1.46.1. Field types, setters, and code snippets all use the legacy
+        shape. The option is off by default, so existing output is unchanged.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.64.3
+  changelogEntry:
+    - summary: |
+        Restore pointer types for optional fields that reference a nullable list, map, or
+        `unknown` alias (for example a `type: [object, "null"]` schema with
+        `additionalProperties`, or a `type: [array, "null"]` schema). Since 1.46.1 these
+        fields were generated as bare values (`Metadata MetadataAlias`) instead of
+        pointers (`Metadata *MetadataAlias`), which was a breaking change for existing
+        SDKs. The double-pointer guard now only applies to aliases that actually render
+        as Go pointers (nullable primitives, enums, objects, and unions). Dynamic snippets
+        now render `&Alias{...}` literals for these fields (including aliases of such
+        aliases), take the address of `unknown` alias values, and no longer emit `&&` for
+        aliases that already render as pointers.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
+- version: 1.64.2
+  changelogEntry:
+    - summary: |
+        Return a completed HTTP response instead of discarding it when the request
+        context is canceled after the response has been fully received but before
+        it is decoded. `Caller.Call` previously re-checked `ctx.Err()` at that point
+        and returned `context.Canceled` / `context.DeadlineExceeded` with a nil
+        response, which dropped valid responses that had already been buffered (for
+        example by a logging `http.RoundTripper` that ends its scope before
+        returning). Calls canceled before the request is sent, and calls whose
+        response body cannot be read to completion once the context ends, continue
+        to fail with the context's error, and a canceled context still never
+        triggers a retry.
+      type: fix
+    - summary: |
+        Fix undiscriminated union deserialization so JSON objects are matched to the correct object
+        member. Previously, the first object member always won because object `UnmarshalJSON` accepts
+        unknown keys and doesn't enforce required keys, so values like `{"ends_with": [...]}` were
+        decoded as an earlier member and silently corrupted on re-serialization. Object members
+        (including aliases to objects) that don't allow extra properties are now only selected when
+        the JSON keys are a subset of the member's properties and include all of its required
+        properties, and permissive object members no longer shadow a later member that matches
+        exactly. If no member matches exactly, object members whose required keys are present are
+        tried next, and the previous behavior is kept as the final fallback.
+      type: fix
+    - summary: |
+        Preserve explicit `null` on optional nullable (`optional<nullable<T>>`) object
+        properties across a JSON decode/re-encode round trip. Previously only required
+        nullable properties were tracked on decode, so a response field such as
+        `"holder_category": null` was dropped when the value was marshaled again.
+        Fields absent from the input remain absent, and plain `optional<T>` fields are
+        unaffected. The generated `<type>RequiredNullableFields` map is renamed to
+        `<type>NullableFields`, and generated SDKs now include an optional-nullable
+        round-trip test for each affected type.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 1.64.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 1.64.0
+  changelogEntry:
+    - summary: |
+        Object type descriptions are now written directly above the `type X struct` declaration
+        so `go doc` and editors attach them to the type. Previously the comment landed above the
+        internal field-bitmask `var (...)` block emitted before the struct.
+      type: fix
+    - summary: |
+        Fluent child methods on XML-encoded (TwiML) types (e.g. `response.Say(...)`,
+        `dial.AddNumber(...)`) now name the appended element and include the child type's
+        description in their doc comment.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.63.0
+  changelogEntry:
+    - summary: |
+        Generated error types that carry a body now expose a nil-safe `GetBody()` accessor that
+        returns the same type as the `Body` field. This lets callers handle every status-specific
+        error through a single interface-based `errors.As`, e.g.
+        `type bodyProvider interface{ GetBody() *ErrorBody }`. Errors without a body are unchanged.
+      type: feat
+    - summary: |
+        `reference.md` now documents enum-typed query parameters, headers, and inlined request body
+        properties (including lists of enums) with the same value types used on the generated request
+        structs (e.g. `[]acme.CountryCode` instead of `[]*acme.CountryCode`).
+      type: fix
+    - summary: |
+        Generated request types with `date` or `datetime` properties now decode those properties
+        through `internal.Date` / `internal.DateTime` in `UnmarshalJSON`, matching what their
+        `MarshalJSON` already emits. Previously `json.Unmarshal` into such a request type rejected
+        date-only values (e.g. `{"start_date":"2026-01-02"}`) that the type itself had produced.
+        Request types without date properties are unchanged.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.62.1
+  changelogEntry:
+    - summary: |
+        Point the "Neither an import path nor a module path was specified" warning at the
+        Go generator README in the fern monorepo; the old `fern-api/fern-go` link now 404s.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.62.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 1.61.0
+  changelogEntry:
+    - summary: |
+        Errors declared with a `4XX` or `5XX` wildcard status code are now decoded into their typed
+        error struct for any status in the 400-499 / 500-599 range. A concrete status code declared
+        alongside a wildcard always wins, and a body that fails to decode as the wildcard error's
+        schema still returns the untyped `*core.APIError`.
+      type: feat
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 1.60.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 1.60.1
+  changelogEntry:
+    - summary: |
+        `DateTime.MarshalJSON` now formats with `time.RFC3339Nano`, so fractional seconds
+        survive a decode/encode round-trip. Whole-second values marshal byte-identically
+        to before because `.999999999` omits trailing zeros.
+      type: fix
+    - summary: |
+        `Date.UnmarshalJSON` now accepts date-time input (e.g. `2025-02-15T00:00:00Z`) as
+        a fallback, preserving the calendar date exactly as written and discarding the time.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 1.60.0
+  changelogEntry:
+    - summary: |
+        Add XML support for xml-encoded object types (e.g. TwiML). Generated types gain
+        `ToXml()`/`ToXmlElement()`, `<Type>FromXml(string)`/`<Type>FromXmlElement(...)`,
+        fluent child builders (e.g. `response.Say(...)`, `Add`-prefixed on collision), and
+        `ExtraAttributes`/`ExtraChildren` to round-trip unknown attributes and elements.
+        A standard-library `core/xml.go` runtime is emitted only when xml-encoded types exist.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 1.59.0
+  changelogEntry:
+    - summary: |
+        Generate wire tests for endpoints that return a file download (`io.Reader`). The generated
+        test calls the raw client, asserts the served `Content-Type`, reads the stream to completion and
+        compares the bytes against the fixture. The WireMock mapping for these endpoints now serves a
+        real binary payload (a small valid PDF via `base64Body`, `application/octet-stream`) instead of
+        the JSON string `""` with `Content-Type: application/json`. This also applies to OpenAPI-imported
+        endpoints whose only autogenerated examples are error responses (e.g. Plaid's `/asset_report/pdf/get`).
+      type: feat
+  createdAt: "2026-09-17"
+  irVersion: 67
+- version: 1.58.1
+  changelogEntry:
+    - summary: |
+        Preserve required-nullable fields that arrive as `null` when a decoded model is
+        marshaled again. Generated `UnmarshalJSON` now records which required-nullable
+        keys were present in the incoming JSON (via a per-type wire-name-to-field-bit
+        table) so that `MarshalJSON` re-emits them as `null` instead of dropping them.
+        Fields absent from the input stay absent, and freshly constructed values
+        (e.g. request bodies) serialize exactly as before.
+      type: fix
+  createdAt: "2026-09-14"
+  irVersion: 67
+- version: 1.58.0
+  changelogEntry:
+    - summary: |
+        Add the `enableNestedRequestBodyPagination` configuration option, which extends
+        `enableRequestBodyPagination` to page properties that live inside nested request objects, e.g.
+        `offset: $request.options.offset`. Such endpoints previously generated without a pager, so the
+        option defaults to `false` to preserve their existing return types.
+
+        ```yaml
+        - name: fernapi/fern-go-sdk
+          config:
+            enableRequestBodyPagination: true
+            enableNestedRequestBodyPagination: true
+        ```
+
+        The generated pager advances the page on a copy of the request and allocates any optional
+        intermediate object the caller left nil (`Options: nil` and `Options: &Options{Count: &n}` both
+        work), across any nesting depth and through aliases to objects, without mutating the caller's
+        request.
+      type: feat
+  createdAt: "2026-09-10"
+  irVersion: 67
+- version: 1.57.13
+  changelogEntry:
+    - summary: |
+        Calling a `SetXxx` setter on a value copy of a request or model type no longer
+        changes the JSON of the value it was copied from. The private `explicitFields`
+        bitmask is reached through a pointer, so a plain struct assignment aliased it and
+        `require` mutated it in place, making every explicit-field bit set on one copy
+        visible in all of them (e.g. `copied.SetOptions(...)` added `"options":null` to
+        the original's body). The bitmask is now replaced rather than mutated, so each
+        copy gets its own on first write.
+      type: fix
+  createdAt: "2026-09-09"
+  irVersion: 67
 - version: 1.57.12
   changelogEntry:
     - summary: |

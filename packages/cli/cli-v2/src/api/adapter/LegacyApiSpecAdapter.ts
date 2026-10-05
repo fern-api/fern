@@ -211,11 +211,30 @@ export class LegacyApiSpecAdapter {
             ignoreTags: settings["ignore-tags"],
             respectParameterContent: settings["respect-parameter-content"],
             respectPerSpecBasePath: settings["respect-per-spec-base-path"],
-            namespacedErrors: settings["namespaced-errors"]
+            respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"],
+            namespacedErrors: settings["namespaced-errors"],
+            errorResponses: this.adaptErrorResponses(settings.errorResponses)
         };
 
         const hasSettings = Object.values(result).some((v) => v != null);
         return hasSettings ? (result as OpenAPISettings) : undefined;
+    }
+
+    private adaptErrorResponses(
+        value: schemas.OpenApiErrorResponsesSchema | undefined
+    ): generatorsYml.OpenApiErrorResponsesSchema | undefined {
+        if (value == null) {
+            return undefined;
+        }
+        return {
+            schema: value.schema,
+            name: value.name,
+            "apply-to": value.applyTo,
+            ensure: value.ensure?.map((ensure) => ({
+                "status-code": ensure.statusCode,
+                methods: ensure.methods
+            }))
+        };
     }
 
     private adaptAsyncApiSettings(settings: AsyncApiSpec["settings"]): OpenAPISettings | undefined {

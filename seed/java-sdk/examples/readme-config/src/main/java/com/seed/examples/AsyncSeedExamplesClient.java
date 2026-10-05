@@ -14,7 +14,7 @@ import com.seed.examples.types.Type;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class AsyncSeedExamplesClient {
+public class AsyncSeedExamplesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedExamplesClient rawClient;
@@ -66,6 +66,15 @@ public class AsyncSeedExamplesClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedExamplesClientBuilder builder() {

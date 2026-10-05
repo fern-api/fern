@@ -503,8 +503,8 @@ func (c *Client) ListWithBodyOffsetPagination(
 	return pager.GetPage(ctx, &next)
 }
 
-// Pagination endpoint with a nested cursor field in the request body. Nested page properties are
-// not supported, so this endpoint is generated without a pager.
+// Pagination endpoint with a cursor field nested in an optional object in the request body. The
+// pager allocates the object when the caller left it unset.
 //
 // Example:
 //
@@ -523,14 +523,376 @@ func (c *Client) ListWithNestedBodyCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersNestedBodyCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*fern.ListUsersResponse, error) {
-	response, err := c.WithRawResponse.ListWithNestedBodyCursorPagination(
-		ctx,
-		request,
-		opts...,
+) (*core.Page[*string, *fern.User, *fern.ListUsersResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
 	)
-	if err != nil {
-		return nil, err
+	endpointURL := baseURL + "/users/nested-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		nextRequest := *request
+		var nextRequestPagination fern.WithCursor
+		if nextRequest.Pagination != nil {
+			nextRequestPagination = *nextRequest.Pagination
+		}
+		nextRequest.Pagination = &nextRequestPagination
+		nextRequestPagination.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
 	}
-	return response.Body, nil
+	readPageResponse := func(response *fern.ListUsersResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersResponse] {
+		var zeroValue *string
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[*string, *fern.User, *fern.ListUsersResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	var cursor *string
+	if request.Pagination != nil {
+		cursor = request.Pagination.Cursor
+	}
+	return pager.GetPage(ctx, cursor)
+}
+
+// Pagination endpoint with a required cursor field nested in a required object in the request
+// body. Objects are always pointers in Go, so the pager still allocates the object when nil.
+//
+// Example:
+//
+//	request := &fern.ListUsersNestedRequiredBodyCursorPaginationRequest{
+//	    Pagination: &fern.WithRequiredCursor{
+//	        Cursor: "cursor",
+//	    },
+//	}
+//	client.Users.ListWithNestedRequiredBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithNestedRequiredBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersNestedRequiredBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[string, *fern.User, *fern.ListUsersRequiredCursorResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/nested-required-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[string]) *internal.CallParams {
+		nextRequest := *request
+		var nextRequestPagination fern.WithRequiredCursor
+		if nextRequest.Pagination != nil {
+			nextRequestPagination = *nextRequest.Pagination
+		}
+		nextRequest.Pagination = &nextRequestPagination
+		nextRequestPagination.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersRequiredCursorResponse) *core.PageResponse[string, *fern.User, *fern.ListUsersRequiredCursorResponse] {
+		var zeroValue string
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[string, *fern.User, *fern.ListUsersRequiredCursorResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	var cursor string
+	if request.Pagination != nil {
+		cursor = request.Pagination.Cursor
+	}
+	return pager.GetPage(ctx, cursor)
+}
+
+// Pagination endpoint with a cursor field nested two levels deep in optional objects in the
+// request body. The pager allocates every intermediate object that the caller left unset.
+//
+// Example:
+//
+//	request := &fern.ListUsersDeeplyNestedBodyCursorPaginationRequest{
+//	    Options: &fern.WithPagination{
+//	        Pagination: &fern.WithCursor{
+//	            Cursor: fern.String(
+//	                "cursor",
+//	            ),
+//	        },
+//	    },
+//	}
+//	client.Users.ListWithDeeplyNestedBodyCursorPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithDeeplyNestedBodyCursorPagination(
+	ctx context.Context,
+	request *fern.ListUsersDeeplyNestedBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *fern.User, *fern.ListUsersResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/deeply-nested-cursor"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		nextRequest := *request
+		var nextRequestOptions fern.WithPagination
+		if nextRequest.Options != nil {
+			nextRequestOptions = *nextRequest.Options
+		}
+		nextRequest.Options = &nextRequestOptions
+		var nextRequestOptionsPagination fern.WithCursor
+		if nextRequestOptions.Pagination != nil {
+			nextRequestOptionsPagination = *nextRequestOptions.Pagination
+		}
+		nextRequestOptions.Pagination = &nextRequestOptionsPagination
+		nextRequestOptionsPagination.Cursor = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	readPageResponse := func(response *fern.ListUsersResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersResponse] {
+		var zeroValue *string
+		next := response.GetNextCursor()
+		results := response.GetData()
+		return &core.PageResponse[*string, *fern.User, *fern.ListUsersResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	var cursor *string
+	if request.Options != nil && request.Options.Pagination != nil {
+		cursor = request.Options.Pagination.Cursor
+	}
+	return pager.GetPage(ctx, cursor)
+}
+
+// Pagination endpoint with an offset field nested in an optional object in the request body,
+// alongside the page size. The pager allocates the object when the caller left it unset.
+//
+// Example:
+//
+//	request := &fern.ListUsersNestedBodyOffsetPaginationRequest{
+//	    Options: &fern.WithOffset{
+//	        Offset: fern.Int(
+//	            1,
+//	        ),
+//	        Count: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithNestedBodyOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithNestedBodyOffsetPagination(
+	ctx context.Context,
+	request *fern.ListUsersNestedBodyOffsetPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[*int, *fern.User, *fern.ListUsersResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/nested-offset"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
+		nextRequest := *request
+		var nextRequestOptions fern.WithOffset
+		if nextRequest.Options != nil {
+			nextRequestOptions = *nextRequest.Options
+		}
+		nextRequest.Options = &nextRequestOptions
+		nextRequestOptions.Offset = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	next := 1
+	if request.Options != nil && request.Options.Offset != nil {
+		next = *request.Options.Offset
+	}
+
+	readPageResponse := func(response *fern.ListUsersResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersResponse] {
+		next += 1
+		results := response.GetData()
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+		}
+	}
+	pager := internal.NewOffsetPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, &next)
+}
+
+// Pagination endpoint with an offset field nested in a required alias to an object. Go
+// generates the alias as a pointer, so the pager must still nil-check and copy it.
+//
+// Example:
+//
+//	request := &fern.ListUsersAliasedNestedBodyOffsetPaginationRequest{
+//	    Options: &fern.WithOffset{
+//	        Offset: fern.Int(
+//	            1,
+//	        ),
+//	        Count: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.Users.ListWithAliasedNestedBodyOffsetPagination(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListWithAliasedNestedBodyOffsetPagination(
+	ctx context.Context,
+	request *fern.ListUsersAliasedNestedBodyOffsetPaginationRequest,
+	opts ...option.RequestOption,
+) (*core.Page[*int, *fern.User, *fern.ListUsersResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/aliased-nested-offset"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
+		nextRequest := *request
+		var nextRequestOptions fern.WithOffset
+		if nextRequest.Options != nil {
+			nextRequestOptions = *nextRequest.Options
+		}
+		nextRequest.Options = &nextRequestOptions
+		nextRequestOptions.Offset = pageRequest.Cursor
+		nextURL := endpointURL
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         &nextRequest,
+			Response:        pageRequest.Response,
+		}
+	}
+	next := 1
+	if request.Options != nil && request.Options.Offset != nil {
+		next = *request.Options.Offset
+	}
+
+	readPageResponse := func(response *fern.ListUsersResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersResponse] {
+		next += 1
+		results := response.GetData()
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+		}
+	}
+	pager := internal.NewOffsetPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, &next)
 }

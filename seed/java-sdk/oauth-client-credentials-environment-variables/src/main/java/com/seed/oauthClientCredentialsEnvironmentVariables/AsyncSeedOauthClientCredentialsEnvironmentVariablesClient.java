@@ -11,7 +11,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.resources.nestednoaut
 import com.seed.oauthClientCredentialsEnvironmentVariables.resources.simple.AsyncSimpleClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClient {
+public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncAuthClient> authClient;
@@ -44,6 +44,15 @@ public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClient {
 
     public AsyncSimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

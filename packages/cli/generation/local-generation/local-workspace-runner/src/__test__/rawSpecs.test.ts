@@ -117,8 +117,15 @@ describe("collectRawSpecs", () => {
                             respectNullableSchemas: false,
                             useTitlesAsName: true,
                             pathParameterOrder: "spec-order",
-                            defaultIntegerFormat: "int64",
-                            ignoreTags: true
+                            ignoreTags: true,
+                            disambiguateRequestNames: false,
+                            respectReadonlySchemas: true,
+                            discriminatedUnionV2: true,
+                            shouldUseUndiscriminatedUnionsWithLiterals: true,
+                            inlineAllOfSchemas: true,
+                            resolveSchemaCollisions: true,
+                            asyncApiNaming: "v2",
+                            defaultIntegerFormat: "int64"
                         }
                     })
                 }
@@ -136,8 +143,15 @@ describe("collectRawSpecs", () => {
             respectNullableSchemas: false,
             titleAsSchemaName: true,
             pathParameterOrder: "spec-order",
-            defaultIntegerFormat: "int64",
-            ignoreTags: true
+            ignoreTags: true,
+            disambiguateRequestNames: false,
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2",
+            defaultIntegerFormat: "int64"
         });
 
         const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
@@ -230,6 +244,39 @@ describe("collectRawSpecs", () => {
         ]);
         expect(archive.specIndexesByGeneratorIndex.get(1)).toEqual([0, 1]);
         expect(archive.specIndexesByGeneratorIndex.get(3)).toEqual([0]);
+    });
+
+    it("creates one manifest-only archive for grouped Fern Definition targets", async () => {
+        const archive = await createGroupedSpecsTarGzArchive({
+            generatorSelections: [
+                { generatorIndex: 0, specs: [] },
+                { generatorIndex: 1, specs: [] }
+            ],
+            context: createMockContext()
+        });
+
+        expect(archive.manifest.specs).toEqual([]);
+        expect(archive.specIndexesByGeneratorIndex).toEqual(
+            new Map([
+                [0, []],
+                [1, []]
+            ])
+        );
+
+        const archivePath = path.join(tmpDir.path, "manifest-only.tar.gz");
+        await writeFile(archivePath, archive.buffer);
+        const archivedFiles = new Map<string, Buffer>();
+        await tar.list({
+            file: archivePath,
+            onReadEntry: (entry) => {
+                const chunks: Buffer[] = [];
+                entry.on("data", (chunk: Buffer) => chunks.push(Buffer.from(chunk)));
+                entry.on("end", () => archivedFiles.set(entry.path, Buffer.concat(chunks)));
+            }
+        });
+
+        expect([...archivedFiles.keys()]).toEqual(["specs-manifest.json"]);
+        expect(JSON.parse(archivedFiles.get("specs-manifest.json")?.toString("utf8") ?? "")).toEqual({ specs: [] });
     });
 
     it("deduplicates specs with implicit and explicit default import settings", async () => {
@@ -452,16 +499,24 @@ describe("collectRawSpecs", () => {
         );
     });
 
-    it("rejects effective import settings that SDK Config cannot preserve", () => {
+    it("accepts every effective import setting represented by SDK Config", () => {
         const spec = {
             ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),
-            settings: getOpenAPISettings({ overrides: { respectReadonlySchemas: true } })
+            settings: getOpenAPISettings({
+                overrides: {
+                    ignoreTags: true,
+                    disambiguateRequestNames: true,
+                    respectReadonlySchemas: true,
+                    discriminatedUnionV2: true,
+                    shouldUseUndiscriminatedUnionsWithLiterals: true,
+                    inlineAllOfSchemas: true,
+                    resolveSchemaCollisions: true,
+                    asyncApiNaming: "v2"
+                }
+            })
         };
 
-        expect(() => validateSdkConfigImportSettings([spec])).toThrow(
-            "cannot preserve effective OpenAPI import setting respectReadonlySchemas=true"
-        );
-        expect(() => validateSdkConfigImportSettings([spec])).toThrow("use a pre-cutover generator version");
+        expect(() => validateSdkConfigImportSettings([spec])).not.toThrow();
     });
 
     it("accepts an empty default audience filter for SDK Config", () => {
@@ -471,6 +526,21 @@ describe("collectRawSpecs", () => {
         };
 
         expect(() => validateSdkConfigImportSettings([spec])).not.toThrow();
+    });
+
+    it("accepts inline path parameter behavior represented by SDK Config client settings", () => {
+        const spec = {
+            ...openApiSpec(path.join(sourceDir, "api", "wrapped-path-parameters.yaml")),
+            settings: getOpenAPISettings({ overrides: { inlinePathParameters: false } })
+        };
+
+        expect(() => validateSdkConfigImportSettings([spec], { clientPathParameterStyle: "wrapped" })).not.toThrow();
+        expect(() => validateSdkConfigImportSettings([spec], { clientPathParameterStyle: "inline" })).toThrow(
+            "cannot preserve effective OpenAPI import setting inlinePathParameters=false"
+        );
+        expect(() => validateSdkConfigImportSettings([spec], { clientPathParameterStyle: "language-default" })).toThrow(
+            "cannot preserve effective OpenAPI import setting inlinePathParameters=false"
+        );
     });
 
     it("merges overrides into the resolved OpenAPI spec", async () => {

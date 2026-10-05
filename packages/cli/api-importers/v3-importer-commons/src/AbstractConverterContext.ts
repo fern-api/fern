@@ -642,7 +642,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
             | OpenAPIV3_1.ReferenceObject
             | OpenAPIV3_1.SchemaObject
             | OpenAPIV3_1.OperationObject
-            | OpenAPIV3_1.ParameterObject;
+            | OpenAPIV3_1.ParameterObject
+            | OpenAPIV3_1.HeaderObject;
         breadcrumbs: string[];
     }): Availability | undefined {
         const visitedReferences = new Set<string>();

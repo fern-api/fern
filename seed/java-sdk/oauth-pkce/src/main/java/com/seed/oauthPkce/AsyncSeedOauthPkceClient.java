@@ -8,7 +8,7 @@ import com.seed.oauthPkce.core.Suppliers;
 import com.seed.oauthPkce.resources.oauth.AsyncOauthClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedOauthPkceClient {
+public class AsyncSeedOauthPkceClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncOauthClient> oauthClient;
@@ -20,6 +20,15 @@ public class AsyncSeedOauthPkceClient {
 
     public AsyncOauthClient oauth() {
         return this.oauthClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedOauthPkceClientBuilder builder() {

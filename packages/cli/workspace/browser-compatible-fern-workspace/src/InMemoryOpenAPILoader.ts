@@ -1,4 +1,5 @@
-import { isOpenAPIV2 } from "@fern-api/api-workspace-commons";
+import { applyErrorResponses, isOpenAPIV2 } from "@fern-api/api-workspace-commons";
+import type { generatorsYml } from "@fern-api/configuration";
 import { applyOpenAPIOverlay, mergeWithOverrides as coreMergeWithOverrides, type Overlay } from "@fern-api/core-utils";
 import { getParseOptions, OpenAPIDocument } from "@fern-api/openapi-ir-parser";
 import { CliError } from "@fern-api/task-context";
@@ -9,10 +10,13 @@ export class InMemoryOpenAPILoader {
     public loadDocument(spec: OpenAPIWorkspace.Spec): OpenAPIDocument {
         return {
             type: "openapi",
-            value: this.loadParsedOpenAPI({
-                openapi: spec.parsed,
-                overrides: spec.overrides,
-                overlays: spec.overlays
+            value: this.applyErrorResponses({
+                document: this.loadParsedOpenAPI({
+                    openapi: spec.parsed,
+                    overrides: spec.overrides,
+                    overlays: spec.overlays
+                }),
+                errorResponses: spec.settings?.errorResponses
             }),
             settings: getParseOptions({ options: spec.settings })
         };
@@ -46,5 +50,24 @@ export class InMemoryOpenAPILoader {
         }
 
         return result;
+    }
+
+    private applyErrorResponses({
+        document,
+        errorResponses
+    }: {
+        document: OpenAPIV3.Document;
+        errorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined;
+    }): OpenAPIV3.Document {
+        if (errorResponses == null) {
+            return document;
+        }
+        if (typeof errorResponses.schema === "string") {
+            throw new CliError({
+                message: "error-responses.schema must be an inline schema object in the browser",
+                code: CliError.Code.ConfigError
+            });
+        }
+        return applyErrorResponses({ document, errorResponses, schema: errorResponses.schema });
     }
 }

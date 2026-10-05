@@ -114,14 +114,12 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 		return nil, err
 	}
 
-	// Check if the call was cancelled before we return the error
-	// associated with the call and/or unmarshal the response data.
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
-
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, decodeError(resp, body, params.ErrorDecoder)
+		decodedErr := decodeError(resp, body, params.ErrorDecoder)
+		if err := unfinishedResponseError(ctx, body); err != nil {
+			return nil, err
+		}
+		return nil, decodedErr
 	}
 
 	// Mutate the response parameter in-place.
@@ -147,10 +145,28 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 		}
 	}
 
+	if err := unfinishedResponseError(ctx, body); err != nil {
+		return nil, err
+	}
+
 	return &CallResponse{
 		StatusCode: resp.StatusCode,
 		Header:     resp.Header,
 	}, nil
+}
+
+// unfinishedResponseError returns the context's error if the context has ended
+// and the rest of the response body cannot be read to completion. A response
+// that was fully received before the context ended is not discarded.
+func unfinishedResponseError(ctx context.Context, body io.Reader) error {
+	ctxErr := ctx.Err()
+	if ctxErr == nil || body == nil {
+		return nil
+	}
+	if _, err := io.Copy(io.Discard, body); err != nil {
+		return ctxErr
+	}
+	return nil
 }
 
 // buildURL constructs the final URL by appending the given query parameters (if any).

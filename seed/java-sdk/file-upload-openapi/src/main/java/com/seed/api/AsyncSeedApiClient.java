@@ -8,7 +8,7 @@ import com.seed.api.core.Suppliers;
 import com.seed.api.resources.fileuploadexample.AsyncFileUploadExampleClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncFileUploadExampleClient> fileUploadExampleClient;
@@ -20,6 +20,15 @@ public class AsyncSeedApiClient {
 
     public AsyncFileUploadExampleClient fileUploadExample() {
         return this.fileUploadExampleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

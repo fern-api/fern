@@ -337,6 +337,23 @@ export class Extern {
                     })
             }),
         /**
+         * XML namespace references.
+         */
+        Xml: () =>
+            lazy({
+                Linq: () =>
+                    lazy({
+                        /**
+                         * Reference to System.Xml.Linq.XElement class.
+                         */
+                        XElement: () =>
+                            this.csharp.classReference({
+                                name: "XElement",
+                                namespace: "System.Xml.Linq"
+                            })
+                    })
+            }),
+        /**
          * Net namespace references.
          */
         Net: () =>

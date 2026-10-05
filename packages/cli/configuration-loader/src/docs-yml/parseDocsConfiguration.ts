@@ -107,6 +107,7 @@ export async function parseDocsConfiguration({
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
         products,
+        rootChangelog: rawDocsConfiguration.changelog,
         versions,
         navigation: rawNavigation,
         absolutePathToFernFolder,
@@ -231,6 +232,14 @@ export async function parseDocsConfiguration({
         );
     }
 
+    warnOnUnconfiguredExternalSitemapLocales({
+        externalSitemaps: experimental?.externalSitemaps,
+        siteLocales: rawDocsConfiguration.translations?.map(
+            (t) => docsYml.DocsYmlSchemas.normalizeTranslationConfig(t).lang
+        ) ?? [rawDocsConfiguration.settings?.language ?? "en"],
+        context
+    });
+
     return {
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
@@ -270,7 +279,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
-        settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
         llmsFullTxtFile,
@@ -328,6 +337,36 @@ export async function parseDocsConfiguration({
 
         experimental
     };
+}
+
+function warnOnUnconfiguredExternalSitemapLocales({
+    externalSitemaps,
+    siteLocales,
+    context
+}: {
+    externalSitemaps: docsYml.RawSchemas.ExternalSitemap[] | undefined;
+    siteLocales: string[];
+    context: TaskContext;
+}): void {
+    if (externalSitemaps == null) {
+        return;
+    }
+    const normalizedSiteLocales = siteLocales.map((l) => l.trim().toLowerCase());
+    for (const sitemap of externalSitemaps) {
+        if (typeof sitemap === "string" || sitemap.locale == null) {
+            continue;
+        }
+        const locale = sitemap.locale.trim().toLowerCase();
+        const language = locale.split(/[-_]/)[0];
+        const matches = normalizedSiteLocales.some(
+            (siteLocale) => siteLocale === locale || siteLocale.split(/[-_]/)[0] === language
+        );
+        if (!matches) {
+            context.logger.warn(
+                `external-sitemaps: locale '${sitemap.locale}' for ${sitemap.url} does not match any site locale (${siteLocales.join(", ")}); this sitemap will not be indexed.`
+            );
+        }
+    }
 }
 
 function convertLogoReference(
@@ -543,15 +582,24 @@ function convertThemeConfig(
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
-        productSwitcher: theme.productSwitcher ?? "default"
+        productSwitcher: theme.productSwitcher ?? "default",
+        siteSwitcher: theme.siteSwitcher
     };
 }
 
 function convertSettingsConfig(
-    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined
+    settings: docsYml.RawSchemas.DocsSettingsConfig | undefined,
+    context: TaskContext
 ): docsYml.ParsedDocsConfiguration["settings"] {
     if (settings == null) {
         return undefined;
+    }
+
+    if (settings.embedding != null) {
+        const embeddingErrors = docsYml.getEmbeddingOriginErrors(settings.embedding.allowedOrigins);
+        if (embeddingErrors.length > 0) {
+            context.failAndThrow(embeddingErrors.join("\n"));
+        }
     }
 
     // The legacy `default-search-filters` setting is preserved as an alias for
@@ -577,7 +625,9 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableEnvironmentEditing: settings.disableEnvironmentEditing ?? false,
         disableAnalytics: settings.disableAnalytics ?? false,
-        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined
+        websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
+        embedding: settings.embedding,
+        showHeadersInExamples: settings.showHeadersInExamples ?? false
     };
 }
 
@@ -683,10 +733,19 @@ function convertLayoutConfig(
         // by the fern-platform companion PR. Part of the `as unknown as` cast
         // below until the published FDR SDK adds `apiReferenceLayout`.
         apiReferenceLayout: layout.apiReferenceLayout,
+        // Opt-in (default off, resolved by the fern-platform companion PR): when
+        // true the first level of nested API reference fields renders expanded.
+        // Part of the `as unknown as` cast below until the published FDR SDK adds the field.
+        apiReferenceExpandProperties: layout.apiReferenceExpandProperties,
         // Opt-in (default off, resolved by the fern-platform companion PR):
         // when true the sidebar renders inline availability badges. Part of the
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when `breadcrumbs.current-page` is true the current page is appended to
+        // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
+        // cast below until the published FDR SDK adds the field.
+        breadcrumbs: layout.breadcrumbs != null ? { currentPage: layout.breadcrumbs.currentPage ?? false } : undefined,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
@@ -884,6 +943,7 @@ async function getVersionedNavigationConfiguration({
 async function getNavigationConfiguration({
     tabs,
     products,
+    rootChangelog,
     versions,
     navigation,
     absolutePathToFernFolder,
@@ -894,6 +954,7 @@ async function getNavigationConfiguration({
 }: {
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
     products?: docsYml.RawSchemas.ProductConfig[];
+    rootChangelog?: docsYml.RawSchemas.ChangelogConfiguration;
     versions?: docsYml.RawSchemas.VersionConfig[];
     navigation?: docsYml.RawSchemas.NavigationConfig;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -902,6 +963,15 @@ async function getNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.DocsNavigationConfiguration> {
+    if (rootChangelog != null && products == null) {
+        throw new CliError({
+            message:
+                "A top-level `changelog` in docs.yml is only supported alongside `products`. " +
+                "For a site using `versions`, add the changelog to each version's `navigation`; " +
+                "otherwise add it to the top-level `navigation`.",
+            code: CliError.Code.ConfigError
+        });
+    }
     if (navigation != null) {
         return await convertNavigationConfiguration({
             tabs,
@@ -1003,7 +1073,11 @@ async function getNavigationConfiguration({
 
         return {
             type: "productgroup",
-            products: productNavbars
+            products: productNavbars,
+            changelog:
+                rootChangelog != null
+                    ? await convertChangelogConfiguration({ rawConfig: rootChangelog, absolutePathToConfig })
+                    : undefined
         };
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({
@@ -1477,6 +1551,35 @@ async function convertNavigationItem({
             title: rawConfig.api,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
             apiName: rawConfig.apiName ?? undefined,
+            specs: rawConfig.specs?.map((spec) => ({
+                type: spec.type,
+                absolutePath: resolveFilepath(spec.path, absolutePathToConfig),
+                namespace: spec.namespace ?? undefined,
+                absoluteOverlayPaths:
+                    spec.overlays == null ? [] : [resolveFilepath(spec.overlays, absolutePathToConfig)],
+                absoluteOverridePaths:
+                    spec.overrides?.map((override) => resolveFilepath(override, absolutePathToConfig)) ?? [],
+                settings:
+                    spec.settings == null
+                        ? undefined
+                        : {
+                              ...spec.settings,
+                              ...(spec.settings.errorResponses == null
+                                  ? {}
+                                  : {
+                                        errorResponses: {
+                                            ...spec.settings.errorResponses,
+                                            schema:
+                                                typeof spec.settings.errorResponses.schema === "string"
+                                                    ? resolveFilepath(
+                                                          spec.settings.errorResponses.schema,
+                                                          absolutePathToConfig
+                                                      )
+                                                    : spec.settings.errorResponses.schema
+                                        }
+                                    })
+                          }
+            })),
             audiences:
                 rawConfig.audiences != null
                     ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
@@ -1516,17 +1619,7 @@ async function convertNavigationItem({
         };
     }
     if (isRawChangelogConfig(rawConfig)) {
-        return {
-            type: "changelog",
-            changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
-            hidden: rawConfig.hidden ?? false,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
-            slug: rawConfig.slug,
-            viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
-        };
+        return await convertChangelogConfiguration({ rawConfig, absolutePathToConfig });
     }
     if (isRawFolderConfig(rawConfig)) {
         return await expandFolderConfiguration({
@@ -1749,6 +1842,26 @@ function isRawLinkConfig(item: unknown): item is docsYml.RawSchemas.LinkConfigur
 
 function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.ChangelogConfiguration {
     return isPlainObject(item) && typeof item.changelog === "string";
+}
+
+async function convertChangelogConfiguration({
+    rawConfig,
+    absolutePathToConfig
+}: {
+    rawConfig: docsYml.RawSchemas.ChangelogConfiguration;
+    absolutePathToConfig: AbsoluteFilePath;
+}): Promise<docsYml.DocsNavigationItem.Changelog> {
+    return {
+        type: "changelog",
+        changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
+        hidden: rawConfig.hidden ?? false,
+        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+        title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
+        slug: rawConfig.slug,
+        viewers: parseRoles(rawConfig.viewers),
+        orphaned: rawConfig.orphaned,
+        featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+    };
 }
 
 function isRawBlogConfig(item: unknown): item is docsYml.RawSchemas.BlogConfiguration {
@@ -2689,6 +2802,66 @@ function parseNavigationItemOverlays(items: unknown[]): docsYml.NavigationItemOv
             };
             result.push(pageOverlay);
             continue;
+        }
+
+        // A link item: { link: "Label", href: "..." }
+        if (typeof obj.link === "string") {
+            const linkOverlay: docsYml.NavigationItemOverlay.Link = {
+                type: "link",
+                title: obj.link
+            };
+            result.push(linkOverlay);
+            continue;
+        }
+
+        // An API reference item: { api: "Title", layout: [...] }
+        if (typeof obj.api === "string") {
+            const apiOverlay: docsYml.NavigationItemOverlay.ApiReference = {
+                type: "apiReference",
+                title: obj.api,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined,
+                layout: Array.isArray(obj.layout) ? parseNavigationItemOverlays(obj.layout) : undefined
+            };
+            result.push(apiOverlay);
+            continue;
+        }
+
+        // An endpoint item inside an api layout: { endpoint: "POST /path", title: "..." }
+        if (typeof obj.endpoint === "string") {
+            const endpointOverlay: docsYml.NavigationItemOverlay.Endpoint = {
+                type: "endpoint",
+                endpoint: obj.endpoint,
+                title: typeof obj.title === "string" ? obj.title : undefined,
+                slug: typeof obj.slug === "string" ? obj.slug : undefined
+            };
+            result.push(endpointOverlay);
+            continue;
+        }
+
+        // A package item inside an api layout: { <package-name>: { title: "...", contents: [...] } }
+        const entries = Object.entries(obj);
+        if (entries.length === 1 && entries[0] != null) {
+            const [packageName, value] = entries[0];
+            if (isPlainObject(value) && ("title" in value || "slug" in value || "contents" in value)) {
+                const pkg = value as Record<string, unknown>;
+                const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
+                    type: "apiPackage",
+                    packageName,
+                    title: typeof pkg.title === "string" ? pkg.title : undefined,
+                    slug: typeof pkg.slug === "string" ? pkg.slug : undefined,
+                    contents: Array.isArray(pkg.contents) ? parseNavigationItemOverlays(pkg.contents) : undefined
+                };
+                result.push(packageOverlay);
+            } else if (Array.isArray(value)) {
+                const packageOverlay: docsYml.NavigationItemOverlay.ApiPackage = {
+                    type: "apiPackage",
+                    packageName,
+                    title: undefined,
+                    slug: undefined,
+                    contents: parseNavigationItemOverlays(value)
+                };
+                result.push(packageOverlay);
+            }
         }
     }
     return result;

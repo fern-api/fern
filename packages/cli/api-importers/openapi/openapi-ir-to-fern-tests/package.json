@@ -33,6 +33,8 @@
   },
   "dependencies": {
     "@fern-api/browser-compatible-fern-workspace": "workspace:*",
+    "@fern-api/fern-definition-schema": "workspace:*",
+    "@fern-api/fern-definition-validator": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/task-context": "workspace:*",

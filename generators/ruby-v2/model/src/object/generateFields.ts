@@ -6,11 +6,14 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export function generateFields({
     typeDeclaration,
     properties,
-    context
+    context,
+    documentFields = false
 }: {
     typeDeclaration?: FernIr.TypeDeclaration;
     properties: FernIr.ObjectProperty[];
     context: ModelGeneratorContext;
+    /* Whether to render each property's docs as a comment above its `field` declaration */
+    documentFields?: boolean;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
         const fieldName = context.caseConverter.snakeSafe(prop.name);
@@ -26,7 +29,12 @@ export function generateFields({
         const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
         const isNullable = prop.valueType.type === "container" && prop.valueType.container.type === "nullable";
 
+        const docs = documentFields ? prop.docs?.trim() : undefined;
+
         return ruby.codeblock((writer) => {
+            if (docs != null && docs !== "") {
+                ruby.comment({ docs }).write(writer);
+            }
             writer.write(`field :${fieldName}, `);
             writer.write("-> { ");
             rubyType.write(writer);

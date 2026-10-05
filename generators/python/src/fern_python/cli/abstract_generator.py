@@ -585,7 +585,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
+      url: https://pypi.org/p/{publish_info_union.package_name}
     permissions:
       contents: read   # Required for checkout
       id-token: write  # Required for OIDC

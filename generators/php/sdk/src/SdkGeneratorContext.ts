@@ -644,7 +644,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.MultipartFormDataPart,
             ...this.getCorePagerAsIsFiles(),
             ...this.getCoreStreamAsIsFiles(),
-            ...this.getCoreSerializationAsIsFiles()
+            ...this.getCoreSerializationAsIsFiles(),
+            ...this.getCoreXmlAsIsFiles()
         ];
         // Only ship the idempotency key helper when the IR enables idempotency-key generation.
         if (this.ir.sdkConfig.idempotencyKeyGeneration != null) {
@@ -657,6 +658,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {
@@ -707,6 +711,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             ...this.getCoreStreamTestAsIsFiles(),
             ...this.getCorePagerTestAsIsFiles(),
             ...this.getCoreSerializationTestAsIsFiles(),
+            ...this.getCoreXmlTestAsIsFiles(),
             ...this.getCoreWebhookTestAsIsFiles()
         ];
     }
@@ -741,7 +746,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public override getExtraTemplateVarsForFile(filename: string): Record<string, string | boolean> | undefined {
         const vars: Record<string, string | boolean> = {
             defaultMaxRetries: String(this.customConfig.maxRetries ?? 2),
-            respectOptionalRequestBody: this.customConfig.respectOptionalRequestBody ?? false
+            respectOptionalRequestBody: this.customConfig.respectOptionalRequestBody ?? false,
+            rejectEmptyDateTimeStrings: this.customConfig.rejectEmptyDateTimeStrings ?? false
         };
         if (filename === AsIsFiles.CustomPager) {
             vars.customPagerClassName = this.getCustomPagerClassName();

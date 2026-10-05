@@ -439,6 +439,38 @@ func (u *UserOrAdmin) GetAdmin() *Admin {
 }
 
 func (u *UserOrAdmin) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "email", "password", "profile"}, []string{"id", "email", "password", "profile"}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			u.typ = "User"
+			u.User = valueUser
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "email", "password", "profile", "adminLevel"}, []string{"id", "email", "password", "profile", "adminLevel"}) {
+		valueAdmin := new(Admin)
+		if err := json.Unmarshal(data, &valueAdmin); err == nil {
+			u.typ = "Admin"
+			u.Admin = valueAdmin
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "email", "password", "profile"}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			u.typ = "User"
+			u.User = valueUser
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "email", "password", "profile", "adminLevel"}) {
+		valueAdmin := new(Admin)
+		if err := json.Unmarshal(data, &valueAdmin); err == nil {
+			u.typ = "Admin"
+			u.Admin = valueAdmin
+			return nil
+		}
+	}
 	valueUser := new(User)
 	if err := json.Unmarshal(data, &valueUser); err == nil {
 		u.typ = "User"

@@ -88,6 +88,7 @@ func main() {
                 "name": "string",
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],

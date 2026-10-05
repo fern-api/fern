@@ -400,6 +400,8 @@
     "objectQueryParameters": true,
     "shouldUseUndiscriminatedUnionsWithLiterals": false,
     "shouldUseIdiomaticRequestNames": true,
+    "libraryVisibility": "all",
+    "docsVisibility": "all",
     "asyncApiNaming": "v1",
     "useBytesForBinaryResponse": false,
     "respectForwardCompatibleEnums": false,
@@ -426,6 +428,7 @@
     "ignoreTags": false,
     "respectParameterContent": false,
     "respectPerSpecBasePath": false,
+    "respectOperationIdWordBoundaries": false,
     "namespacedErrors": false
   }
 }

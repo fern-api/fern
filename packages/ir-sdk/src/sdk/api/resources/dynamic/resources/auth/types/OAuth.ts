@@ -2,7 +2,7 @@
 
 import type * as FernIr from "../../../../../index.js";
 
-export interface OAuth {
+export interface OAuth extends FernIr.dynamic.BaseAuth {
     clientId: FernIr.dynamic.Name;
     clientSecret: FernIr.dynamic.Name;
     /** Custom properties required for the OAuth token endpoint request, beyond clientId and clientSecret. */

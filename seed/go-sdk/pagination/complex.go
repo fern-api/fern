@@ -679,6 +679,22 @@ func (s *SearchRequestQuery) GetMultipleFilterSearchRequest() *MultipleFilterSea
 }
 
 func (s *SearchRequestQuery) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"field", "operator", "value"}, []string{}) {
+		valueSingleFilterSearchRequest := new(SingleFilterSearchRequest)
+		if err := json.Unmarshal(data, &valueSingleFilterSearchRequest); err == nil {
+			s.typ = "SingleFilterSearchRequest"
+			s.SingleFilterSearchRequest = valueSingleFilterSearchRequest
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"operator", "value"}, []string{}) {
+		valueMultipleFilterSearchRequest := new(MultipleFilterSearchRequest)
+		if err := json.Unmarshal(data, &valueMultipleFilterSearchRequest); err == nil {
+			s.typ = "MultipleFilterSearchRequest"
+			s.MultipleFilterSearchRequest = valueMultipleFilterSearchRequest
+			return nil
+		}
+	}
 	valueSingleFilterSearchRequest := new(SingleFilterSearchRequest)
 	if err := json.Unmarshal(data, &valueSingleFilterSearchRequest); err == nil {
 		s.typ = "SingleFilterSearchRequest"

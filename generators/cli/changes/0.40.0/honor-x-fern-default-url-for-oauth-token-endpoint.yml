@@ -1,0 +1,10 @@
+- summary: |
+    OAuth token and refresh endpoints now resolve their URL from `x-fern-default-url`
+    when the spec's server is templated, instead of the template filled with each
+    variable's default. A spec declaring `https://oauth.{region}.example.com` with
+    `x-fern-default-url: https://oauth.example.com` previously baked
+    `https://oauth.us1.example.com` into the token request — a host that need not
+    exist, since the regional form is often not a real name. The CLI has no way to
+    supply server variables, so the untemplated default is always the correct
+    choice; this matches what the SDK generators already do.
+  type: fix

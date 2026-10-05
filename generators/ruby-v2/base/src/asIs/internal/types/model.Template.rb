@@ -141,13 +141,21 @@ module <%= gem_namespace %>
           values = Utils.symbolize_keys(values.dup)
 
           self.class.fields.each do |field_name, field|
-            value = values.delete(field.api_name.to_sym) || values.delete(field.api_name) || values.delete(field_name)
+            value = nil
+            [field.api_name.to_sym, field_name].uniq.each do |key|
+              next unless values.key?(key)
 
-            field_value = value || (if field.literal?
-                                      field.value
-                                    elsif field.default
-                                      field.default
-                                    end)
+              candidate = values.delete(key)
+              value = candidate if value.nil?
+            end
+
+            field_value = if !value.nil?
+                            value
+                          elsif field.literal?
+                            field.value
+                          elsif !field.default.nil?
+                            field.default
+                          end
 
             @data[field_name] = Utils.coerce(field.type, field_value)
           end

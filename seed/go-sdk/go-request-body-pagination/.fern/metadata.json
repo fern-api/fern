@@ -4,11 +4,11 @@
   "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
-    "enableRequestBodyPagination": true
+    "enableRequestBodyPagination": true,
+    "enableNestedRequestBodyPagination": true
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
+  "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "v0.0.1"
 }

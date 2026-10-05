@@ -34,7 +34,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::RuleTypeSearchResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::RuleTypeSearchResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -72,7 +72,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::RuleResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::RuleResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -105,7 +105,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::UserSearchResponse.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::UserSearchResponse.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -138,7 +138,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::CombinedEntity.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::CombinedEntity.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -171,7 +171,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::Organization.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::Organization.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -214,7 +214,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::PlantStrict.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::PlantStrict.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
@@ -252,7 +252,7 @@ module Seed
       end
       code = response.code.to_i
       if code.between?(200, 299)
-        Seed::Types::TreeRecord.load(response.body)
+        (response.body.to_s.empty? ? nil : Seed::Types::TreeRecord.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)

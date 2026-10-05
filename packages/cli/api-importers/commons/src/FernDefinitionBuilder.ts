@@ -40,6 +40,8 @@ export interface FernDefinitionBuilder {
 
     setDefaultUrl(name: string): void;
 
+    setBaseUrlEnv(name: string): void;
+
     setBasePath(basePath: string): void;
 
     setRootPathParameters(parameters: Record<string, RawSchemas.HttpPathParameterSchema>): void;
@@ -198,6 +200,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setDefaultUrl(name: string): void {
         this.rootApiFile["default-url"] = name;
+    }
+
+    public setBaseUrlEnv(name: string): void {
+        this.rootApiFile["base-url-env"] = name;
     }
 
     public setBasePath(basePath: string): void {

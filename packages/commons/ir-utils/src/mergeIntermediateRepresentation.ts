@@ -178,6 +178,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment: environmentConfig1.defaultEnvironment ?? environmentConfig2.defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.singleBaseUrl({
                     environments: [
                         ...environmentConfig1.environments.environments,
@@ -225,6 +226,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         { id: environmentId, name: environmentName },
@@ -274,6 +276,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         ...multipleBaseUrlsEnvironment.baseUrls,
@@ -304,6 +307,7 @@ function mergeEnvironments(
         return {
             environments: {
                 defaultEnvironment,
+                baseUrlEnvVar: environmentConfig1.baseUrlEnvVar ?? environmentConfig2.baseUrlEnvVar,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [...environments1.baseUrls, ...deconflictedEnvironments.baseUrls],
                     environments: environments1.environments.flatMap((env1) =>

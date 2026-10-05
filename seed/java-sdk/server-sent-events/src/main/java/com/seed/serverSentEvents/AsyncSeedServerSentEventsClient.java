@@ -8,7 +8,7 @@ import com.seed.serverSentEvents.core.Suppliers;
 import com.seed.serverSentEvents.resources.completions.AsyncCompletionsClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedServerSentEventsClient {
+public class AsyncSeedServerSentEventsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncCompletionsClient> completionsClient;
@@ -20,6 +20,15 @@ public class AsyncSeedServerSentEventsClient {
 
     public AsyncCompletionsClient completions() {
         return this.completionsClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedServerSentEventsClientBuilder builder() {

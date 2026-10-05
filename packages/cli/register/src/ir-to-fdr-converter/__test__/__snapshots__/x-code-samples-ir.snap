@@ -59,6 +59,7 @@
       "sdkVersion": "",
       "userAgent": undefined,
     },
+    "webhookSignatureVerification": undefined,
   },
   "selfHosted": false,
   "serviceTypeReferenceInfo": {
@@ -440,6 +441,7 @@ func main() {
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -479,6 +481,7 @@ func main() {
               },
               "type": "container",
             },
+            "xml": undefined,
           },
           {
             "availability": undefined,
@@ -518,6 +521,7 @@ func main() {
               },
               "type": "container",
             },
+            "xml": undefined,
           },
         ],
         "type": "object",

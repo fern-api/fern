@@ -8,7 +8,7 @@ import com.seed.nullableOptional.core.Suppliers;
 import com.seed.nullableOptional.resources.nullableoptional.AsyncNullableOptionalClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedNullableOptionalClient {
+public class AsyncSeedNullableOptionalClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncNullableOptionalClient> nullableOptionalClient;
@@ -20,6 +20,15 @@ public class AsyncSeedNullableOptionalClient {
 
     public AsyncNullableOptionalClient nullableOptional() {
         return this.nullableOptionalClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedNullableOptionalClientBuilder builder() {

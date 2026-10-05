@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The OpenAPI `error-responses` setting now replaces a pre-existing `components.schemas` entry of
+    the same `name` when nothing references it anymore once the 4xx/5xx responses have been rewritten
+    (the common case: a legacy error body under `apply-to: all`), so specs that ship their own
+    `TwilioServiceErrorResponse`-style schema no longer need a per-spec overlay to remove it first.
+    If the legacy schema is still referenced (a 2xx body, another schema, `apply-to: untyped`), the
+    error now lists the offending JSON Pointers.
+  type: fix

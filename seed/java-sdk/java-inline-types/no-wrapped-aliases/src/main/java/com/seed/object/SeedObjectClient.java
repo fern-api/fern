@@ -14,7 +14,7 @@ import com.seed.object.types.RootType1;
 import com.seed.object.types.SharedChildType;
 import java.util.Map;
 
-public class SeedObjectClient {
+public class SeedObjectClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedObjectClient rawClient;
@@ -77,6 +77,15 @@ public class SeedObjectClient {
 
     public OrphanParentWithSharedChild getOrphanParent(RequestOptions requestOptions) {
         return this.rawClient.getOrphanParent(requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedObjectClientBuilder builder() {

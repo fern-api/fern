@@ -7,6 +7,7 @@ channel:
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2

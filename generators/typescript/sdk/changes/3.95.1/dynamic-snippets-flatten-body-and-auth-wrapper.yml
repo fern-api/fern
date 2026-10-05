@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    TypeScript dynamic snippets honor `flattenRequestParameters` by spreading referenced object bodies instead of emitting `body: {...}`, and nest multi-auth constructor options under the camelCase auth scheme key regardless of `noSerdeLayer` or `retainOriginalCasing`.
+  type: fix

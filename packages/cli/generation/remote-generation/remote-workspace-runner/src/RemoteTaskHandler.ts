@@ -482,6 +482,30 @@ export async function downloadFilesForTask({
     }
 }
 
+/** Downloads the generated ZIP artifact without extracting it. */
+export async function downloadArchiveForTask({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput,
+    context
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    try {
+        const request = await axios.get(s3PreSignedReadUrl, {
+            responseType: "stream",
+            timeout: 60_000,
+            signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
+        });
+        await mkdir(path.dirname(absolutePathToLocalOutput), { recursive: true });
+        await pipeline(request.data, createWriteStream(absolutePathToLocalOutput));
+        context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
+    } catch (error) {
+        context.failAndThrow("Failed to download archive", error, { code: CliError.Code.NetworkError });
+    }
+}
+
 /** Maximum time (ms) to wait for the S3 download to complete, including streaming. */
 const S3_DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1_000;
 

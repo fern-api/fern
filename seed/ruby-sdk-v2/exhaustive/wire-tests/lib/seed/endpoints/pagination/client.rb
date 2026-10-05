@@ -56,7 +56,7 @@ module Seed
             end
             code = response.code.to_i
             if code.between?(200, 299)
-              parsed_response = Seed::Endpoints::Pagination::Types::PaginatedResponse.load(response.body)
+              parsed_response = (response.body.to_s.empty? ? nil : Seed::Endpoints::Pagination::Types::PaginatedResponse.load(response.body))
               [parsed_response, response]
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)

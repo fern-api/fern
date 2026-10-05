@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `websocketHandlerMode` config option (`"replace" | "accumulate"`, defaults to `"replace"`)
+    for generated WebSocket `Socket` classes. With `accumulate`, multiple `on()` handlers for the same
+    event are all kept and run in registration order instead of the last one replacing the previous.
+    Generated sockets now also expose `off(event, callback)` to detach a handler in both modes.
+    Defaults to `replace`, so generated output is unchanged unless the option is enabled.
+  type: feat

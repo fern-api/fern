@@ -19,7 +19,17 @@ types:
       oauth: OAuthValues
       inferred: InferredAuthValues
 
+  BaseAuth:
+    properties:
+      wrapperProperty:
+        type: optional<commons.Name>
+        docs: |
+          Set when the API declares multiple auth schemes (requirement ANY /
+          ENDPOINT_SECURITY) and the SDK's constructor options for this scheme
+          must be nested under this property, named after the scheme key.
+
   BasicAuth:
+    extends: BaseAuth
     properties:
       username: commons.Name
       usernameOmit:
@@ -36,6 +46,7 @@ types:
       password: string
 
   InferredAuth:
+    extends: BaseAuth
     docs: |
       Inferred auth retrieves tokens dynamically. The client constructor parameters
       are defined by the parameters list.
@@ -54,6 +65,7 @@ types:
         docs: Map of wire values to their example values for snippets.
 
   BearerAuth:
+    extends: BaseAuth
     properties:
       token: commons.Name
 
@@ -62,6 +74,7 @@ types:
       token: string
 
   HeaderAuth:
+    extends: BaseAuth
     properties:
       header: types.NamedParameter
 
@@ -70,6 +83,7 @@ types:
       value: unknown
 
   OAuth:
+    extends: BaseAuth
     properties:
       clientId: commons.Name
       clientSecret: commons.Name

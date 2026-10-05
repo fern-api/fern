@@ -7,7 +7,7 @@ import com.seed.javaDefaultTimeout.core.ClientOptions;
 import com.seed.javaDefaultTimeout.core.RequestOptions;
 import com.seed.javaDefaultTimeout.types.User;
 
-public class SeedJavaDefaultTimeoutClient {
+public class SeedJavaDefaultTimeoutClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedJavaDefaultTimeoutClient rawClient;
@@ -30,6 +30,15 @@ public class SeedJavaDefaultTimeoutClient {
 
     public User getUser(RequestOptions requestOptions) {
         return this.rawClient.getUser(requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedJavaDefaultTimeoutClientBuilder builder() {

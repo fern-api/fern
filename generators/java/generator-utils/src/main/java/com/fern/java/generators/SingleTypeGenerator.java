@@ -12,6 +12,7 @@ import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.utils.NameUtils;
+import com.fern.java.utils.XmlTypeUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
 import java.util.List;
@@ -83,6 +84,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 isTopLevelClass,
                 Collections.emptyList(),
                 Collections.emptyList());
+        XmlTypeUtils.getXmlObjectEncoding(generatorContext.getTypeDeclarations(), declaredTypeName.getTypeId())
+                .ifPresent(xmlEncoding -> objectGenerator.withXmlEncoding(declaredTypeName.getTypeId(), xmlEncoding));
         return Optional.of(objectGenerator);
     }
 

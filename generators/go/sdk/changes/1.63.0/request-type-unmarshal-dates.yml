@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated request types with `date` or `datetime` properties now decode those properties
+    through `internal.Date` / `internal.DateTime` in `UnmarshalJSON`, matching what their
+    `MarshalJSON` already emits. Previously `json.Unmarshal` into such a request type rejected
+    date-only values (e.g. `{"start_date":"2026-01-02"}`) that the type itself had produced.
+    Request types without date properties are unchanged.
+  type: fix

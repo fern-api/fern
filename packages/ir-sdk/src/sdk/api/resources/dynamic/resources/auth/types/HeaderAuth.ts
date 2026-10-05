@@ -2,6 +2,6 @@
 
 import type * as FernIr from "../../../../../index.js";
 
-export interface HeaderAuth {
+export interface HeaderAuth extends FernIr.dynamic.BaseAuth {
     header: FernIr.dynamic.NamedParameter;
 }

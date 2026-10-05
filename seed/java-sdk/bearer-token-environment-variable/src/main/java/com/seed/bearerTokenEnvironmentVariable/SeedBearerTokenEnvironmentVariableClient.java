@@ -8,7 +8,7 @@ import com.seed.bearerTokenEnvironmentVariable.core.Suppliers;
 import com.seed.bearerTokenEnvironmentVariable.resources.service.ServiceClient;
 import java.util.function.Supplier;
 
-public class SeedBearerTokenEnvironmentVariableClient {
+public class SeedBearerTokenEnvironmentVariableClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class SeedBearerTokenEnvironmentVariableClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedBearerTokenEnvironmentVariableClientBuilder builder() {

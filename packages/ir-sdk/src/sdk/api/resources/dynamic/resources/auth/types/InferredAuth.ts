@@ -6,7 +6,7 @@ import type * as FernIr from "../../../../../index.js";
  * Inferred auth retrieves tokens dynamically. The client constructor parameters
  * are defined by the parameters list.
  */
-export interface InferredAuth {
+export interface InferredAuth extends FernIr.dynamic.BaseAuth {
     /** List of parameters (from token endpoint) needed for auth, including their types. */
     parameters: FernIr.dynamic.NamedParameter[] | undefined;
 }

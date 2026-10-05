@@ -13,6 +13,7 @@ export function createBearerAuthScheme(opts?: {
 }): FernIr.BearerAuthScheme {
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         token: casingsGenerator.generateName(opts?.tokenName ?? "token"),
         tokenEnvVar: opts?.tokenEnvVar,
         tokenPlaceholder: opts?.tokenPlaceholder,
@@ -34,6 +35,7 @@ export function createBasicAuthScheme(opts?: {
 }): FernIr.BasicAuthScheme {
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         username: casingsGenerator.generateName(opts?.username ?? "username"),
         usernameEnvVar: opts?.usernameEnvVar,
         usernameOmit: undefined,
@@ -60,6 +62,7 @@ export function createHeaderAuthScheme(opts?: {
 }): FernIr.HeaderAuthScheme {
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         name: createNameAndWireValue(opts?.name ?? "apiKey", opts?.wireValue ?? "X-API-Key"),
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         prefix: opts?.prefix,
@@ -88,6 +91,7 @@ export function createOAuthScheme(opts?: {
     });
     return {
         docs: opts?.docs,
+        playgroundDocs: undefined,
         key: "OAuth",
         configuration: FernIr.OAuthConfiguration.clientCredentials({
             clientIdEnvVar: opts?.clientIdEnvVar,
@@ -435,7 +439,8 @@ export function createObjectProperty(
         availability: undefined,
         v2Examples: undefined,
         propertyAccess: undefined,
-        defaultValue: undefined
+        defaultValue: undefined,
+        xml: undefined
     };
 }
 

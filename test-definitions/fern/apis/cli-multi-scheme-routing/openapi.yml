@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Multi Scheme Routing CLI
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  # Routed to the API-key scheme by the operation's own `security`.
+  /widgets:
+    get:
+      operationId: widgets_list
+      x-fern-sdk-group-name: widgets
+      x-fern-sdk-method-name: list
+      summary: List widgets
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "200":
+          description: Widgets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  # Routed to a *different* scheme. Under the runtime's `Auto` default this
+  # operation receives Basic; under `AuthStrategy::Any` it receives whichever
+  # scheme is first with credentials, which is `ApiKeyAuth`.
+  /admin/users:
+    get:
+      operationId: admin_listUsers
+      x-fern-sdk-group-name: admin
+      x-fern-sdk-method-name: listUsers
+      summary: List users
+      security:
+        - AdminBasic: []
+      responses:
+        "200":
+          description: Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /health:
+    get:
+      operationId: system_health
+      x-fern-sdk-group-name: system
+      x-fern-sdk-method-name: health
+      summary: Health check
+      security: []
+      responses:
+        "200":
+          description: Healthy
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+    AdminBasic:
+      type: http
+      scheme: basic

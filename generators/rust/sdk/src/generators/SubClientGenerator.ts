@@ -219,8 +219,6 @@ export class SubClientGenerator {
         const hasQueryParams = this.hasQueryParameters();
         const hasEndpoints = this.hasEndpoints();
         const typeAnalysis = this.analyzeRequiredImports();
-        const hasSubClients = this.hasSubClients();
-        const endpointsUseCustomTypes = this.endpointsUseCustomTypes();
         const hasBinaryEndpoints = this.hasBinaryEndpoints();
         const hasSseEndpoints = this.hasSseEndpoints();
         const hasJsonStreamingEndpoints = this.hasJsonStreamingEndpoints();
@@ -314,9 +312,9 @@ export class SubClientGenerator {
             );
         }
 
-        // Add crate::api imports if we have sub-clients OR if endpoints use custom types OR query request types
-        const hasQueryRequestTypes = this.hasQueryRequestTypes();
-        if (hasSubClients || endpointsUseCustomTypes || hasQueryRequestTypes) {
+        // Sub-client types are re-exported by the containing mod.rs, so only endpoint
+        // types (custom types and generated query request types) need crate::api.
+        if (this.needsApiTypesImport()) {
             imports.push(
                 new UseStatement({
                     path: "crate::api",
@@ -426,8 +424,8 @@ export class SubClientGenerator {
         return endpoints.length > 0;
     }
 
-    private hasSubClients(): boolean {
-        return this.clientGeneratorContext.subClients.length > 0;
+    public needsApiTypesImport(): boolean {
+        return this.endpointsUseCustomTypes() || this.hasQueryRequestTypes();
     }
 
     private endpointsUseCustomTypes(): boolean {
@@ -499,8 +497,17 @@ export class SubClientGenerator {
             fileDownload: () => false,
             text: () => false,
             bytes: () => false,
-            streaming: () => false,
+            streaming: (streaming) => this.streamingResponseUsesCustomTypes(streaming),
             streamParameter: () => false,
+            _other: () => false
+        });
+    }
+
+    private streamingResponseUsesCustomTypes(streaming: FernIr.StreamingResponse): boolean {
+        return streaming._visit({
+            json: (jsonChunk) => this.isCustomType(jsonChunk.payload),
+            sse: (sseChunk) => this.isCustomType(sseChunk.payload),
+            text: () => false,
             _other: () => false
         });
     }
@@ -1000,10 +1007,8 @@ export class SubClientGenerator {
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
-            // Multi-URL: resolve base URL at call time from environment
-            const baseUrlResolution =
-                `let base_url = self.http_client.config().environment.as_ref()\n` +
-                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            // Multi-URL: resolve the URL at call time; an explicit base_url wins over the environment
+            const baseUrlResolution = `let base_url = self.http_client.config().service_url(|environment| environment.${urlMethodName}());\n`;
             body = `${requestOptionsPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;
@@ -2696,7 +2701,7 @@ export class SubClientGenerator {
                 streaming: (streaming) => {
                     return streaming._visit({
                         json: () => "Complete JSON response (fetched at once, not streaming)",
-                        sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
+                        sse: () => "Server-Sent Events stream (use StreamExt from the prelude to iterate)",
                         text: () => "Text streaming response",
                         _other: () => "Streaming response"
                     });

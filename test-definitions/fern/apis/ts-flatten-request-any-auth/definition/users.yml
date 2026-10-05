@@ -1,0 +1,47 @@
+types:
+  UpdateUser:
+    properties:
+      id: string
+      name: string
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    updateUser:
+      path: /users/{id}
+      method: PUT
+      request:
+        name: UpdateUserRequest
+        path-parameters:
+          id: string
+        body: UpdateUser
+      response: UpdateUser
+      examples:
+        - path-parameters:
+            id: user-1
+          request:
+            id: user-1
+            name: Ada
+          response:
+            body:
+              id: body-id
+              name: Ada
+
+    updateUserProfile:
+      path: /users/{id}/profile
+      method: PUT
+      path-parameters:
+        id: string
+      request: UpdateUser
+      response: UpdateUser
+      examples:
+        - path-parameters:
+            id: user-1
+          request:
+            id: user-1
+            name: Ada
+          response:
+            body:
+              id: body-id
+              name: Ada

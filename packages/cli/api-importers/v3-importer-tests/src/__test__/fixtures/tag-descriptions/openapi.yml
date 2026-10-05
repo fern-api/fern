@@ -1,0 +1,29 @@
+openapi: 3.1.0
+info:
+  title: Tag Descriptions
+  version: 1.0.0
+tags:
+  - name: Plants
+    description: Everything about plants
+  - name: Seeds
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      tags: [Plants]
+      responses:
+        "200":
+          description: ok
+  /seeds:
+    get:
+      operationId: listSeeds
+      tags: [Seeds]
+      responses:
+        "200":
+          description: ok
+  /health:
+    get:
+      operationId: health
+      responses:
+        "200":
+          description: ok

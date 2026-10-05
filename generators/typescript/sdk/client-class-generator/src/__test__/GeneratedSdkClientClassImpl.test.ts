@@ -293,6 +293,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -329,6 +330,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -363,6 +365,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -370,6 +373,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -474,6 +478,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -512,6 +517,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -549,6 +555,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -769,6 +776,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -776,6 +784,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -844,6 +853,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -878,6 +888,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         docs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             tokenPrefix: undefined,
@@ -901,7 +912,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             availability: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -913,7 +925,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             availability: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -929,7 +942,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             availability: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -1062,6 +1076,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,

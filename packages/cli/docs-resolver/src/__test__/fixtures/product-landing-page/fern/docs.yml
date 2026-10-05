@@ -22,3 +22,7 @@ products:
       - display-name: v1
         path: products/versions/rose-v1.yml
         slug: v1
+
+# Site-level changelog shared by every product; served at /changelog.
+changelog:
+  changelog: ./changelog

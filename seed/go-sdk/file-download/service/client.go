@@ -53,6 +53,11 @@ func (c *Client) Simple(
 	return nil
 }
 
+// Example:
+//
+//	client.Service.DownloadFile(
+//	    context.TODO(),
+//	)
 func (c *Client) DownloadFile(
 	ctx context.Context,
 	opts ...option.RequestOption,

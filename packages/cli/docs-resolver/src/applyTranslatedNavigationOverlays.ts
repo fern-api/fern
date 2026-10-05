@@ -1,5 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { kebabCase } from "lodash-es";
 
 /**
  * Applies translated navigation overlays to the resolved nav tree.
@@ -12,8 +13,12 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
  * Matching strategy:
  * - Products: matched positionally against the overlay's products array
  * - Versions: matched positionally against the overlay's versions array
- * - Tabs: matched by looking up the tab slug in the overlay's `tabs` map
- * - Sections/Pages: matched positionally within the overlay's navigation items
+ * - Tabs (including changelog tabs): matched by looking up the tab slug in the overlay's `tabs` map
+ * - Sections/Pages/API references/endpoints: matched by explicit slug (last segment) first,
+ *   otherwise positionally among the remaining slugless overlay entries of the same kind
+ * - Links: matched positionally among sibling links
+ * - API packages (including API layout sections): matched by explicit slug or package name,
+ *   otherwise positionally among the remaining slugless package/section overlays
  */
 export function applyTranslatedNavigationOverlays(
     root: FernNavigation.V1.RootNode | undefined,
@@ -128,7 +133,7 @@ function applyChildOverlays(
             if (childObj == null || typeof childObj !== "object") {
                 return walkAndApply(child, overlay);
             }
-            if (childObj["type"] === "tab") {
+            if (isTabLikeNode(childObj)) {
                 const positionalTabId = orderedTabIds[tabIndex];
                 tabIndex++;
                 const walked = walkAndApply(child, overlay) as Record<string, unknown>;
@@ -163,6 +168,14 @@ function applyChildOverlays(
     }
 
     return children.map((child) => walkAndApply(child, overlay));
+}
+
+/**
+ * Changelog tabs resolve to a `changelog` node rather than a `tab` node, but
+ * occupy a tab slot and are configured under `tabs` like any other tab.
+ */
+function isTabLikeNode(node: Record<string, unknown>): boolean {
+    return node["type"] === "tab" || node["type"] === "changelog";
 }
 
 function findProductOverlay(
@@ -408,104 +421,222 @@ function applySidebarChildOverlays(
     navOverlays: docsYml.NavigationItemOverlay[],
     overlay: docsYml.TranslationNavigationOverlay
 ): unknown[] {
-    let sectionIdx = 0;
-    let pageIdx = 0;
+    const nodesOfType = (...types: string[]): IndexedNode[] =>
+        children.flatMap((child, index) => {
+            const childObj = child as Record<string, unknown> | null;
+            return childObj != null && typeof childObj === "object" && types.includes(childObj["type"] as string)
+                ? [{ index, node: childObj }]
+                : [];
+        });
+    const overlaysOfType = <T extends docsYml.NavigationItemOverlay>(...types: T["type"][]): T[] =>
+        navOverlays.filter((item): item is T => (types as string[]).includes(item.type));
 
-    return children.map((child) => {
-        const childObj = child as Record<string, unknown> | null;
-        if (childObj == null || typeof childObj !== "object") {
-            return walkAndApply(child, overlay);
+    const sectionMatches = assignOverlays(
+        nodesOfType("section"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Section>("section"),
+        matchesExplicitSlug,
+        hasNoSlug
+    );
+    const pageMatches = assignOverlays(
+        nodesOfType("page", "landingPage"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Page>("page"),
+        matchesExplicitSlug,
+        hasNoSlug
+    );
+    const linkMatches = assignOverlays(
+        nodesOfType("link"),
+        overlaysOfType<docsYml.NavigationItemOverlay.Link>("link"),
+        () => false,
+        () => true
+    );
+    const apiMatches = assignOverlays(
+        nodesOfType("apiReference"),
+        overlaysOfType<docsYml.NavigationItemOverlay.ApiReference>("apiReference"),
+        matchesExplicitSlug,
+        hasNoSlug
+    );
+    // API layout packages and sections both resolve to `apiPackage` nodes.
+    const packageMatches = assignOverlays(
+        nodesOfType("apiPackage"),
+        overlaysOfType<docsYml.NavigationItemOverlay.ApiPackage | docsYml.NavigationItemOverlay.Section>(
+            "apiPackage",
+            "section"
+        ),
+        matchesPackageOverlay,
+        hasNoSlug
+    );
+    const endpointNodes = nodesOfType("endpoint", "webSocket", "webhook");
+    const endpointOverlays = overlaysOfType<docsYml.NavigationItemOverlay.Endpoint>("endpoint");
+    const matchesUniqueMethod = uniqueMethodMatcher(endpointNodes, endpointOverlays);
+    const endpointMatches = assignOverlays(
+        endpointNodes,
+        endpointOverlays,
+        (node, o) => matchesExplicitSlug(node, o) || matchesUniqueMethod(node, o),
+        hasNoSlug
+    );
+
+    return children.map((child, index) => {
+        const section = sectionMatches.get(index);
+        if (section != null) {
+            return applyContainerOverlay(child, overlay, section.title, section.contents);
         }
-
-        const childType = childObj["type"] as string | undefined;
-
-        if (childType === "section") {
-            const sectionOverlays = navOverlays.filter(
-                (item): item is docsYml.NavigationItemOverlay.Section => item.type === "section"
-            );
-            const matched = matchSectionOverlay(childObj, sectionOverlays, sectionIdx);
-            sectionIdx++;
-
-            if (matched != null) {
-                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
-                if (matched.title != null) {
-                    walked["title"] = matched.title;
-                }
-                if (matched.contents != null) {
-                    // Re-apply section content overlays recursively
-                    const childArray = walked["children"] as unknown[] | undefined;
-                    if (childArray != null) {
-                        walked["children"] = applySidebarChildOverlays(childArray, matched.contents, overlay);
-                    }
-                }
-                return walked;
-            }
-            return walkAndApply(child, overlay);
+        const page = pageMatches.get(index) ?? linkMatches.get(index);
+        if (page != null) {
+            return applyTitleOverlay(child, overlay, page.title);
         }
-
-        if (childType === "page" || childType === "landingPage") {
-            const pageOverlays = navOverlays.filter(
-                (item): item is docsYml.NavigationItemOverlay.Page => item.type === "page"
-            );
-            const matched = matchPageOverlay(childObj, pageOverlays, pageIdx);
-            pageIdx++;
-
-            if (matched?.title != null) {
-                const walked = walkAndApply(child, overlay) as Record<string, unknown>;
-                walked["title"] = matched.title;
-                return walked;
-            }
-            return walkAndApply(child, overlay);
+        const api = apiMatches.get(index);
+        if (api != null) {
+            return applyContainerOverlay(child, overlay, api.title, api.layout);
         }
-
+        const pkg = packageMatches.get(index);
+        if (pkg != null) {
+            return applyContainerOverlay(child, overlay, pkg.title, pkg.contents);
+        }
+        const endpoint = endpointMatches.get(index);
+        if (endpoint != null) {
+            return applyTitleOverlay(child, overlay, endpoint.title);
+        }
         return walkAndApply(child, overlay);
     });
 }
 
-function matchSectionOverlay(
-    section: Record<string, unknown>,
-    overlays: docsYml.NavigationItemOverlay.Section[],
-    positionIndex: number
-): docsYml.NavigationItemOverlay.Section | undefined {
-    const sectionSlug = extractLastSlugSegment(section["slug"] as string | undefined);
-
-    // First, try to match by slug
-    for (const o of overlays) {
-        if (o.slug != null && o.slug === sectionSlug) {
-            return o;
-        }
+function applyTitleOverlay(
+    child: unknown,
+    overlay: docsYml.TranslationNavigationOverlay,
+    title: string | undefined
+): unknown {
+    const walked = walkAndApply(child, overlay) as Record<string, unknown>;
+    if (title != null) {
+        walked["title"] = title;
     }
-
-    // Positional fallback: only use overlays that don't have a slug defined,
-    // to avoid incorrectly applying a slug-targeted overlay to the wrong sibling.
-    const noSlugOverlays = overlays.filter((o) => o.slug == null);
-    if (positionIndex < noSlugOverlays.length) {
-        return noSlugOverlays[positionIndex];
-    }
-    return undefined;
+    return walked;
 }
 
-function matchPageOverlay(
-    page: Record<string, unknown>,
-    overlays: docsYml.NavigationItemOverlay.Page[],
-    positionIndex: number
-): docsYml.NavigationItemOverlay.Page | undefined {
-    const pageSlug = extractLastSlugSegment(page["slug"] as string | undefined);
-
-    // First, try to match by slug
-    for (const o of overlays) {
-        if (o.slug != null && o.slug === pageSlug) {
-            return o;
+function applyContainerOverlay(
+    child: unknown,
+    overlay: docsYml.TranslationNavigationOverlay,
+    title: string | undefined,
+    contents: docsYml.NavigationItemOverlay[] | undefined
+): unknown {
+    const walked = walkAndApply(child, overlay) as Record<string, unknown>;
+    if (title != null) {
+        walked["title"] = title;
+    }
+    if (contents != null) {
+        const childArray = walked["children"] as unknown[] | undefined;
+        if (childArray != null) {
+            walked["children"] = applySidebarChildOverlays(childArray, contents, overlay);
         }
     }
+    return walked;
+}
 
-    // Positional fallback: only use overlays that don't have a slug defined,
-    // to avoid incorrectly applying a slug-targeted overlay to the wrong sibling.
-    const noSlugOverlays = overlays.filter((o) => o.slug == null);
-    if (positionIndex < noSlugOverlays.length) {
-        return noSlugOverlays[positionIndex];
+interface IndexedNode {
+    index: number;
+    node: Record<string, unknown>;
+}
+
+/**
+ * Assigns overlays to sibling nodes of the same kind in two passes: first every node
+ * takes the first unused overlay that explicitly identifies it, then the remaining
+ * nodes take the remaining positional-eligible overlays in order. An overlay is used
+ * at most once, so an explicit match never shifts or duplicates positional matches.
+ */
+function assignOverlays<T>(
+    nodes: IndexedNode[],
+    overlays: T[],
+    isExplicitMatch: (node: Record<string, unknown>, overlay: T) => boolean,
+    isPositional: (overlay: T) => boolean
+): Map<number, T> {
+    const assigned = new Map<number, T>();
+    const used = new Set<T>();
+    for (const { index, node } of nodes) {
+        const match = overlays.find((o) => !used.has(o) && isExplicitMatch(node, o));
+        if (match != null) {
+            assigned.set(index, match);
+            used.add(match);
+        }
     }
-    return undefined;
+    const positional = overlays.filter((o) => !used.has(o) && isPositional(o));
+    for (const { index } of nodes) {
+        if (!assigned.has(index)) {
+            const next = positional.shift();
+            if (next == null) {
+                break;
+            }
+            assigned.set(index, next);
+        }
+    }
+    return assigned;
+}
+
+function hasNoSlug(overlay: { slug: string | undefined }): boolean {
+    return overlay.slug == null;
+}
+
+/**
+ * Compares the last slug segment on both sides, so multi-segment explicit slugs
+ * such as `customization/voice` match.
+ */
+function matchesExplicitSlug(node: Record<string, unknown>, overlay: { slug: string | undefined }): boolean {
+    const nodeSlug = extractLastSlugSegment(node["slug"] as string | undefined);
+    return nodeSlug != null && overlay.slug != null && extractLastSlugSegment(overlay.slug) === nodeSlug;
+}
+
+/**
+ * Navigation endpoint nodes carry their HTTP method but not their path, so an
+ * overlay's `METHOD /path` locator identifies a sibling only when that method
+ * occurs exactly once among both the sibling nodes and the overlays.
+ */
+function uniqueMethodMatcher(
+    nodes: IndexedNode[],
+    overlays: docsYml.NavigationItemOverlay.Endpoint[]
+): (node: Record<string, unknown>, overlay: docsYml.NavigationItemOverlay.Endpoint) => boolean {
+    const countBy = (methods: (string | undefined)[]) => {
+        const counts = new Map<string, number>();
+        for (const method of methods) {
+            if (method != null) {
+                counts.set(method, (counts.get(method) ?? 0) + 1);
+            }
+        }
+        return counts;
+    };
+    const nodeMethod = (node: Record<string, unknown>) =>
+        typeof node["method"] === "string" ? node["method"].toUpperCase() : undefined;
+    const nodeCounts = countBy(nodes.map(({ node }) => nodeMethod(node)));
+    const overlayCounts = countBy(overlays.map(overlayEndpointMethod));
+    return (node, overlay) => {
+        const method = nodeMethod(node);
+        return (
+            method != null &&
+            overlayEndpointMethod(overlay) === method &&
+            nodeCounts.get(method) === 1 &&
+            overlayCounts.get(method) === 1
+        );
+    };
+}
+
+function overlayEndpointMethod(overlay: docsYml.NavigationItemOverlay.Endpoint): string | undefined {
+    const [method, path] = overlay.endpoint.trim().split(/\s+/);
+    return method != null && path != null ? method.toUpperCase() : undefined;
+}
+
+/**
+ * Package overlays also match by package name, whose kebab-case form is the default
+ * package url slug.
+ */
+function matchesPackageOverlay(
+    node: Record<string, unknown>,
+    overlay: docsYml.NavigationItemOverlay.ApiPackage | docsYml.NavigationItemOverlay.Section
+): boolean {
+    if (matchesExplicitSlug(node, overlay)) {
+        return true;
+    }
+    if (overlay.type !== "apiPackage" || overlay.slug != null) {
+        return false;
+    }
+    const nodeSlug = extractLastSlugSegment(node["slug"] as string | undefined);
+    return nodeSlug != null && kebabCase(overlay.packageName) === nodeSlug;
 }
 
 function extractLastSlugSegment(slug: string | undefined): string | undefined {

@@ -56,7 +56,7 @@ pub use builder::{
     AuthStrategy, SchemeBinding,
 };
 pub use compose::{AllAuthProvider, AnyAuthProvider, LayeredAuthProvider, RoutingAuthProvider};
-pub use credential::AuthCredentialSource;
+pub use credential::{AuthCredentialSource, CredentialSlots};
 pub use error::handle_error_response;
 pub use keyring_store::{
     active_store, auto_store, set_active_store, FileKeyringStore, KeyringStore, MockKeyringStore,
@@ -65,7 +65,8 @@ pub use keyring_store::{
 pub use keyring_store::OsKeyringStore;
 pub use login::{
     build_auth_command, dispatch_auth, inject_keyring_sources, inject_oauth2_caches,
-    run_token_paste, DynLoginFlow, LoginContext, LoginFlow, TokenPasteLoginFlow,
+    run_token_paste, shadowing_env_vars, DynLoginFlow, LoginContext, LoginFlow,
+    TokenPasteLoginFlow,
 };
 pub use oauth2::{OAuth2Grant, OAuth2TokenProvider, TokenCache};
 pub use oauth2_contract::{OAuth2Endpoint, OAuth2RequestProperty, OAuth2RequestValue};

@@ -3,13 +3,8 @@
 package users
 
 import (
-	context "context"
-	http "net/http"
-
-	fern "github.com/go-request-body-pagination/fern"
 	core "github.com/go-request-body-pagination/fern/core"
 	internal "github.com/go-request-body-pagination/fern/internal"
-	option "github.com/go-request-body-pagination/fern/option"
 )
 
 type RawClient struct {
@@ -30,46 +25,4 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 			},
 		),
 	}
-}
-
-func (r *RawClient) ListWithNestedBodyCursorPagination(
-	ctx context.Context,
-	request *fern.ListUsersNestedBodyCursorPaginationRequest,
-	opts ...option.RequestOption,
-) (*core.Response[*fern.ListUsersResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users/nested-cursor"
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	var response *fern.ListUsersResponse
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*fern.ListUsersResponse]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
 }

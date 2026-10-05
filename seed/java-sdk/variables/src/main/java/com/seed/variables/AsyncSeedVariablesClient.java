@@ -8,7 +8,7 @@ import com.seed.variables.core.Suppliers;
 import com.seed.variables.resources.service.AsyncServiceClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedVariablesClient {
+public class AsyncSeedVariablesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncServiceClient> serviceClient;
@@ -20,6 +20,15 @@ public class AsyncSeedVariablesClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedVariablesClientBuilder builder() {

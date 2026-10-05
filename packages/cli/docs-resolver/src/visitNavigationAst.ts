@@ -92,6 +92,7 @@ async function visitNavigationItem({
         alphabetized: noop,
         api: noop,
         apiName: noop,
+        specs: noop,
         audiences: noop,
         displayErrors: noop,
         tagDescriptionPages: noop,

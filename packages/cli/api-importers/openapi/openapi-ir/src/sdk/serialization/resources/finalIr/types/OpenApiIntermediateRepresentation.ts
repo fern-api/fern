@@ -28,6 +28,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     specVersion: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
+    baseUrlEnv: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
     basePathParameters: core.serialization.list(PathParameter).optional(),
     servers: core.serialization.list(Server),
@@ -54,6 +55,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         specVersion?: string | null;
         title?: string | null;
         description?: string | null;
+        baseUrlEnv?: string | null;
         basePath?: string | null;
         basePathParameters?: PathParameter.Raw[] | null;
         servers: Server.Raw[];

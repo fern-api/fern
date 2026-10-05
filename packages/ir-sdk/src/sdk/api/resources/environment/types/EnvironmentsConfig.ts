@@ -4,5 +4,11 @@ import type * as FernIr from "../../../index.js";
 
 export interface EnvironmentsConfig {
     defaultEnvironment: FernIr.EnvironmentId | undefined;
+    /**
+     * The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs
+     * read at construction time to override the base URL. If set, its value takes
+     * precedence over the default environment; an explicitly provided base URL still wins.
+     */
+    baseUrlEnvVar: string | undefined;
     environments: FernIr.Environments;
 }

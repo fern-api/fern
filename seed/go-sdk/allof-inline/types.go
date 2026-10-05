@@ -2294,7 +2294,7 @@ var (
 type RuleTypeSearchResponse struct {
 	Paging *PagingCursors `json:"paging" url:"paging"`
 	// Current page of results from the requested resource.
-	Results []*RuleType `json:"results,omitempty" url:"results,omitempty"`
+	Results []*RuleType `json:"results" url:"results"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3013,7 +3013,7 @@ var (
 type UserSearchResponse struct {
 	Paging *PagingCursors `json:"paging" url:"paging"`
 	// Current page of results from the requested resource.
-	Results []*User `json:"results,omitempty" url:"results,omitempty"`
+	Results []*User `json:"results" url:"results"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

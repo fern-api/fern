@@ -10,7 +10,7 @@ import com.seed.api.resources.oauth.OauthClient;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SeedApiClient {
+public class SeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedApiClient rawClient;
@@ -40,6 +40,15 @@ public class SeedApiClient {
 
     public OauthClient oauth() {
         return this.oauthClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

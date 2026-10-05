@@ -10,7 +10,7 @@ import com.seed.pagination.resources.inlineusers.AsyncInlineUsersClient;
 import com.seed.pagination.resources.users.AsyncUsersClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedPaginationClient {
+public class AsyncSeedPaginationClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncComplexClient> complexClient;
@@ -36,6 +36,15 @@ public class AsyncSeedPaginationClient {
 
     public AsyncUsersClient users() {
         return this.usersClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
+     * and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedPaginationClientBuilder builder() {

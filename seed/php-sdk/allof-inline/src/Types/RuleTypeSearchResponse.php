@@ -15,22 +15,22 @@ class RuleTypeSearchResponse extends JsonSerializableType
     public PagingCursors $paging;
 
     /**
-     * @var ?array<RuleType> $results Current page of results from the requested resource.
+     * @var array<RuleType> $results Current page of results from the requested resource.
      */
     #[JsonProperty('results'), ArrayType([RuleType::class])]
-    public ?array $results;
+    public array $results;
 
     /**
      * @param array{
      *   paging: PagingCursors,
-     *   results?: ?array<RuleType>,
+     *   results: array<RuleType>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->paging = $values['paging'];
-        $this->results = $values['results'] ?? null;
+        $this->results = $values['results'];
     }
 
     /**

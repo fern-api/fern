@@ -115,7 +115,15 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "required_nullable_text"
+                ],
                 "properties": {
+                  "required_nullable_text": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Must be sent, but may be null to clear the value"
+                  },
                   "nullable_text": {
                     "type": "string",
                     "nullable": true,

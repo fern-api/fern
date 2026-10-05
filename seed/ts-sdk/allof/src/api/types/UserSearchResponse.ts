@@ -4,6 +4,6 @@ import type * as SeedApi from "../index.js";
 
 export interface UserSearchResponse {
     /** Current page of results from the requested resource. */
-    results?: SeedApi.User[] | undefined;
+    results: SeedApi.User[];
     paging: SeedApi.PagingCursors;
 }

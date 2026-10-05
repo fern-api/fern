@@ -36,6 +36,7 @@ function makeObjectTypeDeclaration(
                 valueType: propertyTypeRefs[i] ?? stringRef(),
                 propertyAccess: undefined,
                 defaultValue: undefined,
+                xml: undefined,
                 v2Examples: undefined
             })),
             extendedProperties: undefined,
@@ -67,6 +68,10 @@ function namedRef(typeId: string): TypeReference {
 
 function optionalNamedRef(typeId: string): TypeReference {
     return TypeReference.container(ContainerType.optional(namedRef(typeId)));
+}
+
+function nullableStringRef(): TypeReference {
+    return TypeReference.container(ContainerType.nullable(stringRef()));
 }
 
 function stringRef(): TypeReference {
@@ -253,5 +258,46 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
         // The stub for BulkSchedule at cycle limit includes its leaf property "frequency"
         const stubSchedule = schedules[0]?.schedule as Record<string, unknown>;
         expect(stubSchedule).toHaveProperty("frequency");
+    });
+});
+
+describe("nullable properties in generateTypeReferenceExample", () => {
+    const typeDeclarations: Record<TypeId, TypeDeclaration> = {
+        Request: makeObjectTypeDeclaration(
+            "Request",
+            ["processorToken", "webhook", "maybeWebhook"],
+            [stringRef(), nullableStringRef(), TypeReference.container(ContainerType.optional(nullableStringRef()))]
+        )
+    };
+
+    it("should emit an explicit null for a required nullable property when skipping optional properties", () => {
+        const result = generateTypeReferenceExample({
+            fieldName: undefined,
+            typeReference: namedRef("Request"),
+            typeDeclarations,
+            maxDepth: 10,
+            currentDepth: 0,
+            skipOptionalProperties: true
+        });
+
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json).toEqual({ processorToken: "processorToken", webhook: null });
+        expect("webhook" in json).toBe(true);
+    });
+
+    it("should emit a value for a required nullable property when not skipping optional properties", () => {
+        const result = generateTypeReferenceExample({
+            fieldName: undefined,
+            typeReference: namedRef("Request"),
+            typeDeclarations,
+            maxDepth: 10,
+            currentDepth: 0,
+            skipOptionalProperties: false
+        });
+
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json.webhook).toBe("webhook");
     });
 });

@@ -1,0 +1,667 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "calls/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "ConflictError": {
+            "docs": "Conflict",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {},
+              },
+            ],
+            "status-code": 409,
+            "type": "CallError",
+          },
+          "ForbiddenError": {
+            "docs": "Forbidden",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 403,
+            "type": "CallsProblem",
+          },
+          "InternalServerError": {
+            "docs": "Internal Server Error",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 500,
+            "type": "CallsProblem",
+          },
+        },
+        "types": {
+          "Call": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "sid": "optional<string>",
+            },
+            "source": {
+              "openapi": "calls.yml",
+            },
+          },
+          "CallError": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "code": "optional<integer>",
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "calls.yml",
+            },
+          },
+          "CallsProblem": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "status": "integer",
+              "title": "string",
+              "type": "string",
+            },
+            "source": {
+              "openapi": "calls.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "errors:
+  ForbiddenError:
+    status-code: 403
+    type: CallsProblem
+    docs: Forbidden
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+  ConflictError:
+    status-code: 409
+    type: CallError
+    docs: Conflict
+    examples:
+      - value: {}
+  InternalServerError:
+    status-code: 500
+    type: CallsProblem
+    docs: Internal Server Error
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+types:
+  Call:
+    properties:
+      sid: optional<string>
+    source:
+      openapi: calls.yml
+  CallError:
+    properties:
+      code: optional<integer>
+      message: optional<string>
+    source:
+      openapi: calls.yml
+  CallsProblem:
+    properties:
+      type: string
+      title: string
+      status: integer
+    source:
+      openapi: calls.yml
+",
+    },
+    "calls/calls.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "callsRoot": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createCall": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "callsRoot.ForbiddenError",
+                "callsRoot.ConflictError",
+                "callsRoot.InternalServerError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "sid": "sid",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/calls",
+              "response": {
+                "docs": "Created",
+                "status-code": 201,
+                "type": "callsRoot.Call",
+              },
+              "source": {
+                "openapi": "calls.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "calls.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  callsRoot: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createCall:
+      path: /calls
+      method: POST
+      source:
+        openapi: calls.yml
+      response:
+        docs: Created
+        type: callsRoot.Call
+        status-code: 201
+      errors:
+        - callsRoot.ForbiddenError
+        - callsRoot.ConflictError
+        - callsRoot.InternalServerError
+      examples:
+        - response:
+            body:
+              sid: sid
+  source:
+    openapi: calls.yml
+",
+    },
+    "messages/__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "errors": {
+          "BadRequestError": {
+            "docs": "Bad Request",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 400,
+            "type": "ServiceErrorResponse",
+          },
+          "NotFoundError": {
+            "docs": "Not Found",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 404,
+            "type": "ServiceErrorResponse",
+          },
+          "TooManyRequestsError": {
+            "docs": "Too many requests",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 429,
+            "type": "ServiceErrorResponse",
+          },
+          "UnauthorizedError": {
+            "docs": "Unauthorized",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 401,
+            "type": "ServiceErrorResponse",
+          },
+          "UnprocessableEntityError": {
+            "docs": "Unprocessable Entity",
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "value": {
+                  "status": 1,
+                  "title": "title",
+                  "type": "type",
+                },
+              },
+            ],
+            "status-code": 422,
+            "type": "ServiceErrorResponse",
+          },
+        },
+        "types": {
+          "Message": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "body": "string",
+              "sid": "string",
+            },
+            "source": {
+              "openapi": "messages.yml",
+            },
+          },
+          "ServiceErrorResponse": {
+            "docs": "RFC 9457 Problem Details returned for every error response.",
+            "inline": undefined,
+            "properties": {
+              "code": {
+                "docs": "Service-specific error code.",
+                "type": "optional<integer>",
+              },
+              "detail": {
+                "docs": "A human-readable explanation specific to this occurrence of the problem.",
+                "type": "optional<string>",
+              },
+              "errors": {
+                "docs": "Field-level validation failures.",
+                "type": "optional<list<ServiceErrorResponseErrorsItem>>",
+              },
+              "instance": {
+                "docs": "A URI reference that identifies the specific occurrence of the problem.",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "status": {
+                "docs": "The HTTP status code generated by the origin server for this occurrence of the problem.",
+                "type": "integer",
+              },
+              "title": {
+                "docs": "A short, human-readable summary of the problem type.",
+                "type": "string",
+              },
+              "type": {
+                "docs": "A URI reference that identifies the problem type.",
+                "type": "string",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "messages.yml",
+            },
+          },
+          "ServiceErrorResponseErrorsItem": {
+            "docs": undefined,
+            "inline": true,
+            "properties": {
+              "field": "optional<string>",
+              "message": "optional<string>",
+            },
+            "source": {
+              "openapi": "messages.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "errors:
+  UnauthorizedError:
+    status-code: 401
+    type: ServiceErrorResponse
+    docs: Unauthorized
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+  TooManyRequestsError:
+    status-code: 429
+    type: ServiceErrorResponse
+    docs: Too many requests
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+  BadRequestError:
+    status-code: 400
+    type: ServiceErrorResponse
+    docs: Bad Request
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+  UnprocessableEntityError:
+    status-code: 422
+    type: ServiceErrorResponse
+    docs: Unprocessable Entity
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+  NotFoundError:
+    status-code: 404
+    type: ServiceErrorResponse
+    docs: Not Found
+    examples:
+      - value:
+          type: type
+          title: title
+          status: 1
+types:
+  Message:
+    properties:
+      sid: string
+      body: string
+    source:
+      openapi: messages.yml
+  ServiceErrorResponseErrorsItem:
+    properties:
+      field: optional<string>
+      message: optional<string>
+    source:
+      openapi: messages.yml
+    inline: true
+  ServiceErrorResponse:
+    docs: RFC 9457 Problem Details returned for every error response.
+    properties:
+      type:
+        type: string
+        docs: A URI reference that identifies the problem type.
+        validation:
+          format: uri
+      title:
+        type: string
+        docs: A short, human-readable summary of the problem type.
+      status:
+        type: integer
+        docs: >-
+          The HTTP status code generated by the origin server for this
+          occurrence of the problem.
+      detail:
+        type: optional<string>
+        docs: >-
+          A human-readable explanation specific to this occurrence of the
+          problem.
+      instance:
+        type: optional<string>
+        docs: >-
+          A URI reference that identifies the specific occurrence of the
+          problem.
+        validation:
+          format: uri
+      code:
+        type: optional<integer>
+        docs: Service-specific error code.
+      errors:
+        type: optional<list<ServiceErrorResponseErrorsItem>>
+        docs: Field-level validation failures.
+    source:
+      openapi: messages.yml
+",
+    },
+    "messages/messages.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "messagesRoot": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createMessage": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "messagesRoot.BadRequestError",
+                "messagesRoot.UnprocessableEntityError",
+                "messagesRoot.TooManyRequestsError",
+              ],
+              "examples": [
+                {
+                  "request": {
+                    "body": "body",
+                    "sid": "sid",
+                  },
+                  "response": {
+                    "body": {
+                      "body": "body",
+                      "sid": "sid",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/messages",
+              "request": "messagesRoot.Message",
+              "response": {
+                "docs": "Created",
+                "status-code": 201,
+                "type": "messagesRoot.Message",
+              },
+              "source": {
+                "openapi": "messages.yml",
+              },
+            },
+            "deleteMessage": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "messagesRoot.NotFoundError",
+              ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "sid": "sid",
+                  },
+                },
+              ],
+              "method": "DELETE",
+              "pagination": undefined,
+              "path": "/messages/{sid}",
+              "request": {
+                "name": "DeleteMessageRequest",
+                "path-parameters": {
+                  "sid": "string",
+                },
+              },
+              "source": {
+                "openapi": "messages.yml",
+              },
+            },
+            "listMessages": {
+              "auth": undefined,
+              "docs": undefined,
+              "errors": [
+                "messagesRoot.UnauthorizedError",
+                "messagesRoot.TooManyRequestsError",
+              ],
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "body": "body",
+                        "sid": "sid",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/messages",
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "list<messagesRoot.Message>",
+              },
+              "source": {
+                "openapi": "messages.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "messages.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  messagesRoot: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listMessages:
+      path: /messages
+      method: GET
+      source:
+        openapi: messages.yml
+      response:
+        docs: OK
+        type: list<messagesRoot.Message>
+        status-code: 200
+      errors:
+        - messagesRoot.UnauthorizedError
+        - messagesRoot.TooManyRequestsError
+      examples:
+        - response:
+            body:
+              - sid: sid
+                body: body
+    createMessage:
+      path: /messages
+      method: POST
+      source:
+        openapi: messages.yml
+      request: messagesRoot.Message
+      response:
+        docs: Created
+        type: messagesRoot.Message
+        status-code: 201
+      errors:
+        - messagesRoot.BadRequestError
+        - messagesRoot.UnprocessableEntityError
+        - messagesRoot.TooManyRequestsError
+      examples:
+        - request:
+            sid: sid
+            body: body
+          response:
+            body:
+              sid: sid
+              body: body
+    deleteMessage:
+      path: /messages/{sid}
+      method: DELETE
+      source:
+        openapi: messages.yml
+      request:
+        name: DeleteMessageRequest
+        path-parameters:
+          sid: string
+      errors:
+        - messagesRoot.NotFoundError
+      examples:
+        - path-parameters:
+            sid: sid
+  source:
+    openapi: messages.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "Messages",
+      "environments": {
+        "Default": "https://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Messages
+environments:
+  Default: https://api.example.com
+default-environment: Default
+",
+  },
+  "specVersion": "1.0",
+}

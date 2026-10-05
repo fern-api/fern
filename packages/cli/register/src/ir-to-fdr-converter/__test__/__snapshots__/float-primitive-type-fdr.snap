@@ -46,6 +46,7 @@
                 "temperature": 1.1,
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],

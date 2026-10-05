@@ -993,18 +993,49 @@ const GLOBAL_TS_TYPES: string[] = ["Date", "Error", "Object", "File", "Record", 
  * versions in a type text string. For example, if "Date" is shadowed, `"Date"` becomes
  * `"globalThis.Date"` while `"SeedApi.Date"` and `"DateRange"` are left unchanged.
  */
-function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
-    if (shadowedGlobalTypes.length === 0) {
-        return typeText;
-    }
+/**
+ * Applies globalThis-qualification to a span of type text known to contain no
+ * string literals.
+ */
+function qualifyOutsideStringLiterals(span: string, shadowedGlobalTypes: string[]): string {
     for (const globalType of shadowedGlobalTypes) {
         // Replace standalone occurrences of the global type name with globalThis-qualified version.
         // Uses word boundaries to avoid replacing partial matches (e.g., "DateRange" stays unchanged).
         // Negative lookbehind `(?<!\.)` prevents matching already-qualified references (e.g., "SeedApi.Date").
         const pattern = new RegExp(`(?<!\\.)\\b${globalType}\\b`, "g");
-        typeText = typeText.replace(pattern, `globalThis.${globalType}`);
+        span = span.replace(pattern, `globalThis.${globalType}`);
     }
-    return typeText;
+    return span;
+}
+
+function qualifyShadowedGlobalTypeText(typeText: string, shadowedGlobalTypes: string[]): string {
+    if (shadowedGlobalTypes.length === 0) {
+        return typeText;
+    }
+    // Qualify type *references* only, never values. This receives whole
+    // rendered TS — property types, visitor signatures, builder expressions —
+    // so a string literal can appear in any of them, and rewriting one changes
+    // what the SDK sends on the wire (a discriminant `"Date"` became
+    // `"globalThis.Date"`).
+    //
+    // Template literals are treated as opaque, so an interpolated reference
+    // inside one goes unqualified. That is the safe direction: failing to
+    // qualify is a compiler error, while rewriting a value is silent.
+    //
+    // The literal matcher is built per call rather than hoisted: a `g`-flagged
+    // RegExp carries mutable `lastIndex`, and while `matchAll` clones it today,
+    // a later `.exec`/`.test` on a shared constant would silently start
+    // mid-string.
+    const stringLiteral = /(['"`])(?:\\.|(?!\1)[^\\])*\1/g;
+    let qualified = "";
+    let cursor = 0;
+    for (const literal of typeText.matchAll(stringLiteral)) {
+        const start = literal.index ?? 0;
+        qualified += qualifyOutsideStringLiterals(typeText.slice(cursor, start), shadowedGlobalTypes);
+        qualified += literal[0];
+        cursor = start + literal[0].length;
+    }
+    return qualified + qualifyOutsideStringLiterals(typeText.slice(cursor), shadowedGlobalTypes);
 }
 
 function qualifyShadowedGlobalTypes(

@@ -27,3 +27,30 @@ client.Service.Simple(
 </dl>
 </details>
 
+<details><summary><code>client.Service.DownloadFile() -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Service.DownloadFile(
+    context.TODO(),
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
