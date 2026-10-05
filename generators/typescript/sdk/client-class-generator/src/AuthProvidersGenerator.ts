@@ -28,6 +28,9 @@ export declare namespace AuthProvidersGenerator {
         // `typeof process !== "undefined"` guard so they do not throw in runtimes
         // without a Node `process` global.
         guardProcessEnvAccess?: boolean;
+        // When true, cached-credential providers accept `forceRefresh` in `getAuthRequest` so the
+        // fetcher can re-resolve auth after a 401 or 403 response.
+        refreshAuthOnFailedPermissions?: boolean;
     }
 }
 
@@ -40,25 +43,29 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
         includeSerdeLayer,
         shouldUseWrapper,
         optionalAuth = false,
-        guardProcessEnvAccess = false
+        guardProcessEnvAccess = false,
+        refreshAuthOnFailedPermissions = false
     }: AuthProvidersGenerator.Init) {
         const isAuthMandatory = ir.sdkConfig.isAuthMandatory && !optionalAuth;
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
                 case "any":
                     return new AnyAuthProviderGenerator({
-                        ir
+                        ir,
+                        refreshAuthOnFailedPermissions
                     });
                 case "routing":
                     return new RoutingAuthProviderGenerator({
-                        ir
+                        ir,
+                        refreshAuthOnFailedPermissions
                     });
                 case "inferred":
                     return new InferredAuthProviderGenerator({
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        shouldUseWrapper
+                        shouldUseWrapper,
+                        refreshAuthOnFailedPermissions
                     });
                 case "basic":
                     return new BasicAuthProviderGenerator({
@@ -97,7 +104,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         neverThrowErrors,
                         includeSerdeLayer,
                         shouldUseWrapper,
-                        guardProcessEnvAccess
+                        guardProcessEnvAccess,
+                        refreshAuthOnFailedPermissions
                     });
                 default:
                     assertNever(authScheme);

@@ -5,6 +5,7 @@ import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } fr
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator.js";
 import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator.js";
+import { FORCE_REFRESH_ARG_NAME, getDestructuredAuthRequestParameter } from "./getAuthRequestParameter.js";
 import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator.js";
 import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator.js";
 import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator.js";
@@ -12,6 +13,7 @@ import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator.js";
 export declare namespace RoutingAuthProviderGenerator {
     export interface Init {
         ir: FernIr.IntermediateRepresentation;
+        refreshAuthOnFailedPermissions?: boolean;
     }
 }
 
@@ -23,9 +25,11 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     public static readonly AUTH_PROVIDERS_FIELD_NAME = AUTH_PROVIDERS_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
+    private readonly refreshAuthOnFailedPermissions: boolean;
 
     constructor(init: RoutingAuthProviderGenerator.Init) {
         this.ir = init.ir;
+        this.refreshAuthOnFailedPermissions = init.refreshAuthOnFailedPermissions ?? false;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -256,20 +260,9 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     name: "getAuthRequest",
                     isAsync: true,
                     parameters: [
-                        {
-                            name: "{ endpointMetadata }",
-                            type: getTextOfTsNode(
-                                ts.factory.createTypeLiteralNode([
-                                    ts.factory.createPropertySignature(
-                                        undefined,
-                                        "endpointMetadata",
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-                                    )
-                                ])
-                            ),
-                            initializer: "{}"
-                        }
+                        getDestructuredAuthRequestParameter(context, {
+                            includeForceRefresh: this.refreshAuthOnFailedPermissions
+                        })
                     ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [
@@ -333,7 +326,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
             if (provider == null) {
                 throw new Error(\`Internal error: auth provider not found for scheme: \${schemeKey}\`);
             }
-            const authRequest = await provider.getAuthRequest({ endpointMetadata });
+            const authRequest = await provider.getAuthRequest(${this.refreshAuthOnFailedPermissions ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME} }` : "{ endpointMetadata }"});
             Object.assign(combinedHeaders, authRequest.headers);
         }
 

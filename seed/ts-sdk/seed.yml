@@ -332,6 +332,9 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: refresh-auth-on-failed-permissions
+      customConfig:
+        refreshAuthOnFailedPermissions: true
   oauth-client-credentials-custom-prefix-openapi:
     - outputFolder: .
       customConfig: null
@@ -442,6 +445,9 @@ fixtures:
     - outputFolder: guard-process-env-access
       customConfig:
         guardProcessEnvAccess: true
+    - outputFolder: refresh-auth-on-failed-permissions
+      customConfig:
+        refreshAuthOnFailedPermissions: true
   single-url-environment-default:
     - outputFolder: no-custom-config
       customConfig: null

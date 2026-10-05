@@ -84,6 +84,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        refreshAuthOnFailedPermissions: boolean;
     }
 }
 
@@ -130,6 +131,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly refreshAuthOnFailedPermissions: boolean;
 
     constructor({
         caseConverter,
@@ -159,7 +161,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        alwaysSendAuth
+        alwaysSendAuth,
+        refreshAuthOnFailedPermissions
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -182,6 +185,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.refreshAuthOnFailedPermissions = refreshAuthOnFailedPermissions;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -586,6 +590,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getAlwaysSendAuth(): boolean {
         return this.alwaysSendAuth;
+    }
+
+    public getRefreshAuthOnFailedPermissions(): boolean {
+        return this.refreshAuthOnFailedPermissions;
     }
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {

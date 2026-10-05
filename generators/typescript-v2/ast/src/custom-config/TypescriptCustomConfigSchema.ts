@@ -149,7 +149,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // internal - license name extracted from custom license file
     _fernLicenseName: z.optional(z.string()),
     maxRetries: z.optional(z.number().int().min(0)),
-    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
+    retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
+    refreshAuthOnFailedPermissions: z.optional(z.boolean())
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
