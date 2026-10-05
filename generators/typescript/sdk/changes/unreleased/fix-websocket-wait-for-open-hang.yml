@@ -1,0 +1,7 @@
+- summary: |
+    Fix `waitForOpen()` on generated WebSocket clients hanging forever when the socket closes without opening.
+    It now rejects when the socket is already closed, when `close()` is called or the `abortSignal` fires
+    (including before the underlying WebSocket is created, or when the signal is already aborted), and when the
+    connection closes with no reconnect pending. `readyState` now reports `CLOSED` after an abort or `close()`
+    even if the underlying WebSocket was never created.
+  type: fix
