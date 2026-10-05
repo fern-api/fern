@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.65.3
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `String()` instead of JSON, and `ToXml()` prepends the
+        `<?xml version="1.0" encoding="UTF-8"?>` declaration. Use
+        `ToXmlElement().ToXml()` to serialize without the declaration.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 1.65.2
   changelogEntry:
     - summary: |
