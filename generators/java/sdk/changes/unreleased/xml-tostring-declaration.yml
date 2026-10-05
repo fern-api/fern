@@ -1,0 +1,6 @@
+- summary: |
+    XML-encoded (TwiML) types now return their XML representation from
+    `toString()` instead of JSON, and `toXml()` always prepends the
+    `<?xml version="1.0" encoding="UTF-8"?>` declaration regardless of
+    whether the type is a root element. Use `toXml(false)` to omit it.
+  type: fix
