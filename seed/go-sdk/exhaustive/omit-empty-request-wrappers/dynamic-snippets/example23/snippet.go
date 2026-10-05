@@ -19,7 +19,7 @@ func do() {
     )
     request := &types.ObjectWithUnknownField{
         Unknown: map[string]any{
-            "key": "value",
+            "$ref": "https://example.com/schema",
         },
     }
     client.Endpoints.Object.GetAndReturnWithUnknownField(

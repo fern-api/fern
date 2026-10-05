@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `toString()` instead of JSON, and `toXml()` always prepends the
+        `<?xml version="1.0" encoding="UTF-8"?>` declaration regardless of
+        whether the type is a root element. Use `toXml(false)` to omit it.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 4.24.0
+  changelogEntry:
+    - summary: |
+        Add `addBodyProperty(String, Object)` and `bodyProperties(Map<String, Object>)` request options for sending
+        request body properties that are not part of the SDK yet. They are merged into JSON and form-urlencoded bodies
+        using the keys as given, override properties with the same key, and are sent as a JSON body for endpoints
+        without one. Multipart (file upload) requests are not supported.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 4.23.3
+  changelogEntry:
+    - summary: |
+        Fix several runtime correctness issues in generated SDKs:
+        cursor pagers now stop when the next cursor is empty, absent, null, or an empty string;
+        nested offset and cursor pagination builds an omitted parent options object so the page advances;
+        pagination compiles with `collapse-optional-nullable: true` when the cursor is `OptionalNullable`;
+        `4XX`/`5XX` wildcard error responses map to their typed errors, with exact status codes taking precedence;
+        header auth scheme headers and credential-like global headers (for example `PLAID-CLIENT-ID`) are redacted in debug logs;
+        cancelling an async `CompletableFuture` cancels the underlying OkHttp call;
+        the README environment example uses the generated constant name (for example `Environment.PRODUCTION`);
+        and `reference.md` shows `LocalDate` for date parameters when `use-local-date-for-dates` is enabled.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 4.23.2
   changelogEntry:
     - summary: |

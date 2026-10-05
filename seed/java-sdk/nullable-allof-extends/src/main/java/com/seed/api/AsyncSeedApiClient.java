@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.types.RootObject;
 import java.util.concurrent.CompletableFuture;
 
@@ -29,47 +30,91 @@ public class AsyncSeedApiClient implements AutoCloseable {
      * Returns a RootObject which inherits from a nullable schema.
      */
     public CompletableFuture<RootObject> getTest() {
-        return this.rawClient.getTest().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RootObject>> rawFuture = this.rawClient.getTest();
+        CompletableFuture<RootObject> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns a RootObject which inherits from a nullable schema.
      */
     public CompletableFuture<RootObject> getTest(RequestOptions requestOptions) {
-        return this.rawClient.getTest(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RootObject>> rawFuture = this.rawClient.getTest(requestOptions);
+        CompletableFuture<RootObject> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Creates a test object with nullable allOf in request body.
      */
     public CompletableFuture<RootObject> createTest() {
-        return this.rawClient.createTest().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RootObject>> rawFuture = this.rawClient.createTest();
+        CompletableFuture<RootObject> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Creates a test object with nullable allOf in request body.
      */
     public CompletableFuture<RootObject> createTest(RequestOptions requestOptions) {
-        return this.rawClient.createTest(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RootObject>> rawFuture = this.rawClient.createTest(requestOptions);
+        CompletableFuture<RootObject> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Creates a test object with nullable allOf in request body.
      */
     public CompletableFuture<RootObject> createTest(RootObject request) {
-        return this.rawClient.createTest(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RootObject>> rawFuture = this.rawClient.createTest(request);
+        CompletableFuture<RootObject> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Creates a test object with nullable allOf in request body.
      */
     public CompletableFuture<RootObject> createTest(RootObject request, RequestOptions requestOptions) {
-        return this.rawClient.createTest(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<RootObject>> rawFuture =
+                this.rawClient.createTest(request, requestOptions);
+        CompletableFuture<RootObject> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

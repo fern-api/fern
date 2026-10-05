@@ -15,6 +15,8 @@ import { globalHeaderParameterName } from "../utils/credentialNames.js";
 
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
+/** Client keyword exposed when `allowCustomHttpClient` is enabled. */
+const HTTP_CLIENT_PARAMETER_NAME = "http_client";
 
 /** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
 const AUTH_PROVIDER_MEMBER = "@auth_provider";
@@ -31,6 +33,7 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "base_url",
     "environment",
     "max_retries",
+    "timeout",
     "token",
     "client",
     "request_options",
@@ -159,6 +162,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(maxRetriesParameter);
 
+        parameters.push(
+            ruby.parameters.keyword({
+                name: "timeout",
+                type: ruby.Type.class_({ name: "Numeric" }),
+                initializer: ruby.TypeLiteral.integer(60),
+                docs: "The default timeout in seconds for each request."
+            })
+        );
+
         // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
         // `app_info` keyword whose product token is appended to the User-Agent header.
         // Gated so flag-off client.rb keeps byte-identical output.
@@ -169,6 +181,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
                     initializer: ruby.nilValue(),
                     docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
+
+        // When the opt-in `allowCustomHttpClient` config is enabled, expose an optional
+        // `http_client` keyword that replaces the RawClient's Net::HTTP transport.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitHttpClientOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: HTTP_CLIENT_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.object("Object")),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional HTTP transport responding to `request(url, http_request)` and returning a Net::HTTPResponse. Replaces the built-in Net::HTTP connection, e.g. to add a proxy, custom TLS, or request/response interceptors; the transport owns its own timeouts."
                 })
             );
         }
@@ -215,6 +241,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // that scheme's credentials were actually provided. For a single mandatory
         // provider scheme we keep the existing eager behavior.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+
+        const requiredCredentialChecks = this.getRequiredCredentialChecks({ isEndpointSecurity, anyAuthMultiScheme });
+        if (requiredCredentialChecks.length > 0) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(`${requiredCredentialChecks.join("\n")}\n`);
+                })
+            );
+        }
 
         if (isEndpointSecurity) {
             // Under endpoint-security every provider-based scheme may be routed to by
@@ -399,13 +434,52 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // and the RawClient simply resolves no auth headers.
                     writer.writeLine(`auth_provider: @auth_provider,`);
                 }
-                writer.writeLine(`max_retries: max_retries`);
+                if (this.emitHttpClientOption()) {
+                    writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+                }
+                writer.writeLine(`max_retries: max_retries,`);
+                writer.writeLine(`timeout: timeout`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })
         );
 
         return method;
+    }
+
+    /**
+     * Under `requireAuthCredentials`, raises `ArgumentError` from the constructor when a
+     * mandatory bearer or header credential is neither passed nor set in its environment
+     * variable, instead of sending an empty auth header on every request.
+     */
+    private getRequiredCredentialChecks({
+        isEndpointSecurity,
+        anyAuthMultiScheme
+    }: {
+        isEndpointSecurity: boolean;
+        anyAuthMultiScheme: boolean;
+    }): string[] {
+        if (this.context.customConfig.requireAuthCredentials !== true || isEndpointSecurity || anyAuthMultiScheme) {
+            return [];
+        }
+        const checks: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            let paramName: string;
+            let envVar: string | undefined;
+            if (scheme.type === "bearer") {
+                paramName = this.context.getBearerTokenParameterName(scheme.token);
+                envVar = scheme.tokenEnvVar;
+            } else if (scheme.type === "header") {
+                paramName = this.context.getCredentialParameterName(scheme.name);
+                envVar = scheme.headerEnvVar;
+            } else {
+                continue;
+            }
+            const hint =
+                envVar != null ? `pass ${paramName}: or set the ${envVar} environment variable` : `pass ${paramName}:`;
+            checks.push(`raise ArgumentError, "${paramName} is required; ${hint}" if ${paramName}.to_s.empty?`);
+        }
+        return checks;
     }
 
     /**
@@ -582,7 +656,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine(`},`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+            }
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -744,7 +822,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             writer.writeLine(`"X-Fern-Language" => "Ruby"`);
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine(`},`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+            }
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -1356,6 +1438,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
+     * Whether to expose the opt-in `http_client` client keyword and pass it through to
+     * every RawClient the client constructs (including the unauthenticated client used
+     * for OAuth / inferred-auth token requests). Gated on `allowCustomHttpClient` so
+     * flag-off output stays byte-identical.
+     */
+    private emitHttpClientOption(): boolean {
+        return this.context.customConfig.allowCustomHttpClient === true;
+    }
+
+    /**
      * Wraps a base User-Agent expression so the caller-supplied `app_info` product
      * token is appended (via RawClient.append_app_info). Returns the base expression
      * unchanged when appInfo is not enabled, so non-opted-in output is byte-identical.
@@ -1415,13 +1507,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
-        const reservedNames = this.context.respectsAuthSchemeNames()
-            ? new Set([
-                  ...RESERVED_OPTION_NAMES,
-                  ...this.getCredentialParameterNames(),
-                  ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
-              ])
-            : RESERVED_OPTION_NAMES;
+        const reservedNames = new Set(RESERVED_OPTION_NAMES);
+        if (this.emitHttpClientOption()) {
+            reservedNames.add(HTTP_CLIENT_PARAMETER_NAME);
+        }
+        if (this.context.respectsAuthSchemeNames()) {
+            for (const name of this.getCredentialParameterNames()) {
+                reservedNames.add(name);
+            }
+            for (const header of this.getNonLiteralGlobalHeaders()) {
+                reservedNames.add(this.getGlobalHeaderOptionName(header));
+            }
+        }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;

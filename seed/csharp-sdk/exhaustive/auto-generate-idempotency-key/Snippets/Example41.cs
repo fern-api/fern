@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using System.Text;
+using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -11,9 +11,11 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.UploadWithPathAsync(
-            param: "upload-path",
-            request: new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+        await client.Endpoints.Params.ModifyWithInlinePathAsync(
+            new ModifyResourceAtInlinedPath {
+                Param = "param",
+                Body = "string"
+            }
         );
     }
 

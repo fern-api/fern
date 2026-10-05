@@ -201,6 +201,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -340,6 +341,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -374,6 +376,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -436,6 +439,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -482,6 +486,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -519,6 +524,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -562,6 +568,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -596,6 +603,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -633,6 +641,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -669,6 +678,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -733,6 +743,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -899,6 +910,7 @@ func (g *Generator) generateRootService(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -958,6 +970,7 @@ func (g *Generator) generateService(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -1020,6 +1033,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -1077,6 +1091,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
@@ -1455,6 +1470,7 @@ func newClientTestFile(
 		false,
 		false,
 		true,
+		false,
 		false,
 		false,
 		userAgentConfig{},

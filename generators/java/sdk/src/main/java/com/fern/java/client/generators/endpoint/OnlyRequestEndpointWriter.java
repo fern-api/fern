@@ -38,6 +38,7 @@ import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.FormBody;
@@ -219,7 +220,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             if (contentTypeDependsOnBody) {
                 builder.add(";\n")
                         .unindent()
-                        .beginControlFlow("if ($N != null)", "request")
+                        .beginControlFlow("if ($N != null || $L)", "request", hasBodyPropertiesCodeBlock())
                         .addStatement(
                                 "$L.addHeader($S, $S)",
                                 AbstractEndpointWriter.REQUEST_BUILDER_NAME,
@@ -449,13 +450,21 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 }
 
                 if (mayBeOmitted) {
-                    codeBlock.beginControlFlow("if ($N != null)", "request");
+                    codeBlock.beginControlFlow("if ($N != null || $L)", "request", hasBodyPropertiesCodeBlock());
                 } else if (requestBodyGetterName.isPresent()) {
-                    codeBlock.beginControlFlow("if (request.$L().isPresent())", requestBodyGetterName.get());
+                    codeBlock.beginControlFlow(
+                            "if (request.$L().isPresent() || $L)",
+                            requestBodyGetterName.get(),
+                            hasBodyPropertiesCodeBlock());
                 } else {
-                    codeBlock.beginControlFlow("if ($N.isPresent())", "request");
+                    codeBlock.beginControlFlow("if ($N.isPresent() || $L)", "request", hasBodyPropertiesCodeBlock());
                 }
             }
+
+            // With body properties the body is serialized even when it was left out, so it can't be unwrapped.
+            CodeBlock jsonBody = isOptional && requestBodyGetterName.isPresent()
+                    ? CodeBlock.of("request.$L().orElse(null)", requestBodyGetterName.get())
+                    : requestBodyGetter;
 
             CodeBlock requestBodyContentType = CodeBlock.of(
                     "$T.$L",
@@ -468,12 +477,14 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             codeBlock
                     .addStatement(
-                            "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
+                            "$L = $T.create($T.$L.writeValueAsBytes($T.merge($L, $L)), $L)",
                             variables.getOkhttpRequestBodyName(),
                             RequestBody.class,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
-                            requestBodyGetter,
+                            bodyPropertiesClassName(),
+                            jsonBody,
+                            bodyPropertiesCodeBlock(),
                             requestBodyContentType)
                     .endControlFlow();
             if (isOptional || mayBeOmitted) {
@@ -497,6 +508,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     variables.getOkhttpRequestBodyName() + "Builder",
                     FormBody.class);
             codeBlock.beginControlFlow("try");
+            codeBlock.addStatement(
+                    "$T<$T, $T> formParams = new $T<>()", Map.class, String.class, Object.class, LinkedHashMap.class);
 
             if (isOptional) {
                 if (requestBodyGetterName.isPresent()) {
@@ -508,10 +521,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             // Convert the request object to a Map using Jackson, preserving wire names from @JsonProperty
             codeBlock.addStatement(
-                    "$T<$T, $T> formParams = $T.$L.convertValue($L, new com.fasterxml.jackson.core.type.TypeReference<$T<$T, $T>>() {})",
-                    Map.class,
-                    String.class,
-                    Object.class,
+                    "formParams.putAll($T.$L.convertValue($L, new com.fasterxml.jackson.core.type.TypeReference<$T<$T, $T>>() {}))",
                     generatedObjectMapper.getClassName(),
                     generatedObjectMapper.jsonMapperStaticField().name,
                     requestBodyGetter,
@@ -519,8 +529,17 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     String.class,
                     Object.class);
 
+            if (isOptional) {
+                codeBlock.endControlFlow();
+            }
+
             codeBlock.beginControlFlow(
-                    "for ($T.Entry<$T, $T> entry : formParams.entrySet())", Map.class, String.class, Object.class);
+                    "for ($T.Entry<$T, $T> entry : $T.mergeFormParams(formParams, $L).entrySet())",
+                    Map.class,
+                    String.class,
+                    Object.class,
+                    bodyPropertiesClassName(),
+                    bodyPropertiesCodeBlock());
             codeBlock.beginControlFlow("if (entry.getValue() != null)");
             codeBlock.addStatement(
                     "$L.add(entry.getKey(), $T.valueOf(entry.getValue()))",
@@ -528,10 +547,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     String.class);
             codeBlock.endControlFlow();
             codeBlock.endControlFlow();
-
-            if (isOptional) {
-                codeBlock.endControlFlow();
-            }
 
             codeBlock.endControlFlow();
             codeBlock.beginControlFlow("catch($T e)", Exception.class);

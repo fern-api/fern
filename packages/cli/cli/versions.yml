@@ -1,4 +1,111 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.146.1
+  changelogEntry:
+    - summary: |
+        Support building package artifacts from SDKs generated through SDK Gen API with `fern generate --package`, including pnpm-based TypeScript projects.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.146.0
+  changelogEntry:
+    - summary: |
+        SDK variables can now declare an environment variable fallback. In `api.yml`, use the
+        detailed form `variables: { myVar: { type: string, env: MY_VAR } }`; in OpenAPI, add
+        `x-fern-env: MY_VAR` to an `x-fern-sdk-variables` entry. The value is emitted as
+        `VariableDeclaration.envVar` in the IR so generators can make the variable optional at
+        client construction and read it from the environment when it is not passed explicitly.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.145.2
+  changelogEntry:
+    - summary: |
+        `fern org get` now names the org, shows when the CLI version policy was last updated, and shows
+        the running CLI version (e.g. `Org "acme" requires Fern CLI >= 5.106.0 (updated 2026-08-26).
+        You're on 5.140.2.`), so the output no longer reads like an error.
+      type: fix
+    - summary: |
+        `fern upgrade` no longer warns that the running CLI is outside the org's version policy ("Version
+        redirection is disabled, so it was not upgraded"), since the upgrade itself moves the project
+        to a new version.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.145.1
+  changelogEntry:
+    - summary: |
+        `fern docs dev` no longer reports a false `api-section-has-definition` error for every `api:`
+        navigation item. The dev server validates docs without loading API workspaces, so the check
+        is now skipped there; `fern check` and `fern generate --docs` still run it.
+      type: fix
+    - summary: |
+        Upgrade to SDK Config 0.6 and omit defaulted optional fields from SDK Config payloads sent to local and remote generators.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.145.0
+  changelogEntry:
+    - summary: |
+        `fern export` now accepts a repeatable `--audience` flag. When set, the exported OpenAPI spec only
+        includes the endpoints, webhooks, environments, and schemas required for those audiences
+        (e.g. `fern export openapi.yml --audience public`).
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.144.3
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --preview --id <id> --no-prompt` no longer asks for
+        confirmation when the preview ID already exists, so an existing preview can
+        be overwritten non-interactively (as `--force` and CI environments already
+        allowed).
+      type: fix
+    - summary: |
+        Fix several gaps in docs translation navigation overlays: the `display-name`
+        of a changelog tab is now applied; overlays can now translate `link` labels,
+        `api` reference titles, API package titles and endpoint titles (via the api
+        node's `layout`); positional matching of sections/pages no longer shifts after
+        a sibling that was matched by an explicit slug; API layout `section` overlays
+        now apply to their API package nodes; endpoint overlays match by HTTP method
+        when it is unique among siblings; and multi-segment explicit overlay slugs
+        (e.g. `customization/voice`) now match. Overlay endpoint titles are no longer
+        reverted to the translated spec's endpoint name when that name is unchanged
+        from the default locale.
+      type: fix
+    - summary: |
+        Translated OpenAPI specs now fall back to the v2 parser when the v3 parser
+        fails, matching the default-locale API build, instead of falling back to the
+        untranslated API definition. Translated specs are also built when
+        `experimental.openapi-parser-v3` is disabled.
+      type: fix
+    - summary: |
+        Pages served in a translated locale with default-locale content (no
+        translated source file, or an API without a translated spec) are now
+        published as `noindex`, so they are excluded from that locale's sitemap and
+        `llms.txt` instead of being indexed as the locale.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 5.144.2
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` prints non-fatal library-docs parser warnings (e.g. a skipped Cython module).
+      type: fix
+    - summary: |
+        Python library docs: fix 404 links to empty submodules and to private modules, emit cross-page
+        links as relative `.mdx` references so generated folders work under any navigation section,
+        use the shortest public import path in signatures, and link types named in docstring
+        `Parameters`/`Returns` sections to their class pages.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 5.144.1
+  changelogEntry:
+    - summary: |
+        Resolve generators.yml `latest` to an exact generator version before preparing and submitting SDK Gen API runtime bundles.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 5.144.0
   changelogEntry:
     - summary: |

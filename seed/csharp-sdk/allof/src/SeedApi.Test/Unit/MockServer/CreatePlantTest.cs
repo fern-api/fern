@@ -13,11 +13,11 @@ public class CreatePlantTest : BaseMockServerTest
     {
         const string requestJson = """
             {
+              "commonName": "commonName",
+              "wateringFrequency": "daily",
               "sunExposure": "full",
               "plantedAt": "2023-01-15",
               "soilType": "soilType",
-              "commonName": "commonName",
-              "wateringFrequency": "daily",
               "species": "species",
               "family": "family",
               "genus": "genus"
@@ -51,11 +51,11 @@ public class CreatePlantTest : BaseMockServerTest
         var response = await Client.CreatePlantAsync(
             new PlantPost
             {
+                CommonName = "commonName",
+                WateringFrequency = PlantBaseWateringFrequency.Daily,
                 SunExposure = PlantPostSunExposure.Full,
                 PlantedAt = new DateOnly(2023, 1, 15),
                 SoilType = "soilType",
-                CommonName = "commonName",
-                WateringFrequency = PlantBaseWateringFrequency.Daily,
                 Species = "species",
                 Family = "family",
                 Genus = "genus",
@@ -72,6 +72,8 @@ public class CreatePlantTest : BaseMockServerTest
               "species": "species",
               "family": "family",
               "genus": "genus",
+              "commonName": "commonName",
+              "wateringFrequency": "daily",
               "sunExposure": "full"
             }
             """;
@@ -106,6 +108,8 @@ public class CreatePlantTest : BaseMockServerTest
                 Species = "species",
                 Family = "family",
                 Genus = "genus",
+                CommonName = "commonName",
+                WateringFrequency = PlantBaseWateringFrequency.Daily,
                 SunExposure = PlantPostSunExposure.Full,
             }
         );

@@ -30,6 +30,13 @@ public record UpdateFooRequest
     [JsonPropertyName("non_nullable_text")]
     public string? NonNullableText { get; set; }
 
+    /// <summary>
+    /// Must be sent, but may be null to clear the value
+    /// </summary>
+    [Nullable]
+    [JsonPropertyName("required_nullable_text")]
+    public string? RequiredNullableText { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {

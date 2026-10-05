@@ -4,6 +4,7 @@
 package com.seed.api.resources.oauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
@@ -14,6 +15,8 @@ import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.oauth.requests.GetTokenRequest;
 import com.seed.api.resources.oauth.types.GetTokenResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -44,8 +47,14 @@ public class RawOauthClient {
         }
         FormBody.Builder body = new FormBody.Builder();
         try {
-            body.add("client_id", String.valueOf(request.getClientId()));
-            body.add("client_secret", String.valueOf(request.getClientSecret()));
+            Map<String, Object> formParams = new LinkedHashMap<>();
+            formParams.put("client_id", request.getClientId());
+            formParams.put("client_secret", request.getClientSecret());
+            for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
+                            formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
+                    .entrySet()) {
+                body.add(entry.getKey(), String.valueOf(entry.getValue()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

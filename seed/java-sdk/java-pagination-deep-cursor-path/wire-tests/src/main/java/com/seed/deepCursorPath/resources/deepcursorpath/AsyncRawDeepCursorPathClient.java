@@ -98,7 +98,8 @@ public class AsyncRawDeepCursorPathClient {
         }
         CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -109,23 +110,31 @@ public class AsyncRawDeepCursorPathClient {
                                         responseBodyString,
                                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                        Optional<D> d = request.getB()
+                        Optional<D> d = Optional.of(request.getB()
                                 .map(B::getC)
                                 .flatMap(C::getD)
                                 .map((D d_) -> D.builder()
                                         .from(d_)
                                         .startingAfter(startingAfter)
-                                        .build());
-                        Optional<C> c = d.flatMap((D d_) -> request.getB()
+                                        .build())
+                                .orElseGet(() ->
+                                        D.builder().startingAfter(startingAfter).build()));
+                        Optional<C> c = d.map((D d_) -> request.getB()
                                 .map(B::getC)
-                                .map((C c_) -> C.builder().from(c_).d(d_).build()));
-                        Optional<B> b = c.flatMap((C c_) -> request.getB()
-                                .map((B b_) -> B.builder().from(b_).c(c_).build()));
+                                .map((C c_) -> C.builder().from(c_).d(d_).build())
+                                .orElseGet(() -> C.builder().d(d_).build()));
+                        Optional<B> b = c.map((C c_) -> request.getB()
+                                .map((B b_) -> B.builder().from(b_).c(c_).build())
+                                .orElseGet(() -> B.builder().c(c_).build()));
                         A nextRequest = A.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
                                 new SyncPagingIterable<String>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return doThing(nextRequest, requestOptions)
                                                         .get()
@@ -154,6 +163,11 @@ public class AsyncRawDeepCursorPathClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedDeepCursorPathException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -203,7 +217,8 @@ public class AsyncRawDeepCursorPathClient {
         }
         CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -225,7 +240,11 @@ public class AsyncRawDeepCursorPathClient {
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
                                 new SyncPagingIterable<String>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return doThingRequired(nextRequest, requestOptions)
                                                         .get()
@@ -254,6 +273,11 @@ public class AsyncRawDeepCursorPathClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedDeepCursorPathException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -312,7 +336,8 @@ public class AsyncRawDeepCursorPathClient {
         }
         CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -323,26 +348,35 @@ public class AsyncRawDeepCursorPathClient {
                                         responseBodyString,
                                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                        Optional<InlineD> b2 = request.getB()
+                        Optional<InlineD> b2 = Optional.of(request.getB()
                                 .map(InlineB::getC)
                                 .flatMap(InlineC::getB)
                                 .map((InlineD b2_) -> InlineD.builder()
                                         .from(b2_)
                                         .startingAfter(startingAfter)
-                                        .build());
-                        Optional<InlineC> c = b2.flatMap((InlineD b2_) -> request.getB()
+                                        .build())
+                                .orElseGet(() -> InlineD.builder()
+                                        .startingAfter(startingAfter)
+                                        .build()));
+                        Optional<InlineC> c = b2.map((InlineD b2_) -> request.getB()
                                 .map(InlineB::getC)
                                 .map((InlineC c_) ->
-                                        InlineC.builder().from(c_).b(b2_).build()));
-                        Optional<InlineB> b0 = c.flatMap((InlineC c_) -> request.getB()
+                                        InlineC.builder().from(c_).b(b2_).build())
+                                .orElseGet(() -> InlineC.builder().b(b2_).build()));
+                        Optional<InlineB> b0 = c.map((InlineC c_) -> request.getB()
                                 .map((InlineB b0_) ->
-                                        InlineB.builder().from(b0_).c(c_).build()));
+                                        InlineB.builder().from(b0_).c(c_).build())
+                                .orElseGet(() -> InlineB.builder().c(c_).build()));
                         InlineA nextRequest =
                                 InlineA.builder().from(request).b(b0).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
                                 new SyncPagingIterable<String>(
-                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                        startingAfter.isPresent()
+                                                && !startingAfter.get().isEmpty(),
+                                        result,
+                                        parsedResponse,
+                                        () -> {
                                             try {
                                                 return doThingInline(nextRequest, requestOptions)
                                                         .get()
@@ -371,6 +405,11 @@ public class AsyncRawDeepCursorPathClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedDeepCursorPathException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

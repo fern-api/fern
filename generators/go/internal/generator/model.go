@@ -72,7 +72,7 @@ type typeVisitor struct {
 var _ ir.TypeVisitor = (*typeVisitor)(nil)
 
 func (t *typeVisitor) VisitAlias(alias *ir.AliasTypeDeclaration) error {
-	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false))
+	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false, t.writer.legacyNullableAliasPointers))
 	t.writer.P()
 	return nil
 }
@@ -182,7 +182,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
-				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false)
+				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false, t.writer.legacyNullableAliasPointers)
 				propertyTypes = append(propertyTypes, goType)
 				isRequiredNullable := isNullableType(property.ValueType, t.writer.types)
 				isOptionalNullable := !isRequiredNullable && isOptionalNullableType(property.ValueType, t.writer.types)
@@ -421,24 +421,26 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
-	// Implement fmt.Stringer.
-	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
-	t.writer.P("if ", receiver, " == nil {")
-	t.writer.P("return \"<nil>\"")
-	t.writer.P("}")
-	if t.includeRawJSON {
-		t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
-		t.writer.P("if value, err := internal.StringifyJSON(", receiver, ".rawJSON); err == nil {")
+	// Implement fmt.Stringer (xml-encoded types implement it in writeXmlObjectMethods).
+	if t.xml == nil {
+		t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return \"<nil>\"")
+		t.writer.P("}")
+		if t.includeRawJSON {
+			t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+			t.writer.P("if value, err := internal.StringifyJSON(", receiver, ".rawJSON); err == nil {")
+			t.writer.P("return value")
+			t.writer.P("}")
+			t.writer.P("}")
+		}
+		t.writer.P("if value, err := internal.StringifyJSON(", receiver, "); err == nil {")
 		t.writer.P("return value")
 		t.writer.P("}")
+		t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
 		t.writer.P("}")
+		t.writer.P()
 	}
-	t.writer.P("if value, err := internal.StringifyJSON(", receiver, "); err == nil {")
-	t.writer.P("return value")
-	t.writer.P("}")
-	t.writer.P(`return fmt.Sprintf("%#v", `, receiver, ")")
-	t.writer.P("}")
-	t.writer.P()
 
 	// JSON marshaling and String() tests are already added above (lines 259-260)
 
@@ -540,14 +542,14 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			continue
 		}
-		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false))
+		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false, t.writer.legacyNullableAliasPointers))
 	}
 	// We handle the union's literals separate from the extended and base
 	// literals because we only want to set them if they were actually
 	// specified by the user.
 	var unionLiterals []*literal
 	for _, unionType := range union.Types {
-		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.writer.legacyNullableAliasPointers)
 		typeName := singleUnionProperty.goType
 		if typeName == "" {
 			// If the union has no properties, there's nothing for us to do.
@@ -591,7 +593,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P("func New", t.typeName, "With", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "() *", t.typeName, "{")
 			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\", ", fieldName, ": ", literalToValue(literal), "}")
 		} else if t.unionVersion != UnionVersionV1 {
-			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.writer.legacyNullableAliasPointers)
 			t.writer.P("func New", t.typeName, "From", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "(value ", singleUnionProperty.goType, ") *", t.typeName, "{")
 			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\", ", fieldName, ": value}")
 		} else {
@@ -643,7 +645,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if _, ok := inheritedBasePropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
 			continue
 		}
-		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
+		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false, t.writer.legacyNullableAliasPointers), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 		}
@@ -700,7 +702,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			//    Boolean bool  `json:"value"`
 			//  }
 			t.writer.P("var valueUnmarshaler struct {")
-			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.writer.legacyNullableAliasPointers)
 			t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
 			t.writer.P("}")
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
@@ -809,12 +811,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
-			t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
+			t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false, t.writer.legacyNullableAliasPointers), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		}
 		for _, literal := range literals {
 			t.writer.P(goExportedFieldName(literal.Name.Name.PascalCase.UnsafeName), " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
 		}
-		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.writer.legacyNullableAliasPointers)
 		typeName := singleUnionProperty.goType
 		switch unionType.Shape.PropertiesType {
 		case "singleProperty":
@@ -872,7 +874,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")
 	for _, unionType := range union.Types {
-		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.writer.legacyNullableAliasPointers)
 		t.writer.P("Visit", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "(", singleUnionProperty.goType, ") error")
 	}
 	t.writer.P("}")
@@ -1121,7 +1123,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				field:                        field,
 				variable:                     fmt.Sprintf("value%s", strings.Title(field)),
 				caseName:                     firstLetterToLower(field),
-				value:                        typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+				value:                        typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false, t.writer.legacyNullableAliasPointers),
 				zeroValue:                    zeroValueForTypeReference(unionMember.Type, t.writer.types),
 				docs:                         unionMember.Docs,
 				literal:                      literal,
@@ -1673,7 +1675,7 @@ func (t *typeVisitor) visitObjectProperties(
 		if date := maybeDateProperty(property.ValueType, property.Name, false, t.writer.types); date != nil {
 			dates = append(dates, date)
 		}
-		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
+		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals, t.writer.legacyNullableAliasPointers)
 		fieldName := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
 		if includeJSONTags {
 			var structTag string
@@ -1737,8 +1739,8 @@ func isOptionalOrNullableType(typeReference *ir.TypeReference) bool {
 
 // processTypeFieldForOptional handles the common logic for processing optional/nullable type fields
 // Returns the Go type, zero value, whether the field needs dereferencing, and whether the field is optional
-func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
-	originalGoType := typeReferenceToGoType(typeReference, types, scope, baseImportPath, importPath, false)
+func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool, legacyNullableAliasPointers bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
+	originalGoType := typeReferenceToGoType(typeReference, types, scope, baseImportPath, importPath, false, legacyNullableAliasPointers)
 	isOptional = isOptionalOrNullableType(typeReference)
 
 	if isOptional && gettersPassByValue {
@@ -1810,7 +1812,7 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
-		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue, t.writer.legacyNullableAliasPointers)
 		fields = append(fields, &typeField{
 			Name:             goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 			GoType:           goType,
@@ -1954,7 +1956,7 @@ func (t *typeVisitor) unionInheritedBasePropertyNames(union *ir.UnionTypeDeclara
 		}
 		// Go-render widening: dedupe when every variant carries a Go-render-equivalent property,
 		// even though the IR's conservative structural equality did not mark it.
-		baseGetterType, _, _, _ := processTypeFieldForOptional(property.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		baseGetterType, _, _, _ := processTypeFieldForOptional(property.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue, t.writer.legacyNullableAliasPointers)
 		if t.everyVariantHasMatchingGetter(variantProperties, fieldName, baseGetterType, comparisonScope) {
 			inherited[fieldName] = struct{}{}
 		}
@@ -1981,7 +1983,7 @@ func (t *typeVisitor) everyVariantHasMatchingGetter(
 		if isLiteralType(variantProperty.ValueType, t.writer.types) {
 			return false
 		}
-		variantGetterType, _, _, _ := processTypeFieldForOptional(variantProperty.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		variantGetterType, _, _, _ := processTypeFieldForOptional(variantProperty.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue, t.writer.legacyNullableAliasPointers)
 		if variantGetterType != baseGetterType {
 			return false
 		}
@@ -2029,7 +2031,7 @@ func (t *typeVisitor) writeUnionInheritedBasePropertyGetters(
 		if _, ok := inheritedBasePropertyNames[fieldName]; !ok {
 			continue
 		}
-		goType, zeroValue, _, _ := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		goType, zeroValue, _, _ := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue, t.writer.legacyNullableAliasPointers)
 		t.writer.P("func (", receiver, " *", t.typeName, ") Get", fieldName, "()", goType, " {")
 		t.writer.P("if ", receiver, " == nil {")
 		t.writer.P("return ", zeroValue)
@@ -2082,7 +2084,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration, inhe
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
-		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue, t.writer.legacyNullableAliasPointers)
 		fields = append(fields, &typeField{
 			Name:             goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 			GoType:           goType,
@@ -2101,7 +2103,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration, inhe
 }
 
 func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
-	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.writer.legacyNullableAliasPointers)
 	return &typeField{
 		Name:             goExportedFieldName(singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName),
 		GoType:           singleUnionProperty.goType,
@@ -2117,7 +2119,7 @@ func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion 
 		if isLiteralType(member.Type, t.writer.types) {
 			continue
 		}
-		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue, t.writer.legacyNullableAliasPointers)
 		typeFields = append(typeFields, &typeField{
 			Name:             typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
 			GoType:           goType,
@@ -2138,13 +2140,15 @@ type typeReferenceVisitor struct {
 	scope            *gospec.Scope
 	types            map[common.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
+
+	legacyNullableAliasPointers bool
 }
 
 // Compile-time assertion.
 var _ ir.TypeReferenceVisitor = (*typeReferenceVisitor)(nil)
 
 func (t *typeReferenceVisitor) VisitContainer(container *ir.ContainerType) error {
-	t.value = containerTypeToGoType(container, t.types, t.scope, t.baseImportPath, t.importPath, t.includeOptionals)
+	t.value = containerTypeToGoType(container, t.types, t.scope, t.baseImportPath, t.importPath, t.includeOptionals, t.legacyNullableAliasPointers)
 	return nil
 }
 
@@ -2180,18 +2184,20 @@ type containerTypeVisitor struct {
 	scope            *gospec.Scope
 	types            map[common.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
+
+	legacyNullableAliasPointers bool
 }
 
 // Compile-time assertion.
 var _ ir.ContainerTypeVisitor = (*containerTypeVisitor)(nil)
 
 func (c *containerTypeVisitor) VisitList(list *ir.TypeReference) error {
-	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(list, c.types, c.scope, c.baseImportPath, c.importPath, false))
+	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(list, c.types, c.scope, c.baseImportPath, c.importPath, false, c.legacyNullableAliasPointers))
 	return nil
 }
 
 func (c *containerTypeVisitor) VisitMap(mapType *ir.MapType) error {
-	c.value = fmt.Sprintf("map[%s]%s", typeReferenceToGoType(mapType.KeyType, c.types, c.scope, c.baseImportPath, c.importPath, false), typeReferenceToGoType(mapType.ValueType, c.types, c.scope, c.baseImportPath, c.importPath, false))
+	c.value = fmt.Sprintf("map[%s]%s", typeReferenceToGoType(mapType.KeyType, c.types, c.scope, c.baseImportPath, c.importPath, false, c.legacyNullableAliasPointers), typeReferenceToGoType(mapType.ValueType, c.types, c.scope, c.baseImportPath, c.importPath, false, c.legacyNullableAliasPointers))
 	return nil
 }
 
@@ -2207,7 +2213,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 	//
 	// We also don't want to specify pointers for any container types because those
 	// values are already nil-able.
-	value := strings.TrimLeft(typeReferenceToGoType(optionalOrNullable, c.types, c.scope, c.baseImportPath, c.importPath, c.includeOptionals), "*")
+	value := strings.TrimLeft(typeReferenceToGoType(optionalOrNullable, c.types, c.scope, c.baseImportPath, c.importPath, c.includeOptionals, c.legacyNullableAliasPointers), "*")
 	if c.includeOptionals {
 		c.value = fmt.Sprintf("*core.Optional[%s]", value)
 		return nil
@@ -2225,7 +2231,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 		// If the collapsed inner type is a named alias that already resolves
 		// to a pointer type, skip adding another pointer to avoid double
 		// pointers (e.g. optional<nullable<named(NullableDateAlias)>>).
-		if optionalOrNullableContainer.Named != nil && isAliasToPointerType(optionalOrNullableContainer.Named.TypeId, c.types) {
+		if optionalOrNullableContainer.Named != nil && omitsPointerForAlias(optionalOrNullableContainer.Named.TypeId, c.types, c.legacyNullableAliasPointers) {
 			c.value = value
 			return nil
 		}
@@ -2236,7 +2242,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 	// If the inner type is a named alias that already resolves to a pointer
 	// type (e.g. nullable<named(ISO8601DateNullable)> where the alias target
 	// is nullable<date> = *time.Time), skip adding another pointer.
-	if optionalOrNullable.Named != nil && isAliasToPointerType(optionalOrNullable.Named.TypeId, c.types) {
+	if optionalOrNullable.Named != nil && omitsPointerForAlias(optionalOrNullable.Named.TypeId, c.types, c.legacyNullableAliasPointers) {
 		c.value = value
 		return nil
 	}
@@ -2251,7 +2257,7 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 }
 
 func (c *containerTypeVisitor) VisitSet(set *ir.TypeReference) error {
-	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(set, c.types, c.scope, c.baseImportPath, c.importPath, false))
+	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(set, c.types, c.scope, c.baseImportPath, c.importPath, false, c.legacyNullableAliasPointers))
 	return nil
 }
 
@@ -2274,6 +2280,8 @@ type singleUnionTypePropertiesVisitor struct {
 	importPath     string
 	scope          *gospec.Scope
 	types          map[common.TypeId]*ir.TypeDeclaration
+
+	legacyNullableAliasPointers bool
 }
 
 // Compile-time assertion.
@@ -2295,7 +2303,7 @@ func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *ir
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.SingleUnionTypeProperty) error {
-	c.goType = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false)
+	c.goType = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false, c.legacyNullableAliasPointers)
 	c.zeroValue = zeroValueForTypeReference(property.Type, c.types)
 
 	if date := maybeDateProperty(property.Type, property.Name, false, c.types); date != nil {
@@ -2407,13 +2415,15 @@ func typeReferenceToGoType(
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
+	legacyNullableAliasPointers bool,
 ) string {
 	visitor := &typeReferenceVisitor{
-		baseImportPath:   baseImportPath,
-		importPath:       importPath,
-		scope:            scope,
-		types:            types,
-		includeOptionals: includeOptionals,
+		baseImportPath:              baseImportPath,
+		importPath:                  importPath,
+		scope:                       scope,
+		types:                       types,
+		includeOptionals:            includeOptionals,
+		legacyNullableAliasPointers: legacyNullableAliasPointers,
 	}
 	_ = typeReference.Accept(visitor)
 	return visitor.value
@@ -2427,13 +2437,15 @@ func containerTypeToGoType(
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
+	legacyNullableAliasPointers bool,
 ) string {
 	visitor := &containerTypeVisitor{
-		baseImportPath:   baseImportPath,
-		importPath:       importPath,
-		scope:            scope,
-		types:            types,
-		includeOptionals: includeOptionals,
+		baseImportPath:              baseImportPath,
+		importPath:                  importPath,
+		scope:                       scope,
+		types:                       types,
+		includeOptionals:            includeOptionals,
+		legacyNullableAliasPointers: legacyNullableAliasPointers,
 	}
 	_ = containerType.Accept(visitor)
 	return visitor.value
@@ -2466,12 +2478,14 @@ func singleUnionTypePropertiesToGoType(
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
+	legacyNullableAliasPointers bool,
 ) *singleUnionProperty {
 	visitor := &singleUnionTypePropertiesVisitor{
-		baseImportPath: baseImportPath,
-		importPath:     importPath,
-		scope:          scope,
-		types:          types,
+		baseImportPath:              baseImportPath,
+		importPath:                  importPath,
+		scope:                       scope,
+		types:                       types,
+		legacyNullableAliasPointers: legacyNullableAliasPointers,
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return &singleUnionProperty{
@@ -2643,6 +2657,52 @@ func isPointer(typeDeclaration *ir.TypeDeclaration) bool {
 	}
 	// Unreachable.
 	return false
+}
+
+// omitsPointerForAlias reports whether an optional reference to the given type
+// should omit its outer pointer because the alias already renders as a pointer.
+// When legacyNullableAliasPointers is set, the outer pointer is kept to match
+// SDKs generated before v1.46.1.
+// Date and datetime aliases always omit it because their fields are marshaled
+// through *time.Time.
+func omitsPointerForAlias(typeId common.TypeId, types map[common.TypeId]*ir.TypeDeclaration, legacyNullableAliasPointers bool) bool {
+	if !isAliasToPointerType(typeId, types) {
+		return false
+	}
+	if !legacyNullableAliasPointers {
+		return true
+	}
+	return isAliasToDateType(typeId, types)
+}
+
+// isAliasToDateType reports whether the alias chain starting at typeId resolves
+// to an optional or nullable date or datetime primitive.
+func isAliasToDateType(typeId common.TypeId, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	seen := make(map[common.TypeId]struct{})
+	for {
+		if _, ok := seen[typeId]; ok {
+			return false
+		}
+		seen[typeId] = struct{}{}
+		td := types[typeId]
+		if td == nil || td.Shape.Alias == nil {
+			return false
+		}
+		aliasOf := td.Shape.Alias.AliasOf
+		for aliasOf.Container != nil && (aliasOf.Container.Optional != nil || aliasOf.Container.Nullable != nil) {
+			if aliasOf.Container.Optional != nil {
+				aliasOf = aliasOf.Container.Optional
+			} else {
+				aliasOf = aliasOf.Container.Nullable
+			}
+		}
+		if aliasOf.Named != nil {
+			typeId = aliasOf.Named.TypeId
+			continue
+		}
+		return aliasOf.Primitive != nil &&
+			(aliasOf.Primitive.V1 == common.PrimitiveTypeV1Date || aliasOf.Primitive.V1 == common.PrimitiveTypeV1DateTime)
+	}
 }
 
 // isAliasToPointerType checks if a named type is an alias that already

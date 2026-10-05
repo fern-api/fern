@@ -41,32 +41,32 @@ public class CatalogClient {
                 .body();
     }
 
-    public CatalogImage createCatalogImage(Optional<File> imageFile, InputStream stream, String filename) {
-        return this.rawClient.createCatalogImage(imageFile, stream, filename).body();
+    public CatalogImage createCatalogImage(CreateCatalogImageBody request, InputStream stream, String filename) {
+        return this.rawClient.createCatalogImage(request, stream, filename).body();
     }
 
     public CatalogImage createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+            CreateCatalogImageBody request, InputStream stream, String filename, MediaType mediaType) {
         return this.rawClient
-                .createCatalogImage(imageFile, stream, filename, mediaType)
+                .createCatalogImage(request, stream, filename, mediaType)
                 .body();
     }
 
     public CatalogImage createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+            CreateCatalogImageBody request, InputStream stream, String filename, RequestOptions requestOptions) {
         return this.rawClient
-                .createCatalogImage(imageFile, stream, filename, requestOptions)
+                .createCatalogImage(request, stream, filename, requestOptions)
                 .body();
     }
 
     public CatalogImage createCatalogImage(
-            Optional<File> imageFile,
+            CreateCatalogImageBody request,
             InputStream stream,
             String filename,
             MediaType mediaType,
             RequestOptions requestOptions) {
         return this.rawClient
-                .createCatalogImage(imageFile, stream, filename, mediaType, requestOptions)
+                .createCatalogImage(request, stream, filename, mediaType, requestOptions)
                 .body();
     }
 

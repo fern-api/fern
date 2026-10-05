@@ -8,6 +8,9 @@ enum Example33 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.getWithPath(param: "param")
+        _ = try await client.endpoints.pagination.listItems(
+            cursor: "cursor",
+            limit: 1
+        )
     }
 }

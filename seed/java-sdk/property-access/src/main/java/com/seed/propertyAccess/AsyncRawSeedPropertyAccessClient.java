@@ -4,6 +4,7 @@
 package com.seed.propertyAccess;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.propertyAccess.core.BodyProperties;
 import com.seed.propertyAccess.core.ClientOptions;
 import com.seed.propertyAccess.core.MediaTypes;
 import com.seed.propertyAccess.core.ObjectMappers;
@@ -50,7 +51,9 @@ public class AsyncRawSeedPropertyAccessClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPropertyAccessException("Failed to serialize request", e);
         }
@@ -75,7 +78,8 @@ public class AsyncRawSeedPropertyAccessClient {
                     .build();
         }
         CompletableFuture<SeedPropertyAccessHttpResponse<User>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -102,6 +106,11 @@ public class AsyncRawSeedPropertyAccessClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedPropertyAccessException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

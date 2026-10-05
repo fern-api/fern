@@ -23,10 +23,12 @@ type GetProductsRequest struct {
 }
 
 func (g *GetProductsRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetRegionID sets the RegionID field and marks it as non-optional;
@@ -59,10 +61,12 @@ type SearchProductsRequest struct {
 }
 
 func (s *SearchProductsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetRegionID sets the RegionID field and marks it as non-optional;
@@ -154,10 +158,12 @@ func (p *Product) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Product) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -261,10 +267,12 @@ func (s *SearchProductsRequestConfig) GetExtraProperties() map[string]interface{
 }
 
 func (s *SearchProductsRequestConfig) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetCurrency sets the Currency field and marks it as non-optional;
@@ -352,10 +360,12 @@ func (s *SearchProductsResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchProductsResponse) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetResults sets the Results field and marks it as non-optional;

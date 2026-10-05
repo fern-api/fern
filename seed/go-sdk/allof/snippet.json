@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreatePlant(\n\tcontext.TODO(),\n\t\u0026fern.PlantPost{\n\t\tSpecies:     \"species\",\n\t\tFamily:      \"family\",\n\t\tGenus:       \"genus\",\n\t\tSunExposure: fern.PlantPostSunExposureFull,\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreatePlant(\n\tcontext.TODO(),\n\t\u0026fern.PlantPost{\n\t\tSpecies:           \"species\",\n\t\tFamily:            \"family\",\n\t\tGenus:             \"genus\",\n\t\tCommonName:        \"commonName\",\n\t\tWateringFrequency: fern.PlantBaseWateringFrequencyDaily,\n\t\tSunExposure:       fern.PlantPostSunExposureFull,\n\t},\n)\n"
             }
         },
         {
@@ -63,7 +63,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateTree(\n\tcontext.TODO(),\n\t\u0026fern.TreeRecord{\n\t\tID: \"id\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateTree(\n\tcontext.TODO(),\n\t\u0026fern.TreeRecord{\n\t\tTreeName:    \"treeName\",\n\t\tID:          \"id\",\n\t\tTreeSpecies: \"treeSpecies\",\n\t},\n)\n"
             }
         },
         {

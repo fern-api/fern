@@ -12,16 +12,22 @@ public record TreeRecord : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     /// <summary>
-    /// Date the tree was planted.
+    /// Display name of the tree.
     /// </summary>
-    [JsonPropertyName("plantedDate")]
-    public DateOnly? PlantedDate { get; set; }
+    [JsonPropertyName("treeName")]
+    public required string TreeName { get; set; }
 
     /// <summary>
     /// The species of tree.
     /// </summary>
     [JsonPropertyName("treeSpecies")]
-    public string? TreeSpecies { get; set; }
+    public required string TreeSpecies { get; set; }
+
+    /// <summary>
+    /// Date the tree was planted.
+    /// </summary>
+    [JsonPropertyName("plantedDate")]
+    public DateOnly? PlantedDate { get; set; }
 
     /// <summary>
     /// Height of the tree in feet.
@@ -30,22 +36,16 @@ public record TreeRecord : IJsonOnDeserialized
     public double? HeightInFeet { get; set; }
 
     /// <summary>
-    /// Unique tree identifier.
-    /// </summary>
-    [JsonPropertyName("id")]
-    public required string Id { get; set; }
-
-    /// <summary>
-    /// Display name of the tree.
-    /// </summary>
-    [JsonPropertyName("treeName")]
-    public string? TreeName { get; set; }
-
-    /// <summary>
     /// A description of the tree.
     /// </summary>
     [JsonPropertyName("treeDescription")]
     public string? TreeDescription { get; set; }
+
+    /// <summary>
+    /// Unique tree identifier.
+    /// </summary>
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
