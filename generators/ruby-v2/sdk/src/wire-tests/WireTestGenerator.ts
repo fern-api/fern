@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { isUrlEncodedRequestBody, unwrapTypeReference } from "../utils/requestBody.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
@@ -403,6 +404,19 @@ export class WireTestGenerator {
             lines.push(`      expected: 1`);
             lines.push(`    )`);
 
+            const expectedRequestBody = this.getExpectedRawRequestBody(endpoint);
+            if (expectedRequestBody != null) {
+                lines.push(``);
+                lines.push(`    verify_request_body(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(
+                    `      expected_body: JSON.parse(${toRubyStringLiteral(JSON.stringify(expectedRequestBody))})`
+                );
+                lines.push(`    )`);
+            }
+
             if (this.context.isEndpointSecurity()) {
                 // Per-endpoint security: the SDK routes only the auth scheme(s) this endpoint
                 // declares, so assert the routed scheme's header(s) are present (and every other
@@ -433,6 +447,47 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Returns the example body for endpoints whose referenced body is a primitive, an enum, or a
+     * list/set of those. These bodies are sent exactly as the snippet passes them, so the captured
+     * request body must equal the example JSON.
+     */
+    private getExpectedRawRequestBody(endpoint: FernIr.HttpEndpoint): unknown {
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type !== "reference" || isUrlEncodedRequestBody(requestBody)) {
+            return undefined;
+        }
+        let bodyType = this.unwrapTypeReference(requestBody.requestBodyType);
+        if (bodyType.type === "container") {
+            const container = bodyType.container;
+            if (container.type === "list") {
+                bodyType = this.unwrapTypeReference(container.list);
+            } else if (container.type === "set") {
+                bodyType = this.unwrapTypeReference(container.set);
+            } else {
+                return undefined;
+            }
+        }
+        if (!this.isPrimitiveOrEnum(bodyType)) {
+            return undefined;
+        }
+        return this.getDynamicEndpointExample(endpoint)?.requestBody ?? undefined;
+    }
+
+    private isPrimitiveOrEnum(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "primitive") {
+            return true;
+        }
+        return (
+            typeReference.type === "named" &&
+            this.context.getTypeDeclarationOrThrow(typeReference.typeId).shape.type === "enum"
+        );
+    }
+
+    private unwrapTypeReference(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        return unwrapTypeReference(typeReference, (typeId) => this.context.getTypeDeclarationOrThrow(typeId));
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
@@ -803,4 +858,8 @@ export class WireTestGenerator {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join("");
     }
+}
+
+function toRubyStringLiteral(value: string): string {
+    return JSON.stringify(value).replace(/#/g, "\\#");
 }

@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Plant:
+    properties:
+      name: string
+      wateringSchedule: optional<string>
+  PlantAlias: Plant
+  Tags: list<string>
+  Season:
+    enum:
+      - SPRING
+      - SUMMER
+
+service:
+  auth: false
+  base-path: /plants
+  endpoints:
+    createPlant:
+      method: POST
+      path: ""
+      request: Plant
+    createPlantFromAlias:
+      method: POST
+      path: /alias
+      request: PlantAlias
+    updatePlant:
+      method: PUT
+      path: /{plantId}
+      path-parameters:
+        plantId: string
+      request: Plant
+    createPlantsBatch:
+      method: POST
+      path: /batch
+      request: list<Plant>
+    tagPlant:
+      method: POST
+      path: /{plantId}/tags
+      path-parameters:
+        plantId: string
+      request: list<string>
+    setTags:
+      method: POST
+      path: /tags
+      request: Tags
+    setUniqueTags:
+      method: POST
+      path: /unique-tags
+      request: set<string>
+    setOptionalPlants:
+      method: POST
+      path: /optional
+      request: optional<list<Plant>>
+    rename:
+      method: POST
+      path: /rename
+      request: string
+    setSeason:
+      method: POST
+      path: /season
+      request: Season
+    setMetadata:
+      method: POST
+      path: /metadata
+      request: map<string, string>
+    tagPlantWithHeaders:
+      method: POST
+      path: /{plantId}/tagged
+      path-parameters:
+        plantId: string
+      request:
+        name: TagPlantWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        query-parameters:
+          dryRun: optional<boolean>
+        body: list<Plant>
+    renameWithHeaders:
+      method: POST
+      path: /rename-with-headers
+      request:
+        name: RenameWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        body: string
+    createPlantWithHeaders:
+      method: POST
+      path: /with-headers
+      request:
+        name: CreatePlantWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        body: Plant

@@ -31,6 +31,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/list-of-primitives",
+      expected_body: JSON.parse("[\"string\",\"string\"]")
+    )
   end
 
   def test_endpoints_container_get_and_return_list_of_objects_with_wiremock
@@ -76,6 +83,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       url_path: "/container/set-of-primitives",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/container/set-of-primitives",
+      expected_body: JSON.parse("[\"string\"]")
     )
   end
 

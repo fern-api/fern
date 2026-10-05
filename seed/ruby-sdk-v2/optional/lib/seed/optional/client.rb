@@ -32,7 +32,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-body",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -69,7 +69,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-typed-body",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin
@@ -111,14 +111,11 @@ module Seed
       # @return [Seed::Optional::Types::DeployResponse]
       def send_optional_nullable_with_all_optional_properties(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[action_id id]
-        body_params = params.except(*path_param_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "deploy/#{URI.encode_uri_component(params[:action_id].to_s)}/versions/#{URI.encode_uri_component(params[:id].to_s)}",
-          body: body_params,
+          body: params[:request],
           request_options: request_options
         )
         begin

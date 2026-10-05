@@ -2,7 +2,7 @@ import { CaseConverter, GeneratorError } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
+import { isUrlEncodedRequestBody, unwrapTypeReference } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 
 export const BODY_BAG_NAME = "body_params";
@@ -107,6 +107,73 @@ export abstract class EndpointRequest {
             currentTypeId = declaration.shape.aliasOf.typeId;
         }
         return currentTypeId;
+    }
+
+    /**
+     * Returns the type id of the model the body is built from when the body type (following
+     * alias-of-named chains) is a class whose fields are passed as keyword arguments. Returns
+     * undefined for bodies passed as a single argument (containers, primitives, enums, and
+     * aliases of those), which are sent as the bare value.
+     */
+    protected getModelBodyTypeId(bodyType: FernIr.TypeReference): FernIr.TypeId | undefined {
+        if (bodyType.type !== "named") {
+            return undefined;
+        }
+        const resolvedTypeId = this.resolveNamedTypeId(bodyType.typeId);
+        const shape = this.context.getTypeDeclarationOrThrow(resolvedTypeId).shape;
+        // Enums and aliases are modules, not classes, so they don't have a .new() method
+        if (shape.type === "enum" || shape.type === "alias") {
+            return undefined;
+        }
+        return resolvedTypeId;
+    }
+
+    /**
+     * The expression for a body passed as the single `parameterName:` argument. Lists and sets of objects are serialized
+     * element-wise through the model so fields use their wire names; sets are converted to arrays
+     * because `JSON.generate` does not serialize `Set`.
+     */
+    protected getBodyValueExpression(bodyType: FernIr.TypeReference, parameterName: FernIr.NameOrString): string {
+        const value = `params[:${this.case.snakeSafe(parameterName)}]`;
+        const container = this.getCollectionContainer(bodyType);
+        if (container == null) {
+            return value;
+        }
+        const itemModelTypeId = this.getObjectTypeId(container.itemType);
+        if (itemModelTypeId != null) {
+            return `${value}&.map { |item| ${this.context.getReferenceToTypeId(itemModelTypeId)}.new(item).to_h }`;
+        }
+        return container.isSet ? `${value}&.to_a` : value;
+    }
+
+    private getCollectionContainer(
+        typeReference: FernIr.TypeReference
+    ): { itemType: FernIr.TypeReference; isSet: boolean } | undefined {
+        const resolved = this.unwrapTypeReference(typeReference);
+        if (resolved.type !== "container") {
+            return undefined;
+        }
+        const container = resolved.container;
+        if (container.type === "list") {
+            return { itemType: container.list, isSet: false };
+        }
+        if (container.type === "set") {
+            return { itemType: container.set, isSet: true };
+        }
+        return undefined;
+    }
+
+    private getObjectTypeId(typeReference: FernIr.TypeReference): FernIr.TypeId | undefined {
+        const resolved = this.unwrapTypeReference(typeReference);
+        if (resolved.type !== "named") {
+            return undefined;
+        }
+        const shape = this.context.getTypeDeclarationOrThrow(resolved.typeId).shape;
+        return shape.type === "object" ? resolved.typeId : undefined;
+    }
+
+    private unwrapTypeReference(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        return unwrapTypeReference(typeReference, (typeId) => this.context.getTypeDeclarationOrThrow(typeId));
     }
 
     public abstract getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined;

@@ -42,6 +42,18 @@ export class ReferencedEndpointRequest extends EndpointRequest {
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
         const omitContentTypeWithoutBody = this.respectsOptionalRequestBody();
+        const modelTypeId = this.getModelBodyTypeId(this.requestBodyShape);
+        if (modelTypeId == null) {
+            return {
+                omitContentTypeWithoutBody,
+                requestBodyReference: ruby.codeblock((writer) => {
+                    writer.write(
+                        this.getBodyValueExpression(this.requestBodyShape, this.sdkRequest.requestParameterName)
+                    );
+                })
+            };
+        }
+
         const hasPathParameters = this.hasPathParameters();
         const bodyParamsVar = hasPathParameters ? BODY_BAG_NAME : "params";
         return {
@@ -55,18 +67,7 @@ export class ReferencedEndpointRequest extends EndpointRequest {
                 if (omitContentTypeWithoutBody) {
                     this.writeOptionalBodyGuard(writer, bodyParamsVar);
                 }
-                if (this.requestBodyShape.type === "named") {
-                    const resolvedTypeId = this.resolveNamedTypeId(this.requestBodyShape.typeId);
-                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(resolvedTypeId);
-                    // Enums and aliases are modules, not classes, so they don't have a .new() method
-                    if (typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias") {
-                        writer.write(bodyParamsVar);
-                    } else {
-                        writer.write(`${this.context.getReferenceToTypeId(resolvedTypeId)}.new(${bodyParamsVar}).to_h`);
-                    }
-                } else {
-                    writer.write(bodyParamsVar);
-                }
+                writer.write(`${this.context.getReferenceToTypeId(modelTypeId)}.new(${bodyParamsVar}).to_h`);
             })
         };
     }

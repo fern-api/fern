@@ -31,5 +31,12 @@ class EndpointsEnumWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/enum",
+      expected_body: JSON.parse("\"SUNNY\"")
+    )
   end
 end

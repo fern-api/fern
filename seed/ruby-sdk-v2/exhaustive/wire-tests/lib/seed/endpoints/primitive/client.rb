@@ -29,7 +29,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/string",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -64,7 +64,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/integer",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -99,7 +99,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/long",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -134,7 +134,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/double",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -169,7 +169,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/boolean",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -204,7 +204,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/datetime",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -239,7 +239,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/date",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -274,7 +274,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/uuid",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -309,7 +309,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/base64",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin
