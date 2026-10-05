@@ -1147,6 +1147,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .getSafeName();
                 MethodSpec variableMethod =
                         generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                if (variableDeclaration.getEnvVar().isPresent()) {
+                    setVariablesMethodBuilder
+                            .beginControlFlow("if (this.$L == null)", variableName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    variableName + " is required. Pass it to the builder or set the "
+                                            + variableDeclaration.getEnvVar().get() + " environment variable.")
+                            .endControlFlow()
+                            .addStatement("builder.$N(this.$L)", variableMethod, variableName);
+                    return;
+                }
                 setVariablesMethodBuilder
                         .beginControlFlow("if (this.$L != null)", variableName)
                         .addStatement("builder.$N(this.$L)", variableMethod, variableName)
@@ -1303,7 +1315,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(setAdditionalMethod);
 
-        MethodSpec.Builder validateConfigurationBuilder = MethodSpec.methodBuilder("validateConfiguration")
+        MethodSpec validateConfigurationMethod = MethodSpec.methodBuilder("validateConfiguration")
                 .addModifiers(Modifier.PROTECTED)
                 .addJavadoc("Override this method to add custom validation logic before the client is built.\n"
                         + "This method is called at the beginning of the build() method to ensure the configuration is valid.\n"
@@ -1318,24 +1330,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         + "        throw new IllegalStateException(\"tenantId is required\");\n"
                         + "    }\n"
                         + "}\n"
-                        + "}</pre>");
-        generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-            if (!variableDeclaration.getEnvVar().isPresent()) {
-                return;
-            }
-            String variableName = NameUtils.toName(variableDeclaration.getName())
-                    .getCamelCase()
-                    .getSafeName();
-            validateConfigurationBuilder
-                    .beginControlFlow("if (this.$L == null)", variableName)
-                    .addStatement(
-                            "throw new $T($S)",
-                            IllegalStateException.class,
-                            variableName + " is required. Pass it to the builder or set the "
-                                    + variableDeclaration.getEnvVar().get() + " environment variable.")
-                    .endControlFlow();
-        });
-        clientBuilder.addMethod(validateConfigurationBuilder.build());
+                        + "}</pre>")
+                .build();
+        clientBuilder.addMethod(validateConfigurationMethod);
 
         clientBuilder.addMethod(buildMethod
                 .addStatement("validateConfiguration()")
