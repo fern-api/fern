@@ -166,6 +166,10 @@ def _is_auth_failure(response: httpx.Response) -> bool:
     return response.status_code in (401, 403)
 
 
+def _is_replayable_content(content: typing.Any) -> bool:
+    return content is None or isinstance(content, (bytes, str))
+
+
 _SENSITIVE_HEADERS = frozenset(
     {
         "authorization",
@@ -647,6 +651,12 @@ class HttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
+        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None
         with self.httpx_client.stream(
             method=method,
             url=_request_url,
@@ -658,7 +668,36 @@ class HttpClient:
             files=request_files,
             timeout=timeout,
         ) as stream:
-            yield stream
+            if (
+                self.refresh_auth is not None
+                and _is_auth_failure(response=stream)
+                and retries < max_retries
+                and _is_replayable_content(content)
+            ):
+                refresh_auth = self.refresh_auth
+            else:
+                yield stream
+        if refresh_auth is None:
+            return
+        time.sleep(_retry_timeout(response=stream, retries=retries))
+        refresh_auth()
+        with self.stream(
+            path=path,
+            method=method,
+            base_url=base_url,
+            params=params,
+            json=json,
+            data=data,
+            content=content,
+            files=files,
+            headers=headers,
+            request_options=request_options,
+            retries=retries + 1,
+            omit=omit,
+            optional_body=optional_body,
+            force_multipart=force_multipart,
+        ) as retried_stream:
+            yield retried_stream
 
 
 class AsyncHttpClient:
@@ -965,6 +1004,12 @@ class AsyncHttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
+        )
+        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None
         async with self.httpx_client.stream(
             method=method,
             url=_request_url,
@@ -976,4 +1021,33 @@ class AsyncHttpClient:
             files=request_files,
             timeout=timeout,
         ) as stream:
-            yield stream
+            if (
+                self.refresh_auth is not None
+                and _is_auth_failure(response=stream)
+                and retries < max_retries
+                and _is_replayable_content(content)
+            ):
+                refresh_auth = self.refresh_auth
+            else:
+                yield stream
+        if refresh_auth is None:
+            return
+        await asyncio.sleep(_retry_timeout(response=stream, retries=retries))
+        refresh_auth()
+        async with self.stream(
+            path=path,
+            method=method,
+            base_url=base_url,
+            params=params,
+            json=json,
+            data=data,
+            content=content,
+            files=files,
+            headers=headers,
+            request_options=request_options,
+            retries=retries + 1,
+            omit=omit,
+            optional_body=optional_body,
+            force_multipart=force_multipart,
+        ) as retried_stream:
+            yield retried_stream

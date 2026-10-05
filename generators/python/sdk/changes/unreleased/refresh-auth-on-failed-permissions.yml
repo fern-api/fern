@@ -5,5 +5,6 @@
     responses are retried with the SDK's normal retry policy (max retries and backoff), and auth is
     refreshed before each retry: cached OAuth client-credentials and inferred-auth tokens are invalidated
     and fetched again, and callable credentials are re-read. This lets the auth owner rotate a token
-    before it expires. If refreshing auth fails, the error is raised and the request is not retried.
+    before it expires. Streaming endpoints refresh and reconnect the same way when the stream opens with a
+    401 or 403. If refreshing auth fails, the error is raised and the request is not retried.
   type: feat

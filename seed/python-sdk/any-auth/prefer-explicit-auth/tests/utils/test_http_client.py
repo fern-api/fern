@@ -1025,3 +1025,116 @@ async def test_async_refresh_failure_skips_retry(mock_sleep: AsyncMock) -> None:
         await http_client.request(path="/test", method="GET")
 
     assert mock_client.request.call_count == 1
+
+
+def _auth_failure_then_ok_transport(status_code: int, sent: List[str]) -> httpx.MockTransport:
+    def handler(request: httpx.Request) -> httpx.Response:
+        sent.append(request.headers.get("Authorization", ""))
+        return httpx.Response(status_code if len(sent) == 1 else 200, content=b"data: ok\n\n")
+
+    return httpx.MockTransport(handler)
+
+
+@pytest.mark.parametrize("status_code", [401, 403])
+@patch("seed.core.http_client.time.sleep", return_value=None)
+def test_sync_stream_refreshes_auth_and_retries_on_auth_failure(mock_sleep: MagicMock, status_code: int) -> None:
+    sent: List[str] = []
+    token = _RotatingToken()
+    http_client = HttpClient(
+        httpx_client=httpx.Client(transport=_auth_failure_then_ok_transport(status_code, sent)),
+        base_timeout=lambda: None,
+        base_headers=token.headers,
+        base_url=lambda: "https://example.com",
+        refresh_auth=token.refresh,
+    )
+
+    with http_client.stream(path="/test", method="GET") as stream:
+        assert stream.status_code == 200
+        assert stream.read() == b"data: ok\n\n"
+
+    assert token.refresh_count == 1
+    assert sent == ["Bearer old-token", "Bearer new-token"]
+    mock_sleep.assert_called_once()
+
+
+@patch("seed.core.http_client.time.sleep", return_value=None)
+def test_sync_stream_refresh_failure_skips_retry(mock_sleep: MagicMock) -> None:
+    sent: List[str] = []
+
+    def failing_refresh() -> None:
+        raise RuntimeError("refresh failed")
+
+    http_client = HttpClient(
+        httpx_client=httpx.Client(transport=_auth_failure_then_ok_transport(401, sent)),
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+        refresh_auth=failing_refresh,
+    )
+
+    with pytest.raises(RuntimeError, match="refresh failed"):
+        with http_client.stream(path="/test", method="GET"):
+            pass
+
+    assert len(sent) == 1
+
+
+def test_sync_stream_auth_failure_not_retried_without_refresh_auth() -> None:
+    sent: List[str] = []
+    http_client = HttpClient(
+        httpx_client=httpx.Client(transport=_auth_failure_then_ok_transport(401, sent)),
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: "https://example.com",
+    )
+
+    with http_client.stream(path="/test", method="GET") as stream:
+        assert stream.status_code == 401
+
+    assert len(sent) == 1
+
+
+@patch("seed.core.http_client.time.sleep", return_value=None)
+def test_sync_stream_does_not_retry_iterator_content(mock_sleep: MagicMock) -> None:
+    sent: List[str] = []
+    token = _RotatingToken()
+    http_client = HttpClient(
+        httpx_client=httpx.Client(transport=_auth_failure_then_ok_transport(401, sent)),
+        base_timeout=lambda: None,
+        base_headers=token.headers,
+        base_url=lambda: "https://example.com",
+        refresh_auth=token.refresh,
+    )
+
+    with http_client.stream(path="/test", method="POST", content=iter([b"chunk"])) as stream:
+        assert stream.status_code == 401
+
+    assert token.refresh_count == 0
+    assert len(sent) == 1
+
+
+@pytest.mark.asyncio
+@patch("seed.core.http_client.asyncio.sleep", new_callable=AsyncMock)
+async def test_async_stream_refreshes_auth_and_retries_on_auth_failure(mock_sleep: AsyncMock) -> None:
+    sent: List[str] = []
+    token = _RotatingToken()
+
+    async def async_headers() -> Dict[str, str]:
+        return token.headers()
+
+    http_client = AsyncHttpClient(
+        httpx_client=httpx.AsyncClient(transport=_auth_failure_then_ok_transport(401, sent)),
+        base_timeout=lambda: None,
+        base_headers=token.headers,
+        base_url=lambda: "https://example.com",
+        async_base_headers=async_headers,
+        refresh_auth=token.refresh,
+    )
+
+    async with http_client.stream(path="/test", method="GET") as stream:
+        assert stream.status_code == 200
+        assert await stream.aread() == b"data: ok\n\n"
+
+    assert token.refresh_count == 1
+    assert sent == ["Bearer old-token", "Bearer new-token"]
+    mock_sleep.assert_called_once()
