@@ -162,6 +162,10 @@ def _should_retry(response: httpx.Response) -> bool:
     return response.status_code >= 500 or response.status_code in [429, 408, 409]
 
 
+def _is_auth_failure(response: httpx.Response) -> bool:
+    return response.status_code in (401, 403)
+
+
 _SENSITIVE_HEADERS = frozenset(
     {
         "authorization",
@@ -362,11 +366,13 @@ class HttpClient:
         base_url: typing.Optional[typing.Callable[[], str]] = None,
         base_max_retries: int = 2,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
         self.base_max_retries = base_max_retries
+        self.refresh_auth = refresh_auth
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
 
@@ -508,9 +514,12 @@ class HttpClient:
                 )
             raise
 
-        if _should_retry(response=response):
+        refresh_auth = self.refresh_auth if _is_auth_failure(response=response) else None
+        if _should_retry(response=response) or refresh_auth is not None:
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
+                if refresh_auth is not None:
+                    refresh_auth()
                 return self.request(
                     path=path,
                     method=method,
@@ -663,11 +672,13 @@ class AsyncHttpClient:
         base_max_retries: int = 2,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
         self.base_max_retries = base_max_retries
+        self.refresh_auth = refresh_auth
         self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
@@ -818,9 +829,12 @@ class AsyncHttpClient:
                 )
             raise
 
-        if _should_retry(response=response):
+        refresh_auth = self.refresh_auth if _is_auth_failure(response=response) else None
+        if _should_retry(response=response) or refresh_auth is not None:
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
+                if refresh_auth is not None:
+                    refresh_auth()
                 return await self.request(
                     path=path,
                     method=method,
