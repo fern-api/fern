@@ -64,6 +64,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String GET_TOKEN_REQUEST_NAME = "getTokenRequest";
     private static final String EXPIRES_AT_FIELD_NAME = "expiresAt";
     private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
+    public static final String INVALIDATE_METHOD_NAME = "invalidate";
     private static final String BUFFER_IN_MINUTES_CONSTANT_NAME = "BUFFER_IN_MINUTES";
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
 
@@ -302,6 +303,16 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         customPropertiesWithNames,
                         httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            oauthTypeSpecBuilder.addMethod(MethodSpec.methodBuilder(INVALIDATE_METHOD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Drops the cached token so the next call fetches a new one, even if it has not expired.\n")
+                    .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
+                    .addStatement("this.$L = null", ACCESS_TOKEN_FIELD_NAME)
+                    .endControlFlow()
+                    .build());
+        }
         if (refreshRequired) {
             oauthTypeSpecBuilder
                     .addField(

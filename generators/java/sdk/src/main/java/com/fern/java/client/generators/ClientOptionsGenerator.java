@@ -89,6 +89,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     Modifier.PRIVATE,
                     Modifier.FINAL)
             .build();
+    private static final FieldSpec AUTH_INVALIDATORS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(List.class, Runnable.class),
+                    "authInvalidators",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+    public static final String INVALIDATE_AUTH_METHOD_NAME = "invalidateAuth";
     private static final FieldSpec OKHTTP_CLIENT_FIELD = FieldSpec.builder(
                     OkHttpClient.class, "httpClient", Modifier.PRIVATE, Modifier.FINAL)
             .build();
@@ -726,6 +733,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 .build())
                 .addParameter(ParameterSpec.builder(RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name)
                         .build());
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            constructorBuilder.addParameter(
+                    ParameterSpec.builder(AUTH_INVALIDATORS_FIELD.type, AUTH_INVALIDATORS_FIELD.name)
+                            .build());
+        }
 
         // Only add the appInfo parameter when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is
         // actually written, so default-off generated output stays byte-identical.
@@ -784,6 +796,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         "this.$L = $L", INITIAL_RETRY_DELAY_MILLIS_FIELD.name, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
                 .addStatement("this.$L = $L", MAX_RETRY_DELAY_MILLIS_FIELD.name, MAX_RETRY_DELAY_MILLIS_FIELD.name)
                 .addStatement("this.$L = $L", RETRY_JITTER_FACTOR_FIELD.name, RETRY_JITTER_FACTOR_FIELD.name);
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            constructorBuilder.addStatement("this.$L = $L", AUTH_INVALIDATORS_FIELD.name, AUTH_INVALIDATORS_FIELD.name);
+        }
 
         // Only add webSocketFactory assignment if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -829,6 +844,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
                 .addField(MAX_RETRY_DELAY_MILLIS_FIELD)
                 .addField(RETRY_JITTER_FACTOR_FIELD);
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            clientOptionsBuilder.addField(AUTH_INVALIDATORS_FIELD);
+        }
 
         // Only add webSocketFactory field if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -1047,6 +1065,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         // Add logging getter
         MethodSpec loggingGetter = createGetter(loggingField);
         clientOptionsBuilder.addMethod(loggingGetter);
+
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            MethodSpec.Builder invalidateAuthMethod = MethodSpec.methodBuilder(INVALIDATE_AUTH_METHOD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc("Drops cached credentials so the next request resolves auth again.\n")
+                    .addStatement("this.$L.forEach($T::run)", AUTH_INVALIDATORS_FIELD.name, Runnable.class);
+            if (authProviderField != null) {
+                invalidateAuthMethod
+                        .beginControlFlow("if (this.$L != null)", authProviderField.name)
+                        .addStatement("this.$L.invalidate()", authProviderField.name)
+                        .endControlFlow();
+            }
+            clientOptionsBuilder.addMethod(invalidateAuthMethod.build());
+        }
 
         // Only add authProvider getter and getAuthHeaders method if using endpoint security
         if (authProviderField != null) {
@@ -1313,6 +1345,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             Modifier.FINAL)
                     .initializer("new $T<>()", ArrayList.class)
                     .build());
+        }
+
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            builder.addField(AUTH_INVALIDATORS_FIELD.toBuilder()
+                            .initializer("new $T<>()", ArrayList.class)
+                            .build())
+                    .addMethod(MethodSpec.methodBuilder("addAuthInvalidator")
+                            .addModifiers(Modifier.PUBLIC)
+                            .addJavadoc("Registers a callback that drops cached credentials, run before a request is\n")
+                            .addJavadoc("retried after a 401 or 403.\n")
+                            .returns(builderClassName)
+                            .addParameter(Runnable.class, "invalidator")
+                            .addStatement("this.$L.add(invalidator)", AUTH_INVALIDATORS_FIELD.name)
+                            .addStatement("return this")
+                            .build());
         }
 
         builder.addFields(variableFields.values())
@@ -1775,6 +1822,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         RETRY_JITTER_FACTOR_FIELD.name,
                         RETRY_JITTER_FACTOR_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            fromMethod.addStatement(
+                    "builder.$L.addAll(clientOptions.$L)", AUTH_INVALIDATORS_FIELD.name, AUTH_INVALIDATORS_FIELD.name);
+        }
 
         // Forward the sanitized appInfo product token so a derived client keeps sending the caller's app token; the
         // build() constructor re-bakes the User-Agent from this field (null on the plain Builder would otherwise drop
@@ -1851,6 +1902,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         returnStringBuilder.append(", this.").append(INITIAL_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(RETRY_JITTER_FACTOR_FIELD.name);
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            returnStringBuilder.append(", this.").append(AUTH_INVALIDATORS_FIELD.name);
+        }
 
         // Pass the sanitized appInfo product token in the same position as its constructor parameter, only when the
         // opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is actually written.

@@ -21,6 +21,7 @@ import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.ClientPoetClassNameFactory;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.utils.NameUtils;
@@ -38,6 +39,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +55,7 @@ public abstract class AbstractHttpResponseParserGenerator {
     private static final String INTEGER_ONE = "1";
     private static final String DECIMAL_ONE = "1.0";
     private static final String MAX_RETRIES_OVERRIDE_CLASS_NAME = "MaxRetriesOverride";
+    private static final String AUTH_REFRESH_CLASS_NAME = "AuthRefresh";
 
     /** Helper method to generate diagnostic string for container types. Useful for debugging and error messages. */
     private static String getContainerDiagnosticString(com.fern.ir.model.types.ContainerType container) {
@@ -184,6 +187,41 @@ public abstract class AbstractHttpResponseParserGenerator {
                 maxRetriesOverrideClassName);
     }
 
+    /**
+     * Tags the request so that a 401 or 403 drops cached credentials and retries with the request's headers resolved
+     * again. Request option overrides still apply, just as they did for the first attempt.
+     */
+    private void addAuthRefreshTag(CodeBlock.Builder httpResponseBuilder) {
+        ClassName authRefreshClassName = clientGeneratorContext
+                .getPoetClassNameFactory()
+                .getRetryInterceptorClassName()
+                .nestedClass(AUTH_REFRESH_CLASS_NAME);
+        httpResponseBuilder
+                .add(
+                        "$L = $L.newBuilder().tag($T.class, new $T(() -> {\n",
+                        variables.getOkhttpRequestName(),
+                        variables.getOkhttpRequestName(),
+                        authRefreshClassName,
+                        authRefreshClassName)
+                .indent()
+                .addStatement("$N.$L()", clientOptionsField, ClientOptionsGenerator.INVALIDATE_AUTH_METHOD_NAME)
+                .addStatement(
+                        "$T<$T, $T> _refreshedHeaders = new $T<>($N.headers($L))",
+                        Map.class,
+                        String.class,
+                        String.class,
+                        HashMap.class,
+                        clientOptionsField,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+        if (clientGeneratorContext.isEndpointSecurity()) {
+            httpResponseBuilder.addStatement(
+                    "_refreshedHeaders.putAll($N.getAuthHeaders($L))",
+                    clientOptionsField,
+                    AbstractEndpointWriter.getEndpointMetadataCodeBlock(clientGeneratorContext, httpEndpoint));
+        }
+        httpResponseBuilder.addStatement("return _refreshedHeaders").unindent().addStatement("})).build()");
+    }
+
     public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
         ClassName maxRetriesOverrideClassName = getMaxRetriesOverrideClassName();
         boolean retriesDisabled = retriesDisabled(httpEndpoint.getRetries());
@@ -210,6 +248,9 @@ public abstract class AbstractHttpResponseParserGenerator {
         if (retriesDisabled) {
             addDisabledRetriesTag(httpResponseBuilder);
         } else {
+            if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+                addAuthRefreshTag(httpResponseBuilder);
+            }
             httpResponseBuilder
                     .beginControlFlow(
                             "if ($L != null && $L.getMaxRetries().isPresent())",

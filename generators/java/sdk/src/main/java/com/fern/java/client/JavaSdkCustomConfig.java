@@ -178,6 +178,16 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     /**
+     * When true, a 401 or 403 response is retried with the normal retry policy, and auth is refreshed (cached OAuth and
+     * inferred tokens are invalidated, header suppliers are re-read) before each retry. Off by default.
+     */
+    @Value.Default
+    @JsonProperty("refresh-auth-on-failed-permissions")
+    default Boolean refreshAuthOnFailedPermissions() {
+        return false;
+    }
+
+    /**
      * When true, an endpoint whose request body the API does not require also gets an overload without the body
      * parameter, and sends no body when that overload is called. The body parameter keeps its own type. Off by default,
      * so existing signatures are unchanged.

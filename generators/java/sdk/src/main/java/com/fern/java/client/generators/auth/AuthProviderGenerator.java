@@ -16,7 +16,7 @@
 
 package com.fern.java.client.generators.auth;
 
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -33,8 +33,11 @@ import javax.lang.model.element.Modifier;
  */
 public final class AuthProviderGenerator extends AbstractFileGenerator {
 
-    public AuthProviderGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
+    private final ClientGeneratorContext clientGeneratorContext;
+
+    public AuthProviderGenerator(ClientGeneratorContext generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("AuthProvider"), generatorContext);
+        this.clientGeneratorContext = generatorContext;
     }
 
     @Override
@@ -42,7 +45,7 @@ public final class AuthProviderGenerator extends AbstractFileGenerator {
         ClassName endpointMetadataClassName =
                 generatorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
 
-        TypeSpec authProviderInterface = TypeSpec.interfaceBuilder(className)
+        TypeSpec.Builder authProviderInterface = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Interface for authentication providers that can provide headers for requests.\n")
                 .addJavadoc("Each implementation handles a specific authentication scheme (Bearer, Basic, etc.).\n")
@@ -54,11 +57,17 @@ public final class AuthProviderGenerator extends AbstractFileGenerator {
                         .addJavadoc("@return a map of header names to header values\n")
                         .addParameter(endpointMetadataClassName, "endpointMetadata")
                         .returns(ParameterizedTypeName.get(Map.class, String.class, String.class))
-                        .build())
-                .build();
+                        .build());
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            authProviderInterface.addMethod(MethodSpec.methodBuilder("invalidate")
+                    .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
+                    .addJavadoc(
+                            "Drops any cached credentials so the next call to getAuthHeaders resolves them again.\n")
+                    .build());
+        }
 
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), authProviderInterface).build();
+        JavaFile javaFile = JavaFile.builder(className.packageName(), authProviderInterface.build())
+                .build();
 
         return GeneratedJavaFile.builder()
                 .className(className)

@@ -1478,6 +1478,11 @@ public abstract class AbstractEndpointWriter {
     }
 
     protected CodeBlock getEndpointMetadataCodeBlock(HttpEndpoint endpoint) {
+        return getEndpointMetadataCodeBlock(clientGeneratorContext, endpoint);
+    }
+
+    public static CodeBlock getEndpointMetadataCodeBlock(
+            ClientGeneratorContext clientGeneratorContext, HttpEndpoint endpoint) {
         ClassName endpointMetadataClassName =
                 clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
 
