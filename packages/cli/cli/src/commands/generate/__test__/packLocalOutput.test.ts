@@ -134,8 +134,8 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext(), version: "1.2.3" });
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
-        expect(commands[0]).toBe("npx --yes pnpm install");
-        expect(commands[1]).toBe("npx --yes pnpm run build");
+        expect(commands[0]).toBe("npx --yes pnpm@9.15.9 install");
+        expect(commands[1]).toBe("npx --yes pnpm@9.15.9 run build");
         expect(commands[2]).toContain("npm pack");
         expect(JSON.parse(await readFile(path.join(outputDir, "package.json"), "utf-8")).version).toBe("1.2.3");
     });
@@ -158,12 +158,12 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext() });
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
-        expect(commands[0]).toBe("npx --yes pnpm install");
+        expect(commands[0]).toBe("npx --yes pnpm@9.15.9 install");
         expect(commands[1]).toBe("npx --yes --package typescript tsc --project tsconfig.cjs.json");
         expect(commands[2]).toContain("npm pack");
     });
 
-    it("uses the package manager declared by a typescript project", async () => {
+    it("uses yarn when declared by a typescript project", async () => {
         await writeFile(
             path.join(outputDir, "package.json"),
             JSON.stringify({
@@ -190,6 +190,38 @@ describe("packLocalOutputForGroup", () => {
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
         expect(commands[0]).toBe("npx --yes yarn install");
         expect(commands[1]).toBe("npx --yes yarn run build");
+    });
+
+    it.each([
+        { declared: "pnpm", expected: "pnpm@9.15.9" },
+        { declared: "pnpm@10.33.0", expected: "pnpm@10.33.0" }
+    ])("uses $expected when a typescript project declares $declared", async ({ declared, expected }) => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({
+                name: "acme",
+                version: "1.0.0",
+                packageManager: declared,
+                scripts: { build: "tsc" }
+            })
+        );
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe(`npx --yes ${expected} install`);
+        expect(commands[1]).toBe(`npx --yes ${expected} run build`);
     });
 
     it("uses npm when an existing typescript project has a package-lock", async () => {
