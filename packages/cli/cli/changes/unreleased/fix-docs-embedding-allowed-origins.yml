@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `settings.embedding.allowed-origins` in docs.yml having no effect. The CLI now publishes
+    the origins as `iframe.allowedParentOrigins`, the field FDR persists and the docs renderer
+    appends to the `frame-ancestors` directive of the Content-Security-Policy header.
+  type: fix
