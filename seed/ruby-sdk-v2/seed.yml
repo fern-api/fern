@@ -90,6 +90,10 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+  errors:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: wire-tests
       customConfig:

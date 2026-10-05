@@ -8,7 +8,8 @@ class EndpointsParamsWireTest < WireMockTestCase
 
     @client = Seed::MyClient.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -261,6 +262,32 @@ class EndpointsParamsWireTest < WireMockTestCase
         }
       }
     )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/params/path/param",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_get_with_path_and_errors_throws_bad_request_body_with_wiremock
+    test_id = "endpoints.params.get_with_path_and_errors.1"
+
+    error = assert_raises(Seed::Errors::ClientError) do
+      @client.endpoints.params.get_with_path(
+        param: "param",
+        request_options: {
+          additional_headers: {
+            "X-Test-Id" => "endpoints.params.get_with_path_and_errors.1"
+          }
+        }
+      )
+    end
+
+    assert_equal 400, error.code
+    assert_equal JSON.parse('{"message":"message"}'), JSON.parse(error.message)
 
     verify_request_count(
       test_id: test_id,
