@@ -235,7 +235,9 @@ var response = await client.Complex.SearchAsync(
 ### Additional Body Properties
 
 If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
-This is only applied to JSON requests.
+These properties are merged into the serialized JSON body using their wire-format names; on a key collision the additional
+property wins, and nested objects are merged recursively. If the endpoint has no request body, the additional properties
+are sent as the JSON body. This is only applied to JSON requests (not multipart or form-encoded requests).
 
 ```csharp
 var response = await client.Complex.SearchAsync(

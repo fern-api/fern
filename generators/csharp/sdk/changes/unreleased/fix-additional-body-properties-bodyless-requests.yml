@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `RequestOptions.AdditionalBodyProperties` throwing `InvalidOperationException` on endpoints
+    without a request body (e.g. GET requests). When the request body is null, the additional
+    properties are now sent as the JSON request body.
+  type: fix
