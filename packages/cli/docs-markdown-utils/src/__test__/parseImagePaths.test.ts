@@ -1008,7 +1008,7 @@ describe("markdown and JSX image scanning", () => {
 });
 
 describe("replaceImagePathsAndUrls image scanning", () => {
-    it("should replace image paths with file IDs using streaming parser", () => {
+    it("should replace image paths with file IDs", () => {
         const page =
             "This is a test page with an image ![image](path/to/image.png) and more content to exceed 100 bytes threshold for streaming";
         const parseResult = parseImagePaths(page, PATHS);
@@ -1019,7 +1019,7 @@ describe("replaceImagePathsAndUrls image scanning", () => {
         expect(replaced).toContain("![image](file:test-file-id-123)");
     });
 
-    it("should replace multiple image paths with file IDs using streaming parser", () => {
+    it("should replace multiple image paths with file IDs", () => {
         const page =
             "This is a test page with images ![image1](path/to/image1.png) and ![image2](path/to/image2.png) and more content to exceed threshold";
         const parseResult = parseImagePaths(page, PATHS);
@@ -1032,7 +1032,7 @@ describe("replaceImagePathsAndUrls image scanning", () => {
         expect(replaced).toContain("![image2](file:file-id-2)");
     });
 
-    it("should replace HTML img src with file IDs using streaming parser", () => {
+    it("should replace HTML img src with file IDs", () => {
         const page =
             "This is a test page with an image <img src='path/to/image.png' /> and more content to exceed 100 bytes threshold for streaming";
         const parseResult = parseImagePaths(page, PATHS);
@@ -1043,7 +1043,7 @@ describe("replaceImagePathsAndUrls image scanning", () => {
         expect(replaced).toContain("<img src='file:test-file-id-456' />");
     });
 
-    it("should replace markdown links with slugs using streaming parser", () => {
+    it("should replace markdown links with slugs", () => {
         const page =
             "This is a test page with a link [text](../other/page.mdx) and more content to exceed 100 bytes threshold for streaming parser";
         const parseResult = parseImagePaths(page, PATHS);
@@ -1093,7 +1093,7 @@ describe("replaceImagePathsAndUrls image scanning", () => {
         expect(replaced).toContain("[support matrix](../reference/support-matrix.md)");
     });
 
-    it("should replace absolute image paths with file IDs using streaming parser", () => {
+    it("should replace absolute image paths with file IDs", () => {
         const page =
             "This is a test page with an absolute image ![image](/static/image.png) and lots more content to exceed the 100 bytes threshold for the streaming parser to run while replacing paths.";
         const fileIdsMap = new Map([[AbsoluteFilePath.of("/Volume/git/fern/static/image.png"), "absolute-file-id"]]);
@@ -1101,7 +1101,7 @@ describe("replaceImagePathsAndUrls image scanning", () => {
         expect(replaced).toContain("![image](file:absolute-file-id)");
     });
 
-    it("should preserve anchors when replacing image paths using streaming parser", () => {
+    it("should preserve anchors when replacing image paths", () => {
         const page =
             "This is a test page with an image ![image](path/to/image.png#anchor) and more content to exceed 100 bytes threshold for streaming";
         const parseResult = parseImagePaths(page, PATHS);
@@ -1494,7 +1494,7 @@ describe("literal angle brackets in prose", () => {
         expect(result).toContain("[other page](/docs/other)");
     });
 
-    it("replaces the image path on both the streaming and AST paths", () => {
+    it("replaces the image path when collecting and swapping", () => {
         const page = "Outliers are `is < Q1`.\n\n![leaf](path/to/image.png)\n";
         const parsed = parseImagePaths(page, PATHS);
         expect(parsed.filepaths).toEqual([IMAGE_PATH]);
@@ -1583,7 +1583,7 @@ describe("angle bracket delimited destinations", () => {
         expect(roundTrip("![image](<path/to/image.png>)")).not.toContain("/Volume/git/fern");
     });
 
-    it("replaces the image path on the streaming path", () => {
+    it("replaces the image path", () => {
         const parsed = parseImagePaths("![image](<path/to/image.png>)", PATHS);
         expect(parsed.filepaths).toEqual([IMAGE_PATH]);
         expect(replaceImagePathsAndUrls(parsed.markdown, fileIds, {}, PATHS, CONTEXT).trim()).toBe(
