@@ -114,6 +114,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
             sdkGenApiBatch: { run } as never,
             sdkGenApiTargetIdSeed: "0",
+            generateFullProject: true,
             mapFernGroupToSdkConfig: () => ({
                 diagnostics: [],
                 sdkConfig: validateSdkConfigV1({
@@ -126,9 +127,6 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         };
 
         await expect(runRemoteGenerationForGenerator(parameters)).resolves.toMatchObject({ actualVersion: "1.2.3" });
-        await expect(runRemoteGenerationForGenerator({ ...parameters, generateFullProject: true })).rejects.toThrow(
-            "sdk-gen-api does not yet support full-project generation from SDK Config"
-        );
         expect(run).toHaveBeenCalledTimes(1);
     });
 
