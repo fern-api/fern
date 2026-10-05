@@ -390,6 +390,90 @@ func serverURLVariablesFromConfig(enabled bool, environmentsConfig *common.Envir
 	return result
 }
 
+// sdkVariable pairs an IR SDK variable (an API-level variable that path
+// parameters bind to via x-fern-sdk-variable) with the client-option name it is
+// exposed under. Bound path parameters are removed from every endpoint
+// signature and request wrapper, and are resolved from the client option instead.
+type sdkVariable struct {
+	variable   *ir.VariableDeclaration
+	optionName string
+	paramName  string
+	goType     string
+}
+
+// sdkVariablesFromIR returns the SDK variables declared on the API, de-collided
+// against reserved RequestOptions field names.
+func (f *fileWriter) sdkVariablesFromIR(variables []*ir.VariableDeclaration, importPath string) []*sdkVariable {
+	result := make([]*sdkVariable, 0, len(variables))
+	for _, variable := range variables {
+		if variable == nil || variable.Name == nil || variable.Type == nil {
+			continue
+		}
+		optionName := variable.Name.PascalCase.UnsafeName
+		paramName := variable.Name.CamelCase.SafeName
+		if _, ok := reservedRequestOptionNames[optionName]; ok {
+			optionName = "Variable" + variable.Name.PascalCase.UnsafeName
+			paramName = "variable" + variable.Name.PascalCase.UnsafeName
+		}
+		result = append(result, &sdkVariable{
+			variable:   variable,
+			optionName: optionName,
+			paramName:  paramName,
+			goType:     typeReferenceToGoType(variable.Type, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
+		})
+	}
+	return result
+}
+
+// missingErrorMessage is the error returned when a string SDK variable is unset
+// on both the request and the client.
+func (s *sdkVariable) missingErrorMessage() string {
+	envHint := ""
+	if s.variable.EnvVar != nil && *s.variable.EnvVar != "" {
+		envHint = " or set the " + *s.variable.EnvVar + " environment variable"
+	}
+	return fmt.Sprintf("%s is required. Pass option.With%s%s.", s.variable.Name.OriginalName, s.optionName, envHint)
+}
+
+// isSDKVariablePathParameter returns true if the path parameter is bound to an
+// SDK variable and is therefore configured on the client rather than per call.
+func isSDKVariablePathParameter(pathParameter *ir.PathParameter) bool {
+	return pathParameter != nil && pathParameter.Variable != nil
+}
+
+// nonSDKVariablePathParameters returns the path parameters that are not bound
+// to an SDK variable.
+func nonSDKVariablePathParameters(pathParameters []*ir.PathParameter) []*ir.PathParameter {
+	result := make([]*ir.PathParameter, 0, len(pathParameters))
+	for _, pathParameter := range pathParameters {
+		if !isSDKVariablePathParameter(pathParameter) {
+			result = append(result, pathParameter)
+		}
+	}
+	return result
+}
+
+// nonSDKVariableExamplePathParameters returns the example path parameters that
+// are not bound to an SDK variable on the given endpoint.
+func nonSDKVariableExamplePathParameters(endpoint *ir.HttpEndpoint, examplePathParameters []*ir.ExamplePathParameter) []*ir.ExamplePathParameter {
+	bound := make(map[string]struct{})
+	for _, pathParameter := range endpoint.AllPathParameters {
+		if isSDKVariablePathParameter(pathParameter) {
+			bound[pathParameter.Name.OriginalName] = struct{}{}
+		}
+	}
+	if len(bound) == 0 {
+		return examplePathParameters
+	}
+	result := make([]*ir.ExamplePathParameter, 0, len(examplePathParameters))
+	for _, examplePathParameter := range examplePathParameters {
+		if _, ok := bound[examplePathParameter.Name.OriginalName]; !ok {
+			result = append(result, examplePathParameter)
+		}
+	}
+	return result
+}
+
 // collectServerURLVariables extracts the server URL variables from the first
 // environment that declares them, handling both single- and multiple-base-URL
 // environments and de-duplicating by id.
@@ -450,8 +534,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	sdkVersion string,
 	environmentsConfig *common.EnvironmentsConfig,
 	inferredParams []inferredAuthParam,
+	variables []*ir.VariableDeclaration,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
+	sdkVariables := f.sdkVariablesFromIR(variables, importPath)
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
 	f.P("type RequestOption interface {")
 	f.P("applyRequestOptions(*RequestOptions)")
@@ -579,6 +665,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	for _, serverURLVariable := range serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig) {
 		f.P(serverURLVariable.optionName, " string")
 	}
+	// Generate a field for each SDK variable (e.g. targetAccountSid), which is
+	// substituted into every endpoint path bound to it.
+	for _, sdkVariable := range sdkVariables {
+		f.P(sdkVariable.optionName, " ", sdkVariable.goType)
+	}
 	f.P("}")
 	f.P()
 
@@ -609,7 +700,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+		if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig), sdkVariables); err != nil {
 			return err
 		}
 		// Emit the AppInfo type alongside its consumers (the AppInfo field,
@@ -792,7 +883,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig)); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams, serverURLVariablesFromConfig(f.serverURLVariables, environmentsConfig), sdkVariables); err != nil {
 		return err
 	}
 
@@ -1196,6 +1287,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	isMultiURL bool,
 	inferredParams []inferredAuthParam,
 	serverURLVariables []*serverURLVariable,
+	sdkVariables []*sdkVariable,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -1238,6 +1330,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 
 	for _, serverURLVariable := range serverURLVariables {
 		if err := f.writeOptionStruct(serverURLVariable.optionName, "string", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
+	}
+
+	for _, sdkVariable := range sdkVariables {
+		if err := f.writeOptionStruct(sdkVariable.optionName, sdkVariable.goType, true, asIdempotentRequestOption); err != nil {
 			return err
 		}
 	}
@@ -1492,6 +1590,7 @@ func (f *fileWriter) WriteRequestOptions(
 	headers []*ir.HttpHeader,
 	environmentsConfig *common.EnvironmentsConfig,
 	inferredParams []inferredAuthParam,
+	variables []*ir.VariableDeclaration,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
@@ -1634,6 +1733,20 @@ func (f *fileWriter) WriteRequestOptions(
 		f.P("func With", serverURLVariable.optionName, "(", serverURLVariable.paramName, " string) *core.", serverURLVariable.optionName, "Option {")
 		f.P("return &core.", serverURLVariable.optionName, "Option{")
 		f.P(serverURLVariable.optionName, ": ", serverURLVariable.paramName, ",")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
+
+	// Generate a functional option for each SDK variable. The value is substituted
+	// into every endpoint path bound to the variable; it can be set on the client
+	// or overridden on an individual request.
+	for _, sdkVariable := range f.sdkVariablesFromIR(variables, importPath) {
+		f.P("// With", sdkVariable.optionName, " sets the \"", sdkVariable.variable.Name.OriginalName, "\" SDK variable, which is")
+		f.P("// substituted into every endpoint path that references it.")
+		f.P("func With", sdkVariable.optionName, "(", sdkVariable.paramName, " ", sdkVariable.goType, ") *core.", sdkVariable.optionName, "Option {")
+		f.P("return &core.", sdkVariable.optionName, "Option{")
+		f.P(sdkVariable.optionName, ": ", sdkVariable.paramName, ",")
 		f.P("}")
 		f.P("}")
 		f.P()
@@ -1962,6 +2075,7 @@ func (f *fileWriter) WriteClient(
 	inlineFileProperties bool,
 	clientNameOverride string,
 	clientConstructorNameOverride string,
+	variables []*ir.VariableDeclaration,
 ) (*GeneratedClient, error) {
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
@@ -1971,7 +2085,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, errorDiscriminationStrategy, serviceHeaders, idempotencyHeaders, inlinePathParameters, inlineFileProperties, variables)
 		if err != nil {
 			return nil, err
 		}
@@ -2074,6 +2188,15 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 		}
 	}
+	// SDK variables that declare an env var default to it when not set on the client.
+	for _, sdkVariable := range f.sdkVariablesFromIR(variables, fernFilepathToImportPath(f.baseImportPath, fernFilepath)) {
+		if sdkVariable.variable.EnvVar == nil || *sdkVariable.variable.EnvVar == "" || !isStringType(sdkVariable.variable.Type) {
+			continue
+		}
+		f.P("if options.", sdkVariable.optionName, ` == "" {`)
+		f.P("options.", sdkVariable.optionName, ` = os.Getenv("`, *sdkVariable.variable.EnvVar, `")`)
+		f.P("}")
+	}
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider := core.NewTokenProvider(0)")
 		// Create an auth client to fetch tokens
@@ -2172,6 +2295,20 @@ func (f *fileWriter) WriteClient(
 			}
 			f.P("if ", ppd.VarExpr, ` == "" {`)
 			f.P(ppd.VarExpr, " = fmt.Sprintf(\"%v\", ", ppd.DefaultVal, ")")
+			f.P("}")
+		}
+		for _, svp := range endpoint.SDKVariablePathParameters {
+			if !svp.IsString {
+				f.P(svp.VarExpr, " := ", receiver, ".options.", svp.OptionName)
+				continue
+			}
+			f.P(svp.VarExpr, " := options.", svp.OptionName)
+			f.P("if ", svp.VarExpr, ` == "" {`)
+			f.P(svp.VarExpr, " = ", receiver, ".options.", svp.OptionName)
+			f.P("}")
+			f.P("if ", svp.VarExpr, ` == "" {`)
+			errorsPackage := f.scope.AddImport("errors")
+			f.P("return ", strings.TrimSuffix(endpoint.ErrorReturnValues, "err"), errorsPackage, ".New(", strconv.Quote(svp.ErrMessage), ")")
 			f.P("}")
 		}
 		if len(endpoint.PathParameterNames) > 0 {
@@ -3143,7 +3280,7 @@ func getEndpointParameters(
 			},
 		},
 	}
-	allPathParameters := getAllExamplePathParameters(example)
+	allPathParameters := nonSDKVariableExamplePathParameters(endpoint, getAllExamplePathParameters(example))
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range allPathParameters {
 			fields = append(
@@ -3440,6 +3577,17 @@ func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error
 //
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
+// sdkVariablePathParameter resolves a path parameter bound to an SDK variable
+// into a local variable: a per-request option takes precedence over the
+// client-level value, and a string variable that is still empty fails before
+// any request is sent.
+type sdkVariablePathParameter struct {
+	VarExpr    string // Go local variable (e.g., "_targetAccountSid")
+	OptionName string // RequestOptions field name (e.g., "TargetAccountSid")
+	IsString   bool   // Whether the "" zero-value check and env var fallback apply
+	ErrMessage string // Error message when the variable is unset
+}
+
 type pathParameterDefault struct {
 	VarExpr    string // Go local variable to check and assign (e.g., "_region")
 	InitExpr   string // Go expression to initialize VarExpr from (e.g., "request.Region"), empty if VarExpr is already the source
@@ -3462,6 +3610,7 @@ type endpoint struct {
 	ResponseIsOptionalParameter bool
 	PathParameterNames          []string
 	PathParameterDefaults       []pathParameterDefault
+	SDKVariablePathParameters   []*sdkVariablePathParameter
 	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
@@ -3503,8 +3652,36 @@ func (f *fileWriter) endpointFromIR(
 	idempotencyHeaders []*ir.HttpHeader,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	variables []*ir.VariableDeclaration,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+
+	sdkVariablesByID := make(map[string]*sdkVariable)
+	for _, sdkVariable := range f.sdkVariablesFromIR(variables, importPath) {
+		sdkVariablesByID[sdkVariable.variable.Id] = sdkVariable
+	}
+	var sdkVariablePathParameters []*sdkVariablePathParameter
+	// sdkVariableLocal returns the local variable the bound path parameter is
+	// resolved into, registering the resolution once per SDK variable.
+	sdkVariableLocal := func(pathParameter *ir.PathParameter) (string, error) {
+		sdkVariable, ok := sdkVariablesByID[*pathParameter.Variable]
+		if !ok {
+			return "", fmt.Errorf("internal error: path parameter %s references unknown SDK variable %s", pathParameter.Name.OriginalName, *pathParameter.Variable)
+		}
+		localVar := "_" + sdkVariable.paramName
+		for _, existing := range sdkVariablePathParameters {
+			if existing.VarExpr == localVar {
+				return localVar, nil
+			}
+		}
+		sdkVariablePathParameters = append(sdkVariablePathParameters, &sdkVariablePathParameter{
+			VarExpr:    localVar,
+			OptionName: sdkVariable.optionName,
+			IsString:   isStringType(sdkVariable.variable.Type),
+			ErrMessage: sdkVariable.missingErrorMessage(),
+		})
+		return localVar, nil
+	}
 
 	// Create a new child scope for this endpoint.
 	scope := f.scope.Child()
@@ -3524,6 +3701,14 @@ func (f *fileWriter) endpointFromIR(
 	if includePathParametersInWrappedRequest(irEndpoint, inlinePathParameters) {
 		requestParameterName := irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		for _, pathParameter := range irEndpoint.AllPathParameters {
+			if isSDKVariablePathParameter(pathParameter) {
+				localVar, err := sdkVariableLocal(pathParameter)
+				if err != nil {
+					return nil, err
+				}
+				pathParameterNames = append(pathParameterNames, localVar)
+				continue
+			}
 			requestFieldExpr := fmt.Sprintf("%s.%s", requestParameterName, pathParameter.Name.PascalCase.UnsafeName)
 			if pathParameter.ClientDefault != nil && isStringType(pathParameter.ValueType) {
 				// Use a local variable to avoid mutating the caller's request struct.
@@ -3546,6 +3731,16 @@ func (f *fileWriter) endpointFromIR(
 			pathParameter, ok := pathParameters[part.PathParameter]
 			if !ok {
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+			}
+			if isSDKVariablePathParameter(pathParameter) {
+				// Resolved from the client-level SDK variable, not the signature.
+				localVar, err := sdkVariableLocal(pathParameter)
+				if err != nil {
+					return nil, err
+				}
+				pathParameterNames = append(pathParameterNames, localVar)
+				pathParameterToScopedName[part.PathParameter] = localVar
+				continue
 			}
 			if literal := maybeLiteral(pathParameter.ValueType, f.types); literal != nil {
 				value := literalToValue(literal)
@@ -3571,7 +3766,7 @@ func (f *fileWriter) endpointFromIR(
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
 			}
 			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
-			if isLiteralType(pathParameter.ValueType, f.types) {
+			if isLiteralType(pathParameter.ValueType, f.types) || isSDKVariablePathParameter(pathParameter) {
 				continue
 			}
 			signatureParameters = append(
@@ -3871,7 +4066,7 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	var pathParameterDocs []*string
-	for _, pathParam := range irEndpoint.AllPathParameters {
+	for _, pathParam := range nonSDKVariablePathParameters(irEndpoint.AllPathParameters) {
 		if pathParam.Docs != nil && len(*pathParam.Docs) > 0 {
 			pathParameterDocs = append(pathParameterDocs, pathParam.Docs)
 		}
@@ -3920,6 +4115,7 @@ func (f *fileWriter) endpointFromIR(
 		ResponseInitializerFormat:   responseInitializerFormat,
 		ResponseIsOptionalParameter: responseIsOptionalParameter,
 		PathParameterNames:          pathParameterNames,
+		SDKVariablePathParameters:   sdkVariablePathParameters,
 		PathParameterDefaults:       pathParameterDefaults,
 		SignatureParameters:         signatureParameters,
 		ReturnValues:                signatureReturnValues,
@@ -4130,7 +4326,7 @@ func (f *fileWriter) WriteRequestType(
 
 	// Collect from path parameters (always include these)
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
-		for _, pathParameter := range endpoint.AllPathParameters {
+		for _, pathParameter := range nonSDKVariablePathParameters(endpoint.AllPathParameters) {
 			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
@@ -4185,7 +4381,7 @@ func (f *fileWriter) WriteRequestType(
 		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
-		for _, pathParameter := range endpoint.AllPathParameters {
+		for _, pathParameter := range nonSDKVariablePathParameters(endpoint.AllPathParameters) {
 			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			f.WriteDocs(pathParameter.Docs)
 			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
@@ -5000,7 +5196,7 @@ func includePathParametersInWrappedRequest(
 		return false
 	}
 	includePathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetIncludePathParameters()
-	return len(endpoint.PathParameters) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
+	return len(nonSDKVariablePathParameters(endpoint.PathParameters)) > 0 && inlinePathParameters && includePathParameters != nil && *includePathParameters
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive

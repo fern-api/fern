@@ -4,7 +4,7 @@ import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { getOAuthClientCredentialsScheme, isEndpointSecurity, isPlainStringType } from "../../authUtils.js";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { SdkGeneratorContext, SdkVariableOption } from "../../SdkGeneratorContext.js";
 import { getDisableRetriesValue } from "../../utils/getDisableRetriesValue.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
@@ -244,7 +244,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNewLineIfLastLineNot();
             writer.writeNode(this.buildBaseUrl({ endpoint, subpackage, rawClient: false }));
             writer.writeNewLineIfLastLineNot();
-            writer.writeNode(this.buildEndpointUrl({ endpoint, signature }));
+            writer.writeNode(
+                this.buildEndpointUrl({
+                    endpoint,
+                    signature,
+                    receiver: this.getReceiverCodeBlock({ subpackage, rawClient: false })
+                })
+            );
 
             const buildQueryParameters = this.buildQueryParameters({
                 signature,
@@ -570,7 +576,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.newLine();
             writer.writeNode(this.buildBaseUrl({ endpoint, subpackage, rawClient }));
             writer.newLine();
-            writer.writeNode(this.buildEndpointUrl({ endpoint, signature }));
+            writer.writeNode(
+                this.buildEndpointUrl({
+                    endpoint,
+                    signature,
+                    receiver: this.getReceiverCodeBlock({ subpackage, rawClient: rawClient })
+                })
+            );
 
             const buildQueryParameters = this.buildQueryParameters({
                 signature,
@@ -680,10 +692,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private buildEndpointUrl({
         endpoint,
-        signature
+        signature,
+        receiver
     }: {
         endpoint: FernIr.HttpEndpoint;
         signature: EndpointSignatureInfo;
+        receiver: go.AstNode;
     }): go.CodeBlock {
         const pathSuffix = this.getPathSuffix({ endpoint });
         const baseUrl = pathSuffix.length === 0 ? "baseURL" : `baseURL + "/${pathSuffix}"`;
@@ -693,6 +707,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 writer.write(baseUrl);
                 return;
             }
+            this.writeSdkVariablePathParameters({ writer, endpoint, receiver });
             // Apply clientDefault fallback for path parameters before URL encoding.
             // Use local variables to avoid mutating the caller's request struct when
             // path params come from a wrapped request (e.g., request.Region).
@@ -732,6 +747,68 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.write("endpointURL := ");
             writer.writeNode(this.context.callEncodeUrl([go.codeblock(baseUrl), ...pathParameterReferences]));
         });
+    }
+
+    /**
+     * Resolves each path parameter bound to an SDK variable into a local variable: a
+     * per-request option takes precedence over the client-level value, and a string
+     * variable that is still empty fails before any request is sent.
+     */
+    private writeSdkVariablePathParameters({
+        writer,
+        endpoint,
+        receiver
+    }: {
+        writer: go.Writer;
+        endpoint: FernIr.HttpEndpoint;
+        receiver: go.AstNode;
+    }): void {
+        const resolved = new Set<string>();
+        for (const pathParameter of endpoint.allPathParameters) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParameter);
+            if (sdkVariable == null || resolved.has(sdkVariable.variable.id)) {
+                continue;
+            }
+            resolved.add(sdkVariable.variable.id);
+            const localVar = `_${sdkVariable.localName}`;
+            const clientValue = go.codeblock((w) => {
+                w.writeNode(receiver);
+                w.write(`.options.${sdkVariable.fieldName}`);
+            });
+            if (!sdkVariable.isString) {
+                writer.write(`${localVar} := `);
+                writer.writeNode(clientValue);
+                writer.newLine();
+                continue;
+            }
+            writer.writeLine(`${localVar} := options.${sdkVariable.fieldName}`);
+            writer.writeLine(`if ${localVar} == "" {`);
+            writer.indent();
+            writer.write(`${localVar} = `);
+            writer.writeNode(clientValue);
+            writer.newLine();
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine(`if ${localVar} == "" {`);
+            writer.indent();
+            writer.write("return nil, ");
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({ name: "New", importPath: "errors" }),
+                    arguments_: [go.TypeInstantiation.string(this.getMissingSdkVariableMessage(sdkVariable))]
+                })
+            );
+            writer.newLine();
+            writer.dedent();
+            writer.writeLine("}");
+        }
+    }
+
+    private getMissingSdkVariableMessage(sdkVariable: SdkVariableOption): string {
+        const name = getOriginalName(sdkVariable.variable.name);
+        const envVar = sdkVariable.variable.envVar;
+        const envHint = envVar != null ? ` or set the ${envVar} environment variable` : "";
+        return `${name} is required. Pass option.With${sdkVariable.fieldName}${envHint}.`;
     }
 
     // Extracts the default field from a FernIr.TypeReference as a TypeInstantiation.
