@@ -56,6 +56,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
+import okhttp3.RequestBody;
 
 public abstract class AbstractEndpointWriter {
 
@@ -1265,6 +1266,43 @@ public abstract class AbstractEndpointWriter {
         public Boolean _visitUnknown(Object unknownType) {
             return false;
         }
+    }
+
+    /** The body properties of the request options, or {@code null} when no request options were passed. */
+    protected final CodeBlock bodyPropertiesCodeBlock() {
+        return CodeBlock.of(
+                "$L != null ? $L.getBodyProperties() : null",
+                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
+                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+    }
+
+    protected final ClassName bodyPropertiesClassName() {
+        return clientGeneratorContext.getPoetClassNameFactory().getBodyPropertiesClassName();
+    }
+
+    /** Whether the request options carry body properties, in which case a JSON body is sent even without a body. */
+    protected final CodeBlock hasBodyPropertiesCodeBlock() {
+        return CodeBlock.of("$T.isPresent($L)", bodyPropertiesClassName(), bodyPropertiesCodeBlock());
+    }
+
+    /**
+     * The request body for an endpoint without one: a JSON body made of the request options' body properties, if
+     * any, for every method OkHttp allows a body for, and otherwise what such endpoints have always sent.
+     */
+    protected final CodeBlock noRequestBodyCodeBlock(HttpMethod method) {
+        if (requiresRequestBody(method)) {
+            return CodeBlock.of(
+                    "$T.toRequestBody($L, $T.create($S, null))",
+                    bodyPropertiesClassName(),
+                    bodyPropertiesCodeBlock(),
+                    RequestBody.class,
+                    "");
+        }
+        if (method.equals(HttpMethod.DELETE)) {
+            return CodeBlock.of(
+                    "$T.toRequestBody($L, null)", bodyPropertiesClassName(), bodyPropertiesCodeBlock());
+        }
+        return CodeBlock.of("null");
     }
 
     /**

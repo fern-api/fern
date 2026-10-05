@@ -51,6 +51,8 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.nio.file.Files;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.*;
 
@@ -157,13 +159,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         Optional.of(CodeBlock.of("$L.build()", variables.getMultipartBodyPropertiesName()));
             }
         } else {
-            if (httpEndpoint.getMethod().equals(HttpMethod.POST)
-                    || httpEndpoint.getMethod().equals(HttpMethod.PUT)
-                    || httpEndpoint.getMethod().equals(HttpMethod.PATCH)) {
-                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
-            } else {
-                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
-            }
+            inlinedRequestBodyBuilder = Optional.of(noRequestBodyCodeBlock(httpEndpoint.getMethod()));
         }
         if (clientGeneratorContext.isEndpointSecurity()) {
             requestBodyCodeBlock.add(
@@ -310,7 +306,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             // Set a default empty response body and begin a conditional, prior to parsing the RequestBody
             requestBodyCodeBlock
                     .addStatement("$L = $T.create(\"\", null)", variables.getOkhttpRequestBodyName(), RequestBody.class)
-                    .beginControlFlow("if ($N.isPresent())", variableToJsonify);
+                    .beginControlFlow(
+                            "if ($N.isPresent() || $L)", variableToJsonify, hasBodyPropertiesCodeBlock());
         }
         CodeBlock requestBodyContentType = CodeBlock.of(
                 "$T.$L",
@@ -323,12 +320,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
         requestBodyCodeBlock
                 .addStatement(
-                        "$L = $T.create($T.$L.writeValueAsBytes($L), $L)",
+                        "$L = $T.create($T.$L.writeValueAsBytes($T.merge($L, $L)), $L)",
                         variables.getOkhttpRequestBodyName(),
                         RequestBody.class,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
+                        bodyPropertiesClassName(),
                         variableToJsonify,
+                        bodyPropertiesCodeBlock(),
                         requestBodyContentType)
                 .endControlFlow();
         if (isOptional) {
@@ -548,6 +547,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 variables.getOkhttpRequestBodyName(),
                 FormBody.class);
         requestBodyCodeBlock.beginControlFlow("try");
+        requestBodyCodeBlock.addStatement(
+                "$T<$T, $T> formParams = new $T<>()", Map.class, String.class, Object.class, LinkedHashMap.class);
 
         for (EnrichedObjectProperty property : urlFormEncodedGetters.properties()) {
             String propertyGetter = requestParameterName + "." + property.getterProperty().name + "()";
@@ -556,22 +557,27 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             if (isOptional) {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.isPresent())", propertyGetter)
-                        .addStatement(
-                                "$L.add($S, String.valueOf($L.get()))",
-                                variables.getOkhttpRequestBodyName(),
-                                property.wireKey().get(),
-                                propertyGetter)
+                        .addStatement("formParams.put($S, $L.get())", property.wireKey().get(), propertyGetter)
                         .endControlFlow();
             } else {
                 requestBodyCodeBlock.addStatement(
-                        "$L.add($S, String.valueOf($L))",
-                        variables.getOkhttpRequestBodyName(),
-                        property.wireKey().get(),
-                        propertyGetter);
+                        "formParams.put($S, $L)", property.wireKey().get(), propertyGetter);
             }
         }
 
         requestBodyCodeBlock
+                .beginControlFlow(
+                        "for ($T.Entry<$T, $T> entry : $T.mergeFormParams(formParams, $L).entrySet())",
+                        Map.class,
+                        String.class,
+                        Object.class,
+                        bodyPropertiesClassName(),
+                        bodyPropertiesCodeBlock())
+                .addStatement(
+                        "$L.add(entry.getKey(), $T.valueOf(entry.getValue()))",
+                        variables.getOkhttpRequestBodyName(),
+                        String.class)
+                .endControlFlow()
                 .endControlFlow()
                 .beginControlFlow("catch($T e)", Exception.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)
