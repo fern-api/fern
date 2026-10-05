@@ -475,6 +475,16 @@ export class ReconnectingWebSocket {
                 this._addListeners();
 
                 this._connectTimeout = setTimeout(() => this._handleTimeout(), connectionTimeout);
+            })
+            .catch((error: unknown) => {
+                this._debug("connect failed", error);
+                this._connectLock = false;
+                const event = new Events.ErrorEvent(error instanceof Error ? error : new Error(String(error)), this);
+                if (this.onerror) {
+                    this.onerror(event);
+                }
+                this._listeners.error.forEach((listener) => this._callEventListener(event, listener));
+                this._connect();
             });
     }
 

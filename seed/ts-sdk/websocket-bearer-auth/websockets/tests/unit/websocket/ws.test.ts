@@ -478,6 +478,20 @@ describe("ReconnectingWebSocket waitForOpen", () => {
         expect(await settleState(waiting)).toBe("resolved");
     });
 
+    it("rejects with an error event when the URL provider fails", async () => {
+        socket = new ReconnectingWebSocket({
+            url: () => Promise.reject(new Error("url lookup failed")),
+            options: { WebSocket: FakeWebSocket, maxRetries: 0 },
+        });
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+
+        await expect(socket.waitForOpen()).rejects.toBeInstanceOf(ErrorEvent);
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(FakeWebSocket.instances).toHaveLength(0);
+        await expect(socket.waitForOpen()).rejects.toThrow("WebSocket closed before the connection was opened");
+    });
+
     it("rejects when close() is called while a reconnect is pending", async () => {
         socket = createSocket({ minReconnectionDelay: 1000, maxReconnectionDelay: 1000 });
         await flush();
