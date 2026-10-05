@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs dev` no longer reports a spurious `api-section-has-definition` error
+    ("API reference ... does not resolve to an API definition") for every `api:` navigation
+    item that sets `api-name`. The preview validates docs without loading API workspaces, so
+    the check is now skipped there; `fern check` and `fern generate --docs` still run it.
+  type: fix
