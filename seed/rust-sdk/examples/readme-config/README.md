@@ -23,6 +23,7 @@ The CustomName Rust library provides convenient access to the CustomName APIs fr
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Custom Client](#custom-client)
 - [Contributing](#contributing)
 
@@ -200,6 +201,25 @@ let response = client.service.create_movie(
         RequestOptions::new()
             .additional_query_param("filter", "active")
             .additional_query_param("sort", "desc")
+    )
+)?
+.await;
+```
+
+### Additional Body Properties
+
+You can add properties to the request body using `RequestOptions`, e.g. to send fields the SDK
+doesn't model yet. Keys are sent as-is, and a property set here overrides a field of the same name.
+If the endpoint has no body, a JSON object containing only these properties is sent. Additional
+properties apply to JSON and form-urlencoded bodies; multipart (file upload) and raw bytes bodies
+are sent unchanged.
+
+```rust
+let response = client.service.create_movie(
+    Some(
+        RequestOptions::new()
+            .additional_body_param("beta_feature", true)
+            .additional_body_param("metadata", serde_json::json!({ "source": "sdk" }))
     )
 )?
 .await;

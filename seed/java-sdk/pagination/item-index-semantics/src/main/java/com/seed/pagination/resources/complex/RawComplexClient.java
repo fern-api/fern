@@ -101,9 +101,11 @@ public class RawComplexClient {
                 List<Conversation> result = parsedResponse.getConversations();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<Conversation>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> search(
-                                                index, nextRequest, requestOptions)
-                                        .body()),
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> search(index, nextRequest, requestOptions).body()),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

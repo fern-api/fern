@@ -14,6 +14,11 @@ pub struct RequestOptions {
     pub additional_headers: HashMap<String, String>,
     /// Additional query parameters to include in the request
     pub additional_query_params: HashMap<String, String>,
+    /// Additional properties to merge into the JSON request body.
+    ///
+    /// Keys are sent verbatim (use the API's wire-format names). See
+    /// [`RequestOptions::additional_body_param`] for the merge rules.
+    pub additional_body_params: serde_json::Map<String, serde_json::Value>,
 }
 
 impl RequestOptions {
@@ -55,6 +60,47 @@ impl RequestOptions {
             .insert(key.into(), value.into());
         self
     }
+
+    /// Adds a property to the request body, e.g. an undocumented or beta field.
+    ///
+    /// The property is merged into the body after it has been serialized:
+    /// - the key is used as-is (no casing transform), and a value set here overrides a
+    ///   generated field with the same key;
+    /// - if the endpoint sends no body (or a `null` body), a JSON object containing only
+    ///   the additional properties is sent;
+    /// - it applies to JSON and `application/x-www-form-urlencoded` bodies. Multipart
+    ///   (file upload) and raw bytes bodies are not supported and are sent unchanged, as is
+    ///   a body that serializes to a non-object JSON value (e.g. an array).
+    pub fn additional_body_param(
+        mut self,
+        key: impl Into<String>,
+        value: impl Into<serde_json::Value>,
+    ) -> Self {
+        self.additional_body_params.insert(key.into(), value.into());
+        self
+    }
+
+    /// Merges [`RequestOptions::additional_body_params`] into a serialized request body.
+    pub(crate) fn merge_additional_body_params(
+        &self,
+        body: Option<serde_json::Value>,
+    ) -> Option<serde_json::Value> {
+        if self.additional_body_params.is_empty() {
+            return body;
+        }
+        match body {
+            None | Some(serde_json::Value::Null) => Some(serde_json::Value::Object(
+                self.additional_body_params.clone(),
+            )),
+            Some(serde_json::Value::Object(mut map)) => {
+                for (key, value) in &self.additional_body_params {
+                    map.insert(key.clone(), value.clone());
+                }
+                Some(serde_json::Value::Object(map))
+            }
+            other => other,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -70,6 +116,7 @@ mod tests {
         assert!(opts.timeout_seconds.is_none());
         assert!(opts.additional_headers.is_empty());
         assert!(opts.additional_query_params.is_empty());
+        assert!(opts.additional_body_params.is_empty());
     }
 
     #[test]
@@ -81,6 +128,7 @@ mod tests {
         assert!(opts.timeout_seconds.is_none());
         assert!(opts.additional_headers.is_empty());
         assert!(opts.additional_query_params.is_empty());
+        assert!(opts.additional_body_params.is_empty());
     }
 
     #[test]
@@ -165,12 +213,123 @@ mod tests {
             .max_retries(5)
             .timeout_seconds(60)
             .additional_header("X-Foo", "bar")
-            .additional_query_param("q", "search");
+            .additional_query_param("q", "search")
+            .additional_body_param("beta_flag", true);
         assert_eq!(opts.api_key, Some("key".to_string()));
         assert_eq!(opts.token, Some("tok".to_string()));
         assert_eq!(opts.max_retries, Some(5));
         assert_eq!(opts.timeout_seconds, Some(60));
         assert_eq!(opts.additional_headers.len(), 1);
         assert_eq!(opts.additional_query_params.len(), 1);
+        assert_eq!(opts.additional_body_params.len(), 1);
+    }
+
+    #[test]
+    fn test_additional_body_param() {
+        let opts = RequestOptions::new().additional_body_param("beta_flag", true);
+        assert_eq!(
+            opts.additional_body_params.get("beta_flag"),
+            Some(&serde_json::json!(true))
+        );
+    }
+
+    #[test]
+    fn test_additional_body_params_accumulate() {
+        let opts = RequestOptions::new()
+            .additional_body_param("first", "1")
+            .additional_body_param("second", 2);
+        assert_eq!(opts.additional_body_params.len(), 2);
+        assert_eq!(
+            opts.additional_body_params.get("first"),
+            Some(&serde_json::json!("1"))
+        );
+        assert_eq!(
+            opts.additional_body_params.get("second"),
+            Some(&serde_json::json!(2))
+        );
+    }
+
+    #[test]
+    fn test_merge_without_additional_body_params_leaves_body_unchanged() {
+        let opts = RequestOptions::new();
+        assert_eq!(opts.merge_additional_body_params(None), None);
+        assert_eq!(
+            opts.merge_additional_body_params(Some(serde_json::json!({"name": "fern"}))),
+            Some(serde_json::json!({"name": "fern"}))
+        );
+    }
+
+    #[test]
+    fn test_merge_adds_properties_to_object_body() {
+        let opts = RequestOptions::new().additional_body_param("beta_flag", true);
+        let merged = opts.merge_additional_body_params(Some(serde_json::json!({"name": "fern"})));
+        assert_eq!(
+            merged,
+            Some(serde_json::json!({"name": "fern", "beta_flag": true}))
+        );
+    }
+
+    #[test]
+    fn test_merge_additional_body_param_overrides_generated_field() {
+        let opts = RequestOptions::new().additional_body_param("name", "override");
+        let merged = opts.merge_additional_body_params(Some(serde_json::json!({
+            "name": "fern",
+            "count": 1
+        })));
+        assert_eq!(
+            merged,
+            Some(serde_json::json!({"name": "override", "count": 1}))
+        );
+    }
+
+    #[test]
+    fn test_merge_creates_body_when_none() {
+        let opts = RequestOptions::new().additional_body_param("beta_flag", true);
+        assert_eq!(
+            opts.merge_additional_body_params(None),
+            Some(serde_json::json!({"beta_flag": true}))
+        );
+    }
+
+    #[test]
+    fn test_merge_creates_body_when_null() {
+        let opts = RequestOptions::new().additional_body_param("beta_flag", true);
+        assert_eq!(
+            opts.merge_additional_body_params(Some(serde_json::Value::Null)),
+            Some(serde_json::json!({"beta_flag": true}))
+        );
+    }
+
+    #[test]
+    fn test_merge_nested_values() {
+        let opts = RequestOptions::new()
+            .additional_body_param("settings", serde_json::json!({"voice": {"speed": 1.5}}))
+            .additional_body_param("tags", serde_json::json!(["a", "b"]));
+        let merged = opts.merge_additional_body_params(Some(serde_json::json!({
+            "settings": {"voice": {"pitch": 2}},
+            "text": "hello"
+        })));
+        // The override is shallow: a top-level key is replaced wholesale, not deep-merged.
+        assert_eq!(
+            merged,
+            Some(serde_json::json!({
+                "settings": {"voice": {"speed": 1.5}},
+                "tags": ["a", "b"],
+                "text": "hello"
+            }))
+        );
+    }
+
+    #[test]
+    fn test_merge_leaves_non_object_body_unchanged() {
+        let opts = RequestOptions::new().additional_body_param("beta_flag", true);
+        assert_eq!(
+            opts.merge_additional_body_params(Some(serde_json::json!([1, 2, 3]))),
+            Some(serde_json::json!([1, 2, 3]))
+        );
+        assert_eq!(
+            opts.merge_additional_body_params(Some(serde_json::json!("text"))),
+            Some(serde_json::json!("text"))
+        );
     }
 }

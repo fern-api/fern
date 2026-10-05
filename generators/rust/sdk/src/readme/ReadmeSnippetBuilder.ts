@@ -21,6 +21,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static CUSTOM_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_CLIENT";
@@ -76,6 +77,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Additional query string parameters
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
+
+        // Additional body properties
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID] =
+            this.buildAdditionalBodyPropertiesSnippets();
 
         // WebSocket
         const wsSnippets = this.buildWebSocketSnippets();
@@ -174,6 +179,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         );
         return queryEndpoints.map((endpoint) => {
             const codeString = this.buildAdditionalQueryParamsCode(endpoint);
+            return this.writeCode(codeString);
+        });
+    }
+
+    private buildAdditionalBodyPropertiesSnippets(): string[] {
+        const bodyEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID);
+        return bodyEndpoints.map((endpoint) => {
+            const codeString = this.buildAdditionalBodyPropertiesCode(endpoint);
             return this.writeCode(codeString);
         });
     }
@@ -528,6 +541,36 @@ let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.context.getClientName(
         writer.write('.additional_query_param("filter", "active")');
         writer.newLine();
         writer.write('.additional_query_param("sort", "desc")');
+        writer.dedent();
+        writer.newLine();
+        writer.dedent();
+        writer.write(")");
+        writer.newLine();
+        writer.dedent();
+        writer.write(")?");
+        writer.newLine();
+        writer.write(".await;");
+
+        return writer.toString().trim();
+    }
+
+    private buildAdditionalBodyPropertiesCode(endpoint: EndpointWithFilepath): string {
+        const writer = new Writer();
+        const methodCall = this.getMethodCall(endpoint);
+
+        // Manually format using Writer for proper multi-line method chain formatting
+        writer.write(`let response = ${methodCall}(`);
+        writer.newLine();
+        writer.indent();
+        writer.write("Some(");
+        writer.newLine();
+        writer.indent();
+        writer.write("RequestOptions::new()");
+        writer.newLine();
+        writer.indent();
+        writer.write('.additional_body_param("beta_feature", true)');
+        writer.newLine();
+        writer.write('.additional_body_param("metadata", serde_json::json!({ "source": "sdk" }))');
         writer.dedent();
         writer.newLine();
         writer.dedent();

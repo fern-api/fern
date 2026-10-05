@@ -89,7 +89,7 @@ public partial class IdempotentRequestOptions : IIdempotentRequestOptions
 
     /// <summary>
     /// Additional body properties sent with the request.
-    /// This is only applied to JSON requests.
+    /// This is applied to JSON and form-urlencoded requests (not multipart requests).
     /// </summary>
     public object? AdditionalBodyProperties { get;
 #if NET5_0_OR_GREATER

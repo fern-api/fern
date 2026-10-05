@@ -12,10 +12,10 @@ export function getEndpointReturnType({
     return endpoint.response?.body?._visit({
         streaming: () => undefined,
         streamParameter: () => undefined,
-        fileDownload: () => undefined,
+        fileDownload: () => ruby.Type.string(),
         json: (reference) => context.typeMapper.convert({ reference: reference.responseBodyType }),
         text: () => ruby.Type.string(),
-        bytes: () => undefined,
+        bytes: () => ruby.Type.string(),
         _other: () => undefined
     });
 }

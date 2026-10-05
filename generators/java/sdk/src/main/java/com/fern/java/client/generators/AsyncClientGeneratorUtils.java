@@ -49,7 +49,16 @@ public class AsyncClientGeneratorUtils extends AbstractClientGeneratorUtils {
     @Override
     protected AbstractDelegatingHttpEndpointMethodSpecs delegatingHttpEndpointMethodSpecs(
             HttpEndpointMethodSpecs delegate) {
-        return new AsyncDelegatingHttpEndpointMethodSpecs(delegate, RAW_CLIENT_NAME, BODY_GETTER_NAME);
+        return new AsyncDelegatingHttpEndpointMethodSpecs(
+                delegate,
+                RAW_CLIENT_NAME,
+                BODY_GETTER_NAME,
+                generatorContext
+                        .getPoetClassNameFactory()
+                        .getHttpResponseClassName(
+                                generatorContext.getGeneratorConfig().getOrganization(),
+                                generatorContext.getGeneratorConfig().getWorkspaceName(),
+                                generatorContext.getCustomConfig()));
     }
 
     @Override
