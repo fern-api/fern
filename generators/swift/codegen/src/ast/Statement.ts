@@ -385,13 +385,13 @@ export class Statement extends AstNode {
         return new this({ type: "if", ...params });
     }
 
-    /**
-     * Escape hatch for writing raw Swift code. Intended for use in tests.
-     */
     public static doCatch(params: Omit<DoCatch, "type">): Statement {
         return new this({ type: "do-catch", ...params });
     }
 
+    /**
+     * Escape hatch for writing raw Swift code. Intended for use in tests.
+     */
     public static raw(content: string): Statement {
         return new this({ type: "raw", content });
     }

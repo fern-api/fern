@@ -95,12 +95,7 @@ export function getExpectedHTTPErrorResponseBody({
 }): ExpectedHTTPErrorResponseBody | undefined {
     if (isJsonObject(json)) {
         const { code, type, message } = json;
-        if (
-            typeof code === "number" &&
-            Number.isSafeInteger(code) &&
-            isOptionalString(type) &&
-            isOptionalString(message)
-        ) {
+        if (typeof code === "number" && isSwiftInt(code) && isOptionalString(type) && isOptionalString(message)) {
             return { code, type: type ?? undefined, message: message ?? undefined };
         }
         if (typeof message === "string") {
@@ -119,4 +114,9 @@ function isJsonObject(value: unknown): value is Record<string, unknown> {
 
 function isOptionalString(value: unknown): value is string | null | undefined {
     return value == null || typeof value === "string";
+}
+
+/** `HTTPError.ResponseBody.code` is a 64-bit Swift `Int`. */
+function isSwiftInt(value: number): boolean {
+    return Number.isInteger(value) && Math.abs(value) < 2 ** 63;
 }

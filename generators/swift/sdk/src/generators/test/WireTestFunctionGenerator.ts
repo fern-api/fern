@@ -154,13 +154,9 @@ export class WireTestFunctionGenerator {
             return null;
         }
         const statusCode = errorDeclaration.statusCode;
-        const rawBody =
-            response.body != null ? JSON.stringify(buildJsonFromExampleTypeReference(response.body), null, 2) : "";
-        const expectedBody = getExpectedHTTPErrorResponseBody({
-            statusCode,
-            json: response.body != null ? buildJsonFromExampleTypeReference(response.body) : undefined,
-            rawBody
-        });
+        const bodyJson = response.body != null ? buildJsonFromExampleTypeReference(response.body) : undefined;
+        const rawBody = response.body != null ? JSON.stringify(bodyJson, null, 2) : "";
+        const expectedBody = getExpectedHTTPErrorResponseBody({ statusCode, json: bodyJson, rawBody });
         const errorEnumName = this.sdkGeneratorContext.project.nameRegistry.getErrorEnumSymbolOrThrow().name;
         const httpError = swift.Expression.reference("httpError");
         const expect = (left: swift.Expression, right: swift.Expression) =>
@@ -312,8 +308,10 @@ export class WireTestFunctionGenerator {
 
     private generateTestMethod(baseName: string, statements: swift.Statement[]): swift.Method {
         let unsafeName = baseName;
-        for (let suffix = 2; this.usedTestFunctionNames.has(unsafeName); suffix++) {
+        let suffix = 2;
+        while (this.usedTestFunctionNames.has(unsafeName)) {
             unsafeName = `${baseName}${suffix}`;
+            suffix++;
         }
         this.usedTestFunctionNames.add(unsafeName);
         return swift.method({
