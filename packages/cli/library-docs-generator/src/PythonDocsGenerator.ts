@@ -133,7 +133,7 @@ function renderModuleTree(
     packageModules: Set<string>,
     writer: MdxFileWriter,
     parentPath: string,
-    pageKeyBase: string
+    pageIdBase: string
 ): void {
     if (moduleIsPrivate(module)) {
         return;
@@ -144,19 +144,19 @@ function renderModuleTree(
     // picks them up as section overview pages (not sibling duplicates).
     if (moduleHasPage(module)) {
         const pageKey = moduleIsPackage(module)
-            ? `${pageKeyBase}/${modulePath}/index.mdx`
-            : `${pageKeyBase}/${modulePath}.mdx`;
+            ? `${pageIdBase}/${modulePath}/index.mdx`
+            : `${pageIdBase}/${modulePath}.mdx`;
         // Cross-page links are relative to this page's file so they resolve wherever the
         // generated folder is mounted in the navigation.
         const pageCtx: RenderContext = {
             ...ctx,
-            linkToModuleFile: createModuleFileLinker(pageKey, pageKeyBase, packageModules)
+            linkToModuleFile: createModuleFileLinker(pageKey, pageIdBase, packageModules)
         };
         const content = renderModulePage(module, pageCtx, parentPath);
         writer.writePage(pageKey, content);
     }
 
     for (const submodule of module.submodules) {
-        renderModuleTree(submodule, ctx, packageModules, writer, modulePath, pageKeyBase);
+        renderModuleTree(submodule, ctx, packageModules, writer, modulePath, pageIdBase);
     }
 }
