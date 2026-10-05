@@ -619,14 +619,10 @@ export class DocsDefinitionResolver {
         const imageParseStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
-                const { filepaths, markdown: newMarkdown } = parseImagePaths(
-                    markdown,
-                    {
-                        absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                        absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-                    },
-                    this.taskContext
-                );
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                });
 
                 // store the updated markdown in pages
                 this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
