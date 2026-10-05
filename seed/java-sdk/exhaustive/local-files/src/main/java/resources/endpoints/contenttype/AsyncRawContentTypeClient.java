@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
@@ -63,7 +64,7 @@ public class AsyncRawContentTypeClient {
       }
       RequestBody body;
       try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaType.parse("application/json-patch+json"));
       }
       catch(JsonProcessingException e) {
         throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -82,7 +83,8 @@ public class AsyncRawContentTypeClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
+      Call okhttpCall = client.newCall(okhttpRequest);
+      okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
@@ -106,6 +108,11 @@ public class AsyncRawContentTypeClient {
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+        }
+      });
+      future.whenComplete((result_, throwable_) -> {
+        if (future.isCancelled()) {
+          okhttpCall.cancel();
         }
       });
       return future;
@@ -137,7 +144,7 @@ public class AsyncRawContentTypeClient {
         }
         RequestBody body;
         try {
-          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaType.parse("application/json-patch+json; charset=utf-8"));
         }
         catch(JsonProcessingException e) {
           throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -156,7 +163,8 @@ public class AsyncRawContentTypeClient {
           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             try (ResponseBody responseBody = response.body()) {
@@ -180,6 +188,11 @@ public class AsyncRawContentTypeClient {
           @Override
           public void onFailure(@NotNull Call call, @NotNull IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          }
+        });
+        future.whenComplete((result_, throwable_) -> {
+          if (future.isCancelled()) {
+            okhttpCall.cancel();
           }
         });
         return future;

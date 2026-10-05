@@ -5,6 +5,7 @@ package com.seed.simpleApi.resources.user;
 
 import com.seed.simpleApi.core.ClientOptions;
 import com.seed.simpleApi.core.RequestOptions;
+import com.seed.simpleApi.core.SeedSimpleApiHttpResponse;
 import com.seed.simpleApi.resources.user.types.User;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<User> get(String id) {
-        return this.rawClient.get(id).thenApply(response -> response.body());
+        CompletableFuture<SeedSimpleApiHttpResponse<User>> rawFuture = this.rawClient.get(id);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> get(String id, RequestOptions requestOptions) {
-        return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedSimpleApiHttpResponse<User>> rawFuture = this.rawClient.get(id, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

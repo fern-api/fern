@@ -63,7 +63,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.createPlant({\n    species: \"species\",\n    family: \"family\",\n    genus: \"genus\",\n    sunExposure: \"full\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.createPlant({\n    species: \"species\",\n    family: \"family\",\n    genus: \"genus\",\n    commonName: \"commonName\",\n    wateringFrequency: \"daily\",\n    sunExposure: \"full\"\n});\n"
             }
         },
         {
@@ -74,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.createTree({\n    id: \"id\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/allof\";\n\nconst client = new SeedApiClient;\nawait client.createTree({\n    treeName: \"treeName\",\n    id: \"id\",\n    treeSpecies: \"treeSpecies\"\n});\n"
             }
         }
     ],

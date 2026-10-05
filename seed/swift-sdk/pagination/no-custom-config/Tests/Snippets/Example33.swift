@@ -8,10 +8,6 @@ enum Example33 {
             token: "<token>"
         )
 
-        _ = try await client.users.listWithAliasedData(
-            page: 1,
-            perPage: 1,
-            startingAfter: "starting_after"
-        )
+        _ = try await client.users.listWithOptionalData(page: 1)
     }
 }

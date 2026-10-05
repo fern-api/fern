@@ -106,13 +106,19 @@ public class RawCatalogClient {
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename) {
+            CreateCatalogImageBody request, InputStream stream, String filename) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -138,13 +144,19 @@ public class RawCatalogClient {
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+            CreateCatalogImageBody request, InputStream stream, String filename, MediaType mediaType) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -170,7 +182,7 @@ public class RawCatalogClient {
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+            CreateCatalogImageBody request, InputStream stream, String filename, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("catalog/images");
@@ -181,7 +193,13 @@ public class RawCatalogClient {
         }
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -219,7 +237,7 @@ public class RawCatalogClient {
     }
 
     public SeedApiHttpResponse<CatalogImage> createCatalogImage(
-            Optional<File> imageFile,
+            CreateCatalogImageBody request,
             InputStream stream,
             String filename,
             MediaType mediaType,
@@ -234,7 +252,13 @@ public class RawCatalogClient {
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());

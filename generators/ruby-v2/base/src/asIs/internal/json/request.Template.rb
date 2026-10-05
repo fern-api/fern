@@ -29,7 +29,7 @@ module <%= gem_namespace %>
         #   that must not be overridden by additional_headers from request_options.
         def encode_headers(protected_keys: [])
 <% if (respectOptionalRequestBody) { %>          sdk_headers = { "Accept" => "application/json" }
-          sdk_headers["Content-Type"] = "application/json" unless @omit_content_type_without_body && @body.nil?
+          sdk_headers["Content-Type"] = "application/json" unless @omit_content_type_without_body && request_body.nil?
           sdk_headers = sdk_headers.merge(@headers)
 <% } else { %>          sdk_headers = {
             "Content-Type" => "application/json",
@@ -38,9 +38,18 @@ module <%= gem_namespace %>
 <% } %>          merge_additional_headers(sdk_headers, protected_keys:)
         end
 
-        # @return [String, nil] The encoded HTTP request body.
+        # @return [String, nil] The encoded HTTP request body, including any additional_body_parameters
+        #   from request_options.
         def encode_body
-          @body.nil? ? nil : ::JSON.generate(@body)
+          body = request_body
+          body.nil? ? nil : ::JSON.generate(body)
+        end
+
+        private
+
+        # @return [Object, nil] The request body merged with additional_body_parameters.
+        def request_body
+          merge_additional_body_parameters(@body)
         end
       end
     end

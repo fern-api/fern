@@ -5,6 +5,7 @@ package com.seed.exhaustive.endpoints;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.types.types.WeatherReport;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,26 @@ public class AsyncEnumClient {
     }
 
     public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request) {
-        return this.rawClient.getAndReturnEnum(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> rawFuture =
+                this.rawClient.getAndReturnEnum(request);
+        CompletableFuture<WeatherReport> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<WeatherReport> getAndReturnEnum(WeatherReport request, RequestOptions requestOptions) {
-        return this.rawClient.getAndReturnEnum(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<WeatherReport>> rawFuture =
+                this.rawClient.getAndReturnEnum(request, requestOptions);
+        CompletableFuture<WeatherReport> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

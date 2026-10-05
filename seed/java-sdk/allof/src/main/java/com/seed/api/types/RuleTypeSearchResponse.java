@@ -12,24 +12,24 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RuleTypeSearchResponse.Builder.class)
 public final class RuleTypeSearchResponse {
-    private final Optional<List<RuleType>> results;
+    private final List<RuleType> results;
 
     private final PagingCursors paging;
 
     private final Map<String, Object> additionalProperties;
 
     private RuleTypeSearchResponse(
-            Optional<List<RuleType>> results, PagingCursors paging, Map<String, Object> additionalProperties) {
+            List<RuleType> results, PagingCursors paging, Map<String, Object> additionalProperties) {
         this.results = results;
         this.paging = paging;
         this.additionalProperties = additionalProperties;
@@ -39,7 +39,7 @@ public final class RuleTypeSearchResponse {
      * @return Current page of results from the requested resource.
      */
     @JsonProperty("results")
-    public Optional<List<RuleType>> getResults() {
+    public List<RuleType> getResults() {
         return results;
     }
 
@@ -93,16 +93,18 @@ public final class RuleTypeSearchResponse {
         /**
          * <p>Current page of results from the requested resource.</p>
          */
-        _FinalStage results(Optional<List<RuleType>> results);
-
         _FinalStage results(List<RuleType> results);
+
+        _FinalStage addResults(RuleType results);
+
+        _FinalStage addAllResults(List<RuleType> results);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements PagingStage, _FinalStage {
         private PagingCursors paging;
 
-        private Optional<List<RuleType>> results = Optional.empty();
+        private List<RuleType> results = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -128,8 +130,20 @@ public final class RuleTypeSearchResponse {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage results(List<RuleType> results) {
-            this.results = Optional.ofNullable(results);
+        public _FinalStage addAllResults(List<RuleType> results) {
+            if (results != null) {
+                this.results.addAll(results);
+            }
+            return this;
+        }
+
+        /**
+         * <p>Current page of results from the requested resource.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addResults(RuleType results) {
+            this.results.add(results);
             return this;
         }
 
@@ -138,8 +152,11 @@ public final class RuleTypeSearchResponse {
          */
         @java.lang.Override
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
-        public _FinalStage results(Optional<List<RuleType>> results) {
-            this.results = results;
+        public _FinalStage results(List<RuleType> results) {
+            this.results.clear();
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

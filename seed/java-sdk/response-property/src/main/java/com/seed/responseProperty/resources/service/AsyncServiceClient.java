@@ -5,6 +5,7 @@ package com.seed.responseProperty.resources.service;
 
 import com.seed.responseProperty.core.ClientOptions;
 import com.seed.responseProperty.core.RequestOptions;
+import com.seed.responseProperty.core.SeedResponsePropertyHttpResponse;
 import com.seed.responseProperty.resources.service.types.Movie;
 import java.util.Map;
 import java.util.Optional;
@@ -28,58 +29,167 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Movie> getMovie(String request) {
-        return this.rawClient.getMovie(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Movie>> rawFuture = this.rawClient.getMovie(request);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Movie> getMovie(String request, RequestOptions requestOptions) {
-        return this.rawClient.getMovie(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Movie>> rawFuture =
+                this.rawClient.getMovie(request, requestOptions);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getMovieDocs(String request) {
-        return this.rawClient.getMovieDocs(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<String>> rawFuture = this.rawClient.getMovieDocs(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getMovieDocs(String request, RequestOptions requestOptions) {
-        return this.rawClient.getMovieDocs(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<String>> rawFuture =
+                this.rawClient.getMovieDocs(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getMovieName(String request) {
-        return this.rawClient.getMovieName(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<String>> rawFuture = this.rawClient.getMovieName(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getMovieName(String request, RequestOptions requestOptions) {
-        return this.rawClient.getMovieName(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<String>> rawFuture =
+                this.rawClient.getMovieName(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, String>> getMovieMetadata(String request) {
-        return this.rawClient.getMovieMetadata(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Map<String, String>>> rawFuture =
+                this.rawClient.getMovieMetadata(request);
+        CompletableFuture<Map<String, String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, String>> getMovieMetadata(String request, RequestOptions requestOptions) {
-        return this.rawClient.getMovieMetadata(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Map<String, String>>> rawFuture =
+                this.rawClient.getMovieMetadata(request, requestOptions);
+        CompletableFuture<Map<String, String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<Movie>> getOptionalMovie(String request) {
-        return this.rawClient.getOptionalMovie(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Optional<Movie>>> rawFuture =
+                this.rawClient.getOptionalMovie(request);
+        CompletableFuture<Optional<Movie>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<Movie>> getOptionalMovie(String request, RequestOptions requestOptions) {
-        return this.rawClient.getOptionalMovie(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Optional<Movie>>> rawFuture =
+                this.rawClient.getOptionalMovie(request, requestOptions);
+        CompletableFuture<Optional<Movie>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieDocs(String request) {
-        return this.rawClient.getOptionalMovieDocs(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Optional<String>>> rawFuture =
+                this.rawClient.getOptionalMovieDocs(request);
+        CompletableFuture<Optional<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieDocs(String request, RequestOptions requestOptions) {
-        return this.rawClient.getOptionalMovieDocs(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Optional<String>>> rawFuture =
+                this.rawClient.getOptionalMovieDocs(request, requestOptions);
+        CompletableFuture<Optional<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieName(String request) {
-        return this.rawClient.getOptionalMovieName(request).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Optional<String>>> rawFuture =
+                this.rawClient.getOptionalMovieName(request);
+        CompletableFuture<Optional<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<String>> getOptionalMovieName(String request, RequestOptions requestOptions) {
-        return this.rawClient.getOptionalMovieName(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedResponsePropertyHttpResponse<Optional<String>>> rawFuture =
+                this.rawClient.getOptionalMovieName(request, requestOptions);
+        CompletableFuture<Optional<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

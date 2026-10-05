@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.endpoints.params;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.InputStreamRequestBody;
 import com.fern.sdk.core.MediaTypes;
@@ -91,7 +92,8 @@ public class AsyncRawParamsClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
+      Call okhttpCall = client.newCall(okhttpRequest);
+      okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
@@ -115,6 +117,11 @@ public class AsyncRawParamsClient {
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+        }
+      });
+      future.whenComplete((result_, throwable_) -> {
+        if (future.isCancelled()) {
+          okhttpCall.cancel();
         }
       });
       return future;
@@ -170,7 +177,8 @@ public class AsyncRawParamsClient {
           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             try (ResponseBody responseBody = response.body()) {
@@ -194,6 +202,11 @@ public class AsyncRawParamsClient {
           @Override
           public void onFailure(@NotNull Call call, @NotNull IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          }
+        });
+        future.whenComplete((result_, throwable_) -> {
+          if (future.isCancelled()) {
+            okhttpCall.cancel();
           }
         });
         return future;
@@ -234,7 +247,8 @@ public class AsyncRawParamsClient {
             okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
           }
           CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-          client.newCall(okhttpRequest).enqueue(new Callback() {
+          Call okhttpCall = client.newCall(okhttpRequest);
+          okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
               try (ResponseBody responseBody = response.body()) {
@@ -258,6 +272,11 @@ public class AsyncRawParamsClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+            }
+          });
+          future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+              okhttpCall.cancel();
             }
           });
           return future;
@@ -298,7 +317,8 @@ public class AsyncRawParamsClient {
               okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
             }
             CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-            client.newCall(okhttpRequest).enqueue(new Callback() {
+            Call okhttpCall = client.newCall(okhttpRequest);
+            okhttpCall.enqueue(new Callback() {
               @Override
               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -322,6 +342,11 @@ public class AsyncRawParamsClient {
               @Override
               public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+              }
+            });
+            future.whenComplete((result_, throwable_) -> {
+              if (future.isCancelled()) {
+                okhttpCall.cancel();
               }
             });
             return future;
@@ -362,7 +387,8 @@ public class AsyncRawParamsClient {
                 okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
               }
               CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-              client.newCall(okhttpRequest).enqueue(new Callback() {
+              Call okhttpCall = client.newCall(okhttpRequest);
+              okhttpCall.enqueue(new Callback() {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                   try (ResponseBody responseBody = response.body()) {
@@ -386,6 +412,11 @@ public class AsyncRawParamsClient {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
                   future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                }
+              });
+              future.whenComplete((result_, throwable_) -> {
+                if (future.isCancelled()) {
+                  okhttpCall.cancel();
                 }
               });
               return future;
@@ -426,7 +457,8 @@ public class AsyncRawParamsClient {
                   okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                 }
                 CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-                client.newCall(okhttpRequest).enqueue(new Callback() {
+                Call okhttpCall = client.newCall(okhttpRequest);
+                okhttpCall.enqueue(new Callback() {
                   @Override
                   public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                     try (ResponseBody responseBody = response.body()) {
@@ -450,6 +482,11 @@ public class AsyncRawParamsClient {
                   @Override
                   public void onFailure(@NotNull Call call, @NotNull IOException e) {
                     future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                  }
+                });
+                future.whenComplete((result_, throwable_) -> {
+                  if (future.isCancelled()) {
+                    okhttpCall.cancel();
                   }
                 });
                 return future;
@@ -478,7 +515,7 @@ public class AsyncRawParamsClient {
                   }
                   RequestBody body;
                   try {
-                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                   }
                   catch(JsonProcessingException e) {
                     throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -498,7 +535,8 @@ public class AsyncRawParamsClient {
                     okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                   }
                   CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                  client.newCall(okhttpRequest).enqueue(new Callback() {
+                  Call okhttpCall = client.newCall(okhttpRequest);
+                  okhttpCall.enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                       try (ResponseBody responseBody = response.body()) {
@@ -522,6 +560,11 @@ public class AsyncRawParamsClient {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                       future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                    }
+                  });
+                  future.whenComplete((result_, throwable_) -> {
+                    if (future.isCancelled()) {
+                      okhttpCall.cancel();
                     }
                   });
                   return future;
@@ -551,7 +594,7 @@ public class AsyncRawParamsClient {
                     }
                     RequestBody body;
                     try {
-                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                     }
                     catch(JsonProcessingException e) {
                       throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -571,7 +614,8 @@ public class AsyncRawParamsClient {
                       okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                     }
                     CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                    client.newCall(okhttpRequest).enqueue(new Callback() {
+                    Call okhttpCall = client.newCall(okhttpRequest);
+                    okhttpCall.enqueue(new Callback() {
                       @Override
                       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         try (ResponseBody responseBody = response.body()) {
@@ -595,6 +639,11 @@ public class AsyncRawParamsClient {
                       @Override
                       public void onFailure(@NotNull Call call, @NotNull IOException e) {
                         future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                      }
+                    });
+                    future.whenComplete((result_, throwable_) -> {
+                      if (future.isCancelled()) {
+                        okhttpCall.cancel();
                       }
                     });
                     return future;
@@ -635,7 +684,8 @@ public class AsyncRawParamsClient {
                         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                       }
                       CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> future = new CompletableFuture<>();
-                      client.newCall(okhttpRequest).enqueue(new Callback() {
+                      Call okhttpCall = client.newCall(okhttpRequest);
+                      okhttpCall.enqueue(new Callback() {
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                           try (ResponseBody responseBody = response.body()) {
@@ -659,6 +709,11 @@ public class AsyncRawParamsClient {
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
                           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                        }
+                      });
+                      future.whenComplete((result_, throwable_) -> {
+                        if (future.isCancelled()) {
+                          okhttpCall.cancel();
                         }
                       });
                       return future;
@@ -721,7 +776,7 @@ public class AsyncRawParamsClient {
                         }
                         RequestBody body;
                         try {
-                          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                         }
                         catch(Exception e) {
                           throw new RuntimeException(e);
@@ -741,7 +796,8 @@ public class AsyncRawParamsClient {
                           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                         }
                         CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
-                        client.newCall(okhttpRequest).enqueue(new Callback() {
+                        Call okhttpCall = client.newCall(okhttpRequest);
+                        okhttpCall.enqueue(new Callback() {
                           @Override
                           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             try (ResponseBody responseBody = response.body()) {
@@ -765,6 +821,11 @@ public class AsyncRawParamsClient {
                           @Override
                           public void onFailure(@NotNull Call call, @NotNull IOException e) {
                             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                          }
+                        });
+                        future.whenComplete((result_, throwable_) -> {
+                          if (future.isCancelled()) {
+                            okhttpCall.cancel();
                           }
                         });
                         return future;
@@ -811,7 +872,7 @@ public class AsyncRawParamsClient {
                           }
                           RequestBody body;
                           try {
-                            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaTypes.APPLICATION_JSON);
                           }
                           catch(Exception e) {
                             throw new RuntimeException(e);
@@ -831,7 +892,8 @@ public class AsyncRawParamsClient {
                             okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                           }
                           CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
-                          client.newCall(okhttpRequest).enqueue(new Callback() {
+                          Call okhttpCall = client.newCall(okhttpRequest);
+                          okhttpCall.enqueue(new Callback() {
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                               try (ResponseBody responseBody = response.body()) {
@@ -855,6 +917,11 @@ public class AsyncRawParamsClient {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                               future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                            }
+                          });
+                          future.whenComplete((result_, throwable_) -> {
+                            if (future.isCancelled()) {
+                              okhttpCall.cancel();
                             }
                           });
                           return future;
@@ -895,7 +962,8 @@ public class AsyncRawParamsClient {
                               okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                             }
                             CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                            client.newCall(okhttpRequest).enqueue(new Callback() {
+                            Call okhttpCall = client.newCall(okhttpRequest);
+                            okhttpCall.enqueue(new Callback() {
                               @Override
                               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                 try (ResponseBody responseBody = response.body()) {
@@ -919,6 +987,11 @@ public class AsyncRawParamsClient {
                               @Override
                               public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                 future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                              }
+                            });
+                            future.whenComplete((result_, throwable_) -> {
+                              if (future.isCancelled()) {
+                                okhttpCall.cancel();
                               }
                             });
                             return future;
@@ -959,7 +1032,8 @@ public class AsyncRawParamsClient {
                                 okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                               }
                               CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                              client.newCall(okhttpRequest).enqueue(new Callback() {
+                              Call okhttpCall = client.newCall(okhttpRequest);
+                              okhttpCall.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                                   try (ResponseBody responseBody = response.body()) {
@@ -992,6 +1066,11 @@ public class AsyncRawParamsClient {
                                 @Override
                                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                   future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                                }
+                              });
+                              future.whenComplete((result_, throwable_) -> {
+                                if (future.isCancelled()) {
+                                  okhttpCall.cancel();
                                 }
                               });
                               return future;

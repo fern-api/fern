@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.146.1
+  changelogEntry:
+    - summary: |
+        Support building package artifacts from SDKs generated through SDK Gen API with `fern generate --package`, including pnpm-based TypeScript projects.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.146.0
   changelogEntry:
     - summary: |

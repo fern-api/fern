@@ -20,46 +20,32 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PlantBase.Builder.class)
-public final class PlantBase implements IPlantBase, IPlantStrict {
-    private final Optional<String> commonName;
-
-    private final Optional<PlantBaseWateringFrequency> wateringFrequency;
-
+public final class PlantBase implements IPlantStrict {
     private final String species;
 
     private final String family;
 
     private final String genus;
 
+    private final Optional<String> commonName;
+
+    private final Optional<PlantBaseWateringFrequency> wateringFrequency;
+
     private final Map<String, Object> additionalProperties;
 
     private PlantBase(
-            Optional<String> commonName,
-            Optional<PlantBaseWateringFrequency> wateringFrequency,
             String species,
             String family,
             String genus,
+            Optional<String> commonName,
+            Optional<PlantBaseWateringFrequency> wateringFrequency,
             Map<String, Object> additionalProperties) {
-        this.commonName = commonName;
-        this.wateringFrequency = wateringFrequency;
         this.species = species;
         this.family = family;
         this.genus = genus;
+        this.commonName = commonName;
+        this.wateringFrequency = wateringFrequency;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return The common name of the plant.
-     */
-    @JsonProperty("commonName")
-    @java.lang.Override
-    public Optional<String> getCommonName() {
-        return commonName;
-    }
-
-    @JsonProperty("wateringFrequency")
-    public Optional<PlantBaseWateringFrequency> getWateringFrequency() {
-        return wateringFrequency;
     }
 
     /**
@@ -89,6 +75,19 @@ public final class PlantBase implements IPlantBase, IPlantStrict {
         return genus;
     }
 
+    /**
+     * @return The common name of the plant.
+     */
+    @JsonProperty("commonName")
+    public Optional<String> getCommonName() {
+        return commonName;
+    }
+
+    @JsonProperty("wateringFrequency")
+    public Optional<PlantBaseWateringFrequency> getWateringFrequency() {
+        return wateringFrequency;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -101,16 +100,16 @@ public final class PlantBase implements IPlantBase, IPlantStrict {
     }
 
     private boolean equalTo(PlantBase other) {
-        return commonName.equals(other.commonName)
-                && wateringFrequency.equals(other.wateringFrequency)
-                && species.equals(other.species)
+        return species.equals(other.species)
                 && family.equals(other.family)
-                && genus.equals(other.genus);
+                && genus.equals(other.genus)
+                && commonName.equals(other.commonName)
+                && wateringFrequency.equals(other.wateringFrequency);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.commonName, this.wateringFrequency, this.species, this.family, this.genus);
+        return Objects.hash(this.species, this.family, this.genus, this.commonName, this.wateringFrequency);
     }
 
     @java.lang.Override
@@ -183,11 +182,11 @@ public final class PlantBase implements IPlantBase, IPlantStrict {
 
         @java.lang.Override
         public Builder from(PlantBase other) {
-            commonName(other.getCommonName());
-            wateringFrequency(other.getWateringFrequency());
             species(other.getSpecies());
             family(other.getFamily());
             genus(other.getGenus());
+            commonName(other.getCommonName());
+            wateringFrequency(other.getWateringFrequency());
             return this;
         }
 
@@ -259,7 +258,7 @@ public final class PlantBase implements IPlantBase, IPlantStrict {
 
         @java.lang.Override
         public PlantBase build() {
-            return new PlantBase(commonName, wateringFrequency, species, family, genus, additionalProperties);
+            return new PlantBase(species, family, genus, commonName, wateringFrequency, additionalProperties);
         }
 
         @java.lang.Override
