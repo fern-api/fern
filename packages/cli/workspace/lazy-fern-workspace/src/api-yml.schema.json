@@ -2144,6 +2144,17 @@
         },
         "type": {
           "type": "string"
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of an environment variable the generated SDK reads when the\nvariable is not passed to the client constructor. Makes the variable\noptional at client construction."
         }
       },
       "required": [
