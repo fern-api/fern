@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsersAliasedDataRequest;
+use Seed\Users\Requests\ListUsersOptionalDataRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listWithAliasedData(
-    new ListUsersAliasedDataRequest([
+$client->users->listWithOptionalData(
+    new ListUsersOptionalDataRequest([
         'page' => 1,
-        'perPage' => 1,
-        'startingAfter' => 'starting_after',
     ]),
 );

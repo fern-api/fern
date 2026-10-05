@@ -90,6 +90,11 @@ class ServiceClient
     }
 
     /**
+     * Example:
+     * ```php
+     * $client->service->downloadFile();
+     * ```
+     *
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,

@@ -75,6 +75,54 @@ public class AsyncUserClient {
         return future;
     }
 
+    public CompletableFuture<List<User>> getWithBearer() {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBearer();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBearer(RequestOptions requestOptions) {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBearer(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBasic() {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBasic();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<List<User>> getWithBasic(RequestOptions requestOptions) {
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getWithBasic(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
     public CompletableFuture<List<User>> getAnonymous() {
         CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> rawFuture =
                 this.rawClient.getAnonymous();

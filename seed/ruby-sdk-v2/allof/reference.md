@@ -257,6 +257,8 @@ client.create_plant(
   species: "species",
   family: "family",
   genus: "genus",
+  common_name: "commonName",
+  watering_frequency: "daily",
   sun_exposure: "full"
 )
 ```
@@ -269,6 +271,22 @@ client.create_plant(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**common_name:** `String` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**watering_frequency:** `Seed::Types::PlantBaseWateringFrequency` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -336,7 +354,11 @@ Tests that when a parent's allOf contains multiple $ref entries, all of them are
 <dd>
 
 ```ruby
-client.create_tree(id: "id")
+client.create_tree(
+  id: "id",
+  tree_name: "treeName",
+  tree_species: "treeSpecies"
+)
 ```
 </dd>
 </dl>

@@ -5,6 +5,7 @@ package com.seed.trace.resources.homepage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
@@ -96,7 +97,9 @@ public class RawHomepageClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedTraceException("Failed to serialize request", e);
         }

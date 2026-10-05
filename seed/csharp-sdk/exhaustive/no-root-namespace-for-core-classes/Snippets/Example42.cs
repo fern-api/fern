@@ -1,7 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
-using SeedExhaustive.Types;
+using System.Text;
 
 public partial class Examples
 {
@@ -13,13 +12,9 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.CreateWithBodyAndQueryAsync(
-            new CreateWithBodyAndQuery {
-                Fields = "_fields",
-                Body = new ObjectWithRequiredField {
-                    String = "string"
-                }
-            }
+        await client.Endpoints.Params.UploadWithPathAsync(
+            param: "upload-path",
+            request: new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
         );
     }
 

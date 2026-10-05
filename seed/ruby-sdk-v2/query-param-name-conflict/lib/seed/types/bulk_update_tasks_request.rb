@@ -3,11 +3,11 @@
 module Seed
   module Types
     class BulkUpdateTasksRequest < Internal::Types::Model
-      field :filter_assigned_to, -> { String }, optional: true, nullable: false, api_name: "assigned_to"
+      field :filter_assigned_to, -> { String }, optional: true, nullable: true, api_name: "assigned_to"
 
-      field :filter_is_complete, -> { String }, optional: true, nullable: false, api_name: "is_complete"
+      field :filter_is_complete, -> { String }, optional: true, nullable: true, api_name: "is_complete"
 
-      field :filter_date, -> { String }, optional: true, nullable: false, api_name: "date"
+      field :filter_date, -> { String }, optional: true, nullable: true, api_name: "date"
 
       field :fields, -> { String }, optional: true, nullable: false, api_name: "_fields"
 

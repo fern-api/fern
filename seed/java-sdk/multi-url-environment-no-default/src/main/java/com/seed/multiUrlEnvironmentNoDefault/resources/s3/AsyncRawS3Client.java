@@ -4,6 +4,7 @@
 package com.seed.multiUrlEnvironmentNoDefault.resources.s3;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.multiUrlEnvironmentNoDefault.core.BodyProperties;
 import com.seed.multiUrlEnvironmentNoDefault.core.ClientOptions;
 import com.seed.multiUrlEnvironmentNoDefault.core.MediaTypes;
 import com.seed.multiUrlEnvironmentNoDefault.core.ObjectMappers;
@@ -52,7 +53,9 @@ public class AsyncRawS3Client {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedMultiUrlEnvironmentNoDefaultException("Failed to serialize request", e);
         }
@@ -77,7 +80,8 @@ public class AsyncRawS3Client {
                     .build();
         }
         CompletableFuture<SeedMultiUrlEnvironmentNoDefaultHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -104,6 +108,11 @@ public class AsyncRawS3Client {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedMultiUrlEnvironmentNoDefaultException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
