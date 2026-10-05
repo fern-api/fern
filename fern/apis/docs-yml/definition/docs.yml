@@ -1799,6 +1799,12 @@ types:
           Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.
           When provided, the backend uses this Doxyfile instead of auto-generating one.
           Only valid when lang is cpp.
+      include-undocumented-macros:
+        type: optional<boolean>
+        docs: |
+          Also generate pages for `#define`s that have no Doxygen comment.
+          By default only documented macros are rendered. Include guards are never
+          emitted (Doxygen drops them). Only valid when lang is cpp.
 
   LibraryConfiguration:
     docs: |

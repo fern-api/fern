@@ -98,8 +98,7 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
             { id: "source-0", type: "openapi", path: "fern/specs/openapi_0.json", namespace: "weather" }
         ]);
         expect(sdkConfig.targets.map((target) => target.language)).toEqual(["mcp"]);
-        // Root `generation` is required by sdk-config 0.3.0 consumers even when empty.
-        expect(payload.body.toString("utf8")).toContain('"generation":');
+        expect(payload.body.toString("utf8")).not.toContain('"generation":');
         expect(mapFernGroupToSdkConfig).toHaveBeenCalledWith(
             expect.objectContaining({
                 group: expect.objectContaining({
@@ -118,6 +117,32 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
                 }
             })
         );
+    });
+
+    it("preserves active optional fields without materializing their defaults", () => {
+        const mapFernGroupToSdkConfig = vi.fn(
+            ({ source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "weather",
+                    source,
+                    generation: { generateFullProject: true },
+                    targets: [{ language: "mcp", output: { delivery: "files" } }]
+                })
+            })
+        );
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig
+        });
+
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            generation: { generateFullProject: true }
+        });
     });
 
     it("passes generators.yml replay settings through to the SDK Config mapper", () => {

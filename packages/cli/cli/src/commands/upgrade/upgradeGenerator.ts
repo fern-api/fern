@@ -244,12 +244,13 @@ export async function loadAndUpdateGenerators({
             }
 
             const currentGeneratorVersion = generator.get("version") as string;
+            const tracksLatest = currentGeneratorVersion === "latest";
             const useSdkGenApi = isFernSdkGenApiEnabled();
-            if (useSdkGenApi && getSdkGenApiToken == null) {
+            if (useSdkGenApi && !tracksLatest && getSdkGenApiToken == null) {
                 throw new Error("SDK Gen API generator version discovery requires authentication");
             }
             let sdkGenApiVersions: Awaited<ReturnType<typeof getSdkGenApiGeneratorVersions>> | undefined;
-            if (useSdkGenApi && getSdkGenApiToken != null) {
+            if (useSdkGenApi && !tracksLatest && getSdkGenApiToken != null) {
                 sdkGenApiVersions = await getSdkGenApiGeneratorVersions({
                     // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
                     generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
@@ -261,16 +262,18 @@ export async function loadAndUpdateGenerators({
                     context
                 });
             }
-            const latestVersion = useSdkGenApi
-                ? sdkGenApiVersions?.compatibleVersion
-                : await getLatestGeneratorVersion({
-                      generatorName: normalizedGeneratorName,
-                      cliVersion,
-                      currentGeneratorVersion,
-                      channel,
-                      includeMajor,
-                      context
-                  });
+            const latestVersion = tracksLatest
+                ? currentGeneratorVersion
+                : useSdkGenApi
+                  ? sdkGenApiVersions?.compatibleVersion
+                  : await getLatestGeneratorVersion({
+                        generatorName: normalizedGeneratorName,
+                        cliVersion,
+                        currentGeneratorVersion,
+                        channel,
+                        includeMajor,
+                        context
+                    });
 
             const versionComparison =
                 latestVersion == null
@@ -369,7 +372,7 @@ export async function loadAndUpdateGenerators({
                 }
             }
 
-            if (!includeMajor) {
+            if (!includeMajor && !tracksLatest) {
                 const latestMajorVersion = useSdkGenApi
                     ? sdkGenApiVersions?.withheldMajorVersion
                     : await getLatestGeneratorVersion({

@@ -1,4 +1,4 @@
-import { CloseEvent } from "../../../src/core/websocket/events";
+import { CloseEvent, ErrorEvent } from "../../../src/core/websocket/events";
 import { ReconnectingWebSocket } from "../../../src/core/websocket/ws";
 
 type Listener = (event: unknown) => void;
@@ -50,6 +50,10 @@ class FakeWebSocket {
         this.dispatch("close", new CloseEvent(code, reason, this));
     }
 
+    public simulateError(): void {
+        this.dispatch("error", new ErrorEvent(new Error("ECONNREFUSED"), this));
+    }
+
     private dispatch(type: string, event: unknown): void {
         for (const listener of [...(this.listeners[type] ?? [])]) {
             listener(event);
@@ -59,9 +63,10 @@ class FakeWebSocket {
 
 const flush = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 20));
 
-const createSocket = (options: ReconnectingWebSocket.Options = {}): ReconnectingWebSocket =>
+const createSocket = (options: ReconnectingWebSocket.Options = {}, abortSignal?: AbortSignal): ReconnectingWebSocket =>
     new ReconnectingWebSocket({
         url: "ws://localhost/test",
+        abortSignal,
         options: {
             WebSocket: FakeWebSocket,
             minReconnectionDelay: 0,
@@ -80,6 +85,7 @@ describe("ReconnectingWebSocket reconnect policy", () => {
     afterEach(() => {
         socket?.close();
         socket = undefined;
+        jest.useRealTimers();
     });
 
     const openInitialConnection = async (options?: ReconnectingWebSocket.Options): Promise<FakeWebSocket> => {
@@ -101,6 +107,148 @@ describe("ReconnectingWebSocket reconnect policy", () => {
 
         expect(FakeWebSocket.instances).toHaveLength(1);
         expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it("reconnects after a connection error without consulting the server close policy", async () => {
+        const shouldReconnect = jest.fn(() => false);
+        socket = createSocket({ shouldReconnect });
+        await flush();
+        const ws = FakeWebSocket.instances[0] as FakeWebSocket;
+        const onClose = jest.fn();
+        const onError = jest.fn();
+        socket.addEventListener("close", onClose);
+        socket.addEventListener("error", onError);
+
+        ws.simulateError();
+        await flush();
+
+        expect(shouldReconnect).not.toHaveBeenCalled();
+        expect(FakeWebSocket.instances).toHaveLength(2);
+        expect(socket.retryCount).toBe(1);
+        expect(ws.closeCalls).toEqual([{ code: 1000, reason: undefined }]);
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onClose.mock.calls[0]?.[0]).toMatchObject({ code: 1000 });
+        expect(onError).toHaveBeenCalledTimes(1);
+    });
+
+    it("retries connection timeouts only up to maxRetries", async () => {
+        jest.useFakeTimers();
+        const shouldReconnect = jest.fn(() => false);
+        const onError = jest.fn();
+        socket = createSocket({ connectionTimeout: 100, maxRetries: 2, shouldReconnect });
+        socket.addEventListener("error", onError);
+        await jest.advanceTimersByTimeAsync(1);
+        expect(FakeWebSocket.instances).toHaveLength(1);
+
+        await jest.advanceTimersByTimeAsync(400);
+
+        expect(FakeWebSocket.instances).toHaveLength(3);
+        expect(socket.retryCount).toBe(2);
+        expect(onError).toHaveBeenCalledTimes(3);
+        expect(onError.mock.calls[0]?.[0]).toMatchObject({ message: "TIMEOUT" });
+        expect(shouldReconnect).not.toHaveBeenCalled();
+        expect(FakeWebSocket.instances.every((ws) => ws.closeCalls[0]?.reason === "timeout")).toBe(true);
+    });
+
+    it("does not retry an error after explicit close", async () => {
+        const shouldReconnect = jest.fn(() => true);
+        const ws = await openInitialConnection({ shouldReconnect });
+
+        socket?.close();
+        ws.simulateError();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(1);
+        expect(shouldReconnect).not.toHaveBeenCalled();
+    });
+
+    it.each(["close", "error"] as const)("honors close() inside an %s listener during an error", async (event) => {
+        const ws = await openInitialConnection();
+        socket?.addEventListener(event, () => socket?.close());
+
+        ws.simulateError();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(1);
+    });
+
+    it.each(["onclose", "onerror"] as const)("honors close() inside %s during an error", async (handler) => {
+        const ws = await openInitialConnection();
+        if (socket) {
+            socket[handler] = () => socket?.close();
+        }
+
+        ws.simulateError();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(1);
+    });
+
+    it("honors abort during an internal close notification", async () => {
+        const controller = new AbortController();
+        const shouldReconnect = jest.fn(() => true);
+        socket = createSocket({ shouldReconnect }, controller.signal);
+        await flush();
+        const ws = FakeWebSocket.instances[0] as FakeWebSocket;
+        socket.addEventListener("close", () => controller.abort());
+
+        ws.simulateError();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(1);
+        expect(shouldReconnect).not.toHaveBeenCalled();
+    });
+
+    it("does not retry a connection error when maxRetries is 0", async () => {
+        const ws = await openInitialConnection({ maxRetries: 0 });
+
+        ws.simulateError();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(1);
+    });
+
+    it("manually reconnects an active socket without consulting the server close policy", async () => {
+        const shouldReconnect = jest.fn(() => false);
+        const ws = await openInitialConnection({ shouldReconnect });
+        const onClose = jest.fn();
+        socket?.addEventListener("close", onClose);
+
+        socket?.reconnect();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(2);
+        expect(shouldReconnect).not.toHaveBeenCalled();
+        expect(ws.closeCalls).toHaveLength(1);
+        expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it("honors close() during a manual reconnect notification", async () => {
+        await openInitialConnection();
+        socket?.addEventListener("close", () => socket?.close());
+
+        socket?.reconnect();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(1);
+    });
+
+    it("allows manual reconnect after error retries are exhausted", async () => {
+        const ws = await openInitialConnection({ maxRetries: 1 });
+        ws.simulateError();
+        await flush();
+        expect(FakeWebSocket.instances).toHaveLength(2);
+
+        const retried = FakeWebSocket.instances[1] as FakeWebSocket;
+        retried.simulateError();
+        await flush();
+        expect(FakeWebSocket.instances).toHaveLength(2);
+
+        socket?.reconnect();
+        await flush();
+
+        expect(FakeWebSocket.instances).toHaveLength(3);
+        expect(socket?.retryCount).toBe(0);
     });
 
     it("reconnects after a non-1000 close (1005) by default", async () => {

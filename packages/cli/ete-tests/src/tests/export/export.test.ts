@@ -9,6 +9,8 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 describe("overrides", () => {
     itFixture("simple");
     itFixtureWithIndent("simple", 8);
+    itFixtureWithAudiences("audiences", ["public"]);
+    itFixtureWithAudiences("audiences", ["public", "internal"]);
 });
 
 function itFixture(fixtureName: string) {
@@ -32,5 +34,18 @@ function itFixtureWithIndent(fixtureName: string, indent: number) {
             await runFernCli(["export", outputPath, "--indent", String(indent)], { cwd: fixturePath, signal });
             expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
         }
+    }, 90_000);
+}
+
+function itFixtureWithAudiences(fixtureName: string, audiences: string[]) {
+    it(// eslint-disable-next-line jest/valid-title
+    `${fixtureName} ${audiences.map((audience) => `--audience ${audience}`).join(" ")}`, async ({ signal }) => {
+        const fixturePath = path.join(FIXTURES_DIR, fixtureName);
+        const outputPath = path.join(fixturePath, "output", "openapi.yml");
+        await runFernCli(["export", outputPath, ...audiences.flatMap((audience) => ["--audience", audience])], {
+            cwd: fixturePath,
+            signal
+        });
+        expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
     }, 90_000);
 }

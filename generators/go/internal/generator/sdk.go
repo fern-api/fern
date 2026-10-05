@@ -205,7 +205,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				camelCase  = authScheme.Header.Name.Name.CamelCase.SafeName
 				optionName = fmt.Sprintf("With%s", pascalCase)
-				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+				goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers)
 				typeName   = "*core." + pascalCase + "Option"
 			)
 			f.P("// ", optionName, " sets the ", camelCase, " auth request header.")
@@ -228,7 +228,7 @@ func (f *fileWriter) WriteLegacyClientOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers)
 			typeName   = "*core." + pascalCase + "Option"
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
@@ -270,7 +270,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
 		)
 	}
 
@@ -299,7 +299,7 @@ func (f *fileWriter) WriteIdempotentRequestOptionsDefinition(idempotencyHeaders 
 	for _, header := range idempotencyHeaders {
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, false, true); err != nil {
 			return err
@@ -539,7 +539,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(
 				name,
 				" ",
-				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
 			)
 			declaredFields[name] = true
 		}
@@ -571,7 +571,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
+			typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers),
 		)
 	}
 	// Generate a field for each server URL variable (e.g. region), used to
@@ -1299,7 +1299,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 				var (
 					pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
-					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
@@ -1376,7 +1376,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 		}
 		var (
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 		)
 		if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 			return err
@@ -1466,7 +1466,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 			pascalCase = header.Name.Name.PascalCase.UnsafeName
 			camelCase  = header.Name.Name.CamelCase.SafeName
 			optionName = fmt.Sprintf("With%s", pascalCase)
-			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType     = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		)
 		f.P("// ", optionName, " sets the ", camelCase, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -1757,7 +1757,7 @@ func (f *fileWriter) WriteRequestOptions(
 				optionName = fmt.Sprintf("With%s", pascalCase)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
-				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			)
 			if i == 0 {
 				option = ast.NewCallExpr(
@@ -1910,7 +1910,7 @@ func (f *fileWriter) WriteRequestOptions(
 			optionName = fmt.Sprintf("With%s", pascalCase)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
-			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		)
 		f.P("// ", optionName, " sets the ", param, " request header.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -2810,7 +2810,7 @@ func (f *fileWriter) getPaginationInfo(
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
 			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName),
 			PageIsOptional:            pageIsOptional,
@@ -2818,12 +2818,12 @@ func (f *fileWriter) getPaginationInfo(
 			Results:                   pagination.Cursor.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
-			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
+			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			NextCursor:                pagination.Cursor.Next,
 			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
 			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
-			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			NextCursorIsOptional:      nextCursorIsOptional,
 		}, nil
 	case "offset":
@@ -2856,7 +2856,7 @@ func (f *fileWriter) getPaginationInfo(
 			Type:                      t,
 			PageName:                  nameAndWireValue.Name,
 			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, nameAndWireValue.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
-			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false),
+			PageGoType:                typeReferenceToGoType(valueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 			PageZeroValue:             valueTypeFormat.ZeroValue,
 			PageFirstRequestParameter: pageFirstRequestParameter,
 			PageIsOptional:            pageIsOptional,
@@ -2865,8 +2865,8 @@ func (f *fileWriter) getPaginationInfo(
 			Results:                   pagination.Offset.Results,
 			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
 			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
-			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
-			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false, f.legacyNullableAliasPointers),
 		}, nil
 	case "custom", "uri", "path":
 		// The v1 client is overwritten by v2, which generates these endpoints as
@@ -3570,7 +3570,7 @@ func (f *fileWriter) endpointFromIR(
 			if !ok {
 				return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
 			}
-			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 			if isLiteralType(pathParameter.ValueType, f.types) {
 				continue
 			}
@@ -3637,7 +3637,7 @@ func (f *fileWriter) endpointFromIR(
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
 				switch requestBody.Type {
 				case "typeReference":
-					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 				case "bytes":
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
@@ -3735,7 +3735,7 @@ func (f *fileWriter) endpointFromIR(
 			if typeReference == nil {
 				return nil, fmt.Errorf("unsupported json response type: %s", irEndpoint.Response.Body.Json.Type)
 			}
-			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 			responseInitializerFormat = "var response %s"
 			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
 			responseParameterName = "&response"
@@ -3746,7 +3746,7 @@ func (f *fileWriter) endpointFromIR(
 			if irEndpoint.Response.Body.Json.NestedPropertyAsResponse != nil && irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty != nil {
 				responseProperty := irEndpoint.Response.Body.Json.NestedPropertyAsResponse.ResponseProperty
 				responsePropertyTypeReference := responseProperty.ValueType
-				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
+				responsePropertyType := typeReferenceToGoType(responsePropertyTypeReference, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
 				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
 				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
@@ -3784,7 +3784,7 @@ func (f *fileWriter) endpointFromIR(
 			if err != nil {
 				return nil, err
 			}
-			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
+			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers), "*")
 			responseParameterName = "response"
 			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
 			errorReturnValues = "nil, err"
@@ -3801,7 +3801,7 @@ func (f *fileWriter) endpointFromIR(
 			if typeReference == nil {
 				return nil, fmt.Errorf("unsupported json response type: %s", nonStreamResponse.Json.Type)
 			}
-			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.legacyNullableAliasPointers)
 			responseInitializerFormat = "var response %s"
 			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
 			responseParameterName = "&response"
@@ -4015,7 +4015,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 	var (
 		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 	)
 	var literal string
 	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
@@ -4122,7 +4122,7 @@ func (f *fileWriter) WriteRequestType(
 		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(header.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
-			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			propertyTypes = append(propertyTypes, goType)
 			// Headers have json:"-" tags, so skip for test generation
 		}
@@ -4133,7 +4133,7 @@ func (f *fileWriter) WriteRequestType(
 		for _, pathParameter := range endpoint.AllPathParameters {
 			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
-			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			propertyTypes = append(propertyTypes, goType)
 			// Path parameters have json:"-" tags, so skip for test generation
 		}
@@ -4144,7 +4144,7 @@ func (f *fileWriter) WriteRequestType(
 		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
-			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			if queryParam.AllowMultiple {
 				goType = fmt.Sprintf("[]%s", goType)
 			}
@@ -4158,7 +4158,7 @@ func (f *fileWriter) WriteRequestType(
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
-				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 				propertyTypes = append(propertyTypes, goType)
 			}
 		}
@@ -4181,18 +4181,18 @@ func (f *fileWriter) WriteRequestType(
 			continue
 		}
 		f.WriteDocs(header.Docs)
-		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
-			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 			f.WriteDocs(pathParameter.Docs)
 			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
 		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
@@ -4292,7 +4292,7 @@ func (f *fileWriter) WriteRequestType(
 		referenceLiteral        string
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
-		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false)
+		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false, f.legacyNullableAliasPointers)
 		referenceFieldIsPointer = strings.HasPrefix(fullType, "*")
 		referenceType = strings.TrimPrefix(fullType, "*")
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
@@ -4692,7 +4692,7 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 	r.writer.P(
 		r.bodyField,
 		" ",
-		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false),
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false, r.writer.legacyNullableAliasPointers),
 		" `json:\"-\" url:\"-\"`",
 	)
 	return nil

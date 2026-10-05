@@ -1114,6 +1114,38 @@ export function replaceImagePathsAndUrls(
                                 });
                             }
                         }
+                    } else if (isCurlyWrapped && attrName === "links" && content[j] === "{") {
+                        // `<CodeBlock links={{"Type": "./types.mdx#anchor"}}>` emitted by the library-docs
+                        // generators: resolve each `.md`/`.mdx` value like an href.
+                        const objectStart = j;
+                        const objectEnd = findBalancedBraceEnd(content, objectStart, limit);
+                        if (objectEnd === undefined) {
+                            edits.length = editsBeforeTag;
+                            break;
+                        }
+                        const replacement = replaceMarkdownLinksInJsonObject(
+                            content.slice(objectStart, objectEnd),
+                            (href) => {
+                                const trimmedHref = trimAnchor(href) ?? href;
+                                const anchorSuffix = trimmedHref !== href ? href.slice(trimmedHref.length) : "";
+                                const replacedHref = getReplacedHref({
+                                    href: trimmedHref,
+                                    markdownFilesToPathName,
+                                    metadata
+                                });
+                                return replacedHref?.type === "replace" ? replacedHref.slug + anchorSuffix : undefined;
+                            }
+                        );
+                        if (replacement !== undefined) {
+                            edits.push({ start: objectStart, end: objectEnd, replacement });
+                        }
+                        j = objectEnd;
+                        while (j < limit && (content[j] === " " || content[j] === "\n")) {
+                            j++;
+                        }
+                        if (j < limit && content[j] === "}") {
+                            j++; // skip }
+                        }
                     } else if (isCurlyWrapped && (attrName === "src" || attrName === "icon" || attrName === "href")) {
                         // Complex JSX expression (e.g. src={getUrl(...)}, spread attrs)
                         // that the streaming scanner can't resolve — flag for AST fallback
@@ -1273,6 +1305,74 @@ export function trimAnchor(text: unknown): string | undefined {
         return undefined;
     }
     return text.replace(/#.*$/, "");
+}
+
+/**
+ * Index just past the `}` that closes the `{` at `start`, skipping braces inside string
+ * literals; undefined when unbalanced before `limit`.
+ */
+function findBalancedBraceEnd(content: string, start: number, limit: number): number | undefined {
+    let depth = 0;
+    let j = start;
+    while (j < limit) {
+        const ch = content[j];
+        if (ch === "{") {
+            depth++;
+        } else if (ch === "}") {
+            depth--;
+            if (depth === 0) {
+                return j + 1;
+            }
+        } else if (ch === '"' || ch === "'") {
+            j++;
+            while (j < limit && content[j] !== ch) {
+                if (content[j] === "\\") {
+                    j++;
+                }
+                j++;
+            }
+        }
+        j++;
+    }
+    return undefined;
+}
+
+function isStringRecord(value: unknown): value is Record<string, string> {
+    return (
+        typeof value === "object" &&
+        value != null &&
+        !Array.isArray(value) &&
+        Object.values(value).every((v) => typeof v === "string")
+    );
+}
+
+/**
+ * Re-serialize a JSON object literal of `{ label: href }` with each href mapped through
+ * `replaceHref`. Returns undefined when the literal is not such an object or nothing changed.
+ */
+function replaceMarkdownLinksInJsonObject(
+    objectLiteral: string,
+    replaceHref: (href: string) => string | undefined
+): string | undefined {
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(objectLiteral);
+    } catch {
+        return undefined;
+    }
+    if (!isStringRecord(parsed)) {
+        return undefined;
+    }
+    let changed = false;
+    const replaced: Record<string, string> = {};
+    for (const [label, href] of Object.entries(parsed)) {
+        const next = replaceHref(href);
+        if (next !== undefined && next !== href) {
+            changed = true;
+        }
+        replaced[label] = next ?? href;
+    }
+    return changed ? JSON.stringify(replaced) : undefined;
 }
 
 function unescapeMarkdownUrl(text: string): string {

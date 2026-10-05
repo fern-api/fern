@@ -89,7 +89,7 @@ func (t *typeVisitor) newXmlResolver() *xmlResolver {
 }
 
 func (r *xmlResolver) goType(typeReference *ir.TypeReference) string {
-	return typeReferenceToGoType(typeReference, r.types, r.visitor.writer.scope, r.baseImportPath, r.importPath, false)
+	return typeReferenceToGoType(typeReference, r.types, r.visitor.writer.scope, r.baseImportPath, r.importPath, false, r.visitor.writer.legacyNullableAliasPointers)
 }
 
 // resolve resolves the given type reference into an xmlValue, following aliases and

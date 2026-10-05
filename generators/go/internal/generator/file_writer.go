@@ -83,6 +83,7 @@ type fileWriter struct {
 	serverURLVariables           bool
 	exportAllRequestsAtRoot      bool
 	omitEmptyRequestWrappers     bool
+	legacyNullableAliasPointers  bool
 	userAgent                    userAgentConfig
 	unionVersion                 UnionVersion
 	customPagerName              string
@@ -156,6 +157,7 @@ func newFileWriter(
 	serverURLVariables bool,
 	exportAllRequestsAtRoot bool,
 	omitEmptyRequestWrappers bool,
+	legacyNullableAliasPointers bool,
 	userAgent userAgentConfig,
 	unionVersion UnionVersion,
 	customPagerName string,
@@ -208,6 +210,7 @@ func newFileWriter(
 		serverURLVariables:           serverURLVariables,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		omitEmptyRequestWrappers:     omitEmptyRequestWrappers,
+		legacyNullableAliasPointers:  legacyNullableAliasPointers,
 		userAgent:                    userAgent,
 		unionVersion:                 unionVersion,
 		customPagerName:              customPagerName,
@@ -501,6 +504,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
+		f.legacyNullableAliasPointers,
 		f.userAgent,
 		f.unionVersion,
 		f.customPagerName,
@@ -1128,6 +1132,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.serverURLVariables,
 		f.exportAllRequestsAtRoot,
 		f.omitEmptyRequestWrappers,
+		f.legacyNullableAliasPointers,
 		f.userAgent,
 		f.unionVersion,
 		f.customPagerName,

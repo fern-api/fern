@@ -1,4 +1,73 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Fix pagination for endpoints whose cursor or offset lives in the request body
+        (e.g. `$request.cursor` or `$request.options.offset`). The generated iterators
+        previously referenced an undeclared `query_params` and raised `NameError` on first
+        use; they now read and advance the body property, creating omitted parent objects.
+      type: fix
+    - summary: |
+        Nil values are no longer serialized as `{}` (`nil.to_h`), and `optional<nullable<T>>`
+        fields keep their nullable metadata so explicit `nil` values are preserved, while
+        omitted optional fields are still left out of the request.
+      type: fix
+    - summary: |
+        Add a `timeout:` option to the root client and honor `request_options[:timeout_in_seconds]`
+        per request (an explicit `0` is respected). The timeout also applies to OAuth and inferred-auth
+        token requests. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
+        README timeout snippets now show the real API.
+      type: fix
+    - summary: |
+        Endpoints returning text, bytes, or a file download now return the raw response body
+        instead of `nil`.
+      type: fix
+    - summary: |
+        Generated `.rubocop.yml` disables `Style/CommentAnnotation` (API docstrings such as
+        "Note:" tripped it), and the generated retry tests follow the `retryStatusCodes` setting.
+      type: fix
+    - summary: |
+        Error responses now expose the body parsed into the endpoint's declared error type
+        as `error.body` (exact status codes take precedence over `4XX`/`5XX` wildcards).
+        `error.message` and `error.code` are unchanged; `body` is `nil` when no error type
+        matches or the body is not valid JSON.
+      type: feat
+    - summary: |
+        Add the opt-in `wrapInvalidJsonResponses` config. When enabled, a 2xx response whose
+        body is not valid JSON raises `Errors::ResponseError` (with the raw body and status
+        code) instead of leaking `JSON::ParserError`.
+      type: feat
+    - summary: |
+        Add the opt-in `requireAuthCredentials` config. When enabled, the client
+        constructor raises `ArgumentError` if a bearer or header credential is neither
+        passed nor set in its environment variable, instead of sending an empty auth header.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `allowCustomHttpClient` config. When enabled, the generated client
+        accepts an `http_client:` keyword — any object responding to
+        `request(url, http_request)` and returning a `Net::HTTPResponse` — that replaces the
+        SDK's built-in `Net::HTTP` transport. This lets callers configure proxies, custom TLS,
+        connection reuse, or request/response interceptors (logging, signing, header
+        injection). Retries still wrap the custom client, and it is also used for OAuth /
+        inferred-auth token requests. The custom client owns its own connection settings,
+        including timeouts.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        The README's Environments example for a multi-URL SDK passes the environment constant through
+        the client's `environment:` keyword instead of `base_url:`. With more than one URL per
+        environment the constant is a hash of URLs, and `base_url:` expects a string, so the example
+        built a client that could not make a request. Single-URL SDKs keep `base_url:`.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 1.28.2
   changelogEntry:
     - summary: |

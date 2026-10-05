@@ -163,7 +163,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             fullString += this.writeCode(dedent`${openMardownRubySnippet}require "${this.rootPackageName}"
 
                 ${this.rootPackageName} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
-                    base_url: ${this.getEnvironmentNameExample()}
+                    ${this.getEnvironmentKeyword()}: ${this.getEnvironmentNameExample()}
                 )
             ${closeMardownRubySnippet}`);
         }
@@ -211,9 +211,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             # Specify default options applied on every request.
             ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}.new(
                 ${tokenName}: "${placeholder}",
-                http_client: HTTP::Client.new(
-                    timeout: 5
-                )
+                timeout: 5
             )
 
             # Specify options for an individual request.
@@ -240,9 +238,16 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
+            # Set the default timeout (in seconds) for every request made by the client.
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::${this.rootClientClassName}.new(
+                base_url: ${this.getEnvironmentURLExample()},
+                timeout: 30
+            )
+
+            # Override the timeout for an individual request.
             response = ${this.getMethodCall(endpoint)}(
                 ...,
-                timeout: 30  # 30 second timeout
+                request_options: { timeout_in_seconds: 10 }
             )
         `);
     }
@@ -430,6 +435,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getEnvironmentURLExample(): string {
         return '"https://example.com"';
+    }
+
+    /**
+     * A single-URL environment constant is a string the client takes as `base_url`. A multi-URL
+     * environment constant is a hash with one URL per service, which the client takes through its
+     * `environment` keyword; passed as `base_url` it would be used where a URL string is expected.
+     */
+    private getEnvironmentKeyword(): string {
+        return this.context.isMultipleBaseUrlsEnvironment() ? "environment" : "base_url";
     }
 
     private getEnvironmentNameExample(): string | undefined {

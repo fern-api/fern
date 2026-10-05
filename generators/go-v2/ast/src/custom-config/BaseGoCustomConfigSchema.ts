@@ -37,6 +37,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     omitFernHeaders: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
     allowUserAgentAppInfo: z.boolean().optional(),
+    legacyNullableAliasPointers: z.boolean().optional(),
     maxRetries: z.number().int().min(0).optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });

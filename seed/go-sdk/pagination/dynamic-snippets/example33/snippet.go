@@ -17,18 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersAliasedDataRequest{
+    request := &fern.ListUsersOptionalDataRequest{
         Page: fern.Int(
             1,
         ),
-        PerPage: fern.Int(
-            1,
-        ),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
     }
-    client.Users.ListWithAliasedData(
+    client.Users.ListWithOptionalData(
         context.TODO(),
         request,
     )

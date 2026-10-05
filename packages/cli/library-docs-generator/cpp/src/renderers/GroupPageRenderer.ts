@@ -84,7 +84,8 @@ export function collectGroupSections(group: CppGroupIr): GroupSection[] {
         { heading: "Functions", entries: collectFunctionEntries(group.functions ?? []) },
         { heading: "Enumerations", entries: collectEntries(group.enums ?? []) },
         { heading: "Type Definitions", entries: collectEntries(group.typedefs ?? []) },
-        { heading: "Variables", entries: collectEntries(group.variables ?? []) }
+        { heading: "Variables", entries: collectEntries(group.variables ?? []) },
+        { heading: "Macros", entries: collectEntries(group.macros ?? []) }
     ];
     return sections.filter((section) => section.entries.length > 0);
 }
@@ -100,9 +101,14 @@ export function groupHasContent(group: CppGroupIr, visited: Set<string> = new Se
         return false;
     }
     visited.add(group.id);
-    const hasMembers = [group.classes, group.functions, group.enums, group.typedefs, group.variables].some(
-        (members) => members != null && members.some(isNamedMember)
-    );
+    const hasMembers = [
+        group.classes,
+        group.functions,
+        group.enums,
+        group.typedefs,
+        group.variables,
+        group.macros
+    ].some((members) => members != null && members.some(isNamedMember));
     return hasMembers || group.subgroups.some((subgroup) => groupHasContent(subgroup, visited));
 }
 

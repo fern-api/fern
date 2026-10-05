@@ -10,7 +10,7 @@ module Seed
 
         field :include_deleted, -> { Internal::Types::Boolean }, optional: true, nullable: false, api_name: "includeDeleted"
 
-        field :sort_by, -> { String }, optional: true, nullable: false, api_name: "sortBy"
+        field :sort_by, -> { String }, optional: true, nullable: true, api_name: "sortBy"
       end
     end
   end

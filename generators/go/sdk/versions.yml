@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.65.1
+  changelogEntry:
+    - summary: |
+        The generated README's client snippets use the configured client constructor (`clientName`,
+        `exportedClientName`, `clientConstructorName`) instead of always writing `client.NewClient`,
+        and the Environments section of a multi-URL SDK passes the environment through
+        `option.WithEnvironment` instead of `option.WithBaseURL`, which takes a string and does not
+        compile against an environment struct.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.65.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `legacyNullableAliasPointers` custom config option. When enabled, optional or
+        nullable fields that reference an alias which already renders as a Go pointer
+        (e.g. `type DiscoveryURL = *string`) keep the outer pointer (`*DiscoveryURL`), matching
+        SDKs generated before v1.46.1. Field types, setters, and code snippets all use the legacy
+        shape. The option is off by default, so existing output is unchanged.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 1.64.3
   changelogEntry:
     - summary: |

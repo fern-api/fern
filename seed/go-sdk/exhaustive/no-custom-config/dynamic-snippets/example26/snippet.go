@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
     types "github.com/exhaustive/fern/types"
@@ -18,15 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithMixedRequiredAndOptionalFields{
-        RequiredString: "hello",
-        RequiredInteger: 0,
-        OptionalString: fern.String(
-            "world",
-        ),
-        RequiredLong: int64(0),
+    request := map[string]types.DocumentedUnknownType{
+        "string": map[string]any{
+            "key": "value",
+        },
     }
-    client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
+    client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
         context.TODO(),
         request,
     )

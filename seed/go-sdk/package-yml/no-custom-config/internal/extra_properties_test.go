@@ -226,3 +226,46 @@ func TestExtractExtraProperties(t *testing.T) {
 		assert.Nil(t, extraProperties)
 	})
 }
+
+func TestMatchesObjectKeys(t *testing.T) {
+	known := []string{"name", "age"}
+	required := []string{"name"}
+	tests := []struct {
+		desc string
+		data string
+		want bool
+	}{
+		{desc: "all keys", data: `{"name": "alice", "age": 42}`, want: true},
+		{desc: "required keys only", data: `{"name": "alice"}`, want: true},
+		{desc: "missing required key", data: `{"age": 42}`, want: false},
+		{desc: "unknown key", data: `{"name": "alice", "other": true}`, want: false},
+		{desc: "null", data: `null`, want: false},
+		{desc: "array", data: `["name"]`, want: false},
+		{desc: "string", data: `"name"`, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			assert.Equal(t, tt.want, MatchesObjectKeys([]byte(tt.data), known, required))
+		})
+	}
+}
+
+func TestHasObjectKeys(t *testing.T) {
+	required := []string{"name"}
+	tests := []struct {
+		desc string
+		data string
+		want bool
+	}{
+		{desc: "required key", data: `{"name": "alice"}`, want: true},
+		{desc: "unknown key", data: `{"name": "alice", "other": true}`, want: true},
+		{desc: "missing required key", data: `{"age": 42}`, want: false},
+		{desc: "null", data: `null`, want: false},
+		{desc: "array", data: `["name"]`, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.desc, func(t *testing.T) {
+			assert.Equal(t, tt.want, HasObjectKeys([]byte(tt.data), required))
+		})
+	}
+}

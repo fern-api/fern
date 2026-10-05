@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/reports",
+                "method": "POST",
+                "identifier_override": "endpoint_reports.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-nullable-date-ref/fern\"\n\tfernclient \"github.com/go-nullable-date-ref/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Reports.Create(\n\tcontext.TODO(),\n\t\u0026fern.Report{\n\t\tCreatedDate: fern.MustParseDate(\n\t\t\t\"2023-01-15\",\n\t\t),\n\t\tTitle: \"title\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

@@ -35,6 +35,7 @@ type Config struct {
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
 	AllowUserAgentAppInfo          bool
+	LegacyNullableAliasPointers    bool
 	Organization                   string
 	Version                        string
 	IRFilepath                     string
@@ -110,6 +111,7 @@ func NewConfig(
 	omitFernHeaders bool,
 	includePlatformHeaders bool,
 	allowUserAgentAppInfo bool,
+	legacyNullableAliasPointers bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -148,6 +150,7 @@ func NewConfig(
 		OmitFernHeaders:                omitFernHeaders,
 		IncludePlatformHeaders:         includePlatformHeaders,
 		AllowUserAgentAppInfo:          allowUserAgentAppInfo,
+		LegacyNullableAliasPointers:    legacyNullableAliasPointers,
 		Version:                        version,
 		IRFilepath:                     irFilepath,
 		SnippetFilepath:                snippetFilepath,

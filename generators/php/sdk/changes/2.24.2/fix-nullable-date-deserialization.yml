@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `JsonSerializableType::jsonDeserialize` throwing `Unexpected non-string type for date.`
+    when a `#[Date]`-annotated property receives an explicit JSON `null`. Nullable date and
+    date-time fields now deserialize `null` to `null`, matching how omitted keys and the
+    serializer already behave; non-string, non-null values are still rejected.
+  type: fix

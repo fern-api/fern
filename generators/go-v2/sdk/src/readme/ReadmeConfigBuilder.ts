@@ -3,7 +3,11 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
+import {
+    ENVIRONMENTS_FEATURE_ID,
+    MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION,
+    ReadmeSnippetBuilder
+} from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
     public build({
@@ -35,7 +39,7 @@ export class ReadmeConfigBuilder {
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
-                description: feature.description,
+                description: this.getFeatureDescription({ context, feature }),
                 addendum: addendumsByFeatureId[feature.id] ?? feature.addendum,
                 snippets: snippetsForFeature,
                 snippetsAreOptional: false
@@ -56,6 +60,19 @@ export class ReadmeConfigBuilder {
             customSections: getCustomSections(context),
             features
         };
+    }
+
+    private getFeatureDescription({
+        context,
+        feature
+    }: {
+        context: SdkGeneratorContext;
+        feature: FernGeneratorCli.FeatureSpec;
+    }): string | undefined {
+        if (feature.id === ENVIRONMENTS_FEATURE_ID && context.isMultipleBaseUrlsEnvironment()) {
+            return MULTI_URL_ENVIRONMENTS_FEATURE_DESCRIPTION;
+        }
+        return feature.description;
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {

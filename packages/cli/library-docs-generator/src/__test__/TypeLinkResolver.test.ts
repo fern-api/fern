@@ -2,14 +2,19 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { describe, expect, it } from "vitest";
 import {
     buildTypeLinkData,
+    createModuleFileLinker,
     extractLinksFromTypes,
     formatSignatureMultiline,
+    getModuleFilePath,
     getModulePath,
+    getPublicPath,
     getTypeDisplay,
     getTypePathForSignature,
+    linkDocstringType,
     linkTypeInfo,
     type RenderContext,
     renderCodeBlockWithLinks,
+    resolveDocstringTypeUrl,
     type SignatureParam
 } from "../utils/TypeLinkResolver.js";
 
@@ -116,6 +121,30 @@ function makeCtx(overrides: Partial<RenderContext> = {}): RenderContext {
 }
 
 describe("buildTypeLinkData", () => {
+    it("should map re-exported classes and functions to their shortest public path", () => {
+        const ir = makeIr(
+            makeModule("pkg", "pkg", {
+                classes: [makeClass("Foo", "pkg.sub.impl.Foo")],
+                functions: [makeFunction("run", "pkg.sub.impl.run", [])],
+                submodules: [
+                    makeModule("sub", "pkg.sub", {
+                        classes: [makeClass("Foo", "pkg.sub.impl.Foo")],
+                        submodules: [
+                            makeModule("impl", "pkg.sub.impl", {
+                                classes: [makeClass("Foo", "pkg.sub.impl.Foo")],
+                                functions: [makeFunction("run", "pkg.sub.impl.run", [])]
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        const { publicPaths } = buildTypeLinkData(ir);
+        expect(publicPaths.get("pkg.sub.impl.Foo")).toBe("pkg.Foo");
+        expect(publicPaths.get("pkg.sub.impl.run")).toBe("pkg.run");
+    });
+
     it("should collect module paths", () => {
         const ir = makeIr(
             makeModule("pkg", "pkg", {
@@ -612,5 +641,163 @@ describe("formatSignatureMultiline", () => {
         const params: SignatureParam[] = [{ name: "name", type: "str" }];
         const result = formatSignatureMultiline("class Foo", params);
         expect(result).toBe("class Foo(\n    name: str\n)");
+    });
+});
+
+describe("getPublicPath", () => {
+    const ctx: RenderContext = {
+        baseSlug: "reference",
+        validPaths: new Set(),
+        pathAliases: new Map(),
+        publicPaths: new Map([["pkg.sub.impl.Foo", "pkg.Foo"]])
+    };
+
+    it("should return the public path for a re-exported definition", () => {
+        expect(getPublicPath("pkg.sub.impl.Foo", ctx)).toBe("pkg.Foo");
+    });
+
+    it("should rewrite members of a re-exported class", () => {
+        expect(getPublicPath("pkg.sub.impl.Foo.bar", ctx)).toBe("pkg.Foo.bar");
+    });
+
+    it("should leave paths without a public alias unchanged", () => {
+        expect(getPublicPath("pkg.sub.impl.Other", ctx)).toBe("pkg.sub.impl.Other");
+        expect(getPublicPath("pkg.sub.impl.Other", { ...ctx, publicPaths: undefined })).toBe("pkg.sub.impl.Other");
+    });
+});
+
+describe("module file links", () => {
+    const packageModules = new Set(["pkg", "pkg.sub"]);
+
+    it("maps modules to the MDX file the generator writes", () => {
+        expect(getModuleFilePath("pkg", "ref", packageModules)).toBe("ref/pkg/index.mdx");
+        expect(getModuleFilePath("pkg.sub", "ref", packageModules)).toBe("ref/pkg/sub/index.mdx");
+        expect(getModuleFilePath("pkg.sub.leaf", "ref", packageModules)).toBe("ref/pkg/sub/leaf.mdx");
+    });
+
+    it("links relative to the page being rendered", () => {
+        const fromLeaf = createModuleFileLinker("ref/pkg/other.mdx", "ref", packageModules);
+        expect(fromLeaf("pkg.sub.leaf")).toBe("./sub/leaf.mdx");
+        expect(fromLeaf("pkg")).toBe("./index.mdx");
+        const fromDeep = createModuleFileLinker("ref/pkg/sub/leaf.mdx", "ref", packageModules);
+        expect(fromDeep("pkg.other")).toBe("../other.mdx");
+        expect(fromDeep("pkg.sub")).toBe("./index.mdx");
+    });
+
+    it("falls back to the public module's absolute URL for private definitions", () => {
+        const ctx: RenderContext = {
+            baseSlug: "ref",
+            validPaths: new Set(["pkg._impl.Foo"]),
+            pathAliases: new Map(),
+            publicPaths: new Map([["pkg._impl.Foo", "pkg.models.Foo"]])
+        };
+        expect(extractLinksFromTypes(["pkg._impl.Foo"], ctx, "pkg.other")).toEqual({
+            "pkg._impl.Foo": "/ref/pkg/models#pkg-_impl-Foo"
+        });
+    });
+
+    it("uses the file link for cross-module type links when configured", () => {
+        const ctx: RenderContext = {
+            baseSlug: "ref",
+            validPaths: new Set(["pkg.sub.leaf.Foo"]),
+            pathAliases: new Map(),
+            linkToModuleFile: createModuleFileLinker("ref/pkg/other.mdx", "ref", packageModules)
+        };
+        expect(extractLinksFromTypes(["pkg.sub.leaf.Foo"], ctx, "pkg.other")).toEqual({
+            "pkg.sub.leaf.Foo": "./sub/leaf.mdx#pkg-sub-leaf-Foo"
+        });
+        expect(extractLinksFromTypes(["pkg.sub.leaf.Foo"], ctx, "pkg.sub.leaf")).toEqual({
+            "pkg.sub.leaf.Foo": "#pkg-sub-leaf-Foo"
+        });
+    });
+
+    it("records package modules in the link data", () => {
+        const ir = makeIr(
+            makeModule("pkg", "pkg", {
+                submodules: [
+                    makeModule("leaf", "pkg.leaf", { functions: [makeFunction("f", "pkg.leaf.f")] }),
+                    makeModule("empty", "pkg.empty", { submodules: [makeModule("stub", "pkg.empty.stub")] })
+                ]
+            })
+        );
+        expect(buildTypeLinkData(ir).packageModules).toEqual(new Set(["pkg"]));
+    });
+});
+
+describe("resolveDocstringTypeUrl", () => {
+    const validPaths = new Set([
+        "pkg",
+        "pkg.lp",
+        "pkg.lp.data_model",
+        "pkg.lp.data_model.DataModel",
+        "pkg.lp.data_model.DataModel.set_csr",
+        "pkg.lp.solver",
+        "pkg.lp.solver.Solve",
+        "pkg.lp.solution.Solution",
+        "pkg.routing",
+        "pkg.routing.vr.DataModel",
+        "pkg.routing.vr.Solve",
+        "pkg.Unique"
+    ]);
+    const ctx = makeCtx({ validPaths, linkToModuleFile: (m) => `../${m.replace(/\./g, "/")}.mdx` });
+
+    it("resolves an unqualified class name to the unique definition in the nearest enclosing package", () => {
+        expect(resolveDocstringTypeUrl("DataModel", ctx, "pkg.lp.solver")).toBe(
+            "../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel"
+        );
+        expect(resolveDocstringTypeUrl("DataModel", ctx, "pkg.routing.vr")).toBe("#pkg-routing-vr-DataModel");
+    });
+
+    it("leaves names that are ambiguous at every scope unlinked", () => {
+        expect(resolveDocstringTypeUrl("DataModel", ctx, "pkg.other")).toBeUndefined();
+        expect(resolveDocstringTypeUrl("DataModel", ctx, undefined)).toBeUndefined();
+    });
+
+    it("prefers the definition re-exported from a package over an unexported same-named twin", () => {
+        const twinCtx = makeCtx({
+            validPaths: new Set([...validPaths, "pkg.lp.data_model_wrapper.DataModel"]),
+            publicPaths: new Map([
+                ["pkg.lp.data_model.DataModel", "pkg.lp.DataModel"],
+                ["pkg.routing.vr.DataModel", "pkg.routing.DataModel"]
+            ]),
+            linkToModuleFile: (m) => `../${m.replace(/\./g, "/")}.mdx`
+        });
+        expect(resolveDocstringTypeUrl("DataModel", twinCtx, "pkg.lp.solver")).toBe(
+            "../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel"
+        );
+        expect(resolveDocstringTypeUrl("DataModel", twinCtx, "pkg.other")).toBeUndefined();
+    });
+
+    it("resolves a globally unique name from any module", () => {
+        expect(resolveDocstringTypeUrl("Solution", ctx, "pkg.routing.vr")).toBe(
+            "../pkg/lp/solution.mdx#pkg-lp-solution-Solution"
+        );
+        expect(resolveDocstringTypeUrl("Unique", ctx, undefined)).toBe("../pkg.mdx#pkg-Unique");
+    });
+
+    it("resolves qualified paths like signature types", () => {
+        expect(resolveDocstringTypeUrl("pkg.lp.solution.Solution", ctx, "pkg.lp.solver")).toBe(
+            "../pkg/lp/solution.mdx#pkg-lp-solution-Solution"
+        );
+        expect(resolveDocstringTypeUrl("np.ndarray", ctx, "pkg.lp.solver")).toBeUndefined();
+    });
+
+    it("never links lowercase names (builtins, modules, functions)", () => {
+        expect(resolveDocstringTypeUrl("int", ctx, "pkg.lp.solver")).toBeUndefined();
+        expect(resolveDocstringTypeUrl("solver", ctx, "pkg.lp")).toBeUndefined();
+        expect(resolveDocstringTypeUrl("set_csr", ctx, "pkg.lp.data_model")).toBeUndefined();
+    });
+
+    it("links every resolvable token in a docstring type string and quotes the rest", () => {
+        expect(linkDocstringType("list of DataModel", ctx, "pkg.lp.solver")).toBe(
+            "`list of` [`DataModel`](../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel)"
+        );
+        expect(linkDocstringType("DataModel or None", ctx, "pkg.lp.solver")).toBe(
+            "[`DataModel`](../pkg/lp/data_model.mdx#pkg-lp-data_model-DataModel) `or None`"
+        );
+        expect(linkDocstringType("int", ctx, "pkg.lp.solver")).toBeUndefined();
+        expect(linkDocstringType("Optional[Solution]", ctx, "pkg.lp.solver")).toBe(
+            "`Optional[` [`Solution`](../pkg/lp/solution.mdx#pkg-lp-solution-Solution) `]`"
+        );
     });
 });

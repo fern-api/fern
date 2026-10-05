@@ -37,10 +37,12 @@ type BulkUpdateTasksRequest struct {
 }
 
 func (b *BulkUpdateTasksRequest) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetFilterAssignedTo sets the FilterAssignedTo field and marks it as non-optional;
@@ -100,12 +102,18 @@ func (b *BulkUpdateTasksRequest) SetText(text *string) {
 }
 
 func (b *BulkUpdateTasksRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler BulkUpdateTasksRequest
-	var body unmarshaler
+	type embed BulkUpdateTasksRequest
+	var body = struct {
+		embed
+		BulkUpdateTasksRequestDate *internal.Date `json:"date,omitempty"`
+	}{
+		embed: embed(*b),
+	}
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*b = BulkUpdateTasksRequest(body)
+	*b = BulkUpdateTasksRequest(body.embed)
+	b.BulkUpdateTasksRequestDate = body.BulkUpdateTasksRequestDate.TimePtr()
 	return nil
 }
 
@@ -151,10 +159,12 @@ func (b *BulkUpdateTasksResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BulkUpdateTasksResponse) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetUpdatedCount sets the UpdatedCount field and marks it as non-optional;

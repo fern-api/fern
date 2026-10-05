@@ -41,10 +41,12 @@ func (s *SendLiteralsInlinedRequest) Stream() bool {
 }
 
 func (s *SendLiteralsInlinedRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetContext sets the Context field and marks it as non-optional;
@@ -138,10 +140,12 @@ func (a *ANestedLiteral) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ANestedLiteral) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 func (a *ANestedLiteral) UnmarshalJSON(data []byte) error {
@@ -226,10 +230,12 @@ func (a *ATopLevelLiteral) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ATopLevelLiteral) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetNestedLiteral sets the NestedLiteral field and marks it as non-optional;

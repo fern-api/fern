@@ -211,6 +211,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
+                    allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
@@ -232,6 +233,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders,
         includePlatformHeaders,
         allowUserAgentAppInfo,
+        allowCustomHttpClient,
         maxRetries,
         retryStatusCodes,
         respectOptionalRequestBody,
@@ -246,6 +248,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders?: boolean;
         includePlatformHeaders?: boolean;
         allowUserAgentAppInfo?: boolean;
+        allowCustomHttpClient?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
@@ -262,6 +265,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 omitFernHeaders,
                 includePlatformHeaders,
                 allowUserAgentAppInfo,
+                allowCustomHttpClient,
                 maxRetries,
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
@@ -270,11 +274,21 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             })
         });
 
-        const retryStatusCodesArray =
+        const retryStatuses =
             retryStatusCodes === "recommended"
-                ? "[408, 429, 502, 503, 504].freeze"
-                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
-        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+                ? [408, 429, 502, 503, 504]
+                : [408, 429, 500, 502, 503, 504, 521, 522, 524];
+        const tested5xxStatuses = [500, 501, 502, 503, 504, 505, 510, 521, 522, 524, 599];
+        const toRubyArray = (statuses: number[]) => `[${statuses.join(", ")}]`;
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, `${toRubyArray(retryStatuses)}.freeze`);
+        rendered = rendered.replace(
+            /\{\{RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => retryStatuses.includes(status)))
+        );
+        rendered = rendered.replace(
+            /\{\{NON_RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => !retryStatuses.includes(status)))
+        );
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
@@ -328,6 +342,7 @@ function getTemplateVariables({
     omitFernHeaders,
     includePlatformHeaders,
     allowUserAgentAppInfo,
+    allowCustomHttpClient,
     maxRetries,
     respectOptionalRequestBody,
     respectNullableUnionFields,
@@ -340,6 +355,7 @@ function getTemplateVariables({
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    allowCustomHttpClient?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
@@ -358,6 +374,9 @@ function getTemplateVariables({
         // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
         // so flag-off raw_client.rb stays byte-identical.
         allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
+        // Emits the RawClient `http_client:` transport override only when the opt-in
+        // flag is on, so flag-off raw_client.rb stays byte-identical.
+        allowCustomHttpClient: allowCustomHttpClient ?? false,
         defaultMaxRetries: maxRetries ?? 2,
         // Emits the JSON::Request omit_content_type_without_body parameter only when the
         // opt-in flag is on, so flag-off json/request.rb stays byte-identical.
