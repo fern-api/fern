@@ -59,8 +59,8 @@ async function lookupAuth0OrgId(
 
 /**
  * Escape a CSV cell: quote cells containing commas/quotes/newlines (RFC 4180),
- * render newlines as escape sequences so rows stay on one line, and prefix a
- * leading `'` on text a spreadsheet would read as a formula. Signed numbers
+ * render tabs/newlines as escape sequences so rows stay on one line, and prefix
+ * a leading `'` on text a spreadsheet would read as a formula. Signed numbers
  * (`-12`, `+4.5%`) are left alone since a spreadsheet reads them as values.
  */
 function escapeCsvCell(value: string | null | undefined): string {
@@ -68,7 +68,7 @@ function escapeCsvCell(value: string | null | undefined): string {
         return "";
     }
     const raw = /^[=+\-@\t\r]/.test(value) && !/^[+-](?:\d+(?:[.,]\d+)*%?)?$/.test(value) ? `'${value}` : value;
-    const normalized = raw.replace(/\r/g, "\\r").replace(/\n/g, "\\n");
+    const normalized = raw.replace(/\r/g, "\\r").replace(/\n/g, "\\n").replace(/\t/g, "\\t");
     if (normalized.includes('"') || normalized.includes(",")) {
         return `"${normalized.replace(/"/g, '""')}"`;
     }

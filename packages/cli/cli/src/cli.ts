@@ -4197,11 +4197,11 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         }
                     )
                     .command(
-                        "revoke <token-id>",
+                        "revoke <tokenId>",
                         "Revoke an organization API key",
                         (y) =>
                             y
-                                .positional("token-id", {
+                                .positional("tokenId", {
                                     type: "string",
                                     demandOption: true,
                                     description: "Token ID to revoke"
