@@ -61,6 +61,17 @@ export class HttpEndpointGenerator {
         const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
         const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const boundSdkVariables = this.context.getSdkVariablesForEndpoint(endpoint);
+        for (const option of boundSdkVariables) {
+            statements.push(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(this.context.getSdkVariableRequiredGuard(option));
+                })
+            );
+        }
+        const hasPathParametersFromParams = endpoint.allPathParameters.some(
+            (pathParam) => this.context.getSdkVariableForPathParameter(pathParam) == null
+        );
 
         // params is referenced whenever the request emits a body/query/header code
         // block (each reference produced by these blocks uses `params` either in a
@@ -72,7 +83,7 @@ export class HttpEndpointGenerator {
             requestBodyCodeBlock != null ||
             queryParameterCodeBlock != null ||
             headerParameterCodeBlock != null ||
-            Object.keys(pathParameterReferences).length > 0;
+            hasPathParametersFromParams;
 
         if (paramsUsed) {
             statements.push(
@@ -663,6 +674,12 @@ export class HttpEndpointGenerator {
         const pathParameterReferences: Record<string, string> = {};
         const defaultExtractor = new DefaultValueExtractor(this.context);
         for (const pathParam of endpoint.allPathParameters) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                pathParameterReferences[getOriginalName(pathParam.name)] =
+                    this.context.getSdkVariableInstanceVariable(sdkVariable);
+                continue;
+            }
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
@@ -794,6 +811,9 @@ export class HttpEndpointGenerator {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
+            if (this.context.getSdkVariableForPathParameter(pathParam) != null) {
+                continue;
+            }
             const paramName = this.case.snakeSafe(pathParam.name);
             const typeString = this.typeReferenceToYardString(pathParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);

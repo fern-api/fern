@@ -1,7 +1,7 @@
 import { GeneratorError, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
-import { ClassReference, ruby } from "@fern-api/ruby-ast";
+import { ClassReference, getSdkVariableOptionName, ruby } from "@fern-api/ruby-ast";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -15,8 +15,17 @@ import { hasUrlEncodedRequestBody } from "./utils/requestBody.js";
 
 const ROOT_TYPES_FOLDER = "types";
 
+export interface SdkVariableOption {
+    variable: FernIr.VariableDeclaration;
+    /** The keyword exposed on the root client and the (un-prefixed) instance variable name. */
+    optionName: string;
+    isString: boolean;
+}
+
 export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomConfigSchema> {
     public readonly project: RubyProject;
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
     public readonly generatorAgent: RubyGeneratorAgent;
@@ -544,6 +553,79 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public get selfHosted(): boolean {
         return this.ir.selfHosted ?? false;
+    }
+
+    /**
+     * SDK variables (`x-fern-sdk-variables`) exposed as optional keywords on the root client.
+     * Path parameters bound to a variable read `@<option>` instead of a method argument.
+     */
+    public getSdkVariableOptions(): SdkVariableOption[] {
+        if (this.sdkVariableOptions == null) {
+            this.sdkVariableOptions = this.ir.variables.map((variable) => ({
+                variable,
+                optionName: getSdkVariableOptionName(this.caseConverter.snakeSafe(variable.name)),
+                isString: this.isStringTypeReference(variable.type)
+            }));
+        }
+        return this.sdkVariableOptions;
+    }
+
+    public getSdkVariableForPathParameter(pathParameter: FernIr.PathParameter): SdkVariableOption | undefined {
+        if (pathParameter.variable == null) {
+            return undefined;
+        }
+        if (this.sdkVariableOptionsById == null) {
+            this.sdkVariableOptionsById = new Map(
+                this.getSdkVariableOptions().map((option) => [option.variable.id, option])
+            );
+        }
+        return this.sdkVariableOptionsById.get(pathParameter.variable);
+    }
+
+    /** The SDK variables bound to this endpoint's path parameters, de-duplicated in path order. */
+    public getSdkVariablesForEndpoint(endpoint: FernIr.HttpEndpoint): SdkVariableOption[] {
+        const seen = new Set<string>();
+        const options: SdkVariableOption[] = [];
+        for (const pathParameter of endpoint.allPathParameters) {
+            const option = this.getSdkVariableForPathParameter(pathParameter);
+            if (option != null && !seen.has(option.variable.id)) {
+                seen.add(option.variable.id);
+                options.push(option);
+            }
+        }
+        return options;
+    }
+
+    public getSdkVariableInstanceVariable(option: SdkVariableOption): string {
+        return `@${option.optionName}`;
+    }
+
+    /** Raises a clear `ArgumentError` when a bound SDK variable was neither passed nor resolved from the env. */
+    public getSdkVariableRequiredGuard(option: SdkVariableOption): string {
+        const envHint =
+            option.variable.envVar != null && option.isString
+                ? ` or set the ${option.variable.envVar} environment variable`
+                : "";
+        const message =
+            `The \`${option.optionName}\` SDK variable is required. Pass \`${option.optionName}:\` to ` +
+            `${this.getRootModuleName()}::${this.getRootClientClassName()}.new${envHint}.`;
+        return `raise ArgumentError, "${message}" if ${this.getSdkVariableInstanceVariable(option)}.nil?`;
+    }
+
+    private isStringTypeReference(reference: FernIr.TypeReference): boolean {
+        switch (reference.type) {
+            case "primitive":
+                return reference.primitive.v1 === "STRING";
+            case "named": {
+                const declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+                return declaration.shape.type === "alias" && this.isStringTypeReference(declaration.shape.aliasOf);
+            }
+            case "container":
+            case "unknown":
+                return false;
+            default:
+                assertNever(reference);
+        }
     }
 
     public isMultipleBaseUrlsEnvironment(): boolean {
