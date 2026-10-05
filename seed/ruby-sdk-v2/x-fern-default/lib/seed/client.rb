@@ -45,9 +45,10 @@ module Seed
     # @param base_url [String, nil]
     # @param api_version [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, api_version: "2024-02-08", max_retries: 2)
+    def initialize(base_url: nil, api_version: "2024-02-08", max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
@@ -56,7 +57,8 @@ module Seed
           "X-API-Version" => api_version.to_s
         },
         overridable_headers: %w[X-API-Version],
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

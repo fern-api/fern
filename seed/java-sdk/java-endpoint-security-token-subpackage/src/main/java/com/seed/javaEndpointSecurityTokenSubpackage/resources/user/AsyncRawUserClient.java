@@ -193,6 +193,162 @@ public class AsyncRawUserClient {
         return future;
     }
 
+    public CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> getWithBearer() {
+        return getWithBearer(null);
+    }
+
+    public CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> getWithBearer(
+            RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users/bearer");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("tokenAuth")))));
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(_headers))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> future =
+                new CompletableFuture<>();
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedJavaEndpointSecurityTokenSubpackageHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBodyString, new TypeReference<List<User>>() {}),
+                                response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
+                            "Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
+                        "Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> getWithBasic() {
+        return getWithBasic(null);
+    }
+
+    public CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> getWithBasic(
+            RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users/basic");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("passwordAuth")))));
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(_headers))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        if (requestOptions != null && requestOptions.getMaxRetries().isPresent()) {
+            okhttpRequest = okhttpRequest
+                    .newBuilder()
+                    .tag(
+                            RetryInterceptor.MaxRetriesOverride.class,
+                            new RetryInterceptor.MaxRetriesOverride(
+                                    requestOptions.getMaxRetries().get()))
+                    .build();
+        }
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> future =
+                new CompletableFuture<>();
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedJavaEndpointSecurityTokenSubpackageHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBodyString, new TypeReference<List<User>>() {}),
+                                response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (JsonProcessingException e) {
+                    future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
+                            "Failed to deserialize response: " + e.getMessage(), e));
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
+                            "Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedJavaEndpointSecurityTokenSubpackageException(
+                        "Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
+        return future;
+    }
+
     public CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<List<User>>> getAnonymous() {
         return getAnonymous(null);
     }

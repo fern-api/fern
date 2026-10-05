@@ -5,6 +5,7 @@ package com.seed.api.resources.identity;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.identity.requests.GetTokenIdentityRequest;
 import com.seed.api.types.TokenResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,25 @@ public class AsyncIdentityClient {
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenIdentityRequest request) {
-        return this.rawClient.getToken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TokenResponse>> rawFuture = this.rawClient.getToken(request);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenIdentityRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getToken(request, requestOptions);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

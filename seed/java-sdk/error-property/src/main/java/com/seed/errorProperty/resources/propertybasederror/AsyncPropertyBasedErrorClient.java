@@ -5,6 +5,7 @@ package com.seed.errorProperty.resources.propertybasederror;
 
 import com.seed.errorProperty.core.ClientOptions;
 import com.seed.errorProperty.core.RequestOptions;
+import com.seed.errorProperty.core.SeedErrorPropertyHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncPropertyBasedErrorClient {
@@ -28,13 +29,27 @@ public class AsyncPropertyBasedErrorClient {
      * GET request that always throws an error
      */
     public CompletableFuture<String> throwError() {
-        return this.rawClient.throwError().thenApply(response -> response.body());
+        CompletableFuture<SeedErrorPropertyHttpResponse<String>> rawFuture = this.rawClient.throwError();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET request that always throws an error
      */
     public CompletableFuture<String> throwError(RequestOptions requestOptions) {
-        return this.rawClient.throwError(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorPropertyHttpResponse<String>> rawFuture = this.rawClient.throwError(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

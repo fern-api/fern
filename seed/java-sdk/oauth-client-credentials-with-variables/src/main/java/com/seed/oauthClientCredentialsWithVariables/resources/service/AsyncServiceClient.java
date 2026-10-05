@@ -5,6 +5,7 @@ package com.seed.oauthClientCredentialsWithVariables.resources.service;
 
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.RequestOptions;
+import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -25,10 +26,25 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> post() {
-        return this.rawClient.post().thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsWithVariablesHttpResponse<Void>> rawFuture = this.rawClient.post();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> post(RequestOptions requestOptions) {
-        return this.rawClient.post(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsWithVariablesHttpResponse<Void>> rawFuture =
+                this.rawClient.post(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.GetPlantRequest;
 import com.seed.api.types.Plant;
 import java.util.List;
@@ -31,47 +32,91 @@ public class AsyncSeedApiClient implements AutoCloseable {
      * Returns a paginated list of all plants currently in the store inventory.
      */
     public CompletableFuture<List<Plant>> listPlants() {
-        return this.rawClient.listPlants().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<List<Plant>>> rawFuture = this.rawClient.listPlants();
+        CompletableFuture<List<Plant>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns a paginated list of all plants currently in the store inventory.
      */
     public CompletableFuture<List<Plant>> listPlants(RequestOptions requestOptions) {
-        return this.rawClient.listPlants(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<List<Plant>>> rawFuture = this.rawClient.listPlants(requestOptions);
+        CompletableFuture<List<Plant>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Retrieve details about a specific plant by its unique identifier.
      */
     public CompletableFuture<Plant> getPlant(String plantId) {
-        return this.rawClient.getPlant(plantId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.getPlant(plantId);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Retrieve details about a specific plant by its unique identifier.
      */
     public CompletableFuture<Plant> getPlant(String plantId, RequestOptions requestOptions) {
-        return this.rawClient.getPlant(plantId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.getPlant(plantId, requestOptions);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Retrieve details about a specific plant by its unique identifier.
      */
     public CompletableFuture<Plant> getPlant(String plantId, GetPlantRequest request) {
-        return this.rawClient.getPlant(plantId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.getPlant(plantId, request);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Retrieve details about a specific plant by its unique identifier.
      */
     public CompletableFuture<Plant> getPlant(String plantId, GetPlantRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getPlant(plantId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture =
+                this.rawClient.getPlant(plantId, request, requestOptions);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {
