@@ -86,6 +86,7 @@ func TestCompletionsStreamWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &sse.StreamCompletionRequest{
 		Query: "foo",
@@ -111,6 +112,7 @@ func TestCompletionsStreamWithoutTerminatorWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &sse.StreamCompletionRequestWithoutTerminator{
 		Query: "query",

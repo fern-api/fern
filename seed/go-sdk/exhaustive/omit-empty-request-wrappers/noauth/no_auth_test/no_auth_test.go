@@ -10,6 +10,7 @@ import (
 	os "os"
 	testing "testing"
 
+	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	require "github.com/stretchr/testify/require"
@@ -85,6 +86,7 @@ func TestNoAuthPostWithNoAuthWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := map[string]any{
 		"key": "value",
@@ -99,4 +101,37 @@ func TestNoAuthPostWithNoAuthWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestNoAuthPostWithNoAuthWithWireMock", "POST", "/no-auth", nil, 1)
+}
+
+func TestNoAuthPostWithNoAuthWithWireMock_ThrowsBadRequestBody(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := map[string]any{
+		"key": "value",
+	}
+	_, invocationErr := client.NoAuth.PostWithNoAuth(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestNoAuthPostWithNoAuthWithWireMock_ThrowsBadRequestBody"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.BadRequestBody
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestBody")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"message\":\"message\"}", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestNoAuthPostWithNoAuthWithWireMock_ThrowsBadRequestBody", "POST", "/no-auth", nil, 1)
 }

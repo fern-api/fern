@@ -86,6 +86,7 @@ func TestEndpointsUnionGetAndReturnUnionWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.Animal{

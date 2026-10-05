@@ -86,6 +86,7 @@ func TestStreamProtocolNoCollisionWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamProtocolNoCollision(
@@ -109,6 +110,7 @@ func TestStreamProtocolCollisionWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamProtocolCollision(
@@ -132,6 +134,7 @@ func TestStreamDataContextWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamDataContext(
@@ -155,6 +158,7 @@ func TestStreamNoContextWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamNoContext(
@@ -178,6 +182,7 @@ func TestStreamProtocolWithFlatSchemaWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamProtocolWithFlatSchema(
@@ -201,6 +206,7 @@ func TestStreamDataContextWithEnvelopeSchemaWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamDataContextWithEnvelopeSchema(
@@ -224,6 +230,7 @@ func TestStreamOasSpecNativeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamOasSpecNative(
@@ -247,6 +254,7 @@ func TestStreamXFernStreamingConditionStreamWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamXFernStreamingConditionStreamRequest{
 		Query: "query",
@@ -263,7 +271,7 @@ func TestStreamXFernStreamingConditionStreamWithWireMock(
 	VerifyRequestCount(t, "TestStreamXFernStreamingConditionStreamWithWireMock", "POST", "/stream/x-fern-streaming-condition", nil, 1)
 }
 
-func TestStreamXFernStreamingConditionStreamWithWireMock2(
+func TestStreamXFernStreamingConditionWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -272,20 +280,21 @@ func TestStreamXFernStreamingConditionStreamWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
-	request := &fern.StreamXFernStreamingConditionStreamRequest{
+	request := &fern.StreamXFernStreamingConditionRequest{
 		Query: "query",
 	}
-	_, invocationErr := client.StreamXFernStreamingConditionStream(
+	_, invocationErr := client.StreamXFernStreamingCondition(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingConditionStreamWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingConditionWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestStreamXFernStreamingConditionStreamWithWireMock2", "POST", "/stream/x-fern-streaming-condition", nil, 1)
+	VerifyRequestCount(t, "TestStreamXFernStreamingConditionWithWireMock", "POST", "/stream/x-fern-streaming-condition", nil, 1)
 }
 
 func TestStreamXFernStreamingSharedSchemaStreamWithWireMock(
@@ -297,6 +306,7 @@ func TestStreamXFernStreamingSharedSchemaStreamWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
 		Prompt: "prompt",
@@ -314,7 +324,7 @@ func TestStreamXFernStreamingSharedSchemaStreamWithWireMock(
 	VerifyRequestCount(t, "TestStreamXFernStreamingSharedSchemaStreamWithWireMock", "POST", "/stream/x-fern-streaming-shared-schema", nil, 1)
 }
 
-func TestStreamXFernStreamingSharedSchemaStreamWithWireMock2(
+func TestStreamXFernStreamingSharedSchemaWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -323,21 +333,22 @@ func TestStreamXFernStreamingSharedSchemaStreamWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
-	request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
+	request := &fern.StreamXFernStreamingSharedSchemaRequest{
 		Prompt: "prompt",
 		Model:  "model",
 	}
-	_, invocationErr := client.StreamXFernStreamingSharedSchemaStream(
+	_, invocationErr := client.StreamXFernStreamingSharedSchema(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingSharedSchemaStreamWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingSharedSchemaWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestStreamXFernStreamingSharedSchemaStreamWithWireMock2", "POST", "/stream/x-fern-streaming-shared-schema", nil, 1)
+	VerifyRequestCount(t, "TestStreamXFernStreamingSharedSchemaWithWireMock", "POST", "/stream/x-fern-streaming-shared-schema", nil, 1)
 }
 
 func TestValidateCompletionWithWireMock(
@@ -349,6 +360,7 @@ func TestValidateCompletionWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.SharedCompletionRequest{
 		Prompt: "prompt",
@@ -375,6 +387,7 @@ func TestStreamXFernStreamingUnionStreamWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamXFernStreamingUnionStreamRequest{
 		Message: &fern.UnionStreamMessageVariant{
@@ -397,7 +410,7 @@ func TestStreamXFernStreamingUnionStreamWithWireMock(
 	VerifyRequestCount(t, "TestStreamXFernStreamingUnionStreamWithWireMock", "POST", "/stream/x-fern-streaming-union", nil, 1)
 }
 
-func TestStreamXFernStreamingUnionStreamWithWireMock2(
+func TestStreamXFernStreamingUnionWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -406,8 +419,9 @@ func TestStreamXFernStreamingUnionStreamWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
-	request := &fern.StreamXFernStreamingUnionStreamRequest{
+	request := &fern.StreamXFernStreamingUnionRequest{
 		Message: &fern.UnionStreamMessageVariant{
 			StreamResponse: fern.Bool(
 				false,
@@ -416,16 +430,16 @@ func TestStreamXFernStreamingUnionStreamWithWireMock2(
 			Message: "message",
 		},
 	}
-	_, invocationErr := client.StreamXFernStreamingUnionStream(
+	_, invocationErr := client.StreamXFernStreamingUnion(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingUnionStreamWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingUnionWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestStreamXFernStreamingUnionStreamWithWireMock2", "POST", "/stream/x-fern-streaming-union", nil, 1)
+	VerifyRequestCount(t, "TestStreamXFernStreamingUnionWithWireMock", "POST", "/stream/x-fern-streaming-union", nil, 1)
 }
 
 func TestValidateUnionRequestWithWireMock(
@@ -437,6 +451,7 @@ func TestValidateUnionRequestWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.UnionStreamRequestBase{
 		Prompt: "prompt",
@@ -462,6 +477,7 @@ func TestStreamXFernStreamingNullableConditionStreamWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
 		Query: "query",
@@ -478,7 +494,7 @@ func TestStreamXFernStreamingNullableConditionStreamWithWireMock(
 	VerifyRequestCount(t, "TestStreamXFernStreamingNullableConditionStreamWithWireMock", "POST", "/stream/x-fern-streaming-nullable-condition", nil, 1)
 }
 
-func TestStreamXFernStreamingNullableConditionStreamWithWireMock2(
+func TestStreamXFernStreamingNullableConditionWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -487,20 +503,21 @@ func TestStreamXFernStreamingNullableConditionStreamWithWireMock2(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
-	request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
+	request := &fern.StreamXFernStreamingNullableConditionRequest{
 		Query: "query",
 	}
-	_, invocationErr := client.StreamXFernStreamingNullableConditionStream(
+	_, invocationErr := client.StreamXFernStreamingNullableCondition(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingNullableConditionStreamWithWireMock2"}},
+			http.Header{"X-Test-Id": []string{"TestStreamXFernStreamingNullableConditionWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestStreamXFernStreamingNullableConditionStreamWithWireMock2", "POST", "/stream/x-fern-streaming-nullable-condition", nil, 1)
+	VerifyRequestCount(t, "TestStreamXFernStreamingNullableConditionWithWireMock", "POST", "/stream/x-fern-streaming-nullable-condition", nil, 1)
 }
 
 func TestStreamXFernStreamingSseOnlyWithWireMock(
@@ -512,6 +529,7 @@ func TestStreamXFernStreamingSseOnlyWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.StreamRequest{}
 	_, invocationErr := client.StreamXFernStreamingSseOnly(

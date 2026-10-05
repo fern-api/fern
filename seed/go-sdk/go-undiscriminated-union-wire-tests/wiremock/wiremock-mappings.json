@@ -25,9 +25,40 @@
           }
         }
       }
+    },
+    {
+      "id": "6a85239d-c089-430f-af83-4a3bf0480fd4",
+      "name": "rerank - default - TestServiceRerankWithWireMock",
+      "request": {
+        "urlPathTemplate": "/rerank",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestServiceRerankWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"results\": [\n    \"Washington, D.C. is the capital of the United States.\",\n    \"Carson City is the capital city of the American state of Nevada.\"\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6a85239d-c089-430f-af83-4a3bf0480fd4",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

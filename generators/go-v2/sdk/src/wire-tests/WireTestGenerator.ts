@@ -7,7 +7,8 @@ import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import {
     FILE_DOWNLOAD_FIXTURE_BASE64,
     FILE_DOWNLOAD_FIXTURE_CONTENT_TYPE,
-    WireMockMapping
+    WireMockMapping,
+    WireMockOptions
 } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -17,7 +18,17 @@ import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSn
 import { convertIr } from "../utils/convertIr.js";
 import { InferredAuthWireTestGenerator } from "./InferredAuthWireTestGenerator.js";
 import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator.js";
+import { WireTestExampleSelector, WireTestExpectedError } from "./WireTestExampleSelector.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
+
+interface WireTestCase {
+    endpoint: FernIr.HttpEndpoint;
+    example: FernIr.ExampleEndpointCall;
+    dynamicExample: FernIr.dynamic.EndpointExample;
+    snippet: string;
+    testFunctionName: string;
+    expectedError: WireTestExpectedError | undefined;
+}
 
 function isFileDownloadEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
     return endpoint.response?.body?.type === "fileDownload";
@@ -41,7 +52,11 @@ export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
-    private wireMockConfigContent: Record<string, WireMockMapping>;
+    private wireMockConfigContent: Record<string, WireMockMapping> = {};
+    private wireMockMappingsByTestId = new Map<string, WireMockMapping>();
+    // Keyed by example object identity; mock-utils hands back the same objects typed with its own ir-sdk version.
+    private testIdsByExample = new Map<unknown, string>();
+    private exampleSelector: WireTestExampleSelector;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
@@ -54,7 +69,7 @@ export class WireTestGenerator {
             ir: convertIr(dynamicIr),
             config: this.context.config
         });
-        this.wireMockConfigContent = this.getWireMockConfigContent();
+        this.exampleSelector = new WireTestExampleSelector(context);
     }
 
     private wiremockMappingKey({
@@ -67,17 +82,25 @@ export class WireTestGenerator {
         return `${requestMethod} - ${requestUrlPathTemplate}`;
     }
 
-    private getWireMockConfigContent(): Record<string, WireMockMapping> {
-        let out: Record<string, WireMockMapping> = {};
-        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
+    private getExampleTestId: NonNullable<WireMockOptions["getExampleTestId"]> = ({ example }) =>
+        this.testIdsByExample.get(example);
+
+    private loadWireMockConfigContent(): void {
+        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir, {
+            getExampleTestId: this.getExampleTestId
+        });
         for (const mapping of wiremockStubMapping.mappings) {
+            const testId = mapping.request.headers?.["X-Test-Id"]?.equalTo;
+            if (testId != null) {
+                this.wireMockMappingsByTestId.set(testId, mapping);
+                continue;
+            }
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
                 requestUrlPathTemplate: mapping.request.urlPathTemplate
             });
-            out[key] = mapping;
+            this.wireMockConfigContent[key] = mapping;
         }
-        return out;
     }
 
     public async generate(): Promise<void> {
@@ -87,6 +110,7 @@ export class WireTestGenerator {
         const sortedServices = Array.from(endpointsByService.entries()).sort(([a], [b]) =>
             a < b ? -1 : a > b ? 1 : 0
         );
+        const testCasesByService: [string, WireTestCase[]][] = [];
         for (const [serviceName, endpoints] of sortedServices) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
@@ -97,9 +121,16 @@ export class WireTestGenerator {
                 continue;
             }
 
-            const serviceTestFile = await this.generateServiceTestFile(
+            testCasesByService.push([serviceName, await this.getServiceTestCases(endpointsWithExamples)]);
+        }
+
+        // Each test sends its function name as X-Test-Id, which selects the WireMock mapping for its example.
+        this.loadWireMockConfigContent();
+
+        for (const [serviceName, testCases] of testCasesByService) {
+            const serviceTestFile = this.generateServiceTestFile(
                 serviceName,
-                endpointsWithExamples,
+                testCases,
                 filePathsByServiceName.get(serviceName) ?? {
                     allParts: [],
                     packagePath: [],
@@ -112,7 +143,9 @@ export class WireTestGenerator {
             }
         }
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
-        new WireTestSetupGenerator(this.context, this.context.ir).generate();
+        new WireTestSetupGenerator(this.context, this.context.ir, {
+            getExampleTestId: this.getExampleTestId
+        }).generate();
 
         // The standalone OAuth/inferred-auth wire tests assume the scheme is applied
         // globally to every endpoint (the ALL/ANY auth model). Under endpoint-security
@@ -137,12 +170,11 @@ export class WireTestGenerator {
         }
     }
 
-    private async generateServiceTestFile(
-        serviceName: string,
-        endpoints: FernIr.HttpEndpoint[],
-        filePath: FernIr.FernFilepath
-    ): Promise<GoFile | null> {
-        const endpointTestCases = new Map<string, string>();
+    private async getServiceTestCases(endpoints: FernIr.HttpEndpoint[]): Promise<WireTestCase[]> {
+        const testCases: WireTestCase[] = [];
+        // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
+        const testFunctionNameCounts = new Map<string, number>();
+        const usedTestFunctionNames = new Set<string>();
         for (const endpoint of endpoints) {
             // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
             // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
@@ -160,22 +192,57 @@ export class WireTestGenerator {
                 continue;
             }
 
-            const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-            if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = this.getDynamicEndpointExample(endpoint);
-                if (firstExample) {
-                    try {
-                        const snippet = await this.generateSnippetForExample(firstExample, endpoint.id);
-                        endpointTestCases.set(endpoint.id, snippet);
-                    } catch (error) {
-                        this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                        // Skip this endpoint if snippet generation fails
-                        continue;
-                    }
+            let baseTestFunctionName: string | undefined;
+            for (const testExample of this.exampleSelector.getTestExamples(endpoint)) {
+                let snippet: string;
+                try {
+                    snippet = await this.generateSnippetForExample(testExample.dynamicExample, endpoint.id);
+                } catch (error) {
+                    this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
+                    continue;
                 }
+
+                let testFunctionName: string;
+                if (baseTestFunctionName == null) {
+                    // Parse the test function name from the snippet and generate a unique name if needed.
+                    // First occurrence uses the base name, subsequent occurrences get a numeric suffix.
+                    const parsedTestFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
+                    const count = testFunctionNameCounts.get(parsedTestFunctionName) ?? 0;
+                    testFunctionNameCounts.set(parsedTestFunctionName, count + 1);
+                    baseTestFunctionName =
+                        count === 0 ? parsedTestFunctionName : `${parsedTestFunctionName}${count + 1}`;
+                    testFunctionName = baseTestFunctionName;
+                } else {
+                    testFunctionName = `${baseTestFunctionName}_${this.exampleSelector.getTestNameSuffix(testExample)}`;
+                }
+                if (usedTestFunctionNames.has(testFunctionName)) {
+                    let suffix = 2;
+                    while (usedTestFunctionNames.has(`${testFunctionName}${suffix}`)) {
+                        suffix++;
+                    }
+                    testFunctionName = `${testFunctionName}${suffix}`;
+                }
+                usedTestFunctionNames.add(testFunctionName);
+                this.testIdsByExample.set(testExample.example, testFunctionName);
+
+                testCases.push({
+                    endpoint,
+                    example: testExample.example,
+                    dynamicExample: testExample.dynamicExample,
+                    snippet,
+                    testFunctionName,
+                    expectedError: testExample.expectedError
+                });
             }
         }
+        return testCases;
+    }
 
+    private generateServiceTestFile(
+        serviceName: string,
+        testCases: WireTestCase[],
+        filePath: FernIr.FernFilepath
+    ): GoFile | null {
         const imports = new Map<string, string>();
 
         imports.set("http", "net/http");
@@ -183,38 +250,13 @@ export class WireTestGenerator {
         imports.set("encoding/json", "encoding/json");
         imports.set("os", "os"); // For reading WIREMOCK_URL env var
 
-        // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
-        const testFunctionNameCounts = new Map<string, number>();
-
-        const endpointTestCaseCodeBlocks = endpoints
-            .map((endpoint) => {
-                const snippet = endpointTestCases.get(endpoint.id);
-                if (!snippet) {
-                    this.context.logger.warn(`No snippet found for endpoint ${endpoint.id}`);
-                    return null;
-                }
-
-                // Parse the test function name from the snippet and generate a unique name if needed
-                const baseTestFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
-                const count = testFunctionNameCounts.get(baseTestFunctionName) ?? 0;
-                testFunctionNameCounts.set(baseTestFunctionName, count + 1);
-
-                // First occurrence uses the base name, subsequent occurrences get a numeric suffix
-                const uniqueTestFunctionName =
-                    count === 0 ? baseTestFunctionName : `${baseTestFunctionName}${count + 1}`;
-
-                const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(
-                    endpoint,
-                    snippet,
-                    uniqueTestFunctionName
-                );
-                for (const [importName, importPath] of endpointImports.entries()) {
-                    imports.set(importName, importPath);
-                }
-
-                return endpointTestCaseCodeBlock;
-            })
-            .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
+        const endpointTestCaseCodeBlocks = testCases.map((testCase) => {
+            const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(testCase);
+            for (const [importName, importPath] of endpointImports.entries()) {
+                imports.set(importName, importPath);
+            }
+            return endpointTestCaseCodeBlock;
+        });
 
         // If all endpoints were skipped (e.g., file downloads, bytes requests), don't generate the file
         if (endpointTestCaseCodeBlocks.length === 0) {
@@ -409,18 +451,12 @@ export class WireTestGenerator {
         endpointId: string
     ): Promise<string> {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-        // Generate a wiremock test snippet with the test function wrapper.
-        // Pass the endpointId so the correct endpoint is resolved when multiple endpoints
-        // share the same HTTP method and path (e.g. endpoint-security fixtures where every
-        // endpoint is `GET /users` but declares a different auth scheme).
+        // Generate a wiremock test snippet with the test function wrapper. Pass the endpointId so the
+        // endpoint under test is resolved even when several endpoints share the same HTTP method and path;
+        // location-based resolution would call the first of them, which may not declare the expected errors.
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
             config: { outputWiremockTests: true },
-            // Only disambiguate by endpointId in endpoint-security mode. This is required
-            // there because every endpoint shares the same method+path but declares a
-            // different auth scheme, and location-based resolution would otherwise collapse
-            // them all onto the first endpoint. Restricting it to endpoint-security keeps all
-            // other fixtures' generated wire tests byte-for-byte unchanged.
-            endpointId: isEndpointSecurity(this.context.ir) ? endpointId : undefined
+            endpointId
         });
         if (!response.snippet) {
             throw GeneratorError.internalError("No snippet generated for example");
@@ -428,13 +464,10 @@ export class WireTestGenerator {
         return response.snippet;
     }
 
-    private generateEndpointTestMethod(
-        endpoint: FernIr.HttpEndpoint,
-        snippet: string,
-        testFunctionName: string
-    ): [go.CodeBlock, Map<string, string>] {
+    private generateEndpointTestMethod(testCase: WireTestCase): [go.CodeBlock, Map<string, string>] {
+        const { endpoint, snippet, testFunctionName } = testCase;
         const imports = this.parseImportsFromSnippet(snippet);
-        if (isFileDownloadEndpoint(endpoint)) {
+        if (isFileDownloadEndpoint(endpoint) && testCase.expectedError == null) {
             imports.set("encoding/base64", "encoding/base64");
             imports.set("io", "io");
         }
@@ -460,7 +493,7 @@ export class WireTestGenerator {
                         writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();
-                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet, testFunctionName }));
+                        writer.writeNode(this.callClientMethodAndAssert(testCase));
                     })
                 })
             );
@@ -714,6 +747,15 @@ export class WireTestGenerator {
                     }),
                     arguments_: [go.codeblock("WireMockBaseURL")],
                     multiline: false
+                }),
+                // Error examples (e.g. 429/5xx) must surface on the first attempt.
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithoutRetries",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [],
+                    multiline: false
                 })
             ];
             // Add auth options when the endpoint requires authentication, so that the
@@ -820,12 +862,10 @@ export class WireTestGenerator {
     private callClientMethodAndAssert({
         endpoint,
         snippet,
-        testFunctionName
-    }: {
-        endpoint: FernIr.HttpEndpoint;
-        snippet: string;
-        testFunctionName: string;
-    }): go.CodeBlock {
+        testFunctionName,
+        dynamicExample,
+        expectedError
+    }: WireTestCase): go.CodeBlock {
         const requestBodyInstantiation = this.parseRequestBodyInstantiation(snippet);
         const clientCall = this.parseClientCallFromSnippet(snippet).replace(
             `"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}`,
@@ -838,7 +878,7 @@ export class WireTestGenerator {
                 writer.newLine();
             }
 
-            const isFileDownload = isFileDownloadEndpoint(endpoint);
+            const isFileDownload = isFileDownloadEndpoint(endpoint) && expectedError == null;
 
             // Call the method and capture response and error (error only if response body is nonexistent).
             // File downloads go through the raw client so the served headers can be asserted alongside the body.
@@ -856,21 +896,25 @@ export class WireTestGenerator {
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
 
-            // Assert no error on the invocation
-            writer.writeNode(
-                go.invokeFunc({
-                    func: go.typeReference({
-                        name: "NoError",
-                        importPath: "github.com/stretchr/testify/require"
-                    }),
-                    arguments_: [
-                        go.codeblock("t"),
-                        go.codeblock("invocationErr"),
-                        go.TypeInstantiation.string("Client method call should succeed")
-                    ],
-                    multiline: false
-                })
-            );
+            if (expectedError != null) {
+                this.writeErrorAssertions(writer, expectedError);
+            } else {
+                // Assert no error on the invocation
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NoError",
+                            importPath: "github.com/stretchr/testify/require"
+                        }),
+                        arguments_: [
+                            go.codeblock("t"),
+                            go.codeblock("invocationErr"),
+                            go.TypeInstantiation.string("Client method call should succeed")
+                        ],
+                        multiline: false
+                    })
+                );
+            }
 
             writer.writeLine();
 
@@ -879,8 +923,8 @@ export class WireTestGenerator {
             }
 
             // Build URL path and query parameters separately
-            const basePath = this.buildBasePath(endpoint);
-            const queryParamsMap = this.buildQueryParamsMap(endpoint);
+            const basePath = this.buildBasePath(endpoint, testFunctionName);
+            const queryParamsMap = this.buildQueryParamsMap(endpoint, dynamicExample);
 
             writer.writeNode(
                 go.codeblock(
@@ -904,6 +948,73 @@ export class WireTestGenerator {
                 }
             }
         });
+    }
+
+    /**
+     * Asserts that the call failed with the error the SDK's error decoder produces for the example's
+     * status code: the typed error (with its parsed body) when the decoder dispatches to it, otherwise
+     * the base *core.APIError.
+     */
+    private writeErrorAssertions(writer: go.Writer, expectedError: WireTestExpectedError): void {
+        const errorDeclaration = expectedError.errorDeclaration;
+        const errorTypeReference =
+            errorDeclaration != null
+                ? go.typeReference({
+                      name: this.context.getClassName(errorDeclaration.name.name),
+                      importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
+                  })
+                : this.context.getCoreApiErrorTypeReference();
+        const require = (name: string, arguments_: go.AstNode[]) =>
+            go.invokeFunc({
+                func: go.typeReference({ name, importPath: "github.com/stretchr/testify/require" }),
+                arguments_,
+                multiline: false
+            });
+
+        writer.writeNode(
+            require("Error", [
+                go.codeblock("t"),
+                go.codeblock("invocationErr"),
+                go.TypeInstantiation.string("Client method call should fail")
+            ])
+        );
+        writer.newLine();
+        writer.write("var apiError ");
+        writer.writeNode(go.Type.pointer(go.Type.reference(errorTypeReference)));
+        writer.newLine();
+        writer.writeNode(
+            require("ErrorAs", [
+                go.codeblock("t"),
+                go.codeblock("invocationErr"),
+                go.codeblock("&apiError"),
+                go.TypeInstantiation.string(`Client method call should fail with ${errorTypeReference.name}`)
+            ])
+        );
+        writer.newLine();
+        writer.writeNode(
+            require("Equal", [
+                go.codeblock("t"),
+                go.codeblock(expectedError.statusCode.toString()),
+                go.codeblock("apiError.StatusCode"),
+                go.TypeInstantiation.string("Error status code should match the error example")
+            ])
+        );
+        writer.newLine();
+        if (errorDeclaration?.type != null && expectedError.body !== undefined) {
+            writer.writeNode(go.codeblock("actualErrorBody, marshalErr := json.Marshal(apiError)"));
+            writer.newLine();
+            writer.writeNode(require("NoError", [go.codeblock("t"), go.codeblock("marshalErr")]));
+            writer.newLine();
+            writer.writeNode(
+                require("JSONEq", [
+                    go.codeblock("t"),
+                    go.codeblock(JSON.stringify(JSON.stringify(expectedError.body))),
+                    go.codeblock("string(actualErrorBody)"),
+                    go.TypeInstantiation.string("Error body should match the error example")
+                ])
+            );
+            writer.newLine();
+        }
     }
 
     /**
@@ -1137,7 +1248,7 @@ export class WireTestGenerator {
         return result;
     }
 
-    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint, testId: string): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -1151,7 +1262,7 @@ export class WireTestGenerator {
             requestUrlPathTemplate: basePath
         });
 
-        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+        const wiremockMapping = this.wireMockMappingsByTestId.get(testId) ?? this.wireMockConfigContent[mappingKey];
         // Take the first 15 keys
         if (!wiremockMapping) {
             throw GeneratorError.internalError(
@@ -1191,9 +1302,10 @@ export class WireTestGenerator {
         return basePath;
     }
 
-    private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
-
+    private buildQueryParamsMap(
+        endpoint: FernIr.HttpEndpoint,
+        dynamicEndpointExample: FernIr.dynamic.EndpointExample
+    ): string {
         if (!dynamicEndpointExample?.queryParameters) {
             return "nil";
         }
@@ -1238,15 +1350,6 @@ export class WireTestGenerator {
         }
 
         return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
-    }
-
-    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
-        const example = this.dynamicIr.endpoints[endpoint.id];
-        if (!example) {
-            return null;
-        }
-
-        return example.examples?.[0] ?? null;
     }
 
     private getEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall | null {

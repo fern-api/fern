@@ -85,6 +85,7 @@ func TestLoansGetLoanWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	_, invocationErr := client.Loans.GetLoan(
 		context.TODO(),

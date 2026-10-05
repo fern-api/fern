@@ -86,6 +86,7 @@ func TestInlinedSendWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.SendLiteralsInlinedRequest{
 		Context: fern.String(

@@ -223,6 +223,33 @@ func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 
 // Example:
 //
+//	request := map[int]*types.ObjectWithRequiredField{
+//	    1: &types.ObjectWithRequiredField{
+//	        FieldString: "string",
+//	    },
+//	}
+//	client.Endpoints.Container.GetAndReturnMapOfIntegerToObject(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) GetAndReturnMapOfIntegerToObject(
+	ctx context.Context,
+	request map[int]*types.ObjectWithRequiredField,
+	opts ...option.RequestOption,
+) (map[int]*types.ObjectWithRequiredField, error) {
+	response, err := c.WithRawResponse.GetAndReturnMapOfIntegerToObject(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Example:
+//
 //	request := &types.ObjectWithRequiredField{
 //	    FieldString: "string",
 //	}
