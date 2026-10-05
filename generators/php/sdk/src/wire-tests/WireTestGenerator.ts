@@ -360,7 +360,8 @@ export class WireTestGenerator {
                         writer.writeTextStatement(
                             `$this->assertSame(${expectedError.statusCode}, $exception->getCode())`
                         );
-                        if (expectedError.body != null) {
+                        // WireMock substitutes a placeholder for empty error bodies, so only assert real ones.
+                        if (expectedError.body != null && expectedError.body !== "") {
                             writer.writeTextStatement("$body = $exception->getBody()");
                             writer.writeTextStatement("$this->assertIsString($body)");
                             writer.writeTextStatement(
