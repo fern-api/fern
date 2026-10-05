@@ -1213,13 +1213,13 @@ export function replaceImagePathsAndUrls(
         // Each node is rewritten as a whole, so its edit must absorb the edits already made inside
         // it (by the streaming scanner or a nested node); overlapping edits corrupt the output.
         // Reversed pre-order handles children before their parents.
-        for (const { node, start, end } of astNodes.reverse()) {
-            const original = content.slice(start, end);
+        for (const { node, start, end } of [...astNodes].reverse()) {
             const innerEdits = edits.filter((edit) => edit.start >= start && edit.end <= end);
-            let replaced = applyEdits(
-                original,
+            const original = applyEdits(
+                content.slice(start, end),
                 innerEdits.map((edit) => ({ ...edit, start: edit.start - start, end: edit.end - start }))
             );
+            let replaced = original;
 
             function replaceSrc(src: string | undefined) {
                 const imageSrc = mapImage(src);
