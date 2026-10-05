@@ -145,7 +145,7 @@ export async function getOrgConfig({
         let status = "";
         try {
             const { reason } = clampVersionToOrgBounds(currentVersion, bounds);
-            status = ` This CLI (${currentVersion}) ${reason == null ? "meets" : "does not meet"} this policy.`;
+            status = ` You're on ${currentVersion}${reason == null ? "" : ", which is outside this policy"}.`;
         } catch {
             // Unparseable version (e.g. a local dev build): skip the status line.
         }
