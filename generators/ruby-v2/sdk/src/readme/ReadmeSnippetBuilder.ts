@@ -75,6 +75,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             ADDITIONAL_HEADERS: { renderer: this.renderAdditionalHeadersSnippet.bind(this) },
             ADDITIONAL_QUERY_PARAMETERS: { renderer: this.renderAdditionalQueryParametersSnippet.bind(this) },
+            ADDITIONAL_BODY_PROPERTIES: { renderer: this.renderAdditionalBodyPropertiesSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -279,6 +280,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 request_options: {
                     additional_query_parameters: {
                         "custom_param" => "custom-value"
+                    }
+                }
+            )
+        `);
+    }
+
+    private renderAdditionalBodyPropertiesSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+
+            response = ${this.getMethodCall(endpoint)}(
+                ...,
+                request_options: {
+                    additional_body_parameters: {
+                        "custom_field" => "custom-value"
                     }
                 }
             )

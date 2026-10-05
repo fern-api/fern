@@ -30,11 +30,34 @@ module <%= gem_namespace %>
           @query.merge(additional_query)
         end
 
+        # @return [Hash] The additional body parameters from request options, keyed by wire-format name.
+        def additional_body_parameters
+          @request_options&.dig(:additional_body_parameters) || @request_options&.dig("additional_body_parameters") || {}
+        end
+
         # Child classes should implement:
         # - encode_headers: Returns the encoded HTTP request headers.
         # - encode_body: Returns the encoded HTTP request body.
 
         private
+
+        # Merges additional_body_parameters from request_options on top of the request body.
+        # Keys are used as-is (API wire-format names) and are normalized to strings so that a
+        # caller-supplied key always overrides the SDK-serialized field with the same name.
+        # When the body is nil the additional parameters become the body. Bodies that are not
+        # hash-like (arrays, primitives) are returned unchanged.
+        # @param body [Object, nil] The request body.
+        # @return [Object, nil] The merged request body.
+        def merge_additional_body_parameters(body)
+          additional_body = additional_body_parameters
+          return body if additional_body.nil? || additional_body.empty?
+
+          additional_body = additional_body.to_h.transform_keys(&:to_s)
+          return additional_body if body.nil?
+          return body if body.is_a?(::Array) || !body.respond_to?(:to_h)
+
+          body.to_h.transform_keys(&:to_s).merge(additional_body)
+        end
 
         # Merges additional_headers from request_options into sdk_headers, filtering out
         # any keys that collide with SDK-set or client-protected headers (case-insensitive).
