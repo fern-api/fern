@@ -211,6 +211,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
+                    allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
@@ -232,6 +233,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders,
         includePlatformHeaders,
         allowUserAgentAppInfo,
+        allowCustomHttpClient,
         maxRetries,
         retryStatusCodes,
         respectOptionalRequestBody,
@@ -246,6 +248,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders?: boolean;
         includePlatformHeaders?: boolean;
         allowUserAgentAppInfo?: boolean;
+        allowCustomHttpClient?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
@@ -262,6 +265,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 omitFernHeaders,
                 includePlatformHeaders,
                 allowUserAgentAppInfo,
+                allowCustomHttpClient,
                 maxRetries,
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
@@ -338,6 +342,7 @@ function getTemplateVariables({
     omitFernHeaders,
     includePlatformHeaders,
     allowUserAgentAppInfo,
+    allowCustomHttpClient,
     maxRetries,
     respectOptionalRequestBody,
     respectNullableUnionFields,
@@ -350,6 +355,7 @@ function getTemplateVariables({
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    allowCustomHttpClient?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
@@ -368,6 +374,9 @@ function getTemplateVariables({
         // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
         // so flag-off raw_client.rb stays byte-identical.
         allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
+        // Emits the RawClient `http_client:` transport override only when the opt-in
+        // flag is on, so flag-off raw_client.rb stays byte-identical.
+        allowCustomHttpClient: allowCustomHttpClient ?? false,
         defaultMaxRetries: maxRetries ?? 2,
         // Emits the JSON::Request omit_content_type_without_body parameter only when the
         // opt-in flag is on, so flag-off json/request.rb stays byte-identical.

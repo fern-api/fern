@@ -29,12 +29,21 @@ module <%= gem_namespace %>
         # @param auth_provider [Object, nil] An optional auth provider responding to
         #   `auth_headers`. When present its headers are resolved on every request so
         #   token-based schemes (e.g. OAuth) can refresh an expired token mid-session.
-        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil)
-          @base_url = base_url
+<% if (allowCustomHttpClient) { %>        # @param http_client [#request, nil] An optional HTTP transport that replaces the
+        #   built-in Net::HTTP connection. It must respond to `request(url, http_request)`,
+        #   where `url` is a URI and `http_request` a Net::HTTPGenericRequest, and return a
+        #   Net::HTTPResponse. Use it to configure proxies, TLS, connection reuse, or to
+        #   intercept requests and responses; retries still wrap each call. The transport
+        #   owns its connection settings, including timeouts: `timeout:` only applies to
+        #   the built-in Net::HTTP connection.
+        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil, http_client: nil)
+<% } else { %>        def initialize(base_url:, max_retries: <%= defaultMaxRetries %>, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil)
+<% } %>          @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
           @auth_provider = auth_provider
-          @default_headers = <% if (!omitFernHeaders) { %>{
+<% if (allowCustomHttpClient) { %>          @http_client = http_client
+<% } %>          @default_headers = <% if (!omitFernHeaders) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
@@ -174,7 +183,12 @@ module <%= gem_namespace %>
               auth_headers: auth_headers
             )
 
-            conn = connect(url)
+<% if (allowCustomHttpClient) { %>            begin
+              response = perform_request(url, http_request, timeout)
+            rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout => e
+              raise <%= gem_namespace %>::Errors::TimeoutError, e.message
+            end
+<% } else { %>            conn = connect(url)
             conn.open_timeout = timeout
             conn.read_timeout = timeout
             conn.write_timeout = timeout
@@ -185,7 +199,7 @@ module <%= gem_namespace %>
             rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout => e
               raise <%= gem_namespace %>::Errors::TimeoutError, e.message
             end
-
+<% } %>
             break unless should_retry?(response, attempt<% if (requestLevelMaxRetries) { %>, max_retries: request.max_retries<% } %>)
 
             delay = retry_delay(response, attempt)
@@ -374,7 +388,24 @@ module <%= gem_namespace %>
           query.to_h.empty? ? nil : URI.encode_www_form(query)
         end
 
-        # @param url [URI::Generic] The url to connect to.
+<% if (allowCustomHttpClient) { %>        # Sends a single attempt of the request through the custom `http_client` when one
+        # was supplied, or through a fresh Net::HTTP connection otherwise.
+        # @param url [URI::Generic] The url of the resource.
+        # @param http_request [Net::HTTPGenericRequest] The HTTP request.
+        # @param timeout [Float] The timeout for the built-in Net::HTTP connection.
+        # @return [Net::HTTPResponse] The HTTP response.
+        def perform_request(url, http_request, timeout)
+          return @http_client.request(url, http_request) unless @http_client.nil?
+
+          conn = connect(url)
+          conn.open_timeout = timeout
+          conn.read_timeout = timeout
+          conn.write_timeout = timeout
+          conn.continue_timeout = timeout
+          conn.request(http_request)
+        end
+
+<% } %>        # @param url [URI::Generic] The url to connect to.
         # @return [Net::HTTP] The HTTP connection.
         def connect(url)
           is_https = (url.scheme == "https")
