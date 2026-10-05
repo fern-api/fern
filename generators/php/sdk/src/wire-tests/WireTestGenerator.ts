@@ -1,4 +1,4 @@
-import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
@@ -129,7 +129,7 @@ export class WireTestGenerator {
         return `${pascalCase}WireTest`;
     }
 
-    private generateSetUpMethod(): php.Method {
+    private generateSetUpMethod(endpoints: FernIr.HttpEndpoint[]): php.Method {
         return php.method({
             name: "setUp",
             access: "protected",
@@ -138,8 +138,8 @@ export class WireTestGenerator {
                 writer.writeTextStatement("parent::setUp()");
                 writer.writeTextStatement("$wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080'");
 
-                // Build auth parameters
-                const authParams = this.buildAuthParamsForTest();
+                // Build auth parameters (plus any SDK variables bound to the tested endpoints)
+                const authParams = this.buildAuthParamsForTest() + this.buildSdkVariableParamsForTest(endpoints);
 
                 // Instantiate the client with auth and environment
                 writer.write("$this->client = new ");
@@ -248,7 +248,7 @@ export class WireTestGenerator {
         );
 
         // Add setUp method that instantiates the client once
-        class_.addMethod(this.generateSetUpMethod());
+        class_.addMethod(this.generateSetUpMethod(testCases.map((testCase) => testCase.endpoint)));
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
             const testMethod = await this.generateEndpointTestMethod({
@@ -569,6 +569,52 @@ export class WireTestGenerator {
         }
 
         return dedupedParams.map((param) => `${param},\n    `).join("");
+    }
+
+    /**
+     * Builds named constructor arguments for the SDK variables bound to the tested endpoints'
+     * path parameters, seeded from the first example path value found for each variable, so the
+     * generated requests hit the same paths the WireMock stubs expect.
+     */
+    private buildSdkVariableParamsForTest(endpoints: FernIr.HttpEndpoint[]): string {
+        const values = new Map<string, unknown>();
+        for (const endpoint of endpoints) {
+            const boundParameters = endpoint.allPathParameters.filter(
+                (pathParameter) => this.context.getSdkVariableForPathParameter(pathParameter) != null
+            );
+            if (boundParameters.length === 0) {
+                continue;
+            }
+            const example = this.dynamicIr.endpoints[endpoint.id]?.examples?.[0];
+            if (example?.pathParameters == null) {
+                continue;
+            }
+            for (const pathParameter of boundParameters) {
+                const variableId = pathParameter.variable;
+                if (variableId == null || values.has(variableId)) {
+                    continue;
+                }
+                const value = example.pathParameters[getOriginalName(pathParameter.name)];
+                if (value != null) {
+                    values.set(variableId, value);
+                }
+            }
+        }
+        return this.context
+            .getSdkVariableOptions()
+            .filter((option) => values.has(option.variable.id))
+            .map((option) => `${option.optionName}: ${this.toPhpLiteral(values.get(option.variable.id))},\n    `)
+            .join("");
+    }
+
+    private toPhpLiteral(value: unknown): string {
+        if (typeof value === "boolean") {
+            return value ? "true" : "false";
+        }
+        if (typeof value === "number") {
+            return String(value);
+        }
+        return `'${String(value).replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
     }
 
     /**

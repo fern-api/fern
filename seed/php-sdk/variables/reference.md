@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;post($endpointParam)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;post()</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```php
-$client->service->post(
-    '<endpointParam>',
-);
+$client->service->post();
 ```
 </dd>
 </dl>
