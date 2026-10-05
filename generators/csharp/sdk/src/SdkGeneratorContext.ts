@@ -272,6 +272,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.Test.RawClientTests.IdempotentHeadersTests);
         }
         files.push(AsIsFiles.Test.Json.AdditionalPropertiesTests);
+        files.push(AsIsFiles.Test.Json.SerializeWithAdditionalPropertiesTests);
         if (this.hasXmlTypes()) {
             files.push(AsIsFiles.Test.Xml.XmlElementTests);
         }
