@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -11,9 +12,11 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.ModifyWithPathAsync(
-            param: "param",
-            request: "string"
+        await client.Endpoints.Params.GetWithInlinePathAndQueryAsync(
+            new GetWithInlinePathAndQuery {
+                Param = "param",
+                Query = "query"
+            }
         );
     }
 

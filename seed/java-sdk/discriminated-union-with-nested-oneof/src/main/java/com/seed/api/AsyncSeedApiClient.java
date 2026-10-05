@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.types.AstNode;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,16 +27,31 @@ public class AsyncSeedApiClient implements AutoCloseable {
     }
 
     public CompletableFuture<AstNode> createAst(AstNode request) {
-        return this.rawClient.createAst(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<AstNode>> rawFuture = this.rawClient.createAst(request);
+        CompletableFuture<AstNode> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<AstNode> createAst(AstNode request, RequestOptions requestOptions) {
-        return this.rawClient.createAst(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<AstNode>> rawFuture = this.rawClient.createAst(request, requestOptions);
+        CompletableFuture<AstNode> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

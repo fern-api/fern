@@ -17,5 +17,6 @@ $client->updateFoo(
         'nullableText' => 'nullable_text',
         'nullableNumber' => 1.1,
         'nonNullableText' => 'non_nullable_text',
+        'requiredNullableText' => 'required_nullable_text',
     ]),
 );
