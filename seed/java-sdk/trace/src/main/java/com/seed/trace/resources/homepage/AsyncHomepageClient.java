@@ -5,6 +5,7 @@ package com.seed.trace.resources.homepage;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,18 +27,48 @@ public class AsyncHomepageClient {
     }
 
     public CompletableFuture<List<String>> getHomepageProblems() {
-        return this.rawClient.getHomepageProblems().thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<String>>> rawFuture = this.rawClient.getHomepageProblems();
+        CompletableFuture<List<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<String>> getHomepageProblems(RequestOptions requestOptions) {
-        return this.rawClient.getHomepageProblems(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<String>>> rawFuture =
+                this.rawClient.getHomepageProblems(requestOptions);
+        CompletableFuture<List<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> setHomepageProblems(List<String> request) {
-        return this.rawClient.setHomepageProblems(request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture = this.rawClient.setHomepageProblems(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> setHomepageProblems(List<String> request, RequestOptions requestOptions) {
-        return this.rawClient.setHomepageProblems(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.setHomepageProblems(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

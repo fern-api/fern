@@ -4,6 +4,7 @@
 package com.seed.streaming.resources.dummy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.streaming.core.BodyProperties;
 import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.MediaTypes;
 import com.seed.streaming.core.ObjectMappers;
@@ -50,7 +51,9 @@ public class RawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }

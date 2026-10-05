@@ -281,10 +281,8 @@ fn slot() -> &'static RwLock<Option<(Arc<ResolvedProfile>, SelectionSource)>> {
 /// `propagate_root_auth`, because the keyring account and the OAuth
 /// token-cache key are both derived from it at that point.
 ///
-/// The [`SelectionSource`] rides along because precedence depends on it:
-/// a profile named explicitly with `-p` outranks environment variables,
-/// while an ambient one (the active profile, or `<BIN>_PROFILE`) does not.
-/// See [`outranks_env`].
+/// The [`SelectionSource`] rides along so `profiles current` can say *why*
+/// this profile is in play. See [`outranks_env`].
 pub fn install(selection: Option<Selection>) {
     let mut guard = slot()
         .write()
@@ -317,33 +315,30 @@ pub fn active_source() -> Option<SelectionSource> {
 /// Whether this invocation's profile takes precedence over environment
 /// variables.
 ///
-/// True only for `--profile` / `-p`. The reasoning is the difference between
-/// *explicit* and *ambient*: `-p prod` was typed for this invocation and is
-/// the most specific statement of intent available, so it beats an env var
-/// the shell happened to export — which is how every other flag in this CLI
-/// already behaves. The active profile and `<BIN>_PROFILE` are ambient: a
-/// default chosen days ago, or a shell-wide setting. Those must lose to the
-/// environment, which is what keeps a CI job's exported credentials from
-/// being overridden by a developer's stored profile.
+/// True whenever a profile is in play, however it was selected — `-p`,
+/// `<BIN>_PROFILE`, or the active profile from `profiles use`. A profile is
+/// a bundle of settings the user stored *for that tenant*, so a value it
+/// carries applies whenever that profile does; the shell-exported global
+/// only fills in what the profile leaves unset. Unprofiled invocations keep
+/// reading env vars exactly as before (ADR-0011).
 ///
-/// Matches the ordering Twilio's shipping CLI documents:
-/// `-p` > environment variables > active profile.
+/// Every resolution point consults this one predicate, so the rule is
+/// changed here or nowhere.
 pub fn outranks_env() -> bool {
-    active_source() == Some(SelectionSource::Flag)
+    active_source().is_some()
 }
 
 /// Install a profile from a test. Separate name so the production call site
 /// is greppable and a test cannot be mistaken for one.
 ///
-/// Defaults to [`SelectionSource::Active`] — the ambient case — so a test
-/// that does not care about precedence gets the conservative behaviour.
-/// Tests that use this must be `#[serial]`: the slot is process-global.
+/// Defaults to [`SelectionSource::Active`]. Tests that use this must be
+/// `#[serial]`: the slot is process-global.
 pub fn install_for_tests(profile: Option<ResolvedProfile>) {
     install_for_tests_from(profile, SelectionSource::Active);
 }
 
 /// [`install_for_tests`] with an explicit selection source, for tests that
-/// exercise the `-p`-beats-env rung.
+/// check behaviour is the same however the profile was chosen.
 pub fn install_for_tests_from(profile: Option<ResolvedProfile>, source: SelectionSource) {
     install(profile.map(|profile| Selection { profile, source }));
 }
@@ -584,13 +579,13 @@ mod tests {
 
     #[test]
     #[serial]
-    fn only_an_explicitly_named_profile_outranks_env() {
-        // Ambient selections must lose to the environment; that is what
-        // keeps a CI job's exported credentials authoritative.
-        for (source, expected) in [
-            (SelectionSource::Flag, true),
-            (SelectionSource::Env, false),
-            (SelectionSource::Active, false),
+    fn any_selected_profile_outranks_env() {
+        // However the profile was chosen, its stored values win; env only
+        // fills in what it leaves unset.
+        for source in [
+            SelectionSource::Flag,
+            SelectionSource::Env,
+            SelectionSource::Active,
         ] {
             install(Some(Selection {
                 profile: ResolvedProfile {
@@ -599,7 +594,7 @@ mod tests {
                 },
                 source,
             }));
-            assert_eq!(outranks_env(), expected, "{source:?}");
+            assert!(outranks_env(), "{source:?}");
         }
         install(None);
         assert!(!outranks_env(), "unprofiled never outranks env");

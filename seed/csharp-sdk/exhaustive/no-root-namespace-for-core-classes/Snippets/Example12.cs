@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
 
 public partial class Examples
 {
@@ -12,10 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.HttpMethods.TestPostAsync(
-            new ObjectWithRequiredField {
-                String = "string"
-            }
+        await client.Endpoints.HttpMethods.TestGetAsync(
+            "id"
         );
     }
 

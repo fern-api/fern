@@ -85,7 +85,8 @@ impl OutputPipeline {
             None if flag("human") => OutputFormat::Table,
             None => {
                 let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
-                // Profile below env, as everywhere else. `profiles create`
+                // Profile above env when one is selected, as everywhere
+                // else (`outranks_env`). `profiles create`
                 // validated the stored value, so an unparseable one here can
                 // only come from a hand-edited file — treated the same way a
                 // bad `<NAME>_OUTPUT` is, by falling through to the

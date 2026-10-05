@@ -5,6 +5,7 @@ package com.seed.apiWideBasePath.resources.service;
 
 import com.seed.apiWideBasePath.core.ClientOptions;
 import com.seed.apiWideBasePath.core.RequestOptions;
+import com.seed.apiWideBasePath.core.SeedApiWideBasePathHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -25,13 +26,27 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> post(String serviceParam, int endpointParam, String resourceParam) {
-        return this.rawClient.post(serviceParam, endpointParam, resourceParam).thenApply(response -> response.body());
+        CompletableFuture<SeedApiWideBasePathHttpResponse<Void>> rawFuture =
+                this.rawClient.post(serviceParam, endpointParam, resourceParam);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> post(
             String serviceParam, int endpointParam, String resourceParam, RequestOptions requestOptions) {
-        return this.rawClient
-                .post(serviceParam, endpointParam, resourceParam, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiWideBasePathHttpResponse<Void>> rawFuture =
+                this.rawClient.post(serviceParam, endpointParam, resourceParam, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }
