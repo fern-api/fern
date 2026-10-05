@@ -15,6 +15,8 @@ import { globalHeaderParameterName } from "../utils/credentialNames.js";
 
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
+/** Client keyword exposed when `allowCustomHttpClient` is enabled. */
+const HTTP_CLIENT_PARAMETER_NAME = "http_client";
 
 /** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
 const AUTH_PROVIDER_MEMBER = "@auth_provider";
@@ -169,6 +171,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
                     initializer: ruby.nilValue(),
                     docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
+
+        // When the opt-in `allowCustomHttpClient` config is enabled, expose an optional
+        // `http_client` keyword that replaces the RawClient's Net::HTTP transport.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitHttpClientOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: HTTP_CLIENT_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.object("Object")),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional HTTP transport responding to `request(url, http_request)` and returning a Net::HTTPResponse. Replaces the built-in Net::HTTP connection, e.g. to add a proxy, custom TLS, or request/response interceptors; the transport owns its own timeouts."
                 })
             );
         }
@@ -399,6 +415,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // and the RawClient simply resolves no auth headers.
                     writer.writeLine(`auth_provider: @auth_provider,`);
                 }
+                if (this.emitHttpClientOption()) {
+                    writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+                }
                 writer.writeLine(`max_retries: max_retries`);
                 writer.dedent();
                 writer.writeLine(`)`);
@@ -582,7 +601,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.write(`}`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`,`);
+                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+            }
+            writer.newLine();
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -744,7 +768,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             writer.writeLine(`"X-Fern-Language" => "Ruby"`);
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.write(`}`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`,`);
+                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+            }
+            writer.newLine();
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -1356,6 +1385,16 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
+     * Whether to expose the opt-in `http_client` client keyword and pass it through to
+     * every RawClient the client constructs (including the unauthenticated client used
+     * for OAuth / inferred-auth token requests). Gated on `allowCustomHttpClient` so
+     * flag-off output stays byte-identical.
+     */
+    private emitHttpClientOption(): boolean {
+        return this.context.customConfig.allowCustomHttpClient === true;
+    }
+
+    /**
      * Wraps a base User-Agent expression so the caller-supplied `app_info` product
      * token is appended (via RawClient.append_app_info). Returns the base expression
      * unchanged when appInfo is not enabled, so non-opted-in output is byte-identical.
@@ -1415,13 +1454,18 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
-        const reservedNames = this.context.respectsAuthSchemeNames()
-            ? new Set([
-                  ...RESERVED_OPTION_NAMES,
-                  ...this.getCredentialParameterNames(),
-                  ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
-              ])
-            : RESERVED_OPTION_NAMES;
+        const reservedNames = new Set(RESERVED_OPTION_NAMES);
+        if (this.emitHttpClientOption()) {
+            reservedNames.add(HTTP_CLIENT_PARAMETER_NAME);
+        }
+        if (this.context.respectsAuthSchemeNames()) {
+            for (const name of this.getCredentialParameterNames()) {
+                reservedNames.add(name);
+            }
+            for (const header of this.getNonLiteralGlobalHeaders()) {
+                reservedNames.add(this.getGlobalHeaderOptionName(header));
+            }
+        }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;

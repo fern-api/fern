@@ -5,6 +5,7 @@ import { CliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { getDocsDevExcludeRules } from "./getDocsDevExcludeRules.js";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -56,9 +57,9 @@ export async function previewDocsWorkspace({
                     if (docsWorkspace == null) {
                         return;
                     }
-                    const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                     const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                     const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                    const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
                     if (useV3Parser) {
                         await validateDocsWorkspaceWithoutExiting({
                             workspace: docsWorkspace,
@@ -105,9 +106,9 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
-                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                 const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                 const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
                 if (useV3Parser) {
                     await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,

@@ -1,5 +1,116 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`overrides > audiences --audience public --audience internal 1`] = `
+"openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths:
+  /users/{id}:
+    get:
+      operationId: users_get
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/admin/{id}:
+    get:
+      operationId: users_getAdmin
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUser'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    AdminUser:
+      title: AdminUser
+      type: object
+      properties:
+        id:
+          type: string
+        secret:
+          type: string
+      required:
+        - id
+        - secret
+  securitySchemes: {}
+"
+`;
+
+exports[`overrides > audiences --audience public 1`] = `
+"openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths:
+  /users/{id}:
+    get:
+      operationId: users_get
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+  securitySchemes: {}
+"
+`;
+
 exports[`overrides > simple --indent 8 1`] = `
 "openapi: 3.0.1
 info:
