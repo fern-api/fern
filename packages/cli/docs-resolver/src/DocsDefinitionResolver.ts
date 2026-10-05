@@ -61,7 +61,17 @@ interface LibraryNavNode {
     title: string;
     slug: string;
     pageId?: string;
+    /** Section path within the output directory; present only when it differs from `slug`. */
+    path?: string;
     children?: LibraryNavNode[];
+}
+
+/** File path of a library nav node (without extension), which differs from its URL slug when `output.slug` is set. */
+function getLibraryNavNodePath(node: LibraryNavNode): string {
+    if (node.type === "page" && node.pageId != null) {
+        return node.pageId.replace(/\.mdx$/, "");
+    }
+    return node.path ?? node.slug;
 }
 
 interface DocsTranslationsConfig {
@@ -2452,11 +2462,13 @@ export class DocsDefinitionResolver {
         // root page, so fall back to the single page written under the library's slug folder.
         let overviewPageId: FernNavigation.PageId | undefined;
         if (navNodes.length > 0) {
-            const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
-            if (rootSlug) {
+            const firstNode = navNodes[0];
+            const rootPath =
+                firstNode != null ? getLibraryNavNodePath(firstNode).split("/").slice(0, -1).join("/") : "";
+            if (rootPath) {
                 overviewPageId =
-                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
-                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
+                    (await this.registerLibraryMdxPage(outputDir, `${rootPath}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${rootPath}.mdx`));
             }
         } else {
             const rootPage = await this.findSoleLibraryRootPage(outputDir, item.libraryName);
@@ -2622,9 +2634,10 @@ export class DocsDefinitionResolver {
                 });
                 const sectionId = this.#idgen.get(`library-section/${node.slug}`);
 
+                const sectionPath = getLibraryNavNodePath(node);
                 const overviewPageId =
-                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}/index.mdx`, { quiet: true })) ??
-                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`));
+                    (await this.registerLibraryMdxPage(outputDir, `${sectionPath}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${sectionPath}.mdx`));
 
                 // Filter out child pages whose slug matches the section's slug
                 // (they're already represented by the section's overview page)

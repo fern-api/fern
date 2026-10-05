@@ -38,6 +38,8 @@ export interface NavSectionNode {
     title: string;
     /** Stable slug derived from module path (e.g., "reference/python/nemo_rl") */
     slug: string;
+    /** Section path relative to the output directory, set only when it differs from `slug` (i.e. `output.slug` is set) */
+    path?: string;
     /** Child nodes (pages or nested sections) */
     children: NavNode[];
 }
@@ -96,11 +98,13 @@ function generateModuleNav(
             continue;
         }
 
-        const submodulePath = `${modulePath}/${submodule.name}`;
+        const submodulePath = `${baseSlug}/${modulePath}/${submodule.name}`;
+        const sectionSlug = withSlugPrefix(submodulePath, slugPrefix);
         items.push({
             type: "section",
             title: submodule.name,
-            slug: withSlugPrefix(`${baseSlug}/${submodulePath}`, slugPrefix),
+            slug: sectionSlug,
+            ...(sectionSlug !== submodulePath ? { path: submodulePath } : {}),
             children: subItems
         });
     }

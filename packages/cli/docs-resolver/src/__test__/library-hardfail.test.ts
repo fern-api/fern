@@ -50,4 +50,15 @@ describe("library section missing output", () => {
         const definition = await resolveFixture("empty-nav");
         expect(Object.keys(definition.pages)).toContain("static/guardrails/guardrails-python-sdk/guardrails.mdx");
     });
+
+    it("finds root and section overview pages when output.slug prefixes the navigation slugs", async () => {
+        const definition = await resolveFixture("prefixed-slug");
+        expect(Object.keys(definition.pages)).toEqual(
+            expect.arrayContaining([
+                "static/guardrails/guardrails-python-sdk/guardrails/index.mdx",
+                "static/guardrails/guardrails-python-sdk/guardrails/validators/index.mdx",
+                "static/guardrails/guardrails-python-sdk/guardrails/validators/regex.mdx"
+            ])
+        );
+    });
 });

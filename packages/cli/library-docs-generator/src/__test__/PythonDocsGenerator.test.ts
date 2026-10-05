@@ -600,6 +600,7 @@ describe("generate()", () => {
                 type: "section",
                 title: "utils",
                 slug: "api-reference/ref/pkg/utils",
+                path: "ref/pkg/utils",
                 children: [
                     {
                         type: "page",
