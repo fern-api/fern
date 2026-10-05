@@ -16,9 +16,9 @@ use futures_util::StreamExt;
 use serde_json::{json, Map, Value};
 use tokio::io::AsyncWriteExt;
 
-use crate::auth::error::dedup_preserve_order;
+use crate::auth::dry_run::dry_run_auth_info;
 use crate::auth::{
-    ensure_credentials_for, handle_error_response, AuthProvider, DynAuthProvider,
+    ensure_credentials_for, handle_error_response, DynAuthProvider,
     EndpointAuthMetadata,
 };
 use crate::error::CliError;
@@ -981,71 +981,6 @@ fn without_caller_supplied_schemes(
         }),
         base_url_override: metadata.base_url_override.clone(),
     }
-}
-
-/// The `auth` block of a `--dry-run` preview: which scheme(s) the endpoint
-/// accepts and whether the CLI could satisfy one of them, without ever
-/// touching the credential values themselves.
-///
-/// `declared` is the endpoint's own security policy; `effective` is the same
-/// policy with the schemes the caller already supplied as explicit
-/// header/query parameters removed (see [`without_caller_supplied_schemes`]).
-///
-/// `credentials` is one of:
-/// - `"not_required"` — `security: []`, or nothing is declared and the CLI
-///   has no credential sources to draw from;
-/// - `"supplied"` — the caller passed the credential as a request parameter;
-/// - `"resolved"` — the configured provider has credentials for this endpoint
-///   (`configured_sources` lists every populated source the provider knows
-///   about; the `AuthProvider` API cannot scope hints to one requirement);
-/// - `"missing"` — nothing resolved (`expected_sources` lists where to set
-///   them). The request would be rejected by [`ensure_credentials_for`].
-///
-/// `supplied` takes precedence over `resolved`: an explicitly passed
-/// credential is what the request will carry, even if the provider could
-/// also have satisfied another alternative.
-fn dry_run_auth_info(
-    provider: &dyn AuthProvider,
-    declared: &EndpointAuthMetadata,
-    effective: &EndpointAuthMetadata,
-) -> Value {
-    let schemes: Option<Vec<String>> = declared.security_requirements.as_ref().map(|reqs| {
-        reqs.iter()
-            .map(|req| {
-                let mut names: Vec<&str> = req.keys().map(String::as_str).collect();
-                names.sort_unstable();
-                names.join(" + ")
-            })
-            .collect()
-    });
-    let requires_auth = matches!(
-        &declared.security_requirements,
-        Some(reqs) if !reqs.is_empty() && reqs.iter().all(|req| !req.is_empty())
-    );
-    let caller_supplied = requires_auth
-        && matches!(
-            &effective.security_requirements,
-            Some(reqs) if reqs.iter().any(|req| req.is_empty())
-        );
-    let mut info = json!({ "schemes": schemes });
-    if declared.is_explicit_anonymous() {
-        info["credentials"] = json!("not_required");
-    } else if caller_supplied {
-        info["credentials"] = json!("supplied");
-    } else if provider.has_credentials_for(effective) {
-        info["credentials"] = json!("resolved");
-        info["configured_sources"] =
-            json!(dedup_preserve_order(provider.populated_credential_hints()));
-    } else {
-        let expected = dedup_preserve_order(provider.credential_hints());
-        if requires_auth || !expected.is_empty() {
-            info["credentials"] = json!("missing");
-            info["expected_sources"] = json!(expected);
-        } else {
-            info["credentials"] = json!("not_required");
-        }
-    }
-    info
 }
 
 /// Pagination loop state tracked across page fetches.
@@ -2303,11 +2238,23 @@ pub async fn execute_method(
                 }
             })
             .collect();
+        let sensitive_query_param_names = spec_sensitive_query_param_names(doc);
+        let redacted_query_params: Vec<(String, String)> = input
+            .query_params
+            .iter()
+            .map(|(name, value)| {
+                if crate::debug::is_sensitive_query_param(name, &sensitive_query_param_names) {
+                    (name.clone(), "[REDACTED]".to_string())
+                } else {
+                    (name.clone(), value.clone())
+                }
+            })
+            .collect();
         let mut dry_run_info = json!({
             "dry_run": true,
             "url": input.full_url,
             "method": method.http_method,
-            "query_params": input.query_params,
+            "query_params": redacted_query_params,
             "headers": redacted_headers,
             "body": input.body,
             "is_multipart_upload": input.is_upload,
@@ -2417,16 +2364,7 @@ pub async fn execute_method(
         Vec::new()
     };
     let additional_sensitive_query_params: Vec<&str> = if debug {
-        doc.security_schemes
-            .values()
-            .filter_map(|s| {
-                if let crate::openapi::discovery::SecurityScheme::ApiKeyQuery { name } = s {
-                    Some(name.as_str())
-                } else {
-                    None
-                }
-            })
-            .collect()
+        spec_sensitive_query_param_names(doc)
     } else {
         Vec::new()
     };
@@ -3829,6 +3767,19 @@ pub(crate) fn spec_sensitive_header_names(doc: &RestDescription) -> Vec<&str> {
         .values()
         .filter_map(|s| {
             if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
+                Some(name.as_str())
+            } else {
+                None
+            }
+        })
+        .collect()
+}
+
+pub(crate) fn spec_sensitive_query_param_names(doc: &RestDescription) -> Vec<&str> {
+    doc.security_schemes
+        .values()
+        .filter_map(|s| {
+            if let crate::openapi::discovery::SecurityScheme::ApiKeyQuery { name } = s {
                 Some(name.as_str())
             } else {
                 None
@@ -12896,6 +12847,18 @@ async fn dry_run_auth_block(
     params_json: Option<&str>,
     provider: &DynAuthProvider,
 ) -> Value {
+    dry_run_preview(security_schemes, security, params_json, provider).await["auth"].clone()
+}
+
+/// Same endpoint as [`dry_run_auth_block`] (which accepts an `Authorization`
+/// header and an `api_key` query parameter), returning the whole preview.
+#[cfg(test)]
+async fn dry_run_preview(
+    security_schemes: HashMap<String, crate::openapi::discovery::SecurityScheme>,
+    security: Option<Vec<HashMap<String, Vec<String>>>>,
+    params_json: Option<&str>,
+    provider: &DynAuthProvider,
+) -> Value {
     let doc = RestDescription {
         root_url: "https://api.example.com/".to_string(),
         service_path: "v1/".to_string(),
@@ -12907,6 +12870,13 @@ async fn dry_run_auth_block(
         "Authorization".to_string(),
         crate::openapi::discovery::MethodParameter {
             location: Some("header".to_string()),
+            ..Default::default()
+        },
+    );
+    parameters.insert(
+        "api_key".to_string(),
+        crate::openapi::discovery::MethodParameter {
+            location: Some("query".to_string()),
             ..Default::default()
         },
     );
@@ -12947,7 +12917,7 @@ async fn dry_run_auth_block(
     .expect("capture_output should return the dry-run info");
     assert_eq!(out["dry_run"], json!(true));
     assert_eq!(out["url"], json!("https://api.example.com/v1/things"));
-    out["auth"].clone()
+    out
 }
 
 #[cfg(test)]
@@ -12962,7 +12932,119 @@ fn bearer_scheme() -> HashMap<String, crate::openapi::discovery::SecurityScheme>
 
 #[cfg(test)]
 fn require(scheme: &str) -> Option<Vec<HashMap<String, Vec<String>>>> {
-    Some(vec![HashMap::from([(scheme.to_string(), Vec::new())])])
+    Some(vec![requirement(scheme)])
+}
+
+#[cfg(test)]
+fn requirement(scheme: &str) -> HashMap<String, Vec<String>> {
+    HashMap::from([(scheme.to_string(), Vec::new())])
+}
+
+#[cfg(test)]
+fn routing_bearer_schemes(configured: &[&str], unconfigured: &[&str]) -> DynAuthProvider {
+    let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
+    for name in configured {
+        schemes.insert(
+            name.to_string(),
+            crate::auth::test_helpers::bearer(name, &format!("{name}-secret")),
+        );
+    }
+    for name in unconfigured {
+        schemes.insert(
+            name.to_string(),
+            std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+                *name,
+                crate::auth::AuthCredentialSource::from_env(format!("{name}_NOT_SET")),
+            )),
+        );
+    }
+    std::sync::Arc::new(crate::auth::RoutingAuthProvider::new(schemes))
+}
+
+#[tokio::test]
+async fn test_dry_run_optional_auth_without_credentials_is_not_required() {
+    // `security: [{BearerAuth: []}, {}]` — auth is optional. With no token the
+    // routing provider picks the anonymous alternative and attaches nothing,
+    // so the preview must not claim credentials were resolved.
+    let provider = routing_bearer_schemes(&[], &["BearerAuth"]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("BearerAuth"), HashMap::new()]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+    assert_eq!(auth["schemes"], json!(["BearerAuth", ""]), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_optional_auth_with_credentials_is_resolved() {
+    let provider = routing_bearer_schemes(&["BearerAuth"], &[]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("BearerAuth"), HashMap::new()]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("BearerAuth"), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_anonymous_alternative_listed_first_wins() {
+    // Spec order decides, exactly as `RoutingAuthProvider::apply` does: with
+    // `{}` first, the request goes out unauthenticated even if a token exists.
+    let provider = routing_bearer_schemes(&["BearerAuth"], &[]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![HashMap::new(), requirement("BearerAuth")]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_names_the_requirement_that_was_satisfied() {
+    // Two schemes hold credentials but the endpoint only accepts one of them.
+    let provider = routing_bearer_schemes(&["BearerAuth", "OtherAuth"], &[]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("MissingAuth"), requirement("OtherAuth")]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("OtherAuth"), "{auth}");
+    assert_eq!(auth["schemes"], json!(["MissingAuth", "OtherAuth"]), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_redacts_api_key_query_params() {
+    let mut security_schemes = HashMap::new();
+    security_schemes.insert(
+        "ApiKeyAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::ApiKeyQuery {
+            name: "api_key".to_string(),
+        },
+    );
+    let out = dry_run_preview(
+        security_schemes,
+        require("ApiKeyAuth"),
+        Some(r#"{"api_key":"sk-query-secret"}"#),
+        &crate::auth::no_auth_provider(),
+    )
+    .await;
+    assert_eq!(out["query_params"], json!([["api_key", "[REDACTED]"]]), "{out}");
+    assert_eq!(out["auth"]["credentials"], json!("supplied"), "{out}");
+    assert!(
+        !out.to_string().contains("sk-query-secret"),
+        "query credentials must never appear in dry-run output: {out}"
+    );
 }
 
 #[tokio::test]

@@ -9,8 +9,9 @@
   type: fix
 - summary: |
     `--dry-run` output includes an `auth` block reporting the endpoint's security
-    schemes and whether credentials would be attached: `resolved` (with the
-    configured sources), `missing` (with the sources to set), `supplied`
-    (passed explicitly as a request parameter) or `not_required`. Credential
-    values are never printed.
+    schemes and whether credentials would be attached: `resolved` (naming the
+    requirement that was satisfied and the configured sources), `missing` (with
+    the sources to set), `supplied` (passed explicitly as a request parameter)
+    or `not_required`. Credential values are never printed; `apiKey`-in-query
+    values are redacted in the preview like header credentials already were.
   type: feat
