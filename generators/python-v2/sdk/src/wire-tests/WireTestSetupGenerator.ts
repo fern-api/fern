@@ -46,21 +46,38 @@ export class WireTestSetupGenerator {
         // optional fields and OAuth configuration variants that WireMock ignores, but the added
         // union variants stop the two IntermediateRepresentations from overlapping structurally,
         // so the assertion has to go through `unknown`.
+        // Bodyless error examples are stubbed with a placeholder body (`""` or `{}`) that fails the typed
+        // error's validation, so serve them without a body; the client then raises the base ApiError.
+        const bodylessErrorTestIds = new Set<string>();
         const stubMapping = new WireMock().convertToWireMock(
             ir as unknown as Parameters<WireMock["convertToWireMock"]>[0],
             exampleSelector != null
                 ? {
-                      getExampleTestId: ({ service, endpoint, example }) =>
-                          exampleSelector.getTestId(
+                      getExampleTestId: ({ service, endpoint, example }) => {
+                          const testId = exampleSelector.getTestId(
                               service as unknown as FernIr.HttpService,
                               endpoint as unknown as FernIr.HttpEndpoint,
                               example as unknown as FernIr.ExampleEndpointCall
-                          )
+                          );
+                          if (
+                              testId != null &&
+                              example.response.type === "error" &&
+                              example.response.body?.jsonExample == null
+                          ) {
+                              bodylessErrorTestIds.add(testId);
+                          }
+                          return testId;
+                      }
                   }
                 : {}
         );
         for (const mapping of stubMapping.mappings) {
-            if (mapping.response.status === 204 || mapping.response.status === 205) {
+            const testId = mapping.request.headers?.["X-Test-Id"]?.equalTo;
+            if (
+                mapping.response.status === 204 ||
+                mapping.response.status === 205 ||
+                (testId != null && bodylessErrorTestIds.has(testId))
+            ) {
                 delete mapping.response.body;
             }
         }
