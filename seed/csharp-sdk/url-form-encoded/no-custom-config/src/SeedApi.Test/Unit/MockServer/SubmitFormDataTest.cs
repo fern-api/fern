@@ -9,44 +9,7 @@ namespace SeedApi.Test.Unit.MockServer;
 public class SubmitFormDataTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string mockResponse = """
-            {
-              "status": "status",
-              "message": "message"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/submit")
-                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "username=username",
-                            "email=email",
-                        ])
-                    )
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.SubmitFormDataAsync(
-            new PostSubmitRequest { Username = "username", Email = "email" }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

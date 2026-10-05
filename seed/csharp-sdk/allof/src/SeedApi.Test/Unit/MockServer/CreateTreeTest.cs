@@ -9,65 +9,13 @@ namespace SeedApi.Test.Unit.MockServer;
 public class CreateTreeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
-              "plantedDate": "2023-01-15",
-              "treeSpecies": "treeSpecies",
-              "heightInFeet": 1.1,
-              "id": "id",
               "treeName": "treeName",
-              "treeDescription": "treeDescription"
-            }
-            """;
-
-        const string mockResponse = """
-            {
-              "plantedDate": "2023-01-15",
-              "treeSpecies": "treeSpecies",
-              "heightInFeet": 1.1,
               "id": "id",
-              "treeName": "treeName",
-              "treeDescription": "treeDescription"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/trees")
-                    .UsingPost()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.CreateTreeAsync(
-            new TreeRecord
-            {
-                PlantedDate = new DateOnly(2023, 1, 15),
-                TreeSpecies = "treeSpecies",
-                HeightInFeet = 1.1,
-                Id = "id",
-                TreeName = "treeName",
-                TreeDescription = "treeDescription",
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
-    {
-        const string requestJson = """
-            {
-              "id": "id"
+              "treeSpecies": "treeSpecies"
             }
             """;
 
@@ -97,7 +45,14 @@ public class CreateTreeTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.CreateTreeAsync(new TreeRecord { Id = "id" });
+        var response = await Client.CreateTreeAsync(
+            new TreeRecord
+            {
+                TreeName = "treeName",
+                Id = "id",
+                TreeSpecies = "treeSpecies",
+            }
+        );
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

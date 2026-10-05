@@ -9,29 +9,7 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer.Union;
 public class GetMetadataTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string mockResponse = """
-            {
-              "name": "string"
-            }
-            """;
-
-        Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/metadata").UsingGet())
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Union.GetMetadataAsync();
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

@@ -10,57 +10,7 @@ namespace SeedOauthClientCredentials.Test.Unit.MockServer.Auth;
 public class RefreshTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async Task MockServerTest_1()
-    {
-        const string mockResponse = """
-            {
-              "access_token": "access_token",
-              "expires_in": 1,
-              "refresh_token": "refresh_token"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/token")
-                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .UsingPost()
-                    .WithBody(
-                        new WireMock.Matchers.FormUrlEncodedMatcher([
-                            "client_id=client_id",
-                            "client_secret=client_secret",
-                            "refresh_token=refresh_token",
-                            "audience=https://api.example.com",
-                            "grant_type=refresh_token",
-                            "scope=scope",
-                        ])
-                    )
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Auth.RefreshTokenAsync(
-            new RefreshTokenRequest
-            {
-                ClientId = "client_id",
-                ClientSecret = "client_secret",
-                RefreshToken = "refresh_token",
-                Audience = "https://api.example.com",
-                GrantType = "refresh_token",
-                Scope = "scope",
-            }
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

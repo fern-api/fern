@@ -13,22 +13,22 @@ public class ListWithTopLevelBodyCursorPaginationTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "cursor": "cursor",
-              "filter": "filter"
+              "cursor": "initial_cursor",
+              "filter": "active"
             }
             """;
 
         const string mockResponse = """
             {
-              "next_cursor": "next_cursor",
+              "next_cursor": "next_cursor_value",
               "data": [
                 {
-                  "name": "name",
+                  "name": "Alice",
                   "id": 1
                 },
                 {
-                  "name": "name",
-                  "id": 1
+                  "name": "Bob",
+                  "id": 2
                 }
               ]
             }
@@ -52,8 +52,8 @@ public class ListWithTopLevelBodyCursorPaginationTest : BaseMockServerTest
         var items = await Client.Users.ListWithTopLevelBodyCursorPaginationAsync(
             new ListUsersTopLevelBodyCursorPaginationRequest
             {
-                Cursor = "cursor",
-                Filter = "filter",
+                Cursor = "initial_cursor",
+                Filter = "active",
             }
         );
         await foreach (var item in items)
@@ -75,7 +75,7 @@ public class ListWithTopLevelBodyCursorPaginationTest : BaseMockServerTest
 
         const string mockResponse = """
             {
-              "next_cursor": "next_cursor_value",
+              "next_cursor": "",
               "data": [
                 {
                   "name": "Alice",
