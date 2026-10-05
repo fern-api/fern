@@ -9,6 +9,10 @@ name: java-endpoint-security-token-subpackage
 # token endpoint is grouped under a subpackage named `token` (NOT `auth`). Previously
 # the Java generator located the OAuth auth client by scanning for a subpackage named
 # `auth`, which returned null here and threw a NullPointerException during generation.
+#
+# The scheme keys (`clientCredentialsAuth`, `tokenAuth`, `passwordAuth`) intentionally differ from
+# the scheme types: the RoutingAuthProvider must register each provider under the key that the
+# endpoint metadata references (regression: OAuth/bearer/basic were hardcoded as "OAuth"/"Bearer"/"Basic").
 auth:
   endpoint-security: {}
 
@@ -16,7 +20,7 @@ auth-schemes:
   # OAuth is declared first so the generated client-instantiation snippets/README use the OAuth
   # path (Client.withCredentials(...)) — this reproduces the endpoint-security withCredentials
   # compile bug. The snippet generator picks the first-declared scheme for the client snippet.
-  OAuth:
+  clientCredentialsAuth:
     scheme: oauth
     type: client-credentials
     client-id-env: MY_CLIENT_ID
@@ -30,3 +34,13 @@ auth-schemes:
     header: X-API-Key
     type: string
     env: MY_API_KEY
+  tokenAuth:
+    scheme: bearer
+    token:
+      env: MY_TOKEN
+  passwordAuth:
+    scheme: basic
+    username:
+      env: MY_USERNAME
+    password:
+      env: MY_PASSWORD
