@@ -5,3 +5,8 @@
     the running CLI version (e.g. `Org "acme" requires Fern CLI >= 5.106.0 (updated 2026-08-26).
     You're on 5.140.2.`), so the output no longer reads like an error.
   type: fix
+- summary: |
+    `fern upgrade` no longer warns that the running CLI is outside the org's version policy ("Version
+    redirection is disabled, so it was not upgraded"), since the upgrade itself moves the project
+    to a new version.
+  type: fix
