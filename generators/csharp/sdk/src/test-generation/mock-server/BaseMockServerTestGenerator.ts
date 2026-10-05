@@ -18,6 +18,47 @@ import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
+    /**
+     * Instantiates the root client against the running WireMock server. Additional client
+     * options (e.g. the SDK variables an individual test needs) are appended to the default
+     * BaseUrl/Environment and MaxRetries options.
+     */
+    public generateClientInstantiation(additionalClientOptions: NamedArgument[] = []): ast.ClassInstantiation {
+        return this.rootClientGenerator.generateExampleClientInstantiationSnippet({
+            includeEnvVarArguments: true,
+            asSnippet: false,
+            clientOptionsArgument: this.csharp.instantiateClass({
+                classReference: this.Types.ClientOptions,
+                arguments_: [
+                    this.context.ir.environments?.environments._visit<NamedArgument>({
+                        singleBaseUrl: () => ({
+                            name: "BaseUrl",
+                            assignment: this.csharp.codeblock("Server.Urls[0]")
+                        }),
+                        multipleBaseUrls: (value) => {
+                            const environments = new MultiUrlEnvironmentGenerator({
+                                context: this.context,
+                                multiUrlEnvironments: value
+                            });
+                            return {
+                                name: "Environment",
+                                assignment: environments.generateSnippet(this.csharp.codeblock("Server.Urls[0]"))
+                            };
+                        },
+                        _other: () => {
+                            throw GeneratorError.internalError("Internal error; Unexpected environment type");
+                        }
+                    }) ?? {
+                        name: "BaseUrl",
+                        assignment: this.csharp.codeblock("Server.Urls[0]")
+                    },
+                    { name: "MaxRetries", assignment: this.csharp.codeblock("0") },
+                    ...additionalClientOptions
+                ]
+            })
+        });
+    }
+
     constructor(context: SdkGeneratorContext) {
         super(context);
         this.rootClientGenerator = new RootClientGenerator(context);
@@ -96,44 +137,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
                 writer.writeLine("// Initialize the Client");
                 writer.writeLine("Client = ");
-                writer.writeNodeStatement(
-                    this.rootClientGenerator.generateExampleClientInstantiationSnippet({
-                        includeEnvVarArguments: true,
-                        asSnippet: false,
-                        clientOptionsArgument: this.csharp.instantiateClass({
-                            classReference: this.Types.ClientOptions,
-                            arguments_: [
-                                this.context.ir.environments?.environments._visit<NamedArgument>({
-                                    singleBaseUrl: () => ({
-                                        name: "BaseUrl",
-                                        assignment: this.csharp.codeblock("Server.Urls[0]")
-                                    }),
-                                    multipleBaseUrls: (value) => {
-                                        const environments = new MultiUrlEnvironmentGenerator({
-                                            context: this.context,
-                                            multiUrlEnvironments: value
-                                        });
-                                        return {
-                                            name: "Environment",
-                                            assignment: environments.generateSnippet(
-                                                this.csharp.codeblock("Server.Urls[0]")
-                                            )
-                                        };
-                                    },
-                                    _other: () => {
-                                        throw GeneratorError.internalError(
-                                            "Internal error; Unexpected environment type"
-                                        );
-                                    }
-                                }) ?? {
-                                    name: "BaseUrl",
-                                    assignment: this.csharp.codeblock("Server.Urls[0]")
-                                },
-                                { name: "MaxRetries", assignment: this.csharp.codeblock("0") }
-                            ]
-                        })
-                    })
-                );
+                writer.writeNodeStatement(this.generateClientInstantiation());
 
                 if (oauth) {
                     writer.writeNodeStatement(

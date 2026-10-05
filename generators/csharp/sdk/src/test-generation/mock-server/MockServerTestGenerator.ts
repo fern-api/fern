@@ -13,6 +13,7 @@ type ServiceId = FernIr.ServiceId;
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
 import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { BaseMockServerTestGenerator } from "./BaseMockServerTestGenerator.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
@@ -26,6 +27,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private readonly classReference: ast.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
+    private readonly baseMockServerTestGenerator: BaseMockServerTestGenerator;
 
     constructor(
         context: SdkGeneratorContext,
@@ -43,6 +45,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpointGenerator = new HttpEndpointGenerator({ context });
         this.mockEndpointGenerator = new MockEndpointGenerator(context);
+        this.baseMockServerTestGenerator = new BaseMockServerTestGenerator(context);
     }
 
     public override shouldGenerate(): boolean {
@@ -130,10 +133,27 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
                 writer.newLine();
 
+                // SDK variables bound to the endpoint's path parameters live on the client, so a
+                // test that needs them constructs its own client with the example values.
+                const sdkVariableClientOptions = this.endpointGenerator.getSdkVariableClientOptionArguments({
+                    endpoint: this.endpoint,
+                    example,
+                    parseDatetimes: true
+                });
+                let clientVariableName = "Client";
+                if (sdkVariableClientOptions.length > 0) {
+                    clientVariableName = "client";
+                    writer.write("var client = ");
+                    writer.writeNodeStatement(
+                        this.baseMockServerTestGenerator.generateClientInstantiation(sdkVariableClientOptions)
+                    );
+                    writer.newLine();
+                }
+
                 const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
-                    clientVariableName: "Client",
+                    clientVariableName,
                     serviceId: this.serviceId,
                     getResult: true,
                     parseDatetimes: true

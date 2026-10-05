@@ -1,6 +1,6 @@
 import { NamedArgument, Options, Scope, Severity, Style } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, getSdkVariableOptionName, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { Config } from "./Config.js";
@@ -212,6 +212,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         if (baseUrlArgs.length > 0) {
             optionArgs.push(...baseUrlArgs);
         }
+        optionArgs.push(...this.getConstructorSdkVariableArgs({ endpoint, snippet }));
         this.context.errors.scope(Scope.Headers);
         const headerArgs: NamedArgument[] = [];
         if (this.context.ir.headers != null && snippet.headers != null) {
@@ -270,6 +271,54 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 })
             }
         ];
+    }
+
+    /**
+     * Path parameters bound to an SDK variable are configured on the client via
+     * `ClientOptions.<Variable>` rather than passed to the endpoint method.
+     */
+    private getConstructorSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): NamedArgument[] {
+        const boundParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.pathParameters ?? [])
+        ].filter((parameter) => parameter.variable != null);
+        if (boundParameters.length === 0) {
+            return [];
+        }
+        const args: NamedArgument[] = [];
+        const seen = new Set<string>();
+        this.context.errors.scope(Scope.PathParameters);
+        const instances = this.context.associateByWireValueOrDefault({
+            parameters: boundParameters,
+            values: snippet.pathParameters ?? {}
+        });
+        const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
+        for (const parameter of boundParameters) {
+            const instance = instancesByWireValue.get(parameter.name.wireValue);
+            const variableId = parameter.variable;
+            if (instance == null || variableId == null || seen.has(variableId)) {
+                continue;
+            }
+            seen.add(variableId);
+            const variable = (this.context.ir.variables ?? []).find((candidate) => candidate.id === variableId);
+            const name = variable?.name ?? parameter.name.name;
+            args.push({
+                name: getSdkVariableOptionName(name.pascalCase.safeName),
+                assignment: this.context.dynamicLiteralMapper.convert({
+                    ...instance,
+                    fallbackToDefault: parameter.name.wireValue,
+                    forceLiteral: true
+                })
+            });
+        }
+        this.context.errors.unscope();
+        return args;
     }
 
     private getConstructorBaseUrlArgs({
@@ -569,11 +618,16 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): (ast.Literal | ast.CodeBlock)[] {
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        const includePathParameters = this.context.includePathParametersInWrappedRequest({
-            request,
-            inlinePathParameters: this.settings.shouldInlinePathParameters
-        });
+        // Parameters bound to a client-level SDK variable are passed to the constructor instead.
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
+        const includePathParameters =
+            pathParameters.length > 0 &&
+            this.context.includePathParametersInWrappedRequest({
+                request,
+                inlinePathParameters: this.settings.shouldInlinePathParameters
+            });
         const pathParameterFields = includePathParameters
             ? this.getPathParameters({ namedParameters: pathParameters, snippet })
             : [];
@@ -795,7 +849,9 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): (ast.Literal | ast.CodeBlock)[] {
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
         const pathParameterArgs = this.getPathParameterArguments({ namedParameters: pathParameters, snippet });
         this.context.errors.unscope();
 
