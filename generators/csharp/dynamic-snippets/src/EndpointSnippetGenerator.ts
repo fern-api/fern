@@ -284,10 +284,16 @@ export class EndpointSnippetGenerator extends WithGeneration {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): NamedArgument[] {
+        const variables = this.context.ir.variables ?? [];
+        const pathParameterValues = snippet.pathParameters ?? {};
         const boundParameters = [
             ...(this.context.ir.pathParameters ?? []),
             ...(endpoint.request.pathParameters ?? [])
-        ].filter((parameter) => parameter.variable != null);
+        ].filter(
+            // Without a value, leave the variable unset so the generated client resolves it from
+            // its environment fallback (or fails clearly) instead of sending a placeholder.
+            (parameter) => parameter.variable != null && pathParameterValues[parameter.name.wireValue] != null
+        );
         if (boundParameters.length === 0) {
             return [];
         }
@@ -296,7 +302,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         this.context.errors.scope(Scope.PathParameters);
         const instances = this.context.associateByWireValueOrDefault({
             parameters: boundParameters,
-            values: snippet.pathParameters ?? {}
+            values: pathParameterValues
         });
         const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
         for (const parameter of boundParameters) {
@@ -306,7 +312,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 continue;
             }
             seen.add(variableId);
-            const variable = (this.context.ir.variables ?? []).find((candidate) => candidate.id === variableId);
+            const variable = variables.find((candidate) => candidate.id === variableId);
             const name = variable?.name ?? parameter.name.name;
             args.push({
                 name: getSdkVariableOptionName(name.pascalCase.safeName),

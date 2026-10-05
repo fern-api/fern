@@ -44,4 +44,17 @@ describe("sdk variables", () => {
         expect(response.snippet).toContain('RootVariable = "endpointParam"');
         expect(response.snippet).toContain("PostAsync()");
     });
+
+    it("leaves the variable unset when the snippet has no value for it", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: IR_FILEPATH,
+            config: buildGeneratorConfig()
+        });
+
+        const response = await generator.generate({ ...post, pathParameters: undefined });
+
+        expect(response.errors).toBeUndefined();
+        expect(response.snippet).not.toContain("RootVariable");
+        expect(response.snippet).toContain("PostAsync()");
+    });
 });
