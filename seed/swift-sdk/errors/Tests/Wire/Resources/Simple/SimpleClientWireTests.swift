@@ -295,6 +295,40 @@ import Errors
         }
     }
 
+    @Test func fooThrowsInternalServerError() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            statusCode: 500,
+            body: Foundation.Data(
+                #"""
+                {
+                  "message": "message",
+                  "code": 1
+                }
+                """#.utf8
+            )
+        )
+        let client = ErrorsClient(
+            baseURL: "https://api.fern.com",
+            urlSession: stub.urlSession
+        )
+        do {
+            _ = try await client.simple.foo(
+                request: FooRequest(
+                    bar: "bar"
+                ),
+                requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+            )
+            Issue.record("Expected ErrorsError.httpError with status code 500")
+        } catch ErrorsError.httpError(let httpError) {
+            #expect(httpError.statusCode == 500)
+            let body = try #require(httpError.body)
+            #expect(body.code == 1)
+            #expect(body.type == nil)
+            #expect(body.message == "message")
+        }
+    }
+
     @Test func fooWithExamples1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

@@ -150,7 +150,8 @@ export class WireTestFunctionGenerator {
             return null;
         }
         const errorDeclaration = this.sdkGeneratorContext.ir.errors[response.error.errorId];
-        if (errorDeclaration == null || !this.isExpectedError(errorDeclaration, response.body != null)) {
+        // Swift surfaces every error status as the root `.httpError` case, so no example is shadowed.
+        if (errorDeclaration == null || errorDeclaration.statusCode < 400) {
             return null;
         }
         const statusCode = errorDeclaration.statusCode;
@@ -266,40 +267,6 @@ export class WireTestFunctionGenerator {
         ];
         const errorName = this.sdkGeneratorContext.caseConverter.pascalUnsafe(errorDeclaration.name.name);
         return this.generateTestMethod(`${this.endpointMethodBaseName}Throws${errorName}`, statements);
-    }
-
-    /**
-     * Mirrors the generator's status-code error dispatch: errors declared with a non-error status code are
-     * skipped, and when several of the endpoint's errors share a status code only the first one is expected.
-     * Examples that would surface as the base error (non-status-code discrimination, or a missing body for an
-     * error that declares one) are always expected.
-     */
-    private isExpectedError(errorDeclaration: FernIr.ErrorDeclaration, hasBody: boolean): boolean {
-        if (errorDeclaration.statusCode < 400) {
-            return false;
-        }
-        if (this.sdkGeneratorContext.ir.errorDiscriminationStrategy.type !== "statusCode") {
-            return true;
-        }
-        if (!hasBody && errorDeclaration.type != null) {
-            return true;
-        }
-        const dispatchedErrorId = this.getErrorIdsByStatusCode().get(errorDeclaration.statusCode);
-        return dispatchedErrorId == null || dispatchedErrorId === errorDeclaration.name.errorId;
-    }
-
-    private getErrorIdsByStatusCode(): Map<number, string> {
-        const errorDeclarations = this.endpoint.errors
-            .map((responseError) => this.sdkGeneratorContext.ir.errors[responseError.error.errorId])
-            .filter((errorDeclaration): errorDeclaration is FernIr.ErrorDeclaration => errorDeclaration != null)
-            .sort((a, b) => a.statusCode - b.statusCode);
-        const errorIdsByStatusCode = new Map<number, string>();
-        for (const errorDeclaration of errorDeclarations) {
-            if (!errorIdsByStatusCode.has(errorDeclaration.statusCode)) {
-                errorIdsByStatusCode.set(errorDeclaration.statusCode, errorDeclaration.name.errorId);
-            }
-        }
-        return errorIdsByStatusCode;
     }
 
     private get endpointMethodBaseName(): string {
