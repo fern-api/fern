@@ -5,8 +5,10 @@
 package com.fern.sdk.core;
 
 import java.lang.Integer;
+import java.lang.Object;
 import java.lang.String;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -29,10 +31,12 @@ public final class RequestOptions {
 
   private final Map<String, Supplier<String>> queryParameterSuppliers;
 
+  private final Map<String, Object> bodyProperties;
+
   private RequestOptions(String token, Optional<Integer> timeout, TimeUnit timeoutTimeUnit,
       Optional<Integer> maxRetries, Map<String, String> headers,
       Map<String, Supplier<String>> headerSuppliers, Map<String, String> queryParameters,
-      Map<String, Supplier<String>> queryParameterSuppliers) {
+      Map<String, Supplier<String>> queryParameterSuppliers, Map<String, Object> bodyProperties) {
     this.token = token;
     this.timeout = timeout;
     this.timeoutTimeUnit = timeoutTimeUnit;
@@ -41,6 +45,7 @@ public final class RequestOptions {
     this.headerSuppliers = headerSuppliers;
     this.queryParameters = queryParameters;
     this.queryParameterSuppliers = queryParameterSuppliers;
+    this.bodyProperties = bodyProperties;
   }
 
   public Optional<Integer> getTimeout() {
@@ -75,6 +80,13 @@ public final class RequestOptions {
     return queryParameters;
   }
 
+  /**
+   * Additional properties merged into the request body, keyed by their wire names.
+   */
+  public Map<String, Object> getBodyProperties() {
+    return new LinkedHashMap<>(this.bodyProperties);
+  }
+
   public static Builder builder() {
     return new Builder();
   }
@@ -95,6 +107,8 @@ public final class RequestOptions {
     private final Map<String, String> queryParameters = new HashMap<>();
 
     private final Map<String, Supplier<String>> queryParameterSuppliers = new HashMap<>();
+
+    private final Map<String, Object> bodyProperties = new LinkedHashMap<>();
 
     public Builder token(String token) {
       this.token = token;
@@ -137,8 +151,24 @@ public final class RequestOptions {
       return this;
     }
 
+    /**
+     * Adds a property to the JSON or form-urlencoded request body, keyed by its wire name. It overrides any request body property with the same key, and is sent as the whole body for endpoints without one. Multipart (file upload) bodies are not supported.
+     */
+    public Builder addBodyProperty(String key, Object value) {
+      this.bodyProperties.put(key, value);
+      return this;
+    }
+
+    /**
+     * Adds each entry as a request body property. See {@link #addBodyProperty}.
+     */
+    public Builder bodyProperties(Map<String, Object> bodyProperties) {
+      this.bodyProperties.putAll(bodyProperties);
+      return this;
+    }
+
     public RequestOptions build() {
-      return new RequestOptions(token, timeout, timeoutTimeUnit, maxRetries, headers, headerSuppliers, queryParameters, queryParameterSuppliers);
+      return new RequestOptions(token, timeout, timeoutTimeUnit, maxRetries, headers, headerSuppliers, queryParameters, queryParameterSuppliers, bodyProperties);
     }
   }
 }

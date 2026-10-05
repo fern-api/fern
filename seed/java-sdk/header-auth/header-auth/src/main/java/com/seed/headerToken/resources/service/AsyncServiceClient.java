@@ -5,6 +5,7 @@ package com.seed.headerToken.resources.service;
 
 import com.seed.headerToken.core.ClientOptions;
 import com.seed.headerToken.core.RequestOptions;
+import com.seed.headerToken.core.SeedHeaderTokenHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -28,13 +29,28 @@ public class AsyncServiceClient {
      * GET request with custom api key
      */
     public CompletableFuture<String> getWithBearerToken() {
-        return this.rawClient.getWithBearerToken().thenApply(response -> response.body());
+        CompletableFuture<SeedHeaderTokenHttpResponse<String>> rawFuture = this.rawClient.getWithBearerToken();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET request with custom api key
      */
     public CompletableFuture<String> getWithBearerToken(RequestOptions requestOptions) {
-        return this.rawClient.getWithBearerToken(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedHeaderTokenHttpResponse<String>> rawFuture =
+                this.rawClient.getWithBearerToken(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

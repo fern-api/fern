@@ -193,6 +193,8 @@ await client.CreatePlantAsync(
         Species = "species",
         Family = "family",
         Genus = "genus",
+        CommonName = "commonName",
+        WateringFrequency = PlantBaseWateringFrequency.Daily,
         SunExposure = PlantPostSunExposure.Full,
     }
 );
@@ -249,7 +251,14 @@ Tests that when a parent's allOf contains multiple $ref entries, all of them are
 <dd>
 
 ```csharp
-await client.CreateTreeAsync(new TreeRecord { Id = "id" });
+await client.CreateTreeAsync(
+    new TreeRecord
+    {
+        TreeName = "treeName",
+        Id = "id",
+        TreeSpecies = "treeSpecies",
+    }
+);
 ```
 </dd>
 </dl>

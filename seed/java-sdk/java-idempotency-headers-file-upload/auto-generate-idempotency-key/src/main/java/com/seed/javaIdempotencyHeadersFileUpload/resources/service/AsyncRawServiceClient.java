@@ -89,7 +89,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -118,17 +119,30 @@ public class AsyncRawServiceClient {
                         new SeedJavaIdempotencyHeadersFileUploadException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> upload(
-            InputStream stream, String filename) {
+            UploadRequest request, InputStream stream, String filename) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("documents");
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+            if (request.getDescription().isPresent()) {
+                multipartBodyBuilder.addFormDataPart(
+                        "description", request.getDescription().get());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -138,7 +152,8 @@ public class AsyncRawServiceClient {
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -167,17 +182,30 @@ public class AsyncRawServiceClient {
                         new SeedJavaIdempotencyHeadersFileUploadException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> upload(
-            InputStream stream, String filename, MediaType mediaType) {
+            UploadRequest request, InputStream stream, String filename, MediaType mediaType) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("documents");
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+            if (request.getDescription().isPresent()) {
+                multipartBodyBuilder.addFormDataPart(
+                        "description", request.getDescription().get());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -187,7 +215,8 @@ public class AsyncRawServiceClient {
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -216,11 +245,16 @@ public class AsyncRawServiceClient {
                         new SeedJavaIdempotencyHeadersFileUploadException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> upload(
-            InputStream stream, String filename, RequestOptions requestOptions) {
+            UploadRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("documents");
@@ -231,7 +265,15 @@ public class AsyncRawServiceClient {
         }
         FileStream fs = new FileStream(stream, filename, null);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+            if (request.getDescription().isPresent()) {
+                multipartBodyBuilder.addFormDataPart(
+                        "description", request.getDescription().get());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -253,7 +295,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -282,11 +325,20 @@ public class AsyncRawServiceClient {
                         new SeedJavaIdempotencyHeadersFileUploadException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
     public CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> upload(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+            UploadRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("documents");
@@ -297,7 +349,15 @@ public class AsyncRawServiceClient {
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        try {
+            multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+            if (request.getDescription().isPresent()) {
+                multipartBodyBuilder.addFormDataPart(
+                        "description", request.getDescription().get());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
@@ -319,7 +379,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -346,6 +407,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaIdempotencyHeadersFileUploadException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

@@ -4,6 +4,7 @@
 package com.seed.streaming.resources.dummy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.streaming.core.BodyProperties;
 import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.MediaTypes;
 import com.seed.streaming.core.ObjectMappers;
@@ -56,7 +57,9 @@ public class AsyncRawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
@@ -81,7 +84,8 @@ public class AsyncRawDummyClient {
         }
         client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         CompletableFuture<SeedStreamingHttpResponse<Iterable<StreamResponse>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try {
@@ -110,6 +114,11 @@ public class AsyncRawDummyClient {
                 future.completeExceptionally(new SeedStreamingException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -130,7 +139,9 @@ public class AsyncRawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedStreamingException("Failed to serialize request", e);
         }
@@ -155,7 +166,8 @@ public class AsyncRawDummyClient {
                     .build();
         }
         CompletableFuture<SeedStreamingHttpResponse<StreamResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -181,6 +193,11 @@ public class AsyncRawDummyClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedStreamingException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

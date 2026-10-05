@@ -10,15 +10,15 @@ async fn main() {
     client
         .create_tree(
             &TreeRecord {
-                tree_base_fields: TreeBase {
-                    tree_species: Some("treeSpecies".to_string()),
-                    height_in_feet: Some(1.1),
+                tree_identifiable_fields: TreeIdentifiable {
                     id: "id".to_string(),
-                    tree_name: Some("treeName".to_string()),
-                    tree_description: Some("treeDescription".to_string()),
                     ..Default::default()
                 },
+                tree_name: "treeName".to_string(),
+                tree_species: "treeSpecies".to_string(),
                 planted_date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                height_in_feet: Some(1.1),
+                tree_description: Some("treeDescription".to_string()),
                 ..Default::default()
             },
             None,

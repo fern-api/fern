@@ -10,9 +10,10 @@ module Seed
     # @param username [String]
     # @param password [String]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), client_id: nil, client_secret: nil, username: nil, password: nil, max_retries: 2)
+    def initialize(base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), client_id: nil, client_secret: nil, username: nil, password: nil, max_retries: 2, timeout: 60)
       explicit_oauth_auth = !client_id.nil? || !client_secret.nil?
       explicit_basic_auth = !username.nil? || !password.nil?
       client_id = ENV.fetch("MY_CLIENT_ID", nil) if client_id.nil?
@@ -26,7 +27,8 @@ module Seed
           base_url: base_url,
           headers: {
             "X-Fern-Language" => "Ruby"
-          }
+          },
+          timeout: timeout
         )
 
         # Create the auth client for token retrieval
@@ -50,7 +52,8 @@ module Seed
         base_url: base_url,
         headers: headers,
         auth_provider: @auth_provider,
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

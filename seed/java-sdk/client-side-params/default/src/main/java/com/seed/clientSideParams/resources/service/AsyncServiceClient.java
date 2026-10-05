@@ -5,6 +5,7 @@ package com.seed.clientSideParams.resources.service;
 
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.RequestOptions;
+import com.seed.clientSideParams.core.SeedClientSideParamsHttpResponse;
 import com.seed.clientSideParams.resources.service.requests.GetClientRequest;
 import com.seed.clientSideParams.resources.service.requests.GetConnectionRequest;
 import com.seed.clientSideParams.resources.service.requests.GetResourceRequest;
@@ -47,7 +48,15 @@ public class AsyncServiceClient {
      * List resources with pagination
      */
     public CompletableFuture<List<Resource>> listResources(ListResourcesRequest request) {
-        return this.rawClient.listResources(request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<List<Resource>>> rawFuture =
+                this.rawClient.listResources(request);
+        CompletableFuture<List<Resource>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -55,14 +64,30 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<List<Resource>> listResources(
             ListResourcesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listResources(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<List<Resource>>> rawFuture =
+                this.rawClient.listResources(request, requestOptions);
+        CompletableFuture<List<Resource>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a single resource
      */
     public CompletableFuture<Resource> getResource(String resourceId, GetResourceRequest request) {
-        return this.rawClient.getResource(resourceId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Resource>> rawFuture =
+                this.rawClient.getResource(resourceId, request);
+        CompletableFuture<Resource> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -70,14 +95,30 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<Resource> getResource(
             String resourceId, GetResourceRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getResource(resourceId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Resource>> rawFuture =
+                this.rawClient.getResource(resourceId, request, requestOptions);
+        CompletableFuture<Resource> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Search resources with complex parameters
      */
     public CompletableFuture<SearchResponse> searchResources(SearchResourcesRequest request) {
-        return this.rawClient.searchResources(request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.searchResources(request);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -85,140 +126,296 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<SearchResponse> searchResources(
             SearchResourcesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.searchResources(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.searchResources(request, requestOptions);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List or search for users
      */
     public CompletableFuture<PaginatedUserResponse> listUsers() {
-        return this.rawClient.listUsers().thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> rawFuture =
+                this.rawClient.listUsers();
+        CompletableFuture<PaginatedUserResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List or search for users
      */
     public CompletableFuture<PaginatedUserResponse> listUsers(RequestOptions requestOptions) {
-        return this.rawClient.listUsers(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> rawFuture =
+                this.rawClient.listUsers(requestOptions);
+        CompletableFuture<PaginatedUserResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List or search for users
      */
     public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request) {
-        return this.rawClient.listUsers(request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> rawFuture =
+                this.rawClient.listUsers(request);
+        CompletableFuture<PaginatedUserResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List or search for users
      */
     public CompletableFuture<PaginatedUserResponse> listUsers(ListUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listUsers(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> rawFuture =
+                this.rawClient.listUsers(request, requestOptions);
+        CompletableFuture<PaginatedUserResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a user by ID
      */
     public CompletableFuture<User> getUserById(String userId) {
-        return this.rawClient.getUserById(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture = this.rawClient.getUserById(userId);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a user by ID
      */
     public CompletableFuture<User> getUserById(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUserById(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.getUserById(userId, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a user by ID
      */
     public CompletableFuture<User> getUserById(String userId, GetUserRequest request) {
-        return this.rawClient.getUserById(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.getUserById(userId, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a user by ID
      */
     public CompletableFuture<User> getUserById(String userId, GetUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getUserById(userId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.getUserById(userId, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a new user
      */
     public CompletableFuture<User> createUser(CreateUserRequest request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture = this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a new user
      */
     public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update a user
      */
     public CompletableFuture<User> updateUser(String userId) {
-        return this.rawClient.updateUser(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture = this.rawClient.updateUser(userId);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update a user
      */
     public CompletableFuture<User> updateUser(String userId, RequestOptions requestOptions) {
-        return this.rawClient.updateUser(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update a user
      */
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request) {
-        return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update a user
      */
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.updateUser(userId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Delete a user
      */
     public CompletableFuture<Void> deleteUser(String userId) {
-        return this.rawClient.deleteUser(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Void>> rawFuture = this.rawClient.deleteUser(userId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Delete a user
      */
     public CompletableFuture<Void> deleteUser(String userId, RequestOptions requestOptions) {
-        return this.rawClient.deleteUser(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Void>> rawFuture =
+                this.rawClient.deleteUser(userId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all connections
      */
     public CompletableFuture<List<Connection>> listConnections() {
-        return this.rawClient.listConnections().thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> rawFuture =
+                this.rawClient.listConnections();
+        CompletableFuture<List<Connection>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all connections
      */
     public CompletableFuture<List<Connection>> listConnections(RequestOptions requestOptions) {
-        return this.rawClient.listConnections(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> rawFuture =
+                this.rawClient.listConnections(requestOptions);
+        CompletableFuture<List<Connection>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all connections
      */
     public CompletableFuture<List<Connection>> listConnections(ListConnectionsRequest request) {
-        return this.rawClient.listConnections(request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> rawFuture =
+                this.rawClient.listConnections(request);
+        CompletableFuture<List<Connection>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -226,28 +423,60 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<List<Connection>> listConnections(
             ListConnectionsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listConnections(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> rawFuture =
+                this.rawClient.listConnections(request, requestOptions);
+        CompletableFuture<List<Connection>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a connection by ID
      */
     public CompletableFuture<Connection> getConnection(String connectionId) {
-        return this.rawClient.getConnection(connectionId).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> rawFuture =
+                this.rawClient.getConnection(connectionId);
+        CompletableFuture<Connection> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a connection by ID
      */
     public CompletableFuture<Connection> getConnection(String connectionId, RequestOptions requestOptions) {
-        return this.rawClient.getConnection(connectionId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> rawFuture =
+                this.rawClient.getConnection(connectionId, requestOptions);
+        CompletableFuture<Connection> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a connection by ID
      */
     public CompletableFuture<Connection> getConnection(String connectionId, GetConnectionRequest request) {
-        return this.rawClient.getConnection(connectionId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> rawFuture =
+                this.rawClient.getConnection(connectionId, request);
+        CompletableFuture<Connection> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -255,30 +484,60 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<Connection> getConnection(
             String connectionId, GetConnectionRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getConnection(connectionId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> rawFuture =
+                this.rawClient.getConnection(connectionId, request, requestOptions);
+        CompletableFuture<Connection> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all clients/applications
      */
     public CompletableFuture<PaginatedClientResponse> listClients() {
-        return this.rawClient.listClients().thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> rawFuture =
+                this.rawClient.listClients();
+        CompletableFuture<PaginatedClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all clients/applications
      */
     public CompletableFuture<PaginatedClientResponse> listClients(RequestOptions requestOptions) {
-        return this.rawClient.listClients(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> rawFuture =
+                this.rawClient.listClients(requestOptions);
+        CompletableFuture<PaginatedClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all clients/applications
      */
     public CompletableFuture<PaginatedClientResponse> listClients(ListClientsRequest request) {
-        return this.rawClient.listClients(request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> rawFuture =
+                this.rawClient.listClients(request);
+        CompletableFuture<PaginatedClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -286,28 +545,59 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<PaginatedClientResponse> listClients(
             ListClientsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listClients(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> rawFuture =
+                this.rawClient.listClients(request, requestOptions);
+        CompletableFuture<PaginatedClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a client by ID
      */
     public CompletableFuture<Client> getClient(String clientId) {
-        return this.rawClient.getClient(clientId).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Client>> rawFuture = this.rawClient.getClient(clientId);
+        CompletableFuture<Client> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a client by ID
      */
     public CompletableFuture<Client> getClient(String clientId, RequestOptions requestOptions) {
-        return this.rawClient.getClient(clientId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Client>> rawFuture =
+                this.rawClient.getClient(clientId, requestOptions);
+        CompletableFuture<Client> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get a client by ID
      */
     public CompletableFuture<Client> getClient(String clientId, GetClientRequest request) {
-        return this.rawClient.getClient(clientId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Client>> rawFuture =
+                this.rawClient.getClient(clientId, request);
+        CompletableFuture<Client> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -315,6 +605,14 @@ public class AsyncServiceClient {
      */
     public CompletableFuture<Client> getClient(
             String clientId, GetClientRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getClient(clientId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedClientSideParamsHttpResponse<Client>> rawFuture =
+                this.rawClient.getClient(clientId, request, requestOptions);
+        CompletableFuture<Client> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

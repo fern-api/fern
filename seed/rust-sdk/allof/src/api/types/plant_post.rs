@@ -2,6 +2,12 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct PlantPost {
+    /// The common name of the plant.
+    #[serde(rename = "commonName")]
+    #[serde(default)]
+    pub common_name: String,
+    #[serde(rename = "wateringFrequency")]
+    pub watering_frequency: PlantBaseWateringFrequency,
     /// Required sun exposure level.
     #[serde(rename = "sunExposure")]
     pub sun_exposure: PlantPostSunExposure,
@@ -13,13 +19,6 @@ pub struct PlantPost {
     #[serde(rename = "soilType")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub soil_type: Option<String>,
-    /// The common name of the plant.
-    #[serde(rename = "commonName")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub common_name: Option<String>,
-    #[serde(rename = "wateringFrequency")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub watering_frequency: Option<PlantBaseWateringFrequency>,
     /// The botanical species name.
     #[serde(default)]
     pub species: String,
@@ -40,17 +39,27 @@ impl PlantPost {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct PlantPostBuilder {
+    common_name: Option<String>,
+    watering_frequency: Option<PlantBaseWateringFrequency>,
     sun_exposure: Option<PlantPostSunExposure>,
     planted_at: Option<NaiveDate>,
     soil_type: Option<String>,
-    common_name: Option<String>,
-    watering_frequency: Option<PlantBaseWateringFrequency>,
     species: Option<String>,
     family: Option<String>,
     genus: Option<String>,
 }
 
 impl PlantPostBuilder {
+    pub fn common_name(mut self, value: impl Into<String>) -> Self {
+        self.common_name = Some(value.into());
+        self
+    }
+
+    pub fn watering_frequency(mut self, value: PlantBaseWateringFrequency) -> Self {
+        self.watering_frequency = Some(value);
+        self
+    }
+
     pub fn sun_exposure(mut self, value: PlantPostSunExposure) -> Self {
         self.sun_exposure = Some(value);
         self
@@ -63,16 +72,6 @@ impl PlantPostBuilder {
 
     pub fn soil_type(mut self, value: impl Into<String>) -> Self {
         self.soil_type = Some(value.into());
-        self
-    }
-
-    pub fn common_name(mut self, value: impl Into<String>) -> Self {
-        self.common_name = Some(value.into());
-        self
-    }
-
-    pub fn watering_frequency(mut self, value: PlantBaseWateringFrequency) -> Self {
-        self.watering_frequency = Some(value);
         self
     }
 
@@ -93,19 +92,25 @@ impl PlantPostBuilder {
 
     /// Consumes the builder and constructs a [`PlantPost`].
     /// This method will fail if any of the following fields are not set:
+    /// - [`common_name`](PlantPostBuilder::common_name)
+    /// - [`watering_frequency`](PlantPostBuilder::watering_frequency)
     /// - [`sun_exposure`](PlantPostBuilder::sun_exposure)
     /// - [`species`](PlantPostBuilder::species)
     /// - [`family`](PlantPostBuilder::family)
     /// - [`genus`](PlantPostBuilder::genus)
     pub fn build(self) -> Result<PlantPost, BuildError> {
         Ok(PlantPost {
+            common_name: self
+                .common_name
+                .ok_or_else(|| BuildError::missing_field("common_name"))?,
+            watering_frequency: self
+                .watering_frequency
+                .ok_or_else(|| BuildError::missing_field("watering_frequency"))?,
             sun_exposure: self
                 .sun_exposure
                 .ok_or_else(|| BuildError::missing_field("sun_exposure"))?,
             planted_at: self.planted_at,
             soil_type: self.soil_type,
-            common_name: self.common_name,
-            watering_frequency: self.watering_frequency,
             species: self
                 .species
                 .ok_or_else(|| BuildError::missing_field("species"))?,
