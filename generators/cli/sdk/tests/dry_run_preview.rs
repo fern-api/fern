@@ -30,15 +30,23 @@ fn table_dry_run_shows_the_whole_request() {
     );
     assert_eq!(out.status.code(), Some(0), "{}", stdout(&out));
     let text = stdout(&out);
-    for needle in [
-        "url                     https://api.fixture.example/v1/users",
-        "method                  GET",
-        "headers.X-API-Stage     production",
-        "query_params.user_type  all",
-        "auth.credentials        resolved",
-        "auth.sources            OPENAPI_FIXTURE_API_KEY environment variable",
+    let rows: Vec<(&str, &str)> = text
+        .lines()
+        .filter_map(|line| line.split_once("  "))
+        .map(|(key, value)| (key, value.trim()))
+        .collect();
+    for expected in [
+        ("url", "https://api.fixture.example/v1/users"),
+        ("method", "GET"),
+        ("headers.X-API-Stage", "production"),
+        ("query_params.user_type", "all"),
+        ("auth.credentials", "resolved"),
+        (
+            "auth.configured_sources",
+            "OPENAPI_FIXTURE_API_KEY environment variable",
+        ),
     ] {
-        assert!(text.contains(needle), "missing {needle:?} in:\n{text}");
+        assert!(rows.contains(&expected), "missing {expected:?} in:\n{text}");
     }
     assert!(
         !text.contains("sk-secret"),

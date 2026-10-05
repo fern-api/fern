@@ -508,7 +508,9 @@ fn flatten_record(obj: &serde_json::Map<String, Value>, prefix: &str) -> Vec<(St
             format!("{prefix}.{key}")
         };
         match val {
-            Value::Object(nested) => out.extend(flatten_record(nested, &full_key)),
+            Value::Object(nested) if !nested.is_empty() => {
+                out.extend(flatten_record(nested, &full_key))
+            }
             Value::Array(arr) if !arr.is_empty() => match as_name_value_pairs(arr) {
                 Some(pairs) => out.extend(
                     pairs
@@ -974,7 +976,7 @@ mod tests {
             "method": "GET",
             "query_params": [],
             "headers": [["Twilio-Api-Version", "2026-11-01.preview"]],
-            "body": null,
+            "body": {},
             "auth": {"credentials": "resolved"},
         });
         let pipeline = OutputPipeline {
@@ -994,6 +996,7 @@ mod tests {
             "headers.Twilio-Api-Version  2026-11-01.preview",
             "auth.credentials",
             "resolved",
+            "body",
         ] {
             assert!(text.contains(needle), "missing {needle:?} in:\n{text}");
         }

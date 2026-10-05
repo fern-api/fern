@@ -10,7 +10,7 @@
 - summary: |
     `--dry-run` output includes an `auth` block reporting the endpoint's security
     schemes and whether credentials would be attached: `resolved` (with the
-    sources they come from), `missing` (with the sources to set), `supplied`
+    configured sources), `missing` (with the sources to set), `supplied`
     (passed explicitly as a request parameter) or `not_required`. Credential
     values are never printed.
   type: feat

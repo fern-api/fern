@@ -996,9 +996,14 @@ fn without_caller_supplied_schemes(
 ///   has no credential sources to draw from;
 /// - `"supplied"` — the caller passed the credential as a request parameter;
 /// - `"resolved"` — the configured provider has credentials for this endpoint
-///   (`sources` lists where they came from);
+///   (`configured_sources` lists every populated source the provider knows
+///   about; the `AuthProvider` API cannot scope hints to one requirement);
 /// - `"missing"` — nothing resolved (`expected_sources` lists where to set
 ///   them). The request would be rejected by [`ensure_credentials_for`].
+///
+/// `supplied` takes precedence over `resolved`: an explicitly passed
+/// credential is what the request will carry, even if the provider could
+/// also have satisfied another alternative.
 fn dry_run_auth_info(
     provider: &dyn AuthProvider,
     declared: &EndpointAuthMetadata,
@@ -1029,7 +1034,8 @@ fn dry_run_auth_info(
         info["credentials"] = json!("supplied");
     } else if provider.has_credentials_for(effective) {
         info["credentials"] = json!("resolved");
-        info["sources"] = json!(dedup_preserve_order(provider.populated_credential_hints()));
+        info["configured_sources"] =
+            json!(dedup_preserve_order(provider.populated_credential_hints()));
     } else {
         let expected = dedup_preserve_order(provider.credential_hints());
         if requires_auth || !expected.is_empty() {
@@ -12965,7 +12971,7 @@ async fn test_dry_run_reports_resolved_credentials_without_leaking_them() {
     let auth = dry_run_auth_block(bearer_scheme(), require("BearerAuth"), None, &provider).await;
     assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
     assert_eq!(auth["schemes"], json!(["BearerAuth"]), "{auth}");
-    assert!(auth["sources"].is_array(), "{auth}");
+    assert!(auth["configured_sources"].is_array(), "{auth}");
     assert!(
         !auth.to_string().contains("tok-secret"),
         "credential values must never appear in dry-run output: {auth}"
@@ -13006,7 +13012,7 @@ async fn test_dry_run_reports_anonymous_endpoint_as_not_required() {
     let auth = dry_run_auth_block(bearer_scheme(), Some(Vec::new()), None, &provider).await;
     assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
     assert_eq!(auth["schemes"], json!([]), "{auth}");
-    assert!(auth.get("sources").is_none(), "{auth}");
+    assert!(auth.get("configured_sources").is_none(), "{auth}");
 }
 
 #[tokio::test]
