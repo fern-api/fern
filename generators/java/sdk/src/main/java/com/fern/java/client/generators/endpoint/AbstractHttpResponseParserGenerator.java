@@ -222,6 +222,11 @@ public abstract class AbstractHttpResponseParserGenerator {
         httpResponseBuilder.addStatement("return _refreshedHeaders").unindent().addStatement("})).build()");
     }
 
+    private static boolean sendsAuth(HttpEndpoint endpoint) {
+        return endpoint.getAuth()
+                || endpoint.getSecurity().map(security -> !security.isEmpty()).orElse(false);
+    }
+
     public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
         ClassName maxRetriesOverrideClassName = getMaxRetriesOverrideClassName();
         boolean retriesDisabled = retriesDisabled(httpEndpoint.getRetries());
@@ -248,7 +253,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         if (retriesDisabled) {
             addDisabledRetriesTag(httpResponseBuilder);
         } else {
-            if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions() && sendsAuth(httpEndpoint)) {
                 addAuthRefreshTag(httpResponseBuilder);
             }
             httpResponseBuilder
