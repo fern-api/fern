@@ -5,9 +5,7 @@ import { CliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
-
-// The v3 dev path skips loading API workspaces, so these rules would flag every `api:` section.
-const RULES_REQUIRING_API_WORKSPACES = ["api-section-has-definition"];
+import { getDocsDevExcludeRules } from "./getDocsDevExcludeRules.js";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -59,9 +57,9 @@ export async function previewDocsWorkspace({
                     if (docsWorkspace == null) {
                         return;
                     }
-                    const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                     const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                     const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                    const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
                     if (useV3Parser) {
                         await validateDocsWorkspaceWithoutExiting({
                             workspace: docsWorkspace,
@@ -70,7 +68,7 @@ export async function previewDocsWorkspace({
                             logSummary: false,
                             apiWorkspaces: [],
                             ossWorkspaces: await filterOssWorkspaces(project),
-                            excludeRules: [...excludeRules, ...RULES_REQUIRING_API_WORKSPACES]
+                            excludeRules
                         });
                     } else {
                         await validateDocsWorkspaceWithoutExiting({
@@ -108,9 +106,9 @@ export async function previewDocsWorkspace({
                 if (docsWorkspace == null) {
                     return;
                 }
-                const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                 const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                 const useV3Parser = openapiParserV3 == null || openapiParserV3;
+                const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
                 if (useV3Parser) {
                     await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,
@@ -119,7 +117,7 @@ export async function previewDocsWorkspace({
                         logSummary: false,
                         apiWorkspaces: [],
                         ossWorkspaces: await filterOssWorkspaces(project),
-                        excludeRules: [...excludeRules, ...RULES_REQUIRING_API_WORKSPACES]
+                        excludeRules
                     });
                 } else {
                     await validateDocsWorkspaceWithoutExiting({
