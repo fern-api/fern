@@ -54,6 +54,8 @@ export class WireTestGenerator {
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping> = {};
     private wireMockMappingsByTestId = new Map<string, WireMockMapping>();
+    // Test function names double as X-Test-Id values, which WireMock matches across all services.
+    private usedTestFunctionNames = new Set<string>();
     // Keyed by example object identity; mock-utils hands back the same objects typed with its own ir-sdk version.
     private testIdsByExample = new Map<unknown, string>();
     private exampleSelector: WireTestExampleSelector;
@@ -86,6 +88,8 @@ export class WireTestGenerator {
         this.testIdsByExample.get(example);
 
     private loadWireMockConfigContent(): void {
+        this.wireMockConfigContent = {};
+        this.wireMockMappingsByTestId.clear();
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir, {
             getExampleTestId: this.getExampleTestId
         });
@@ -174,7 +178,6 @@ export class WireTestGenerator {
         const testCases: WireTestCase[] = [];
         // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
         const testFunctionNameCounts = new Map<string, number>();
-        const usedTestFunctionNames = new Set<string>();
         for (const endpoint of endpoints) {
             // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
             // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
@@ -215,14 +218,14 @@ export class WireTestGenerator {
                 } else {
                     testFunctionName = `${baseTestFunctionName}_${this.exampleSelector.getTestNameSuffix(testExample)}`;
                 }
-                if (usedTestFunctionNames.has(testFunctionName)) {
+                if (this.usedTestFunctionNames.has(testFunctionName)) {
                     let suffix = 2;
-                    while (usedTestFunctionNames.has(`${testFunctionName}${suffix}`)) {
+                    while (this.usedTestFunctionNames.has(`${testFunctionName}${suffix}`)) {
                         suffix++;
                     }
                     testFunctionName = `${testFunctionName}${suffix}`;
                 }
-                usedTestFunctionNames.add(testFunctionName);
+                this.usedTestFunctionNames.add(testFunctionName);
                 this.testIdsByExample.set(testExample.example, testFunctionName);
 
                 testCases.push({

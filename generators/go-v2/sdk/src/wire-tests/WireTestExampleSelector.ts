@@ -75,6 +75,9 @@ export class WireTestExampleSelector {
         for (const tagged of selected) {
             const dynamicExample = this.findDynamicExample(dynamicExamples, tagged);
             if (dynamicExample == null) {
+                this.context.logger.warn(
+                    `Skipping wire test for an example of endpoint ${endpoint.id}: no matching dynamic example ${tagged.dynamicExampleId}`
+                );
                 continue;
             }
             const response = tagged.example.response;
@@ -126,6 +129,7 @@ export class WireTestExampleSelector {
         { dynamicExampleId, isUserSpecified }: TaggedExample
     ): FernIr.dynamic.EndpointExample | undefined {
         const candidates = dynamicExamples.filter((example) => example.id === dynamicExampleId);
+        // Matching IDs identify the same example; isUserSpecified only breaks ties between colliding IDs.
         return candidates.find((example) => (example.isUserSpecified ?? false) === isUserSpecified) ?? candidates[0];
     }
 
@@ -183,7 +187,10 @@ export class WireTestExampleSelector {
             return this.buildErrorIdsByStatusCodeKey([endpoint]);
         }
         const service = this.serviceByEndpointId.get(endpoint.id);
-        const namespace = service != null ? this.context.getPackageLocation(service.name.fernFilepath).importPath : "";
+        if (service == null) {
+            return this.buildErrorIdsByStatusCodeKey([endpoint]);
+        }
+        const namespace = this.context.getPackageLocation(service.name.fernFilepath).importPath;
         let errorIdsByStatusCodeKey = this.errorIdsByStatusCodeKeyByNamespace.get(namespace);
         if (errorIdsByStatusCodeKey == null) {
             const namespaceEndpoints = Object.values(this.context.ir.services)
