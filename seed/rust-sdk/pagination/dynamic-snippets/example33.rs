@@ -10,11 +10,9 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_aliased_data(
-            &ListWithAliasedDataQueryRequest {
+        .list_with_optional_data(
+            &ListWithOptionalDataQueryRequest {
                 page: Some(1),
-                per_page: Some(1),
-                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,

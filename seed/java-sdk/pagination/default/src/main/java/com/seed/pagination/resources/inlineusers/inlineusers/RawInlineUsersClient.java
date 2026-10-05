@@ -133,8 +133,11 @@ public class RawInlineUsersClient {
                 List<User> result = parsedResponse.getData().getUsers();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> listWithCursorPagination(
-                                                nextRequest, requestOptions)
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> listWithCursorPagination(nextRequest, requestOptions)
                                         .body()),
                         response);
             }
@@ -290,11 +293,13 @@ public class RawInlineUsersClient {
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ListUsersPaginationResponse.class);
                 Optional<String> startingAfter =
                         parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
-                Optional<WithCursor> pagination = request.getPagination()
+                Optional<WithCursor> pagination = Optional.of(request.getPagination()
                         .map((WithCursor pagination_) -> WithCursor.builder()
                                 .from(pagination_)
                                 .cursor(startingAfter)
-                                .build());
+                                .build())
+                        .orElseGet(
+                                () -> WithCursor.builder().cursor(startingAfter).build()));
                 ListUsersBodyCursorPaginationRequest nextRequest = ListUsersBodyCursorPaginationRequest.builder()
                         .from(request)
                         .pagination(pagination)
@@ -302,8 +307,11 @@ public class RawInlineUsersClient {
                 List<User> result = parsedResponse.getData().getUsers();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<User>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> listWithBodyCursorPagination(
-                                                nextRequest, requestOptions)
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> listWithBodyCursorPagination(nextRequest, requestOptions)
                                         .body()),
                         response);
             }
@@ -560,10 +568,12 @@ public class RawInlineUsersClient {
                         .flatMap(WithPage::getPage)
                         .map((Integer page) -> page + 1)
                         .orElse(1);
-                Optional<WithPage> pagination = request.getPagination().map((WithPage pagination_) -> WithPage.builder()
-                        .from(pagination_)
-                        .page(newPageNumber)
-                        .build());
+                Optional<WithPage> pagination = Optional.of(request.getPagination()
+                        .map((WithPage pagination_) -> WithPage.builder()
+                                .from(pagination_)
+                                .page(newPageNumber)
+                                .build())
+                        .orElseGet(() -> WithPage.builder().page(newPageNumber).build()));
                 ListUsersBodyOffsetPaginationRequest nextRequest = ListUsersBodyOffsetPaginationRequest.builder()
                         .from(request)
                         .pagination(pagination)
@@ -973,9 +983,11 @@ public class RawInlineUsersClient {
                 List<String> result = parsedResponse.getCursor().getData();
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> listUsernames(
-                                                nextRequest, requestOptions)
-                                        .body()),
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> listUsernames(nextRequest, requestOptions).body()),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

@@ -11,6 +11,22 @@ import (
 )
 
 func TestSettersPlantPost(t *testing.T) {
+	t.Run("SetCommonName", func(t *testing.T) {
+		obj := &PlantPost{}
+		var fernTestValueCommonName string
+		obj.SetCommonName(fernTestValueCommonName)
+		assert.Equal(t, fernTestValueCommonName, obj.CommonName)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetWateringFrequency", func(t *testing.T) {
+		obj := &PlantPost{}
+		var fernTestValueWateringFrequency PlantBaseWateringFrequency
+		obj.SetWateringFrequency(fernTestValueWateringFrequency)
+		assert.Equal(t, fernTestValueWateringFrequency, obj.WateringFrequency)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSunExposure", func(t *testing.T) {
 		obj := &PlantPost{}
 		var fernTestValueSunExposure PlantPostSunExposure
@@ -38,6 +54,68 @@ func TestSettersPlantPost(t *testing.T) {
 }
 
 func TestSettersMarkExplicitPlantPost(t *testing.T) {
+	t.Run("SetCommonName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PlantPost{}
+		var fernTestValueCommonName string
+
+		// Act
+		obj.SetCommonName(fernTestValueCommonName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetWateringFrequency_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PlantPost{}
+		var fernTestValueWateringFrequency PlantBaseWateringFrequency
+
+		// Act
+		obj.SetWateringFrequency(fernTestValueWateringFrequency)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetSunExposure_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -4184,25 +4262,25 @@ func TestSettersTreeRecord(t *testing.T) {
 
 	t.Run("SetTreeName", func(t *testing.T) {
 		obj := &TreeRecord{}
-		var fernTestValueTreeName *string
+		var fernTestValueTreeName string
 		obj.SetTreeName(fernTestValueTreeName)
 		assert.Equal(t, fernTestValueTreeName, obj.TreeName)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetTreeDescription", func(t *testing.T) {
+	t.Run("SetTreeSpecies", func(t *testing.T) {
 		obj := &TreeRecord{}
-		var fernTestValueTreeDescription *string
-		obj.SetTreeDescription(fernTestValueTreeDescription)
-		assert.Equal(t, fernTestValueTreeDescription, obj.TreeDescription)
+		var fernTestValueTreeSpecies string
+		obj.SetTreeSpecies(fernTestValueTreeSpecies)
+		assert.Equal(t, fernTestValueTreeSpecies, obj.TreeSpecies)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetTreeSpecies", func(t *testing.T) {
+	t.Run("SetPlantedDate", func(t *testing.T) {
 		obj := &TreeRecord{}
-		var fernTestValueTreeSpecies *string
-		obj.SetTreeSpecies(fernTestValueTreeSpecies)
-		assert.Equal(t, fernTestValueTreeSpecies, obj.TreeSpecies)
+		var fernTestValuePlantedDate *time.Time
+		obj.SetPlantedDate(fernTestValuePlantedDate)
+		assert.Equal(t, fernTestValuePlantedDate, obj.PlantedDate)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -4214,11 +4292,11 @@ func TestSettersTreeRecord(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetPlantedDate", func(t *testing.T) {
+	t.Run("SetTreeDescription", func(t *testing.T) {
 		obj := &TreeRecord{}
-		var fernTestValuePlantedDate *time.Time
-		obj.SetPlantedDate(fernTestValuePlantedDate)
-		assert.Equal(t, fernTestValuePlantedDate, obj.PlantedDate)
+		var fernTestValueTreeDescription *string
+		obj.SetTreeDescription(fernTestValueTreeDescription)
+		assert.Equal(t, fernTestValueTreeDescription, obj.TreeDescription)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -4252,21 +4330,11 @@ func TestGettersTreeRecord(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		var expected *string
+		var expected string
 		obj.TreeName = expected
 
 		// Act & Assert
 		assert.Equal(t, expected, obj.GetTreeName(), "getter should return the property value")
-	})
-
-	t.Run("GetTreeName_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TreeRecord{}
-		obj.TreeName = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetTreeName(), "getter should return nil when property is nil")
 	})
 
 	t.Run("GetTreeName_NilReceiver", func(t *testing.T) {
@@ -4281,58 +4349,15 @@ func TestGettersTreeRecord(t *testing.T) {
 		_ = obj.GetTreeName() // Should return zero value
 	})
 
-	t.Run("GetTreeDescription", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TreeRecord{}
-		var expected *string
-		obj.TreeDescription = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetTreeDescription(), "getter should return the property value")
-	})
-
-	t.Run("GetTreeDescription_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TreeRecord{}
-		obj.TreeDescription = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetTreeDescription(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetTreeDescription_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *TreeRecord
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetTreeDescription() // Should return zero value
-	})
-
 	t.Run("GetTreeSpecies", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		var expected *string
+		var expected string
 		obj.TreeSpecies = expected
 
 		// Act & Assert
 		assert.Equal(t, expected, obj.GetTreeSpecies(), "getter should return the property value")
-	})
-
-	t.Run("GetTreeSpecies_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TreeRecord{}
-		obj.TreeSpecies = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetTreeSpecies(), "getter should return nil when property is nil")
 	})
 
 	t.Run("GetTreeSpecies_NilReceiver", func(t *testing.T) {
@@ -4345,6 +4370,39 @@ func TestGettersTreeRecord(t *testing.T) {
 			}
 		}()
 		_ = obj.GetTreeSpecies() // Should return zero value
+	})
+
+	t.Run("GetPlantedDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TreeRecord{}
+		var expected *time.Time
+		obj.PlantedDate = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPlantedDate(), "getter should return the property value")
+	})
+
+	t.Run("GetPlantedDate_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TreeRecord{}
+		obj.PlantedDate = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPlantedDate(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPlantedDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *TreeRecord
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPlantedDate() // Should return zero value
 	})
 
 	t.Run("GetHeightInFeet", func(t *testing.T) {
@@ -4380,28 +4438,28 @@ func TestGettersTreeRecord(t *testing.T) {
 		_ = obj.GetHeightInFeet() // Should return zero value
 	})
 
-	t.Run("GetPlantedDate", func(t *testing.T) {
+	t.Run("GetTreeDescription", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		var expected *time.Time
-		obj.PlantedDate = expected
+		var expected *string
+		obj.TreeDescription = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetPlantedDate(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTreeDescription(), "getter should return the property value")
 	})
 
-	t.Run("GetPlantedDate_NilValue", func(t *testing.T) {
+	t.Run("GetTreeDescription_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		obj.PlantedDate = nil
+		obj.TreeDescription = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetPlantedDate(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTreeDescription(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetPlantedDate_NilReceiver", func(t *testing.T) {
+	t.Run("GetTreeDescription_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *TreeRecord
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4410,7 +4468,7 @@ func TestGettersTreeRecord(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetPlantedDate() // Should return zero value
+		_ = obj.GetTreeDescription() // Should return zero value
 	})
 
 }
@@ -4451,41 +4509,10 @@ func TestSettersMarkExplicitTreeRecord(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		var fernTestValueTreeName *string
+		var fernTestValueTreeName string
 
 		// Act
 		obj.SetTreeName(fernTestValueTreeName)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetTreeDescription_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TreeRecord{}
-		var fernTestValueTreeDescription *string
-
-		// Act
-		obj.SetTreeDescription(fernTestValueTreeDescription)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4513,10 +4540,41 @@ func TestSettersMarkExplicitTreeRecord(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		var fernTestValueTreeSpecies *string
+		var fernTestValueTreeSpecies string
 
 		// Act
 		obj.SetTreeSpecies(fernTestValueTreeSpecies)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPlantedDate_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &TreeRecord{}
+		var fernTestValuePlantedDate *time.Time
+
+		// Act
+		obj.SetPlantedDate(fernTestValuePlantedDate)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4571,14 +4629,14 @@ func TestSettersMarkExplicitTreeRecord(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetPlantedDate_MarksExplicit", func(t *testing.T) {
+	t.Run("SetTreeDescription_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TreeRecord{}
-		var fernTestValuePlantedDate *time.Time
+		var fernTestValueTreeDescription *string
 
 		// Act
-		obj.SetPlantedDate(fernTestValuePlantedDate)
+		obj.SetTreeDescription(fernTestValueTreeDescription)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -86,6 +86,36 @@ pub fn handle_error_response<T>(
     Err(parse_api_error(status, error_body))
 }
 
+/// Refuse to send a request the spec requires credentials for when none of
+/// its security requirements can be met.
+///
+/// Only fires when the operation declares concrete requirements (its own
+/// `security:` or the spec-level default). Undeclared operations and
+/// `security: []` still go out, as does an operation whose requirements
+/// include the empty object (`- {}`, "auth optional"). A CLI that declares no credential sources
+/// has nothing to point the user at, so it also sends and lets the server
+/// decide.
+pub fn ensure_credentials_for(
+    provider: &dyn AuthProvider,
+    endpoint: &EndpointAuthMetadata,
+) -> Result<(), CliError> {
+    let requires_auth = matches!(
+        &endpoint.security_requirements,
+        Some(reqs) if !reqs.is_empty() && reqs.iter().all(|req| !req.is_empty())
+    );
+    if !requires_auth || provider.has_credentials_for(endpoint) {
+        return Ok(());
+    }
+    let hints = dedup_preserve_order(provider.credential_hints());
+    if hints.is_empty() {
+        return Ok(());
+    }
+    Err(CliError::Auth(format!(
+        "Authentication credentials are missing, so the request was not sent. Set {}.",
+        hints.join(", ")
+    )))
+}
+
 /// Advice for a request that went out with no credentials at all, or `None`
 /// when the CLI declares no auth sources to point at.
 fn missing_credentials_note(provider: &dyn AuthProvider) -> Option<String> {
@@ -172,6 +202,59 @@ mod tests {
     use crate::auth::credential::AuthCredentialSource;
     use crate::auth::schemes::BearerAuthProvider;
     use serde_json::json;
+
+    fn requiring(schemes: &[&str]) -> EndpointAuthMetadata {
+        EndpointAuthMetadata::with_requirements(
+            schemes
+                .iter()
+                .map(|s| std::collections::HashMap::from([(s.to_string(), Vec::new())]))
+                .collect(),
+        )
+    }
+
+    #[test]
+    fn ensure_credentials_rejects_a_required_endpoint_with_no_credentials() {
+        std::env::remove_var("__FERN_TEST_ENSURE_UNSET");
+        let p = BearerAuthProvider::new(
+            "bearer",
+            AuthCredentialSource::from_env("__FERN_TEST_ENSURE_UNSET"),
+        );
+        match ensure_credentials_for(&p, &requiring(&["bearer"])).unwrap_err() {
+            CliError::Auth(msg) => {
+                assert!(msg.contains("request was not sent"), "got: {msg}");
+                assert!(msg.contains("__FERN_TEST_ENSURE_UNSET"), "got: {msg}");
+            }
+            other => panic!("expected Auth, got: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn ensure_credentials_allows_a_required_endpoint_with_credentials() {
+        let p = BearerAuthProvider::new("bearer", AuthCredentialSource::literal("t"));
+        assert!(ensure_credentials_for(&p, &requiring(&["bearer"])).is_ok());
+    }
+
+    #[test]
+    fn ensure_credentials_leaves_undeclared_anonymous_and_optional_endpoints_alone() {
+        std::env::remove_var("__FERN_TEST_ENSURE_OPTIONAL_UNSET");
+        let p = BearerAuthProvider::new(
+            "bearer",
+            AuthCredentialSource::from_env("__FERN_TEST_ENSURE_OPTIONAL_UNSET"),
+        );
+        assert!(ensure_credentials_for(&p, &EndpointAuthMetadata::unspecified()).is_ok());
+        assert!(ensure_credentials_for(&p, &EndpointAuthMetadata::explicit_anonymous()).is_ok());
+        let optional = EndpointAuthMetadata::with_requirements(vec![
+            std::collections::HashMap::from([("bearer".to_string(), Vec::new())]),
+            std::collections::HashMap::new(),
+        ]);
+        assert!(ensure_credentials_for(&p, &optional).is_ok());
+    }
+
+    #[test]
+    fn ensure_credentials_sends_when_the_cli_declares_no_sources() {
+        let p = BearerAuthProvider::new("bearer", AuthCredentialSource::Missing);
+        assert!(ensure_credentials_for(&p, &requiring(&["bearer"])).is_ok());
+    }
 
     #[test]
     fn friendly_when_provider_has_no_credentials_for_endpoint() {

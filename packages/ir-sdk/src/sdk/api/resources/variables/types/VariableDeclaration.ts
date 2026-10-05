@@ -6,4 +6,14 @@ export interface VariableDeclaration extends FernIr.WithDocs {
     id: FernIr.VariableId;
     name: FernIr.NameOrString;
     type: FernIr.TypeReference;
+    /**
+     * The name of an environment variable the generated SDK reads at client
+     * construction when the caller does not pass the variable explicitly.
+     * When present, the variable becomes optional in the client constructor
+     * and generators should fail with a clear error if neither a value nor
+     * the environment variable is provided. Populated from `env` on a
+     * detailed `variables` declaration in `api.yml`, or from `x-fern-env`
+     * on an `x-fern-sdk-variables` entry in OpenAPI specs.
+     */
+    envVar: string | undefined;
 }

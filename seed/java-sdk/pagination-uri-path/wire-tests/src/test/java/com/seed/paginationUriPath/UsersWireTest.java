@@ -37,7 +37,7 @@ public class UsersWireTest {
     public void testListWithUriPagination() throws Exception {
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
-                .setBody("{\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}],\"next\":\"next\"}"));
+                .setBody("{\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}],\"next\":\"next\"}"));
         SyncPagingIterable<User> response = client.users().listWithUriPagination();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
@@ -53,7 +53,7 @@ public class UsersWireTest {
     public void testListWithPathPagination() throws Exception {
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
-                .setBody("{\"data\":[{\"name\":\"name\",\"id\":1},{\"name\":\"name\",\"id\":1}],\"next\":\"next\"}"));
+                .setBody("{\"data\":[{\"name\":\"Alice\",\"id\":1},{\"name\":\"Bob\",\"id\":2}],\"next\":\"next\"}"));
         SyncPagingIterable<User> response = client.users().listWithPathPagination();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);

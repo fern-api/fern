@@ -149,6 +149,7 @@ export const AsIsFiles = {
             EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
             JsonAccessAttributeTests: "test/Json/JsonAccessAttributeTests.Template.cs",
             OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
+            SerializeWithAdditionalPropertiesTests: "test/Json/SerializeWithAdditionalPropertiesTests.Template.cs",
             StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs"
         }
     }

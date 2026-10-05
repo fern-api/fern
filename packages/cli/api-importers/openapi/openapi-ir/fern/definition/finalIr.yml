@@ -44,7 +44,7 @@ types:
       webhooks: list<Webhook>
       channels: map<string, WebsocketChannel>
       groupedSchemas: Schemas
-      variables: map<string, PrimitiveSchema>
+      variables: map<string, SdkVariable>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
@@ -53,6 +53,16 @@ types:
       globalHeaders: optional<list<GlobalHeader>>
       globalParameters: optional<list<GlobalParameter>>
       idempotencyHeaders: optional<list<IdempotencyHeader>>
+
+  SdkVariable:
+    docs: A client-level SDK variable declared with `x-fern-sdk-variables`.
+    properties:
+      schema: PrimitiveSchema
+      envVar:
+        type: optional<string>
+        docs: |
+          Environment variable the generated SDK falls back to when the variable is not
+          passed to the client constructor (from the `x-fern-env` key on the variable).
 
   GlobalSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 

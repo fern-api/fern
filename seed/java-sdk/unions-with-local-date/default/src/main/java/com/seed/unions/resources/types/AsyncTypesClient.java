@@ -5,6 +5,7 @@ package com.seed.unions.resources.types;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
+import com.seed.unions.core.SeedUnionsHttpResponse;
 import com.seed.unions.resources.types.types.UnionWithTime;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,18 +27,46 @@ public class AsyncTypesClient {
     }
 
     public CompletableFuture<UnionWithTime> get(String id) {
-        return this.rawClient.get(id).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<UnionWithTime>> rawFuture = this.rawClient.get(id);
+        CompletableFuture<UnionWithTime> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UnionWithTime> get(String id, RequestOptions requestOptions) {
-        return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<UnionWithTime>> rawFuture = this.rawClient.get(id, requestOptions);
+        CompletableFuture<UnionWithTime> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> update(UnionWithTime request) {
-        return this.rawClient.update(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<Boolean>> rawFuture = this.rawClient.update(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> update(UnionWithTime request, RequestOptions requestOptions) {
-        return this.rawClient.update(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionsHttpResponse<Boolean>> rawFuture = this.rawClient.update(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

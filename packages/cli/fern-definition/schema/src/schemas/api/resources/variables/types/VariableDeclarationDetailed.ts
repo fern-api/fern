@@ -4,4 +4,10 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface VariableDeclarationDetailed extends FernDefinition.WithDocsSchema {
     type: string;
+    /**
+     * The name of an environment variable the generated SDK reads when the
+     * variable is not passed to the client constructor. Makes the variable
+     * optional at client construction.
+     */
+    env?: string;
 }

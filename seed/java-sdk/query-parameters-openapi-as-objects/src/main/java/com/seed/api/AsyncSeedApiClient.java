@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.SearchRequest;
 import com.seed.api.types.SearchResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,16 +28,32 @@ public class AsyncSeedApiClient implements AutoCloseable {
     }
 
     public CompletableFuture<SearchResponse> search(SearchRequest request) {
-        return this.rawClient.search(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<SearchResponse>> rawFuture = this.rawClient.search(request);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SearchResponse> search(SearchRequest request, RequestOptions requestOptions) {
-        return this.rawClient.search(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.search(request, requestOptions);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

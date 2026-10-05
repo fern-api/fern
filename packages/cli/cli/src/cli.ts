@@ -117,7 +117,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
-import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -342,8 +342,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         // Redirection is off (e.g. local dev builds), so we won't re-exec at the
         // org bounds — but still surface a warning if the running version is out
         // of range, otherwise enforcement would be silently invisible here.
+        // `upgrade` is skipped: it is about to move the project off this version.
         const orgId = await getOrganization(cliContext);
-        if (orgId != null) {
+        if (orgId != null && getInvokedCommandName(process.argv) !== "upgrade") {
             await warnIfVersionOutsideOrgBounds({
                 cliContext,
                 orgId,

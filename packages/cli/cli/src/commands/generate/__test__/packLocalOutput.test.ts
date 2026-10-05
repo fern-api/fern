@@ -114,8 +114,11 @@ describe("packLocalOutputForGroup", () => {
         expect(options?.env?.GIT_DIR).toBe(path.join(outputDir, ".git"));
     });
 
-    it("runs npm install and npm pack for typescript generators, including build when a build script exists", async () => {
-        await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ scripts: { build: "tsc" } }));
+    it("runs pnpm install and npm pack for typescript generators, including build when a build script exists", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({ name: "@acme/test-sdk", version: "", scripts: { build: "tsc" } })
+        );
         const group = {
             groupName: "test",
             audiences: { type: "all" },
@@ -128,12 +131,13 @@ describe("packLocalOutputForGroup", () => {
             ]
         } as unknown as generatorsYml.GeneratorGroup;
 
-        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), version: "1.2.3" });
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
-        expect(commands[0]).toBe("npm install");
+        expect(commands[0]).toBe("npx --yes pnpm install");
         expect(commands[1]).toBe("npx --yes pnpm run build");
         expect(commands[2]).toContain("npm pack");
+        expect(JSON.parse(await readFile(path.join(outputDir, "package.json"), "utf-8")).version).toBe("1.2.3");
     });
 
     it("compiles with tsc before packing when a typescript package has no build script", async () => {
@@ -154,9 +158,63 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext() });
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
-        expect(commands[0]).toBe("npm install");
+        expect(commands[0]).toBe("npx --yes pnpm install");
         expect(commands[1]).toBe("npx --yes --package typescript tsc --project tsconfig.cjs.json");
         expect(commands[2]).toContain("npm pack");
+    });
+
+    it("uses the package manager declared by a typescript project", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({
+                name: "acme",
+                version: "1.0.0",
+                packageManager: "yarn@1.22.22",
+                scripts: { build: "tsc" }
+            })
+        );
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe("npx --yes yarn install");
+        expect(commands[1]).toBe("npx --yes yarn run build");
+    });
+
+    it("uses npm when an existing typescript project has a package-lock", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({ name: "acme", version: "1.0.0", scripts: { build: "tsc" } })
+        );
+        await writeFile(path.join(outputDir, "package-lock.json"), "{}");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe("npm install");
+        expect(commands[1]).toBe("npm run build");
     });
 
     it("fails typescript packaging when tsc fails and no output was emitted", async () => {

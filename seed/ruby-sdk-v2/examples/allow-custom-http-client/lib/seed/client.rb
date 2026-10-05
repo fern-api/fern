@@ -75,10 +75,11 @@ module Seed
     # @param token [String]
     # @param base_url [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     # @param http_client [Object, nil]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, max_retries: 2, http_client: nil)
+    def initialize(token:, base_url: nil, max_retries: 2, timeout: 60, http_client: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
@@ -87,7 +88,8 @@ module Seed
           Authorization: "Bearer #{token}"
         },
         http_client: http_client,
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

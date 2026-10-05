@@ -99,21 +99,31 @@ public class RawDeepCursorPathClient {
                                 responseBodyString,
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                Optional<D> d = request.getB().map(B::getC).flatMap(C::getD).map((D d_) -> D.builder()
-                        .from(d_)
-                        .startingAfter(startingAfter)
-                        .build());
-                Optional<C> c = d.flatMap((D d_) -> request.getB()
+                Optional<D> d = Optional.of(request.getB()
                         .map(B::getC)
-                        .map((C c_) -> C.builder().from(c_).d(d_).build()));
-                Optional<B> b = c.flatMap((C c_) ->
-                        request.getB().map((B b_) -> B.builder().from(b_).c(c_).build()));
+                        .flatMap(C::getD)
+                        .map((D d_) -> D.builder()
+                                .from(d_)
+                                .startingAfter(startingAfter)
+                                .build())
+                        .orElseGet(
+                                () -> D.builder().startingAfter(startingAfter).build()));
+                Optional<C> c = d.map((D d_) -> request.getB()
+                        .map(B::getC)
+                        .map((C c_) -> C.builder().from(c_).d(d_).build())
+                        .orElseGet(() -> C.builder().d(d_).build()));
+                Optional<B> b = c.map((C c_) -> request.getB()
+                        .map((B b_) -> B.builder().from(b_).c(c_).build())
+                        .orElseGet(() -> B.builder().c(c_).build()));
                 A nextRequest = A.builder().from(request).b(b).build();
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
-                        new SyncPagingIterable<String>(startingAfter.isPresent(), result, parsedResponse, () -> doThing(
-                                        nextRequest, requestOptions)
-                                .body()),
+                        new SyncPagingIterable<String>(
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> doThing(nextRequest, requestOptions).body()),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
@@ -187,8 +197,11 @@ public class RawDeepCursorPathClient {
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> doThingRequired(
-                                                nextRequest, requestOptions)
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> doThingRequired(nextRequest, requestOptions)
                                         .body()),
                         response);
             }
@@ -260,25 +273,31 @@ public class RawDeepCursorPathClient {
                                 responseBodyString,
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                Optional<InlineD> b2 = request.getB()
+                Optional<InlineD> b2 = Optional.of(request.getB()
                         .map(InlineB::getC)
                         .flatMap(InlineC::getB)
                         .map((InlineD b2_) -> InlineD.builder()
                                 .from(b2_)
                                 .startingAfter(startingAfter)
-                                .build());
-                Optional<InlineC> c = b2.flatMap((InlineD b2_) -> request.getB()
+                                .build())
+                        .orElseGet(() ->
+                                InlineD.builder().startingAfter(startingAfter).build()));
+                Optional<InlineC> c = b2.map((InlineD b2_) -> request.getB()
                         .map(InlineB::getC)
-                        .map((InlineC c_) -> InlineC.builder().from(c_).b(b2_).build()));
-                Optional<InlineB> b0 = c.flatMap((InlineC c_) -> request.getB()
-                        .map((InlineB b0_) -> InlineB.builder().from(b0_).c(c_).build()));
+                        .map((InlineC c_) -> InlineC.builder().from(c_).b(b2_).build())
+                        .orElseGet(() -> InlineC.builder().b(b2_).build()));
+                Optional<InlineB> b0 = c.map((InlineC c_) -> request.getB()
+                        .map((InlineB b0_) -> InlineB.builder().from(b0_).c(c_).build())
+                        .orElseGet(() -> InlineB.builder().c(c_).build()));
                 InlineA nextRequest = InlineA.builder().from(request).b(b0).build();
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, parsedResponse, () -> doThingInline(
-                                                nextRequest, requestOptions)
-                                        .body()),
+                                startingAfter.isPresent()
+                                        && !startingAfter.get().isEmpty(),
+                                result,
+                                parsedResponse,
+                                () -> doThingInline(nextRequest, requestOptions).body()),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

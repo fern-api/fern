@@ -5,6 +5,7 @@ package com.seed._enum.resources.queryparam;
 
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.RequestOptions;
+import com.seed._enum.core.SeedEnumHttpResponse;
 import com.seed._enum.resources.queryparam.requests.SendEnumAsQueryParamRequest;
 import com.seed._enum.resources.queryparam.requests.SendEnumListAsQueryParamRequest;
 import java.util.concurrent.CompletableFuture;
@@ -27,18 +28,46 @@ public class AsyncQueryParamClient {
     }
 
     public CompletableFuture<Void> send(SendEnumAsQueryParamRequest request) {
-        return this.rawClient.send(request).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.send(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> send(SendEnumAsQueryParamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.send(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.send(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> sendList(SendEnumListAsQueryParamRequest request) {
-        return this.rawClient.sendList(request).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.sendList(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> sendList(SendEnumListAsQueryParamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.sendList(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.sendList(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

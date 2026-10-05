@@ -51,6 +51,14 @@ public partial interface IContainerClient
         CancellationToken cancellationToken = default
     );
 
+    WithRawResponseTask<
+        Dictionary<int, ObjectWithRequiredField>
+    > GetAndReturnMapOfIntegerToObjectAsync(
+        Dictionary<int, ObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
     WithRawResponseTask<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
         ObjectWithRequiredField? request,
         RequestOptions? options = null,

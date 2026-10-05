@@ -8,7 +8,7 @@ enum Example40 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.modifyWithInlinePath(
+        _ = try await client.endpoints.params.modifyWithPath(
             param: "param",
             request: "string"
         )

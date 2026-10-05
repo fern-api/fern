@@ -38,10 +38,12 @@ func (a *Acai) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Acai) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetAnimal sets the Animal field and marks it as non-optional;
@@ -216,10 +218,12 @@ func (b *Berry) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *Berry) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetAnimal sets the Animal field and marks it as non-optional;
@@ -300,10 +304,12 @@ func (b *BranchNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BranchNode) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetChildren sets the Children field and marks it as non-optional;
@@ -384,10 +390,12 @@ func (c *Cat) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Cat) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetFruit sets the Fruit field and marks it as non-optional;
@@ -612,10 +620,12 @@ func (d *Dog) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *Dog) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetFruit sets the Fruit field and marks it as non-optional;
@@ -866,10 +876,12 @@ func (f *Fig) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Fig) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetAnimal sets the Animal field and marks it as non-optional;
@@ -1032,10 +1044,12 @@ func (l *LeafNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafNode) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 func (l *LeafNode) UnmarshalJSON(data []byte) error {
@@ -1195,10 +1209,12 @@ func (n *NodesWrapper) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NodesWrapper) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetNodes sets the Nodes field and marks it as non-optional;
@@ -1250,12 +1266,12 @@ func (n *NodesWrapper) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// This type allows us to test a circular reference with a union type (see FieldValue).
 var (
 	objectFieldValueFieldName  = big.NewInt(1 << 0)
 	objectFieldValueFieldValue = big.NewInt(1 << 1)
 )
 
+// This type allows us to test a circular reference with a union type (see FieldValue).
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
 	Value *FieldValue `json:"value" url:"value"`
@@ -1289,10 +1305,12 @@ func (o *ObjectFieldValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectFieldValue) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1368,10 +1386,12 @@ func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectValue) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {

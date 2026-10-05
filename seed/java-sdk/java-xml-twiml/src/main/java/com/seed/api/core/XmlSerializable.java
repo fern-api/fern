@@ -9,8 +9,7 @@ package com.seed.api.core;
 public interface XmlSerializable {
 
     /**
-     * Serializes this object as an XML element. Root elements (elements that are never nested inside another
-     * element) include the XML declaration.
+     * Serializes this object as an XML document, prefixed with the XML declaration.
      */
     String toXml();
 

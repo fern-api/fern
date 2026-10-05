@@ -33,6 +33,7 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "base_url",
     "environment",
     "max_retries",
+    "timeout",
     "token",
     "client",
     "request_options",
@@ -161,6 +162,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(maxRetriesParameter);
 
+        parameters.push(
+            ruby.parameters.keyword({
+                name: "timeout",
+                type: ruby.Type.class_({ name: "Numeric" }),
+                initializer: ruby.TypeLiteral.integer(60),
+                docs: "The default timeout in seconds for each request."
+            })
+        );
+
         // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
         // `app_info` keyword whose product token is appended to the User-Agent header.
         // Gated so flag-off client.rb keeps byte-identical output.
@@ -231,6 +241,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // that scheme's credentials were actually provided. For a single mandatory
         // provider scheme we keep the existing eager behavior.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+
+        const requiredCredentialChecks = this.getRequiredCredentialChecks({ isEndpointSecurity, anyAuthMultiScheme });
+        if (requiredCredentialChecks.length > 0) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(`${requiredCredentialChecks.join("\n")}\n`);
+                })
+            );
+        }
 
         if (isEndpointSecurity) {
             // Under endpoint-security every provider-based scheme may be routed to by
@@ -418,13 +437,49 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 if (this.emitHttpClientOption()) {
                     writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
                 }
-                writer.writeLine(`max_retries: max_retries`);
+                writer.writeLine(`max_retries: max_retries,`);
+                writer.writeLine(`timeout: timeout`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })
         );
 
         return method;
+    }
+
+    /**
+     * Under `requireAuthCredentials`, raises `ArgumentError` from the constructor when a
+     * mandatory bearer or header credential is neither passed nor set in its environment
+     * variable, instead of sending an empty auth header on every request.
+     */
+    private getRequiredCredentialChecks({
+        isEndpointSecurity,
+        anyAuthMultiScheme
+    }: {
+        isEndpointSecurity: boolean;
+        anyAuthMultiScheme: boolean;
+    }): string[] {
+        if (this.context.customConfig.requireAuthCredentials !== true || isEndpointSecurity || anyAuthMultiScheme) {
+            return [];
+        }
+        const checks: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            let paramName: string;
+            let envVar: string | undefined;
+            if (scheme.type === "bearer") {
+                paramName = this.context.getBearerTokenParameterName(scheme.token);
+                envVar = scheme.tokenEnvVar;
+            } else if (scheme.type === "header") {
+                paramName = this.context.getCredentialParameterName(scheme.name);
+                envVar = scheme.headerEnvVar;
+            } else {
+                continue;
+            }
+            const hint =
+                envVar != null ? `pass ${paramName}: or set the ${envVar} environment variable` : `pass ${paramName}:`;
+            checks.push(`raise ArgumentError, "${paramName} is required; ${hint}" if ${paramName}.to_s.empty?`);
+        }
+        return checks;
     }
 
     /**
@@ -601,12 +656,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.write(`}`);
+            writer.writeLine(`},`);
             if (this.emitHttpClientOption()) {
-                writer.writeLine(`,`);
-                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
             }
-            writer.newLine();
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -768,12 +822,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             writer.writeLine(`"X-Fern-Language" => "Ruby"`);
             writer.dedent();
-            writer.write(`}`);
+            writer.writeLine(`},`);
             if (this.emitHttpClientOption()) {
-                writer.writeLine(`,`);
-                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
             }
-            writer.newLine();
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();

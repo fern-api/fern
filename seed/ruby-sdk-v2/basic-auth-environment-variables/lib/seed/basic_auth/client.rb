@@ -41,7 +41,11 @@ module Seed
           (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            401 => Seed::Errors::Types::UnauthorizedRequestErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 
@@ -80,7 +84,11 @@ module Seed
           (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            401 => Seed::Errors::Types::UnauthorizedRequestErrorBody
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
     end

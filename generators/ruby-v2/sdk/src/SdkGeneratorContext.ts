@@ -372,7 +372,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // URL-encoded forms — only emitted when an endpoint actually uses a
             // form-urlencoded body, so the root require and its as-is file stay in
             // lockstep and never ship a dangling require.
-            ...(this.hasUrlEncodedRequestBodies() ? [AsIsFiles.UrlEncodedRequest] : []),
+            ...(this.hasUrlEncodedRequestBodies()
+                ? [AsIsFiles.UrlEncodedRequest, AsIsFiles.TestUrlEncodedRequest]
+                : []),
 
             // XML
             ...(this.hasXmlTypes()
@@ -411,6 +413,9 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
             // HTTP tests
             AsIsFiles.TestHttpRawClient,
+
+            // JSON tests
+            AsIsFiles.TestJsonRequest,
 
             // Multipart tests
             AsIsFiles.TestMultipartFormData
