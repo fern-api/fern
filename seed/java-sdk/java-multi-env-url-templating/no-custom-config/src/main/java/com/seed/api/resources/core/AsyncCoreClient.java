@@ -5,6 +5,7 @@ package com.seed.api.resources.core;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.core.types.ListThingsResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,25 @@ public class AsyncCoreClient {
     }
 
     public CompletableFuture<ListThingsResponse> listThings() {
-        return this.rawClient.listThings().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ListThingsResponse>> rawFuture = this.rawClient.listThings();
+        CompletableFuture<ListThingsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ListThingsResponse> listThings(RequestOptions requestOptions) {
-        return this.rawClient.listThings(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ListThingsResponse>> rawFuture =
+                this.rawClient.listThings(requestOptions);
+        CompletableFuture<ListThingsResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -9,6 +9,7 @@
 //! - **Model Types**: 23 types for data representation
 
 pub mod rule_create_request_execution_context;
+pub mod plant_base_watering_frequency;
 pub mod plant_post_sun_exposure;
 pub mod paginated_result;
 pub mod paging_cursors;
@@ -30,7 +31,6 @@ pub mod detailed_org_metadata;
 pub mod detailed_org;
 pub mod organization;
 pub mod plant_strict;
-pub mod plant_base_watering_frequency;
 pub mod plant_base;
 pub mod tree_identifiable;
 pub mod tree_describable;
@@ -41,6 +41,7 @@ pub mod plant_post;
 pub mod search_rule_types_query_request;
 
 pub use rule_create_request_execution_context::RuleCreateRequestExecutionContext;
+pub use plant_base_watering_frequency::PlantBaseWateringFrequency;
 pub use plant_post_sun_exposure::PlantPostSunExposure;
 pub use paginated_result::PaginatedResult;
 pub use paging_cursors::PagingCursors;
@@ -62,7 +63,6 @@ pub use detailed_org_metadata::DetailedOrgMetadata;
 pub use detailed_org::DetailedOrg;
 pub use organization::Organization;
 pub use plant_strict::PlantStrict;
-pub use plant_base_watering_frequency::PlantBaseWateringFrequency;
 pub use plant_base::PlantBase;
 pub use tree_identifiable::TreeIdentifiable;
 pub use tree_describable::TreeDescribable;

@@ -41,7 +41,7 @@ This SDK allows you to configure different environments or custom URLs for API r
 require "seed"
 
 seed = Seed::Client.new(
-    base_url: Seed::Environment::PRODUCTION
+    environment: Seed::Environment::PRODUCTION
 )
 ```
 
@@ -116,9 +116,16 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
+# Set the default timeout (in seconds) for every request made by the client.
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    timeout: 30
+)
+
+# Override the timeout for an individual request.
 response = client.auth.get_token(
     ...,
-    timeout: 30  # 30 second timeout
+    request_options: { timeout_in_seconds: 10 }
 )
 ```
 

@@ -4,6 +4,7 @@
 package com.seed.idempotencyHeaders.resources.payment;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.idempotencyHeaders.core.BodyProperties;
 import com.seed.idempotencyHeaders.core.ClientOptions;
 import com.seed.idempotencyHeaders.core.IdempotencyUtils;
 import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
@@ -53,7 +54,9 @@ public class AsyncRawPaymentClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedIdempotencyHeadersException("Failed to serialize request", e);
         }
@@ -79,7 +82,8 @@ public class AsyncRawPaymentClient {
                     .build();
         }
         CompletableFuture<SeedIdempotencyHeadersHttpResponse<UUID>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -108,6 +112,11 @@ public class AsyncRawPaymentClient {
                         new SeedIdempotencyHeadersException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -128,7 +137,10 @@ public class AsyncRawPaymentClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("DELETE", null)
+                .method(
+                        "DELETE",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null, null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -145,7 +157,8 @@ public class AsyncRawPaymentClient {
                     .build();
         }
         CompletableFuture<SeedIdempotencyHeadersHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -171,6 +184,11 @@ public class AsyncRawPaymentClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedIdempotencyHeadersException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

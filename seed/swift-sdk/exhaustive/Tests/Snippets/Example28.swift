@@ -8,14 +8,11 @@ enum Example28 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
-            requiredString: "hello",
-            requiredObject: NestedObjectWithRequiredField(
-                string: "nested",
-                nestedObject: ObjectWithOptionalField(
-
-                )
-            )
+        _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
+            requiredString: "requiredString",
+            requiredInteger: 1,
+            optionalString: "optionalString",
+            requiredLong: 1000000
         ))
     }
 }

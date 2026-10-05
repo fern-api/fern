@@ -5,6 +5,7 @@ package com.seed.exhaustive;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncNoAuthClient {
@@ -28,13 +29,28 @@ public class AsyncNoAuthClient {
      * POST request with no auth
      */
     public CompletableFuture<Boolean> postWithNoAuth(Object request) {
-        return this.rawClient.postWithNoAuth(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.postWithNoAuth(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST request with no auth
      */
     public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
-        return this.rawClient.postWithNoAuth(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture =
+                this.rawClient.postWithNoAuth(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

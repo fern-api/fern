@@ -5,6 +5,7 @@ package com.seed.undiscriminatedUnionWithResponseProperty;
 
 import com.seed.undiscriminatedUnionWithResponseProperty.core.ClientOptions;
 import com.seed.undiscriminatedUnionWithResponseProperty.core.RequestOptions;
+import com.seed.undiscriminatedUnionWithResponseProperty.core.SeedUndiscriminatedUnionWithResponsePropertyHttpResponse;
 import com.seed.undiscriminatedUnionWithResponseProperty.types.MyUnion;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,24 +28,57 @@ public class AsyncSeedUndiscriminatedUnionWithResponsePropertyClient implements 
     }
 
     public CompletableFuture<MyUnion> getUnion() {
-        return this.rawClient.getUnion().thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<MyUnion>> rawFuture =
+                this.rawClient.getUnion();
+        CompletableFuture<MyUnion> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<MyUnion> getUnion(RequestOptions requestOptions) {
-        return this.rawClient.getUnion(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<MyUnion>> rawFuture =
+                this.rawClient.getUnion(requestOptions);
+        CompletableFuture<MyUnion> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<MyUnion>> listUnions() {
-        return this.rawClient.listUnions().thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<List<MyUnion>>> rawFuture =
+                this.rawClient.listUnions();
+        CompletableFuture<List<MyUnion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<MyUnion>> listUnions(RequestOptions requestOptions) {
-        return this.rawClient.listUnions(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUndiscriminatedUnionWithResponsePropertyHttpResponse<List<MyUnion>>> rawFuture =
+                this.rawClient.listUnions(requestOptions);
+        CompletableFuture<List<MyUnion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

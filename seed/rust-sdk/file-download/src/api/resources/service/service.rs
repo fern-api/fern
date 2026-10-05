@@ -32,6 +32,20 @@ impl ServiceClient {
             .await
     }
 
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_file_download::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = FileDownloadClient::new(config).expect("Failed to build client");
+    ///     client.service.download_file(None).await;
+    /// }
+    /// ```
     pub async fn download_file(
         &self,
         options: Option<RequestOptions>,

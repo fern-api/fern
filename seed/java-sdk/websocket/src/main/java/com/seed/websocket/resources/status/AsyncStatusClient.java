@@ -5,6 +5,7 @@ package com.seed.websocket.resources.status;
 
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.RequestOptions;
+import com.seed.websocket.core.SeedWebsocketHttpResponse;
 import com.seed.websocket.resources.status.types.StatusResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,25 @@ public class AsyncStatusClient {
     }
 
     public CompletableFuture<StatusResponse> getStatus() {
-        return this.rawClient.getStatus().thenApply(response -> response.body());
+        CompletableFuture<SeedWebsocketHttpResponse<StatusResponse>> rawFuture = this.rawClient.getStatus();
+        CompletableFuture<StatusResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<StatusResponse> getStatus(RequestOptions requestOptions) {
-        return this.rawClient.getStatus(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedWebsocketHttpResponse<StatusResponse>> rawFuture =
+                this.rawClient.getStatus(requestOptions);
+        CompletableFuture<StatusResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

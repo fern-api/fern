@@ -12,8 +12,8 @@ async fn main() {
         .users
         .list_with_top_level_body_cursor_pagination(
             &ListUsersTopLevelBodyCursorPaginationRequest {
-                cursor: Some("cursor".to_string()),
-                filter: Some("filter".to_string()),
+                cursor: Some("initial_cursor".to_string()),
+                filter: Some("active".to_string()),
                 ..Default::default()
             },
             None,

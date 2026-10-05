@@ -5,6 +5,7 @@ package com.seed.api.resources.users;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.users.requests.GetUsersRequest;
 import com.seed.api.types.User;
 import java.util.concurrent.CompletableFuture;
@@ -30,27 +31,55 @@ public class AsyncUsersClient {
      * Gets a user by ID. The deleted_at field uses type null.
      */
     public CompletableFuture<User> get(String id) {
-        return this.rawClient.get(id).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<User>> rawFuture = this.rawClient.get(id);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
     public CompletableFuture<User> get(String id, RequestOptions requestOptions) {
-        return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<User>> rawFuture = this.rawClient.get(id, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
     public CompletableFuture<User> get(String id, GetUsersRequest request) {
-        return this.rawClient.get(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<User>> rawFuture = this.rawClient.get(id, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a user by ID. The deleted_at field uses type null.
      */
     public CompletableFuture<User> get(String id, GetUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<User>> rawFuture = this.rawClient.get(id, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

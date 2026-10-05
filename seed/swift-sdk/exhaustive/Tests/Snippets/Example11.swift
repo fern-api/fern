@@ -8,6 +8,6 @@ enum Example11 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.httpMethods.testGet(id: "id")
+        _ = try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
     }
 }
