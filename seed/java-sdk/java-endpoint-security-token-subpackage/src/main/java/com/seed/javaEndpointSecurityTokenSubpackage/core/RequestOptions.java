@@ -13,6 +13,8 @@ import java.util.function.Supplier;
 public final class RequestOptions {
     private final String apiKey;
 
+    private final String token;
+
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
@@ -31,6 +33,7 @@ public final class RequestOptions {
 
     private RequestOptions(
             String apiKey,
+            String token,
             Optional<Integer> timeout,
             TimeUnit timeoutTimeUnit,
             Optional<Integer> maxRetries,
@@ -40,6 +43,7 @@ public final class RequestOptions {
             Map<String, Supplier<String>> queryParameterSuppliers,
             Map<String, Object> bodyProperties) {
         this.apiKey = apiKey;
+        this.token = token;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
         this.maxRetries = maxRetries;
@@ -66,6 +70,9 @@ public final class RequestOptions {
         Map<String, String> headers = new HashMap<>();
         if (this.apiKey != null) {
             headers.put("X-API-Key", this.apiKey);
+        }
+        if (this.token != null) {
+            headers.put("Authorization", "Bearer " + this.token);
         }
         headers.putAll(this.headers);
         this.headerSuppliers.forEach((key, supplier) -> {
@@ -96,6 +103,8 @@ public final class RequestOptions {
     public static class Builder {
         private String apiKey = null;
 
+        private String token = null;
+
         private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
@@ -114,6 +123,11 @@ public final class RequestOptions {
 
         public Builder apiKey(String apiKey) {
             this.apiKey = apiKey;
+            return this;
+        }
+
+        public Builder token(String token) {
+            this.token = token;
             return this;
         }
 
@@ -172,6 +186,7 @@ public final class RequestOptions {
         public RequestOptions build() {
             return new RequestOptions(
                     apiKey,
+                    token,
                     timeout,
                     timeoutTimeUnit,
                     maxRetries,
