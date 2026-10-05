@@ -201,6 +201,8 @@ $client->createPlant(
         'species' => 'species',
         'family' => 'family',
         'genus' => 'genus',
+        'commonName' => 'commonName',
+        'wateringFrequency' => PlantBaseWateringFrequency::Daily->value,
         'sunExposure' => PlantPostSunExposure::Full->value,
     ]),
 );
@@ -214,6 +216,22 @@ $client->createPlant(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**$commonName:** `string` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$wateringFrequency:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -276,6 +294,8 @@ Tests that when a parent's allOf contains multiple $ref entries, all of them are
 $client->createTree(
     new TreeRecord([
         'id' => 'id',
+        'treeName' => 'treeName',
+        'treeSpecies' => 'treeSpecies',
     ]),
 );
 ```
