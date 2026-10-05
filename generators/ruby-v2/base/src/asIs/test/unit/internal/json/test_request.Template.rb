@@ -3,11 +3,11 @@
 require "test_helper"
 
 describe <%= gem_namespace %>::Internal::JSON::Request do
-  def build_request(body: nil, request_options: {})
+  def build_request(body: nil, request_options: {}, method: "POST")
     <%= gem_namespace %>::Internal::JSON::Request.new(
       base_url: "https://example.com",
       path: "/test",
-      method: "POST",
+      method: method,
       body: body,
       request_options: request_options
     )
@@ -51,6 +51,22 @@ describe <%= gem_namespace %>::Internal::JSON::Request do
 
       assert_equal({ "beta_flag" => true }, encoded_body(request))
       assert_equal "application/json", request.encode_headers["Content-Type"]
+    end
+
+    it "creates a body from additional body parameters for body-less DELETE, PUT and PATCH requests" do
+      %w[DELETE PUT PATCH].each do |method|
+        request = build_request(method: method, request_options: { additional_body_parameters: { "beta_flag" => true } })
+
+        assert_equal({ "beta_flag" => true }, encoded_body(request))
+      end
+    end
+
+    it "ignores additional body parameters for GET and HEAD requests without a body" do
+      ["GET", "HEAD", :get, "head"].each do |method|
+        request = build_request(method: method, request_options: { additional_body_parameters: { "beta_flag" => true } })
+
+        assert_nil request.encode_body
+      end
     end
 
     it "supports nested values" do

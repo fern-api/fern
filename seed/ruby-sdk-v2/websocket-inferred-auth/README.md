@@ -159,7 +159,7 @@ response = client.auth.get_token_with_client_credentials(
 ### Additional Body Properties
 
 If you would like to send additional body properties as part of the request, use the `additional_body_parameters` request option.
-Properties are merged into the serialized request body using their API (wire-format) names and override any field the SDK sets with the same name. If the endpoint has no body, one is created from these properties.
+Properties are merged into the serialized request body using their API (wire-format) names and override any field the SDK sets with the same name. If the endpoint has no body, one is created from these properties, except for GET and HEAD requests, which are always sent without a body (the properties are ignored).
 This applies to JSON and form-urlencoded requests; it is not applied to multipart (file upload) requests.
 
 ```ruby
