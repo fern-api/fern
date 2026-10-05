@@ -33,6 +33,7 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "base_url",
     "environment",
     "max_retries",
+    "timeout",
     "token",
     "client",
     "request_options",
@@ -160,6 +161,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             docs: "The default maximum number of retries for failed requests."
         });
         parameters.push(maxRetriesParameter);
+
+        parameters.push(
+            ruby.parameters.keyword({
+                name: "timeout",
+                type: ruby.Type.class_({ name: "Numeric" }),
+                initializer: ruby.TypeLiteral.integer(60),
+                docs: "The default timeout in seconds for each request."
+            })
+        );
 
         // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
         // `app_info` keyword whose product token is appended to the User-Agent header.
@@ -418,7 +428,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 if (this.emitHttpClientOption()) {
                     writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
                 }
-                writer.writeLine(`max_retries: max_retries`);
+                writer.writeLine(`max_retries: max_retries,`);
+                writer.writeLine(`timeout: timeout`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })
@@ -601,12 +612,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.write(`}`);
+            writer.writeLine(`},`);
             if (this.emitHttpClientOption()) {
-                writer.writeLine(`,`);
-                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
             }
-            writer.newLine();
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -768,12 +778,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             writer.writeLine(`"X-Fern-Language" => "Ruby"`);
             writer.dedent();
-            writer.write(`}`);
+            writer.writeLine(`},`);
             if (this.emitHttpClientOption()) {
-                writer.writeLine(`,`);
-                writer.write(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME}`);
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
             }
-            writer.newLine();
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
