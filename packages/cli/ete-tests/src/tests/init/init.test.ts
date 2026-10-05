@@ -266,7 +266,7 @@ describe("fern init", () => {
             targets: Array<{ generatorVersion?: string; language: string }>;
         };
         expect(sdkConfig.source.specs[0]?.path).toBe("./openapi.yml");
-        expect(sdkConfig.targets).toEqual([
+        expect(sdkConfig.targets).toStrictEqual([
             { language: "typescript", output: { delivery: "files", path: "../sdks/typescript" } }
         ]);
         expect(sdkConfig.targets[0]?.generatorVersion).toBeUndefined();
@@ -325,6 +325,37 @@ describe("fern init", () => {
         expect(
             await doesPathExist(join(apisDirectory, RelativeFilePath.of("api1"), RelativeFilePath.of("generators.yml")))
         ).toBe(true);
+    }, 180_000);
+
+    it.concurrent("relocates an existing OpenAPI input while preserving the SDK output default", async ({
+        expect,
+        signal
+    }) => {
+        const pathOfDirectory = await init({ env: SDK_CONFIG_ENV, signal });
+
+        await init({
+            directory: pathOfDirectory,
+            additionalArgs: [{ name: "--openapi", value: "fern/openapi.yml" }],
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+
+        const apisDirectory = join(
+            pathOfDirectory,
+            RelativeFilePath.of(FERN_DIRECTORY),
+            RelativeFilePath.of(APIS_DIRECTORY)
+        );
+        const originalConfig = yaml.load(
+            await readFile(join(apisDirectory, RelativeFilePath.of("api/sdk-config.yml")), "utf8")
+        ) as { targets: Array<{ output: { path?: string } }> };
+        const newConfig = yaml.load(
+            await readFile(join(apisDirectory, RelativeFilePath.of("api1/sdk-config.yml")), "utf8")
+        ) as { targets: Array<{ output: { path?: string } }> };
+
+        expect(await doesPathExist(join(apisDirectory, RelativeFilePath.of("api/openapi.yml")))).toBe(true);
+        expect(await doesPathExist(join(apisDirectory, RelativeFilePath.of("api1/openapi.yml")))).toBe(true);
+        expect(originalConfig.targets[0]?.output.path).toBe("../sdks/typescript");
+        expect(newConfig.targets[0]?.output.path).toBe("../sdks/typescript");
     }, 180_000);
 
     it.concurrent("rejects Fern Definition initialization without exposing internal details", async ({

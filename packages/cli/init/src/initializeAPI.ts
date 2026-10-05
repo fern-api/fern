@@ -46,15 +46,16 @@ export async function initializeAPI({
         taskContext: context
     });
 
-    const directoryOfWorkspace = await getDirectoryOfNewAPIWorkspace({
+    const { directoryOfWorkspace, relocatedOpenApiPath } = await getDirectoryOfNewAPIWorkspace({
         absolutePathToFernDirectory,
+        openApiPath,
         taskContext: context
     });
     const sdkName = directoryOfWorkspace === absolutePathToFernDirectory ? "api" : path.basename(directoryOfWorkspace);
-    if (openApiPath != null) {
+    if (relocatedOpenApiPath != null || openApiUrl != null) {
         await createOpenAPIWorkspace({
             directoryOfWorkspace,
-            openAPIFilePath: openApiPath,
+            openAPIFilePath: relocatedOpenApiPath,
             openAPIUrl: openApiUrl,
             cliVersion: versionOfCli,
             context,
@@ -84,11 +85,13 @@ export async function initializeAPI({
 
 async function getDirectoryOfNewAPIWorkspace({
     absolutePathToFernDirectory,
+    openApiPath,
     taskContext
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
+    openApiPath: AbsoluteFilePath | undefined;
     taskContext: TaskContext;
-}) {
+}): Promise<{ directoryOfWorkspace: AbsoluteFilePath; relocatedOpenApiPath: AbsoluteFilePath | undefined }> {
     const workspaces = await hasWorkspaces({ absolutePathToFernDirectory });
     if (workspaces) {
         let attemptCount = 0;
@@ -103,7 +106,7 @@ async function getDirectoryOfNewAPIWorkspace({
                 RelativeFilePath.of(`${DEFAULT_API_WORKSPACE_FOLDER_NAME}${++attemptCount}`)
             );
         }
-        return newApiDirectory;
+        return { directoryOfWorkspace: newApiDirectory, relocatedOpenApiPath: openApiPath };
     }
 
     const inlinedApiDefinition = await hasInlinedAPIDefinitions({ absolutePathToFernDirectory });
@@ -130,17 +133,25 @@ async function getDirectoryOfNewAPIWorkspace({
             await fs.move(inlinedDefinitionDirectory, workspaceDefinitionDirectory);
         }
 
+        let relocatedOpenApiPath = openApiPath;
         for (const filename of [
             GENERATORS_CONFIGURATION_FILENAME,
             SDK_CONFIG_FILENAME,
             "openapi.yml",
             "openapi.json"
         ]) {
-            await moveWorkspaceFileIfPresent({
+            const movedFile = await moveWorkspaceFileIfPresent({
                 filename,
                 from: absolutePathToFernDirectory,
                 to: apiWorkspaceDirectory
             });
+            if (
+                movedFile != null &&
+                openApiPath != null &&
+                path.resolve(openApiPath) === path.resolve(movedFile.from)
+            ) {
+                relocatedOpenApiPath = movedFile.to;
+            }
         }
 
         const newApiDirectory = join(
@@ -148,11 +159,11 @@ async function getDirectoryOfNewAPIWorkspace({
             RelativeFilePath.of(APIS_DIRECTORY),
             RelativeFilePath.of("api1")
         );
-        return newApiDirectory;
+        return { directoryOfWorkspace: newApiDirectory, relocatedOpenApiPath };
     }
 
     // if no apis exist already, create an inlined workspace
-    return absolutePathToFernDirectory;
+    return { directoryOfWorkspace: absolutePathToFernDirectory, relocatedOpenApiPath: openApiPath };
 }
 
 async function hasWorkspaces({
@@ -199,9 +210,12 @@ async function moveWorkspaceFileIfPresent({
     filename: string;
     from: AbsoluteFilePath;
     to: AbsoluteFilePath;
-}): Promise<void> {
+}): Promise<{ from: AbsoluteFilePath; to: AbsoluteFilePath } | undefined> {
     const source = join(from, RelativeFilePath.of(filename));
     if (await doesPathExist(source)) {
-        await fs.move(source, join(to, RelativeFilePath.of(filename)));
+        const destination = join(to, RelativeFilePath.of(filename));
+        await fs.move(source, destination);
+        return { from: source, to: destination };
     }
+    return undefined;
 }

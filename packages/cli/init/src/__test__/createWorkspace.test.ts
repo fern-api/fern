@@ -20,7 +20,9 @@ describe("createWorkspace", () => {
 
     afterEach(async () => {
         vi.resetAllMocks();
-        await Promise.all(temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true })));
+        await Promise.all(
+            temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true, force: true }))
+        );
     });
 
     it("creates a valid SDK Config without pinning the generator version", async () => {
@@ -96,15 +98,45 @@ describe("createWorkspace", () => {
         expect(bundledOpenAPI).not.toContain("./components.yml");
     });
 
-    it("preserves an OpenAPI URL in SDK Config", async () => {
+    it("removes a consumed x-fern-overrides-filepath from a bundled OpenAPI document", async () => {
         const directory = await temporaryDirectory();
         const sourceDirectory = await temporaryDirectory();
-        const sourcePath = path.join(sourceDirectory, "downloaded-openapi.yml");
-        await writeFile(sourcePath, "openapi: 3.0.0\n");
+        const sourcePath = path.join(sourceDirectory, "openapi.yml");
+        await writeFile(
+            sourcePath,
+            [
+                "openapi: 3.0.0",
+                "info:",
+                "  title: Original",
+                "  version: 1.0.0",
+                "paths: {}",
+                "x-fern-overrides-filepath: ./overrides.yml",
+                ""
+            ].join("\n")
+        );
+        await writeFile(path.join(sourceDirectory, "overrides.yml"), "info:\n  title: Overridden\n");
 
         await createOpenAPIWorkspace({
             directoryOfWorkspace: AbsoluteFilePath.of(directory),
             openAPIFilePath: AbsoluteFilePath.of(sourcePath),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext(),
+            useSdkConfig: true
+        });
+
+        const bundledOpenAPI = yaml.load(await readFile(path.join(directory, "openapi.yml"), "utf8")) as Record<
+            string,
+            unknown
+        >;
+        expect((bundledOpenAPI.info as { title: string }).title).toBe("Overridden");
+        expect(bundledOpenAPI["x-fern-overrides-filepath"]).toBeUndefined();
+    });
+
+    it("preserves an OpenAPI URL in SDK Config", async () => {
+        const directory = await temporaryDirectory();
+
+        await createOpenAPIWorkspace({
+            directoryOfWorkspace: AbsoluteFilePath.of(directory),
             openAPIUrl: "https://example.com/openapi.yml",
             cliVersion: "0.0.0",
             context: createMockTaskContext(),

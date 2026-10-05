@@ -57,7 +57,7 @@ export async function createOpenAPIWorkspace({
     sdkName = "api"
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
-    openAPIFilePath: AbsoluteFilePath;
+    openAPIFilePath?: AbsoluteFilePath;
     openAPIUrl?: string;
     cliVersion: string;
     context: TaskContext;
@@ -73,7 +73,7 @@ export async function createOpenAPIWorkspace({
                 ? {
                       path: await materializeOpenAPI({
                           directoryOfWorkspace,
-                          openAPIFilePath,
+                          openAPIFilePath: requireOpenAPIFilePath({ openAPIFilePath, context }),
                           context
                       })
                   }
@@ -85,14 +85,30 @@ export async function createOpenAPIWorkspace({
         });
         return;
     }
+    const localOpenAPIFilePath = requireOpenAPIFilePath({ openAPIFilePath, context });
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
         cliVersion,
         context,
         apiConfiguration: {
-            specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
+            specs: [{ openapi: relative(directoryOfWorkspace, localOpenAPIFilePath) }]
         }
     });
+}
+
+function requireOpenAPIFilePath({
+    openAPIFilePath,
+    context
+}: {
+    openAPIFilePath: AbsoluteFilePath | undefined;
+    context: TaskContext;
+}): AbsoluteFilePath {
+    if (openAPIFilePath == null) {
+        return context.failAndThrow("A local OpenAPI file is required", undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
+    return openAPIFilePath;
 }
 
 export async function createDefaultOpenAPIWorkspace({
@@ -147,10 +163,11 @@ async function materializeOpenAPI({
         absolutePathToOpenAPIOverrides: undefined,
         absolutePathToOpenAPIOverlays: undefined
     });
+    delete (bundled as Record<string, unknown>)["x-fern-overrides-filepath"];
     const contents =
         openAPIFileName === "openapi.json"
             ? `${JSON.stringify(bundled, null, 2)}\n`
-            : yaml.dump(bundled, { lineWidth: -1, noRefs: true });
+            : yaml.dump(bundled, { lineWidth: -1 });
     await writeFile(join(directoryOfWorkspace, RelativeFilePath.of(openAPIFileName)), contents);
     return `./${openAPIFileName}`;
 }
