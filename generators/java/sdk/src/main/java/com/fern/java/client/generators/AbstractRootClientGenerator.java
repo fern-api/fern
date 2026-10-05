@@ -1577,8 +1577,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .map(env -> "Please provide " + fieldName + " via ." + fieldName + "() or set " + env.get()
                                 + " environment variable")
                         .orElse("Please provide " + fieldName + " via ." + fieldName + "()");
-                authProviderInfos.add(
-                        new AuthProviderInfo("Bearer", "BearerAuthProvider", fieldName, null, envVarHint, false));
+                authProviderInfos.add(new AuthProviderInfo(
+                        bearer.getKey().get(), "BearerAuthProvider", fieldName, null, envVarHint, false));
             } else if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow("if (this.$L != null)", fieldName)
@@ -1682,7 +1682,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             + basic.getPasswordEnvVar().get().get() + " environment variables";
                 }
                 authProviderInfos.add(new AuthProviderInfo(
-                        "Basic",
+                        basic.getKey().get(),
                         "BasicAuthProvider",
                         usernameFieldName,
                         passwordFieldName,
@@ -1727,7 +1727,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+            return oauth.getConfiguration()
+                    .visit(new OAuthSchemeHandler(oauth.getKey().get()));
         }
 
         @Override
@@ -1940,6 +1941,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
 
+            private final String schemeKey;
+
+            public OAuthSchemeHandler(String schemeKey) {
+                this.schemeKey = schemeKey;
+            }
+
             @Override
             public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
                 EndpointReference tokenEndpointReference =
@@ -2085,7 +2092,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .append(" environment variables");
                         }
                         AuthProviderInfo oauthInfo = new AuthProviderInfo(
-                                "OAuth",
+                                schemeKey,
                                 "OAuthAuthProvider",
                                 "clientId",
                                 "clientSecret",

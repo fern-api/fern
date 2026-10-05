@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=../../../../../fern.schema.json
+types:
+  User:
+    properties:
+      id: string
+      name: string
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    getWithOAuth:
+      path: /users/oauth
+      method: GET
+      response: list<User>
+      auth:
+        - sellerAuth: []
+    getWithBearer:
+      path: /users/bearer
+      method: GET
+      response: list<User>
+      auth:
+        - tokenAuth: []
+    getWithBasic:
+      path: /users/basic
+      method: GET
+      response: list<User>
+      auth:
+        - passwordAuth: []
+    getWithAny:
+      path: /users/any
+      method: GET
+      response: list<User>
+      auth:
+        - sellerAuth: []
+        - tokenAuth: []
+        - passwordAuth: []

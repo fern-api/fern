@@ -1,0 +1,6 @@
+- summary: |
+    With endpoint-security auth, the client builder now registers OAuth, bearer and basic
+    auth providers under the auth scheme's configured key (for example `sellerAuth`)
+    instead of a hardcoded `OAuth`/`Bearer`/`Basic`. Previously, every authenticated call
+    failed with "No authentication credentials provided" when the scheme key differed.
+  type: fix
