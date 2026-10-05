@@ -65,9 +65,10 @@ export class WireTestDataExtractor {
         endpoint: FernIr.HttpEndpoint,
         dynamicExampleId: string
     ): WireTestExample | undefined {
+        const responseBody = this.extractResponseBody(example.response);
         let expectedError: WireTestExpectedError | undefined;
         if (example.response.type === "error") {
-            expectedError = this.getExpectedError(endpoint, example.response.error.errorId);
+            expectedError = this.getExpectedError(endpoint, example.response.error.errorId, responseBody != null);
             if (expectedError == null) {
                 return undefined;
             }
@@ -91,7 +92,7 @@ export class WireTestDataExtractor {
             },
             response: {
                 statusCode: expectedError?.statusCode ?? this.getSuccessStatusCode(endpoint),
-                body: this.extractResponseBody(example.response)
+                body: responseBody
             },
             expectedError
         };
@@ -102,9 +103,14 @@ export class WireTestDataExtractor {
      * discrimination the client maps each status code to the first declared error (by status code)
      * and throws the base API exception for undeclared ones; examples for errors shadowed by another
      * error with the same status code are skipped. With property discrimination the client always
-     * throws the base API exception.
+     * throws the base API exception. Error examples without a body for an error that declares a body type
+     * can't be parsed into the typed error, so the client throws the base API exception for those too.
      */
-    private getExpectedError(endpoint: FernIr.HttpEndpoint, errorId: string): WireTestExpectedError | undefined {
+    private getExpectedError(
+        endpoint: FernIr.HttpEndpoint,
+        errorId: string,
+        hasBody: boolean
+    ): WireTestExpectedError | undefined {
         const errorDeclaration = this.context.ir.errors[errorId];
         if (errorDeclaration == null || errorDeclaration.statusCode < 400) {
             return undefined;
@@ -118,6 +124,9 @@ export class WireTestDataExtractor {
         };
 
         if (this.context.ir.errorDiscriminationStrategy.type !== "statusCode") {
+            return base;
+        }
+        if (!hasBody && errorDeclaration.type != null) {
             return base;
         }
 

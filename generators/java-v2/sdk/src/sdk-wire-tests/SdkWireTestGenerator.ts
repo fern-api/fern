@@ -189,6 +189,7 @@ export class SdkWireTestGenerator {
             const dynamicExamples = dynamicEndpoint?.examples ?? [];
             const baseTestMethodName = this.testMethodBuilder.getTestMethodName(endpoint);
             const testCases: WireTestCase[] = [];
+            const skipReasons: string[] = [];
 
             for (const [index, testExample] of testExamples.entries()) {
                 const isFirstExample = index === 0;
@@ -196,19 +197,22 @@ export class SdkWireTestGenerator {
                     this.context.logger.debug(
                         `Skipping example ${testExample.dynamicExampleId} of endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): ${reason}`
                     );
-                    skippedEndpoints.push({
-                        endpointId: endpoint.id,
-                        endpointName: getOriginalName(endpoint.name),
-                        reason
-                    });
+                    skipReasons.push(reason);
                 };
 
                 let fullSnippet: string;
                 try {
                     if (dynamicEndpoint != null && dynamicExamples.length > 0) {
-                        const dynamicExample =
-                            dynamicExamples.find((example) => example.id === testExample.dynamicExampleId) ??
-                            (isFirstExample ? dynamicExamples[0] : undefined);
+                        let dynamicExample = dynamicExamples.find(
+                            (example) => example.id === testExample.dynamicExampleId
+                        );
+                        if (dynamicExample == null && isFirstExample) {
+                            // Same pairing as before multi-example support: first test example with first dynamic example.
+                            this.context.logger.debug(
+                                `No dynamic example with id ${testExample.dynamicExampleId} for endpoint ${endpoint.id}, using the first dynamic example`
+                            );
+                            dynamicExample = dynamicExamples[0];
+                        }
                         if (dynamicExample == null) {
                             skip(`No dynamic example with id ${testExample.dynamicExampleId}`);
                             continue;
@@ -276,13 +280,21 @@ export class SdkWireTestGenerator {
                 endpointTests.set(endpoint.id, testCases);
                 const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
                 returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
+            } else if (skipReasons.length > 0) {
+                skippedEndpoints.push({
+                    endpointId: endpoint.id,
+                    endpointName: getOriginalName(endpoint.name),
+                    reason: skipReasons.join("; ")
+                });
             }
         }
 
         // Import expected exception classes unless their simple name clashes with another import.
-        const importedSimpleNames = new Map<string, string>();
+        // Simple names imported more than once map to undefined, so exceptions with that name are fully qualified.
+        const importedSimpleNames = new Map<string, string | undefined>();
         for (const imp of allImports) {
-            importedSimpleNames.set(imp.substring(imp.lastIndexOf(".") + 1), imp);
+            const simpleName = imp.substring(imp.lastIndexOf(".") + 1);
+            importedSimpleNames.set(simpleName, importedSimpleNames.has(simpleName) ? undefined : imp);
         }
         for (const testCases of endpointTests.values()) {
             for (const testCase of testCases) {
@@ -293,7 +305,7 @@ export class SdkWireTestGenerator {
                 const qualifiedName = `${expectedError.packageName}.${expectedError.className}`;
                 const importedAs = importedSimpleNames.get(expectedError.className);
                 if (
-                    (importedAs == null || importedAs === qualifiedName) &&
+                    (!importedSimpleNames.has(expectedError.className) || importedAs === qualifiedName) &&
                     expectedError.className !== className &&
                     expectedError.className !== clientClassName
                 ) {
