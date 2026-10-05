@@ -982,17 +982,34 @@ export class WireTestGenerator {
             ])
         );
         writer.newLine();
-        writer.write("var apiError ");
-        writer.writeNode(go.Type.pointer(go.Type.reference(errorTypeReference)));
-        writer.newLine();
-        writer.writeNode(
-            require("ErrorAs", [
-                go.codeblock("t"),
-                go.codeblock("invocationErr"),
-                go.codeblock("&apiError"),
-                go.TypeInstantiation.string(`Client method call should fail with ${errorTypeReference.name}`)
-            ])
-        );
+        if (errorDeclaration != null) {
+            writer.write("var apiError ");
+            writer.writeNode(go.Type.pointer(go.Type.reference(errorTypeReference)));
+            writer.newLine();
+            writer.writeNode(
+                require("ErrorAs", [
+                    go.codeblock("t"),
+                    go.codeblock("invocationErr"),
+                    go.codeblock("&apiError"),
+                    go.TypeInstantiation.string(`Client method call should fail with ${errorTypeReference.name}`)
+                ])
+            );
+        } else {
+            // Typed errors unwrap to *core.APIError, so ErrorAs can't tell them apart from the base error.
+            writer.write("apiError, isAPIError := invocationErr.(");
+            writer.writeNode(go.Type.pointer(go.Type.reference(errorTypeReference)));
+            writer.write(")");
+            writer.newLine();
+            writer.writeNode(
+                require("True", [
+                    go.codeblock("t"),
+                    go.codeblock("isAPIError"),
+                    go.TypeInstantiation.string(
+                        `Client method call should fail with exactly ${errorTypeReference.name}, not a typed error`
+                    )
+                ])
+            );
+        }
         writer.newLine();
         writer.writeNode(
             require("Equal", [
