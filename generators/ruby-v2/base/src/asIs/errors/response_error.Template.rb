@@ -14,6 +14,7 @@ module <%= gem_namespace %>
         "#<#{self.class.name} @code=#{code} @body=#{message}>"
       end
 
+<% /* Keep in sync with getResponseErrorClassName in generators/ruby-v2/sdk/src/wire-tests/WireTestExampleSelector.ts (pinned by its unit test). */ -%>
       # Returns the most appropriate error class for the given code.
       #
       # @return [Class]
