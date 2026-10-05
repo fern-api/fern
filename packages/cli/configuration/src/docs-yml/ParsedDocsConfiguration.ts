@@ -9,7 +9,6 @@ import {
     ApiSpecImportSettings,
     Availability,
     DocsInstance,
-    EmbeddingConfig,
     ExperimentalConfig,
     ExternalSitemap,
     LibraryLanguage,
@@ -50,7 +49,6 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
-    embedding: EmbeddingConfig | undefined;
     showHeadersInExamples: boolean | undefined;
     search:
         | {

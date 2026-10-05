@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Revert `settings.embedding.allowed-origins` in docs.yml (added in 5.129.0).
+  type: fix
