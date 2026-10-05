@@ -4,6 +4,7 @@
 package com.seed.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
@@ -16,6 +17,7 @@ import com.seed.api.types.PostSubmitResponse;
 import com.seed.api.types.TokenRequest;
 import com.seed.api.types.TokenResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import okhttp3.FormBody;
 import okhttp3.Headers;
@@ -49,8 +51,14 @@ public class RawSeedApiClient {
         }
         FormBody.Builder body = new FormBody.Builder();
         try {
-            body.add("username", String.valueOf(request.getUsername()));
-            body.add("email", String.valueOf(request.getEmail()));
+            Map<String, Object> formParams = new LinkedHashMap<>();
+            formParams.put("username", request.getUsername());
+            formParams.put("email", request.getEmail());
+            for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
+                            formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
+                    .entrySet()) {
+                body.add(entry.getKey(), String.valueOf(entry.getValue()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -106,9 +114,12 @@ public class RawSeedApiClient {
         }
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         try {
-            Map<String, Object> formParams = ObjectMappers.JSON_MAPPER.convertValue(
-                    request, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {});
-            for (Map.Entry<String, Object> entry : formParams.entrySet()) {
+            Map<String, Object> formParams = new LinkedHashMap<>();
+            formParams.putAll(ObjectMappers.JSON_MAPPER.convertValue(
+                    request, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {}));
+            for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
+                            formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
+                    .entrySet()) {
                 if (entry.getValue() != null) {
                     bodyBuilder.add(entry.getKey(), String.valueOf(entry.getValue()));
                 }

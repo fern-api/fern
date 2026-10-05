@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `toString()` instead of JSON, and `toXml()` always prepends the
+        `<?xml version="1.0" encoding="UTF-8"?>` declaration regardless of
+        whether the type is a root element. Use `toXml(false)` to omit it.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 4.24.0
   changelogEntry:
     - summary: |

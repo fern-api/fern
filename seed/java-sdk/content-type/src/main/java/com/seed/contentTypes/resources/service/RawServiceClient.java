@@ -4,6 +4,7 @@
 package com.seed.contentTypes.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.contentTypes.core.BodyProperties;
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.MediaTypes;
 import com.seed.contentTypes.core.ObjectMappers;
@@ -50,7 +51,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -148,7 +150,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -214,7 +217,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -287,7 +291,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -365,7 +370,9 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }

@@ -4,6 +4,7 @@
 package com.seed.variables.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.variables.core.BodyProperties;
 import com.seed.variables.core.ClientOptions;
 import com.seed.variables.core.ObjectMappers;
 import com.seed.variables.core.RequestOptions;
@@ -46,7 +47,11 @@ public class AsyncRawServiceClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -63,7 +68,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedVariablesHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -87,6 +93,11 @@ public class AsyncRawServiceClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedVariablesException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

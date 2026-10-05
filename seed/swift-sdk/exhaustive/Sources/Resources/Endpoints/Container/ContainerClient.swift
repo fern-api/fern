@@ -208,6 +208,34 @@ public final class ContainerClient: Sendable {
     /// private func main() async throws {
     ///     let client = ExhaustiveClient(token: "<token>")
     ///
+    ///     _ = try await client.endpoints.container.getAndReturnMapOfIntegerToObject(request: [
+    ///         1: ObjectWithRequiredField(
+    ///             string: "string"
+    ///         )
+    ///     ])
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getAndReturnMapOfIntegerToObject(request: [Int: ObjectWithRequiredField], requestOptions: RequestOptions? = nil) async throws -> [Int: ObjectWithRequiredField] {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/container/map-integer-to-object",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: [Int: ObjectWithRequiredField].self
+        )
+    }
+
+    /// ```swift
+    /// import Foundation
+    /// import Exhaustive
+    ///
+    /// private func main() async throws {
+    ///     let client = ExhaustiveClient(token: "<token>")
+    ///
     ///     _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
     ///         string: "string"
     ///     ))

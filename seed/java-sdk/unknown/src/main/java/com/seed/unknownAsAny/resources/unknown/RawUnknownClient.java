@@ -5,6 +5,7 @@ package com.seed.unknownAsAny.resources.unknown;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.unknownAsAny.core.BodyProperties;
 import com.seed.unknownAsAny.core.ClientOptions;
 import com.seed.unknownAsAny.core.MediaTypes;
 import com.seed.unknownAsAny.core.ObjectMappers;
@@ -47,7 +48,9 @@ public class RawUnknownClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedUnknownAsAnyException("Failed to serialize request", e);
         }
@@ -105,7 +108,9 @@ public class RawUnknownClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedUnknownAsAnyException("Failed to serialize request", e);
         }

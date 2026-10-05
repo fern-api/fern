@@ -8,6 +8,6 @@ enum Example50 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.primitive.getAndReturnBool(request: true)
+        _ = try await client.endpoints.primitive.getAndReturnDouble(request: 1.1)
     }
 }

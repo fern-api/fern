@@ -8,9 +8,9 @@ enum Example19 {
             token: "<token>"
         )
 
-        _ = try await client.users.listWithDoubleOffsetPagination(
-            page: 1.1,
-            perPage: 1.1,
+        _ = try await client.users.listWithOffsetPagination(
+            page: 1,
+            perPage: 1,
             order: .asc,
             startingAfter: "starting_after"
         )

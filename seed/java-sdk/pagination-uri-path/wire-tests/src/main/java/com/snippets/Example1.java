@@ -9,6 +9,6 @@ public class Example1 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.users().listWithPathPagination();
+        client.users().listWithUriPagination();
     }
 }

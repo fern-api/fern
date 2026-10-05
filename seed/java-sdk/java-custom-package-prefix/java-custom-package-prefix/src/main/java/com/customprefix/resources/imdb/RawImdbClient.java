@@ -3,6 +3,7 @@
  */
 package com.customprefix.resources.imdb;
 
+import com.customprefix.core.BodyProperties;
 import com.customprefix.core.ClientOptions;
 import com.customprefix.core.MediaTypes;
 import com.customprefix.core.ObjectMappers;
@@ -54,7 +55,9 @@ public class RawImdbClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }

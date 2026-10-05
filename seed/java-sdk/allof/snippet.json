@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "3b9bdc0d",
+            "example_identifier": "2138ee95",
             "id": {
                 "method": "POST",
                 "path": "/plants",
@@ -74,12 +74,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PlantPost;\nimport com.seed.api.types.PlantPostSunExposure;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(\n            PlantPost\n                .builder()\n                .species(\"species\")\n                .family(\"family\")\n                .genus(\"genus\")\n                .sunExposure(PlantPostSunExposure.FULL)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PlantPost;\nimport com.seed.api.types.PlantPostSunExposure;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(\n            PlantPost\n                .builder()\n                .species(\"species\")\n                .family(\"family\")\n                .genus(\"genus\")\n                .sunExposure(PlantPostSunExposure.FULL)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PlantPost;\nimport com.seed.api.types.PlantBaseWateringFrequency;\nimport com.seed.api.types.PlantPostSunExposure;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(\n            PlantPost\n                .builder()\n                .species(\"species\")\n                .family(\"family\")\n                .genus(\"genus\")\n                .commonName(\"commonName\")\n                .wateringFrequency(PlantBaseWateringFrequency.DAILY)\n                .sunExposure(PlantPostSunExposure.FULL)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PlantPost;\nimport com.seed.api.types.PlantBaseWateringFrequency;\nimport com.seed.api.types.PlantPostSunExposure;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlant(\n            PlantPost\n                .builder()\n                .species(\"species\")\n                .family(\"family\")\n                .genus(\"genus\")\n                .commonName(\"commonName\")\n                .wateringFrequency(PlantBaseWateringFrequency.DAILY)\n                .sunExposure(PlantPostSunExposure.FULL)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "79a98995",
+            "example_identifier": "553352f7",
             "id": {
                 "method": "POST",
                 "path": "/trees",
@@ -87,8 +87,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.TreeRecord;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTree(\n            TreeRecord\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.TreeRecord;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTree(\n            TreeRecord\n                .builder()\n                .id(\"id\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.TreeRecord;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTree(\n            TreeRecord\n                .builder()\n                .id(\"id\")\n                .treeName(\"treeName\")\n                .treeSpecies(\"treeSpecies\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.TreeRecord;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTree(\n            TreeRecord\n                .builder()\n                .id(\"id\")\n                .treeName(\"treeName\")\n                .treeSpecies(\"treeSpecies\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],
