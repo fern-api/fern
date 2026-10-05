@@ -38,10 +38,12 @@ func (c *Conversation) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Conversation) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetFoo sets the Foo field and marks it as non-optional;
@@ -154,10 +156,12 @@ func (c *CursorPages) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CursorPages) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -279,10 +283,12 @@ func (m *MultipleFilterSearchRequest) GetExtraProperties() map[string]interface{
 }
 
 func (m *MultipleFilterSearchRequest) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetOperator sets the Operator field and marks it as non-optional;
@@ -477,10 +483,12 @@ func (p *PaginatedConversationResponse) GetExtraProperties() map[string]interfac
 }
 
 func (p *PaginatedConversationResponse) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetConversations sets the Conversations field and marks it as non-optional;
@@ -595,10 +603,12 @@ func (s *SearchRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetPagination sets the Pagination field and marks it as non-optional;
@@ -782,10 +792,12 @@ func (s *SingleFilterSearchRequest) GetExtraProperties() map[string]interface{} 
 }
 
 func (s *SingleFilterSearchRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetField sets the Field field and marks it as non-optional;
@@ -935,10 +947,12 @@ func (s *StartingAfterPaging) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *StartingAfterPaging) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;

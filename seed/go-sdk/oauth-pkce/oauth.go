@@ -36,10 +36,12 @@ func (a *AuthorizeRequest) ResponseType() string {
 }
 
 func (a *AuthorizeRequest) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (a *AuthorizeResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AuthorizeResponse) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetCode sets the Code field and marks it as non-optional;

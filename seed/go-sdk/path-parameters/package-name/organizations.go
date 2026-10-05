@@ -25,10 +25,12 @@ type GetOrganizationUserRequest struct {
 }
 
 func (g *GetOrganizationUserRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetTenantID sets the TenantID field and marks it as non-optional;
@@ -64,10 +66,12 @@ type SearchOrganizationsRequest struct {
 }
 
 func (s *SearchOrganizationsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
@@ -115,10 +119,12 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *Organization) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
