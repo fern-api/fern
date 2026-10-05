@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `--dry-run` now renders the full request preview on a terminal. The default
+    `table` format treated the preview's `headers` array as a paginated list and
+    printed only the header rows, dropping the URL, method, query params and body.
+    Dry-run previews (REST and GraphQL) are now emitted as a key/value record;
+    other formats (`json`, `yaml`, ...) are unchanged.
+  type: fix
+- summary: |
+    `--dry-run` output includes an `auth` block reporting the endpoint's security
+    schemes and whether credentials would be attached: `resolved` (with the
+    sources they come from), `missing` (with the sources to set), `supplied`
+    (passed explicitly as a request parameter) or `not_required`. Credential
+    values are never printed.
+  type: feat

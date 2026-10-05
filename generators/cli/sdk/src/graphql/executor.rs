@@ -270,7 +270,7 @@ pub async fn execute_method(
         }
         let mut out = std::io::stdout().lock();
         pipeline
-            .emit(&mut out, &dry_run_info, false, true)
+            .emit_record(&mut out, &dry_run_info)
             .context("Failed to write output")?;
         return Ok(None);
     }

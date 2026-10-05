@@ -1425,8 +1425,17 @@ impl CliApp {
                     .map_err(|e| CliError::Other(e.into()))?;
                 Ok(PipelineOutcome::Success)
             }
+            Ok(DispatchResult::Record(value)) => {
+                let transformed = self.hooks.run_transform_response(value, &op_path).await?;
+                let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
+                    .map_err(|e| CliError::Validation(e.to_string()))?;
+                pipeline
+                    .emit_record(out, &transformed)
+                    .map_err(|e| CliError::Other(e.into()))?;
+                Ok(PipelineOutcome::Success)
+            }
             Ok(DispatchResult::Handled) => {
-                // Binding already handled output (dry-run, streaming, etc.).
+                // Binding already handled output (streaming, pager, etc.).
                 Ok(PipelineOutcome::Success)
             }
             Err(err) => {
