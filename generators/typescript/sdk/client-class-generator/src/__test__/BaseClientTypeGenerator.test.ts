@@ -14,8 +14,12 @@ function createIR(opts?: {
     authRequirement?: FernIr.AuthSchemesRequirement;
     headers?: FernIr.HttpHeader[];
     pathParameters?: FernIr.PathParameter[];
+    variables?: FernIr.VariableDeclaration[];
 }): FernIr.IntermediateRepresentation {
     const ir = createMinimalIR();
+    if (opts?.variables) {
+        ir.variables = opts.variables;
+    }
     if (opts?.authSchemes || opts?.authRequirement) {
         ir.auth = {
             docs: undefined,
@@ -41,6 +45,16 @@ function createRootPathParameter(opts: { name: string; clientDefault?: FernIr.Li
         clientDefault: opts.clientDefault,
         v2Examples: undefined,
         explode: undefined,
+        docs: undefined
+    };
+}
+
+function createVariable(opts: { name: string; envVar?: string }): FernIr.VariableDeclaration {
+    return {
+        id: opts.name,
+        name: casingsGenerator.generateName(opts.name),
+        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+        envVar: opts.envVar,
         docs: undefined
     };
 }
@@ -311,6 +325,69 @@ describe("BaseClientTypeGenerator", () => {
             );
             expect(normalizeFunction).toBeDefined();
             expect(normalizeFunction).not.toContain("userId:");
+        });
+    });
+
+    describe("SDK variable environment variable fallback", () => {
+        function getNormalizeFunction(context: { _captured: { statements: string[] } }): string | undefined {
+            return context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+        }
+
+        it("does not resolve variables that have no envVar", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("_rootVariable");
+            expect(normalizeFunction).not.toContain("process.env");
+        });
+
+        it("resolves the option, then the env var, and throws when neither is set", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).toContain(
+                'const _rootVariable = options?.rootVariable ?? process.env?.["ROOT_VARIABLE"];'
+            );
+            expect(normalizeFunction).toContain("if (_rootVariable == null) {");
+            expect(normalizeFunction).toContain(
+                'throw new Error("rootVariable is required. Pass it to the client or set the ROOT_VARIABLE environment variable.");'
+            );
+            expect(normalizeFunction).toContain("rootVariable: _rootVariable,");
+        });
+
+        it("adds the resolved variable to NormalizedClientOptions", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizedType = context._captured.statements.find((s: string) =>
+                s.includes("export type NormalizedClientOptions<")
+            );
+            expect(normalizedType).toBeDefined();
+            expect(normalizedType).toContain("rootVariable: string;");
+        });
+
+        it("guards process access when guardProcessEnvAccess is enabled", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir, guardProcessEnvAccess: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toContain(
+                '(typeof process !== "undefined" ? process.env?.["ROOT_VARIABLE"] : undefined)'
+            );
         });
     });
 

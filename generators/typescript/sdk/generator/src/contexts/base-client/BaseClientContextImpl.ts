@@ -233,11 +233,19 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);
+            const variableDocs: string[] = [];
+            if (variable.docs != null) {
+                variableDocs.push(variable.docs);
+            }
+            if (variable.envVar != null) {
+                variableDocs.push(`Defaults to the ${variable.envVar} environment variable when not provided.`);
+            }
             properties.push({
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.getOptionNameForVariable(variable)),
                 type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
-                hasQuestionToken: variableType.isOptional
+                hasQuestionToken: variableType.isOptional || variable.envVar != null,
+                docs: variableDocs.length > 0 ? [variableDocs.join(" ")] : undefined
             });
         }
 

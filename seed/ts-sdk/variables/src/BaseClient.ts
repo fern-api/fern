@@ -7,7 +7,8 @@ export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    rootVariable: string;
+    /** Falls back to the ROOT_VARIABLE environment variable when not passed to the client. Defaults to the ROOT_VARIABLE environment variable when not provided. */
+    rootVariable?: string;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -41,6 +42,7 @@ export interface BaseRequestOptions {
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
+    rootVariable: string;
 };
 
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
@@ -58,8 +60,16 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         options?.headers,
     );
 
+    const _rootVariable = options?.rootVariable ?? process.env?.ROOT_VARIABLE;
+    if (_rootVariable == null) {
+        throw new Error(
+            "rootVariable is required. Pass it to the client or set the ROOT_VARIABLE environment variable.",
+        );
+    }
+
     return {
         ...options,
+        rootVariable: _rootVariable,
         logging: core.logging.createLogger(options?.logging),
         headers,
     } as NormalizedClientOptions<T>;
