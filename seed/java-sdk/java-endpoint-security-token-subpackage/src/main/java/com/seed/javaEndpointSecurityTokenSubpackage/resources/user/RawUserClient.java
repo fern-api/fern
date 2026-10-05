@@ -46,8 +46,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.of(
-                EndpointMetadata.requirement(EndpointMetadata.scheme("clientCredentialsAuth", "read-only")))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("OAuth", "read-only")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -102,7 +102,7 @@ public class RawUserClient {
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.of(
-                EndpointMetadata.requirement(EndpointMetadata.scheme("clientCredentialsAuth", "read-only")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("OAuth", "read-only")),
                 EndpointMetadata.requirement(EndpointMetadata.scheme("ApiKey")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())

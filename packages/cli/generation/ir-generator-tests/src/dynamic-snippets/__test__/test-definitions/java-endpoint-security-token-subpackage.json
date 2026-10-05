@@ -344,22 +344,22 @@
                 },
                 "customProperties": null,
                 "wrapperProperty": {
-                    "originalName": "clientCredentialsAuth",
+                    "originalName": "OAuth",
                     "camelCase": {
-                        "unsafeName": "clientCredentialsAuth",
-                        "safeName": "clientCredentialsAuth"
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_credentials_auth",
-                        "safeName": "client_credentials_auth"
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_CREDENTIALS_AUTH",
-                        "safeName": "CLIENT_CREDENTIALS_AUTH"
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientCredentialsAuth",
-                        "safeName": "ClientCredentialsAuth"
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
                     }
                 }
             },
@@ -753,22 +753,22 @@
                 },
                 "customProperties": null,
                 "wrapperProperty": {
-                    "originalName": "clientCredentialsAuth",
+                    "originalName": "OAuth",
                     "camelCase": {
-                        "unsafeName": "clientCredentialsAuth",
-                        "safeName": "clientCredentialsAuth"
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_credentials_auth",
-                        "safeName": "client_credentials_auth"
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_CREDENTIALS_AUTH",
-                        "safeName": "CLIENT_CREDENTIALS_AUTH"
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientCredentialsAuth",
-                        "safeName": "ClientCredentialsAuth"
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
                     }
                 }
             },
@@ -894,22 +894,22 @@
                 },
                 "customProperties": null,
                 "wrapperProperty": {
-                    "originalName": "clientCredentialsAuth",
+                    "originalName": "OAuth",
                     "camelCase": {
-                        "unsafeName": "clientCredentialsAuth",
-                        "safeName": "clientCredentialsAuth"
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_credentials_auth",
-                        "safeName": "client_credentials_auth"
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_CREDENTIALS_AUTH",
-                        "safeName": "CLIENT_CREDENTIALS_AUTH"
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientCredentialsAuth",
-                        "safeName": "ClientCredentialsAuth"
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
                     }
                 }
             },
@@ -1035,22 +1035,22 @@
                 },
                 "customProperties": null,
                 "wrapperProperty": {
-                    "originalName": "clientCredentialsAuth",
+                    "originalName": "OAuth",
                     "camelCase": {
-                        "unsafeName": "clientCredentialsAuth",
-                        "safeName": "clientCredentialsAuth"
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_credentials_auth",
-                        "safeName": "client_credentials_auth"
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_CREDENTIALS_AUTH",
-                        "safeName": "CLIENT_CREDENTIALS_AUTH"
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientCredentialsAuth",
-                        "safeName": "ClientCredentialsAuth"
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
                     }
                 }
             },
@@ -1176,22 +1176,22 @@
                 },
                 "customProperties": null,
                 "wrapperProperty": {
-                    "originalName": "clientCredentialsAuth",
+                    "originalName": "OAuth",
                     "camelCase": {
-                        "unsafeName": "clientCredentialsAuth",
-                        "safeName": "clientCredentialsAuth"
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_credentials_auth",
-                        "safeName": "client_credentials_auth"
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_CREDENTIALS_AUTH",
-                        "safeName": "CLIENT_CREDENTIALS_AUTH"
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientCredentialsAuth",
-                        "safeName": "ClientCredentialsAuth"
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
                     }
                 }
             },
@@ -1317,22 +1317,22 @@
                 },
                 "customProperties": null,
                 "wrapperProperty": {
-                    "originalName": "clientCredentialsAuth",
+                    "originalName": "OAuth",
                     "camelCase": {
-                        "unsafeName": "clientCredentialsAuth",
-                        "safeName": "clientCredentialsAuth"
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_credentials_auth",
-                        "safeName": "client_credentials_auth"
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_CREDENTIALS_AUTH",
-                        "safeName": "CLIENT_CREDENTIALS_AUTH"
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientCredentialsAuth",
-                        "safeName": "ClientCredentialsAuth"
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
                     }
                 }
             },

@@ -252,7 +252,7 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
                     ClientOptions.builder().environment(this.environment);
             TokenClient oauthAuthClient = new TokenClient(oauthClientOptionsBuilder.build());
             routingBuilder.addAuthProvider(
-                    "clientCredentialsAuth",
+                    "OAuth",
                     new OAuthAuthProvider(() -> this.clientId, () -> this.clientSecret, oauthAuthClient),
                     "Please provide clientId and clientSecret via .clientId()/.clientSecret() or set MY_CLIENT_ID and MY_CLIENT_SECRET environment variables");
         }

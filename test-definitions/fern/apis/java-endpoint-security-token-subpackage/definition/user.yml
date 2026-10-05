@@ -14,13 +14,13 @@ service:
       method: GET
       response: list<User>
       auth:
-        - clientCredentialsAuth: [read-only]
+        - OAuth: [read-only]
     getWithApiKeyOrOAuth:
       path: /users/mixed
       method: GET
       response: list<User>
       auth:
-        - clientCredentialsAuth: [read-only]
+        - OAuth: [read-only]
         - ApiKey: []
     getWithBearer:
       path: /users/bearer
