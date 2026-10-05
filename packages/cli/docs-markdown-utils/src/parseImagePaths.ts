@@ -1215,6 +1215,7 @@ export function replaceImagePathsAndUrls(
         // Reversed pre-order handles children before their parents.
         for (const { node, start, end } of [...astNodes].reverse()) {
             const innerEdits = edits.filter((edit) => edit.start >= start && edit.end <= end);
+            const innerEditSet = new Set(innerEdits);
             const original = applyEdits(
                 content.slice(start, end),
                 innerEdits.map((edit) => ({ ...edit, start: edit.start - start, end: edit.end - start }))
@@ -1273,7 +1274,7 @@ export function replaceImagePathsAndUrls(
             }
 
             if (replaced !== original) {
-                const outerEdits = edits.filter((edit) => !innerEdits.includes(edit));
+                const outerEdits = edits.filter((edit) => !innerEditSet.has(edit));
                 edits.length = 0;
                 edits.push(...outerEdits, { start, end, replacement: replaced });
             }
