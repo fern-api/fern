@@ -36,7 +36,8 @@ export class WireTestExampleSelector {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public getExamples(service: FernIr.HttpService, endpoint: FernIr.HttpEndpoint): WireTestExampleCase[] {
-        const cached = this.cache.get(endpoint.id);
+        const cacheKey = `${service.name.fernFilepath.allParts.map((part) => getOriginalName(part)).join(".")}:${endpoint.id}`;
+        const cached = this.cache.get(cacheKey);
         if (cached != null) {
             return cached;
         }
@@ -62,7 +63,7 @@ export class WireTestExampleSelector {
                 expectedError
             });
         }
-        this.cache.set(endpoint.id, cases);
+        this.cache.set(cacheKey, cases);
         return cases;
     }
 
@@ -137,9 +138,9 @@ export class WireTestExampleSelector {
             return base;
         }
 
-        const dispatchedErrorId = endpoint.errors
-            .map((responseError) => this.context.ir.errors[responseError.error.errorId])
-            .find((declaration) => declaration?.statusCode === statusCode)?.name.errorId;
+        const dispatchedErrorId = endpoint.errors.find(
+            (responseError) => this.context.ir.errors[responseError.error.errorId]?.statusCode === statusCode
+        )?.error.errorId;
         if (dispatchedErrorId == null) {
             return { ...base, body };
         }
