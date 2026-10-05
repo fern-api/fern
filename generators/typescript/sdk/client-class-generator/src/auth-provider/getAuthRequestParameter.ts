@@ -8,7 +8,10 @@ export const FORCE_REFRESH_ARG_NAME = "forceRefresh";
  * The type of the argument to `AuthProvider.getAuthRequest`, e.g.
  * `{ endpointMetadata?: core.EndpointMetadata; forceRefresh?: boolean }`.
  */
-export function getAuthRequestArgType(context: FileContext, { includeForceRefresh }: { includeForceRefresh: boolean }): string {
+export function getAuthRequestArgType(
+    context: FileContext,
+    { includeForceRefresh }: { includeForceRefresh: boolean }
+): string {
     const properties = [
         ts.factory.createPropertySignature(
             undefined,
