@@ -170,6 +170,9 @@
                 "properties": {
                   "path": {
                     "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
                   }
                 },
                 "required": [
