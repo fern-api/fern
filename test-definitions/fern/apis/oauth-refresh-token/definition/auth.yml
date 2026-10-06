@@ -1,0 +1,32 @@
+types:
+  TokenResponse:
+    docs: |
+      An OAuth token response.
+    properties:
+      access_token: string
+      expires_in: integer
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    refreshToken:
+      path: /token
+      method: POST
+      request:
+        name: RefreshTokenRequest
+        body:
+          properties:
+            refresh_token: string
+            grant_type: literal<"refresh_token">
+      response: TokenResponse
+      examples:
+        - request:
+            refresh_token: "refresh_token"
+            grant_type: "refresh_token"
+          response:
+            body:
+              access_token: "access_token"
+              expires_in: 3600
+              refresh_token: "rotated_refresh_token"

@@ -25,6 +25,7 @@ export const OAuthSchemeSchema: core.serialization.ObjectSchema<
         "client-secret-env": core.serialization.string().optional(),
         "get-token": OAuthGetTokenEndpointSchema.optional(),
         "refresh-token": OAuthRefreshTokenEndpointSchema.optional(),
+        "refresh-token-env": core.serialization.string().optional(),
         "client-id": core.serialization.string().optional(),
         "authorization-url": core.serialization.string().optional(),
         "device-authorization-url": core.serialization.string().optional(),
@@ -60,6 +61,7 @@ export declare namespace OAuthSchemeSchema {
         "client-secret-env"?: string | null;
         "get-token"?: OAuthGetTokenEndpointSchema.Raw | null;
         "refresh-token"?: OAuthRefreshTokenEndpointSchema.Raw | null;
+        "refresh-token-env"?: string | null;
         "client-id"?: string | null;
         "authorization-url"?: string | null;
         "device-authorization-url"?: string | null;

@@ -210,7 +210,8 @@
       "enum": [
         "client-credentials",
         "authorization-code",
-        "device-code"
+        "device-code",
+        "refresh-token"
       ]
     },
     "fernDefinition.auth.AuthScope": {
@@ -574,7 +575,19 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "The endpoint that exchanges a refresh token for an access token. Optional for the client-credentials flow and required for the refresh-token flow."
+        },
+        "refresh-token-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The environment variable holding the refresh token, for the refresh-token flow. The refresh token is the only credential for that flow; the SDK exchanges it at the `refresh-token` endpoint for an access token and caches it until it expires."
         },
         "client-id": {
           "oneOf": [

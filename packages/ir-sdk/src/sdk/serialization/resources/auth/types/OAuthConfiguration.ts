@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { OAuthAuthorizationCode } from "./OAuthAuthorizationCode.js";
 import { OAuthClientCredentials } from "./OAuthClientCredentials.js";
 import { OAuthDeviceCode } from "./OAuthDeviceCode.js";
+import { OAuthRefreshToken } from "./OAuthRefreshToken.js";
 
 export const OAuthConfiguration: core.serialization.Schema<
     serializers.OAuthConfiguration.Raw,
@@ -15,6 +16,7 @@ export const OAuthConfiguration: core.serialization.Schema<
         clientCredentials: OAuthClientCredentials,
         authorizationCode: OAuthAuthorizationCode,
         deviceCode: OAuthDeviceCode,
+        refreshToken: OAuthRefreshToken,
     })
     .transform<FernIr.OAuthConfiguration>({
         transform: (value) => {
@@ -25,6 +27,8 @@ export const OAuthConfiguration: core.serialization.Schema<
                     return FernIr.OAuthConfiguration.authorizationCode(value);
                 case "deviceCode":
                     return FernIr.OAuthConfiguration.deviceCode(value);
+                case "refreshToken":
+                    return FernIr.OAuthConfiguration.refreshToken(value);
                 default:
                     return value as FernIr.OAuthConfiguration;
             }
@@ -36,7 +40,8 @@ export declare namespace OAuthConfiguration {
     export type Raw =
         | OAuthConfiguration.ClientCredentials
         | OAuthConfiguration.AuthorizationCode
-        | OAuthConfiguration.DeviceCode;
+        | OAuthConfiguration.DeviceCode
+        | OAuthConfiguration.RefreshToken;
 
     export interface ClientCredentials extends OAuthClientCredentials.Raw {
         type: "clientCredentials";
@@ -48,5 +53,9 @@ export declare namespace OAuthConfiguration {
 
     export interface DeviceCode extends OAuthDeviceCode.Raw {
         type: "deviceCode";
+    }
+
+    export interface RefreshToken extends OAuthRefreshToken.Raw {
+        type: "refreshToken";
     }
 }

@@ -18,6 +18,7 @@ import { ResolvedEndpoint } from "../resolvers/ResolvedEndpoint.js";
 import { TypeResolver } from "../resolvers/TypeResolver.js";
 import { createEndpointReference } from "../utils/createEndpointReference.js";
 import { convertOAuthClientCredentials } from "./convertOAuthClientCredentials.js";
+import { convertOAuthRefreshToken } from "./convertOAuthRefreshToken.js";
 import { get0AuthTokenEndpoint, getRefreshTokenEndpoint } from "./convertOAuthUtils.js";
 import { getResponsePropertyComponents } from "./services/convertProperty.js";
 
@@ -329,6 +330,20 @@ function generateOAuth({
                     tokenHeader: rawScheme["token-header"],
                     tokenPrefix: rawScheme["token-prefix"]
                 })
+            });
+        case "refresh-token":
+            return AuthScheme.oauth({
+                key,
+                docs,
+                playgroundDocs,
+                configuration: OAuthConfiguration.refreshToken(
+                    convertOAuthRefreshToken({
+                        propertyResolver,
+                        endpointResolver,
+                        file,
+                        oauthScheme: rawScheme
+                    })
+                )
             });
         default:
             throw new CliError({

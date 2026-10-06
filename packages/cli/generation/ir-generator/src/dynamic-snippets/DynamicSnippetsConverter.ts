@@ -800,6 +800,14 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.Auth.header(headerAuth);
             }
             case "oauth": {
+                // The refresh-token flow's only credential is the refresh token, so snippets
+                // present it like a bearer token named `refreshToken`.
+                if (scheme.configuration.type === "refreshToken") {
+                    return DynamicSnippets.Auth.bearer({
+                        wrapperProperty,
+                        token: this.inflateName("refreshToken")
+                    });
+                }
                 const customProperties = this.getOAuthCustomProperties(scheme);
                 const oauth = {
                     wrapperProperty,
@@ -841,6 +849,9 @@ export class DynamicSnippetsConverter {
                     value: scheme.headerPlaceholder ?? "<value>"
                 });
             case "oauth": {
+                if (scheme.configuration.type === "refreshToken") {
+                    return DynamicSnippets.AuthValues.bearer({ token: "<refreshToken>" });
+                }
                 const customPropertyValues = this.getOAuthCustomPropertyValues(scheme);
                 return DynamicSnippets.AuthValues.oauth({
                     clientId: "<clientId>",

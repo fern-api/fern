@@ -1,0 +1,11 @@
+name: invalid
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: refresh-token
+    get-token:
+      endpoint: auth.refreshToken

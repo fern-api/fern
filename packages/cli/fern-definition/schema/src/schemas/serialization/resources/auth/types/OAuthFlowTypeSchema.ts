@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const OAuthFlowTypeSchema: core.serialization.Schema<
     serializers.OAuthFlowTypeSchema.Raw,
     FernDefinition.OAuthFlowTypeSchema
-> = core.serialization.enum_(["client-credentials", "authorization-code", "device-code"]);
+> = core.serialization.enum_(["client-credentials", "authorization-code", "device-code", "refresh-token"]);
 
 export declare namespace OAuthFlowTypeSchema {
-    export type Raw = "client-credentials" | "authorization-code" | "device-code";
+    export type Raw = "client-credentials" | "authorization-code" | "device-code" | "refresh-token";
 }

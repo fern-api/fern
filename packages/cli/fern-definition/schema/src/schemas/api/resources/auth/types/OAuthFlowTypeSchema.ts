@@ -4,5 +4,6 @@ export const OAuthFlowTypeSchema = {
     ClientCredentials: "client-credentials",
     AuthorizationCode: "authorization-code",
     DeviceCode: "device-code",
+    RefreshToken: "refresh-token",
 } as const;
 export type OAuthFlowTypeSchema = (typeof OAuthFlowTypeSchema)[keyof typeof OAuthFlowTypeSchema];

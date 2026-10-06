@@ -108,7 +108,50 @@ const DEVICE_CODE_CONFIG = Ir.auth.OAuthConfiguration.deviceCode({
     tokenPrefix: undefined
 });
 
+const REFRESH_TOKEN_CONFIG = Ir.auth.OAuthConfiguration.refreshToken({
+    refreshTokenEnvVar: "ACME_REFRESH_TOKEN",
+    tokenPrefix: undefined,
+    tokenHeader: undefined,
+    refreshEndpoint: {
+        endpointReference: {
+            endpointId: "endpoint_auth.refreshToken",
+            serviceId: "service_auth",
+            subpackageId: undefined
+        },
+        requestProperties: { refreshToken: bodyProperty("refresh_token") },
+        responseProperties: {
+            accessToken: {
+                propertyPath: undefined,
+                property: {
+                    name: { wireValue: "access_token", name: "access_token" },
+                    valueType: STRING_TYPE,
+                    propertyAccess: undefined,
+                    defaultValue: undefined,
+                    v2Examples: undefined,
+                    docs: undefined,
+                    availability: undefined,
+                    xml: undefined
+                }
+            },
+            expiresIn: undefined,
+            refreshToken: undefined
+        }
+    }
+});
+
 describe("convertAuth", () => {
+    it("surfaces the refresh-token flow to FDR as a bearer scheme even when the OAuth playground is enabled", () => {
+        const auth = apiAuthWithScheme(oauthScheme(REFRESH_TOKEN_CONFIG));
+
+        const result = convertAuth({ auth, playgroundConfig: { oauth: true }, context: createMockTaskContext() });
+
+        expect(result).toEqual({
+            type: "bearerAuth",
+            tokenName: "token",
+            description: "Log in with OAuth"
+        });
+    });
+
     it("surfaces the authorization-code (PKCE) flow to FDR as a bearer scheme", () => {
         const auth = apiAuthWithScheme(oauthScheme(AUTHORIZATION_CODE_CONFIG));
 

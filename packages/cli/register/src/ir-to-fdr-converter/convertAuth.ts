@@ -63,7 +63,8 @@ function convertAuthScheme({
         case "oauth": {
             // FDR only models the client-credentials playground flow. The authorization-code
             // (PKCE) flow is a public-client browser login handled by generated CLIs, not the
-            // docs playground, so it is surfaced to FDR as a plain bearer scheme.
+            // docs playground, so it is surfaced to FDR as a plain bearer scheme. The refresh-token
+            // flow is also surfaced as bearer: the playground sends an access token directly.
             const configuration = scheme.configuration;
             if (configuration.type !== "clientCredentials") {
                 return {

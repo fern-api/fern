@@ -73,6 +73,9 @@ function resolveOAuthScheme({
     key: string;
     oauthScheme: RawSchemas.OAuthSchemeSchema;
 }): AuthScheme | undefined {
+    if (oauthScheme.type === "refresh-token") {
+        return resolveOAuthRefreshTokenScheme({ ir, key, oauthScheme });
+    }
     if (oauthScheme.type !== "client-credentials") {
         return undefined;
     }
@@ -154,6 +157,36 @@ function resolveOAuthScheme({
                 oauthScheme["refresh-token"] != null
                     ? resolveRefreshEndpoint({ ir, refreshTokenConfig: oauthScheme["refresh-token"] })
                     : undefined
+        })
+    });
+}
+
+function resolveOAuthRefreshTokenScheme({
+    ir,
+    key,
+    oauthScheme
+}: {
+    ir: IntermediateRepresentation;
+    key: string;
+    oauthScheme: RawSchemas.OAuthSchemeSchema;
+}): AuthScheme | undefined {
+    const refreshTokenConfig = oauthScheme["refresh-token"];
+    if (refreshTokenConfig == null) {
+        return undefined;
+    }
+    const refreshEndpoint = resolveRefreshEndpoint({ ir, refreshTokenConfig });
+    if (refreshEndpoint == null) {
+        return undefined;
+    }
+    return AuthScheme.oauth({
+        key,
+        docs: oauthScheme.docs,
+        playgroundDocs: oauthScheme["playground-docs"],
+        configuration: OAuthConfiguration.refreshToken({
+            refreshTokenEnvVar: oauthScheme["refresh-token-env"],
+            tokenPrefix: oauthScheme["token-prefix"],
+            tokenHeader: oauthScheme["token-header"],
+            refreshEndpoint
         })
     });
 }

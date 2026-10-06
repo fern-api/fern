@@ -21,6 +21,7 @@ export * from "./OAuthPkceConfiguration.js";
 export * from "./OAuthPkceMethod.js";
 export * from "./OAuthPublicClientId.js";
 export * from "./OAuthRefreshEndpoint.js";
+export * from "./OAuthRefreshToken.js";
 export * from "./OAuthRefreshTokenRequestProperties.js";
 export * from "./OAuthScheme.js";
 export * from "./OAuthTokenEndpoint.js";
