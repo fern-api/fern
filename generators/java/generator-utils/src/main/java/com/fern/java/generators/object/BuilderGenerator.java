@@ -47,6 +47,9 @@ public final class BuilderGenerator {
     public static final String CONTENT_NAME = "content";
     private static final String ADD_CHILD_METHOD_NAME = "addChild";
     private static final String ADD_TEXT_METHOD_NAME = "addText";
+    private static final String COMMENT_METHOD_NAME = "comment";
+    private static final String COMMENT_BEFORE_METHOD_NAME = "commentBefore";
+    private static final String COMMENT_AFTER_METHOD_NAME = "commentAfter";
 
     private final ClassName objectClassName;
     private final ClassName nestedBuilderClassName;
@@ -471,9 +474,11 @@ public final class BuilderGenerator {
     }
 
     private String getAddTextMethodName() {
-        return allPropertyCamelCaseNames.contains(ADD_TEXT_METHOD_NAME)
-                ? "_" + ADD_TEXT_METHOD_NAME
-                : ADD_TEXT_METHOD_NAME;
+        return getContentMethodName(ADD_TEXT_METHOD_NAME);
+    }
+
+    private String getContentMethodName(String name) {
+        return allPropertyCamelCaseNames.contains(name) ? "_" + name : name;
     }
 
     private TypeName getAdditionalChildrenType() {
@@ -490,8 +495,9 @@ public final class BuilderGenerator {
 
     /**
      * The ordered-content members of an xml-encoded type's builder: {@code addChild(XmlElement)},
-     * {@code addText(String)} and bulk setters, all appending to one {@code content} sequence so that typed children,
-     * generic children and text keep their relative order.
+     * {@code addText(String)}, {@code comment(String)}, {@code commentBefore(String)}, {@code commentAfter(String)}
+     * and bulk setters, all appending to one {@code content} sequence so that typed children, generic children, text
+     * and comments keep their relative order.
      */
     private List<MethodSpec.Builder> getContentBuilderMethods(ClassName returnClass, boolean withBody) {
         List<MethodSpec.Builder> methods = new ArrayList<>();
@@ -504,6 +510,24 @@ public final class BuilderGenerator {
         MethodSpec.Builder addText = MethodSpec.methodBuilder(getAddTextMethodName())
                 .addJavadoc("Appends a text segment after any content added so far, so text can be interleaved with "
                         + "child elements.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder comment = MethodSpec.methodBuilder(getContentMethodName(COMMENT_METHOD_NAME))
+                .addJavadoc("Appends an xml comment ({@code <!--text-->}) inside this element, after any content "
+                        + "added so far.\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder commentBefore = MethodSpec.methodBuilder(getContentMethodName(COMMENT_BEFORE_METHOD_NAME))
+                .addJavadoc("Adds an xml comment rendered immediately before this element (as a sibling in its "
+                        + "parent, or before the root element).\n")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "text");
+        MethodSpec.Builder commentAfter = MethodSpec.methodBuilder(getContentMethodName(COMMENT_AFTER_METHOD_NAME))
+                .addJavadoc("Adds an xml comment rendered immediately after this element (as a sibling in its "
+                        + "parent, or after the root element).\n")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
                 .addParameter(String.class, "text");
@@ -521,6 +545,14 @@ public final class BuilderGenerator {
                     .addStatement("return this");
             addText.addStatement("this.$L.add($T.text(text))", contentFieldName, getXmlNodeClassName())
                     .addStatement("return this");
+            comment.addStatement("this.$L.add($T.comment(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            commentBefore
+                    .addStatement("this.$L.add($T.commentBefore(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
+            commentAfter
+                    .addStatement("this.$L.add($T.commentAfter(text))", contentFieldName, getXmlNodeClassName())
+                    .addStatement("return this");
             additionalChildren
                     .beginControlFlow(
                             "for ($T child : $L)", additionalChildrenItemType.get(), additionalChildrenFieldName)
@@ -532,6 +564,9 @@ public final class BuilderGenerator {
         }
         methods.add(addChild);
         methods.add(addText);
+        methods.add(comment);
+        methods.add(commentBefore);
+        methods.add(commentAfter);
         methods.add(additionalChildren);
         methods.add(content);
         return methods;

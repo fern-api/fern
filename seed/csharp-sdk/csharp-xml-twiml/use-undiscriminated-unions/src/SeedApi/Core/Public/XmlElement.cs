@@ -7,8 +7,8 @@ namespace SeedApi;
 /// A generic XML element. Used to carry child elements that are not part of the typed model
 /// (for example, elements introduced after the SDK was generated) so they survive a
 /// <c>FromXml</c> / <c>ToXml</c> round trip, and to append arbitrary elements to a model.
-/// Text segments and child elements live in a single ordered <see cref="Content"/> list, so
-/// mixed content keeps its order.
+/// Text segments, comments and child elements live in a single ordered <see cref="Content"/> list,
+/// so mixed content keeps its order.
 /// </summary>
 public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
 {
@@ -44,8 +44,8 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     public string? Prefix { get; set; }
 
     /// <summary>
-    /// The element's content in document order: <see cref="string"/> text segments and
-    /// <see cref="IXmlNode"/> child elements.
+    /// The element's content in document order: <see cref="string"/> text segments,
+    /// <see cref="XmlComment"/>s and <see cref="IXmlNode"/> child elements.
     /// </summary>
     public List<object> Content { get; set; } = new();
 
@@ -114,6 +114,16 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
         return this;
     }
 
+    /// <summary>
+    /// Appends an XML comment (<c>&lt;!--text--&gt;</c>) after any content added so far and returns this
+    /// element for chaining.
+    /// </summary>
+    public XmlElement AddComment(string text)
+    {
+        Content.Add(new XmlComment(text));
+        return this;
+    }
+
     public XElement ToXElement()
     {
         var element = XmlUtils.CreateElement(Name, Namespace, Prefix);
@@ -128,10 +138,7 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
         {
             XmlUtils.SetAttribute(element, attribute.Key, attribute.Value);
         }
-        foreach (var item in Content)
-        {
-            element.Add(XmlUtils.ToXNode(item));
-        }
+        XmlUtils.AddContent(element, Content);
         return element;
     }
 

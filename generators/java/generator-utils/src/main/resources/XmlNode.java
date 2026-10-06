@@ -7,26 +7,55 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * One item of an element's ordered content: either a text segment or a child element (a typed model or a generic
- * {@link XmlElement}). Keeping text and children in a single sequence preserves their relative order when
+ * One item of an element's ordered content: a text segment, a comment or a child element (a typed model or a generic
+ * {@link XmlElement}). Keeping text, comments and children in a single sequence preserves their relative order when
  * serializing and parsing mixed content.
+ *
+ * <p>Comments created with {@link #commentBefore} and {@link #commentAfter} are rendered as siblings of the element
+ * that holds them (immediately before or after it) rather than inside it.
  */
 public final class XmlNode {
 
+    /** Where a comment node is rendered relative to the element whose content holds it. */
+    public enum CommentPlacement {
+        INSIDE,
+        BEFORE,
+        AFTER
+    }
+
     private final String text;
     private final XmlSerializable element;
+    private final String comment;
+    private final CommentPlacement commentPlacement;
 
-    private XmlNode(String text, XmlSerializable element) {
+    private XmlNode(String text, XmlSerializable element, String comment, CommentPlacement commentPlacement) {
         this.text = text;
         this.element = element;
+        this.comment = comment;
+        this.commentPlacement = commentPlacement;
     }
 
     public static XmlNode text(String text) {
-        return new XmlNode(Objects.requireNonNull(text, "text"), null);
+        return new XmlNode(Objects.requireNonNull(text, "text"), null, null, null);
     }
 
     public static XmlNode element(XmlSerializable element) {
-        return new XmlNode(null, Objects.requireNonNull(element, "element"));
+        return new XmlNode(null, Objects.requireNonNull(element, "element"), null, null);
+    }
+
+    /** A comment ({@code <!--text-->}) rendered inside the element, at this position of its content. */
+    public static XmlNode comment(String text) {
+        return new XmlNode(null, null, Objects.requireNonNull(text, "text"), CommentPlacement.INSIDE);
+    }
+
+    /** A comment rendered immediately before the element that holds it. */
+    public static XmlNode commentBefore(String text) {
+        return new XmlNode(null, null, Objects.requireNonNull(text, "text"), CommentPlacement.BEFORE);
+    }
+
+    /** A comment rendered immediately after the element that holds it. */
+    public static XmlNode commentAfter(String text) {
+        return new XmlNode(null, null, Objects.requireNonNull(text, "text"), CommentPlacement.AFTER);
     }
 
     public boolean isText() {
@@ -37,12 +66,29 @@ public final class XmlNode {
         return element != null;
     }
 
+    public boolean isComment() {
+        return comment != null;
+    }
+
     public Optional<String> getText() {
         return Optional.ofNullable(text);
     }
 
     public Optional<XmlSerializable> getElement() {
         return Optional.ofNullable(element);
+    }
+
+    public Optional<String> getComment() {
+        return Optional.ofNullable(comment);
+    }
+
+    public Optional<CommentPlacement> getCommentPlacement() {
+        return Optional.ofNullable(commentPlacement);
+    }
+
+    /** The xml markup of a comment node. */
+    public static String renderComment(String text) {
+        return "<!--" + text + "-->";
     }
 
     /**
@@ -129,16 +175,25 @@ public final class XmlNode {
             return false;
         }
         XmlNode that = (XmlNode) other;
-        return Objects.equals(text, that.text) && Objects.equals(element, that.element);
+        return Objects.equals(text, that.text)
+                && Objects.equals(element, that.element)
+                && Objects.equals(comment, that.comment)
+                && commentPlacement == that.commentPlacement;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, element);
+        return Objects.hash(text, element, comment, commentPlacement);
     }
 
     @Override
     public String toString() {
-        return text != null ? text : element.toXml(false);
+        if (text != null) {
+            return text;
+        }
+        if (comment != null) {
+            return renderComment(comment);
+        }
+        return element.toXml(false);
     }
 }

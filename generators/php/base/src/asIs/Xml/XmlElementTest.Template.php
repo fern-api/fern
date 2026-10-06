@@ -4,6 +4,7 @@ namespace <%= namespace%>;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use <%= coreNamespace%>\Xml\XmlComment;
 use <%= coreNamespace%>\Xml\XmlElement;
 use <%= coreNamespace%>\Xml\XmlText;
 use <%= coreNamespace%>\Xml\XmlUtils;
@@ -172,5 +173,42 @@ class XmlElementTest extends TestCase
         $this->assertSame('B', $content[2]->text);
         $this->assertInstanceOf(XmlText::class, $content[3]);
         $this->assertSame('tail', $content[3]->text);
+    }
+
+    public function testCommentsKeepTheirPositionInContent(): void
+    {
+        $element = (new XmlElement('Response'))
+            ->addComment(' a comment ')
+            ->addChild(new XmlElement('Hangup'))
+            ->addText('loose text');
+        $this->assertSame('<Response><!-- a comment --><Hangup/>loose text</Response>', $element->toXml());
+
+        $parsed = XmlElement::fromXml($element->toXml());
+        $this->assertCount(3, $parsed->children);
+        $this->assertInstanceOf(XmlComment::class, $parsed->children[0]);
+        $this->assertSame(' a comment ', $parsed->children[0]->text);
+        $this->assertSame($element->toXml(), $parsed->toXml());
+
+        $say = XmlElement::fromXml('<Say><!--x-->text</Say>');
+        $this->assertNull($say->text);
+        $this->assertSame('<Say><!--x-->text</Say>', $say->toXml());
+    }
+
+    public function testSiblingCommentsRenderAroundTheirElement(): void
+    {
+        $say = new XmlElement('Say', 'x');
+        $say->addChild(XmlComment::before('before'))->addChild(XmlComment::after('after'));
+        $response = (new XmlElement('Response'))->addChild(new XmlElement('Pause'))->addChild($say);
+        $this->assertSame('<Response><Pause/><!--before--><Say>x</Say><!--after--></Response>', $response->toXml());
+        $this->assertSame(
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<!--before--><Say>x</Say><!--after-->',
+            $say->toXml(xmlDeclaration: true),
+        );
+    }
+
+    public function testFromXmlRejectsUnterminatedComment(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        XmlElement::fromXml('<Response><!-- oops </Response>');
     }
 }

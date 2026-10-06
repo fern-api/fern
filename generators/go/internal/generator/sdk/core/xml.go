@@ -36,11 +36,56 @@ func (XmlText) ToXmlElement() *XmlElement {
 	return nil
 }
 
+// XmlCommentPlacement says where an XmlComment is rendered relative to the
+// element whose content holds it.
+type XmlCommentPlacement int
+
+const (
+	// XmlCommentInside renders the comment inside the element, at its position
+	// in the content.
+	XmlCommentInside XmlCommentPlacement = iota
+	// XmlCommentBeforeElement renders the comment immediately before the element.
+	XmlCommentBeforeElement
+	// XmlCommentAfterElement renders the comment immediately after the element.
+	XmlCommentAfterElement
+)
+
+// XmlComment is an XML comment (<!--Text-->) in an element's mixed content. It
+// is an XmlNode so that comments, text and child elements share one ordered list.
+type XmlComment struct {
+	Text      string
+	Placement XmlCommentPlacement
+}
+
+// XmlCommentBefore returns a comment rendered immediately before the element
+// whose content holds it.
+func XmlCommentBefore(text string) XmlComment {
+	return XmlComment{Text: text, Placement: XmlCommentBeforeElement}
+}
+
+// XmlCommentAfter returns a comment rendered immediately after the element
+// whose content holds it.
+func XmlCommentAfter(text string) XmlComment {
+	return XmlComment{Text: text, Placement: XmlCommentAfterElement}
+}
+
+// ToXmlElement implements XmlNode; a comment has no element representation.
+func (XmlComment) ToXmlElement() *XmlElement {
+	return nil
+}
+
+func (c XmlComment) write(buffer *bytes.Buffer) {
+	buffer.WriteString("<!--")
+	buffer.WriteString(c.Text)
+	buffer.WriteString("-->")
+}
+
 // XmlElement is a generic XML element. It carries the children the generated
 // types don't know about, and is the escape hatch for emitting arbitrary tags.
 //
 // Text is the text before the first child; Children holds the child elements
-// and any further text segments (XmlText) in document order.
+// and any further text segments (XmlText) and comments (XmlComment) in document
+// order.
 type XmlElement struct {
 	Name       string
 	Namespace  string
@@ -99,6 +144,12 @@ func (x *XmlElement) AddChild(child XmlNode) *XmlElement {
 	return x
 }
 
+// AddComment appends an XML comment (<!--text-->) after the children added so far and returns the element.
+func (x *XmlElement) AddComment(text string) *XmlElement {
+	x.Children = append(x.Children, XmlComment{Text: text})
+	return x
+}
+
 // AddText appends a text segment after the children added so far and returns the element.
 func (x *XmlElement) AddText(text string) *XmlElement {
 	x.Children = append(x.Children, XmlText(text))
@@ -145,6 +196,20 @@ func (x *XmlElement) ToXmlDocument() string {
 }
 
 func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
+	x.writeSiblingComments(buffer, XmlCommentBeforeElement)
+	x.writeElement(buffer, declared)
+	x.writeSiblingComments(buffer, XmlCommentAfterElement)
+}
+
+func (x *XmlElement) writeSiblingComments(buffer *bytes.Buffer, placement XmlCommentPlacement) {
+	for _, child := range x.Children {
+		if comment, ok := child.(XmlComment); ok && comment.Placement == placement {
+			comment.write(buffer)
+		}
+	}
+}
+
+func (x *XmlElement) writeElement(buffer *bytes.Buffer, declared map[string]string) {
 	name := x.QualifiedName()
 	buffer.WriteByte('<')
 	buffer.WriteString(name)
@@ -191,6 +256,12 @@ func (x *XmlElement) hasContent() bool {
 			}
 			continue
 		}
+		if comment, ok := child.(XmlComment); ok {
+			if comment.Placement == XmlCommentInside {
+				return true
+			}
+			continue
+		}
 		if child != nil && child.ToXmlElement() != nil {
 			return true
 		}
@@ -204,6 +275,12 @@ func writeXmlNode(buffer *bytes.Buffer, node XmlNode, declared map[string]string
 	}
 	if text, ok := node.(XmlText); ok {
 		xmlEscape(buffer, string(text))
+		return
+	}
+	if comment, ok := node.(XmlComment); ok {
+		if comment.Placement == XmlCommentInside {
+			comment.write(buffer)
+		}
 		return
 	}
 	if element := node.ToXmlElement(); element != nil {
@@ -272,6 +349,14 @@ func ParseXml(document string) (*XmlElement, error) {
 			if len(stack) > 0 {
 				stack[len(stack)-1].appendParsedText(string(token))
 			}
+		case xml.Comment:
+			if len(stack) > 0 {
+				parent := stack[len(stack)-1]
+				if len(parent.Children) == 0 && IsXmlIndentation(parent.Text) {
+					parent.Text = ""
+				}
+				parent.Children = append(parent.Children, XmlComment{Text: string(token)})
+			}
 		}
 	}
 	if root == nil {
@@ -333,7 +418,7 @@ func isComparableXmlNode(node XmlNode) bool {
 }
 
 // OrderXmlContent reconciles a type's ordered Content with the nodes its typed
-// fields reference. Text segments and XmlElements keep their position, and so does
+// fields reference. Text segments, comments and XmlElements keep their position, and so does
 // any node still referenced by a field, one position per reference. Nodes no
 // longer referenced are dropped; referenced nodes missing from content (assigned
 // to a field directly) are appended in field order.
@@ -362,6 +447,10 @@ func OrderXmlContent(content []XmlNode, referenced ...[]XmlNode) []XmlNode {
 			continue
 		}
 		if _, ok := node.(XmlText); ok {
+			ordered = append(ordered, node)
+			continue
+		}
+		if _, ok := node.(XmlComment); ok {
 			ordered = append(ordered, node)
 			continue
 		}

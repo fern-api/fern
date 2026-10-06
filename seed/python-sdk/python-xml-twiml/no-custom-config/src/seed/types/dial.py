@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.xml_utilities import (
     XmlAttribute,
     XmlChild,
+    XmlComment,
     XmlContent,
     XmlElement,
     XmlNode,
@@ -31,6 +32,8 @@ class Dial(UniversalBaseModel):
     status_callback_event: typing.Optional[typing.List[str]] = None
     numbers: typing.Optional[typing.List[Number]] = None
     _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+    _comments_before: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
+    _comments_after: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
@@ -49,6 +52,8 @@ class Dial(UniversalBaseModel):
                 XmlChild(name="Numbers", value=self.numbers, wrapped=True),
             ],
             content=order_xml_content(self._content),
+            comments_before=self._comments_before,
+            comments_after=self._comments_after,
             xml_declaration=xml_declaration,
         )
 
@@ -113,6 +118,27 @@ class Dial(UniversalBaseModel):
         Appends a text segment after the children added so far and returns this element, so text and child elements can be interleaved.
         """
         self._content.append(text)
+        return self
+
+    def comment(self, text: str) -> Dial:
+        """
+        Appends an XML comment (`<!--text-->`) inside this element, after the content added so far, and returns this element.
+        """
+        self._content.append(XmlComment(text))
+        return self
+
+    def comment_before(self, text: str) -> Dial:
+        """
+        Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this element.
+        """
+        self._comments_before.append(XmlComment(text))
+        return self
+
+    def comment_after(self, text: str) -> Dial:
+        """
+        Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this element.
+        """
+        self._comments_after.append(XmlComment(text))
         return self
 
     def append(self, child: Number) -> Dial:

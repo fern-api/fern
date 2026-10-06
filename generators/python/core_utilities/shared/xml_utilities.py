@@ -22,8 +22,9 @@ from xml.dom import minidom
 from xml.parsers.expat import ExpatError
 from xml.sax.saxutils import escape, quoteattr
 
-import pydantic
 from .pydantic_utilities import IS_PYDANTIC_V2
+
+import pydantic
 
 XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -48,7 +49,7 @@ class XmlParsable(Protocol):
 XmlScalar = Union[str, int, float, bool, enum.Enum, dt.datetime, dt.date, uuid.UUID]
 _SCALAR_TYPES = (str, int, float, bool, enum.Enum, dt.datetime, dt.date, uuid.UUID)
 XmlAttributeValue = Optional[Union[XmlScalar, Sequence[XmlScalar]]]
-# One item of an element's ordered content: a text segment or a child element (typed model or XmlElement).
+# One item of an element's ordered content: a text segment, a comment or a child element (typed model or XmlElement).
 XmlContent = Union[str, XmlSerializable]
 XmlChildValue = Optional[Union[XmlScalar, XmlSerializable, Sequence[Union[XmlScalar, XmlSerializable]]]]
 
@@ -70,6 +71,25 @@ class XmlChild:
     wrapped: bool = False
 
 
+class XmlComment:
+    """An XML comment (`<!--text-->`), kept in an element's ordered content like a text segment or child element."""
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+    def to_xml(self, *, xml_declaration: bool = False) -> str:
+        return f"<!--{self.text}-->"
+
+    def __str__(self) -> str:
+        return self.to_xml()
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, XmlComment) and other.text == self.text
+
+    def __repr__(self) -> str:
+        return f"XmlComment({self.text!r})"
+
+
 def serialize_xml_element(
     *,
     name: str,
@@ -79,15 +99,18 @@ def serialize_xml_element(
     children: Sequence[XmlChild] = (),
     additional_children: Sequence[XmlSerializable] = (),
     content: Sequence[XmlContent] = (),
+    comments_before: Sequence[XmlComment] = (),
+    comments_after: Sequence[XmlComment] = (),
     namespace: Optional[str] = None,
     prefix: Optional[str] = None,
     xml_declaration: bool = False,
 ) -> str:
     """Renders an element. `text` and the `children` without a position marker come first, then `content`
-    (text segments and child elements, in order) followed by `additional_children`.
+    (text segments, comments and child elements, in order) followed by `additional_children`.
 
     An `XmlElement` in the content named after a wrapped child (a *wrapper marker*, as produced by
     `xml_content`) marks where that wrapped list renders; its attributes and children are merged into the wrapper.
+    `comments_before` and `comments_after` are rendered as siblings around the element (after the declaration).
     """
     tag = f"{prefix}:{name}" if prefix else name
     parts: List[str] = [f"<{tag}"]
@@ -132,7 +155,13 @@ def serialize_xml_element(
         parts.extend(body)
         parts.append(f"</{tag}>")
 
-    element = "".join(parts)
+    element = "".join(
+        [
+            *(comment.to_xml() for comment in comments_before),
+            *parts,
+            *(comment.to_xml() for comment in comments_after),
+        ]
+    )
     return f"{XML_DECLARATION}{element}" if xml_declaration else element
 
 
@@ -242,6 +271,10 @@ class XmlElement:
         self.content.append(text)
         return self
 
+    def add_comment(self, text: str) -> "XmlElement":
+        self.content.append(XmlComment(text))
+        return self
+
     def add_child(self, child: "XmlElement") -> "XmlElement":
         self.content.append(child)
         return self
@@ -312,7 +345,7 @@ def xml_leading_text(node: XmlNode, *, separator: Optional[str] = None) -> Optio
     """Returns the text before the element's first child element (the legacy text property), if any."""
     segments: List[str] = []
     for child in node.childNodes:
-        if child.nodeType == minidom.Node.ELEMENT_NODE:
+        if child.nodeType in (minidom.Node.ELEMENT_NODE, minidom.Node.COMMENT_NODE):
             break
         if child.nodeType in (minidom.Node.TEXT_NODE, minidom.Node.CDATA_SECTION_NODE):
             segments.append(child.data)
@@ -331,7 +364,7 @@ def xml_content(
     wrappers: Mapping[str, Collection[str]] = {},
 ) -> List[XmlContent]:
     """Returns the element's direct content in document order: text segments (whitespace-only ones are
-    kept unless they span a line break, i.e. come from pretty-printing) and child elements.
+    kept unless they span a line break, i.e. come from pretty-printing), comments and child elements.
 
     Children named in `types` (tag -> xml-encoded model class) are parsed with their `from_xml`; children
     named in `skip` are left out (they are read separately, e.g. scalar-valued elements); wrapper elements
@@ -345,6 +378,10 @@ def xml_content(
         if child.nodeType in (minidom.Node.TEXT_NODE, minidom.Node.CDATA_SECTION_NODE):
             if _is_content_text(child.data) and not (skip_leading_text and before_first_element):
                 content.append(child.data)
+            continue
+        if child.nodeType == minidom.Node.COMMENT_NODE:
+            before_first_element = False
+            content.append(XmlComment(child.data))
             continue
         if child.nodeType != minidom.Node.ELEMENT_NODE:
             continue

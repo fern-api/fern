@@ -8,7 +8,7 @@ export interface XmlSerializable {
     toXml(xmlDeclaration?: boolean): string;
 }
 
-/** One item of an element's ordered content: a text segment or a child element. */
+/** One item of an element's ordered content: a text segment, or a child element or comment (anything serializable). */
 export type XmlContent = string | XmlSerializable;
 
 export function isXmlSerializable(value: unknown): value is XmlSerializable {

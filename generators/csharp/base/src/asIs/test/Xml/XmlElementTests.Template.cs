@@ -266,4 +266,45 @@ public class XmlElementTests
 
         public string ToXml(bool xmlDeclaration) => ToXml();
     }
+
+    [Test]
+    public void Comments_KeepTheirPositionInContent()
+    {
+        var element = new XmlElement("Response")
+            .AddComment(" a comment ")
+            .AddChild(new XmlElement("Hangup"))
+            .AddText("loose text");
+
+        Assert.That(element.ToXml(), Is.EqualTo("<Response><!-- a comment --><Hangup />loose text</Response>"));
+
+        var parsed = XmlElement.FromXml(element.ToXml());
+        Assert.That(parsed.Content, Has.Count.EqualTo(3));
+        Assert.That(parsed.Content[0], Is.EqualTo(new XmlComment(" a comment ")));
+        Assert.That(parsed.Text, Is.EqualTo("loose text"));
+        Assert.That(parsed.ToXml(), Is.EqualTo(element.ToXml()));
+    }
+
+    [Test]
+    public void SiblingComments_RenderAroundTheirElement()
+    {
+        var say = new XmlElement("Say", "x");
+        say.Content.Add(XmlComment.Before("before"));
+        say.Content.Add(XmlComment.After("after"));
+        var response = new XmlElement("Response").AddChild(new XmlElement("Pause")).AddChild(say);
+
+        Assert.That(
+            response.ToXml(),
+            Is.EqualTo("<Response><Pause /><!--before--><Say>x</Say><!--after--></Response>")
+        );
+        Assert.That(
+            say.ToXml(true),
+            Is.EqualTo("<?xml version=\"1.0\" encoding=\"utf-8\"?><!--before--><Say>x</Say><!--after-->")
+        );
+    }
+
+    [Test]
+    public void FromXml_RejectsUnterminatedComment()
+    {
+        Assert.Throws<ArgumentException>(() => XmlElement.FromXml("<Response><!-- oops </Response>"));
+    }
 }

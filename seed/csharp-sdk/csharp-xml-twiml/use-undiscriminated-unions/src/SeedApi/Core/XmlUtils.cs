@@ -18,7 +18,7 @@ internal static class XmlUtils
     {
         DtdProcessing = DtdProcessing.Prohibit,
         XmlResolver = null,
-        IgnoreComments = true,
+        IgnoreComments = false,
         IgnoreProcessingInstructions = true,
     };
 
@@ -40,7 +40,66 @@ internal static class XmlUtils
     internal static string Serialize(XElement element, bool xmlDeclaration = false)
     {
         var xml = element.ToString(SaveOptions.DisableFormatting);
+        var siblings = element.Annotation<SiblingComments>();
+        if (siblings != null)
+        {
+            xml = siblings.Wrap(xml);
+        }
         return xmlDeclaration ? XmlDeclaration + xml : xml;
+    }
+
+    /// <summary>
+    /// Comments rendered immediately before and after an element (<see cref="XmlComment.Before"/> /
+    /// <see cref="XmlComment.After"/>), attached to the rendered <see cref="XElement"/> as an annotation
+    /// so the parent, or <see cref="Serialize"/> for the root, can emit them as siblings.
+    /// </summary>
+    internal sealed class SiblingComments
+    {
+        internal readonly List<XComment> Before = new();
+        internal readonly List<XComment> After = new();
+
+        internal static SiblingComments Of(XElement element)
+        {
+            var siblings = element.Annotation<SiblingComments>();
+            if (siblings == null)
+            {
+                siblings = new SiblingComments();
+                element.AddAnnotation(siblings);
+            }
+            return siblings;
+        }
+
+        internal void Add(XmlComment comment)
+        {
+            (comment.Placement == XmlComment.CommentPlacement.After ? After : Before).Add(
+                new XComment(comment.Text)
+            );
+        }
+
+        internal object[] Surround(XElement element)
+        {
+            var nodes = new List<object>(Before);
+            nodes.Add(element);
+            nodes.AddRange(After);
+            return nodes.ToArray();
+        }
+
+        internal string Wrap(string xml)
+        {
+            return string.Concat(Before.Select(c => c.ToString()))
+                + xml
+                + string.Concat(After.Select(c => c.ToString()));
+        }
+    }
+
+    /// <summary>
+    /// The element together with its sibling comments, if any, in a form <see cref="XContainer.Add(object)"/>
+    /// flattens into consecutive nodes.
+    /// </summary>
+    internal static object WithSiblings(XElement element)
+    {
+        var siblings = element.Annotation<SiblingComments>();
+        return siblings == null ? element : siblings.Surround(element);
     }
 
     /// <summary>
@@ -365,9 +424,17 @@ internal static class XmlUtils
     /// <summary>
     /// Renders one content item: a text segment or a child element.
     /// </summary>
-    internal static XNode ToXNode(object item)
+    internal static object ToXNode(object item)
     {
-        return item is string text ? new XText(text) : ToXElement(item);
+        switch (item)
+        {
+            case string text:
+                return new XText(text);
+            case XmlComment comment:
+                return new XComment(comment.Text);
+            default:
+                return WithSiblings(ToXElement(item));
+        }
     }
 
     internal static string? ConcatText(IEnumerable<object> content)
@@ -392,7 +459,7 @@ internal static class XmlUtils
         string? text = null;
         foreach (var node in element.Nodes())
         {
-            if (node is XElement)
+            if (node is XElement || node is XComment)
             {
                 break;
             }
@@ -426,7 +493,8 @@ internal static class XmlUtils
 
     /// <summary>
     /// Reads an element's content in document order. Text nodes become strings (leading text is
-    /// skipped when <paramref name="skipLeadingText"/>, as it belongs to the text property).
+    /// skipped when <paramref name="skipLeadingText"/>, as it belongs to the text property) and
+    /// comments become <see cref="XmlComment"/>s.
     /// Child elements go through <paramref name="parseChild"/> (returning null for elements it does
     /// not know) and otherwise become <see cref="XmlElement"/>s. Elements named in
     /// <paramref name="skipNames"/> (scalar element properties) are left out. Wrapper elements
@@ -453,6 +521,12 @@ internal static class XmlUtils
                     continue;
                 }
                 content.Add(text.Value);
+                continue;
+            }
+            if (node is XComment comment)
+            {
+                beforeFirstElement = false;
+                content.Add(new XmlComment(comment.Value));
                 continue;
             }
             if (node is not XElement child)
@@ -504,7 +578,7 @@ internal static class XmlUtils
         var ordered = new List<object>();
         foreach (var item in content)
         {
-            if (item is string || item is XmlElement)
+            if (item is string || item is XmlElement || item is XmlComment)
             {
                 ordered.Add(item);
             }
@@ -615,6 +689,14 @@ internal static class XmlUtils
                 positions[marker.Name] = position + take;
                 continue;
             }
+            if (
+                item is XmlComment comment
+                && comment.Placement != XmlComment.CommentPlacement.Inside
+            )
+            {
+                SiblingComments.Of(element).Add(comment);
+                continue;
+            }
             element.Add(ToXNode(item));
         }
         if (wrapped == null)
@@ -649,7 +731,7 @@ internal static class XmlUtils
         }
         foreach (var item in items)
         {
-            wrapper.Add(item);
+            wrapper.Add(WithSiblings(item));
         }
         if (marker != null)
         {

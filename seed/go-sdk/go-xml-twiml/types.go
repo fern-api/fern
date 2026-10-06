@@ -36,7 +36,7 @@ type Break struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -99,6 +99,24 @@ func (b *Break) AddText(text string) *Break {
 	return b
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Break.
+func (b *Break) Comment(text string) *Break {
+	b.Content = append(b.Content, core.XmlComment{Text: text})
+	return b
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Break.
+func (b *Break) CommentBefore(text string) *Break {
+	b.Content = append(b.Content, core.XmlCommentBefore(text))
+	return b
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Break.
+func (b *Break) CommentAfter(text string) *Break {
+	b.Content = append(b.Content, core.XmlCommentAfter(text))
+	return b
+}
+
 // BreakFromXml parses a Break from an XML document.
 func BreakFromXml(document string) (*Break, error) {
 	element, err := core.ParseXml(document)
@@ -140,6 +158,10 @@ func BreakFromXmlElement(element *core.XmlElement) (*Break, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -287,7 +309,7 @@ type Dial struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -365,6 +387,24 @@ func (d *Dial) AddText(text string) *Dial {
 	return d
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Dial.
+func (d *Dial) Comment(text string) *Dial {
+	d.Content = append(d.Content, core.XmlComment{Text: text})
+	return d
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Dial.
+func (d *Dial) CommentBefore(text string) *Dial {
+	d.Content = append(d.Content, core.XmlCommentBefore(text))
+	return d
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Dial.
+func (d *Dial) CommentAfter(text string) *Dial {
+	d.Content = append(d.Content, core.XmlCommentAfter(text))
+	return d
+}
+
 // AddNumber appends a <Number> child element and returns the Dial.
 func (d *Dial) AddNumber(child *Number) *Dial {
 	d.Numbers = append(d.Numbers, child)
@@ -417,6 +457,10 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -589,7 +633,7 @@ type Hangup struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -646,6 +690,24 @@ func (h *Hangup) AddText(text string) *Hangup {
 	return h
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Hangup.
+func (h *Hangup) Comment(text string) *Hangup {
+	h.Content = append(h.Content, core.XmlComment{Text: text})
+	return h
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Hangup.
+func (h *Hangup) CommentBefore(text string) *Hangup {
+	h.Content = append(h.Content, core.XmlCommentBefore(text))
+	return h
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Hangup.
+func (h *Hangup) CommentAfter(text string) *Hangup {
+	h.Content = append(h.Content, core.XmlCommentAfter(text))
+	return h
+}
+
 // HangupFromXml parses a Hangup from an XML document.
 func HangupFromXml(document string) (*Hangup, error) {
 	element, err := core.ParseXml(document)
@@ -678,6 +740,10 @@ func HangupFromXmlElement(element *core.XmlElement) (*Hangup, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -758,7 +824,7 @@ type Number struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -821,6 +887,24 @@ func (n *Number) AddText(text string) *Number {
 	return n
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Number.
+func (n *Number) Comment(text string) *Number {
+	n.Content = append(n.Content, core.XmlComment{Text: text})
+	return n
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Number.
+func (n *Number) CommentBefore(text string) *Number {
+	n.Content = append(n.Content, core.XmlCommentBefore(text))
+	return n
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Number.
+func (n *Number) CommentAfter(text string) *Number {
+	n.Content = append(n.Content, core.XmlCommentAfter(text))
+	return n
+}
+
 // NumberFromXml parses a Number from an XML document.
 func NumberFromXml(document string) (*Number, error) {
 	element, err := core.ParseXml(document)
@@ -857,6 +941,10 @@ func NumberFromXmlElement(element *core.XmlElement) (*Number, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -964,7 +1052,7 @@ type Pause struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -1024,6 +1112,24 @@ func (p *Pause) AddText(text string) *Pause {
 	return p
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Pause.
+func (p *Pause) Comment(text string) *Pause {
+	p.Content = append(p.Content, core.XmlComment{Text: text})
+	return p
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Pause.
+func (p *Pause) CommentBefore(text string) *Pause {
+	p.Content = append(p.Content, core.XmlCommentBefore(text))
+	return p
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Pause.
+func (p *Pause) CommentAfter(text string) *Pause {
+	p.Content = append(p.Content, core.XmlCommentAfter(text))
+	return p
+}
+
 // PauseFromXml parses a Pause from an XML document.
 func PauseFromXml(document string) (*Pause, error) {
 	element, err := core.ParseXml(document)
@@ -1062,6 +1168,10 @@ func PauseFromXmlElement(element *core.XmlElement) (*Pause, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -1242,7 +1352,7 @@ type Response struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -1297,6 +1407,24 @@ func (r *Response) AddChild(child core.XmlNode) *Response {
 // AddText appends a text segment after the children added so far and returns the Response.
 func (r *Response) AddText(text string) *Response {
 	r.Content = append(r.Content, core.XmlText(text))
+	return r
+}
+
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Response.
+func (r *Response) Comment(text string) *Response {
+	r.Content = append(r.Content, core.XmlComment{Text: text})
+	return r
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Response.
+func (r *Response) CommentBefore(text string) *Response {
+	r.Content = append(r.Content, core.XmlCommentBefore(text))
+	return r
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Response.
+func (r *Response) CommentAfter(text string) *Response {
+	r.Content = append(r.Content, core.XmlCommentAfter(text))
 	return r
 }
 
@@ -1368,6 +1496,10 @@ func ResponseFromXmlElement(element *core.XmlElement) (*Response, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -1666,7 +1798,7 @@ type Say struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -1733,6 +1865,24 @@ func (s *Say) AddText(text string) *Say {
 	return s
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Say.
+func (s *Say) Comment(text string) *Say {
+	s.Content = append(s.Content, core.XmlComment{Text: text})
+	return s
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Say.
+func (s *Say) CommentBefore(text string) *Say {
+	s.Content = append(s.Content, core.XmlCommentBefore(text))
+	return s
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Say.
+func (s *Say) CommentAfter(text string) *Say {
+	s.Content = append(s.Content, core.XmlCommentAfter(text))
+	return s
+}
+
 // Break appends a <break> child element and returns the Say.
 //
 // Adding a Pause in <Say>
@@ -1784,6 +1934,10 @@ func SayFromXmlElement(element *core.XmlElement) (*Say, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}
@@ -2438,7 +2592,7 @@ type Wide struct {
 	// The same nodes also appear in Content, which decides their position;
 	// a node removed from ExtraChildren is no longer rendered.
 	ExtraChildren []core.XmlNode `json:"-" url:"-"`
-	// Content holds the child elements and text segments in document order,
+	// Content holds the child elements, text segments and comments in document order,
 	// including the typed children, so mixed content round-trips as written.
 	// Nodes are shared by reference with the typed fields and ExtraChildren.
 	Content []core.XmlNode `json:"-" url:"-"`
@@ -3264,6 +3418,24 @@ func (w *Wide) AddText(text string) *Wide {
 	return w
 }
 
+// Comment appends an XML comment (<!--text-->) inside the element after the content added so far and returns the Wide.
+func (w *Wide) Comment(text string) *Wide {
+	w.Content = append(w.Content, core.XmlComment{Text: text})
+	return w
+}
+
+// CommentBefore adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns the Wide.
+func (w *Wide) CommentBefore(text string) *Wide {
+	w.Content = append(w.Content, core.XmlCommentBefore(text))
+	return w
+}
+
+// CommentAfter adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns the Wide.
+func (w *Wide) CommentAfter(text string) *Wide {
+	w.Content = append(w.Content, core.XmlCommentAfter(text))
+	return w
+}
+
 // Pause appends a <Pause> child element and returns the Wide.
 //
 // XML element without an explicit xml.name; falls back to the schema name.
@@ -4073,6 +4245,10 @@ func WideFromXmlElement(element *core.XmlElement) (*Wide, error) {
 			continue
 		}
 		if _, ok := node.(core.XmlText); ok {
+			result.Content = append(result.Content, node)
+			continue
+		}
+		if _, ok := node.(core.XmlComment); ok {
 			result.Content = append(result.Content, node)
 			continue
 		}

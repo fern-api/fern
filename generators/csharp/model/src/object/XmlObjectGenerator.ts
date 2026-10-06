@@ -28,6 +28,9 @@ const RESERVED_MEMBER_NAMES = [
     "AdditionalProperties",
     "AddChild",
     "AddText",
+    "Comment",
+    "CommentAfter",
+    "CommentBefore",
     "Equals",
     "FromXElement",
     "FromXml",
@@ -102,6 +105,7 @@ export class XmlObjectGenerator {
         this.addChildBuilderMethods();
         this.addAddChild();
         this.addAddText();
+        this.addCommentMethods();
     }
 
     /** Element properties holding xml-encoded child models, which live in the ordered content. */
@@ -315,7 +319,7 @@ export class XmlObjectGenerator {
             get: true,
             set: true,
             summary:
-                "Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.",
+                "Ordered content of the element: text segments (string), comments (XmlComment), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.",
             annotations: [jsonIgnore],
             initializer: this.csharp.codeblock("new()")
         });
@@ -1128,5 +1132,49 @@ export class XmlObjectGenerator {
                 writer.writeLine("return this;");
             })
         });
+    }
+
+    private addCommentMethods(): void {
+        const methods: { name: string; factory: string | undefined; summary: string }[] = [
+            {
+                name: "Comment",
+                factory: undefined,
+                summary:
+                    "Appends an XML comment (<!--text-->) inside this element after any content added so far and returns this instance for chaining."
+            },
+            {
+                name: "CommentBefore",
+                factory: "Before",
+                summary:
+                    "Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this instance for chaining."
+            },
+            {
+                name: "CommentAfter",
+                factory: "After",
+                summary:
+                    "Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this instance for chaining."
+            }
+        ];
+        for (const method of methods) {
+            this.class_.addMethod({
+                name: method.name,
+                access: ast.Access.Public,
+                return_: this.class_.reference,
+                parameters: [this.csharp.parameter({ name: "text", type: this.context.Primitive.string })],
+                summary: method.summary,
+                body: this.csharp.codeblock((writer) => {
+                    writer.write(`${CONTENT}.Add(`);
+                    if (method.factory == null) {
+                        writer.write("new ");
+                        writer.writeNode(this.context.Types.XmlComment);
+                        writer.writeLine("(text));");
+                    } else {
+                        writer.writeNode(this.context.Types.XmlComment);
+                        writer.writeLine(`.${method.factory}(text));`);
+                    }
+                    writer.writeLine("return this;");
+                })
+            });
+        }
     }
 }

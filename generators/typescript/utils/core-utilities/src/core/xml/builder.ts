@@ -1,8 +1,39 @@
-import { type XmlContent, XmlSerializable } from "./serialize";
+import { XML_DECLARATION, type XmlContent, XmlSerializable } from "./serialize";
+import { XmlComment } from "./XmlComment";
 
 /** A mutable, fluent builder for an xml-encoded model of type `T`. */
 export interface XmlBuilder<T> extends XmlSerializable {
     build(): T;
+    /** Comments rendered as siblings of the built element (see `XmlSiblingComments`). */
+    readonly siblingComments?: XmlSiblingComments;
+}
+
+/**
+ * Comments placed next to an element rather than inside it: before its start tag and after its end
+ * tag. When the element is built as part of a parent's content the comments become the parent's
+ * content around it; when it is serialized on its own they surround the root element.
+ */
+export class XmlSiblingComments {
+    public readonly before: XmlComment[] = [];
+    public readonly after: XmlComment[] = [];
+
+    public isEmpty(): boolean {
+        return this.before.length === 0 && this.after.length === 0;
+    }
+
+    /** Surrounds a serialized element with the comments, keeping an XML declaration first. */
+    public wrap(xml: string): string {
+        if (this.isEmpty()) {
+            return xml;
+        }
+        const declaration = xml.startsWith(XML_DECLARATION) ? XML_DECLARATION : "";
+        return [
+            declaration,
+            ...this.before.map((comment) => comment.toXml()),
+            xml.substring(declaration.length),
+            ...this.after.map((comment) => comment.toXml()),
+        ].join("");
+    }
 }
 
 export function isXmlBuilder<T>(value: T | XmlBuilder<T>): value is XmlBuilder<T> {
@@ -37,6 +68,7 @@ export interface XmlBuiltContent {
 /**
  * Builds every builder in an ordered content sequence exactly once, so that typed child
  * properties and the content refer to the same built instances (which keeps their order aligned).
+ * A builder's sibling comments are placed into the content around its built element.
  */
 export function xmlBuildContent(content: readonly XmlContent[]): XmlBuiltContent {
     const built = new Map<XmlBuilder<unknown>, unknown>();
@@ -51,7 +83,13 @@ export function xmlBuildContent(content: readonly XmlContent[]): XmlBuiltContent
         return built.get(value) as T;
     }
     return {
-        content: content.map((item) => (typeof item === "string" ? item : build(item))),
+        content: content.flatMap((item): XmlContent[] => {
+            if (typeof item === "string") {
+                return [item];
+            }
+            const siblings = isXmlBuilder(item) ? item.siblingComments : undefined;
+            return siblings == null ? [build(item)] : [...siblings.before, build(item), ...siblings.after];
+        }),
         build,
         buildAll: (values) => (values == null ? values : values.map((value) => build(value))),
     };

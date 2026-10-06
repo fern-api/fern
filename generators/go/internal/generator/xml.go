@@ -493,6 +493,30 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	t.writer.P("}")
 	t.writer.P()
 
+	// Comment, CommentBefore, CommentAfter
+	comments := []struct {
+		name     string
+		fallback string
+		value    string
+		doc      string
+	}{
+		{"Comment", "AddXmlComment", "core.XmlComment{Text: text}", "appends an XML comment (<!--text-->) inside the element after the content added so far"},
+		{"CommentBefore", "AddXmlCommentBefore", "core.XmlCommentBefore(text)", "adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element)"},
+		{"CommentAfter", "AddXmlCommentAfter", "core.XmlCommentAfter(text)", "adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element)"},
+	}
+	for _, comment := range comments {
+		name := comment.name
+		if _, ok := fieldNames[name]; ok {
+			name = comment.fallback
+		}
+		t.writer.P("// ", name, " ", comment.doc, " and returns the ", t.typeName, ".")
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(text string) *", t.typeName, " {")
+		t.writer.P(receiver, ".", xmlContentField, " = append(", receiver, ".", xmlContentField, ", ", comment.value, ")")
+		t.writer.P("return ", receiver)
+		t.writer.P("}")
+		t.writer.P()
+	}
+
 	// Builders
 	t.writeXmlBuilders(receiver, properties, fieldNames, addChild, addText)
 
@@ -559,6 +583,10 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	t.writer.P("continue")
 	t.writer.P("}")
 	t.writer.P("if _, ok := node.(core.XmlText); ok {")
+	t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", node)")
+	t.writer.P("continue")
+	t.writer.P("}")
+	t.writer.P("if _, ok := node.(core.XmlComment); ok {")
 	t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", node)")
 	t.writer.P("continue")
 	t.writer.P("}")

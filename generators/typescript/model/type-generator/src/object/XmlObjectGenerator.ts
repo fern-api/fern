@@ -46,7 +46,19 @@ const ADDITIONAL_CHILDREN = "additionalChildren";
 const CONTENT = "content";
 const FIELDS_INTERFACE = "Fields";
 const BUILDER_CLASS = "Builder";
-const RESERVED_BUILDER_METHODS = ["build", "toXml", "toString", "attribute", "addChild", "addText", "fromXml"];
+const RESERVED_BUILDER_METHODS = [
+    "build",
+    "toXml",
+    "toString",
+    "attribute",
+    "addChild",
+    "addText",
+    "comment",
+    "commentBefore",
+    "commentAfter",
+    "siblingComments",
+    "fromXml"
+];
 
 interface XmlProperty {
     key: string;
@@ -124,7 +136,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                     docs: [
                         {
                             description:
-                                "Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear."
+                                "Ordered content of the element: text segments, comments and child elements (typed children and children not declared in the API definition) in the order they appear."
                         }
                     ]
                 }
@@ -439,12 +451,57 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 returnType: "this",
                 statements: [`this.${contentName}.push(text);`, "return this;"]
             },
+            {
+                name: "comment",
+                docs: [
+                    {
+                        description:
+                            "Appends an XML comment (`<!--text-->`) inside this element, after any content added so far."
+                    }
+                ],
+                parameters: [{ name: "text", type: "string" }],
+                returnType: "this",
+                statements: [
+                    `this.${contentName}.push(new ${this.xmlRef(context, "XmlComment")}(text));`,
+                    "return this;"
+                ]
+            },
+            {
+                name: "commentBefore",
+                docs: [
+                    {
+                        description:
+                            "Adds an XML comment rendered immediately before this element: as a sibling in the parent it is added to, or before the root element."
+                    }
+                ],
+                parameters: [{ name: "text", type: "string" }],
+                returnType: "this",
+                statements: [
+                    `this.siblingComments.before.push(new ${this.xmlRef(context, "XmlComment")}(text));`,
+                    "return this;"
+                ]
+            },
+            {
+                name: "commentAfter",
+                docs: [
+                    {
+                        description:
+                            "Adds an XML comment rendered immediately after this element: as a sibling in the parent it is added to, or after the root element."
+                    }
+                ],
+                parameters: [{ name: "text", type: "string" }],
+                returnType: "this",
+                statements: [
+                    `this.siblingComments.after.push(new ${this.xmlRef(context, "XmlComment")}(text));`,
+                    "return this;"
+                ]
+            },
             { name: "build", returnType: this.typeName, statements: buildStatements },
             {
                 name: "toXml",
                 parameters: [{ name: "xmlDeclaration", type: "boolean", initializer: "true" }],
                 returnType: "string",
-                statements: ["return this.build().toXml(xmlDeclaration);"]
+                statements: ["return this.siblingComments.wrap(this.build().toXml(xmlDeclaration));"]
             },
             { name: "toString", returnType: "string", statements: ["return this.toXml();"] }
         );
@@ -462,6 +519,16 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 name: contentName,
                 scope: Scope.Private,
                 type: `${this.xmlType(context, "XmlContent")}[]`
+            },
+            {
+                kind: StructureKind.Property,
+                name: "siblingComments",
+                isReadonly: true,
+                type: this.xmlRef(context, "XmlSiblingComments"),
+                docs: [
+                    { description: "Comments added with `commentBefore`/`commentAfter`, rendered around this element." }
+                ],
+                initializer: `new ${this.xmlRef(context, "XmlSiblingComments")}()`
             }
         ];
         if (elementProperties.length > 0) {

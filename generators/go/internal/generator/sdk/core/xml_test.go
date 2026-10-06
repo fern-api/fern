@@ -216,3 +216,40 @@ func TestAddXmlContentTruncatedWrappedList(t *testing.T) {
 	AddXmlContent(element, []XmlNode{marker, marker}, map[string][]XmlNode{"Numbers": {NewXmlElement("Number")}})
 	assert.Equal(t, `<Dial><Numbers><Number /></Numbers></Dial>`, element.ToXml())
 }
+
+func TestXmlCommentsKeepTheirPosition(t *testing.T) {
+	element := NewXmlElement("Response").
+		AddComment(" a comment ").
+		AddChild(NewXmlElement("Hangup")).
+		AddText("loose text")
+	assert.Equal(t, `<Response><!-- a comment --><Hangup />loose text</Response>`, element.ToXml())
+
+	parsed, err := ParseXml(element.ToXml())
+	require.NoError(t, err)
+	require.Len(t, parsed.Children, 3)
+	assert.Equal(t, XmlComment{Text: " a comment "}, parsed.Children[0])
+	assert.Equal(t, XmlText("loose text"), parsed.Children[2])
+	assert.Equal(t, element.ToXml(), parsed.ToXml())
+
+	say, err := ParseXml(`<Say><!--x-->text</Say>`)
+	require.NoError(t, err)
+	assert.Equal(t, "", say.Text)
+	assert.Equal(t, `<Say><!--x-->text</Say>`, say.ToXml())
+}
+
+func TestXmlSiblingCommentsRenderAroundTheirElement(t *testing.T) {
+	say := NewXmlElement("Say").SetText("x")
+	say.Children = append(say.Children, XmlCommentBefore("before"), XmlCommentAfter("after"))
+	response := NewXmlElement("Response").AddChild(NewXmlElement("Pause")).AddChild(say)
+	assert.Equal(t, `<Response><Pause /><!--before--><Say>x</Say><!--after--></Response>`, response.ToXml())
+	assert.Equal(t, XmlHeader+`<!--before--><Say>x</Say><!--after-->`, say.ToXmlDocument())
+
+	empty := NewXmlElement("Hangup")
+	empty.Children = append(empty.Children, XmlCommentAfter("done"))
+	assert.Equal(t, `<Hangup /><!--done-->`, empty.ToXml())
+}
+
+func TestParseXmlRejectsUnterminatedComment(t *testing.T) {
+	_, err := ParseXml(`<Response><!-- oops </Response>`)
+	require.Error(t, err)
+}

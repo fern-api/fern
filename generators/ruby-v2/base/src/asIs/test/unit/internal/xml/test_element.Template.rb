@@ -6,6 +6,7 @@ describe <%= gem_namespace %>::Internal::Xml::Element do
   XmlTestElement = <%= gem_namespace %>::Internal::Xml::Element
   XmlTestUtils = <%= gem_namespace %>::Internal::Xml::Utils
   XmlTestText = <%= gem_namespace %>::Internal::Xml::Text
+  XmlTestComment = <%= gem_namespace %>::Internal::Xml::Comment
 
   describe "#to_xml" do
     it "serializes attributes, text and children with escaping" do
@@ -159,6 +160,44 @@ describe <%= gem_namespace %>::Internal::Xml::Element do
       assert_raises(ArgumentError) { XmlTestUtils.parse_integer("x") }
       assert_raises(ArgumentError) { XmlTestUtils.parse_boolean("maybe") }
       assert_raises(ArgumentError) { XmlTestUtils.parse_literal("no", "yes") }
+    end
+  end
+
+  describe "comments" do
+    it "keeps comments in their position in the content" do
+      element = XmlTestElement.new("Response").add_comment(" a comment ").add_child(XmlTestElement.new("Hangup")).add_text("loose text")
+
+      assert_equal "<Response><!-- a comment --><Hangup/>loose text</Response>", element.to_xml
+
+      parsed = XmlTestUtils.parse_document(element.to_xml)
+
+      assert_equal 3, parsed.children.length
+      assert_equal XmlTestComment.new(" a comment "), parsed.children[0]
+      assert_equal element.to_xml, parsed.to_xml
+      assert_equal element, parsed
+
+      say = XmlTestUtils.parse_document("<Say><!--x-->text</Say>")
+
+      assert_nil say.text
+      assert_equal "<Say><!--x-->text</Say>", say.to_xml
+    end
+
+    it "renders sibling comments around their element" do
+      say = XmlTestElement.new("Say", text: "x")
+      say.add_child(XmlTestComment.before("before")).add_child(XmlTestComment.after("after"))
+      response = XmlTestElement.new("Response").add_child(XmlTestElement.new("Pause")).add_child(say)
+
+      assert_equal "<Response><Pause/><!--before--><Say>x</Say><!--after--></Response>", response.to_xml
+      assert_equal "#{XmlTestUtils::XML_DECLARATION}<!--before--><Say>x</Say><!--after-->", say.to_xml(xml_declaration: true)
+      assert_empty say.child_elements
+
+      empty = XmlTestElement.new("Hangup").add_child(XmlTestComment.after("done"))
+
+      assert_equal "<Hangup/><!--done-->", empty.to_xml
+    end
+
+    it "rejects an unterminated comment" do
+      assert_raises(ArgumentError) { XmlTestUtils.parse_document("<Response><!-- oops </Response>") }
     end
   end
 end

@@ -3,8 +3,10 @@ import {
     parseXml,
     replaceXmlContent,
     serializeXmlElement,
+    XmlComment,
     XmlElement,
     XmlParseError,
+    XmlSiblingComments,
     xmlAttribute,
     xmlBoolean,
     xmlBuildContent,
@@ -254,5 +256,76 @@ describe("ordered content", () => {
         const other = new XmlElement({ name: "Other" });
         expect(xmlInitialContent(["a", custom], [custom, other])).toEqual(["a", custom, other]);
         expect(xmlInitialContent(undefined, undefined)).toEqual([]);
+    });
+});
+
+describe("comments", () => {
+    class Say {
+        constructor(public readonly text: string) {}
+        toXml(): string {
+            return `<Say>${this.text}</Say>`;
+        }
+    }
+
+    it("keeps comments in the parsed content in document order and round-trips them", () => {
+        const node = parseXml("<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>");
+        expect(node.content).toEqual([
+            { comment: " a comment " },
+            expect.objectContaining({ name: "Say" }),
+            { comment: "b" },
+            "tail",
+        ]);
+        const content = xmlContent(node, {
+            parse: (child) => (child.name === "Say" ? new Say(child.text ?? "") : undefined),
+        });
+        expect(content[0]).toBeInstanceOf(XmlComment);
+        expect(content.map((item) => (typeof item === "string" ? item : item.toXml()))).toEqual([
+            "<!-- a comment -->",
+            "<Say>hi</Say>",
+            "<!--b-->",
+            "tail",
+        ]);
+        expect(serializeXmlElement({ name: "Response", content })).toBe(
+            "<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>",
+        );
+        expect(XmlElement.fromXml("<Custom><!--c-->x</Custom>").toXml()).toBe("<Custom><!--c-->x</Custom>");
+        expect(XmlElement.fromXml("<Custom><!--c-->x</Custom>").text).toBe("x");
+    });
+
+    it("ends the leading text at a comment", () => {
+        const node = parseXml("<Say>Hi<!--c--> there</Say>");
+        expect(xmlLeadingText(node)).toBe("Hi");
+        expect(xmlContent(node, { skipLeadingText: true }).map((item) => String(item))).toEqual(["<!--c-->", " there"]);
+    });
+
+    it("rejects an unterminated comment", () => {
+        expect(() => parseXml("<Response><!-- oops </Response>")).toThrow(XmlParseError);
+    });
+
+    it("places a builder's sibling comments around its built element in the parent's content", () => {
+        const siblingComments = new XmlSiblingComments();
+        siblingComments.before.push(new XmlComment("before"));
+        siblingComments.after.push(new XmlComment("after"));
+        const builder = { build: () => new Say("built"), toXml: () => "", siblingComments };
+        const built = xmlBuildContent(["Hi ", builder, new XmlComment("inside")]);
+        expect(built.content.map((item) => (typeof item === "string" ? item : item.toXml()))).toEqual([
+            "Hi ",
+            "<!--before-->",
+            "<Say>built</Say>",
+            "<!--after-->",
+            "<!--inside-->",
+        ]);
+        expect(built.buildAll([builder])?.[0]).toBe(built.content[2]);
+    });
+
+    it("wraps a root element with its sibling comments, keeping the declaration first", () => {
+        const siblingComments = new XmlSiblingComments();
+        expect(siblingComments.wrap("<Response />")).toBe("<Response />");
+        siblingComments.before.push(new XmlComment("b"));
+        siblingComments.after.push(new XmlComment("a"));
+        expect(siblingComments.wrap('<?xml version="1.0" encoding="UTF-8"?><Response />')).toBe(
+            '<?xml version="1.0" encoding="UTF-8"?><!--b--><Response /><!--a-->',
+        );
+        expect(siblingComments.wrap("<Response />")).toBe("<!--b--><Response /><!--a-->");
     });
 });
