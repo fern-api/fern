@@ -2114,6 +2114,7 @@ export async function generateLanguageSpecificDynamicIRs({
             context.logger.warn(
                 `Skipping ${generatorInvocation.language} SDK snippets for API "${workspace.workspaceName ?? ""}": could not build the dynamic snippets IR (${error instanceof Error ? error.message : String(error)}). The rest of the docs will still publish.`
             );
+            context.logger.debug(error instanceof Error ? (error.stack ?? error.message) : String(error));
         }
     }
 
