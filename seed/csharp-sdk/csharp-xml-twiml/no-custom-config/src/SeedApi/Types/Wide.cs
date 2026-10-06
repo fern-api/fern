@@ -796,10 +796,27 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements that are not part of the typed model. They are written back by ToXml().
+    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
-    public List<XmlElement> AdditionalChildren { get; set; } = new();
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// Child elements that are not part of the typed model, derived from Content (a snapshot; add children through AddChild or Content).
+    /// </summary>
+    [JsonIgnore]
+    public IReadOnlyList<XmlElement> AdditionalChildren => Content.OfType<XmlElement>().ToList();
+
+    private static object? ParseContentChild(XElement child)
+    {
+        switch (child.Name.LocalName)
+        {
+            case "Pause":
+                return global::SeedApi.Pause.FromXElement(child);
+            default:
+                return null;
+        }
+    }
 
     /// <summary>
     /// Parses a <c>&lt;Wide&gt;</c> XML document. Throws <see cref="ArgumentException"/> if the XML is malformed or the root element does not match.
@@ -812,6 +829,7 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public static Wide FromXElement(XElement element)
     {
         XmlUtils.RequireName(element, "Wide");
+        var content = XmlUtils.ReadContent(element, ParseContentChild, false, null, null);
         var result = new Wide
         {
             Attr1 = XmlUtils.ParseValue<string?>(XmlUtils.GetAttribute(element, "attr1")),
@@ -1070,11 +1088,7 @@ public record Wide : IJsonOnDeserialized, IXmlNode
             Attr254 = XmlUtils.ParseValue<string?>(XmlUtils.GetAttribute(element, "attr254")),
             Attr255 = XmlUtils.ParseValue<string?>(XmlUtils.GetAttribute(element, "attr255")),
             Attr256 = XmlUtils.ParseValue<string?>(XmlUtils.GetAttribute(element, "attr256")),
-            Children = XmlUtils.ParseChildren(
-                element,
-                new string[] { "Pause" },
-                global::SeedApi.Pause.FromXElement
-            ),
+            Children = XmlUtils.ContentItems<Pause>(content),
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(
                 element,
                 "attr1",
@@ -1334,7 +1348,7 @@ public record Wide : IJsonOnDeserialized, IXmlNode
                 "attr255",
                 "attr256"
             ),
-            AdditionalChildren = XmlUtils.GetAdditionalChildren(element, new string[] { "Pause" }),
+            Content = content,
         };
         return result;
     }
@@ -1604,14 +1618,8 @@ public record Wide : IJsonOnDeserialized, IXmlNode
         XmlUtils.SetAttribute(element, "attr254", XmlUtils.ToXmlString(Attr254));
         XmlUtils.SetAttribute(element, "attr255", XmlUtils.ToXmlString(Attr255));
         XmlUtils.SetAttribute(element, "attr256", XmlUtils.ToXmlString(Attr256));
-        if (Children != null)
-        {
-            foreach (var item in Children)
-            {
-                element.Add(item.ToXElement());
-            }
-        }
-        XmlUtils.AddAdditional(element, AdditionalAttributes, AdditionalChildren);
+        XmlUtils.AddContent(element, XmlUtils.OrderContent(Content, Children));
+        XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }
 
@@ -1626,7 +1634,7 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
-    /// Adds a <c>&lt;Pause&gt;</c> child element and returns this instance for chaining.
+    /// Adds a <c>&lt;Pause&gt;</c> child element after any content added so far and returns this instance for chaining.
     /// <para>
     /// XML element without an explicit xml.name; falls back to the schema name.
     /// </para>
@@ -1635,6 +1643,7 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public Wide Pause(Pause pause)
     {
         Children = XmlUtils.Append<Pause>(Children, pause);
+        Content.Add(pause);
         return this;
     }
 
@@ -1650,11 +1659,20 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
-    /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
+    /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Wide AddChild(XmlElement child)
     {
-        AdditionalChildren.Add(child);
+        Content.Add(child);
+        return this;
+    }
+
+    /// <summary>
+    /// Appends a text segment after any content added so far, so text can be interleaved with child elements, and returns this instance for chaining.
+    /// </summary>
+    public Wide AddText(string text)
+    {
+        Content.Add(text);
         return this;
     }
 

@@ -34,6 +34,9 @@ const RESERVED_METHOD_NAMES = new Set([
     "to_xml",
     "to_xml_element",
     "add_child",
+    "add_text",
+    "content",
+    "record_content",
     "additional_attributes",
     "additional_children",
     "inspect",
@@ -518,6 +521,7 @@ export class XmlObjectGenerator {
             } else {
                 writer.writeLine(`self.${property.fieldName} = child`);
             }
+            writer.writeLine("record_content(child)");
             writer.writeLine("child");
             writer.dedent();
             writer.write("end");

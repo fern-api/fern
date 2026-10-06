@@ -10,8 +10,8 @@ export class Dial implements core.xml.XmlSerializable {
     numbers?: SeedApi.Number[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Dial.Fields = {}) {
         this.number = fields.number;
@@ -19,7 +19,15 @@ export class Dial implements core.xml.XmlSerializable {
         this.record = fields.record;
         this.numbers = fields.numbers;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter(
+            (item): item is core.xml.XmlElement =>
+                item instanceof core.xml.XmlElement && !["Numbers"].includes(core.xml.localName(item.name)),
+        );
     }
 
     static builder(fields: Dial.Fields = {}): Dial.Builder {
@@ -29,8 +37,9 @@ export class Dial implements core.xml.XmlSerializable {
     /** Parses a `<Dial>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Dial {
         const node = core.xml.parseXml(xml, "Dial");
+        const content = core.xml.xmlContent(node, { skipLeadingText: true, wrappers: { Numbers: ["Number"] } });
         return new Dial({
-            number: core.xml.xmlScalar(core.xml.xmlText(node), core.xml.xmlString, "Dial.number"),
+            number: core.xml.xmlScalar(core.xml.xmlLeadingText(node), core.xml.xmlString, "Dial.number"),
             statusCallbackEvent: core.xml.xmlScalarList(
                 core.xml.xmlAttribute(node, "statusCallbackEvent"),
                 " ",
@@ -49,7 +58,7 @@ export class Dial implements core.xml.XmlSerializable {
                 { wrapper: "Numbers" },
             ),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["statusCallbackEvent", "record"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, ["Numbers"], { Numbers: ["Number"] }),
+            content,
         });
     }
 
@@ -66,7 +75,7 @@ export class Dial implements core.xml.XmlSerializable {
             ],
             text: this.number,
             children: [{ name: "Numbers", value: this.numbers, wrapped: true }],
-            additionalChildren: this.additionalChildren,
+            content: core.xml.orderXmlContent(this.content),
             xmlDeclaration,
         });
     }
@@ -84,15 +93,18 @@ export namespace Dial {
         numbers?: SeedApi.Number[];
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Dial> {
         private readonly fields: Partial<Dial.Fields>;
+        private content: core.xml.XmlContent[];
         private readonly elements: { numbers?: (SeedApi.Number | core.xml.XmlBuilder<SeedApi.Number>)[] };
 
         constructor(fields: Partial<Dial.Fields> = {}) {
-            const { numbers, ...rest } = fields;
+            const { content, additionalChildren, numbers, ...rest } = fields;
             this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
             this.elements = { numbers };
         }
 
@@ -122,7 +134,7 @@ export namespace Dial {
         }
 
         /**
-         * Adds a `<Number>` child and returns its builder.
+         * Adds a `<Number>` child after any content added so far and returns its builder.
          * @param fields initial `<Number>` attributes and children
          * @returns the `SeedApi.Number.Builder` appended to this element
          */
@@ -138,14 +150,21 @@ export namespace Dial {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Dial {
-            return new Dial({ ...this.fields, numbers: core.xml.xmlBuildAll(this.elements.numbers) });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Dial({ ...this.fields, numbers: built.buildAll(this.elements.numbers), content: built.content });
         }
 
         toXml(xmlDeclaration: boolean = true): string {

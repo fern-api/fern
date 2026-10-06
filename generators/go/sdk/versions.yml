@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.67.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child elements and raw `core.XmlElement` children in a
+        single ordered `Content` slice, so `ToXml()` emits them in the order they were added
+        (`response.Say(a).AddChild(custom).Say(b)` yields `<Say>a</Say><Custom /><Say>b</Say>`) and
+        `FromXml()` preserves document order, including the position of unknown elements and repeated
+        wrapper elements. Adds `AddText(string)` to XML types and `core.XmlElement` for mixed content such
+        as `<Say>Hi <break strength="weak" /> world</Say>`. Typed child properties and `ExtraChildren`
+        remain available and are reconciled into `Content` on serialization.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 1.66.0
   changelogEntry:
     - summary: |

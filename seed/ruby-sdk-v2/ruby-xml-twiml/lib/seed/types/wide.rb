@@ -213,6 +213,7 @@ module Seed
       def pause(**attributes)
         child = Seed::Types::Pause.new(**attributes)
         self.children = [*children, child]
+        record_content(child)
         child
       end
     end

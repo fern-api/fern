@@ -43,9 +43,10 @@ export declare namespace XmlObjectGenerator {
 
 const ADDITIONAL_ATTRIBUTES = "additionalAttributes";
 const ADDITIONAL_CHILDREN = "additionalChildren";
+const CONTENT = "content";
 const FIELDS_INTERFACE = "Fields";
 const BUILDER_CLASS = "Builder";
-const RESERVED_BUILDER_METHODS = ["build", "toXml", "toString", "attribute", "addChild", "fromXml"];
+const RESERVED_BUILDER_METHODS = ["build", "toXml", "toString", "attribute", "addChild", "addText", "fromXml"];
 
 interface XmlProperty {
     key: string;
@@ -118,9 +119,27 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 },
                 {
                     kind: StructureKind.Property,
+                    name: this.contentName(properties),
+                    type: `${this.xmlType(context, "XmlContent")}[]`,
+                    docs: [
+                        {
+                            description:
+                                "Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear."
+                        }
+                    ]
+                }
+            ],
+            getAccessors: [
+                {
                     name: ADDITIONAL_CHILDREN,
-                    type: `${this.xmlType(context, "XmlElement")}[]`,
-                    docs: [{ description: "Child elements not declared in the API definition." }]
+                    returnType: `${this.xmlType(context, "XmlElement")}[]`,
+                    docs: [
+                        {
+                            description:
+                                "Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder)."
+                        }
+                    ],
+                    statements: [this.generateAdditionalChildrenStatement(context, properties)]
                 }
             ],
             ctors: [
@@ -132,7 +151,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                                 `${accessProperty("this", property.key)} = ${accessProperty("fields", property.key)};`
                         ),
                         `this.${ADDITIONAL_ATTRIBUTES} = fields.${ADDITIONAL_ATTRIBUTES} ?? {};`,
-                        `this.${ADDITIONAL_CHILDREN} = fields.${ADDITIONAL_CHILDREN} ?? [];`
+                        `this.${this.contentName(properties)} = ${this.xmlRef(context, "xmlInitialContent")}(fields.${this.contentName(properties)}, fields.${ADDITIONAL_CHILDREN});`
                     ]
                 }
             ],
@@ -229,9 +248,42 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                     name: ADDITIONAL_CHILDREN,
                     type: `${this.xmlType(context, "XmlElement")}[]`,
                     hasQuestionToken: true
+                },
+                {
+                    kind: StructureKind.PropertySignature,
+                    name: this.contentName(properties),
+                    type: `${this.xmlType(context, "XmlContent")}[]`,
+                    hasQuestionToken: true
                 }
             ]
         };
+    }
+
+    /** Name of the ordered-content member, avoiding a clash with a declared property. */
+    /** Wrapped list properties: wrapper wire name -> item element names. */
+    private wrapperProperties(properties: XmlProperty[]): XmlProperty[] {
+        return properties.filter(
+            (property) => property.kind === "ELEMENT" && property.wrapped && property.childTypes.length > 0
+        );
+    }
+
+    private generateAdditionalChildrenStatement(context: Context, properties: XmlProperty[]): string {
+        const wrapperNames = this.wrapperProperties(properties).map((property) => JSON.stringify(property.wireName));
+        const isElement = `item instanceof ${this.xmlRef(context, "XmlElement")}`;
+        const guard =
+            wrapperNames.length > 0
+                ? `${isElement} && ![${wrapperNames.join(", ")}].includes(${this.xmlRef(context, "localName")}(item.name))`
+                : isElement;
+        return `return this.${this.contentName(properties)}.filter((item): item is ${this.xmlType(context, "XmlElement")} => ${guard});`;
+    }
+
+    private contentName(properties: XmlProperty[]): string {
+        return properties.some((property) => property.key === CONTENT) ? "xmlContent" : CONTENT;
+    }
+
+    /** Element properties whose items are xml-encoded objects rendered inline (not under a wrapper); these live in the ordered content. */
+    private contentProperties(properties: XmlProperty[]): XmlProperty[] {
+        return properties.filter((property) => property.childTypes.length > 0 && !property.wrapped);
     }
 
     private generateBuilderClass(context: Context, properties: XmlProperty[]): ClassDeclarationStructure {
@@ -244,11 +296,15 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             .map((property) => `${getPropertyKey(property.key)}?: ${this.builderValueType(context, property)}`)
             .join("; ")} }`;
 
-        const constructorStatements: string[] = [];
+        const contentName = this.contentName(properties);
+        const contentProperties = this.contentProperties(properties);
+        const constructorStatements: string[] = [
+            `const { ${[contentName, ADDITIONAL_CHILDREN, ...elementProperties.map(destructureProperty)].join(", ")}, ...rest } = fields;`,
+            "this.fields = rest;",
+            `this.${contentName} = ${this.xmlRef(context, "xmlInitialContent")}(${contentName}, ${ADDITIONAL_CHILDREN});`
+        ];
         if (elementProperties.length > 0) {
             constructorStatements.push(
-                `const { ${elementProperties.map(destructureProperty).join(", ")}, ...rest } = fields;`,
-                "this.fields = rest;",
                 `this.elements = { ${elementProperties
                     .map((property) => {
                         const local = property.localName;
@@ -258,8 +314,6 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                     })
                     .join(", ")} };`
             );
-        } else {
-            constructorStatements.push("this.fields = { ...fields };");
         }
 
         const methods: OptionalKind<MethodDeclarationStructure>[] = [
@@ -289,7 +343,15 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                     }
                 ],
                 returnType: "this",
-                statements: [`${accessProperty(target, property.key)} = ${property.localName};`, "return this;"]
+                statements: [
+                    ...(contentProperties.includes(property)
+                        ? [
+                              `this.${contentName} = ${this.xmlRef(context, "replaceXmlContent")}(this.${contentName}, ${accessProperty(target, property.key)}, ${property.localName});`
+                          ]
+                        : []),
+                    `${accessProperty(target, property.key)} = ${property.localName};`,
+                    "return this;"
+                ]
             };
             maybeAddDocsStructure(setter, property.irProperty.docs);
             methods.push(setter);
@@ -297,7 +359,15 @@ export class XmlObjectGenerator<Context extends BaseContext> {
 
         for (const property of elementProperties) {
             for (const childType of property.childTypes) {
-                methods.push(this.generateChildBuilderMethod(context, property, childType, takenNames));
+                methods.push(
+                    this.generateChildBuilderMethod(
+                        context,
+                        property,
+                        childType,
+                        takenNames,
+                        contentProperties.includes(property) ? contentName : undefined
+                    )
+                );
             }
         }
 
@@ -311,21 +381,23 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 );
             }
         }
+        buildStatements.push(`const built = ${this.xmlRef(context, "xmlBuildContent")}(this.${contentName});`);
         const builtElements = elementProperties.map((property) => {
             const key = getPropertyKey(property.key);
             const element = accessProperty("this.elements", property.key);
-            const built = `${this.xmlRef(context, "xmlBuildAll")}(${element})`;
+            const built = `built.buildAll(${element})`;
             const value = property.isList
                 ? isSetTypeNode(property.valueType)
                     ? `${this.xmlRef(context, "xmlToSet")}(${built})`
                     : built
-                : `${element} == null ? ${element} : ${this.xmlRef(context, "xmlBuild")}(${element})`;
+                : `${element} == null ? ${element} : built.build(${element})`;
             return `${key}: ${this.requireValue(context, property, value, `"${this.typeName}.${property.key}"`)}`;
         });
         buildStatements.push(
             `return new ${this.typeName}({ ...this.fields, ${[
                 ...requiredKeys.map((property) => propertyAssignment(property.key, property.localName)),
-                ...builtElements
+                ...builtElements,
+                `${contentName}: built.content`
             ].join(", ")} });`
         );
 
@@ -345,13 +417,27 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             },
             {
                 name: "addChild",
-                docs: [{ description: "Appends a child element that is not declared in the API definition." }],
+                docs: [
+                    {
+                        description:
+                            "Appends a child element that is not declared in the API definition, after any content added so far."
+                    }
+                ],
                 parameters: [{ name: "child", type: this.xmlType(context, "XmlElement") }],
                 returnType: "this",
-                statements: [
-                    `this.fields.${ADDITIONAL_CHILDREN} = [...(this.fields.${ADDITIONAL_CHILDREN} ?? []), child];`,
-                    "return this;"
-                ]
+                statements: [`this.${contentName}.push(child);`, "return this;"]
+            },
+            {
+                name: "addText",
+                docs: [
+                    {
+                        description:
+                            "Appends a text segment after any content added so far, so text can be interleaved with child elements."
+                    }
+                ],
+                parameters: [{ name: "text", type: "string" }],
+                returnType: "this",
+                statements: [`this.${contentName}.push(text);`, "return this;"]
             },
             { name: "build", returnType: this.typeName, statements: buildStatements },
             {
@@ -370,6 +456,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 scope: Scope.Private,
                 isReadonly: true,
                 type: `Partial<${fieldsType}>`
+            },
+            {
+                kind: StructureKind.Property,
+                name: contentName,
+                scope: Scope.Private,
+                type: `${this.xmlType(context, "XmlContent")}[]`
             }
         ];
         if (elementProperties.length > 0) {
@@ -402,7 +494,8 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         context: Context,
         property: XmlProperty,
         childType: FernIr.TypeDeclaration,
-        takenNames: Set<string>
+        takenNames: Set<string>,
+        contentName: string | undefined
     ): OptionalKind<MethodDeclarationStructure> {
         const childXml = getXmlEncoding(childType);
         if (childXml == null) {
@@ -422,7 +515,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const childRef = getTextOfTsNode(context.type.getReferenceToNamedType(childType.name).getExpression());
         const element = accessProperty("this.elements", property.key);
         const append = property.isList ? `${element} = [...(${element} ?? []), builder];` : `${element} = builder;`;
-        const summary = `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} and returns its builder.`;
+        const summary = `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} after any content added so far and returns its builder.`;
         return {
             name,
             docs: [
@@ -436,7 +529,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             ],
             parameters: [{ name: "fields", type: `Partial<${childRef}.${FIELDS_INTERFACE}>`, hasQuestionToken: true }],
             returnType: `${childRef}.${BUILDER_CLASS}`,
-            statements: [`const builder = new ${childRef}.${BUILDER_CLASS}(fields);`, append, "return builder;"]
+            statements: [
+                `const builder = new ${childRef}.${BUILDER_CLASS}(fields);`,
+                append,
+                ...(contentName != null ? [`this.${contentName}.push(builder);`] : []),
+                "return builder;"
+            ]
         };
     }
 
@@ -460,28 +558,51 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const attributeNames = properties
             .filter((property) => property.kind === "ATTRIBUTE")
             .map((property) => JSON.stringify(property.wireName));
-        const childNames = properties
-            .filter((property) => property.kind === "ELEMENT")
-            .flatMap((property) => this.getElementNames(property).map((name) => JSON.stringify(name)));
-        const wrappers = properties
-            .filter((property) => property.kind === "ELEMENT" && property.wrapped && property.childTypes.length > 0)
-            .map(
+        const wrappers = this.wrapperProperties(properties).map(
+            (property) =>
+                `${JSON.stringify(property.wireName)}: [${property.childTypes
+                    .map((childType) => JSON.stringify(this.getChildElementName(childType)))
+                    .join(", ")}]`
+        );
+        const contentName = this.contentName(properties);
+        const contentProperties = this.contentProperties(properties);
+        const skippedNames = properties
+            .filter(
                 (property) =>
-                    `${JSON.stringify(property.wireName)}: [${property.childTypes
-                        .map((childType) => JSON.stringify(this.getChildElementName(childType)))
-                        .join(", ")}]`
-            );
+                    property.kind === "ELEMENT" &&
+                    !contentProperties.includes(property) &&
+                    !(property.wrapped && property.childTypes.length > 0)
+            )
+            .flatMap((property) => this.getElementNames(property).map((name) => JSON.stringify(name)));
+        const parseCases = contentProperties.flatMap((property) =>
+            property.childTypes.map((childType) => {
+                const ref = getTextOfTsNode(context.type.getReferenceToNamedType(childType.name).getExpression());
+                return `case ${JSON.stringify(this.getChildElementName(childType))}: return ${ref}.fromXml(child);`;
+            })
+        );
+        const contentOptions = [
+            ...(properties.some((property) => property.kind === "TEXT") ? ["skipLeadingText: true"] : []),
+            ...(skippedNames.length > 0 ? [`skip: [${skippedNames.join(", ")}]`] : []),
+            ...(wrappers.length > 0 ? [`wrappers: { ${wrappers.join(", ")} }`] : []),
+            ...(parseCases.length > 0
+                ? [
+                      `parse: (child) => { switch (${this.xmlRef(context, "localName")}(child.name)) { ${parseCases.join(" ")} default: return undefined; } }`
+                  ]
+                : [])
+        ];
         const assignments = properties.map(
-            (property) => `${getPropertyKey(property.key)}: ${this.generateReadExpression(context, property)}`
+            (property) =>
+                `${getPropertyKey(property.key)}: ${this.generateReadExpression(context, property, contentName)}`
         );
         return [
             `const node = ${this.xmlRef(context, "parseXml")}(xml, ${JSON.stringify(this.xml.name)});`,
+            `const ${contentName} = ${this.xmlRef(context, "xmlContent")}(node${
+                contentOptions.length > 0 ? `, { ${contentOptions.join(", ")} }` : ""
+            });`,
             `return new ${this.typeName}({`,
             ...assignments.map((assignment) => `    ${assignment},`),
             `    ${ADDITIONAL_ATTRIBUTES}: ${this.xmlRef(context, "xmlExtraAttributes")}(node, [${attributeNames.join(", ")}]),`,
-            `    ${ADDITIONAL_CHILDREN}: ${this.xmlRef(context, "xmlUnknownChildren")}(node, [${childNames.join(", ")}]${
-                wrappers.length > 0 ? `, { ${wrappers.join(", ")} }` : ""
-            }),`,
+            `    ${contentName},`,
             "});"
         ];
     }
@@ -498,10 +619,29 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         return getXmlEncoding(childType)?.name ?? getOriginalName(childType.name.name);
     }
 
-    private generateReadExpression(context: Context, property: XmlProperty): string {
+    private generateReadExpression(context: Context, property: XmlProperty, contentName: string): string {
         const location = JSON.stringify(`${this.xml.name}.${property.wireName}`);
-        const expression = this.generateValueReadExpression(context, property, location);
+        const expression =
+            property.childTypes.length > 0 && !property.wrapped
+                ? this.generateContentReadExpression(context, property, contentName)
+                : this.generateValueReadExpression(context, property, location);
         return this.requireValue(context, property, expression, location);
+    }
+
+    /** Typed children are taken from the already-parsed ordered content so both share the same instances. */
+    private generateContentReadExpression(context: Context, property: XmlProperty, contentName: string): string {
+        const itemType = getTextOfTsNode(property.itemTypeNode);
+        const guard = property.childTypes
+            .map((childType) => {
+                const ref = getTextOfTsNode(context.type.getReferenceToNamedType(childType.name).getExpression());
+                return `item instanceof ${ref}`;
+            })
+            .join(" || ");
+        const items = `${this.xmlRef(context, "xmlContentElements")}(${contentName}, (item): item is ${itemType} => ${guard})`;
+        if (property.isList) {
+            return isSetTypeNode(property.valueType) ? `${this.xmlRef(context, "xmlToSet")}(${items})` : items;
+        }
+        return `${items}?.[0]`;
     }
 
     /**
@@ -526,7 +666,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 const raw =
                     property.kind === "ATTRIBUTE"
                         ? `${this.xmlRef(context, "xmlAttribute")}(node, ${JSON.stringify(property.wireName)})`
-                        : `${this.xmlRef(context, "xmlText")}(node)`;
+                        : `${this.xmlRef(context, "xmlLeadingText")}(node)`;
                 const parser = this.getScalarParser(context, property.itemType);
                 if (!property.isList) {
                     return `${this.xmlRef(context, "xmlScalar")}(${raw}, ${parser}, ${location})`;
@@ -632,8 +772,9 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 } }`;
             });
         const text = properties.find((property) => property.kind === "TEXT");
+        const contentProperties = this.contentProperties(properties);
         const children = properties
-            .filter((property) => property.kind === "ELEMENT")
+            .filter((property) => property.kind === "ELEMENT" && !contentProperties.includes(property))
             .map(
                 (property) =>
                     `{ name: ${JSON.stringify(property.wireName)}, value: ${accessProperty("this", property.key)}${
@@ -658,7 +799,13 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             }
         }
         args.push(`children: [${children.join(", ")}]`);
-        args.push(`${ADDITIONAL_CHILDREN}: this.${ADDITIONAL_CHILDREN}`);
+        const contentName = this.contentName(properties);
+        args.push(
+            `${CONTENT}: ${this.xmlRef(context, "orderXmlContent")}(${[
+                `this.${contentName}`,
+                ...contentProperties.map((property) => accessProperty("this", property.key))
+            ].join(", ")})`
+        );
         args.push("xmlDeclaration");
         return `${this.xmlRef(context, "serializeXmlElement")}({ ${args.join(", ")} })`;
     }
