@@ -5,6 +5,7 @@ package com.seed.nurseryApi.resources.package_;
 
 import com.seed.nurseryApi.core.ClientOptions;
 import com.seed.nurseryApi.core.RequestOptions;
+import com.seed.nurseryApi.core.SeedNurseryApiHttpResponse;
 import com.seed.nurseryApi.resources.package_.requests.TestRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncPackageClient {
     }
 
     public CompletableFuture<Void> test(TestRequest request) {
-        return this.rawClient.test(request).thenApply(response -> response.body());
+        CompletableFuture<SeedNurseryApiHttpResponse<Void>> rawFuture = this.rawClient.test(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> test(TestRequest request, RequestOptions requestOptions) {
-        return this.rawClient.test(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNurseryApiHttpResponse<Void>> rawFuture = this.rawClient.test(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

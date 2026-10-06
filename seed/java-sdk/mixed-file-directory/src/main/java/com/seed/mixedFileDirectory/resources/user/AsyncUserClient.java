@@ -5,6 +5,7 @@ package com.seed.mixedFileDirectory.resources.user;
 
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryHttpResponse;
 import com.seed.mixedFileDirectory.core.Suppliers;
 import com.seed.mixedFileDirectory.resources.user.events.AsyncEventsClient;
 import com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;
@@ -37,28 +38,58 @@ public class AsyncUserClient {
      * List all users.
      */
     public CompletableFuture<List<User>> list() {
-        return this.rawClient.list().thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<User>>> rawFuture = this.rawClient.list();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all users.
      */
     public CompletableFuture<List<User>> list(RequestOptions requestOptions) {
-        return this.rawClient.list(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<User>>> rawFuture =
+                this.rawClient.list(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all users.
      */
     public CompletableFuture<List<User>> list(ListUsersRequest request) {
-        return this.rawClient.list(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<User>>> rawFuture = this.rawClient.list(request);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all users.
      */
     public CompletableFuture<List<User>> list(ListUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.list(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<User>>> rawFuture =
+                this.rawClient.list(request, requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncEventsClient events() {

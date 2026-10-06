@@ -5,6 +5,7 @@ package com.seed.javaEndpointSecurityTokenSubpackage.resources.token;
 
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ClientOptions;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.RequestOptions;
+import com.seed.javaEndpointSecurityTokenSubpackage.core.SeedJavaEndpointSecurityTokenSubpackageHttpResponse;
 import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.requests.GetTokenRequest;
 import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.types.TokenResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,26 @@ public class AsyncTokenClient {
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenRequest request) {
-        return this.rawClient.getToken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getToken(request);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> getToken(GetTokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaEndpointSecurityTokenSubpackageHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getToken(request, requestOptions);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

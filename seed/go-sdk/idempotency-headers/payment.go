@@ -23,10 +23,12 @@ type CreatePaymentRequest struct {
 }
 
 func (c *CreatePaymentRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAmount sets the Amount field and marks it as non-optional;

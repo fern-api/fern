@@ -13,5 +13,7 @@ $client = new SeedClient(
 $client->createTree(
     new TreeRecord([
         'id' => 'id',
+        'treeName' => 'treeName',
+        'treeSpecies' => 'treeSpecies',
     ]),
 );

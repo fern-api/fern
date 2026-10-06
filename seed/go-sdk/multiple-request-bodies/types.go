@@ -65,10 +65,12 @@ func (d *DocumentMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DocumentMetadata) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetAuthor sets the Author field and marks it as non-optional;
@@ -179,10 +181,12 @@ func (d *DocumentUploadResult) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DocumentUploadResult) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetFileID sets the FileID field and marks it as non-optional;
@@ -335,10 +339,12 @@ type UploadDocumentRequest struct {
 }
 
 func (u *UploadDocumentRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetAuthor sets the Author field and marks it as non-optional;

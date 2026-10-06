@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AimUnionWithGlobalNameCollisions,
         AnyNumberUnionWithSameNumberTypes,
         Bar,
         BarUnion,
@@ -15,6 +16,7 @@ if typing.TYPE_CHECKING:
         BarUnionWithOptionalReference,
         BarUnionWithoutKey,
         CustomFormatUnionWithSameStringTypes,
+        DateUnionWithGlobalNameCollisions,
         DateUnionWithOptionalTime,
         DateUnionWithTime,
         DatetimeUnionWithOptionalTime,
@@ -22,6 +24,7 @@ if typing.TYPE_CHECKING:
         Empty1UnionWithMultipleNoProperties,
         Empty2UnionWithMultipleNoProperties,
         EmptyUnionWithNoProperties,
+        ErrorUnionWithGlobalNameCollisions,
         FernUnionWithLiteral,
         FirstItemType,
         FirstItemTypeUnionWithDuplicativeDiscriminants,
@@ -62,6 +65,7 @@ if typing.TYPE_CHECKING:
         UnionWithDuplicatePrimitive,
         UnionWithDuplicateTypes,
         UnionWithDuplicativeDiscriminants,
+        UnionWithGlobalNameCollisions,
         UnionWithLiteral,
         UnionWithMultipleNoProperties,
         UnionWithNoProperties,
@@ -78,6 +82,7 @@ if typing.TYPE_CHECKING:
         ValueUnionWithTime,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AimUnionWithGlobalNameCollisions": ".types",
     "AnyNumberUnionWithSameNumberTypes": ".types",
     "Bar": ".types",
     "BarUnion": ".types",
@@ -86,6 +91,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BarUnionWithOptionalReference": ".types",
     "BarUnionWithoutKey": ".types",
     "CustomFormatUnionWithSameStringTypes": ".types",
+    "DateUnionWithGlobalNameCollisions": ".types",
     "DateUnionWithOptionalTime": ".types",
     "DateUnionWithTime": ".types",
     "DatetimeUnionWithOptionalTime": ".types",
@@ -93,6 +99,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Empty1UnionWithMultipleNoProperties": ".types",
     "Empty2UnionWithMultipleNoProperties": ".types",
     "EmptyUnionWithNoProperties": ".types",
+    "ErrorUnionWithGlobalNameCollisions": ".types",
     "FernUnionWithLiteral": ".types",
     "FirstItemType": ".types",
     "FirstItemTypeUnionWithDuplicativeDiscriminants": ".types",
@@ -133,6 +140,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDuplicatePrimitive": ".types",
     "UnionWithDuplicateTypes": ".types",
     "UnionWithDuplicativeDiscriminants": ".types",
+    "UnionWithGlobalNameCollisions": ".types",
     "UnionWithLiteral": ".types",
     "UnionWithMultipleNoProperties": ".types",
     "UnionWithNoProperties": ".types",
@@ -172,6 +180,7 @@ def __dir__():
 
 
 __all__ = [
+    "AimUnionWithGlobalNameCollisions",
     "AnyNumberUnionWithSameNumberTypes",
     "Bar",
     "BarUnion",
@@ -180,6 +189,7 @@ __all__ = [
     "BarUnionWithOptionalReference",
     "BarUnionWithoutKey",
     "CustomFormatUnionWithSameStringTypes",
+    "DateUnionWithGlobalNameCollisions",
     "DateUnionWithOptionalTime",
     "DateUnionWithTime",
     "DatetimeUnionWithOptionalTime",
@@ -187,6 +197,7 @@ __all__ = [
     "Empty1UnionWithMultipleNoProperties",
     "Empty2UnionWithMultipleNoProperties",
     "EmptyUnionWithNoProperties",
+    "ErrorUnionWithGlobalNameCollisions",
     "FernUnionWithLiteral",
     "FirstItemType",
     "FirstItemTypeUnionWithDuplicativeDiscriminants",
@@ -227,6 +238,7 @@ __all__ = [
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
     "UnionWithDuplicativeDiscriminants",
+    "UnionWithGlobalNameCollisions",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",

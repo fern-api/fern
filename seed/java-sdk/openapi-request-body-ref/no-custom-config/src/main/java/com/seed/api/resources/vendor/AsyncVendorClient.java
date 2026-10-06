@@ -5,6 +5,7 @@ package com.seed.api.resources.vendor;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.vendor.requests.CreateVendorRequest;
 import com.seed.api.resources.vendor.requests.UpdateVendorBody;
 import com.seed.api.types.Vendor;
@@ -28,19 +29,48 @@ public class AsyncVendorClient {
     }
 
     public CompletableFuture<Vendor> updateVendor(String vendorId, UpdateVendorBody request) {
-        return this.rawClient.updateVendor(vendorId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Vendor>> rawFuture = this.rawClient.updateVendor(vendorId, request);
+        CompletableFuture<Vendor> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Vendor> updateVendor(
             String vendorId, UpdateVendorBody request, RequestOptions requestOptions) {
-        return this.rawClient.updateVendor(vendorId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Vendor>> rawFuture =
+                this.rawClient.updateVendor(vendorId, request, requestOptions);
+        CompletableFuture<Vendor> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Vendor> createVendor(CreateVendorRequest request) {
-        return this.rawClient.createVendor(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Vendor>> rawFuture = this.rawClient.createVendor(request);
+        CompletableFuture<Vendor> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Vendor> createVendor(CreateVendorRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createVendor(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Vendor>> rawFuture = this.rawClient.createVendor(request, requestOptions);
+        CompletableFuture<Vendor> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

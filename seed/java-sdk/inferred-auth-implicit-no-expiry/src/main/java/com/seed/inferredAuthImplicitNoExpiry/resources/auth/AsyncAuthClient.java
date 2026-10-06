@@ -5,6 +5,7 @@ package com.seed.inferredAuthImplicitNoExpiry.resources.auth;
 
 import com.seed.inferredAuthImplicitNoExpiry.core.ClientOptions;
 import com.seed.inferredAuthImplicitNoExpiry.core.RequestOptions;
+import com.seed.inferredAuthImplicitNoExpiry.core.SeedInferredAuthImplicitNoExpiryHttpResponse;
 import com.seed.inferredAuthImplicitNoExpiry.resources.auth.requests.GetTokenRequest;
 import com.seed.inferredAuthImplicitNoExpiry.resources.auth.requests.RefreshTokenRequest;
 import com.seed.inferredAuthImplicitNoExpiry.resources.auth.types.TokenResponse;
@@ -28,21 +29,51 @@ public class AsyncAuthClient {
     }
 
     public CompletableFuture<TokenResponse> getTokenWithClientCredentials(GetTokenRequest request) {
-        return this.rawClient.getTokenWithClientCredentials(request).thenApply(response -> response.body());
+        CompletableFuture<SeedInferredAuthImplicitNoExpiryHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getTokenWithClientCredentials(request);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> getTokenWithClientCredentials(
             GetTokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getTokenWithClientCredentials(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedInferredAuthImplicitNoExpiryHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getTokenWithClientCredentials(request, requestOptions);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> refreshToken(RefreshTokenRequest request) {
-        return this.rawClient.refreshToken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedInferredAuthImplicitNoExpiryHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.refreshToken(request);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> refreshToken(RefreshTokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient.refreshToken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedInferredAuthImplicitNoExpiryHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.refreshToken(request, requestOptions);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

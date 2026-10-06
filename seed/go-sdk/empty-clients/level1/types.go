@@ -79,10 +79,12 @@ func (a *Address) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Address) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetLine1 sets the Line1 field and marks it as non-optional;
@@ -211,10 +213,12 @@ func (p *Person) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Person) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

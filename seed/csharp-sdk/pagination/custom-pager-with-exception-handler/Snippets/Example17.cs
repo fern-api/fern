@@ -12,8 +12,8 @@ public partial class Examples
 
         await client.Users.ListWithTopLevelBodyCursorPaginationAsync(
             new ListUsersTopLevelBodyCursorPaginationRequest {
-                Cursor = "cursor",
-                Filter = "filter"
+                Cursor = "initial_cursor",
+                Filter = "active"
             }
         );
     }

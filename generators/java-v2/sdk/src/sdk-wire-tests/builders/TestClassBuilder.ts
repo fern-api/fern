@@ -38,7 +38,10 @@ export class TestClassBuilder {
             writer.addImport("okhttp3.mockwebserver.RecordedRequest");
             writer.addImport("org.junit.jupiter.api.AfterEach");
             writer.addImport("org.junit.jupiter.api.BeforeEach");
-            writer.addImport("org.junit.jupiter.api.Test");
+            const javaNames = getWireTestJavaNames(additionalImports);
+            if (javaNames.testAnnotation === "@Test") {
+                writer.addImport("org.junit.jupiter.api.Test");
+            }
             writer.addImport(`${this.context.getRootPackageName()}.core.ObjectMappers`);
 
             // Add Environment import for multi-URL environments
@@ -61,7 +64,7 @@ export class TestClassBuilder {
             writer.writeLine("private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;");
 
             writer.writeLine("@BeforeEach");
-            writer.writeLine("public void setup() throws Exception {");
+            writer.writeLine(`public void setup() throws ${javaNames.exceptionType} {`);
             writer.indent();
             writer.writeLine("server = new MockWebServer();");
             writer.writeLine("server.start();");
@@ -75,12 +78,14 @@ export class TestClassBuilder {
                 writer.writeLine(`client = ${clientClassName}.withCredentials("test-client-id", "test-client-secret")`);
                 writer.indent();
                 this.generateEnvironmentConfiguration(writer);
+                writer.writeLine(".maxRetries(0)");
                 writer.writeLine(".build();");
             } else {
                 writer.writeLine(`client = ${clientClassName}.builder()`);
                 writer.indent();
 
                 this.generateEnvironmentConfiguration(writer);
+                writer.writeLine(".maxRetries(0)");
 
                 const authConfig = this.getAuthClientBuilderCalls();
                 if (authConfig) {
@@ -94,7 +99,7 @@ export class TestClassBuilder {
             writer.writeLine("}");
 
             writer.writeLine("@AfterEach");
-            writer.writeLine("public void teardown() throws Exception {");
+            writer.writeLine(`public void teardown() throws ${javaNames.exceptionType} {`);
             writer.indent();
             writer.writeLine("server.shutdown();");
             writer.dedent();
@@ -314,4 +319,19 @@ export class TestClassBuilder {
                 return undefined;
         }
     }
+}
+
+/**
+ * Names used by the wire test boilerplate, fully qualified when an API type with the same
+ * simple name (e.g. `Test` or `Exception`) is imported by the test snippets.
+ */
+export function getWireTestJavaNames(imports: Set<string> | undefined): {
+    testAnnotation: string;
+    exceptionType: string;
+} {
+    const importedSimpleNames = new Set([...(imports ?? [])].map((imp) => imp.substring(imp.lastIndexOf(".") + 1)));
+    return {
+        testAnnotation: importedSimpleNames.has("Test") ? "@org.junit.jupiter.api.Test" : "@Test",
+        exceptionType: importedSimpleNames.has("Exception") ? "java.lang.Exception" : "Exception"
+    };
 }

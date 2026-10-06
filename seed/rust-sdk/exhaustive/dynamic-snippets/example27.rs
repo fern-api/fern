@@ -13,10 +13,10 @@ async fn main() {
         .object
         .get_and_return_with_mixed_required_and_optional_fields(
             &ObjectWithMixedRequiredAndOptionalFields {
-                required_string: "requiredString".to_string(),
-                required_integer: 1,
-                optional_string: Some("optionalString".to_string()),
-                required_long: 1000000,
+                required_string: "hello".to_string(),
+                required_integer: 0,
+                optional_string: Some("world".to_string()),
+                required_long: 0,
                 ..Default::default()
             },
             None,

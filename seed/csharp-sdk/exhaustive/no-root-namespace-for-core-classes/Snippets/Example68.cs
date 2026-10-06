@@ -11,13 +11,7 @@ public partial class Examples
             }
         );
 
-        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-            new ReqWithHeaders {
-                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-                Body = "string"
-            }
-        );
+        await client.NoReqBody.PostWithNoRequestBodyAsync();
     }
 
 }

@@ -5,6 +5,7 @@ package com.seed._extends;
 
 import com.seed._extends.core.ClientOptions;
 import com.seed._extends.core.RequestOptions;
+import com.seed._extends.core.SeedExtendsHttpResponse;
 import com.seed._extends.requests.Inlined;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,16 +27,32 @@ public class AsyncSeedExtendsClient implements AutoCloseable {
     }
 
     public CompletableFuture<Void> extendedInlineRequestBody(Inlined request) {
-        return this.rawClient.extendedInlineRequestBody(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExtendsHttpResponse<Void>> rawFuture = this.rawClient.extendedInlineRequestBody(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> extendedInlineRequestBody(Inlined request, RequestOptions requestOptions) {
-        return this.rawClient.extendedInlineRequestBody(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExtendsHttpResponse<Void>> rawFuture =
+                this.rawClient.extendedInlineRequestBody(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

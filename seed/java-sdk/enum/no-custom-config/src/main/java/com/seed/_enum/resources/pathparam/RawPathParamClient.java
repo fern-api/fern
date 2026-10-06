@@ -4,6 +4,7 @@
 package com.seed._enum.resources.pathparam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed._enum.core.BodyProperties;
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.ObjectMappers;
 import com.seed._enum.core.RequestOptions;
@@ -47,7 +48,11 @@ public class RawPathParamClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();

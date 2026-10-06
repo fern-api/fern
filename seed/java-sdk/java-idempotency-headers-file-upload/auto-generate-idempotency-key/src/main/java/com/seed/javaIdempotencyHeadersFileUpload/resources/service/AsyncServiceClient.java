@@ -6,6 +6,7 @@ package com.seed.javaIdempotencyHeadersFileUpload.resources.service;
 import com.seed.javaIdempotencyHeadersFileUpload.core.ClientOptions;
 import com.seed.javaIdempotencyHeadersFileUpload.core.IdempotentRequestOptions;
 import com.seed.javaIdempotencyHeadersFileUpload.core.RequestOptions;
+import com.seed.javaIdempotencyHeadersFileUpload.core.SeedJavaIdempotencyHeadersFileUploadHttpResponse;
 import com.seed.javaIdempotencyHeadersFileUpload.resources.service.requests.UploadRequest;
 import java.io.File;
 import java.io.InputStream;
@@ -30,29 +31,81 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<String> upload(File file, UploadRequest request) {
-        return this.rawClient.upload(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.upload(file, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> upload(File file, UploadRequest request, IdempotentRequestOptions requestOptions) {
-        return this.rawClient.upload(file, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.upload(file, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
-    public CompletableFuture<String> upload(InputStream stream, String filename) {
-        return this.rawClient.upload(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> upload(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.upload(stream, filename, mediaType).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> upload(InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.upload(stream, filename, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<String> upload(UploadRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.upload(request, stream, filename);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> upload(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .upload(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+            UploadRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.upload(request, stream, filename, mediaType);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> upload(
+            UploadRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.upload(request, stream, filename, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> upload(
+            UploadRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedJavaIdempotencyHeadersFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.upload(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

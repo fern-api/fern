@@ -38,10 +38,12 @@ func (n *NoAuthReceiveEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NoAuthReceiveEvent) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetResponse sets the Response field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (n *NoAuthSendEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NoAuthSendEvent) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetText sets the Text field and marks it as non-optional;
