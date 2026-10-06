@@ -256,8 +256,9 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         }
 
         method.addStatement(
-                        "$T expected = $T.computeHmacSignature(payload, signatureKey, algorithm != null ? algorithm : $S, $S)",
+                        "$T expected = $T.computeHmacSignature(payload, signatureKey, $T.toMacAlgorithm(algorithm, $S), $S)",
                         String.class,
+                        generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"),
                         generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"),
                         mapHmacAlgorithm(config.getAlgorithm()),
                         mapEncoding(config.getEncoding()))
@@ -515,8 +516,9 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             method.addStatement("$T payload = $L", String.class, formPayload);
         }
         method.addStatement(
-                "$T expected = $T.computeHmacSignature(payload, signatureKey, algorithm != null ? algorithm : $S, $S)",
+                "$T expected = $T.computeHmacSignature(payload, signatureKey, $T.toMacAlgorithm(algorithm, $S), $S)",
                 String.class,
+                signatureClass,
                 signatureClass,
                 mapHmacAlgorithm(config.getAlgorithm()),
                 mapEncoding(config.getEncoding()));
