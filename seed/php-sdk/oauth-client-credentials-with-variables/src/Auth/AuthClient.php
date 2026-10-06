@@ -23,6 +23,7 @@ class AuthClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
@@ -40,6 +41,7 @@ class AuthClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options
      */
     public function __construct(
@@ -72,6 +74,7 @@ class AuthClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
+     *   rootVariable?: string,
      * } $options
      * @return ?TokenResponse
      * @throws SeedException
@@ -133,6 +136,7 @@ class AuthClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
+     *   rootVariable?: string,
      * } $options
      * @return ?TokenResponse
      * @throws SeedException
