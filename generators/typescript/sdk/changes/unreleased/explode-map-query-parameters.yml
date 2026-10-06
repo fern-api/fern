@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A query parameter typed as a map (an OpenAPI `type: object` with `additionalProperties`) is now
+    exploded by default, as the OpenAPI defaults `style: form, explode: true` require: every entry is
+    spread into the query string as its own parameter (`?category=books&createdDate%3Agte=2023-01-01`)
+    instead of being JSON encoded into a single parameter (`?filter=%7B%22category%22...`). This changes
+    the default wire format, which the 3.91.0 entry for `deepObjectMapQueryParameters` said would stay as
+    it was: that option keeps its behavior (deepObject, `?filter[category]=books`) when enabled, but with
+    it disabled, the default, the JSON encoding is replaced because no OpenAPI style produces it.
+    `allowMultiple` maps and `explode: false` keep their current encoding.
+  type: fix

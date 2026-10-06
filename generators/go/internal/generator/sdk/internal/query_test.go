@@ -198,7 +198,25 @@ func TestQueryValues(t *testing.T) {
 			},
 		)
 		require.NoError(t, err)
-		assert.Equal(t, "metadata%5Bbaz%5D=qux&metadata%5Bfoo%5D=bar", values.Encode())
+		assert.Equal(t, "baz=qux&foo=bar", values.Encode())
+	})
+
+	t.Run("map with operator keys", func(t *testing.T) {
+		// The case this format exists for: a dynamic filter whose keys carry the field and
+		// the operator. Exploded, each entry is a parameter in its own right.
+		type request struct {
+			Filter map[string]interface{} `json:"filter" url:"filter"`
+		}
+		values, err := QueryValues(
+			&request{
+				Filter: map[string]interface{}{
+					"category":        "books",
+					"createdDate:gte": "2023-01-01",
+				},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "category=books&createdDate%3Agte=2023-01-01", values.Encode())
 	})
 
 	t.Run("nested map", func(t *testing.T) {
@@ -215,7 +233,27 @@ func TestQueryValues(t *testing.T) {
 			},
 		)
 		require.NoError(t, err)
-		assert.Equal(t, "metadata%5Binner%5D%5Bfoo%5D=bar", values.Encode())
+		assert.Equal(t, "inner%5Bfoo%5D=bar", values.Encode())
+	})
+
+	t.Run("map inside a declared object keeps its prefix", func(t *testing.T) {
+		// Only a map that is itself the query parameter is exploded. A map held by a
+		// declared object stays bracketed under that object's name.
+		type user struct {
+			Tags map[string]interface{} `json:"tags" url:"tags"`
+		}
+		type request struct {
+			User   *user                  `json:"user" url:"user"`
+			Filter map[string]interface{} `json:"filter" url:"filter"`
+		}
+		values, err := QueryValues(
+			&request{
+				User:   &user{Tags: map[string]interface{}{"a": "b"}},
+				Filter: map[string]interface{}{"c": "d"},
+			},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, "c=d&user%5Btags%5D%5Ba%5D=b", values.Encode())
 	})
 
 	t.Run("nested map array", func(t *testing.T) {
@@ -234,7 +272,7 @@ func TestQueryValues(t *testing.T) {
 			},
 		)
 		require.NoError(t, err)
-		assert.Equal(t, "metadata%5Binner%5D=one&metadata%5Binner%5D=two&metadata%5Binner%5D=three", values.Encode())
+		assert.Equal(t, "inner=one&inner=two&inner=three", values.Encode())
 	})
 }
 

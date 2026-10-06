@@ -198,7 +198,14 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 		}
 
 		if sv.Kind() == reflect.Map {
-			if err := reflectMap(values, sv, name); err != nil {
+			// A top-level map query parameter is exploded: every entry becomes its own
+			// parameter, keyed by the property name alone. An empty scope says so. A map
+			// inside a declared object keeps its bracketed prefix.
+			mapScope := name
+			if scope == "" {
+				mapScope = ""
+			}
+			if err := reflectMap(values, sv, mapScope); err != nil {
 				return err
 			}
 			continue
@@ -217,7 +224,9 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 	return nil
 }
 
-// reflectMap handles map types specifically, generating query parameters in the format key[mapkey]=value
+// reflectMap handles map types specifically, generating query parameters in the format
+// key[mapkey]=value. An empty scope means the map is exploded: every entry becomes its own
+// parameter named after the property, and only nested levels are bracketed.
 func reflectMap(values url.Values, val reflect.Value, scope string) error {
 	if val.IsNil() {
 		return nil
@@ -229,7 +238,10 @@ func reflectMap(values url.Values, val reflect.Value, scope string) error {
 		v := iter.Value()
 
 		key := fmt.Sprint(k.Interface())
-		paramName := scope + "[" + key + "]"
+		paramName := key
+		if scope != "" {
+			paramName = scope + "[" + key + "]"
+		}
 
 		for v.Kind() == reflect.Ptr {
 			if v.IsNil() {

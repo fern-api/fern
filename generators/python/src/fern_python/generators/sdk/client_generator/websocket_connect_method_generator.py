@@ -10,6 +10,7 @@ from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
     EndpointFunctionGenerator,
     filter_variable_path_parameters,
+    get_exploded_map_query_parameter,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
@@ -769,7 +770,11 @@ class WebsocketConnectMethodGenerator:
         - additional_query_parameters from request_options
         """
         query_parameters = [
-            (get_wire_value(query_parameter.name), self._get_query_parameter_reference(query_parameter))
+            (
+                get_wire_value(query_parameter.name),
+                self._get_query_parameter_reference(query_parameter),
+                get_exploded_map_query_parameter(self._context, query_parameter),
+            )
             for query_parameter in channel.query_parameters
         ]
 
@@ -777,9 +782,12 @@ class WebsocketConnectMethodGenerator:
             writer.write_line("{")
             with writer.indent():
                 # Write channel-declared query parameters
-                for query_param_key, query_param_value in query_parameters:
-                    writer.write(f'"{query_param_key}": ')
-                    writer.write_node(query_param_value)
+                for query_param_key, query_param_value, exploded_map in query_parameters:
+                    if exploded_map is not None:
+                        exploded_map.write(writer, query_param_value)
+                    else:
+                        writer.write(f'"{query_param_key}": ')
+                        writer.write_node(query_param_value)
                     writer.write_line(",")
                 # Spread additional_query_parameters from request_options
                 writer.write_line("**(")
