@@ -116,7 +116,7 @@ export class Method extends MemberNode {
         if (this.override) {
             writer.write("override ");
         }
-        if (this.virtual) {
+        if (this.virtual && !this.override) {
             writer.write("virtual ");
         }
         if (this.return == null) {
