@@ -3,6 +3,7 @@
 - summary: |
     Add a `sort-by-availability` option to API reference entries in `docs.yml`. Endpoints are ordered by
     their `x-fern-availability`: listed values come first in the given order, followed by the rest in the
-    default order (no availability, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`).
+    default order (`unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`).
+    Use `unset` to position endpoints that have no availability.
     Endpoints with the same availability keep their order, or are alphabetized when `alphabetized` is true.
   type: feat

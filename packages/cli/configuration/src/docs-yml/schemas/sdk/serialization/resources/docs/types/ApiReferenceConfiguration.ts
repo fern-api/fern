@@ -9,6 +9,7 @@ import { Availability } from "./Availability.js";
 import { CollapsedValue } from "./CollapsedValue.js";
 import { PlaygroundSettings } from "./PlaygroundSettings.js";
 import { SnippetsConfiguration } from "./SnippetsConfiguration.js";
+import { SortByAvailabilityValue } from "./SortByAvailabilityValue.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
 
@@ -40,7 +41,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         alphabetized: core.serialization.boolean().optional(),
         sortByAvailability: core.serialization.property(
             "sort-by-availability",
-            core.serialization.list(Availability).optional(),
+            core.serialization.list(SortByAvailabilityValue).optional(),
         ),
         flattened: core.serialization.boolean().optional(),
         paginated: core.serialization.boolean().optional(),
@@ -69,7 +70,7 @@ export declare namespace ApiReferenceConfiguration {
         availability?: Availability.Raw | null;
         "skip-slug"?: boolean | null;
         alphabetized?: boolean | null;
-        "sort-by-availability"?: Availability.Raw[] | null;
+        "sort-by-availability"?: SortByAvailabilityValue.Raw[] | null;
         flattened?: boolean | null;
         paginated?: boolean | null;
         playground?: PlaygroundSettings.Raw | null;

@@ -75,6 +75,19 @@ export const Availability = z.enum([
     "legacy"
 ]);
 
+export const SortByAvailabilityValue = z.enum([
+    "unset",
+    "stable",
+    "generally-available",
+    "in-development",
+    "pre-release",
+    "deprecated",
+    "beta",
+    "alpha",
+    "preview",
+    "legacy"
+]);
+
 export const VersionAvailability = z.enum(["deprecated", "ga", "stable", "beta"]);
 
 export const TitleSource = z.enum(["frontmatter", "filename"]);
@@ -907,7 +920,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         availability: Availability.optional(),
         "skip-slug": z.boolean().optional(),
         alphabetized: z.boolean().optional(),
-        "sort-by-availability": z.array(Availability).optional(),
+        "sort-by-availability": z.array(SortByAvailabilityValue).optional(),
         flattened: z.boolean().optional(),
         paginated: z.boolean().optional(),
         playground: PlaygroundSettings.optional()

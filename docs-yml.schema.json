@@ -2924,6 +2924,22 @@
       ],
       "description": "Use the `layout` object to customize the order that your API endpoints\nare displayed in the docs site."
     },
+    "docs.SortByAvailabilityValue": {
+      "type": "string",
+      "enum": [
+        "unset",
+        "stable",
+        "generally-available",
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
+      ],
+      "description": "An availability to sort by, or `unset` for items without an availability."
+    },
     "docs.ApiReferenceConfiguration": {
       "type": "object",
       "properties": {
@@ -3151,14 +3167,14 @@
             {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/docs.Availability"
+                "$ref": "#/definitions/docs.SortByAvailabilityValue"
               }
             },
             {
               "type": "null"
             }
           ],
-          "description": "Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.\nListed availabilities come first, in the order provided. Unlisted availabilities follow in the default order:\nno availability, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.\n`stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.\nItems with the same availability keep their existing order (alphabetical when `alphabetized` is true)."
+          "description": "Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.\nListed availabilities come first, in the order provided. Use `unset` for items without an availability.\nUnlisted availabilities follow in the default order:\n`unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.\n`stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.\nItems with the same availability keep their existing order (alphabetical when `alphabetized` is true)."
         },
         "flattened": {
           "oneOf": [

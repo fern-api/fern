@@ -97,6 +97,27 @@ describe("sortChildrenByAvailability", () => {
         ]);
     });
 
+    it("places items without an availability where unset is listed", () => {
+        expect(sortChildrenByAvailability(children, ["beta", "unset", "deprecated"]).map(getTitle)).toEqual([
+            "beta",
+            "none",
+            "deprecated",
+            "ga",
+            "alpha",
+            "preview",
+            "legacy"
+        ]);
+        expect(sortChildrenByAvailability(children, ["generally-available"]).map(getTitle)).toEqual([
+            "ga",
+            "none",
+            "alpha",
+            "beta",
+            "preview",
+            "legacy",
+            "deprecated"
+        ]);
+    });
+
     it("keeps the existing order within the same availability", () => {
         const sameAvailability = [endpoint("b", "beta"), endpoint("a", "beta"), endpoint("c", undefined)];
         expect(sortChildrenByAvailability(sameAvailability, ["beta"]).map(getTitle)).toEqual(["b", "a", "c"]);

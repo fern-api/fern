@@ -32,12 +32,13 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     alphabetized?: boolean;
     /**
      * Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.
-     * Listed availabilities come first, in the order provided. Unlisted availabilities follow in the default order:
-     * no availability, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.
+     * Listed availabilities come first, in the order provided. Use `unset` for items without an availability.
+     * Unlisted availabilities follow in the default order:
+     * `unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.
      * `stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.
      * Items with the same availability keep their existing order (alphabetical when `alphabetized` is true).
      */
-    sortByAvailability?: FernDocsConfig.Availability[];
+    sortByAvailability?: FernDocsConfig.SortByAvailabilityValue[];
     /**
      * If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
      *

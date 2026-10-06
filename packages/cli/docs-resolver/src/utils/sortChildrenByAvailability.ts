@@ -15,12 +15,14 @@ const DEFAULT_AVAILABILITY_ORDER: (AvailabilityTier | undefined)[] = [
 ];
 
 function toAvailabilityTier(
-    availability: docsYml.RawSchemas.Availability | FernNavigation.V1.NavigationV1Availability | undefined
+    availability: docsYml.RawSchemas.SortByAvailabilityValue | FernNavigation.V1.NavigationV1Availability | undefined
 ): AvailabilityTier | undefined {
     if (availability == null) {
         return undefined;
     }
     switch (availability) {
+        case "unset":
+            return undefined;
         case "stable":
         case "generally-available":
             return "generally-available";
@@ -66,7 +68,7 @@ function getChildAvailability(
  */
 export function sortChildrenByAvailability(
     children: FernNavigation.V1.ApiPackageChild[],
-    sortByAvailability: docsYml.RawSchemas.Availability[]
+    sortByAvailability: docsYml.RawSchemas.SortByAvailabilityValue[]
 ): FernNavigation.V1.ApiPackageChild[] {
     const order: (AvailabilityTier | undefined)[] = [];
     for (const availability of sortByAvailability) {
