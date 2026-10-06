@@ -102,6 +102,7 @@ export const MissingRedirectsRule: Rule = {
         const violations = await findMissingRedirects({
             workspace,
             logger,
+            token: (await getToken())?.value,
             resolveLocalDocs: (url) => resolveLocalDocs({ url, workspace, apiWorkspaces, ossWorkspaces })
         });
         return violations.length === 0 ? {} : { file: () => violations };
@@ -119,10 +120,13 @@ export const MissingRedirectsRule: Rule = {
 export async function findMissingRedirects({
     workspace,
     logger,
+    token,
     resolveLocalDocs
 }: {
     workspace: DocsWorkspace;
     logger: Logger;
+    /** Fern token used to read the live site's pages from FDR; the comparison is skipped without one. */
+    token: string | undefined;
     resolveLocalDocs: (url: string) => Promise<DocsV1Write.DocsDefinition>;
 }): Promise<RuleViolation[]> {
     const url = getInstanceUrls(workspace)[0];
@@ -132,12 +136,11 @@ export async function findMissingRedirects({
 
     const baseUrl = toBaseUrl(url);
 
-    const token = await getToken();
     if (token == null) {
         return getSkipViolations({ type: "no-token" });
     }
 
-    const result = await fetchMarkdownEntries(getFdrOrigin(), baseUrl.domain, baseUrl.basePath, token.value);
+    const result = await fetchMarkdownEntries(getFdrOrigin(), baseUrl.domain, baseUrl.basePath, token);
     if ("error" in result) {
         logger.debug(`[missing-redirects] FDR fetch failed: ${result.error}`);
         return getSkipViolations({ type: "fetch-failed", reason: result.error });

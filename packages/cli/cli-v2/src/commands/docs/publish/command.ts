@@ -121,10 +121,11 @@ export class PublishCommand {
         try {
             const checker = new DocsChecker({ context, task: docsTask.getTask() });
             // publishDocs runs missing-redirects on the docs it resolves, so the navigation is built once.
+            // --strict keeps it here, because publishDocs only stops on errors and strict also fails on warnings.
             const checkResult = await checker.check({
                 workspace,
                 strict: args.strict,
-                excludeRules: [Rules.MissingRedirectsRule.name]
+                excludeRules: args.strict ? [] : [Rules.MissingRedirectsRule.name]
             });
 
             if (checkResult.hasErrors || (args.strict && checkResult.hasWarnings)) {

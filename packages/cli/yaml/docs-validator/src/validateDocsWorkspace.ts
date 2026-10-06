@@ -99,15 +99,18 @@ export async function validateDocsWorkspace(
 export async function validateMissingRedirects({
     workspace,
     docsDefinition,
+    token,
     logger
 }: {
     workspace: DocsWorkspace;
     docsDefinition: DocsV1Write.DocsDefinition;
+    token: string;
     logger: Logger;
 }): Promise<ValidationViolation[]> {
     const violations = await findMissingRedirects({
         workspace,
         logger,
+        token,
         resolveLocalDocs: async () => docsDefinition
     });
     const severity = getRuleNamesConfiguredAsErrors(workspace.config.check).has(MissingRedirectsRule.name)

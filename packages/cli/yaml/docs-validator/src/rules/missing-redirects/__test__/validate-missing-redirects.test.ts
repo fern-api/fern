@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { validateMissingRedirects } from "../../../validateDocsWorkspace.js";
 
 vi.mock("@fern-api/auth", () => ({
-    getToken: async () => ({ type: "user", value: "token" })
+    getToken: async () => undefined
 }));
 
 vi.mock(import("@fern-api/docs-resolver"), async (importOriginal) => ({
@@ -86,6 +86,7 @@ describe("validateMissingRedirects", () => {
         const violations = await validateMissingRedirects({
             workspace: createWorkspace({}),
             docsDefinition,
+            token: "token",
             logger
         });
         expect(violations).toHaveLength(1);
@@ -97,6 +98,7 @@ describe("validateMissingRedirects", () => {
         const violations = await validateMissingRedirects({
             workspace: createWorkspace({ check: { rules: { missingRedirects: "error" } } }),
             docsDefinition,
+            token: "token",
             logger
         });
         expect(violations.map((violation) => violation.severity)).toEqual(["error"]);
@@ -106,6 +108,7 @@ describe("validateMissingRedirects", () => {
         const violations = await validateMissingRedirects({
             workspace: createWorkspace({ redirects: [{ source: "/old", destination: "/welcome" }] }),
             docsDefinition,
+            token: "token",
             logger
         });
         expect(violations).toEqual([]);
