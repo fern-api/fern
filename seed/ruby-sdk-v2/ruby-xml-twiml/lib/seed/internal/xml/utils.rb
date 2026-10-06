@@ -475,13 +475,14 @@ module Seed
             raise ArgumentError, "Expected a boolean but found '#{raw}'"
           end
 
+          # Enums are open on the wire: a value the enum does not declare is kept as-is so documents
+          # written by a newer API version still parse and round-trip.
+          #
           # @param enum [Module] an `Internal::Types::Enum`
-          # @raise [ArgumentError] if the value is not a member of the enum
+          # @return [String] the enum member, or the raw value when it is not a declared member
           def parse_enum(raw, enum)
             value = raw.strip
-            raise ArgumentError, "'#{raw}' is not a valid #{enum.name}" unless enum.values.include?(value)
-
-            value
+            enum.values.include?(value) ? value : raw
           end
 
           # @raise [ArgumentError] if the value differs from the literal
