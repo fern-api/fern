@@ -56,7 +56,7 @@ import {
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
+import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
@@ -212,7 +212,6 @@ export async function publishDocs({
     editThisPage,
     disableTemplates = false,
     skipUpload = false,
-    withAiExamples = true,
     excludeApis = false,
     targetAudiences,
     docsVisibility,
@@ -236,7 +235,6 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
-    withAiExamples?: boolean;
     excludeApis?: boolean;
     targetAudiences?: string[];
     /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
@@ -409,7 +407,7 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            let apiDefinition = convertIrToFdrApi({
+            const apiDefinition = convertIrToFdrApi({
                 ir,
                 snippetsConfig,
                 playgroundConfig,
@@ -418,34 +416,6 @@ export async function publishDocs({
                 context,
                 apiNameOverride: apiName
             });
-
-            const isSelfHosted = token.value === "dummy";
-            const aiEnhancerConfig = getAIEnhancerConfig(
-                withAiExamples && !isSelfHosted,
-                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
-            );
-            if (aiEnhancerConfig) {
-                const sources = workspace?.getSources();
-                const openApiSources = sources
-                    ?.filter((source) => source.type === "openapi")
-                    .map((source) => ({
-                        absoluteFilePath: source.absoluteFilePath,
-                        absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
-                    }));
-
-                if (openApiSources == null || openApiSources.length === 0) {
-                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
-                } else {
-                    apiDefinition = await enhanceExamplesWithAI(
-                        apiDefinition,
-                        aiEnhancerConfig,
-                        context,
-                        token,
-                        organization,
-                        openApiSources
-                    );
-                }
-            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
@@ -2214,20 +2184,6 @@ async function updateAiChatFromDocsDefinition({
     context.logger.warn(
         chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.")
     );
-}
-
-function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {
-    if (!withAiExamples) {
-        return undefined;
-    }
-
-    return {
-        enabled: true,
-        model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
-        maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
-        styleInstructions
-    };
 }
 
 /**
