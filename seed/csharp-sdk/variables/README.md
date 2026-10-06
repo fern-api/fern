@@ -45,8 +45,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedVariables;
 
-var client = new SeedVariablesClient();
-await client.Service.PostAsync("endpointParam");
+var client = new SeedVariablesClient(clientOptions: new ClientOptions { RootVariable = "endpointParam" });
+await client.Service.PostAsync();
 ```
 
 ## Exception Handling

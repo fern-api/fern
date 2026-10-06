@@ -635,6 +635,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
 
                     this.writeServerVariableInterpolation(innerWriter);
+                    this.writeSdkVariableEnvironmentFallbacks(innerWriter);
 
                     // Add platform headers to clientOptions
                     innerWriter.write("var platformHeaders = ");
@@ -1099,6 +1100,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 default:
                     assertNever(scheme);
             }
+        }
+    }
+
+    /**
+     * String SDK variables that declare an `env` fall back to that environment variable when
+     * not set on the client options. Missing values are reported by the endpoints that need
+     * them so clients that never touch a bound endpoint still construct.
+     */
+    private writeSdkVariableEnvironmentFallbacks(writer: Writer): void {
+        for (const option of this.context.getSdkVariableOptions()) {
+            if (option.variable.envVar == null || !option.isString) {
+                continue;
+            }
+            writer.write(`clientOptions.${option.optionName} ??= Environment.GetEnvironmentVariable(`);
+            writer.writeNode(this.csharp.string_({ string: option.variable.envVar }));
+            writer.writeTextStatement(")");
         }
     }
 
