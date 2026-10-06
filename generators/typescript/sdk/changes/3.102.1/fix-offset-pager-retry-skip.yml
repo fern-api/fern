@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Offset pagers no longer skip a page when a failed `getNextPage()` is retried. The pager now
+    advances its saved offset only after the next page loads successfully, so a retry re-requests
+    the same offset instead of moving past it.
+  type: fix

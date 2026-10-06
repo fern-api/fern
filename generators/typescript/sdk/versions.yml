@@ -1,4 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.103.0
+  changelogEntry:
+    - summary: |
+        With `enableForwardCompatibleEnums: true`, enum-typed attributes and text on XML (TwiML) types are open on the
+        wire: `fromXml` keeps a value the enum does not declare (e.g. a voice added after the SDK was generated) instead
+        of throwing, and it round-trips through `toXml`. Without the flag the parse error now lists at most 10 of the
+        allowed values instead of all of them.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.102.1
+  changelogEntry:
+    - summary: |
+        Offset pagers no longer skip a page when a failed `getNextPage()` is retried. The pager now
+        advances its saved offset only after the next page loads successfully, so a retry re-requests
+        the same offset instead of moving past it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.102.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, `X-Fern-SDK-Version`, `X-Fern-Runtime`, and
+        `X-Fern-Runtime-Version` headers. Disabled by default, so existing generated output is
+        unchanged. `omitFernHeaders` still takes precedence and drops the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 3.101.0
   changelogEntry:
     - summary: |

@@ -98,6 +98,8 @@ export class XmlObjectGenerator {
         this.addToXElement();
         this.addToXml();
         this.addToString();
+        this.addEquals();
+        this.addGetHashCode();
         this.addFromXml();
         this.addFromXElement();
         this.addChildItemParsers();
@@ -523,6 +525,42 @@ export class XmlObjectGenerator {
             bodyType: ast.Method.BodyType.Expression,
             body: this.csharp.codeblock((writer) => {
                 writer.write("ToXml()");
+            })
+        });
+    }
+
+    /**
+     * Records compare collection members by reference, so two separately built (or parsed) values would
+     * never be equal. Equality is defined over the rendered XML instead, matching ToXml()/FromXml().
+     */
+    private addEquals(): void {
+        this.class_.addMethod({
+            name: "Equals",
+            access: ast.Access.Public,
+            virtual: !this.class_.sealed,
+            return_: this.context.Primitive.boolean,
+            parameters: [this.csharp.parameter({ name: "other", type: this.class_.reference.asOptional() })],
+            summary: "Two values are equal when they render to the same XML.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                this.utils(writer, "XmlEquals");
+                writer.write("(this, other)");
+            })
+        });
+    }
+
+    private addGetHashCode(): void {
+        this.class_.addMethod({
+            name: "GetHashCode",
+            access: ast.Access.Public,
+            override: true,
+            return_: this.context.Primitive.integer,
+            parameters: [],
+            summary: "Hash code derived from the rendered XML, consistent with Equals.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                this.utils(writer, "XmlHashCode");
+                writer.write("(this)");
             })
         });
     }

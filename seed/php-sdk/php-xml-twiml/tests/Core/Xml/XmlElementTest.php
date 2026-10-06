@@ -9,6 +9,12 @@ use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlText;
 use Seed\Core\Xml\XmlUtils;
 
+enum XmlTestStrength: string
+{
+    case Weak = 'weak';
+    case Strong = 'strong';
+}
+
 class XmlElementTest extends TestCase
 {
     public function testSerializesAttributesTextAndChildren(): void
@@ -68,6 +74,14 @@ class XmlElementTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         XmlUtils::parseInt('abc');
+    }
+
+    public function testEnumsAreOpen(): void
+    {
+        $this->assertSame('weak', XmlUtils::parseEnumValue('weak', XmlTestStrength::class));
+        $this->assertSame('bogus', XmlUtils::parseEnumValue('bogus', XmlTestStrength::class));
+        $this->assertNull(XmlUtils::parseEnumValue(null, XmlTestStrength::class));
+        $this->assertSame(['weak', 'bogus'], XmlUtils::enumValues(['weak', 'bogus'], XmlTestStrength::class));
     }
 
     public function testRejectsMalformedXml(): void

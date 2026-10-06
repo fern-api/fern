@@ -112,6 +112,10 @@ describe("readers", () => {
             "dtmf",
         ]);
         expect(() => xmlScalar("loud", xmlEnum(["quiet"] as const), "strength")).toThrow(/must be one of "quiet"/);
+        const many = Array.from({ length: 12 }, (_, i) => `v${i}`);
+        expect(() => xmlScalar("bogus", xmlEnum(many), "voice")).toThrow(
+            /must be one of "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", … \(2 more\) but was "bogus"$/,
+        );
         expect(xmlToSet(xmlScalarList("a,b,a", ",", (item) => item, "tags"))).toEqual(new Set(["a", "b"]));
         expect(xmlToSet(undefined)).toBeUndefined();
     });

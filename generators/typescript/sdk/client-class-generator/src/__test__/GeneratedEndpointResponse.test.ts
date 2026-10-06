@@ -175,6 +175,14 @@ function createMockContext(): any {
                         body: "body"
                     }
                 },
+                HttpResponsePromise: {
+                    fromPromise: (promise: ts.Expression) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createIdentifier("core.HttpResponsePromise.fromPromise"),
+                            undefined,
+                            [promise]
+                        )
+                },
                 getHeader: {
                     _invoke: ({ header }: { referenceToResponseHeaders: ts.Expression; header: string }) =>
                         ts.factory.createCallExpression(ts.factory.createIdentifier("getHeader"), undefined, [
@@ -524,6 +532,12 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.getItems)).toMatchSnapshot();
+                // _offset must only advance after the next page loads, so a retried getNextPage()
+                // re-requests the failed page instead of skipping it.
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                const loadPageText = serializeStatements(info!.loadPage);
+                expect(loadPageText).not.toContain("_offset +=");
+                expect(loadPageText).toMatchSnapshot();
             });
 
             it("returns offset-step pagination info with step and item-index semantics", () => {
@@ -553,6 +567,10 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 );
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
+                const loadPageText = serializeStatements(info!.loadPage);
+                expect(loadPageText).not.toContain("_offset +=");
+                expect(loadPageText).toMatchSnapshot();
             });
 
             it("returns offset pagination info with step and page-index semantics", () => {

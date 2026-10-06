@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fluent XML (TwiML) child methods accept the text content as a keyword as well as positionally,
+    matching the legacy call style: `response.say(message: "x")`, `response.dial(number: "+1555")` and
+    `response.message(body: "hi")` now emit the text instead of silently dropping it. Passing the text
+    both positionally and as a keyword raises `ArgumentError`.
+  type: fix

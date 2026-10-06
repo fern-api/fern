@@ -86,6 +86,11 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
+    /// Hash code derived from the rendered XML, consistent with Equals.
+    /// </summary>
+    public override int GetHashCode() => XmlUtils.XmlHashCode(this);
+
+    /// <summary>
     /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Pause AddChild(XmlElement child)
@@ -129,6 +134,11 @@ public record Pause : IJsonOnDeserialized, IXmlNode
         Content.Add(XmlComment.After(text));
         return this;
     }
+
+    /// <summary>
+    /// Two values are equal when they render to the same XML.
+    /// </summary>
+    public virtual bool Equals(Pause? other) => XmlUtils.XmlEquals(this, other);
 
     /// <summary>
     /// Returns the XML representation of this value.

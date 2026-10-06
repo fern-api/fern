@@ -1634,6 +1634,11 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
+    /// Hash code derived from the rendered XML, consistent with Equals.
+    /// </summary>
+    public override int GetHashCode() => XmlUtils.XmlHashCode(this);
+
+    /// <summary>
     /// Adds a <c>&lt;Pause&gt;</c> child element after any content added so far and returns this instance for chaining.
     /// <para>
     /// XML element without an explicit xml.name; falls back to the schema name.
@@ -1702,6 +1707,11 @@ public record Wide : IJsonOnDeserialized, IXmlNode
         Content.Add(XmlComment.After(text));
         return this;
     }
+
+    /// <summary>
+    /// Two values are equal when they render to the same XML.
+    /// </summary>
+    public virtual bool Equals(Wide? other) => XmlUtils.XmlEquals(this, other);
 
     /// <summary>
     /// Returns the XML representation of this value.
