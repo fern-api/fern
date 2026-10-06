@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) child builders keep their legacy names when they collide with the element's text
+    field: `dial.number("+15551234567")` and `message.body("b")` now work instead of raising
+    `TypeError: 'NoneType' object is not callable`. The text is still passed as the same constructor
+    keyword (`Dial(number="+1555")`) but is stored under a trailing underscore (`dial.number_`) so the
+    builder method stays callable; `add_number`/`add_body` are no longer generated.
+  type: fix
