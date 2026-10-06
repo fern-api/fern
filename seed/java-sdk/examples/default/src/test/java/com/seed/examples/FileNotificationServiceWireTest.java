@@ -18,22 +18,23 @@ public class FileNotificationServiceWireTest {
     private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
 
     @BeforeEach
-    public void setup() throws Exception {
+    public void setup() throws java.lang.Exception {
         server = new MockWebServer();
         server.start();
         client = SeedExamplesClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }
 
     @AfterEach
-    public void teardown() throws Exception {
+    public void teardown() throws java.lang.Exception {
         server.shutdown();
     }
 
     @Test
-    public void testGetException() throws Exception {
+    public void testGetException() throws java.lang.Exception {
         server.enqueue(
                 new MockResponse()
                         .setResponseCode(200)

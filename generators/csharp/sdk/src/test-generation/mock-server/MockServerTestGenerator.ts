@@ -12,7 +12,9 @@ type ServiceId = FernIr.ServiceId;
 
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
 import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { generateMockServerClientInstantiation } from "./generateMockServerClientInstantiation.js";
 import { ExpectedMockServerError, MockServerTestExample } from "./getMockServerTestExamples.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
@@ -27,6 +29,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     private readonly classReference: ast.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
     private readonly mockEndpointGenerator: MockEndpointGenerator;
+    private rootClientGenerator: RootClientGenerator | undefined;
 
     constructor(
         context: SdkGeneratorContext,
@@ -44,6 +47,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpointGenerator = new HttpEndpointGenerator({ context });
         this.mockEndpointGenerator = new MockEndpointGenerator(context);
+    }
+
+    private getRootClientGenerator(): RootClientGenerator {
+        this.rootClientGenerator ??= new RootClientGenerator(this.context);
+        return this.rootClientGenerator;
     }
 
     public override shouldGenerate(): boolean {
@@ -144,10 +152,12 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
                 writer.newLine();
 
+                const clientVariableName = this.writeClientVariable(writer, example);
+
                 const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
-                    clientVariableName: "Client",
+                    clientVariableName,
                     serviceId: this.serviceId,
                     getResult: true,
                     parseDatetimes: true
@@ -256,16 +266,41 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         });
     }
 
+    // SDK variables bound to the endpoint's path parameters live on the client, so a
+    // test that needs them constructs its own client with the example values.
+    private writeClientVariable(writer: Writer, example: ExampleEndpointCall): string {
+        const sdkVariableClientOptions = this.endpointGenerator.getSdkVariableClientOptionArguments({
+            endpoint: this.endpoint,
+            example,
+            parseDatetimes: true
+        });
+        if (sdkVariableClientOptions.length === 0) {
+            return "Client";
+        }
+        writer.write("var client = ");
+        writer.writeNodeStatement(
+            generateMockServerClientInstantiation({
+                context: this.context,
+                rootClientGenerator: this.getRootClientGenerator(),
+                additionalClientOptions: sdkVariableClientOptions
+            })
+        );
+        writer.newLine();
+        return "client";
+    }
+
     private generateErrorTestBody(example: ExampleEndpointCall, expectedError: ExpectedMockServerError): ast.CodeBlock {
         return this.csharp.codeblock((writer: Writer) => {
             writer.writeNode(this.mockEndpointGenerator.generateForExample(this.endpoint, example));
 
             writer.newLine();
 
+            const clientVariableName = this.writeClientVariable(writer, example);
+
             const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
                 example,
                 endpoint: this.endpoint,
-                clientVariableName: "Client",
+                clientVariableName,
                 serviceId: this.serviceId,
                 getResult: true,
                 parseDatetimes: true
