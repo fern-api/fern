@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.87.0
+  changelogEntry:
+    - summary: |
+        Support SDK variables (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). Path
+        parameters bound to a variable via `x-fern-sdk-variable` are removed from endpoint
+        signatures and request types and are configured once on the client through the generated
+        `ClientOptions.<Variable>` property. String variables that declare an `env` fall back to that
+        environment variable, and a variable that is still unset fails with a clear
+        `ArgumentException` before the request is sent.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 2.86.3
   changelogEntry:
     - summary: |
