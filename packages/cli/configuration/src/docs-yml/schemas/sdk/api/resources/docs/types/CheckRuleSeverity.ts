@@ -3,5 +3,6 @@
 export const CheckRuleSeverity = {
     Warn: "warn",
     Error: "error",
+    Off: "off",
 } as const;
 export type CheckRuleSeverity = (typeof CheckRuleSeverity)[keyof typeof CheckRuleSeverity];

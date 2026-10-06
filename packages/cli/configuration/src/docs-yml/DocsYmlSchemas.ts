@@ -630,7 +630,7 @@ export const RedirectsFile = z
 
 // ===== Check =====
 
-export const CheckRuleSeverity = z.enum(["warn", "error"]);
+export const CheckRuleSeverity = z.enum(["warn", "error", "off"]);
 
 export const CheckRulesConfig = z.object({
     "example-validation": CheckRuleSeverity.optional(),

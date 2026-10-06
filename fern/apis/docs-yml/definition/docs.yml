@@ -198,6 +198,7 @@ types:
     enum:
       - warn
       - error
+      - "off"
 
   CheckRulesConfig:
     properties:
@@ -229,7 +230,7 @@ types:
   CheckConfig:
     docs: |
       Configure the severity of validation rules run by `fern check`.
-      Each rule can be set to `warn` (non-blocking) or `error` (blocking).
+      Each rule can be set to `warn` (non-blocking), `error` (blocking), or `off` (not run).
     properties:
       rules: optional<CheckRulesConfig>
 

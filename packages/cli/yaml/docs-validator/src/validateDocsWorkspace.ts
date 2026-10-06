@@ -23,17 +23,6 @@ import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
-function toSeverityOverride(severity: docsYml.RawSchemas.CheckRuleSeverity): SeverityOverride {
-    switch (severity) {
-        case "error":
-            return "error";
-        case "warn":
-            return "warning";
-        default:
-            assertNever(severity);
-    }
-}
-
 const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     exampleValidation: ValidOpenApiExamples.name,
     brokenLinks: ValidMarkdownLinks.name,
@@ -45,33 +34,62 @@ const CHECK_RULE_CONFIG_TO_RULE_NAME = {
     validChangelogSlug: ValidChangelogSlugRule.name
 } satisfies Record<keyof docsYml.RawSchemas.CheckRulesConfig, string>;
 
-function buildSeverityOverrides(
+/** Maps each rule name configured under `check.rules` in docs.yml to its configured severity. */
+function getConfiguredSeverities(
     checkConfig: docsYml.RawSchemas.CheckConfig | undefined
-): Map<string, SeverityOverride> {
-    const severityOverrides = new Map<string, SeverityOverride>();
+): Map<string, docsYml.RawSchemas.CheckRuleSeverity> {
+    const severities = new Map<string, docsYml.RawSchemas.CheckRuleSeverity>();
     const rulesConfig = checkConfig?.rules;
     if (rulesConfig == null) {
-        return severityOverrides;
+        return severities;
     }
     for (const [configKey, ruleName] of Object.entries(CHECK_RULE_CONFIG_TO_RULE_NAME) as Array<
         [keyof docsYml.RawSchemas.CheckRulesConfig, string]
     >) {
         const severity = rulesConfig[configKey];
         if (severity != null) {
-            severityOverrides.set(ruleName, toSeverityOverride(severity));
+            severities.set(ruleName, severity);
+        }
+    }
+    return severities;
+}
+
+function buildSeverityOverrides(
+    checkConfig: docsYml.RawSchemas.CheckConfig | undefined
+): Map<string, SeverityOverride> {
+    const severityOverrides = new Map<string, SeverityOverride>();
+    for (const [ruleName, severity] of getConfiguredSeverities(checkConfig)) {
+        switch (severity) {
+            case "error":
+                severityOverrides.set(ruleName, "error");
+                break;
+            case "warn":
+                severityOverrides.set(ruleName, "warning");
+                break;
+            case "off":
+                break;
+            default:
+                assertNever(severity);
         }
     }
     return severityOverrides;
 }
 
-export function getRuleNamesConfiguredAsErrors(checkConfig: docsYml.RawSchemas.CheckConfig | undefined): Set<string> {
+function getRuleNamesConfiguredAs(
+    checkConfig: docsYml.RawSchemas.CheckConfig | undefined,
+    severity: docsYml.RawSchemas.CheckRuleSeverity
+): Set<string> {
     const ruleNames = new Set<string>();
-    for (const [ruleName, severity] of buildSeverityOverrides(checkConfig)) {
-        if (severity === "error") {
+    for (const [ruleName, configured] of getConfiguredSeverities(checkConfig)) {
+        if (configured === severity) {
             ruleNames.add(ruleName);
         }
     }
     return ruleNames;
+}
+
+export function getRuleNamesConfiguredAsErrors(checkConfig: docsYml.RawSchemas.CheckConfig | undefined): Set<string> {
+    return getRuleNamesConfiguredAs(checkConfig, "error");
 }
 
 export async function validateDocsWorkspace(
@@ -103,7 +121,9 @@ export async function runRulesOnDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
     const startMemory = process.memoryUsage();
-    const rules = [...selectedRules];
+    // Rules set to `off` are dropped before `create`, so their setup work never runs.
+    const disabledRuleNames = getRuleNamesConfiguredAs(workspace.config.check, "off");
+    const rules = selectedRules.filter((rule) => !disabledRuleNames.has(rule.name));
     const severityOverrides = buildSeverityOverrides(workspace.config.check);
     const validMarkdownLinksOverride = severityOverrides.get(ValidMarkdownLinks.name);
     // Some CLI paths still exclude `valid-markdown-links` unless broken-link checking is enabled.

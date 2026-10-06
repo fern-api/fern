@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `check.rules` in docs.yml now accepts `off` to skip a rule entirely, including its setup.
+    For example, `missing-redirects: off` stops `fern check` and `fern generate --docs` from
+    fetching the live site and building the docs navigation a second time.
+  type: feat
