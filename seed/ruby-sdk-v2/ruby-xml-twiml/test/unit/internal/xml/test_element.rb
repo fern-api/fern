@@ -174,4 +174,33 @@ describe Seed::Internal::Xml::Element do
       assert_equal "bogus", XmlTestUtils.parse_enum(" bogus ", strength)
     end
   end
+
+  describe "Serializable" do
+    XmlTestModel = Class.new(Seed::Internal::Types::Model) do
+      include Seed::Internal::Xml::Serializable
+
+      xml_element "Response", root: true
+    end
+
+    it "yields the new instance to a constructor block" do
+      model = XmlTestModel.new { |r| r.add_text("hi") }
+
+      assert_equal "<Response>hi</Response>", model.to_xml(xml_declaration: false)
+    end
+
+    it "builds an additional child from a name, text and attributes" do
+      model = XmlTestModel.new
+      child = model.add_child("Custom", "v", a: "1", status_callback: "u", skipped: nil)
+      model.add_child(:Empty)
+
+      assert_kind_of XmlTestElement, child
+      assert_equal "<Response><Custom a=\"1\" statusCallback=\"u\">v</Custom><Empty/></Response>",
+                   model.to_xml(xml_declaration: false)
+      assert_equal 2, model.additional_children.length
+    end
+
+    it "rejects text or attributes alongside an element object" do
+      assert_raises(ArgumentError) { XmlTestModel.new.add_child(XmlTestElement.new("Custom"), "v") }
+    end
+  end
 end
