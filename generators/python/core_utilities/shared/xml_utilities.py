@@ -548,7 +548,9 @@ def _render_wrapper(name: str, items: Sequence[str], marker: Optional[XmlElement
     attributes: List[str] = []
     if marker is not None:
         attributes.extend(f" {key}={quoteattr(value)}" for key, value in marker.attributes.items())
-        body.extend(escape(item) if isinstance(item, str) else item.to_xml(xml_declaration=False) for item in marker.content)
+        body.extend(
+            escape(item) if isinstance(item, str) else item.to_xml(xml_declaration=False) for item in marker.content
+        )
     open_tag = f"<{name}{''.join(attributes)}"
     return f"{open_tag}>{''.join(body)}</{name}>" if body else f"{open_tag} />"
 
