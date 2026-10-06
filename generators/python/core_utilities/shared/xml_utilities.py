@@ -95,7 +95,7 @@ def serialize_xml_element(
         body.append(escape(rendered_text))
     for child in children:
         body.extend(_render_child(child))
-    body.extend(extra.to_xml() for extra in additional_children)
+    body.extend(extra.to_xml(xml_declaration=False) for extra in additional_children)
 
     if not body:
         parts.append(" />")
@@ -327,7 +327,7 @@ def _render_child_item(name: str, item: Union[XmlScalar, XmlSerializable]) -> st
             f"Cannot serialize <{name}> child of type {type(item).__name__} to XML: "
             "only scalars and xml-encoded models (with a to_xml() method) are supported"
         )
-    return item.to_xml()
+    return item.to_xml(xml_declaration=False)
 
 
 def _scalar_to_string(value: XmlScalar) -> str:

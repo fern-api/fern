@@ -53,7 +53,8 @@ export class Dial implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Dial>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Dial",
             namespace: "https://www.twilio.com/twiml",
@@ -66,6 +67,7 @@ export class Dial implements core.xml.XmlSerializable {
             text: this.number,
             children: [{ name: "Numbers", value: this.numbers, wrapped: true }],
             additionalChildren: this.additionalChildren,
+            xmlDeclaration,
         });
     }
 
@@ -146,8 +148,8 @@ export namespace Dial {
             return new Dial({ ...this.fields, numbers: core.xml.xmlBuildAll(this.elements.numbers) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {
