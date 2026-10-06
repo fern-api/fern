@@ -495,9 +495,9 @@ public final class BuilderGenerator {
 
     /**
      * The ordered-content members of an xml-encoded type's builder: {@code addChild(XmlElement)},
-     * {@code addText(String)}, {@code comment(String)}, {@code commentBefore(String)}, {@code commentAfter(String)}
-     * and bulk setters, all appending to one {@code content} sequence so that typed children, generic children, text
-     * and comments keep their relative order.
+     * {@code addText(String)}, {@code comment(String)}, {@code commentBefore(String)}, {@code commentAfter(String)} and
+     * bulk setters, all appending to one {@code content} sequence so that typed children, generic children, text and
+     * comments keep their relative order.
      */
     private List<MethodSpec.Builder> getContentBuilderMethods(ClassName returnClass, boolean withBody) {
         List<MethodSpec.Builder> methods = new ArrayList<>();

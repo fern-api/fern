@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace SeedApi;
 
 /// <summary>
@@ -45,5 +47,16 @@ public sealed class XmlComment : IEquatable<XmlComment>
 
     public override bool Equals(object? obj) => Equals(obj as XmlComment);
 
-    public override int GetHashCode() => Text.GetHashCode() ^ (int)Placement;
+    /// <summary>
+    /// The text as it is written inside the comment. XML forbids <c>--</c> within a comment and a trailing
+    /// <c>-</c>, and either would otherwise end the comment early and turn the rest into markup, so both are
+    /// spaced out.
+    /// </summary>
+    public string XmlText()
+    {
+        var safe = Regex.Replace(Text, "-(?=-)", "- ");
+        return safe.EndsWith("-") ? safe + " " : safe;
+    }
+
+    public override int GetHashCode() => unchecked((Text.GetHashCode() * 397) ^ (int)Placement);
 }

@@ -307,4 +307,13 @@ public class XmlElementTests
     {
         Assert.Throws<ArgumentException>(() => XmlElement.FromXml("<Response><!-- oops </Response>"));
     }
+
+    [Test]
+    public void CommentText_CannotCloseTheCommentEarly()
+    {
+        var element = new XmlElement("Response").AddComment("a -- b --> <Hangup/> -");
+        Assert.That(element.ToXml(), Is.EqualTo("<Response><!--a - - b - -> <Hangup/> - --></Response>"));
+        var parsed = XmlElement.FromXml(element.ToXml());
+        Assert.That(parsed.Content, Is.EqualTo(new object[] { new XmlComment("a - - b - -> <Hangup/> - ") }));
+    }
 }

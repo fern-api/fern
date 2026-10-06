@@ -93,7 +93,16 @@ public final class XmlNode {
 
     /** The xml markup of a comment node. */
     public static String renderComment(String text) {
-        return "<!--" + text + "-->";
+        return "<!--" + commentText(text) + "-->";
+    }
+
+    /**
+     * Makes text safe to place inside a comment: XML forbids {@code --} within a comment and a trailing {@code -},
+     * and either would otherwise end the comment early and turn the rest into markup.
+     */
+    public static String commentText(String text) {
+        String safe = text.replaceAll("-(?=-)", "- ");
+        return safe.endsWith("-") ? safe + " " : safe;
     }
 
     /**

@@ -253,3 +253,13 @@ func TestParseXmlRejectsUnterminatedComment(t *testing.T) {
 	_, err := ParseXml(`<Response><!-- oops </Response>`)
 	require.Error(t, err)
 }
+
+func TestXmlCommentTextCannotCloseTheCommentEarly(t *testing.T) {
+	element := NewXmlElement("Response").AddComment("a -- b --> <Hangup/> -")
+	assert.Equal(t, `<Response><!--a - - b - -> <Hangup/> - --></Response>`, element.ToXml())
+
+	parsed, err := ParseXml(element.ToXml())
+	require.NoError(t, err)
+	require.Len(t, parsed.Children, 1)
+	assert.Equal(t, XmlComment{Text: "a - - b - -> <Hangup/> - "}, parsed.Children[0])
+}

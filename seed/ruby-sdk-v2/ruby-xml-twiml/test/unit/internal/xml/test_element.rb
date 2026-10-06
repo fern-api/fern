@@ -199,5 +199,12 @@ describe Seed::Internal::Xml::Element do
     it "rejects an unterminated comment" do
       assert_raises(ArgumentError) { XmlTestUtils.parse_document("<Response><!-- oops </Response>") }
     end
+
+    it "keeps comment text from closing the comment early" do
+      element = XmlTestElement.new("Response").add_comment("a -- b --> <Hangup/> -")
+      assert_equal "<Response><!--a - - b - -> <Hangup/> - --></Response>", XmlTestUtils.serialize(element)
+      parsed = XmlTestUtils.parse_document(XmlTestUtils.serialize(element))
+      assert_equal [XmlTestComment.new("a - - b - -> <Hangup/> - ")], parsed.children
+    end
   end
 end

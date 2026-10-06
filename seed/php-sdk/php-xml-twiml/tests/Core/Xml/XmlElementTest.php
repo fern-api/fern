@@ -211,4 +211,12 @@ class XmlElementTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         XmlElement::fromXml('<Response><!-- oops </Response>');
     }
+
+    public function testCommentTextCannotCloseTheCommentEarly(): void
+    {
+        $element = (new XmlElement('Response'))->addComment('a -- b --> <Hangup/> -');
+        $this->assertSame('<Response><!--a - - b - -> <Hangup/> - --></Response>', $element->toXml());
+        $parsed = XmlElement::fromXml($element->toXml());
+        $this->assertEquals([new XmlComment('a - - b - -> <Hangup/> - ')], $parsed->children);
+    }
 }

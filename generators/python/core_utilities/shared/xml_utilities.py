@@ -71,6 +71,13 @@ class XmlChild:
     wrapped: bool = False
 
 
+def xml_comment_text(text: str) -> str:
+    """Makes text safe to place inside a comment: XML forbids `--` within a comment and a trailing `-`,
+    and either would otherwise end the comment early and turn the rest into markup."""
+    safe = re.sub(r"-(?=-)", "- ", text)
+    return f"{safe} " if safe.endswith("-") else safe
+
+
 class XmlComment:
     """An XML comment (`<!--text-->`), kept in an element's ordered content like a text segment or child element."""
 
@@ -78,7 +85,7 @@ class XmlComment:
         self.text = text
 
     def to_xml(self, *, xml_declaration: bool = False) -> str:
-        return f"<!--{self.text}-->"
+        return f"<!--{xml_comment_text(self.text)}-->"
 
     def __str__(self) -> str:
         return self.to_xml()
@@ -197,7 +204,7 @@ def xml_model_content(model: object) -> Optional[List[XmlContent]]:
 def order_xml_content(content: Sequence[XmlContent], *typed_children: object) -> List[XmlContent]:
     """Reconciles an element's ordered content with its typed child properties.
 
-    Text segments and undeclared `XmlElement` children keep their position. Typed children keep their
+    Text segments, comments and undeclared `XmlElement` children keep their position. Typed children keep their
     position as long as the typed properties still reference them (one position per reference); those
     no longer referenced are dropped, and extra references (e.g. children passed to the constructor or
     set on a list property) are appended at the end.
@@ -208,7 +215,7 @@ def order_xml_content(content: Sequence[XmlContent], *typed_children: object) ->
             remaining[id(child)] = remaining.get(id(child), 0) + 1
     ordered: List[XmlContent] = []
     for item in content:
-        if isinstance(item, (str, XmlElement)):
+        if isinstance(item, (str, XmlElement, XmlComment)):
             ordered.append(item)
             continue
         count = remaining.get(id(item), 0)

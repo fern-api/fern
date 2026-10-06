@@ -1,5 +1,5 @@
 import { XML_DECLARATION, type XmlContent, XmlSerializable } from "./serialize";
-import { XmlComment } from "./XmlComment";
+import { XmlComment, rememberXmlSiblingComments } from "./XmlComment";
 
 /** A mutable, fluent builder for an xml-encoded model of type `T`. */
 export interface XmlBuilder<T> extends XmlSerializable {
@@ -49,7 +49,12 @@ export function isXmlBuilder<T>(value: T | XmlBuilder<T>): value is XmlBuilder<T
 
 /** Resolves a value that may still be a builder into the built model. */
 export function xmlBuild<T>(value: T | XmlBuilder<T>): T {
-    return isXmlBuilder(value) ? value.build() : value;
+    if (!isXmlBuilder(value)) {
+        return value;
+    }
+    const model = value.build();
+    rememberXmlSiblingComments(model, value.siblingComments);
+    return model;
 }
 
 export function xmlBuildAll<T, N extends null | undefined>(
@@ -77,7 +82,7 @@ export function xmlBuildContent(content: readonly XmlContent[]): XmlBuiltContent
             return value;
         }
         if (!built.has(value)) {
-            built.set(value, value.build());
+            built.set(value, xmlBuild(value));
         }
         // The map stores each builder's own build() result, so the entry for a `XmlBuilder<T>` is a `T`.
         return built.get(value) as T;

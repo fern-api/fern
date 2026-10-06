@@ -93,7 +93,7 @@ final class XmlUtils
                 $node->appendChild($document->createTextNode($child->text));
             } elseif ($child instanceof XmlComment) {
                 if ($child->placement === XmlComment::PLACEMENT_INSIDE) {
-                    $node->appendChild($document->createComment($child->text));
+                    $node->appendChild($document->createComment($child->xmlText()));
                 }
             } else {
                 self::toDom($document, $node, $child->toXmlElement());
@@ -114,7 +114,7 @@ final class XmlUtils
     ): void {
         foreach ($element->children as $child) {
             if ($child instanceof XmlComment && $child->placement === $placement) {
-                $parent->appendChild($document->createComment($child->text));
+                $parent->appendChild($document->createComment($child->xmlText()));
             }
         }
     }

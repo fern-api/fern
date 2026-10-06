@@ -72,7 +72,15 @@ module <%= gem_namespace %>
 
         # @return [String]
         def to_s
-          "<!--#{value}-->"
+          "<!--#{xml_text}-->"
+        end
+
+        # The text as written inside the comment. XML forbids `--` within a comment and a trailing `-`,
+        # and either would otherwise end the comment early and turn the rest into markup, so both are spaced out.
+        # @return [String]
+        def xml_text
+          safe = value.gsub(/-(?=-)/, "- ")
+          safe.end_with?("-") ? "#{safe} " : safe
         end
 
         # @return [Boolean]

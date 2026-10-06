@@ -431,3 +431,16 @@ def test_sibling_comments_surround_the_element_after_the_declaration() -> None:
         == f"{XML_DECLARATION}<!--b--><Response /><!--a-->"
     )
     assert serialize_xml_element(name="Say", text="x", comments_after=[XmlComment("a")]) == "<Say>x</Say><!--a-->"
+
+
+def test_comments_keep_their_position_in_ordered_content() -> None:
+    comment = XmlComment("c")
+    a = Say("a")
+    assert order_xml_content([comment, a, "text"], [a]) == [comment, a, "text"]
+    assert order_xml_content([comment]) == [comment]
+
+
+def test_comment_text_cannot_close_the_comment_early() -> None:
+    assert XmlComment("a -- b --> <Hangup/> -").to_xml() == "<!--a - - b - -> <Hangup/> - -->"
+    node = parse_xml(f"<Response>{XmlComment('x -->').to_xml()}</Response>", "Response")
+    assert xml_content(node) == [XmlComment("x - ->")]

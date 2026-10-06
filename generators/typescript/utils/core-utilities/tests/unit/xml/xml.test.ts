@@ -259,6 +259,13 @@ describe("comments", () => {
         }
     }
 
+    it("keeps comment text from closing the comment early", () => {
+        expect(new XmlComment("a -- b --> <Hangup/> -").toXml()).toBe("<!--a - - b - -> <Hangup/> - -->");
+        expect(parseXml(`<Response>${new XmlComment("x -->").toXml()}</Response>`).content).toEqual([
+            { comment: "x - ->" },
+        ]);
+    });
+
     it("keeps comments in the parsed content in document order and round-trips them", () => {
         const node = parseXml("<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>");
         expect(node.content).toEqual([
@@ -308,6 +315,38 @@ describe("comments", () => {
             "<!--inside-->",
         ]);
         expect(built.buildAll([builder])?.[0]).toBe(built.content[2]);
+    });
+
+    it("keeps a wrapped child builder's sibling comments around its element inside the wrapper", () => {
+        const siblingComments = new XmlSiblingComments();
+        siblingComments.before.push(new XmlComment("before"));
+        siblingComments.after.push(new XmlComment("after"));
+        const builder = { build: () => new XmlElement({ name: "Number", text: "1" }), toXml: () => "", siblingComments };
+        const built = xmlBuildContent([new XmlElement({ name: "Numbers" }), new XmlComment("inside")]);
+        const numbers = built.buildAll([builder, new XmlElement({ name: "Number", text: "2" })]);
+        const xml = serializeXmlElement({
+            name: "Dial",
+            children: [{ name: "Numbers", value: numbers, wrapped: true }],
+            content: built.content,
+        });
+        expect(xml).toBe(
+            "<Dial><Numbers><!--before--><Number>1</Number><!--after--><Number>2</Number></Numbers><!--inside--></Dial>",
+        );
+        const roundTrip = "<Dial><Numbers><Number>1</Number><Number>2</Number><!--trailing--></Numbers><!--inside--></Dial>";
+        const parsed = parseXml(roundTrip);
+        expect(
+            serializeXmlElement({
+                name: "Dial",
+                children: [
+                    {
+                        name: "Numbers",
+                        value: xmlChildren(parsed, { Number: (node) => XmlElement.fromXml(node) }, { wrapper: "Numbers" }),
+                        wrapped: true,
+                    },
+                ],
+                content: xmlContent(parsed, { wrappers: { Numbers: ["Number"] } }),
+            }),
+        ).toBe(roundTrip);
     });
 
     it("wraps a root element with its sibling comments, keeping the declaration first", () => {

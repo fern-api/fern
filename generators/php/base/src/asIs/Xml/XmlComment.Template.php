@@ -42,6 +42,16 @@ final class XmlComment
 
     public function __toString(): string
     {
-        return "<!--{$this->text}-->";
+        return "<!--{$this->xmlText()}-->";
+    }
+
+    /**
+     * The text as it is written inside the comment. XML forbids `--` within a comment and a trailing `-`,
+     * and either would otherwise end the comment early and turn the rest into markup, so both are spaced out.
+     */
+    public function xmlText(): string
+    {
+        $safe = preg_replace('/-(?=-)/', '- ', $this->text) ?? $this->text;
+        return str_ends_with($safe, '-') ? "$safe " : $safe;
     }
 }

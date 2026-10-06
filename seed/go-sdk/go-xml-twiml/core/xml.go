@@ -76,8 +76,22 @@ func (XmlComment) ToXmlElement() *XmlElement {
 
 func (c XmlComment) write(buffer *bytes.Buffer) {
 	buffer.WriteString("<!--")
-	buffer.WriteString(c.Text)
+	buffer.WriteString(xmlCommentText(c.Text))
 	buffer.WriteString("-->")
+}
+
+// xmlCommentText makes text safe to place inside a comment: XML forbids "--"
+// within a comment and a trailing "-", and either would otherwise end the
+// comment early and turn the rest into markup.
+func xmlCommentText(text string) string {
+	var out strings.Builder
+	for i := 0; i < len(text); i++ {
+		out.WriteByte(text[i])
+		if text[i] == '-' && (i+1 == len(text) || text[i+1] == '-') {
+			out.WriteByte(' ')
+		}
+	}
+	return out.String()
 }
 
 // XmlElement is a generic XML element. It carries the children the generated
@@ -196,16 +210,25 @@ func (x *XmlElement) ToXmlDocument() string {
 }
 
 func (x *XmlElement) write(buffer *bytes.Buffer, declared map[string]string) {
-	x.writeSiblingComments(buffer, XmlCommentBeforeElement)
-	x.writeElement(buffer, declared)
-	x.writeSiblingComments(buffer, XmlCommentAfterElement)
-}
-
-func (x *XmlElement) writeSiblingComments(buffer *bytes.Buffer, placement XmlCommentPlacement) {
+	var before, after []XmlComment
 	for _, child := range x.Children {
-		if comment, ok := child.(XmlComment); ok && comment.Placement == placement {
-			comment.write(buffer)
+		comment, ok := child.(XmlComment)
+		if !ok {
+			continue
 		}
+		switch comment.Placement {
+		case XmlCommentBeforeElement:
+			before = append(before, comment)
+		case XmlCommentAfterElement:
+			after = append(after, comment)
+		}
+	}
+	for _, comment := range before {
+		comment.write(buffer)
+	}
+	x.writeElement(buffer, declared)
+	for _, comment := range after {
+		comment.write(buffer)
 	}
 }
 

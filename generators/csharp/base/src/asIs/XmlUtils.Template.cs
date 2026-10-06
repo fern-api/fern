@@ -72,7 +72,7 @@ internal static class XmlUtils
         internal void Add(XmlComment comment)
         {
             (comment.Placement == XmlComment.CommentPlacement.After ? After : Before).Add(
-                new XComment(comment.Text)
+                new XComment(comment.XmlText())
             );
         }
 
@@ -84,11 +84,11 @@ internal static class XmlUtils
             return nodes.ToArray();
         }
 
+        private static string Render(XComment comment) => "<!--" + comment.Value + "-->";
+
         internal string Wrap(string xml)
         {
-            return string.Concat(Before.Select(c => c.ToString()))
-                + xml
-                + string.Concat(After.Select(c => c.ToString()));
+            return string.Concat(Before.Select(Render)) + xml + string.Concat(After.Select(Render));
         }
     }
 
@@ -416,7 +416,7 @@ internal static class XmlUtils
             case string text:
                 return new XText(text);
             case XmlComment comment:
-                return new XComment(comment.Text);
+                return new XComment(comment.XmlText());
             default:
                 return WithSiblings(ToXElement(item));
         }
@@ -685,7 +685,7 @@ internal static class XmlUtils
         }
     }
 
-    private static XElement RenderWrapper(string name, List<XElement> items, XmlElement? marker)
+    private static object RenderWrapper(string name, List<XElement> items, XmlElement? marker)
     {
         var wrapper = CreateElement(name, marker?.Namespace, marker?.Prefix);
         if (marker != null)
@@ -710,10 +710,15 @@ internal static class XmlUtils
         {
             foreach (var item in marker.Content)
             {
+                if (item is XmlComment comment && comment.Placement != XmlComment.CommentPlacement.Inside)
+                {
+                    SiblingComments.Of(wrapper).Add(comment);
+                    continue;
+                }
                 wrapper.Add(ToXNode(item));
             }
         }
-        return wrapper;
+        return WithSiblings(wrapper);
     }
 
     /// <summary>
