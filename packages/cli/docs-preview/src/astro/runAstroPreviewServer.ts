@@ -25,7 +25,10 @@ const BUNDLE_MANIFEST_FILENAME = "fern-local-bundle.json";
 const DEFAULT_RENDERER_ENTRY = "dist/server/entry.mjs";
 /** The renderer scopes every request to this header (fern-platform `HEADER_X_FERN_HOST`). */
 const X_FERN_HOST_HEADER = "x-fern-host";
-/** The renderer's purge route: drops its site + render caches for the `x-fern-host`. */
+/**
+ * The renderer's purge route: drops its site + render caches for the `x-fern-host`.
+ * Matched on path alone, so GET sidesteps Astro's same-origin check on POSTs.
+ */
 const RENDERER_INVALIDATE_PATH = "/api/fern-docs/invalidate";
 /** Browser live-reload: the proxy injects a listener into HTML and emits here after a reload. */
 const RELOAD_EVENTS_PATH = "/__fern/reload-events";
@@ -255,7 +258,6 @@ export async function runAstroPreviewServer({
     const notifyRenderer = async (): Promise<void> => {
         try {
             const response = await fetch(`http://127.0.0.1:${rendererPort}${RENDERER_INVALIDATE_PATH}`, {
-                method: "POST",
                 headers: { [X_FERN_HOST_HEADER]: rendererHost }
             });
             if (!response.ok) {
