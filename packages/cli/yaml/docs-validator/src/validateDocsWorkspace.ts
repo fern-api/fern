@@ -99,17 +99,21 @@ export async function validateDocsWorkspace(
 export async function validateMissingRedirects({
     workspace,
     docsDefinition,
+    instanceUrl,
     token,
     logger
 }: {
     workspace: DocsWorkspace;
     docsDefinition: DocsV1Write.DocsDefinition;
+    /** URL of the docs instance being published; its live pages are the ones compared. */
+    instanceUrl: string;
     token: string;
     logger: Logger;
 }): Promise<ValidationViolation[]> {
     const violations = await findMissingRedirects({
         workspace,
         logger,
+        instanceUrl,
         token,
         resolveLocalDocs: async () => docsDefinition
     });

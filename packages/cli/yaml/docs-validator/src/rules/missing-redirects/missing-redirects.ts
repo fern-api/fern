@@ -102,6 +102,7 @@ export const MissingRedirectsRule: Rule = {
         const violations = await findMissingRedirects({
             workspace,
             logger,
+            instanceUrl: getInstanceUrls(workspace)[0],
             token: (await getToken())?.value,
             resolveLocalDocs: (url) => resolveLocalDocs({ url, workspace, apiWorkspaces, ossWorkspaces })
         });
@@ -120,16 +121,18 @@ export const MissingRedirectsRule: Rule = {
 export async function findMissingRedirects({
     workspace,
     logger,
+    instanceUrl: url,
     token,
     resolveLocalDocs
 }: {
     workspace: DocsWorkspace;
     logger: Logger;
+    /** Docs instance whose published pages are compared; the comparison is skipped without one. */
+    instanceUrl: string | undefined;
     /** Fern token used to read the live site's pages from FDR; the comparison is skipped without one. */
     token: string | undefined;
     resolveLocalDocs: (url: string) => Promise<DocsV1Write.DocsDefinition>;
 }): Promise<RuleViolation[]> {
-    const url = getInstanceUrls(workspace)[0];
     if (url == null) {
         return getSkipViolations({ type: "no-instance-url" });
     }

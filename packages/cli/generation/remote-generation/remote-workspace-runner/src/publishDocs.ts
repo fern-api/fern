@@ -853,6 +853,7 @@ export async function publishDocs({
         const missingRedirects = await validateMissingRedirects({
             workspace: docsWorkspace,
             docsDefinition,
+            instanceUrl: domain,
             token: token.value,
             logger: context.logger
         });

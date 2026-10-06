@@ -82,22 +82,26 @@ afterEach(() => {
 describe("validateMissingRedirects", () => {
     const docsDefinition = createDocsDefinition([{ pageId: "welcome.mdx", slug: "welcome" }]);
 
-    it("warns about a removed page using the given docs definition", async () => {
+    it("warns about a removed page of the published instance using the given docs definition", async () => {
         const violations = await validateMissingRedirects({
             workspace: createWorkspace({}),
             docsDefinition,
+            instanceUrl: "beta.docs.buildwithfern.com",
             token: "token",
             logger
         });
         expect(violations).toHaveLength(1);
         expect(violations[0]).toMatchObject({ name: "missing-redirects", severity: "warning" });
         expect(violations[0]?.message).toContain('"/old"');
+        const requestBody = JSON.parse(String(vi.mocked(fetch).mock.calls[0]?.[1]?.body));
+        expect(requestBody.domain).toBe("beta.docs.buildwithfern.com");
     });
 
     it("reports an error when docs.yml sets missing-redirects to error", async () => {
         const violations = await validateMissingRedirects({
             workspace: createWorkspace({ check: { rules: { missingRedirects: "error" } } }),
             docsDefinition,
+            instanceUrl: "beta.docs.buildwithfern.com",
             token: "token",
             logger
         });
@@ -108,6 +112,7 @@ describe("validateMissingRedirects", () => {
         const violations = await validateMissingRedirects({
             workspace: createWorkspace({ redirects: [{ source: "/old", destination: "/welcome" }] }),
             docsDefinition,
+            instanceUrl: "beta.docs.buildwithfern.com",
             token: "token",
             logger
         });
