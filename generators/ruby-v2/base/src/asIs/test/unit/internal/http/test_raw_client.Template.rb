@@ -250,8 +250,9 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
       assert_kind_of Net::HTTPGenericRequest, http_request
       assert_equal "POST", http_request.method
       assert_equal "yes", http_request["X-Custom"]
-      assert_equal "Ruby", http_request["X-Fern-Language"]
-      assert_equal '{"name":"widget"}', http_request.body
+<% if (!omitFernHeaders && !userAgentOnly) { %>      assert_equal "Ruby", http_request["X-Fern-Language"]
+<% } else { %>      assert_nil http_request["X-Fern-Language"]
+<% } %>      assert_equal '{"name":"widget"}', http_request.body
     end
 
     it "retries through the custom http_client" do

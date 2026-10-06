@@ -246,6 +246,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # unchanged. Subject to `omit_fern_headers`.
     include_platform_headers: bool = False
 
+    # If true, emits only the `User-Agent` header (in whatever form the other
+    # configs produce) and drops the X-Fern-Language, X-Fern-SDK-Name,
+    # X-Fern-SDK-Version, X-Fern-Runtime, and X-Fern-Platform headers. Disabled by
+    # default so existing output is unchanged. Subject to `omit_fern_headers`.
+    user_agent_only: bool = False
+
     # If true, the SDK version reported in the telemetry headers (X-Fern-SDK-Version
     # and the version segment of User-Agent) is resolved at runtime via
     # `importlib.metadata.version(<dist>)` instead of being baked in as a literal at
@@ -319,6 +325,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["runtime_version"] = obj.pop("runtimeVersion")
             if "allowUserAgentAppInfo" in obj and "allow_user_agent_app_info" not in obj:
                 obj["allow_user_agent_app_info"] = obj.pop("allowUserAgentAppInfo")
+            if "userAgentOnly" in obj and "user_agent_only" not in obj:
+                obj["user_agent_only"] = obj.pop("userAgentOnly")
             if "maxRetries" in obj and "default_max_retries" not in obj:
                 obj["default_max_retries"] = obj.pop("maxRetries")
             if "retryStatusCodes" in obj and "retry_status_codes" not in obj:
