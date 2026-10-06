@@ -22,6 +22,10 @@ module Seed
       # @option attributes [Array[Seed::Types::Break], nil] :children Nested TwiML elements, rendered in order.
       # @return [Say]
       def say(message = nil, **attributes)
+        if attributes.key?(:message)
+          raise ArgumentError, "message given both positionally and as a keyword" unless message.nil?
+          message = attributes.delete(:message)
+        end
         child = message.is_a?(Seed::Types::Say) ? message : Seed::Types::Say.new(**attributes, message: message)
         self.children = [*children, child]
         record_content(child)
@@ -37,6 +41,10 @@ module Seed
       # @option attributes [Array[Seed::Types::Number], nil] :numbers
       # @return [Dial]
       def dial(number = nil, **attributes)
+        if attributes.key?(:number)
+          raise ArgumentError, "number given both positionally and as a keyword" unless number.nil?
+          number = attributes.delete(:number)
+        end
         child = number.is_a?(Seed::Types::Dial) ? number : Seed::Types::Dial.new(**attributes, number: number)
         self.children = [*children, child]
         record_content(child)
@@ -78,6 +86,10 @@ module Seed
       # @option attributes [String, nil] :kind
       # @return [Redirect]
       def redirect(url = nil, **attributes)
+        if attributes.key?(:url)
+          raise ArgumentError, "url given both positionally and as a keyword" unless url.nil?
+          url = attributes.delete(:url)
+        end
         child = url.is_a?(Seed::Types::Redirect) ? url : Seed::Types::Redirect.new(**attributes, url: url)
         self.children = [*children, child]
         record_content(child)

@@ -506,6 +506,14 @@ export class XmlObjectGenerator {
             writer.writeLine(`def ${methodName}(${params})`);
             writer.indent();
             if (textField != null) {
+                writer.writeLine(`if attributes.key?(:${textField})`);
+                writer.indent();
+                writer.writeLine(
+                    `raise ArgumentError, "${textField} given both positionally and as a keyword" unless ${textField}.nil?`
+                );
+                writer.writeLine(`${textField} = attributes.delete(:${textField})`);
+                writer.dedent();
+                writer.writeLine("end");
                 writer.write(`child = ${textField}.is_a?(`);
                 childClass.write(writer);
                 writer.write(`) ? ${textField} : `);
