@@ -100,6 +100,7 @@ jobs:
           pnpm seed publish cli --ver ${git_version} --beta --log-level debug
 
       - name: Publish Pre Prod CLI
+        # Requires @fern-api/fern-api-pre-prod to trust this workflow through npm OIDC.
         run: |
           git_version="$(./scripts/git-version.sh)"
           pnpm seed publish cli --ver "${git_version}" --pre-prod --log-level debug
@@ -183,6 +184,7 @@ jobs:
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug --beta
 
           # Publish pre-prod CLI at the same version as prod
+          # Requires @fern-api/fern-api-pre-prod to trust this workflow through npm OIDC.
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug --pre-prod
 
           # Publish prod CLI
@@ -229,6 +231,7 @@ jobs:
           pnpm seed publish cli --ver ${{ inputs.version }} --beta --log-level debug
 
       - name: Publish Pre Prod CLI
+        # Requires @fern-api/fern-api-pre-prod to trust this workflow through npm OIDC.
         run: |
           pnpm seed publish cli --ver ${{ inputs.version }} --pre-prod --log-level debug
 
