@@ -562,16 +562,16 @@ class InferredAuthTokenProviderGenerator:
         self, name: ir_types.NameAndWireValueOrString, value_type: ir_types.TypeReference
     ) -> CredentialProperty:
         field_name = resolve_name(get_name_from_wire_value(name)).snake_case.safe_name
-        fixed_value = self._get_fixed_grant_type_value(name)
-        is_literal = fixed_value is not None or self._is_literal_type(value_type)
-        literal_value = self._extract_literal_value(value_type) if is_literal else None
+        value_is_literal = self._is_literal_type(value_type)
+        # A literal grant type is already sent by the endpoint itself, so only non-literals need a fixed value.
+        fixed_value = None if value_is_literal else self._get_fixed_grant_type_value(name)
         return CredentialProperty(
             field_name=field_name,
             constructor_param_name=field_name,
-            is_literal=is_literal,
-            literal_value=literal_value,
+            is_literal=value_is_literal or fixed_value is not None,
+            literal_value=self._extract_literal_value(value_type) if value_is_literal else None,
             is_optional=self._is_optional_type(value_type),
-            fixed_value=fixed_value if not self._is_literal_type(value_type) else None,
+            fixed_value=fixed_value,
         )
 
     def _get_fixed_grant_type_value(self, name: ir_types.NameAndWireValueOrString) -> Optional[str]:
