@@ -93,6 +93,7 @@ import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { mapWithConcurrency } from "./utils/mapWithConcurrency.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
@@ -148,6 +149,14 @@ export interface TranslatedApiSpec {
 }
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AIChatConfig | undefined }) => AsyncOrSync<void>;
+
+const DEFAULT_API_REGISTRATION_CONCURRENCY = 4;
+
+/** Max APIs registered with FDR at once; override with `FERN_DOCS_API_REGISTRATION_CONCURRENCY` (1 = serial). */
+function getApiRegistrationConcurrency(): number {
+    const value = process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY?.trim();
+    return value != null && /^[1-9]\d*$/.test(value) ? Number(value) : DEFAULT_API_REGISTRATION_CONCURRENCY;
+}
 
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
@@ -688,32 +697,65 @@ export class DocsDefinitionResolver {
                 `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
             );
             const deferredStart = performance.now();
+            const pendingRegistrations = this.pendingApiRegistrations;
             // Versioned docs often reference the same API from every version; register each
             // distinct definition once and reuse its ID.
-            const apiDefinitionIdsByRegistration = new Map<string, string>();
-            for (const pending of this.pendingApiRegistrations) {
+            const registrationKeys: string[] = [];
+            const uniqueRegistrations = new Map<string, (typeof pendingRegistrations)[number]>();
+            for (const pending of pendingRegistrations) {
                 // Resolve .mdx/.md file path links in all IR description (docs) fields
                 this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
 
-                const registration = {
-                    ir: pending.ir,
-                    snippetsConfig: pending.snippetsConfig,
-                    playgroundConfig: pending.playgroundConfig,
-                    apiName: pending.apiName,
-                    workspace: pending.workspace,
-                    graphqlOperations: pending.graphqlOperations,
-                    graphqlTypes: pending.graphqlTypes
-                };
-                const sourceFiles = registration.workspace
+                const sourceFiles = pending.workspace
                     ?.getSources()
                     .map((source) => [source.absoluteFilePath, source.absoluteFilePathToOverrides]);
                 const registrationKey = createHash("sha256")
-                    .update(JSON.stringify({ ...registration, workspace: sourceFiles }))
+                    .update(
+                        JSON.stringify({
+                            ir: pending.ir,
+                            snippetsConfig: pending.snippetsConfig,
+                            playgroundConfig: pending.playgroundConfig,
+                            apiName: pending.apiName,
+                            workspace: sourceFiles,
+                            graphqlOperations: pending.graphqlOperations,
+                            graphqlTypes: pending.graphqlTypes
+                        })
+                    )
                     .digest("hex");
-                let realApiDefinitionId = apiDefinitionIdsByRegistration.get(registrationKey);
+                registrationKeys.push(registrationKey);
+                if (!uniqueRegistrations.has(registrationKey)) {
+                    uniqueRegistrations.set(registrationKey, pending);
+                }
+            }
+            // Registrations are independent, so a few run at once; FDR caps concurrent
+            // registrations per task and queues the rest.
+            const uniqueEntries = [...uniqueRegistrations.entries()];
+            const uniqueApiDefinitionIds = await mapWithConcurrency(
+                uniqueEntries,
+                getApiRegistrationConcurrency(),
+                async ([, pending]) =>
+                    await this.registerApi({
+                        ir: pending.ir,
+                        snippetsConfig: pending.snippetsConfig,
+                        playgroundConfig: pending.playgroundConfig,
+                        apiName: pending.apiName,
+                        workspace: pending.workspace,
+                        graphqlOperations: pending.graphqlOperations,
+                        graphqlTypes: pending.graphqlTypes
+                    })
+            );
+            const apiDefinitionIdsByRegistration = new Map(
+                uniqueEntries.map(([registrationKey], index) => [registrationKey, uniqueApiDefinitionIds[index]])
+            );
+            // Apply results in registration order so the nav tree and translated specs stay deterministic.
+            for (const [index, pending] of pendingRegistrations.entries()) {
+                const registrationKey = registrationKeys[index];
+                const realApiDefinitionId =
+                    registrationKey != null ? apiDefinitionIdsByRegistration.get(registrationKey) : undefined;
                 if (realApiDefinitionId == null) {
-                    realApiDefinitionId = await this.registerApi(registration);
-                    apiDefinitionIdsByRegistration.set(registrationKey, realApiDefinitionId);
+                    throw new Error(
+                        `Registering API ${pending.apiName ?? pending.tempApiDefinitionId} returned no definition id`
+                    );
                 }
 
                 // Update all apiDefinitionId references in the navigation subtree

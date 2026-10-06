@@ -499,6 +499,7 @@ export class XmlObjectGenerator {
                     : []),
                 `@param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes`,
                 ...attributeOptionDocs,
+                `@yieldparam child [${childClass.name}] the new element, for nesting children inline`,
                 `@return [${childClass.name}]`
             ];
             ruby.comment({ docs: docs.join("\n") }).write(writer);
@@ -522,6 +523,7 @@ export class XmlObjectGenerator {
                 writer.writeLine(`self.${property.fieldName} = child`);
             }
             writer.writeLine("record_content(child)");
+            writer.writeLine("yield child if block_given?");
             writer.writeLine("child");
             writer.dedent();
             writer.write("end");

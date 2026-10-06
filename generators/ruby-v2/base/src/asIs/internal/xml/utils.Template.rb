@@ -475,13 +475,13 @@ module <%= gem_namespace %>
             raise ArgumentError, "Expected a boolean but found '#{raw}'"
           end
 
-          # @param enum [Module] an `Internal::Types::Enum`
-          # @raise [ArgumentError] if the value is not a member of the enum
-          def parse_enum(raw, enum)
-            value = raw.strip
-            raise ArgumentError, "'#{raw}' is not a valid #{enum.name}" unless enum.values.include?(value)
-
-            value
+          # Enums are open on the wire: a value the enum does not declare is kept so documents
+          # written by a newer API version still parse and round-trip.
+          #
+          # @param _enum [Module] an `Internal::Types::Enum`
+          # @return [String] the stripped value, whether or not it is a declared member
+          def parse_enum(raw, _enum)
+            raw.strip
           end
 
           # @raise [ArgumentError] if the value differs from the literal
