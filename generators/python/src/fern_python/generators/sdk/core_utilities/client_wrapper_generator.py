@@ -672,34 +672,44 @@ class ClientWrapperGenerator:
                 )
             )
             writer.write_line(" = {}")
+            # Only resolve credentials that may fetch a token (OAuth, inferred auth) when the
+            # endpoint can use them, so e.g. the token endpoint doesn't first fetch a token.
+            writer.write_line(
+                f"_required_scheme_keys = {{scheme_key for requirement in {security_param} for scheme_key in requirement}}"
+            )
 
             # Bearer / OAuth token schemes
             if len(token_schemes) > 0 and bearer_auth_scheme is not None:
                 token_getter = names.get_token_getter_name(bearer_auth_scheme)
-                if is_async:
-                    # Forward-declare so both branches (async token -> str, sync getter ->
-                    # str | None) unify to Optional[str]; otherwise mypy infers `str` from the
-                    # first assignment and rejects the else branch.
-                    writer.write_line("_token: typing.Optional[str]")
-                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
-                    with writer.indent():
-                        writer.write_line(f"_token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
-                    writer.write_line("else:")
-                    with writer.indent():
-                        writer.write_line(f"_token = self.{token_getter}()")
-                else:
-                    writer.write_line(f"_token = self.{token_getter}()")
-                writer.write_line("if _token is not None:")
+                token_condition = " or ".join(
+                    f"{json.dumps(key)} in _required_scheme_keys" for key, _, _ in token_schemes
+                )
+                writer.write_line(f"if {token_condition}:")
                 with writer.indent():
-                    for key, token_header, token_prefix in token_schemes:
-                        token_value = self._get_prefixed_header_value(
-                            token_prefix,
-                            "_token",
-                            raw_value_for_empty_prefix=True,
-                        )
-                        writer.write_line(
-                            f"{available_var}[{json.dumps(key)}] = {{{json.dumps(token_header)}: {token_value}}}"
-                        )
+                    if is_async:
+                        # Forward-declare so both branches (async token -> str, sync getter ->
+                        # str | None) unify to Optional[str]; otherwise mypy infers `str` from the
+                        # first assignment and rejects the else branch.
+                        writer.write_line("_token: typing.Optional[str]")
+                        writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
+                        with writer.indent():
+                            writer.write_line(f"_token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
+                        writer.write_line("else:")
+                        with writer.indent():
+                            writer.write_line(f"_token = self.{token_getter}()")
+                    else:
+                        writer.write_line(f"_token = self.{token_getter}()")
+                    writer.write_line("if _token is not None:")
+                    with writer.indent():
+                        for key, token_header, token_prefix in token_schemes:
+                            token_value = self._get_prefixed_header_value(
+                                token_prefix,
+                                "_token",
+                                raw_value_for_empty_prefix=True,
+                            )
+                            writer.write_line(
+                                f"{available_var}[{json.dumps(key)}] = {{{json.dumps(token_header)}: {token_value}}}"
+                            )
 
             # Header auth schemes (e.g. X-API-Key)
             for header_auth_scheme in header_auth_schemes:
@@ -743,23 +753,27 @@ class ClientWrapperGenerator:
 
             # Inferred auth
             if inferred_auth_scheme is not None:
-                if is_async:
-                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
-                    with writer.indent():
+                writer.write_line(f"if {json.dumps(inferred_auth_scheme.key)} in _required_scheme_keys:")
+                with writer.indent():
+                    if is_async:
                         writer.write_line(
-                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())'
+                            f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:"
                         )
-                    writer.write_line(f"elif self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
-                    with writer.indent():
-                        writer.write_line(
-                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
-                        )
-                else:
-                    writer.write_line(f"if self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
-                    with writer.indent():
-                        writer.write_line(
-                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
-                        )
+                        with writer.indent():
+                            writer.write_line(
+                                f'{available_var}["{inferred_auth_scheme.key}"] = dict(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())'
+                            )
+                        writer.write_line(f"elif self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
+                        with writer.indent():
+                            writer.write_line(
+                                f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
+                            )
+                    else:
+                        writer.write_line(f"if self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
+                        with writer.indent():
+                            writer.write_line(
+                                f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
+                            )
 
             # OR across requirements: pick the first fully-satisfiable requirement.
             writer.write_line(f"for requirement in {security_param}:")
