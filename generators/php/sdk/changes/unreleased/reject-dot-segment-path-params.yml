@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Requests whose path contains a `.` or `..` segment (including `%2e` forms) now throw an
+    `InvalidArgumentException` before being sent. A path parameter value of `.` or `..` could
+    otherwise change which endpoint the request was sent to, with or without
+    `encode-path-params`.
+  type: fix
