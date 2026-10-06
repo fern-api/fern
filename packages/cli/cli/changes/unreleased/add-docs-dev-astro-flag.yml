@@ -1,4 +1,5 @@
 - summary: |
     Add an experimental `fern docs dev --astro` flag that renders the docs to the ledger read model, serves it from a
-    local mirror, and runs the Astro docs dev server against it with live reload. Next.js remains the default.
+    local mirror, and runs the prebuilt Astro docs preview server (downloaded and cached like the Next bundle) against
+    it with live reload. Next.js remains the default.
   type: feat

@@ -103,8 +103,18 @@ describe("LocalLedgerMirror", () => {
     it("rejects non-read methods and unknown routes", async () => {
         expect(await fetchStatus(`${base}/cas/${HASH}`, { method: "POST" })).toBe(405);
         expect(await fetchStatus(`${base}/cas/${HASH}`, { method: "DELETE" })).toBe(405);
+        expect(await fetchStatus(`${base}/manifest/v1/fdr.json`, { method: "POST" })).toBe(405);
         expect(await fetchStatus(`${base}/`)).toBe(404);
         expect(await fetchStatus(`${base}/etc/passwd`)).toBe(404);
+    });
+
+    it("answers the preview-SSR renderer's housekeeping routes", async () => {
+        expect(await fetchStatus(`${base}/healthz`)).toBe(200);
+        expect(await fetchStatus(`${base}/manifest/${DOMAIN}`, { method: "DELETE" })).toBe(200);
+        const edgeConfig = await fetch(`${base}/edge-config?keys=authentication,trailing-slash`);
+        expect(edgeConfig.status).toBe(200);
+        expect(await edgeConfig.json()).toEqual({});
+        expect(await fetchStatus(`${base}/edge-config/item/authentication`)).toBe(404);
     });
 
     it("swaps models atomically", async () => {

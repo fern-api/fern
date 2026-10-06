@@ -73,7 +73,8 @@ export async function previewDocsWorkspace({
                 context,
                 port,
                 bundlePath,
-                backendPort
+                backendPort,
+                forceDownload
             });
         });
         return;

@@ -10,9 +10,12 @@ const MANIFEST_FILENAME = "v1/fdr.json";
  * Astro docs loader expects from `MIRROR_ENDPOINT` (`MIRROR_MODE=true`):
  *
  *   GET /manifest/{key}     the `fdr.json` pointer (local-mode keys)
+ *   DELETE /manifest/{host} manifest-cache eviction (nothing is cached here; always 200)
  *   GET /cas/{key}          CAS blobs, bare hash or `v1/{orgId}/{ab}/{hash}`
  *   GET /dynamic-ir/{key}   always 404 (the loader fails open)
+ *   GET /edge-config[/...]  the local Edge Config mock protocol: no items configured
  *   GET /files/{domain}/{hash}/{fullPath}   local files from the manifest
+ *   GET /healthz
  *
  * Only content present in the current model is ever served — there is no
  * filesystem fallback, so a request can never read outside the docs folder.
@@ -36,9 +39,17 @@ export class LocalLedgerMirror {
         const app = express();
         app.disable("x-powered-by");
 
+        app.get("/healthz", (_req, res) => {
+            res.type("text/plain").send("ok\n");
+        });
+
+        app.delete(/^\/manifest\/(.*)$/, (_req, res) => {
+            res.type("text/plain").send("evicted 0\n");
+        });
+
         app.use((req, res, next) => {
             if (req.method !== "GET" && req.method !== "HEAD") {
-                res.set("Allow", "GET, HEAD").status(405).end();
+                res.set("Allow", "GET, HEAD, DELETE").status(405).end();
                 return;
             }
             if (this.model == null) {
@@ -71,6 +82,14 @@ export class LocalLedgerMirror {
         });
 
         app.get(/^\/dynamic-ir\/(.*)$/, (_req, res) => {
+            res.status(404).end();
+        });
+
+        app.get(["/edge-config", "/edge-config/"], (_req, res) => {
+            res.json({});
+        });
+
+        app.get(/^\/edge-config\/item\/(.*)$/, (_req, res) => {
             res.status(404).end();
         });
 

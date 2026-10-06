@@ -2304,8 +2304,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 .option("astro", {
                     boolean: true,
                     default: false,
-                    description:
-                        "Run the experimental Astro development server (requires --bundle-path or FERN_DOCS_ASTRO_PATH pointing at the Astro docs app)"
+                    description: "Run the experimental Astro docs preview server instead of Next.js"
                 })
                 .option("backend-port", {
                     number: true,
