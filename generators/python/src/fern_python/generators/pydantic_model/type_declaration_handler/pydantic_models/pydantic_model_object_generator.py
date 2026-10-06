@@ -486,11 +486,13 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]
     ) -> None:
         """Lets list-valued attributes and text be passed as one delimited string (`input="speech dtmf"`)."""
-        separators = {
-            _field_name(p): (p.xml.list_separator if p.xml is not None and p.xml.list_separator else " ")
-            for p in properties
-            if (_is_xml_attribute(p) or _is_xml_text(p)) and _unwrap_list_item_type(p.value_type) is not None
-        }
+        separators: Dict[str, str] = {}
+        for p in properties:
+            if not (_is_xml_attribute(p) or _is_xml_text(p)) or _unwrap_list_item_type(p.value_type) is None:
+                continue
+            separator = p.xml.list_separator if p.xml is not None and p.xml.list_separator else " "
+            separators[_field_name(p)] = separator
+            separators[get_wire_value(p.name)] = separator
         if not separators:
             return
         core_utilities = self._context.core_utilities

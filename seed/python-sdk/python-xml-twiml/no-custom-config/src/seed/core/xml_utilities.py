@@ -478,7 +478,11 @@ def _split(value: str, separator: str) -> List[str]:
 
 def coerce_xml_list_fields(values: Dict[str, Any], separators: Dict[str, str]) -> Dict[str, Any]:
     """Pre-validation hook for list-valued attributes and text: a single delimited string
-    (e.g. `input="speech dtmf"`) is split on the field's separator so it validates as a list."""
+    (e.g. `input="speech dtmf"`) is split on the field's separator so it validates as a list.
+
+    `separators` may hold both the field name and its wire name. Splitting is intentionally
+    lossy, mirroring parsing: a string containing the separator is never a single item, and
+    an empty string becomes an empty list (the attribute is omitted on output)."""
     if not isinstance(values, dict):
         return values
     coerced = dict(values)
