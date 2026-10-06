@@ -40,6 +40,21 @@ describe("mapWithConcurrency", () => {
         ).rejects.toThrow("boom");
     });
 
+    it("stops starting new calls after a failure", async () => {
+        const started: number[] = [];
+        await expect(
+            mapWithConcurrency([0, 1, 2, 3, 4, 5], 2, async (item) => {
+                started.push(item);
+                await new Promise((resolve) => setTimeout(resolve, 5));
+                if (item === 0) {
+                    throw new Error("boom");
+                }
+            })
+        ).rejects.toThrow("boom");
+        await new Promise((resolve) => setTimeout(resolve, 30));
+        expect(started).toEqual([0, 1]);
+    });
+
     it("handles an empty list", async () => {
         expect(await mapWithConcurrency([], 4, async () => 1)).toEqual([]);
     });

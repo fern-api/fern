@@ -9,10 +9,17 @@ export async function mapWithConcurrency<T, R>(
 ): Promise<R[]> {
     const results = new Array<R>(items.length);
     let next = 0;
+    let failed = false;
+    // After the first failure, workers stop pulling new items instead of starting more calls.
     const worker = async (): Promise<void> => {
-        while (next < items.length) {
+        while (next < items.length && !failed) {
             const index = next++;
-            results[index] = await fn(items[index] as T, index);
+            try {
+                results[index] = await fn(items[index] as T, index);
+            } catch (error) {
+                failed = true;
+                throw error;
+            }
         }
     };
     const workerCount = Math.min(Math.max(1, Math.floor(concurrency)), items.length);

@@ -722,7 +722,9 @@ export class DocsDefinitionResolver {
             for (const [index, pending] of pendingRegistrations.entries()) {
                 const realApiDefinitionId = realApiDefinitionIds[index];
                 if (realApiDefinitionId == null) {
-                    continue;
+                    throw new Error(
+                        `Registering API ${pending.apiName ?? pending.tempApiDefinitionId} returned no definition id`
+                    );
                 }
 
                 // Update all apiDefinitionId references in the navigation subtree
