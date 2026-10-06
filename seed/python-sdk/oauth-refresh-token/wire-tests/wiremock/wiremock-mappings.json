@@ -1,0 +1,65 @@
+{
+  "mappings": [
+    {
+      "id": "cf0497ea-635b-4a8d-a5c0-67064c3dccc1",
+      "name": "refreshToken - default",
+      "request": {
+        "urlPathTemplate": "/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"access_token\": \"access_token\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"rotated_refresh_token\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cf0497ea-635b-4a8d-a5c0-67064c3dccc1",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "48bcf2a9-f263-4bb1-abc6-528079e16f35",
+      "name": "getSomething - default",
+      "request": {
+        "urlPathTemplate": "/get-something",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "48bcf2a9-f263-4bb1-abc6-528079e16f35",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    }
+  ],
+  "meta": {
+    "total": 2
+  }
+}

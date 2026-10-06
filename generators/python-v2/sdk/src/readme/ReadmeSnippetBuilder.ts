@@ -97,7 +97,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                       }
                   }
                 : undefined),
-            ...(this.hasOAuthScheme()
+            ...(this.hasOAuthClientCredentialsScheme()
                 ? {
                       [ReadmeSnippetBuilder.OAUTH_TOKEN_OVERRIDE_FEATURE_ID]: {
                           renderer: this.renderOAuthTokenOverrideSnippet.bind(this)
@@ -317,6 +317,11 @@ asyncio.run(main())`
                     break;
                 }
                 case "oauth":
+                    // The refresh-token flow (IR `OAuthConfiguration.refreshToken`) is not modeled by this IR SDK version.
+                    if ((scheme.configuration as unknown as { type: string }).type === "refreshToken") {
+                        args.push(`    refresh_token="YOUR_REFRESH_TOKEN",`);
+                        break;
+                    }
                     args.push(`    client_id="YOUR_CLIENT_ID",`);
                     args.push(`    client_secret="YOUR_CLIENT_SECRET",`);
                     break;
@@ -771,11 +776,13 @@ ${constructorArg}
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
     }
 
-    private hasOAuthScheme(): boolean {
+    private hasOAuthClientCredentialsScheme(): boolean {
         if (this.context.ir.auth == null) {
             return false;
         }
-        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+        return this.context.ir.auth.schemes.some(
+            (scheme) => scheme.type === "oauth" && scheme.configuration.type === "clientCredentials"
+        );
     }
 
     private getFirstWebsocketChannel():

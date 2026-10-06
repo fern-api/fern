@@ -79,6 +79,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
     TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
     TOKEN_PARAMETER_NAME = "token"
+    REFRESH_TOKEN_PARAMETER_NAME = "refresh_token"
+    REFRESH_TOKEN_CONSTRUCTOR_PARAMETER_DOCS = "The refresh token used to obtain access tokens."
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
@@ -251,6 +253,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
         is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+        is_oauth_refresh_token = oauth_union is not None and oauth_union.type == "refreshToken"
         has_inferred_auth = self._get_inferred_auth_scheme() is not None
 
         # Resolve the actual bearer token parameter name (e.g. "api_key" instead of default "token")
@@ -278,15 +281,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=(
                 self._get_constructor_parameters(is_async=False)
-                if (has_inferred_auth or is_oauth_client_credentials)
+                if (has_inferred_auth or is_oauth_client_credentials or is_oauth_refresh_token)
                 else self._root_client_constructor_params
             ),
             oauth_token_override=is_oauth_client_credentials,
+            oauth_refresh_token=is_oauth_refresh_token,
             bearer_token_param_name=bearer_token_param_name,
             # OAuth token-override and inferred-auth SDKs should always use kwargs-style snippets;
             # positional snippets are unstable and can degrade badly when defaults are expressions
             # like os.getenv("...").
-            use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials),
+            use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials or is_oauth_refresh_token),
             base_url_example_value=base_url_example_value,
             sync_init_parameters=self._get_constructor_parameters(is_async=False),
             async_init_parameters=self._get_constructor_parameters(is_async=True),
@@ -823,6 +827,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         ),
                     ),
                 )
+            elif oauth.type == "refreshToken":
+                parameters.append(self._get_refresh_token_constructor_parameter(oauth))
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
@@ -943,6 +949,32 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
+
+    def _get_refresh_token_constructor_parameter(
+        self, refresh_token: ir_types.OAuthRefreshToken
+    ) -> RootClientConstructorParameter:
+        env_var = refresh_token.refresh_token_env_var
+        if env_var is None:
+            return RootClientConstructorParameter(
+                constructor_parameter_name=self.REFRESH_TOKEN_PARAMETER_NAME,
+                type_hint=AST.TypeHint.str_(),
+                docs=RootClientGenerator.REFRESH_TOKEN_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+
+        def _write_environment_variable_fallback(writer: AST.NodeWriter) -> None:
+            param_name = self.REFRESH_TOKEN_PARAMETER_NAME
+            writer.write(f"{param_name} = {param_name} if {param_name} is not None else ")
+            writer.write_node(self._get_os_getenv_expression(env_var))
+            writer.write_newline_if_last_line_not()
+            self._get_parameter_validation_writer(param_name=param_name, environment_variable=env_var)(writer)
+
+        return RootClientConstructorParameter(
+            constructor_parameter_name=self.REFRESH_TOKEN_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+            initializer=AST.Expression("None"),
+            docs=f"{RootClientGenerator.REFRESH_TOKEN_CONSTRUCTOR_PARAMETER_DOCS} Defaults to the {env_var} environment variable.",
+            validation_check=AST.Expression(AST.CodeWriter(_write_environment_variable_fallback)),
+        )
 
     def _prefer_explicit_auth_enabled(self) -> bool:
         """
@@ -1262,16 +1294,25 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     if is_async
                     else self._context.core_utilities.get_oauth_token_provider()
                 )
-                oauth_tp_kwargs = [
-                    (
-                        "client_id",
-                        AST.Expression("client_id"),
-                    ),
-                    (
-                        "client_secret",
-                        AST.Expression("client_secret"),
-                    ),
-                ]
+                oauth_tp_kwargs = (
+                    [
+                        (
+                            self.REFRESH_TOKEN_PARAMETER_NAME,
+                            AST.Expression(self.REFRESH_TOKEN_PARAMETER_NAME),
+                        ),
+                    ]
+                    if oauth_union is not None and oauth_union.type == "refreshToken"
+                    else [
+                        (
+                            "client_id",
+                            AST.Expression("client_id"),
+                        ),
+                        (
+                            "client_secret",
+                            AST.Expression("client_secret"),
+                        ),
+                    ]
+                )
                 if oauth_union is not None and oauth_union.type == "clientCredentials":
                     for extra_param_name in self._get_additional_oauth_param_names(oauth_union):
                         oauth_tp_kwargs.append(
@@ -2263,6 +2304,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             async_class_name: str,
             constructor_parameters: Sequence[ConstructorParameter],
             oauth_token_override: bool = False,
+            oauth_refresh_token: bool = False,
             bearer_token_param_name: str = "token",
             use_kwargs_snippets: bool = False,
             base_url_example_value: Optional[AST.Expression] = None,
@@ -2284,6 +2326,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._sync_constructor_overloads = sync_constructor_overloads
             self._async_constructor_overloads = async_constructor_overloads
             self._oauth_token_override = oauth_token_override
+            self._oauth_refresh_token = oauth_refresh_token
             self._bearer_token_param_name = bearer_token_param_name
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
@@ -2369,6 +2412,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         kwargs.append(("client_id", AST.Expression('"YOUR_CLIENT_ID"')))
                     if "client_secret" not in oauth_param_names_in_kwargs:
                         kwargs.append(("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')))
+
+                # The refresh token is optional when it has an environment variable fallback,
+                # but it is the only credential, so always show it.
+                if self._oauth_refresh_token and RootClientGenerator.REFRESH_TOKEN_PARAMETER_NAME not in {
+                    name for name, _ in kwargs
+                }:
+                    kwargs.append(
+                        (RootClientGenerator.REFRESH_TOKEN_PARAMETER_NAME, AST.Expression('"YOUR_REFRESH_TOKEN"'))
+                    )
 
                 return kwargs
 
