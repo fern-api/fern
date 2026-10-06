@@ -5,6 +5,7 @@ package com.seed.basicAuthEnvironmentVariables.resources.basicauth;
 
 import com.seed.basicAuthEnvironmentVariables.core.ClientOptions;
 import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
+import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncBasicAuthClient {
@@ -28,27 +29,59 @@ public class AsyncBasicAuthClient {
      * GET request with basic auth scheme
      */
     public CompletableFuture<Boolean> getWithBasicAuth() {
-        return this.rawClient.getWithBasicAuth().thenApply(response -> response.body());
+        CompletableFuture<SeedBasicAuthEnvironmentVariablesHttpResponse<Boolean>> rawFuture =
+                this.rawClient.getWithBasicAuth();
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET request with basic auth scheme
      */
     public CompletableFuture<Boolean> getWithBasicAuth(RequestOptions requestOptions) {
-        return this.rawClient.getWithBasicAuth(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBasicAuthEnvironmentVariablesHttpResponse<Boolean>> rawFuture =
+                this.rawClient.getWithBasicAuth(requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST request with basic auth scheme
      */
     public CompletableFuture<Boolean> postWithBasicAuth(Object request) {
-        return this.rawClient.postWithBasicAuth(request).thenApply(response -> response.body());
+        CompletableFuture<SeedBasicAuthEnvironmentVariablesHttpResponse<Boolean>> rawFuture =
+                this.rawClient.postWithBasicAuth(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST request with basic auth scheme
      */
     public CompletableFuture<Boolean> postWithBasicAuth(Object request, RequestOptions requestOptions) {
-        return this.rawClient.postWithBasicAuth(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedBasicAuthEnvironmentVariablesHttpResponse<Boolean>> rawFuture =
+                this.rawClient.postWithBasicAuth(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

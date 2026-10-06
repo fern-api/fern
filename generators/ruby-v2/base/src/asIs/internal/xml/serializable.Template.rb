@@ -45,7 +45,8 @@ module <%= gem_namespace %>
       end
 
       # Mixed into XML-encoded models. Provides the class-level mapping DSL together with
-      # `to_xml`/`from_xml`, unknown attribute/child preservation and the generic `add_child`.
+      # `to_xml`/`from_xml`, unknown attribute/child preservation, the generic `add_child`/`add_text`
+      # and the ordered {#content} that keeps mixed content in insertion order.
       #
       # Extra keyword arguments passed to the constructor are emitted as additional attributes.
       module Serializable
@@ -132,6 +133,20 @@ module <%= gem_namespace %>
             model = new(values)
             model.additional_attributes.merge!(Utils.additional_attributes(element, known_attributes))
             model.additional_children.concat(Utils.additional_children(element, known_children, wrappers))
+            typed = xml_properties.filter_map do |property|
+              next unless property.kind == :element && property.object? && !property.wrapped
+
+              value = values[property.field]
+              nodes = if value.nil?
+                        []
+                      elsif property.list
+                        value
+                      else
+                        [value]
+                      end
+              [property.object_types.map(&:xml_name), nodes]
+            end
+            model.content = Utils.content(element, typed, model.additional_children, wrappers.keys)
             model
           end
 
@@ -214,20 +229,48 @@ module <%= gem_namespace %>
           @additional_children ||= []
         end
 
+        # The element's content in order: typed child models, additional children and {Text}
+        # segments. Child builders, {#add_child} and {#add_text} append to it; `from_xml` fills it in
+        # document order. Typed children assigned directly to a property but missing here are written
+        # after it.
+        #
+        # @return [Array<Element, Serializable, Text>]
+        def content
+          @content ||= []
+        end
+
+        # @param content [Array<Element, Serializable, Text>]
+        # @return [Array<Element, Serializable, Text>]
+        def content=(content)
+          @content = content.to_a.dup
+        end
+
         # Appends an arbitrary child element; use this for elements the model does not know about.
         #
         # @param child [Element, Serializable]
         # @return [Element, Serializable] the child
         def add_child(child)
           additional_children << child
+          content << child
           child
+        end
+
+        # Appends a text segment after the children added so far (for mixed content such as
+        # `<Say>Hi <break/> world</Say>`).
+        #
+        # @param text [String]
+        # @return [self]
+        def add_text(text)
+          content << Text.new(text)
+          self
         end
 
         # @return [Element]
         def to_xml_element
           klass = self.class
           element = Element.new(klass.xml_name, namespace: klass.xml_namespace, prefix: klass.xml_prefix)
-          wrapper_names = []
+          typed = []
+          wrapped = {}
           klass.xml_properties.each do |property|
             value = public_send(property.field)
             case property.kind
@@ -237,27 +280,26 @@ module <%= gem_namespace %>
             when :text
               element.text = xml_scalar_string(property, value)
             when :element
-              wrapper_names << property.xml_name if property.wrapped
-              write_xml_children(property, value, element)
+              collect_xml_children(property, value, typed, wrapped)
             end
           end
           klass.extra_fields.each_key do |name|
             value = @data[name]
             element.set_attribute(name, Utils.to_xml_string(value)) unless value.nil?
           end
-          Utils.add_additional(element, additional_attributes, additional_children, wrapper_names)
+          Utils.add_content(element, content, typed, wrapped, additional_children, additional_attributes)
           element
         end
 
         # @param xml_declaration [Boolean] whether to prepend `<?xml version="1.0" encoding="UTF-8"?>`
         # @return [String]
-        def to_xml(xml_declaration: false)
+        def to_xml(xml_declaration: true)
           Utils.serialize(to_xml_element, xml_declaration: xml_declaration)
         end
 
-        # @return [String] the XML, including the declaration for root elements
+        # @return [String] the XML document, including the declaration
         def to_s
-          to_xml(xml_declaration: self.class.xml_root?)
+          to_xml
         end
 
         def ==(other)
@@ -275,24 +317,28 @@ module <%= gem_namespace %>
           Utils.to_xml_string(value)
         end
 
-        private def write_xml_children(property, value, element)
+        # Records the typed children of one property: child models as-is and scalar values as
+        # text-only elements, into `wrapped[name]` for wrapped lists or `typed` otherwise.
+        private def collect_xml_children(property, value, typed, wrapped)
           return if value.nil?
 
-          target = element
-          if property.wrapped
-            target = Element.new(property.xml_name)
-            element.add_child(target)
-          end
+          target = property.wrapped ? (wrapped[property.xml_name] ||= []) : typed
           values = property.list ? value : [value]
           values.each do |item|
             next if item.nil?
 
             if property.object?
-              target.add_child(item)
+              target << item
             else
-              Utils.add_child_value(target, property.xml_name, item)
+              text = Utils.to_xml_string(item)
+              target << Element.new(property.xml_name, text: text) unless text.nil?
             end
           end
+        end
+
+        # Appends a child created by a typed child builder to the ordered content.
+        private def record_content(child)
+          content << child
         end
       end
     end

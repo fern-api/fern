@@ -5,6 +5,7 @@ package com.seed.crossPackageTypeNames.resources.foo;
 
 import com.seed.crossPackageTypeNames.core.ClientOptions;
 import com.seed.crossPackageTypeNames.core.RequestOptions;
+import com.seed.crossPackageTypeNames.core.SeedCrossPackageTypeNamesHttpResponse;
 import com.seed.crossPackageTypeNames.resources.foo.requests.FindRequest;
 import com.seed.crossPackageTypeNames.resources.foo.types.ImportingType;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,26 @@ public class AsyncFooClient {
     }
 
     public CompletableFuture<ImportingType> find(FindRequest request) {
-        return this.rawClient.find(request).thenApply(response -> response.body());
+        CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<ImportingType>> rawFuture =
+                this.rawClient.find(request);
+        CompletableFuture<ImportingType> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ImportingType> find(FindRequest request, RequestOptions requestOptions) {
-        return this.rawClient.find(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<ImportingType>> rawFuture =
+                this.rawClient.find(request, requestOptions);
+        CompletableFuture<ImportingType> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

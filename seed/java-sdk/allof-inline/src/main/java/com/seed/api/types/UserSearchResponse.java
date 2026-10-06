@@ -12,11 +12,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -24,12 +24,11 @@ import org.jetbrains.annotations.NotNull;
 public final class UserSearchResponse {
     private final PagingCursors paging;
 
-    private final Optional<List<User>> results;
+    private final List<User> results;
 
     private final Map<String, Object> additionalProperties;
 
-    private UserSearchResponse(
-            PagingCursors paging, Optional<List<User>> results, Map<String, Object> additionalProperties) {
+    private UserSearchResponse(PagingCursors paging, List<User> results, Map<String, Object> additionalProperties) {
         this.paging = paging;
         this.results = results;
         this.additionalProperties = additionalProperties;
@@ -44,7 +43,7 @@ public final class UserSearchResponse {
      * @return Current page of results from the requested resource.
      */
     @JsonProperty("results")
-    public Optional<List<User>> getResults() {
+    public List<User> getResults() {
         return results;
     }
 
@@ -93,16 +92,18 @@ public final class UserSearchResponse {
         /**
          * <p>Current page of results from the requested resource.</p>
          */
-        _FinalStage results(Optional<List<User>> results);
-
         _FinalStage results(List<User> results);
+
+        _FinalStage addResults(User results);
+
+        _FinalStage addAllResults(List<User> results);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements PagingStage, _FinalStage {
         private PagingCursors paging;
 
-        private Optional<List<User>> results = Optional.empty();
+        private List<User> results = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -128,8 +129,20 @@ public final class UserSearchResponse {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage results(List<User> results) {
-            this.results = Optional.ofNullable(results);
+        public _FinalStage addAllResults(List<User> results) {
+            if (results != null) {
+                this.results.addAll(results);
+            }
+            return this;
+        }
+
+        /**
+         * <p>Current page of results from the requested resource.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage addResults(User results) {
+            this.results.add(results);
             return this;
         }
 
@@ -138,8 +151,11 @@ public final class UserSearchResponse {
          */
         @java.lang.Override
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
-        public _FinalStage results(Optional<List<User>> results) {
-            this.results = results;
+        public _FinalStage results(List<User> results) {
+            this.results.clear();
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

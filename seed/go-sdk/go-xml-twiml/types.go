@@ -73,9 +73,17 @@ func (b *Break) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Break to an XML string.
+// ToXml serializes the Break to an XML document, prefixed with the XML declaration.
 func (b *Break) ToXml() string {
-	return b.ToXmlElement().ToXml()
+	return b.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Break.
+func (b *Break) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	return b.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Break.
@@ -219,21 +227,6 @@ func (b *Break) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (b *Break) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
 // Set a pause based on strength
 type BreakStrength string
 
@@ -346,9 +339,17 @@ func (d *Dial) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Dial to an XML string.
+// ToXml serializes the Dial to an XML document, prefixed with the XML declaration.
 func (d *Dial) ToXml() string {
-	return d.ToXmlElement().ToXml()
+	return d.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Dial.
+func (d *Dial) String() string {
+	if d == nil {
+		return "<nil>"
+	}
+	return d.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Dial.
@@ -552,21 +553,6 @@ func (d *Dial) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (d *Dial) String() string {
-	if d == nil {
-		return "<nil>"
-	}
-	if len(d.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(d); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", d)
-}
-
 type DialRecordItem string
 
 const (
@@ -634,9 +620,17 @@ func (h *Hangup) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Hangup to an XML string.
+// ToXml serializes the Hangup to an XML document, prefixed with the XML declaration.
 func (h *Hangup) ToXml() string {
-	return h.ToXmlElement().ToXml()
+	return h.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Hangup.
+func (h *Hangup) String() string {
+	if h == nil {
+		return "<nil>"
+	}
+	return h.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Hangup.
@@ -743,21 +737,6 @@ func (h *Hangup) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (h *Hangup) String() string {
-	if h == nil {
-		return "<nil>"
-	}
-	if len(h.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(h.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(h); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", h)
-}
-
 var (
 	numberFieldPhoneNumber = big.NewInt(1 << 0)
 	numberFieldSendDigits  = big.NewInt(1 << 1)
@@ -816,9 +795,17 @@ func (n *Number) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Number to an XML string.
+// ToXml serializes the Number to an XML document, prefixed with the XML declaration.
 func (n *Number) ToXml() string {
-	return n.ToXmlElement().ToXml()
+	return n.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Number.
+func (n *Number) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	return n.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Number.
@@ -957,21 +944,6 @@ func (n *Number) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (n *Number) String() string {
-	if n == nil {
-		return "<nil>"
-	}
-	if len(n.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(n); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", n)
-}
-
 var (
 	pauseFieldLength = big.NewInt(1 << 0)
 )
@@ -1026,9 +998,17 @@ func (p *Pause) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Pause to an XML string.
+// ToXml serializes the Pause to an XML document, prefixed with the XML declaration.
 func (p *Pause) ToXml() string {
-	return p.ToXmlElement().ToXml()
+	return p.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Pause.
+func (p *Pause) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return p.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Pause.
@@ -1153,21 +1133,6 @@ func (p *Pause) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-func (p *Pause) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	if len(p.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
 }
 
 var (
@@ -1309,9 +1274,17 @@ func (r *Response) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Response to an XML string.
+// ToXml serializes the Response to an XML document, prefixed with the XML declaration.
 func (r *Response) ToXml() string {
-	return r.ToXmlElement().ToXml()
+	return r.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Response.
+func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	return r.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Response.
@@ -1473,21 +1446,6 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-func (r *Response) String() string {
-	if r == nil {
-		return "<nil>"
-	}
-	if len(r.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(r); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", r)
 }
 
 type ResponseChildrenItem struct {
@@ -1749,9 +1707,17 @@ func (s *Say) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Say to an XML string.
+// ToXml serializes the Say to an XML document, prefixed with the XML declaration.
 func (s *Say) ToXml() string {
-	return s.ToXmlElement().ToXml()
+	return s.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Say.
+func (s *Say) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	return s.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Say.
@@ -1938,21 +1904,6 @@ func (s *Say) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-func (s *Say) String() string {
-	if s == nil {
-		return "<nil>"
-	}
-	if len(s.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(s); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", s)
 }
 
 var (
@@ -3287,9 +3238,17 @@ func (w *Wide) ToXmlElement() *core.XmlElement {
 	return element
 }
 
-// ToXml serializes the Wide to an XML string.
+// ToXml serializes the Wide to an XML document, prefixed with the XML declaration.
 func (w *Wide) ToXml() string {
-	return w.ToXmlElement().ToXml()
+	return w.ToXmlElement().ToXmlDocument()
+}
+
+// String implements fmt.Stringer and returns the XML representation of the Wide.
+func (w *Wide) String() string {
+	if w == nil {
+		return "<nil>"
+	}
+	return w.ToXml()
 }
 
 // AddChild appends an arbitrary child element (e.g. a core.XmlElement) and returns the Wide.
@@ -7776,19 +7735,4 @@ func (w *Wide) MarshalJSON() ([]byte, error) {
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-func (w *Wide) String() string {
-	if w == nil {
-		return "<nil>"
-	}
-	if len(w.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(w); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", w)
 }

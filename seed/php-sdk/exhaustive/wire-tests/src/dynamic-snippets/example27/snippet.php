@@ -13,9 +13,9 @@ $client = new SeedClient(
 );
 $client->endpoints->object->getAndReturnWithMixedRequiredAndOptionalFields(
     new ObjectWithMixedRequiredAndOptionalFields([
-        'requiredString' => 'requiredString',
-        'requiredInteger' => 1,
-        'optionalString' => 'optionalString',
-        'requiredLong' => 1000000,
+        'requiredString' => 'hello',
+        'requiredInteger' => 0,
+        'optionalString' => 'world',
+        'requiredLong' => 0,
     ]),
 );

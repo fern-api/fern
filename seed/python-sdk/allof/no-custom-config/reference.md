@@ -304,6 +304,8 @@ client.create_plant(
     species="species",
     family="family",
     genus="genus",
+    common_name="commonName",
+    watering_frequency="daily",
     sun_exposure="full",
 )
 
@@ -345,23 +347,23 @@ client.create_plant(
 <dl>
 <dd>
 
+**common_name:** `str` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**watering_frequency:** `PlantBaseWateringFrequency` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **sun_exposure:** `PlantPostSunExposure` — Required sun exposure level.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**common_name:** `typing.Optional[str]` — The common name of the plant.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**watering_frequency:** `typing.Optional[PlantBaseWateringFrequency]` 
     
 </dd>
 </dl>
@@ -433,6 +435,8 @@ client = SeedApi(
 
 client.create_tree(
     id="id",
+    tree_name="treeName",
+    tree_species="treeSpecies",
 )
 
 ```

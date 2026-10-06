@@ -154,6 +154,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             );
         }
 
+        parameters.push(...this.getSdkVariableParameters());
+
         const maxRetriesParameter = ruby.parameters.keyword({
             name: "max_retries",
             type: ruby.Type.integer(),
@@ -218,6 +220,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const serverVariableInterpolation = this.getServerVariableInterpolationStatement(serverVariableOptions);
         if (serverVariableInterpolation != null) {
             method.addStatement(serverVariableInterpolation);
+        }
+
+        const sdkVariableOptions = this.context.getSdkVariableOptions();
+        if (sdkVariableOptions.length > 0) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    for (const option of sdkVariableOptions) {
+                        writer.writeLine(
+                            `${this.context.getSdkVariableInstanceVariable(option)} = ${option.optionName}`
+                        );
+                    }
+                })
+            );
         }
 
         // Both inferred-auth and OAuth attach their Authorization header through a
@@ -1463,6 +1478,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const sdkVariableArgs = this.context
+            .getSdkVariableOptions()
+            .map((option) => `, ${option.optionName}: ${this.context.getSdkVariableInstanceVariable(option)}`)
+            .join("");
         return new ruby.Method({
             name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
@@ -1480,14 +1499,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
-                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
+                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment${sdkVariableArgs})`
                         );
                     } else {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
-                                `Client.new(client: @raw_client)`
+                                `Client.new(client: @raw_client${sdkVariableArgs})`
                         );
                     }
                 })
@@ -1498,6 +1517,30 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getSubpackages(): FernIr.Subpackage[] {
         return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
+        });
+    }
+
+    /**
+     * Returns one optional keyword per SDK variable. String variables declared with an env
+     * var fall back to `ENV.fetch(<ENV_VAR>, nil)`; everything else defaults to nil and the
+     * bound endpoints raise when the value is still missing at call time.
+     */
+    private getSdkVariableParameters(): ruby.KeywordParameter[] {
+        return this.context.getSdkVariableOptions().map(({ variable, optionName, isString }) => {
+            const docLines: string[] = [];
+            if (variable.docs != null) {
+                docLines.push(variable.docs);
+            }
+            const envVar = isString ? variable.envVar : undefined;
+            if (envVar != null) {
+                docLines.push(`Defaults to the ${envVar} environment variable when not passed.`);
+            }
+            return ruby.parameters.keyword({
+                name: optionName,
+                type: ruby.Type.nilable(this.context.typeMapper.convert({ reference: variable.type })),
+                initializer: envVar != null ? ruby.codeblock(`ENV.fetch("${envVar}", nil)`) : ruby.nilValue(),
+                docs: docLines.length > 0 ? docLines.join(" ") : undefined
+            });
         });
     }
 
@@ -1518,6 +1561,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             for (const header of this.getNonLiteralGlobalHeaders()) {
                 reservedNames.add(this.getGlobalHeaderOptionName(header));
             }
+        }
+        for (const option of this.context.getSdkVariableOptions()) {
+            reservedNames.add(option.optionName);
         }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);

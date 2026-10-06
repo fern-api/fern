@@ -16,6 +16,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersUriPaginationResponse'
+              examples:
+                WithNextPage:
+                  value:
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
+                    next: next
+                WithoutNextPage:
+                  value:
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
+                    next: ''
   /users/path:
     get:
       operationId: users_listWithPathPagination
@@ -29,6 +46,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListUsersPathPaginationResponse'
+              examples:
+                WithNextPage:
+                  value:
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
+                    next: next
+                WithoutNextPage:
+                  value:
+                    data:
+                      - name: Alice
+                        id: 1
+                      - name: Bob
+                        id: 2
+                    next: ''
 components:
   schemas:
     User:

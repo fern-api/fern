@@ -5,6 +5,7 @@ package com.seed.version.resources.user;
 
 import com.seed.version.core.ClientOptions;
 import com.seed.version.core.RequestOptions;
+import com.seed.version.core.SeedVersionHttpResponse;
 import com.seed.version.resources.user.types.User;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<User> getUser(String userId) {
-        return this.rawClient.getUser(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedVersionHttpResponse<User>> rawFuture = this.rawClient.getUser(userId);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUser(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUser(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedVersionHttpResponse<User>> rawFuture = this.rawClient.getUser(userId, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

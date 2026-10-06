@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getXmlChildTypeIds, isXmlDependentType } from "@fern-typescript/commons";
+import { isXmlDependentType } from "@fern-typescript/commons";
 
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all
@@ -7,7 +7,6 @@ import { getXmlChildTypeIds, isXmlDependentType } from "@fern-typescript/commons
  */
 export class TypeResolver {
     private allTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration> = {};
-    private xmlChildTypeIds: Set<FernIr.TypeId> | undefined;
 
     constructor(intermediateRepresentation: FernIr.IntermediateRepresentation) {
         for (const type of Object.values(intermediateRepresentation.types)) {
@@ -86,19 +85,6 @@ export class TypeResolver {
 
     public doesTypeExist(typeName: FernIr.DeclaredTypeName): boolean {
         return this.allTypes[typeName.typeId] != null;
-    }
-
-    /**
-     * Whether this xml-encoded type is used as a child element of another xml-encoded type.
-     * Xml-encoded types that are not children are document roots.
-     */
-    public isXmlChildType(typeName: FernIr.DeclaredTypeName): boolean {
-        if (this.xmlChildTypeIds == null) {
-            this.xmlChildTypeIds = getXmlChildTypeIds(Object.values(this.allTypes), (name) =>
-                this.getTypeDeclarationFromName(name)
-            );
-        }
-        return this.xmlChildTypeIds.has(typeName.typeId);
     }
 
     public isXmlDependentType(typeDeclaration: FernIr.TypeDeclaration): boolean {

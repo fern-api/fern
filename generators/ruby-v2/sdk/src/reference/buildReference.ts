@@ -156,6 +156,9 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
+        if (context.getSdkVariableForPathParameter(pathParam) != null) {
+            return;
+        }
         parameters.push(`${context.caseConverter.snakeSafe(pathParam.name)}:`);
     });
 
@@ -228,6 +231,9 @@ function getEndpointParameters({
     const parameters: FernGeneratorCli.ParameterReference[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
+        if (context.getSdkVariableForPathParameter(pathParam) != null) {
+            return;
+        }
         parameters.push({
             name: context.caseConverter.snakeSafe(pathParam.name),
             type: getRubyTypeString({ context, typeReference: pathParam.valueType }),

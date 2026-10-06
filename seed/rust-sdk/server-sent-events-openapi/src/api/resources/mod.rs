@@ -27,7 +27,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -75,7 +75,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -123,7 +123,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -171,7 +171,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -219,7 +219,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -267,7 +267,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -315,7 +315,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///
@@ -862,7 +862,7 @@ impl ApiClient {
     ///
     /// # Returns
     ///
-    /// Server-Sent Events stream (use futures::StreamExt to iterate)
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
     ///
     /// # Examples
     ///

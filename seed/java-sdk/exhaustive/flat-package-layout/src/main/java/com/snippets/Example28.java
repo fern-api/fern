@@ -1,9 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
-import com.seed.exhaustive.types.types.ObjectWithOptionalField;
-import com.seed.exhaustive.types.types.ObjectWithRequiredNestedObject;
+import com.seed.exhaustive.types.types.ObjectWithMixedRequiredAndOptionalFields;
 
 public class Example28 {
     public static void main(String[] args) {
@@ -14,12 +12,11 @@ public class Example28 {
 
         client.endpoints()
                 .object()
-                .getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject.builder()
-                        .requiredString("hello")
-                        .requiredObject(NestedObjectWithRequiredField.builder()
-                                .string("nested")
-                                .nestedObject(ObjectWithOptionalField.builder().build())
-                                .build())
+                .getAndReturnWithMixedRequiredAndOptionalFields(ObjectWithMixedRequiredAndOptionalFields.builder()
+                        .requiredString("requiredString")
+                        .requiredInteger(1)
+                        .requiredLong(1000000L)
+                        .optionalString("optionalString")
                         .build());
     }
 }

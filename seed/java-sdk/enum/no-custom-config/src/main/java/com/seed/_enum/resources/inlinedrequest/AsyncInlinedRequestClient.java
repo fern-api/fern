@@ -5,6 +5,7 @@ package com.seed._enum.resources.inlinedrequest;
 
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.RequestOptions;
+import com.seed._enum.core.SeedEnumHttpResponse;
 import com.seed._enum.resources.inlinedrequest.requests.SendEnumInlinedRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncInlinedRequestClient {
     }
 
     public CompletableFuture<Void> send(SendEnumInlinedRequest request) {
-        return this.rawClient.send(request).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.send(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> send(SendEnumInlinedRequest request, RequestOptions requestOptions) {
-        return this.rawClient.send(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.send(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

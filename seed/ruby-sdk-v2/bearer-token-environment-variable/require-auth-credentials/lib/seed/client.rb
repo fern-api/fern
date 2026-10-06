@@ -5,9 +5,10 @@ module Seed
     # @param base_url [String, nil]
     # @param token [String]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, token: ENV.fetch("COURIER_API_KEY", nil), max_retries: 2)
+    def initialize(base_url: nil, token: ENV.fetch("COURIER_API_KEY", nil), max_retries: 2, timeout: 60)
       raise ArgumentError, "token is required; pass token: or set the COURIER_API_KEY environment variable" if token.to_s.empty?
 
       @raw_client = Seed::Internal::Http::RawClient.new(
@@ -18,7 +19,8 @@ module Seed
           Authorization: "Bearer #{token}",
           "X-API-Version" => "1.0.0"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

@@ -1,12 +1,14 @@
 /**
  * A parsed XML element. Names keep their `prefix:` verbatim (no namespace processing);
- * `text` is the element's own (non-whitespace) character data.
+ * `text` is the element's own (non-whitespace) character data, and `content` holds the
+ * non-blank text segments and child elements in document order.
  */
 export interface XmlNode {
     name: string;
     attributes: Record<string, string>;
     text: string | undefined;
     children: XmlNode[];
+    content: (string | XmlNode)[];
 }
 
 export class XmlParseError extends Error {
@@ -89,7 +91,7 @@ class Parser {
             const char = this.source.charAt(this.position);
             if (char === "/") {
                 this.expect("/>");
-                return { name, attributes, text: undefined, children: [] };
+                return { name, attributes, text: undefined, children: [], content: [] };
             }
             if (char === ">") {
                 this.position++;
@@ -107,6 +109,15 @@ class Parser {
 
         const children: XmlNode[] = [];
         const text: string[] = [];
+        const content: (string | XmlNode)[] = [];
+        const flushText = (): void => {
+            const segment = text.slice(flushedText).join("");
+            flushedText = text.length;
+            if (segment.trim().length > 0) {
+                content.push(segment);
+            }
+        };
+        let flushedText = 0;
         for (;;) {
             if (this.position >= this.source.length) {
                 throw new XmlParseError(`unclosed <${name}> element`);
@@ -132,7 +143,10 @@ class Parser {
             } else if (this.source.startsWith("<!", this.position)) {
                 throw new XmlParseError("DOCTYPE declarations are not allowed");
             } else if (this.source.charAt(this.position) === "<") {
-                children.push(this.parseElement());
+                flushText();
+                const child = this.parseElement();
+                children.push(child);
+                content.push(child);
             } else {
                 const end = this.source.indexOf("<", this.position);
                 const raw = this.source.substring(this.position, end === -1 ? this.source.length : end);
@@ -140,8 +154,9 @@ class Parser {
                 this.position += raw.length;
             }
         }
+        flushText();
         const joined = text.join("");
-        return { name, attributes, text: joined.trim().length === 0 ? undefined : joined, children };
+        return { name, attributes, text: joined.trim().length === 0 ? undefined : joined, children, content };
     }
 
     private parseName(): string {

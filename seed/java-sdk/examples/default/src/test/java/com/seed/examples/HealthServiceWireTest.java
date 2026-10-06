@@ -22,6 +22,7 @@ public class HealthServiceWireTest {
         server.start();
         client = SeedExamplesClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }
@@ -35,6 +36,15 @@ public class HealthServiceWireTest {
     public void testCheck() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         client.health().service().check("id-2sdx82h");
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
+    }
+
+    @Test
+    public void testCheckExample2() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        client.health().service().check("id-3tey93i");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

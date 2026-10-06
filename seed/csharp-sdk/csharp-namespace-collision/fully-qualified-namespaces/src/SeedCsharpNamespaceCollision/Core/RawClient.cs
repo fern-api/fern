@@ -202,7 +202,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends a single request attempt with its own timeout, so that backoff delays and
     /// earlier attempts do not consume the timeout budget of later attempts.
     /// </summary>
-    private static async global::System.Threading.Tasks.Task<HttpResponseMessage> SendWithTimeoutAsync(
+    private static async Task<HttpResponseMessage> SendWithTimeoutAsync(
         HttpClient httpClient,
         HttpRequestMessage request,
         TimeSpan timeout,
@@ -219,9 +219,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// <summary>
     /// Buffers the response content so the response we already have survives if a later attempt fails.
     /// </summary>
-    private static async global::System.Threading.Tasks.Task BufferResponseAsync(
-        HttpResponseMessage response
-    )
+    private static async SystemTask BufferResponseAsync(HttpResponseMessage response)
     {
         try
         {

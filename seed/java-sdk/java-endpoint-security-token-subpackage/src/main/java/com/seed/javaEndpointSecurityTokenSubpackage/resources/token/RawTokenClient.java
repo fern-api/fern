@@ -4,6 +4,7 @@
 package com.seed.javaEndpointSecurityTokenSubpackage.resources.token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.javaEndpointSecurityTokenSubpackage.core.BodyProperties;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.ClientOptions;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.EndpointMetadata;
 import com.seed.javaEndpointSecurityTokenSubpackage.core.MediaTypes;
@@ -50,7 +51,9 @@ public class RawTokenClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedJavaEndpointSecurityTokenSubpackageException("Failed to serialize request", e);
         }

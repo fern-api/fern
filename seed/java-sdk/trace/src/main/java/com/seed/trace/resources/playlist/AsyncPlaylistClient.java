@@ -5,6 +5,7 @@ package com.seed.trace.resources.playlist;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.playlist.requests.CreatePlaylistRequest;
 import com.seed.trace.resources.playlist.requests.GetPlaylistsRequest;
 import com.seed.trace.resources.playlist.types.Playlist;
@@ -34,7 +35,15 @@ public class AsyncPlaylistClient {
      * Create a new playlist
      */
     public CompletableFuture<Playlist> createPlaylist(int serviceParam, CreatePlaylistRequest request) {
-        return this.rawClient.createPlaylist(serviceParam, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Playlist>> rawFuture =
+                this.rawClient.createPlaylist(serviceParam, request);
+        CompletableFuture<Playlist> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -42,16 +51,30 @@ public class AsyncPlaylistClient {
      */
     public CompletableFuture<Playlist> createPlaylist(
             int serviceParam, CreatePlaylistRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .createPlaylist(serviceParam, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Playlist>> rawFuture =
+                this.rawClient.createPlaylist(serviceParam, request, requestOptions);
+        CompletableFuture<Playlist> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns the user's playlists
      */
     public CompletableFuture<List<Playlist>> getPlaylists(int serviceParam, GetPlaylistsRequest request) {
-        return this.rawClient.getPlaylists(serviceParam, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<Playlist>>> rawFuture =
+                this.rawClient.getPlaylists(serviceParam, request);
+        CompletableFuture<List<Playlist>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -59,32 +82,60 @@ public class AsyncPlaylistClient {
      */
     public CompletableFuture<List<Playlist>> getPlaylists(
             int serviceParam, GetPlaylistsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getPlaylists(serviceParam, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<Playlist>>> rawFuture =
+                this.rawClient.getPlaylists(serviceParam, request, requestOptions);
+        CompletableFuture<List<Playlist>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns a playlist
      */
     public CompletableFuture<Playlist> getPlaylist(int serviceParam, String playlistId) {
-        return this.rawClient.getPlaylist(serviceParam, playlistId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Playlist>> rawFuture =
+                this.rawClient.getPlaylist(serviceParam, playlistId);
+        CompletableFuture<Playlist> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns a playlist
      */
     public CompletableFuture<Playlist> getPlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
-        return this.rawClient
-                .getPlaylist(serviceParam, playlistId, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Playlist>> rawFuture =
+                this.rawClient.getPlaylist(serviceParam, playlistId, requestOptions);
+        CompletableFuture<Playlist> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Updates a playlist
      */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(int serviceParam, String playlistId) {
-        return this.rawClient.updatePlaylist(serviceParam, playlistId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> rawFuture =
+                this.rawClient.updatePlaylist(serviceParam, playlistId);
+        CompletableFuture<Optional<Playlist>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -92,9 +143,15 @@ public class AsyncPlaylistClient {
      */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(
             int serviceParam, String playlistId, RequestOptions requestOptions) {
-        return this.rawClient
-                .updatePlaylist(serviceParam, playlistId, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> rawFuture =
+                this.rawClient.updatePlaylist(serviceParam, playlistId, requestOptions);
+        CompletableFuture<Optional<Playlist>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -102,7 +159,15 @@ public class AsyncPlaylistClient {
      */
     public CompletableFuture<Optional<Playlist>> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
-        return this.rawClient.updatePlaylist(serviceParam, playlistId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> rawFuture =
+                this.rawClient.updatePlaylist(serviceParam, playlistId, request);
+        CompletableFuture<Optional<Playlist>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -113,24 +178,44 @@ public class AsyncPlaylistClient {
             String playlistId,
             Optional<UpdatePlaylistRequest> request,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .updatePlaylist(serviceParam, playlistId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> rawFuture =
+                this.rawClient.updatePlaylist(serviceParam, playlistId, request, requestOptions);
+        CompletableFuture<Optional<Playlist>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Deletes a playlist
      */
     public CompletableFuture<Void> deletePlaylist(int serviceParam, String playlistId) {
-        return this.rawClient.deletePlaylist(serviceParam, playlistId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.deletePlaylist(serviceParam, playlistId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Deletes a playlist
      */
     public CompletableFuture<Void> deletePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
-        return this.rawClient
-                .deletePlaylist(serviceParam, playlistId, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.deletePlaylist(serviceParam, playlistId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -3,6 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
+import { RESERVED_OPTION_NAMES } from "@fern-api/go-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import {
@@ -21,26 +22,6 @@ import {
 } from "../authUtils.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
-
-/**
- * RequestOptions field names that a server URL variable must not shadow. Kept in
- * sync with the reserved names in the Go v1 generator (sdk.go). A variable whose
- * idiomatic name collides with one of these is exposed under a "ServerURL"-prefixed
- * name instead.
- */
-const RESERVED_OPTION_NAMES = new Set<string>([
-    "BaseURL",
-    "Environment",
-    "HTTPClient",
-    "HTTPHeader",
-    "BodyProperties",
-    "QueryParameters",
-    "MaxAttempts",
-    "MaxBufSize",
-    "MaxStreamReconnectAttempts",
-    "DisableStreamReconnection",
-    "DisableRetries"
-]);
 
 interface ServerVariableOption {
     variable: FernIr.ServerVariable;
@@ -300,6 +281,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         this.writeHeaderEnvironmentVariables({ writer });
         if (this.isRootClient) {
             this.writeServerVariableInterpolation({ writer });
+            this.writeSdkVariableEnvironmentVariables({ writer });
             this.writeOAuthTokenFetching({ writer });
             this.writeInferredAuthTokenFetching({ writer });
         }
@@ -644,6 +626,27 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     this.writeInferredAuthEnvironmentVariables({ writer });
                     break;
             }
+        }
+    }
+
+    /**
+     * SDK variables that declare an env var default to it when not set on the client.
+     * A missing value is reported when an endpoint bound to the variable is called.
+     */
+    private writeSdkVariableEnvironmentVariables({ writer }: { writer: go.Writer }): void {
+        for (const option of this.context.getSdkVariableOptions()) {
+            const envVar = option.variable.envVar;
+            if (envVar == null || !option.isString) {
+                continue;
+            }
+            this.writeEnvConditional({
+                writer,
+                propertyReference: go.selector({
+                    on: go.codeblock("options"),
+                    selector: go.codeblock(option.fieldName)
+                }),
+                env: envVar
+            });
         }
     }
 

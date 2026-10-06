@@ -27,6 +27,7 @@ type RequestOptions struct {
 	MaxStreamReconnectAttempts uint
 	DisableStreamReconnection  bool
 	DisableRetries             bool
+	RootVariable               string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -142,4 +143,13 @@ type WithoutRetriesOption struct{}
 
 func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
 	opts.DisableRetries = true
+}
+
+// RootVariableOption implements the RequestOption interface.
+type RootVariableOption struct {
+	RootVariable string
+}
+
+func (r *RootVariableOption) applyRequestOptions(opts *RequestOptions) {
+	opts.RootVariable = r.RootVariable
 }

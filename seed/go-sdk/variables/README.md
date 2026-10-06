@@ -34,13 +34,17 @@ import (
     context "context"
 
     client "github.com/variables/fern/client"
+    option "github.com/variables/fern/option"
 )
 
 func do() {
-    client := client.NewClient()
+    client := client.NewClient(
+        option.WithRootVariable(
+            "<endpointParam>",
+        ),
+    )
     client.Service.Post(
         context.TODO(),
-        "<endpointParam>",
     )
 }
 ```
