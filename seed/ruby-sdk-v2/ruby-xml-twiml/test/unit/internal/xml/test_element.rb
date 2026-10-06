@@ -202,8 +202,10 @@ describe Seed::Internal::Xml::Element do
 
     it "keeps comment text from closing the comment early" do
       element = XmlTestElement.new("Response").add_comment("a -- b --> <Hangup/> -")
+
       assert_equal "<Response><!--a - - b - -> <Hangup/> - --></Response>", XmlTestUtils.serialize(element)
       parsed = XmlTestUtils.parse_document(XmlTestUtils.serialize(element))
+
       assert_equal [XmlTestComment.new("a - - b - -> <Hangup/> - ")], parsed.children
     end
   end
