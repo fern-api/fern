@@ -115,11 +115,14 @@ test.describe("Image rendering validation", () => {
     });
 });
 
-test.describe("Live reload", () => {
-    // The Astro preview server rebuilds the docs model and evicts the renderer on
-    // every edit; assert an edited page is served with the new content.
-    test.skip(process.env.SMOKE_RENDERER !== "astro", "live-reload assertion only runs for the Astro renderer");
+// The Astro preview server rebuilds the docs model and evicts the renderer on
+// every edit; assert an edited page is served with the new content.
+const LIVE_RELOAD_RENDERERS = new Set(["astro"]);
+const describeLiveReload = LIVE_RELOAD_RENDERERS.has(process.env.SMOKE_RENDERER ?? "")
+    ? test.describe
+    : test.describe.skip;
 
+describeLiveReload("Live reload", () => {
     test("editing a markdown page is reflected on the next request", async ({ page }) => {
         const original = await readFile(WELCOME_MDX, "utf-8");
         const marker = `Smoke-test live reload marker ${Date.now()}`;
