@@ -160,5 +160,18 @@ describe <%= gem_namespace %>::Internal::Xml::Element do
       assert_raises(ArgumentError) { XmlTestUtils.parse_boolean("maybe") }
       assert_raises(ArgumentError) { XmlTestUtils.parse_literal("no", "yes") }
     end
+
+    def test_enums_are_open
+      strength = Module.new do
+        extend <%= gem_namespace %>::Internal::Types::Enum
+
+        const_set(:WEAK, "weak")
+        const_set(:STRONG, "strong")
+      end
+
+      assert_equal "weak", XmlTestUtils.parse_enum(" weak ", strength)
+      assert_equal "bogus", XmlTestUtils.parse_enum("bogus", strength)
+      assert_equal "bogus", XmlTestUtils.parse_enum(" bogus ", strength)
+    end
   end
 end

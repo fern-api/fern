@@ -670,6 +670,9 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
 
 scripts:
   - image: fernapi/ts-seed
