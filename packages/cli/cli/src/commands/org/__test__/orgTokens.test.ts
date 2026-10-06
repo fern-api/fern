@@ -7,6 +7,8 @@ function token(overrides: Partial<OrgTokenRow> = {}): OrgTokenRow {
         tokenId: "tok_01",
         status: "active",
         createdTime: "2026-07-15T12:00:00.000Z",
+        createdBy: "google-oauth2|1234",
+        lastUsedAt: "2026-10-01T12:00:00.000Z",
         description: "CI/CD pipeline",
         ...overrides
     };
@@ -27,9 +29,9 @@ describe("buildOrgTokensCsv", () => {
         const csv = buildOrgTokensCsv(tokens);
 
         expect(csv).toMatchInlineSnapshot(`
-          "Name,Token ID,Status,Created at
-          CI/CD pipeline,tok_01,active,2026-07-15T12:00:00.000Z
-          ,tok_02,revoked,2026-07-20T12:00:00.000Z"
+          "Name,Token ID,Status,Created by,Created at,Last used at
+          CI/CD pipeline,tok_01,active,google-oauth2|1234,2026-07-15T12:00:00.000Z,2026-10-01T12:00:00.000Z
+          ,tok_02,revoked,google-oauth2|1234,2026-07-20T12:00:00.000Z,2026-10-01T12:00:00.000Z"
         `);
     });
 

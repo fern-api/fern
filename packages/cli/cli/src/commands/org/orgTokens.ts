@@ -10,6 +10,8 @@ export interface OrgTokenRow {
     tokenId: string;
     status: string;
     createdTime: string;
+    createdBy: string | null;
+    lastUsedAt: string | null;
     description: string | null;
 }
 
@@ -45,16 +47,16 @@ function failForStatus(context: TaskContext, status: number, subject: string): n
     );
 }
 
-async function lookupAuth0OrgId(
-    context: TaskContext,
-    venus: ReturnType<typeof createVenusService>,
-    orgName: string
-): Promise<string> {
-    const orgLookup = await venus.organization.get({ orgId: orgName });
-    if (!orgLookup.ok) {
-        failForStatus(context, orgLookup.rawResponse.status, `Organization "${orgName}"`);
-    }
-    return orgLookup.body.auth0Id;
+/**
+ * The api-keys endpoints take the org name as `organizationId` (the dashboard
+ * calls them the same way). The venus SDK's TokenMetadata type omits
+ * `createdBy`/`lastUsedAt`, but they are present in the response
+ * (unrecognizedObjectKeys: "passthrough"), so read them defensively.
+ */
+function readExtraFields(t: object): { createdBy: string | null; lastUsedAt: string | null } {
+    const createdBy = "createdBy" in t && typeof t.createdBy === "string" ? t.createdBy : null;
+    const lastUsedAt = "lastUsedAt" in t && typeof t.lastUsedAt === "string" ? t.lastUsedAt : null;
+    return { createdBy, lastUsedAt };
 }
 
 /**
@@ -82,8 +84,15 @@ function escapeCsvCell(value: string | null | undefined): string {
  * creation — so the export carries metadata only.
  */
 export function buildOrgTokensCsv(tokens: OrgTokenRow[]): string {
-    const headers = ["Name", "Token ID", "Status", "Created at"];
-    const rows = tokens.map((t) => [t.description ?? "", t.tokenId, t.status, t.createdTime]);
+    const headers = ["Name", "Token ID", "Status", "Created by", "Created at", "Last used at"];
+    const rows = tokens.map((t) => [
+        t.description ?? "",
+        t.tokenId,
+        t.status,
+        t.createdBy ?? "",
+        t.createdTime,
+        t.lastUsedAt ?? ""
+    ]);
     return [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
 }
 
@@ -103,19 +112,23 @@ export async function listOrgTokens({
     await cliContext.runTask(async (context) => {
         const token = await getUserToken(context);
         const venus = createVenusService({ token });
-        const auth0OrgId = await lookupAuth0OrgId(context, venus, orgName);
 
-        const response = await venus.apiKeys.getTokensForOrganization({ organizationId: auth0OrgId });
+        const response = await venus.apiKeys.getTokensForOrganization({ organizationId: orgName });
         if (!response.ok) {
             return failForStatus(context, response.rawResponse.status, `Organization "${orgName}"`);
         }
 
-        const tokens: OrgTokenRow[] = response.body.map((t) => ({
-            tokenId: t.tokenId,
-            status: t.status.type,
-            createdTime: t.createdTime.toISOString(),
-            description: t.description ?? null
-        }));
+        const tokens: OrgTokenRow[] = response.body.map((t) => {
+            const extra = readExtraFields(t);
+            return {
+                tokenId: t.tokenId,
+                status: t.status.type,
+                createdTime: t.createdTime.toISOString(),
+                createdBy: extra.createdBy,
+                lastUsedAt: extra.lastUsedAt,
+                description: t.description ?? null
+            };
+        });
 
         if (json) {
             cliContext.writeJsonToStdout(tokens);
@@ -160,7 +173,6 @@ export async function createOrgToken({
     await cliContext.runTask(async (context) => {
         const token = await getUserToken(context);
         const venus = createVenusService({ token });
-        const auth0OrgId = await lookupAuth0OrgId(context, venus, orgName);
 
         let name = description;
         if (name == null && process.stdout.isTTY) {
@@ -172,7 +184,7 @@ export async function createOrgToken({
             }
         }
 
-        const response = await venus.apiKeys.create({ organizationId: auth0OrgId, description: name });
+        const response = await venus.apiKeys.create({ organizationId: orgName, description: name });
         if (!response.ok) {
             return failForStatus(context, response.rawResponse.status, `Organization "${orgName}"`);
         }
