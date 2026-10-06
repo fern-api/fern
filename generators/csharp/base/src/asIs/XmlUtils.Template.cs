@@ -44,6 +44,31 @@ internal static class XmlUtils
     }
 
     /// <summary>
+    /// Value equality for XML-encoded models: two values are equal when they render to the same XML
+    /// (same element, attributes, text and ordered children).
+    /// </summary>
+    internal static bool XmlEquals(IXmlNode? left, IXmlNode? right)
+    {
+        if (ReferenceEquals(left, right))
+        {
+            return true;
+        }
+        if (left is null || right is null)
+        {
+            return false;
+        }
+        return XNode.DeepEquals(left.ToXElement(), right.ToXElement());
+    }
+
+    /// <summary>
+    /// Hash code consistent with <see cref="XmlEquals"/>, derived from the rendered XML.
+    /// </summary>
+    internal static int XmlHashCode(IXmlNode node)
+    {
+        return Serialize(node.ToXElement()).GetHashCode();
+    }
+
+    /// <summary>
     /// Parses an XML document securely (no DTDs, no external resolution) and returns its root element.
     /// </summary>
     internal static XElement ParseDocument(string xml)
