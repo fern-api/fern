@@ -211,6 +211,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
+                    userAgentOnly: this.rubyContext.customConfig.userAgentOnly,
                     allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
@@ -233,6 +234,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders,
         includePlatformHeaders,
         allowUserAgentAppInfo,
+        userAgentOnly,
         allowCustomHttpClient,
         maxRetries,
         retryStatusCodes,
@@ -248,6 +250,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders?: boolean;
         includePlatformHeaders?: boolean;
         allowUserAgentAppInfo?: boolean;
+        userAgentOnly?: boolean;
         allowCustomHttpClient?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
@@ -265,6 +268,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 omitFernHeaders,
                 includePlatformHeaders,
                 allowUserAgentAppInfo,
+                userAgentOnly,
                 allowCustomHttpClient,
                 maxRetries,
                 respectOptionalRequestBody,
@@ -342,6 +346,7 @@ function getTemplateVariables({
     omitFernHeaders,
     includePlatformHeaders,
     allowUserAgentAppInfo,
+    userAgentOnly,
     allowCustomHttpClient,
     maxRetries,
     respectOptionalRequestBody,
@@ -355,6 +360,7 @@ function getTemplateVariables({
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    userAgentOnly?: boolean;
     allowCustomHttpClient?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
@@ -374,6 +380,8 @@ function getTemplateVariables({
         // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
         // so flag-off raw_client.rb stays byte-identical.
         allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
+        // Drops the default X-Fern-Language/SDK-Name/SDK-Version headers.
+        userAgentOnly: userAgentOnly ?? false,
         // Emits the RawClient `http_client:` transport override only when the opt-in
         // flag is on, so flag-off raw_client.rb stays byte-identical.
         allowCustomHttpClient: allowCustomHttpClient ?? false,

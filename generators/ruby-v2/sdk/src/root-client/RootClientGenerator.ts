@@ -657,7 +657,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Add X-Fern-Language header
             const hasParams = inferredParams.length > 0;
-            writer.writeLine(`"X-Fern-Language" => "Ruby"${hasParams ? "," : ""}`);
+            if (!this.context.customConfig.userAgentOnly) {
+                writer.writeLine(`"X-Fern-Language" => "Ruby"${hasParams ? "," : ""}`);
+            }
 
             // Add any header-based auth params to the auth client headers
             for (let i = 0; i < inferredParams.length; i++) {
@@ -835,7 +837,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
             writer.writeLine(`headers: {`);
             writer.indent();
-            writer.writeLine(`"X-Fern-Language" => "Ruby"`);
+            if (!this.context.customConfig.userAgentOnly) {
+                writer.writeLine(`"X-Fern-Language" => "Ruby"`);
+            }
             writer.dedent();
             writer.writeLine(`},`);
             if (this.emitHttpClientOption()) {
@@ -1348,10 +1352,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
             }
 
-            headers.push({
-                key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
-                value: ruby.TypeLiteral.string("Ruby")
-            });
+            if (!this.context.customConfig.userAgentOnly) {
+                headers.push({
+                    key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
+                    value: ruby.TypeLiteral.string("Ruby")
+                });
+            }
         }
 
         // In endpoint-security mode, auth headers are NOT baked into the RawClient's
