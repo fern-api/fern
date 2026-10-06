@@ -179,11 +179,16 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
 
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
         const hasSnippetFilepath = context.config.output.snippetFilepath != null;
+        // GitHub output is a full repository, so it always gets a README (local runs don't set a snippet path).
+        if (context.config.output.mode.type === "github") {
+            return true;
+        }
         const publishConfig = context.ir.publishConfig;
         switch (publishConfig?.type) {
             case "filesystem":
                 return publishConfig.generateFullProject || hasSnippetFilepath;
             case "github":
+                return true;
             case "direct":
             default:
                 return hasSnippetFilepath;

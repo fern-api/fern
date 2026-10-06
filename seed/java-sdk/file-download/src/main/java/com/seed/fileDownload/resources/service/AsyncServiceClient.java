@@ -5,6 +5,7 @@ package com.seed.fileDownload.resources.service;
 
 import com.seed.fileDownload.core.ClientOptions;
 import com.seed.fileDownload.core.RequestOptions;
+import com.seed.fileDownload.core.SeedFileDownloadHttpResponse;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,18 +27,47 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> simple() {
-        return this.rawClient.simple().thenApply(response -> response.body());
+        CompletableFuture<SeedFileDownloadHttpResponse<Void>> rawFuture = this.rawClient.simple();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> simple(RequestOptions requestOptions) {
-        return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileDownloadHttpResponse<Void>> rawFuture = this.rawClient.simple(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<InputStream> downloadFile() {
-        return this.rawClient.downloadFile().thenApply(response -> response.body());
+        CompletableFuture<SeedFileDownloadHttpResponse<InputStream>> rawFuture = this.rawClient.downloadFile();
+        CompletableFuture<InputStream> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<InputStream> downloadFile(RequestOptions requestOptions) {
-        return this.rawClient.downloadFile(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileDownloadHttpResponse<InputStream>> rawFuture =
+                this.rawClient.downloadFile(requestOptions);
+        CompletableFuture<InputStream> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

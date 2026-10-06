@@ -36,7 +36,7 @@ class EndpointsEnumWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/enum",
-      expected_body: JSON.parse("\"SUNNY\"")
+      expected_body: JSON.parse('"SUNNY"')
     )
   end
 end

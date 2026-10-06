@@ -38,10 +38,12 @@ func (b *BadObjectRequestInfo) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BadObjectRequestInfo) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;

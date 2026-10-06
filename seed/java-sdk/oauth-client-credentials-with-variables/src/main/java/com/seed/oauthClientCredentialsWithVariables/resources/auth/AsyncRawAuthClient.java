@@ -4,6 +4,7 @@
 package com.seed.oauthClientCredentialsWithVariables.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.oauthClientCredentialsWithVariables.core.BodyProperties;
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.MediaTypes;
 import com.seed.oauthClientCredentialsWithVariables.core.ObjectMappers;
@@ -53,7 +54,9 @@ public class AsyncRawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsWithVariablesException("Failed to serialize request", e);
         }
@@ -79,7 +82,8 @@ public class AsyncRawAuthClient {
         }
         CompletableFuture<SeedOauthClientCredentialsWithVariablesHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -109,6 +113,11 @@ public class AsyncRawAuthClient {
                         "Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -130,7 +139,9 @@ public class AsyncRawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedOauthClientCredentialsWithVariablesException("Failed to serialize request", e);
         }
@@ -156,7 +167,8 @@ public class AsyncRawAuthClient {
         }
         CompletableFuture<SeedOauthClientCredentialsWithVariablesHttpResponse<TokenResponse>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -184,6 +196,11 @@ public class AsyncRawAuthClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedOauthClientCredentialsWithVariablesException(
                         "Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

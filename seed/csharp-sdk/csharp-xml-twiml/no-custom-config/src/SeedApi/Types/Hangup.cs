@@ -22,10 +22,16 @@ public record Hangup : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements that are not part of the typed model. They are written back by ToXml().
+    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
-    public List<XmlElement> AdditionalChildren { get; set; } = new();
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// Child elements that are not part of the typed model, derived from Content (a snapshot; add children through AddChild or Content).
+    /// </summary>
+    [JsonIgnore]
+    public IReadOnlyList<XmlElement> AdditionalChildren => Content.OfType<XmlElement>().ToList();
 
     /// <summary>
     /// Parses a <c>&lt;Hangup&gt;</c> XML document. Throws <see cref="ArgumentException"/> if the XML is malformed or the root element does not match.
@@ -38,10 +44,11 @@ public record Hangup : IJsonOnDeserialized, IXmlNode
     public static Hangup FromXElement(XElement element)
     {
         XmlUtils.RequireName(element, "Hangup");
+        var content = XmlUtils.ReadContent(element, null, false, null, null);
         var result = new Hangup
         {
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(element),
-            AdditionalChildren = XmlUtils.GetAdditionalChildren(element, new string[] { }),
+            Content = content,
         };
         return result;
     }
@@ -55,27 +62,41 @@ public record Hangup : IJsonOnDeserialized, IXmlNode
     public XElement ToXElement()
     {
         var element = XmlUtils.CreateElement("Hangup", null, null);
-        XmlUtils.AddAdditional(element, AdditionalAttributes, AdditionalChildren);
+        XmlUtils.AddContent(element, XmlUtils.OrderContent(Content));
+        XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }
 
     /// <summary>
-    /// Serializes this value to an XML string.
+    /// Serializes this value to an XML document, prefixed with the XML declaration.
     /// </summary>
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    public string ToXml() => ToXml(true);
 
     /// <summary>
-    /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
+    /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+
+    /// <summary>
+    /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Hangup AddChild(XmlElement child)
     {
-        AdditionalChildren.Add(child);
+        Content.Add(child);
         return this;
     }
 
-    /// <inheritdoc />
-    public override string ToString()
+    /// <summary>
+    /// Appends a text segment after any content added so far, so text can be interleaved with child elements, and returns this instance for chaining.
+    /// </summary>
+    public Hangup AddText(string text)
     {
-        return JsonUtils.Serialize(this);
+        Content.Add(text);
+        return this;
     }
+
+    /// <summary>
+    /// Returns the XML representation of this value.
+    /// </summary>
+    public override string ToString() => ToXml();
 }

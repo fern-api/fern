@@ -334,7 +334,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/refresh-token",
-          body: params[:request],
+          body: params[:request]&.then { |value| Seed::Types::Types::RefreshTokenRequest.new(value).to_h },
           request_options: request_options
         )
         begin

@@ -216,7 +216,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-object",
-            body: params[:request],
+            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin
@@ -292,7 +292,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-integer-to-object",
-            body: params[:request],
+            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin
@@ -329,7 +329,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/opt-objects",
-            body: params[:request],
+            body: params[:request]&.then { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin

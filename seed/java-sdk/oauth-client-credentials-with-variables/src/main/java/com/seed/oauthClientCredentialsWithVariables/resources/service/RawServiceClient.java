@@ -4,6 +4,7 @@
 package com.seed.oauthClientCredentialsWithVariables.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.oauthClientCredentialsWithVariables.core.BodyProperties;
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.ObjectMappers;
 import com.seed.oauthClientCredentialsWithVariables.core.RequestOptions;
@@ -43,7 +44,11 @@ public class RawServiceClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();

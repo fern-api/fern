@@ -167,7 +167,7 @@ class EndpointsParamsWireTest < WireMockTestCase
       test_id: test_id,
       method: "PUT",
       url_path: "/params/path/param",
-      expected_body: JSON.parse("\"string\"")
+      expected_body: JSON.parse('"string"')
     )
   end
 
@@ -196,7 +196,7 @@ class EndpointsParamsWireTest < WireMockTestCase
       test_id: test_id,
       method: "PUT",
       url_path: "/params/path/param",
-      expected_body: JSON.parse("\"string\"")
+      expected_body: JSON.parse('"string"')
     )
   end
 

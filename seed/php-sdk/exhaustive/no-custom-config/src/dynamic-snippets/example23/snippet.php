@@ -14,7 +14,7 @@ $client = new SeedClient(
 $client->endpoints->object->getAndReturnWithUnknownField(
     new ObjectWithUnknownField([
         'unknown' => [
-            'key' => "value",
+            '$ref' => "https://example.com/schema",
         ],
     ]),
 );

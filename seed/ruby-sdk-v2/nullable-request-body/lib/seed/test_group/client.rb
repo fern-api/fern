@@ -43,7 +43,7 @@ module Seed
           method: "POST",
           path: "optional-request-body/#{URI.encode_uri_component(params[:path_param].to_s)}",
           query: query_params,
-          body: params[:body],
+          body: params[:body]&.then { |value| Seed::Types::PlainObject.new(value).to_h },
           request_options: request_options
         )
         begin
@@ -56,7 +56,11 @@ module Seed
           (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            422 => Seed::Types::PlainObject
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
     end

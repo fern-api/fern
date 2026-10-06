@@ -233,6 +233,10 @@ internal static class JsonUtils
             );
         }
         var jsonNode = SerializeToNode(obj);
+        if (jsonNode is null)
+        {
+            return additionalPropertiesJsonObject.ToJsonString(JsonOptions.JsonSerializerOptions);
+        }
         if (jsonNode is not JsonObject jsonObject)
         {
             throw new InvalidOperationException(

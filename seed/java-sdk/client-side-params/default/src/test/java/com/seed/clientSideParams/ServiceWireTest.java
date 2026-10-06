@@ -44,6 +44,7 @@ public class ServiceWireTest {
         server.start();
         client = SeedClientSideParamsClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }

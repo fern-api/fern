@@ -36,7 +36,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/string",
-      expected_body: JSON.parse("\"string\"")
+      expected_body: JSON.parse('"string"')
     )
   end
 
@@ -64,7 +64,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/integer",
-      expected_body: JSON.parse("1")
+      expected_body: JSON.parse('1')
     )
   end
 
@@ -92,7 +92,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/long",
-      expected_body: JSON.parse("1000000")
+      expected_body: JSON.parse('1000000')
     )
   end
 
@@ -114,13 +114,6 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/double",
       query_params: nil,
       expected: 1
-    )
-
-    verify_request_body(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/primitive/double",
-      expected_body: JSON.parse("1.1")
     )
   end
 
@@ -148,7 +141,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/boolean",
-      expected_body: JSON.parse("true")
+      expected_body: JSON.parse('true')
     )
   end
 
@@ -171,13 +164,6 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
-
-    verify_request_body(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/primitive/datetime",
-      expected_body: JSON.parse("\"2024-01-15T09:30:00Z\"")
-    )
   end
 
   def test_endpoints_primitive_get_and_return_date_with_wiremock
@@ -198,13 +184,6 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/date",
       query_params: nil,
       expected: 1
-    )
-
-    verify_request_body(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/primitive/date",
-      expected_body: JSON.parse("\"2023-01-15\"")
     )
   end
 
@@ -232,7 +211,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/uuid",
-      expected_body: JSON.parse("\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"")
+      expected_body: JSON.parse('"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"')
     )
   end
 
@@ -254,13 +233,6 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/base64",
       query_params: nil,
       expected: 1
-    )
-
-    verify_request_body(
-      test_id: test_id,
-      method: "POST",
-      url_path: "/primitive/base64",
-      expected_body: JSON.parse("\"SGVsbG8gd29ybGQh\"")
     )
   end
 end

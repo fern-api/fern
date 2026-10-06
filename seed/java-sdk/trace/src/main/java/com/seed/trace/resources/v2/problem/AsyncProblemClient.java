@@ -5,6 +5,7 @@ package com.seed.trace.resources.v2.problem;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.v2.problem.types.LightweightProblemInfoV2;
 import com.seed.trace.resources.v2.problem.types.ProblemInfoV2;
 import java.util.List;
@@ -31,49 +32,103 @@ public class AsyncProblemClient {
      * Returns lightweight versions of all problems
      */
     public CompletableFuture<List<LightweightProblemInfoV2>> getLightweightProblems() {
-        return this.rawClient.getLightweightProblems().thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<LightweightProblemInfoV2>>> rawFuture =
+                this.rawClient.getLightweightProblems();
+        CompletableFuture<List<LightweightProblemInfoV2>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns lightweight versions of all problems
      */
     public CompletableFuture<List<LightweightProblemInfoV2>> getLightweightProblems(RequestOptions requestOptions) {
-        return this.rawClient.getLightweightProblems(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<LightweightProblemInfoV2>>> rawFuture =
+                this.rawClient.getLightweightProblems(requestOptions);
+        CompletableFuture<List<LightweightProblemInfoV2>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns latest versions of all problems
      */
     public CompletableFuture<List<ProblemInfoV2>> getProblems() {
-        return this.rawClient.getProblems().thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<ProblemInfoV2>>> rawFuture = this.rawClient.getProblems();
+        CompletableFuture<List<ProblemInfoV2>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns latest versions of all problems
      */
     public CompletableFuture<List<ProblemInfoV2>> getProblems(RequestOptions requestOptions) {
-        return this.rawClient.getProblems(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<List<ProblemInfoV2>>> rawFuture =
+                this.rawClient.getProblems(requestOptions);
+        CompletableFuture<List<ProblemInfoV2>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns latest version of a problem
      */
     public CompletableFuture<ProblemInfoV2> getLatestProblem(String problemId) {
-        return this.rawClient.getLatestProblem(problemId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> rawFuture = this.rawClient.getLatestProblem(problemId);
+        CompletableFuture<ProblemInfoV2> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns latest version of a problem
      */
     public CompletableFuture<ProblemInfoV2> getLatestProblem(String problemId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestProblem(problemId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> rawFuture =
+                this.rawClient.getLatestProblem(problemId, requestOptions);
+        CompletableFuture<ProblemInfoV2> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns requested version of a problem
      */
     public CompletableFuture<ProblemInfoV2> getProblemVersion(String problemId, int problemVersion) {
-        return this.rawClient.getProblemVersion(problemId, problemVersion).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> rawFuture =
+                this.rawClient.getProblemVersion(problemId, problemVersion);
+        CompletableFuture<ProblemInfoV2> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -81,8 +136,14 @@ public class AsyncProblemClient {
      */
     public CompletableFuture<ProblemInfoV2> getProblemVersion(
             String problemId, int problemVersion, RequestOptions requestOptions) {
-        return this.rawClient
-                .getProblemVersion(problemId, problemVersion, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> rawFuture =
+                this.rawClient.getProblemVersion(problemId, problemVersion, requestOptions);
+        CompletableFuture<ProblemInfoV2> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

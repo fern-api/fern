@@ -34,10 +34,16 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements that are not part of the typed model. They are written back by ToXml().
+    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
-    public List<XmlElement> AdditionalChildren { get; set; } = new();
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// Child elements that are not part of the typed model, derived from Content (a snapshot; add children through AddChild or Content).
+    /// </summary>
+    [JsonIgnore]
+    public IReadOnlyList<XmlElement> AdditionalChildren => Content.OfType<XmlElement>().ToList();
 
     /// <summary>
     /// Parses a <c>&lt;Dial&gt;</c> XML document. Throws <see cref="ArgumentException"/> if the XML is malformed or the root element does not match.
@@ -50,9 +56,16 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     public static Dial FromXElement(XElement element)
     {
         XmlUtils.RequireName(element, "Dial");
+        var content = XmlUtils.ReadContent(
+            element,
+            null,
+            true,
+            null,
+            new Dictionary<string, string[]> { { "Numbers", new string[] { "Number" } } }
+        );
         var result = new Dial
         {
-            Number = XmlUtils.ParseValue<string?>(XmlUtils.GetText(element)),
+            Number = XmlUtils.ParseValue<string?>(XmlUtils.GetLeadingText(element)),
             StatusCallbackEvent = XmlUtils.ParseList<string>(
                 XmlUtils.GetAttribute(element, "statusCallbackEvent"),
                 " "
@@ -62,7 +75,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
                 " "
             ),
             Numbers = XmlUtils.ParseChildren(
-                XmlUtils.GetWrapper(element, "Numbers"),
+                XmlUtils.GetWrapperItems(element, "Numbers"),
                 new string[] { "Number" },
                 global::SeedApi.Number.FromXElement
             ),
@@ -71,11 +84,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
                 "statusCallbackEvent",
                 "record"
             ),
-            AdditionalChildren = XmlUtils.GetAdditionalChildren(
-                element,
-                new string[] { },
-                new Dictionary<string, string[]> { { "Numbers", new string[] { "Number" } } }
-            ),
+            Content = content,
         };
         return result;
     }
@@ -96,25 +105,30 @@ public record Dial : IJsonOnDeserialized, IXmlNode
             XmlUtils.JoinValues(StatusCallbackEvent, " ")
         );
         XmlUtils.SetAttribute(element, "record", XmlUtils.JoinValues(Record, " "));
-        if (Numbers != null)
-        {
-            var wrapper = XmlUtils.AddWrapper(element, "Numbers");
-            foreach (var item in Numbers)
+        XmlUtils.AddContent(
+            element,
+            XmlUtils.OrderContent(Content),
+            new Dictionary<string, List<XElement>?>
             {
-                wrapper.Add(item.ToXElement());
+                { "Numbers", XmlUtils.RenderWrappedItems(Numbers, item => item.ToXElement()) },
             }
-        }
-        XmlUtils.AddAdditional(element, AdditionalAttributes, AdditionalChildren, "Numbers");
+        );
+        XmlUtils.SetAttributes(element, AdditionalAttributes);
         return element;
     }
 
     /// <summary>
-    /// Serializes this value to an XML string.
+    /// Serializes this value to an XML document, prefixed with the XML declaration.
     /// </summary>
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    public string ToXml() => ToXml(true);
 
     /// <summary>
-    /// Adds a <c>&lt;Number&gt;</c> child element and returns this instance for chaining.
+    /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+
+    /// <summary>
+    /// Adds a <c>&lt;Number&gt;</c> child element after any content added so far and returns this instance for chaining.
     /// </summary>
     /// <param name="number">The <c>&lt;Number&gt;</c> element to add.</param>
     public Dial AddNumber(Number number)
@@ -134,17 +148,25 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
-    /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
+    /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Dial AddChild(XmlElement child)
     {
-        AdditionalChildren.Add(child);
+        Content.Add(child);
         return this;
     }
 
-    /// <inheritdoc />
-    public override string ToString()
+    /// <summary>
+    /// Appends a text segment after any content added so far, so text can be interleaved with child elements, and returns this instance for chaining.
+    /// </summary>
+    public Dial AddText(string text)
     {
-        return JsonUtils.Serialize(this);
+        Content.Add(text);
+        return this;
     }
+
+    /// <summary>
+    /// Returns the XML representation of this value.
+    /// </summary>
+    public override string ToString() => ToXml();
 }

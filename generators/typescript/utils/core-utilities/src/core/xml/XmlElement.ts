@@ -1,12 +1,16 @@
 import { type XmlNode, parseXml } from "./parse";
-import { type XmlSerializable, serializeXmlElement } from "./serialize";
+import { type XmlContent, type XmlSerializable, serializeXmlElement } from "./serialize";
 
 export declare namespace XmlElement {
     interface Fields {
         name: string;
         attributes?: Record<string, string>;
+        /** Text content; shorthand for a single leading text segment in `content`. */
         text?: string;
+        /** Child elements; shorthand for appending them to `content` after `text`. */
         children?: XmlElement[];
+        /** Ordered text segments and child elements. Takes precedence over `text` and `children`. */
+        content?: XmlContent[];
     }
 }
 
@@ -14,14 +18,24 @@ export declare namespace XmlElement {
 export class XmlElement implements XmlSerializable {
     public name: string;
     public attributes: Record<string, string>;
-    public text: string | undefined;
-    public children: XmlElement[];
+    /** Ordered text segments and child elements. */
+    public content: XmlContent[];
 
-    constructor({ name, attributes = {}, text, children = [] }: XmlElement.Fields) {
+    constructor({ name, attributes = {}, text, children = [], content }: XmlElement.Fields) {
         this.name = name;
         this.attributes = attributes;
-        this.text = text;
-        this.children = children;
+        this.content = content ?? [...(text != null ? [text] : []), ...children];
+    }
+
+    /** All text segments of the element joined together, if any. */
+    public get text(): string | undefined {
+        const segments = this.content.filter((item): item is string => typeof item === "string");
+        return segments.length === 0 ? undefined : segments.join("");
+    }
+
+    /** The generic child elements, in order. */
+    public get children(): XmlElement[] {
+        return this.content.filter((item): item is XmlElement => item instanceof XmlElement);
     }
 
     public static fromXml(xml: string | XmlNode): XmlElement {
@@ -29,17 +43,17 @@ export class XmlElement implements XmlSerializable {
         return new XmlElement({
             name: node.name,
             attributes: { ...node.attributes },
-            text: node.text,
-            children: node.children.map((child) => XmlElement.fromXml(child)),
+            content: node.content.map((item) => (typeof item === "string" ? item : XmlElement.fromXml(item))),
         });
     }
 
-    public toXml(): string {
+    /** Serializes the element, without an XML declaration unless `xmlDeclaration` is `true`. */
+    public toXml(xmlDeclaration = false): string {
         return serializeXmlElement({
             name: this.name,
             attributes: Object.entries(this.attributes).map(([name, value]) => ({ name, value })),
-            text: this.text,
-            additionalChildren: this.children,
+            content: this.content,
+            xmlDeclaration,
         });
     }
 

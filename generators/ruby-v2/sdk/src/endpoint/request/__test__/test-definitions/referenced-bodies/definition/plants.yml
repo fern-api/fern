@@ -52,6 +52,34 @@ service:
       method: POST
       path: /optional
       request: optional<list<Plant>>
+    setOptionalPlant:
+      method: POST
+      path: /optional-plant
+      request: optional<Plant>
+    setNullablePlant:
+      method: POST
+      path: /nullable-plant
+      request: nullable<PlantAlias>
+    setPlantsByRoom:
+      method: POST
+      path: /by-room
+      request: map<string, Plant>
+    setOptionalPlantsByRoom:
+      method: POST
+      path: /optional-by-room
+      request: optional<map<string, optional<Plant>>>
+    setPlantGroups:
+      method: POST
+      path: /groups
+      request: list<map<string, Plant>>
+    setUniquePlants:
+      method: POST
+      path: /unique-plants
+      request: set<Plant>
+    setOptionalTags:
+      method: POST
+      path: /optional-tags
+      request: optional<list<string>>
     rename:
       method: POST
       path: /rename
@@ -92,3 +120,11 @@ service:
         headers:
           X-Trace-Id: string
         body: Plant
+    renameOptionalWithHeaders:
+      method: POST
+      path: /rename-optional-with-headers
+      request:
+        name: RenameOptionalWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        body: optional<string>

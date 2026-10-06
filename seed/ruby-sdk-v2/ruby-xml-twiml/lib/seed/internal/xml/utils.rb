@@ -87,7 +87,13 @@ module Seed
             end
             output << ">"
             output << escape_text(element.text) unless element.text.nil?
-            element.children.each { |child| write_element(output, child.to_xml_element, scope) }
+            element.children.each do |child|
+              if child.is_a?(Text)
+                output << escape_text(child.value)
+              else
+                write_element(output, child.to_xml_element, scope)
+              end
+            end
             output << "</" << qualified_name << ">"
           end
 
@@ -127,19 +133,6 @@ module Seed
             values.map { |value| to_xml_string(value) }.compact.join(separator)
           end
 
-          # Appends a text-only child element unless the value is nil.
-          #
-          # @param element [Element]
-          # @param name [String]
-          # @param value [Object]
-          # @return [void]
-          def add_child_value(element, name, value)
-            text = to_xml_string(value)
-            return if text.nil?
-
-            element.add_child(Element.new(name, text: text))
-          end
-
           # Adds unknown attributes and children back onto an element. Unknown content found inside
           # a wrapper element (see `wrapper_names`) is merged into the wrapper of the same name instead
           # of producing a second wrapper.
@@ -157,14 +150,112 @@ module Seed
               if child.is_a?(Element) && wrapper_names.include?(child.name)
                 wrapper = element.child(child.name)
                 unless wrapper.nil?
-                  child.namespace_declarations.each { |prefix, uri| wrapper.namespace_declarations[prefix] ||= uri }
-                  child.attributes.each { |name, value| wrapper.attributes[name] = value unless wrapper.attributes.key?(name) }
-                  wrapper.text ||= child.text
-                  child.children.each { |grand_child| wrapper.add_child(grand_child) }
+                  merge_wrapper!(wrapper, child)
                   next
                 end
               end
               element.add_child(child)
+            end
+          end
+
+          # Appends the typed children, the additional children and the text segments to `element` in
+          # content order. `content` decides the order; typed or additional children missing from it
+          # are appended after it (typed first), so directly assigned properties still render. Wrapped
+          # lists render as one wrapper element, placed where the first wrapper of that name or the
+          # first item of that list appears in `content`; a raw wrapper element added with `add_child`
+          # is merged into it rather than written as a second wrapper. Nodes in `content` that are neither typed,
+          # additional nor text are not written.
+          #
+          # @param element [Element]
+          # @param content [Array<Element, Serializable, Text>]
+          # @param typed [Array<Element, Serializable>] typed child elements, in property order
+          # @param wrapped [Hash<String, Array<Element, Serializable>>] items of each wrapped list, keyed by wrapper name
+          # @param additional [Array<Element, Serializable>]
+          # @param attributes [Hash<String, String>] additional attributes
+          # @return [void]
+          def add_content(element, content, typed, wrapped, additional, attributes = {})
+            remaining = {}.compare_by_identity
+            (typed + additional).each { |node| remaining[node] = (remaining[node] || 0) + 1 }
+            wrapper_of = {}.compare_by_identity
+            wrapped.each { |name, items| items.each { |item| wrapper_of[item] = name } }
+            wrappers = {}
+            emit_wrapper = ->(name) { emit_wrapper!(element, name, wrapped, wrappers) }
+            content.each do |node|
+              if node.is_a?(Text)
+                element.add_child(node)
+              elsif (remaining[node] || 0).positive?
+                remaining[node] -= 1
+                if node.is_a?(Element) && wrapped.key?(node.name)
+                  emit_wrapper.call(node.name)
+                  merge_wrapper!(wrappers[node.name], node)
+                else
+                  element.add_child(node)
+                end
+              elsif wrapper_of.key?(node)
+                emit_wrapper.call(wrapper_of[node])
+              elsif node.is_a?(Element) && wrapped.key?(node.name)
+                emit_wrapper.call(node.name)
+              end
+            end
+            typed.each do |node|
+              next unless (remaining[node] || 0).positive?
+
+              remaining[node] -= 1
+              element.add_child(node)
+            end
+            wrapped.each_key { |name| emit_wrapper.call(name) }
+            leftover = additional.select do |node|
+              keep = (remaining[node] || 0).positive?
+              remaining[node] -= 1 if keep
+              keep
+            end
+            add_additional(element, attributes, leftover, wrapped.keys)
+          end
+
+          private def merge_wrapper!(wrapper, raw)
+            raw.namespace_declarations.each { |prefix, uri| wrapper.namespace_declarations[prefix] ||= uri }
+            raw.attributes.each { |name, value| wrapper.attributes[name] = value unless wrapper.attributes.key?(name) }
+            wrapper.text ||= raw.text
+            raw.children.each { |grand_child| wrapper.add_child(grand_child) }
+          end
+
+          private def emit_wrapper!(element, name, wrapped, wrappers)
+            return if wrappers.key?(name)
+
+            wrapper = Element.new(name)
+            element.add_child(wrapper)
+            wrapped[name].each { |item| wrapper.add_child(item) }
+            wrappers[name] = wrapper
+          end
+
+          # Builds the content list of a parsed element: its text segments, the typed children (taken
+          # in document order from `typed`), wrapper elements (as parsed) and the additional children.
+          #
+          # @param element [Element]
+          # @param typed [Array<Array(Array<String>, Array<Serializable>)>] pairs of element names and
+          #   the typed children parsed from elements with those names, in document order
+          # @param additional [Array<Element, Serializable>]
+          # @param wrapper_names [Array<String>]
+          # @return [Array<Element, Serializable, Text>]
+          def content(element, typed, additional, wrapper_names = [])
+            by_name = {}
+            typed.each_with_index { |(names, _nodes), index| names.each { |name| by_name[name] = index } }
+            positions = Array.new(typed.length, 0)
+            additional_ids = {}.compare_by_identity
+            additional.each { |node| additional_ids[node] = true }
+            element.children.filter_map do |child|
+              next child if child.is_a?(Text)
+
+              name = child.to_xml_element.name
+              index = by_name[name]
+              if index.nil?
+                next child if wrapper_names.include?(name) || additional_ids.key?(child)
+
+                next nil
+              end
+              node = typed[index][1][positions[index]]
+              positions[index] += 1 unless node.nil?
+              node
             end
           end
 
@@ -242,18 +333,43 @@ module Seed
               end
             end
             text = +""
+            has_element = false
             node.each_child do |child|
               case child
               when ::REXML::Text
-                text << child.value
+                if has_element
+                  append_parsed_text(element, child.value)
+                else
+                  text << child.value
+                end
               when ::REXML::Element
+                has_element = true
                 element.add_child(from_rexml(child))
               end
             end
-            # Text nodes are concatenated (whitespace-only text is dropped); interleaving with child
-            # elements is not preserved, matching serialization which writes text before children.
+            # Text before the first child element is the element's text (dropped when whitespace-only);
+            # text between and after child elements is kept as Text segments in document order.
             element.text = text.strip.empty? ? nil : text
             element
+          end
+
+          # Appends character data read after a child element. Whitespace-only text spanning a line
+          # break is pretty-print indentation and is dropped; whitespace-only text without a line break
+          # (e.g. a space between two inline children) is significant and kept. Adjacent segments are
+          # merged.
+          private def append_parsed_text(element, text)
+            return if indentation?(text)
+
+            last = element.children.last
+            if last.is_a?(Text)
+              last.value += text
+            else
+              element.add_text(text)
+            end
+          end
+
+          private def indentation?(text)
+            text.strip.empty? && text.match?(/[\r\n]/)
           end
 
           # @raise [ArgumentError] if the attribute is missing
@@ -308,8 +424,7 @@ module Seed
           def parse_children(parent, parsers)
             return [] if parent.nil?
 
-            parent.children.filter_map do |child|
-              element = child.to_xml_element
+            parent.child_elements.filter_map do |element|
               parser = parsers[element.name]
               parser&.call(element)
             end
@@ -317,8 +432,7 @@ module Seed
 
           # @return [Object, nil] the first child with a parser, parsed
           def parse_child(parent, parsers)
-            parent.children.each do |child|
-              element = child.to_xml_element
+            parent.child_elements.each do |element|
               parser = parsers[element.name]
               return parser.call(element) unless parser.nil?
             end
@@ -409,6 +523,8 @@ module Seed
           def additional_children(element, known_names, wrappers = {})
             result = []
             element.children.each do |child|
+              next if child.is_a?(Text)
+
               child_element = child.to_xml_element
               known_items = wrappers[child_element.name]
               if known_items.nil?
@@ -424,7 +540,7 @@ module Seed
               )
               rest.namespace_declarations.merge!(child_element.namespace_declarations)
               child_element.children.each do |item|
-                rest.add_child(item) unless known_items.include?(item.to_xml_element.name)
+                rest.add_child(item) unless !item.is_a?(Text) && known_items.include?(item.to_xml_element.name)
               end
               result << rest if !rest.text.nil? || !rest.attributes.empty? || !rest.children.empty?
             end

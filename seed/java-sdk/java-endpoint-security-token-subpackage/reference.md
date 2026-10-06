@@ -143,6 +143,56 @@ client.user().getWithApiKeyOrOAuth();
 </dl>
 </details>
 
+<details><summary><code>client.user.getWithBearer() -> List&amp;lt;User&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().getWithBearer();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.getWithBasic() -> List&amp;lt;User&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().getWithBasic();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.user.getAnonymous() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>

@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -41,7 +41,7 @@ public final class Dial implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
     private Dial(
             Optional<String> number,
@@ -49,13 +49,13 @@ public final class Dial implements XmlSerializable {
             Optional<List<DialRecordItem>> record,
             Optional<List<Number>> numbers,
             Map<String, Object> additionalProperties,
-            List<XmlElement> additionalChildren) {
+            List<XmlNode> content) {
         this.number = number;
         this.statusCallbackEvent = statusCallbackEvent;
         this.record = record;
         this.numbers = numbers;
         this.additionalProperties = additionalProperties;
-        this.additionalChildren = additionalChildren;
+        this.content = content;
     }
 
     @JsonProperty("number")
@@ -89,9 +89,20 @@ public final class Dial implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     private boolean equalTo(Dial other) {
@@ -106,18 +117,18 @@ public final class Dial implements XmlSerializable {
         return Objects.hash(this.number, this.statusCallbackEvent, this.record, this.numbers);
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
 
     @Override
+    public String toString() {
+        return toXml();
+    }
+
+    @Override
     public String toXml() {
-        return toXml(false);
+        return toXml(true);
     }
 
     @Override
@@ -128,7 +139,7 @@ public final class Dial implements XmlSerializable {
         writer.attribute("record", this.record, " ");
         writer.wrappedChildren("Numbers", "Number", this.numbers);
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -141,8 +152,9 @@ public final class Dial implements XmlSerializable {
 
     public static Dial fromXml(Element element) {
         XmlReader.expect(element, "Dial");
+        List<XmlNode> content = XmlReader.content(element, true, Arrays.asList("Numbers"), e -> null);
         return new Dial(
-                XmlReader.text(element),
+                XmlReader.leadingText(element),
                 XmlReader.attribute(element, "statusCallbackEvent").map(raw -> XmlReader.split(raw, " ")),
                 XmlReader.attribute(element, "record").map(raw -> XmlReader.split(raw, " ").stream()
                         .map(v -> XmlReader.convert(v, DialRecordItem.class))
@@ -154,7 +166,7 @@ public final class Dial implements XmlSerializable {
                                 .map(Number::fromXml)
                                 .collect(Collectors.toList())),
                 XmlReader.extraAttributes(element, Arrays.asList("statusCallbackEvent", "record")),
-                XmlReader.unknownChildren(element, Arrays.asList("Numbers")));
+                content);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -171,7 +183,7 @@ public final class Dial implements XmlSerializable {
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
@@ -180,6 +192,7 @@ public final class Dial implements XmlSerializable {
             statusCallbackEvent(other.getStatusCallbackEvent());
             record(other.getRecord());
             numbers(other.getNumbers());
+            content(other.getContent());
             return this;
         }
 
@@ -228,7 +241,7 @@ public final class Dial implements XmlSerializable {
         }
 
         public Dial build() {
-            return new Dial(number, statusCallbackEvent, record, numbers, additionalProperties, additionalChildren);
+            return new Dial(number, statusCallbackEvent, record, numbers, additionalProperties, content);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -242,27 +255,47 @@ public final class Dial implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
-            return this;
-        }
-
-        public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            this.content.add(XmlNode.element(child));
             return this;
         }
 
         /**
-         * Appends a &lt;Number&gt; child element.
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
+            return this;
+        }
+
+        /**
+         * Appends a &lt;Number&gt; child element after any content added so far.
          * @param number the &lt;Number&gt; element to append
          * @return this builder
          */
         public Builder addNumber(Number number) {
+            Number item = number;
             List<Number> updated = new ArrayList<>(this.numbers.orElseGet(Collections::emptyList));
-            updated.add(number);
+            updated.add(item);
             this.numbers = Optional.of(updated);
+            this.content.add(XmlNode.element(item));
             return this;
         }
 
@@ -277,7 +310,6 @@ public final class Dial implements XmlSerializable {
             Dial parsed = Dial.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }

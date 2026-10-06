@@ -37,6 +37,9 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
         });
 
         for (const pathParameter of this.endpoint.allPathParameters) {
+            if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                continue;
+            }
             properties.push({
                 ...pathParameter,
                 name: {

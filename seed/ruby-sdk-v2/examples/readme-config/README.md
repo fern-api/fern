@@ -1,10 +1,10 @@
-# Seed Ruby Library
+# CustomName Ruby Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRuby)
 
-The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
+The CustomName Ruby library provides convenient access to the CustomName APIs from Ruby.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
   - [Timeouts](#timeouts)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
-- [Contributing](#contributing)
+  - [Additional Body Properties](#additional-body-properties)
 
 ## Documentation
 
@@ -271,18 +271,32 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
+# Set the default timeout (in seconds) for every request made by the client.
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    timeout: 30
+)
+
+# Override the timeout for an individual request.
 response = client.service.get_movie(
     ...,
-    timeout: 30  # 30 second timeout
+    request_options: { timeout_in_seconds: 10 }
 )
 ```
 
 ```ruby
 require "seed"
 
+# Set the default timeout (in seconds) for every request made by the client.
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    timeout: 30
+)
+
+# Override the timeout for an individual request.
 response = client.service.create_movie(
     ...,
-    timeout: 30  # 30 second timeout
+    request_options: { timeout_in_seconds: 10 }
 )
 ```
 
@@ -320,12 +334,22 @@ response = client.service.create_big_entity(
 )
 ```
 
-## Contributing
+### Additional Body Properties
 
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
+If you would like to send additional body properties as part of the request, use the `additional_body_parameters` request option.
+Properties are merged into the serialized request body using their API (wire-format) names and override any field the SDK sets with the same name. If the endpoint has no body, one is created from these properties, except for GET and HEAD requests, which are always sent without a body (the properties are ignored).
+This applies to JSON and form-urlencoded requests; it is not applied to multipart (file upload) requests.
 
-On the other hand, contributions to the README are always very welcome!
+```ruby
+require "seed"
+
+response = client.service.create_big_entity(
+    ...,
+    request_options: {
+        additional_body_parameters: {
+            "custom_field" => "custom-value"
+        }
+    }
+)
+```
+

@@ -5,6 +5,7 @@ package com.seed.streaming.resources.dummy;
 
 import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.RequestOptions;
+import com.seed.streaming.core.SeedStreamingHttpResponse;
 import com.seed.streaming.resources.dummy.requests.GenerateRequest;
 import com.seed.streaming.resources.dummy.types.StreamResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,11 +28,27 @@ public class AsyncDummyClient {
     }
 
     public CompletableFuture<Iterable<StreamResponse>> generate(GenerateRequest request) {
-        return this.rawClient.generate(request).thenApply(response -> response.body());
+        CompletableFuture<SeedStreamingHttpResponse<Iterable<StreamResponse>>> rawFuture =
+                this.rawClient.generate(request);
+        CompletableFuture<Iterable<StreamResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamResponse>> generate(
             GenerateRequest request, RequestOptions requestOptions) {
-        return this.rawClient.generate(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedStreamingHttpResponse<Iterable<StreamResponse>>> rawFuture =
+                this.rawClient.generate(request, requestOptions);
+        CompletableFuture<Iterable<StreamResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

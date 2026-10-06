@@ -36,21 +36,26 @@ public class ServiceClient {
         return this.rawClient.upload(file, request, requestOptions).body();
     }
 
-    public String upload(InputStream stream, String filename) {
-        return this.rawClient.upload(stream, filename).body();
+    public String upload(UploadRequest request, InputStream stream, String filename) {
+        return this.rawClient.upload(request, stream, filename).body();
     }
 
-    public String upload(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.upload(stream, filename, mediaType).body();
+    public String upload(UploadRequest request, InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.upload(request, stream, filename, mediaType).body();
     }
 
-    public String upload(InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.upload(stream, filename, requestOptions).body();
+    public String upload(UploadRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.upload(request, stream, filename, requestOptions).body();
     }
 
-    public String upload(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+    public String upload(
+            UploadRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
         return this.rawClient
-                .upload(stream, filename, mediaType, requestOptions)
+                .upload(request, stream, filename, mediaType, requestOptions)
                 .body();
     }
 }

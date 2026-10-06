@@ -63,7 +63,7 @@ class SeedBearerTokenEnvironmentVariable:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"),
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -76,6 +76,7 @@ class SeedBearerTokenEnvironmentVariable:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("COURIER_API_KEY")
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
@@ -177,7 +178,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"),
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         timeout: typing.Optional[float] = None,
@@ -191,6 +192,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("COURIER_API_KEY")
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"

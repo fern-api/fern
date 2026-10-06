@@ -73,7 +73,7 @@ class WireMockTestCase < Minitest::Test
     result = JSON.parse(response.body)
     requests = result["requests"] || []
 
-    refute_empty requests, "No requests found for test_id #{test_id}"
+    refute_empty requests, "No requests found for test_id #{test_id} (#{method} #{url_path})"
     actual_body = JSON.parse(requests.first["body"])
 
     assert_equal expected_body, actual_body

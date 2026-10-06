@@ -159,6 +159,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
             if (modelTypeId == null) {
                 return {
                     requestBodyReference: ruby.codeblock((writer) => {
+                        if (omitContentTypeWithoutBody) {
+                            this.writeOptionalValueGuard(writer, this.getBodyArgumentReference(this.wrapper.bodyKey));
+                        }
                         writer.write(this.getBodyValueExpression(requestBodyType, this.wrapper.bodyKey));
                     }),
                     omitContentTypeWithoutBody

@@ -69,7 +69,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-typed-body",
-          body: params[:request],
+          body: params[:request]&.then { |value| Seed::Optional::Types::SendOptionalBodyRequest.new(value).to_h },
           request_options: request_options
         )
         begin
@@ -115,7 +115,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "deploy/#{URI.encode_uri_component(params[:action_id].to_s)}/versions/#{URI.encode_uri_component(params[:id].to_s)}",
-          body: params[:request],
+          body: params[:request]&.then { |value| Seed::Optional::Types::DeployParams.new(value).to_h },
           request_options: request_options
         )
         begin

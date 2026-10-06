@@ -63,7 +63,11 @@ module Seed
           (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body))
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          error_types = {
+            400 => Seed::GeneralErrors::Types::BadObjectRequestInfo
+          }
+          error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+          raise error_class.new(response.body, code: code, body: error_body)
         end
       end
 

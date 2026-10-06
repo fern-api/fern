@@ -1,4 +1,95 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.32.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child models and raw `Element` children in a single
+        ordered `content` list, so `to_xml` emits them in the order they were added
+        (`response.say("a"); response.add_child(Element.new("Custom")); response.say("b")` yields
+        `<Say>a</Say><Custom/><Say>b</Say>`) and `from_xml` preserves document order, including the
+        position of unknown elements. Adds `add_text(String)` to XML types and `Element` for mixed content
+        such as `<Say>Hi <break strength="weak"/> world</Say>`. Typed child properties and additional
+        children remain available and are reconciled into the content order on serialization.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for SDK variables (`x-fern-sdk-variables` / `variables` in `api.yml`).
+        Each variable is exposed as an optional keyword on the root client (e.g.
+        `Client.new(target_account_sid: "AC...")`); path parameters bound to a variable are
+        removed from the endpoint methods and request classes, and the value is read from
+        the client instead. String variables declared with an `env` fall back to
+        `ENV.fetch("<ENV_VAR>", nil)` when the keyword is omitted, and endpoints raise an
+        `ArgumentError` with a clear message when a required variable is still unset.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        The `additional_body_parameters` request option is now applied to request bodies. Previously it was
+        documented on every endpoint method but silently ignored. Extra properties are merged into the serialized
+        JSON (or form-urlencoded) body using their API wire-format names, override SDK-set fields with the same name,
+        and create a body when the endpoint has none
+        (except GET and HEAD requests, which are still sent without a body). Multipart (file upload) requests are not affected.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Fix pagination for endpoints whose cursor or offset lives in the request body
+        (e.g. `$request.cursor` or `$request.options.offset`). The generated iterators
+        previously referenced an undeclared `query_params` and raised `NameError` on first
+        use; they now read and advance the body property, creating omitted parent objects.
+      type: fix
+    - summary: |
+        Nil values are no longer serialized as `{}` (`nil.to_h`), and `optional<nullable<T>>`
+        fields keep their nullable metadata so explicit `nil` values are preserved, while
+        omitted optional fields are still left out of the request.
+      type: fix
+    - summary: |
+        Add a `timeout:` option to the root client and honor `request_options[:timeout_in_seconds]`
+        per request (an explicit `0` is respected). The timeout also applies to OAuth and inferred-auth
+        token requests. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
+        README timeout snippets now show the real API.
+      type: fix
+    - summary: |
+        Endpoints returning text, bytes, or a file download now return the raw response body
+        instead of `nil`.
+      type: fix
+    - summary: |
+        Generated `.rubocop.yml` disables `Style/CommentAnnotation` (API docstrings such as
+        "Note:" tripped it), and the generated retry tests follow the `retryStatusCodes` setting.
+      type: fix
+    - summary: |
+        Error responses now expose the body parsed into the endpoint's declared error type
+        as `error.body` (exact status codes take precedence over `4XX`/`5XX` wildcards).
+        `error.message` and `error.code` are unchanged; `body` is `nil` when no error type
+        matches or the body is not valid JSON.
+      type: feat
+    - summary: |
+        Add the opt-in `wrapInvalidJsonResponses` config. When enabled, a 2xx response whose
+        body is not valid JSON raises `Errors::ResponseError` (with the raw body and status
+        code) instead of leaking `JSON::ParserError`.
+      type: feat
+    - summary: |
+        Add the opt-in `requireAuthCredentials` config. When enabled, the client
+        constructor raises `ArgumentError` if a bearer or header credential is neither
+        passed nor set in its environment variable, instead of sending an empty auth header.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 1.29.0
   changelogEntry:
     - summary: |

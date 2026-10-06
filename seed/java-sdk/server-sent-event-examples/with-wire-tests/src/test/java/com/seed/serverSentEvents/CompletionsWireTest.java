@@ -3,6 +3,7 @@ package com.seed.serverSentEvents;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.serverSentEvents.core.ObjectMappers;
+import com.seed.serverSentEvents.resources.completions.errors.BadRequestError;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;
@@ -30,6 +31,7 @@ public class CompletionsWireTest {
         server.start();
         client = SeedServerSentEventsClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .build();
     }
 
@@ -85,6 +87,55 @@ public class CompletionsWireTest {
     }
 
     @Test
+    public void testStreamThrowsBadRequestError() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(400).setBody("\"bad request\""));
+        BadRequestError exception = Assertions.assertThrows(
+                BadRequestError.class,
+                () -> client.completions().stream(
+                        StreamCompletionRequest.builder().query("").build()));
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{\n" + "  \"query\": \"\"\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+
+        // Validate error response
+        Assertions.assertEquals(400, exception.statusCode(), "Error status code does not match expected");
+        String actualErrorJson = objectMapper.writeValueAsString(exception.body());
+        String expectedErrorBody = "" + "\"bad request\"";
+        JsonNode actualErrorNode = objectMapper.readTree(actualErrorJson);
+        JsonNode expectedErrorNode = objectMapper.readTree(expectedErrorBody);
+        Assertions.assertTrue(jsonEquals(expectedErrorNode, actualErrorNode), "Error body does not match expected");
+    }
+
+    @Test
     public void testStreamEvents() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         Iterable<StreamEvent> response = client.completions()
@@ -128,6 +179,53 @@ public class CompletionsWireTest {
         String responseJson = objectMapper.writeValueAsString(response);
         Assertions.assertNotNull(responseJson);
         Assertions.assertFalse(responseJson.isEmpty());
+    }
+
+    @Test
+    public void testStreamEventsThrowsBadRequestError() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(400).setBody("\"bad request\""));
+        BadRequestError exception = Assertions.assertThrows(BadRequestError.class, () -> client.completions()
+                .streamEvents(StreamEventsRequest.builder().query("").build()));
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{\n" + "  \"query\": \"\"\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+
+        // Validate error response
+        Assertions.assertEquals(400, exception.statusCode(), "Error status code does not match expected");
+        String actualErrorJson = objectMapper.writeValueAsString(exception.body());
+        String expectedErrorBody = "" + "\"bad request\"";
+        JsonNode actualErrorNode = objectMapper.readTree(actualErrorJson);
+        JsonNode expectedErrorNode = objectMapper.readTree(expectedErrorBody);
+        Assertions.assertTrue(jsonEquals(expectedErrorNode, actualErrorNode), "Error body does not match expected");
     }
 
     @Test
@@ -179,6 +277,55 @@ public class CompletionsWireTest {
     }
 
     @Test
+    public void testStreamEventsDiscriminantInDataThrowsBadRequestError() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(400).setBody("\"string\""));
+        BadRequestError exception = Assertions.assertThrows(BadRequestError.class, () -> client.completions()
+                .streamEventsDiscriminantInData(StreamEventsDiscriminantInDataRequest.builder()
+                        .query("query")
+                        .build()));
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{\n" + "  \"query\": \"query\"\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+
+        // Validate error response
+        Assertions.assertEquals(400, exception.statusCode(), "Error status code does not match expected");
+        String actualErrorJson = objectMapper.writeValueAsString(exception.body());
+        String expectedErrorBody = "" + "\"string\"";
+        JsonNode actualErrorNode = objectMapper.readTree(actualErrorJson);
+        JsonNode expectedErrorNode = objectMapper.readTree(expectedErrorBody);
+        Assertions.assertTrue(jsonEquals(expectedErrorNode, actualErrorNode), "Error body does not match expected");
+    }
+
+    @Test
     public void testStreamEventsContextProtocol() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
         Iterable<StreamEventContextProtocol> response = client.completions()
@@ -224,6 +371,54 @@ public class CompletionsWireTest {
         String responseJson = objectMapper.writeValueAsString(response);
         Assertions.assertNotNull(responseJson);
         Assertions.assertFalse(responseJson.isEmpty());
+    }
+
+    @Test
+    public void testStreamEventsContextProtocolThrowsBadRequestError() throws Exception {
+        server.enqueue(new MockResponse().setResponseCode(400).setBody("\"bad request\""));
+        BadRequestError exception = Assertions.assertThrows(BadRequestError.class, () -> client.completions()
+                .streamEventsContextProtocol(
+                        StreamEventsContextProtocolRequest.builder().query("").build()));
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("POST", request.getMethod());
+        // Validate request body
+        String actualRequestBody = request.getBody().readUtf8();
+        String expectedRequestBody = "" + "{\n" + "  \"query\": \"\"\n" + "}";
+        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
+        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
+        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
+        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
+            String discriminator = null;
+            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
+            else if (actualJson.has("_type"))
+                discriminator = actualJson.get("_type").asText();
+            else if (actualJson.has("kind"))
+                discriminator = actualJson.get("kind").asText();
+            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
+            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
+        }
+
+        if (!actualJson.isNull()) {
+            Assertions.assertTrue(
+                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
+                    "request should be a valid JSON value");
+        }
+
+        if (actualJson.isArray()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
+        }
+        if (actualJson.isObject()) {
+            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
+        }
+
+        // Validate error response
+        Assertions.assertEquals(400, exception.statusCode(), "Error status code does not match expected");
+        String actualErrorJson = objectMapper.writeValueAsString(exception.body());
+        String expectedErrorBody = "" + "\"bad request\"";
+        JsonNode actualErrorNode = objectMapper.readTree(actualErrorJson);
+        JsonNode expectedErrorNode = objectMapper.readTree(expectedErrorBody);
+        Assertions.assertTrue(jsonEquals(expectedErrorNode, actualErrorNode), "Error body does not match expected");
     }
 
     /**

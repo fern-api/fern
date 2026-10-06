@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.146.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs` corrupting MDX pages that mix JSX image expressions like
+        `icon={<img src="..." />}` with other components that have local image paths. Text after
+        those components (such as a closing `</Tab>`) was deleted, so the page failed to compile and
+        rendered as raw text.
+      type: fix
+    - summary: |
+        Fix local images inside Markdown link text, like `[Docs <img src="./icon.svg" />](https://...)`
+        or `[![badge](./badge.png)](https://...)`, being published with the build machine's absolute
+        path instead of the uploaded file. Finding images to upload no longer parses each page as full
+        MDX, which makes `fern generate --docs` faster on large sites.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.146.1
+  changelogEntry:
+    - summary: |
+        Support building package artifacts from SDKs generated through SDK Gen API with `fern generate --package`, including pnpm-based TypeScript projects.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.146.0
+  changelogEntry:
+    - summary: |
+        SDK variables can now declare an environment variable fallback. In `api.yml`, use the
+        detailed form `variables: { myVar: { type: string, env: MY_VAR } }`; in OpenAPI, add
+        `x-fern-env: MY_VAR` to an `x-fern-sdk-variables` entry. The value is emitted as
+        `VariableDeclaration.envVar` in the IR so generators can make the variable optional at
+        client construction and read it from the environment when it is not passed explicitly.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 5.145.2
+  changelogEntry:
+    - summary: |
+        `fern org get` now names the org, shows when the CLI version policy was last updated, and shows
+        the running CLI version (e.g. `Org "acme" requires Fern CLI >= 5.106.0 (updated 2026-08-26).
+        You're on 5.140.2.`), so the output no longer reads like an error.
+      type: fix
+    - summary: |
+        `fern upgrade` no longer warns that the running CLI is outside the org's version policy ("Version
+        redirection is disabled, so it was not upgraded"), since the upgrade itself moves the project
+        to a new version.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.145.1
   changelogEntry:
     - summary: |

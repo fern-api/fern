@@ -7,15 +7,20 @@ namespace <%= namespace%>;
 /// A generic XML element. Used to carry child elements that are not part of the typed model
 /// (for example, elements introduced after the SDK was generated) so they survive a
 /// <c>FromXml</c> / <c>ToXml</c> round trip, and to append arbitrary elements to a model.
+/// Text segments and child elements live in a single ordered <see cref="Content"/> list, so
+/// mixed content keeps its order.
 /// </summary>
 public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
 {
     public XmlElement(string name, string? text = null, string? @namespace = null, string? prefix = null)
     {
         Name = name;
-        Text = text;
         Namespace = @namespace;
         Prefix = prefix;
+        if (text != null)
+        {
+            Content.Add(text);
+        }
     }
 
     /// <summary>
@@ -34,9 +39,27 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     public string? Prefix { get; set; }
 
     /// <summary>
-    /// The text content of the element, if any.
+    /// The element's content in document order: <see cref="string"/> text segments and
+    /// <see cref="IXmlNode"/> child elements.
     /// </summary>
-    public string? Text { get; set; }
+    public List<object> Content { get; set; } = new();
+
+    /// <summary>
+    /// The concatenated text content of the element, or null when it has none. Setting it replaces
+    /// every text segment with a single one placed before the child elements.
+    /// </summary>
+    public string? Text
+    {
+        get => XmlUtils.ConcatText(Content);
+        set
+        {
+            Content.RemoveAll(item => item is string);
+            if (value != null)
+            {
+                Content.Insert(0, value);
+            }
+        }
+    }
 
     /// <summary>
     /// Attributes in document order.
@@ -44,9 +67,15 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     public Dictionary<string, string> Attributes { get; set; } = new();
 
     /// <summary>
-    /// Child elements in document order.
+    /// Child elements in document order (a snapshot derived from <see cref="Content"/>).
     /// </summary>
-    public List<IXmlNode> Children { get; set; } = new();
+    public IReadOnlyList<IXmlNode> Children => Content.OfType<IXmlNode>().ToList();
+
+    /// <summary>
+    /// When this element was parsed as the wrapper of a wrapped list property, the number of typed
+    /// items it held. Used to deal the items back out to repeated wrappers when serializing.
+    /// </summary>
+    internal int WrappedItemCount { get; set; }
 
     /// <summary>
     /// Namespace declarations (prefix to URI) required by prefixed <see cref="Attributes"/>.
@@ -67,7 +96,16 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     /// </summary>
     public XmlElement AddChild(IXmlNode child)
     {
-        Children.Add(child);
+        Content.Add(child);
+        return this;
+    }
+
+    /// <summary>
+    /// Appends a text segment (after any content added so far) and returns this element for chaining.
+    /// </summary>
+    public XmlElement AddText(string text)
+    {
+        Content.Add(text);
         return this;
     }
 
@@ -85,18 +123,22 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
         {
             XmlUtils.SetAttribute(element, attribute.Key, attribute.Value);
         }
-        if (Text != null)
+        foreach (var item in Content)
         {
-            element.Add(new XText(Text));
-        }
-        foreach (var child in Children)
-        {
-            element.Add(child.ToXElement());
+            element.Add(XmlUtils.ToXNode(item));
         }
         return element;
     }
 
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    /// <summary>
+    /// Serializes this element without an XML declaration.
+    /// </summary>
+    public string ToXml() => ToXml(false);
+
+    /// <summary>
+    /// Serializes this element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
     /// Parses an XML document into an <see cref="XmlElement"/>.
@@ -110,7 +152,7 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
     {
         var result = new XmlElement(
             element.Name.LocalName,
-            XmlUtils.GetText(element),
+            null,
             element.Name.NamespaceName == "" ? null : element.Name.NamespaceName,
             XmlUtils.GetPrefix(element)
         );
@@ -128,10 +170,7 @@ public sealed class XmlElement : IXmlNode, IEquatable<XmlElement>
             }
             result.Attributes[name] = attribute.Value;
         }
-        foreach (var child in element.Elements())
-        {
-            result.Children.Add(FromXElement(child));
-        }
+        result.Content = XmlUtils.ReadContent(element, null, false, null, null);
         return result;
     }
 

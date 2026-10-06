@@ -26,10 +26,12 @@ type CreatePlaylistRequest struct {
 }
 
 func (c *CreatePlaylistRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDatetime sets the Datetime field and marks it as non-optional;
@@ -82,10 +84,12 @@ type GetPlaylistsRequest struct {
 }
 
 func (g *GetPlaylistsRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
@@ -179,10 +183,12 @@ func (p *Playlist) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Playlist) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -293,10 +299,12 @@ func (p *PlaylistCreateRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PlaylistCreateRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -529,10 +537,12 @@ func (u *UpdatePlaylistRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdatePlaylistRequest) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

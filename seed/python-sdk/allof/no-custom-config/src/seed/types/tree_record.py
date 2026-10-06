@@ -7,10 +7,24 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
-from .tree_base import TreeBase
+from .tree_identifiable import TreeIdentifiable
 
 
-class TreeRecord(TreeBase):
+class TreeRecord(TreeIdentifiable):
+    tree_name: typing_extensions.Annotated[
+        str, FieldMetadata(alias="treeName"), pydantic.Field(alias="treeName", description="Display name of the tree.")
+    ]
+    """
+    Display name of the tree.
+    """
+
+    tree_species: typing_extensions.Annotated[
+        str, FieldMetadata(alias="treeSpecies"), pydantic.Field(alias="treeSpecies", description="The species of tree.")
+    ]
+    """
+    The species of tree.
+    """
+
     planted_date: typing_extensions.Annotated[
         typing.Optional[dt.date],
         FieldMetadata(alias="plantedDate"),
@@ -18,6 +32,24 @@ class TreeRecord(TreeBase):
     ] = None
     """
     Date the tree was planted.
+    """
+
+    height_in_feet: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="heightInFeet"),
+        pydantic.Field(alias="heightInFeet", description="Height of the tree in feet."),
+    ] = None
+    """
+    Height of the tree in feet.
+    """
+
+    tree_description: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="treeDescription"),
+        pydantic.Field(alias="treeDescription", description="A description of the tree."),
+    ] = None
+    """
+    A description of the tree.
     """
 
     if IS_PYDANTIC_V2:

@@ -5,7 +5,7 @@ module Seed
     class Foo < Internal::Types::Model
       field :bar, -> { String }, optional: true, nullable: false
 
-      field :nullable_bar, -> { String }, optional: true, nullable: false
+      field :nullable_bar, -> { String }, optional: true, nullable: true
 
       field :nullable_required_bar, -> { String }, optional: false, nullable: true
 

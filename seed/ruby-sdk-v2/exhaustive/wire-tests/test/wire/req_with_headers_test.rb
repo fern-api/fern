@@ -38,7 +38,7 @@ class ReqWithHeadersWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/test-headers/custom-header",
-      expected_body: JSON.parse("\"string\"")
+      expected_body: JSON.parse('"string"')
     )
   end
 end

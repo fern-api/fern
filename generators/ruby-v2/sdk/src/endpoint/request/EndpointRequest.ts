@@ -2,7 +2,7 @@ import { CaseConverter, GeneratorError } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
-import { isUrlEncodedRequestBody, unwrapTypeReference } from "../../utils/requestBody.js";
+import { isUrlEncodedRequestBody } from "../../utils/requestBody.js";
 import { RawClient } from "../http/RawClient.js";
 
 export const BODY_BAG_NAME = "body_params";
@@ -73,6 +73,15 @@ export abstract class EndpointRequest {
         writer.write(`${bodyVariableName}.empty? ? nil : `);
     }
 
+    /**
+     * Writes `<valueExpression>.nil? ? nil : ` for bodies passed as a single argument, so an omitted
+     * optional body stays nil (and the Content-Type header is omitted). `.empty?` is not used because
+     * `[]`, `{}`, and `""` are valid explicit bodies and scalars do not respond to it.
+     */
+    protected writeOptionalValueGuard(writer: ruby.Writer, valueExpression: string): void {
+        writer.write(`${valueExpression}.nil? ? nil : `);
+    }
+
     protected getPathParameterNames(): string[] {
         return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
     }
@@ -129,51 +138,87 @@ export abstract class EndpointRequest {
     }
 
     /**
-     * The expression for a body passed as the single `parameterName:` argument. Lists and sets of objects are serialized
-     * element-wise through the model so fields use their wire names; sets are converted to arrays
-     * because `JSON.generate` does not serialize `Set`.
+     * The expression for a body passed as the single `parameterName:` argument. Objects (including
+     * optional, nullable, and those nested in lists, sets, and map values) are serialized through
+     * their model so fields use their wire names; sets are converted to arrays because
+     * `JSON.generate` does not serialize `Set`. Omitted values stay nil.
      */
-    protected getBodyValueExpression(bodyType: FernIr.TypeReference, parameterName: FernIr.NameOrString): string {
-        const value = `params[:${this.case.snakeSafe(parameterName)}]`;
-        const container = this.getCollectionContainer(bodyType);
-        if (container == null) {
-            return value;
-        }
-        const itemModelTypeId = this.getObjectTypeId(container.itemType);
-        if (itemModelTypeId != null) {
-            return `${value}&.map { |item| ${this.context.getReferenceToTypeId(itemModelTypeId)}.new(item).to_h }`;
-        }
-        return container.isSet ? `${value}&.to_a` : value;
+    protected getBodyArgumentReference(parameterName: FernIr.NameOrString): string {
+        return `params[:${this.case.snakeSafe(parameterName)}]`;
     }
 
-    private getCollectionContainer(
-        typeReference: FernIr.TypeReference
-    ): { itemType: FernIr.TypeReference; isSet: boolean } | undefined {
-        const resolved = this.unwrapTypeReference(typeReference);
+    protected getBodyValueExpression(bodyType: FernIr.TypeReference, parameterName: FernIr.NameOrString): string {
+        const value = this.getBodyArgumentReference(parameterName);
+        return this.getSerializedValueExpression(bodyType, value, { depth: 0, nilable: true }) ?? value;
+    }
+
+    /**
+     * Returns an expression converting `value` to its wire representation, or undefined when the
+     * value can be sent as-is.
+     */
+    private getSerializedValueExpression(
+        typeReference: FernIr.TypeReference,
+        value: string,
+        { depth, nilable }: { depth: number; nilable: boolean }
+    ): string | undefined {
+        const resolved = this.resolveAliases(typeReference);
+        if (resolved.type === "named") {
+            if (this.context.getTypeDeclarationOrThrow(resolved.typeId).shape.type !== "object") {
+                return undefined;
+            }
+            const model = this.context.getReferenceToTypeId(resolved.typeId);
+            if (!nilable) {
+                return `${model}.new(${value}).to_h`;
+            }
+            const blockVar = toBlockVariable("value", depth);
+            return `${value}&.then { |${blockVar}| ${model}.new(${blockVar}).to_h }`;
+        }
         if (resolved.type !== "container") {
             return undefined;
         }
         const container = resolved.container;
-        if (container.type === "list") {
-            return { itemType: container.list, isSet: false };
+        switch (container.type) {
+            case "optional":
+                return this.getSerializedValueExpression(container.optional, value, { depth, nilable: true });
+            case "nullable":
+                return this.getSerializedValueExpression(container.nullable, value, { depth, nilable: true });
+            case "list":
+            case "set": {
+                const itemVar = toBlockVariable("item", depth);
+                const itemType = container.type === "list" ? container.list : container.set;
+                const item = this.getSerializedValueExpression(itemType, itemVar, { depth: depth + 1, nilable: false });
+                if (item != null) {
+                    return `${value}${nilable ? "&." : "."}map { |${itemVar}| ${item} }`;
+                }
+                return container.type === "set" ? `${value}${nilable ? "&." : "."}to_a` : undefined;
+            }
+            case "map": {
+                const valueVar = toBlockVariable("value", depth);
+                const mapValue = this.getSerializedValueExpression(container.valueType, valueVar, {
+                    depth: depth + 1,
+                    nilable: false
+                });
+                return mapValue != null
+                    ? `${value}${nilable ? "&." : "."}transform_values { |${valueVar}| ${mapValue} }`
+                    : undefined;
+            }
+            default:
+                return undefined;
         }
-        if (container.type === "set") {
-            return { itemType: container.set, isSet: true };
-        }
-        return undefined;
     }
 
-    private getObjectTypeId(typeReference: FernIr.TypeReference): FernIr.TypeId | undefined {
-        const resolved = this.unwrapTypeReference(typeReference);
-        if (resolved.type !== "named") {
-            return undefined;
+    private resolveAliases(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        const seen = new Set<FernIr.TypeId>();
+        let current = typeReference;
+        while (current.type === "named" && !seen.has(current.typeId)) {
+            seen.add(current.typeId);
+            const shape = this.context.getTypeDeclarationOrThrow(current.typeId).shape;
+            if (shape.type !== "alias") {
+                break;
+            }
+            current = shape.aliasOf;
         }
-        const shape = this.context.getTypeDeclarationOrThrow(resolved.typeId).shape;
-        return shape.type === "object" ? resolved.typeId : undefined;
-    }
-
-    private unwrapTypeReference(typeReference: FernIr.TypeReference): FernIr.TypeReference {
-        return unwrapTypeReference(typeReference, (typeId) => this.context.getTypeDeclarationOrThrow(typeId));
+        return current;
     }
 
     public abstract getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined;
@@ -183,6 +228,10 @@ export abstract class EndpointRequest {
     public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;
 
     public abstract getRequestType(): RawClient.RequestBodyType | undefined;
+}
+
+function toBlockVariable(name: string, depth: number): string {
+    return depth === 0 ? name : `${name}${depth}`;
 }
 
 export function toRubySymbolArray(names: string[]): string {

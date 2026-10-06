@@ -74,6 +74,7 @@ export * from "./RetriesConfiguration.js";
 export * from "./Schema.js";
 export * from "./Schemas.js";
 export * from "./SdkGroupInfo.js";
+export * from "./SdkVariable.js";
 export * from "./StreamingResponseExample.js";
 export * from "./StringSchema.js";
 export * from "./SupportedSdkLanguage.js";

@@ -5,6 +5,7 @@ package com.seed.serverSentEvents.resources.completions;
 
 import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.RequestOptions;
+import com.seed.serverSentEvents.core.SeedServerSentEventsHttpResponse;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequestWithoutTerminator;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
@@ -28,21 +29,53 @@ public class AsyncCompletionsClient {
     }
 
     public CompletableFuture<Iterable<StreamedCompletion>> stream(StreamCompletionRequest request) {
-        return this.rawClient.stream(request).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> rawFuture =
+                this.rawClient.stream(request);
+        CompletableFuture<Iterable<StreamedCompletion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamedCompletion>> stream(
             StreamCompletionRequest request, RequestOptions requestOptions) {
-        return this.rawClient.stream(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> rawFuture =
+                this.rawClient.stream(request, requestOptions);
+        CompletableFuture<Iterable<StreamedCompletion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamedCompletion>> streamWithoutTerminator(
             StreamCompletionRequestWithoutTerminator request) {
-        return this.rawClient.streamWithoutTerminator(request).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> rawFuture =
+                this.rawClient.streamWithoutTerminator(request);
+        CompletableFuture<Iterable<StreamedCompletion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamedCompletion>> streamWithoutTerminator(
             StreamCompletionRequestWithoutTerminator request, RequestOptions requestOptions) {
-        return this.rawClient.streamWithoutTerminator(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> rawFuture =
+                this.rawClient.streamWithoutTerminator(request, requestOptions);
+        CompletableFuture<Iterable<StreamedCompletion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

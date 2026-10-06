@@ -11,11 +11,11 @@ public partial class Examples
 
         await client.CreatePlantAsync(
             new PlantPost {
-                CommonName = "commonName",
-                WateringFrequency = PlantBaseWateringFrequency.Daily,
                 Species = "species",
                 Family = "family",
                 Genus = "genus",
+                CommonName = "commonName",
+                WateringFrequency = PlantBaseWateringFrequency.Daily,
                 SunExposure = PlantPostSunExposure.Full,
                 PlantedAt = DateOnly.Parse("2023-01-15"),
                 SoilType = "soilType"

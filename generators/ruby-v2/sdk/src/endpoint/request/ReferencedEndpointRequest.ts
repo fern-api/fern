@@ -47,6 +47,12 @@ export class ReferencedEndpointRequest extends EndpointRequest {
             return {
                 omitContentTypeWithoutBody,
                 requestBodyReference: ruby.codeblock((writer) => {
+                    if (omitContentTypeWithoutBody) {
+                        this.writeOptionalValueGuard(
+                            writer,
+                            this.getBodyArgumentReference(this.sdkRequest.requestParameterName)
+                        );
+                    }
                     writer.write(
                         this.getBodyValueExpression(this.requestBodyShape, this.sdkRequest.requestParameterName)
                     );

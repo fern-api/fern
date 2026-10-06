@@ -21,11 +21,11 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     abstract public function toXmlElement(): XmlElement;
 
     /**
-     * Serializes this value to an XML string.
+     * Serializes this value to an XML document, prefixed with the `<?xml ...?>` declaration by default.
      *
      * @param bool $xmlDeclaration Whether to prepend the `<?xml ...?>` declaration.
      */
-    public function toXml(bool $xmlDeclaration = false): string
+    public function toXml(bool $xmlDeclaration = true): string
     {
         return XmlUtils::serialize($this->toXmlElement(), $xmlDeclaration);
     }

@@ -8,6 +8,7 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import com.fern.sdk.resources.types.union.types.MixedType;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,16 @@ public class ContainerClient {
   public Map<String, MixedType> getAndReturnMapOfPrimToUndiscriminatedUnion(
       Map<String, MixedType> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions).body();
+  }
+
+  public Map<Integer, ObjectWithRequiredField> getAndReturnMapOfIntegerToObject(
+      Map<Integer, ObjectWithRequiredField> request) {
+    return this.rawClient.getAndReturnMapOfIntegerToObject(request).body();
+  }
+
+  public Map<Integer, ObjectWithRequiredField> getAndReturnMapOfIntegerToObject(
+      Map<Integer, ObjectWithRequiredField> request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnMapOfIntegerToObject(request, requestOptions).body();
   }
 
   public Optional<ObjectWithRequiredField> getAndReturnOptional() {

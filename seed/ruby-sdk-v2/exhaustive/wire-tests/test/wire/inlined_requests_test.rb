@@ -76,7 +76,7 @@ class InlinedRequestsWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/req-bodies/array-body-with-headers",
-      expected_body: JSON.parse("[\"string\",\"string\"]")
+      expected_body: JSON.parse('["string","string"]')
     )
   end
 end

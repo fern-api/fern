@@ -135,6 +135,9 @@ public partial class ServiceClient : IServiceClient
         return new WithRawResponseTask(SimpleAsyncCore(options, cancellationToken));
     }
 
+    /// <example><code>
+    /// await client.Service.DownloadFileAsync();
+    /// </code></example>
     public WithRawResponseTask<global::System.IO.Stream> DownloadFileAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

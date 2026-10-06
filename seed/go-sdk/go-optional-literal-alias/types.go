@@ -42,10 +42,12 @@ func (s *SearchRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetSortField sets the SortField field and marks it as non-optional;
@@ -133,10 +135,12 @@ func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchResponse) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetResult sets the Result field and marks it as non-optional;
