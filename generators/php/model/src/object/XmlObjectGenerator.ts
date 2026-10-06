@@ -882,7 +882,8 @@ export class XmlObjectGenerator {
         if (textProperty != null) {
             const textType = php.Type.union([
                 php.Type.reference(childClass),
-                ...(textIsOptional ? [php.Type.optional(php.Type.string())] : [php.Type.string()])
+                childGenerator?.getFieldConstructorOverrides(textProperty)?.constructorType ??
+                    (textIsOptional ? php.Type.optional(php.Type.string()) : php.Type.string())
             ]);
             parameters.push(
                 php.parameter({
