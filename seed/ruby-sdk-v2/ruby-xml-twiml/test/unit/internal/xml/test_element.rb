@@ -170,6 +170,7 @@ describe Seed::Internal::Xml::Element do
       end
       assert_equal "weak", XmlTestUtils.parse_enum(" weak ", strength)
       assert_equal "bogus", XmlTestUtils.parse_enum("bogus", strength)
+      assert_equal "bogus", XmlTestUtils.parse_enum(" bogus ", strength)
     end
   end
 end
