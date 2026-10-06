@@ -99,6 +99,11 @@ jobs:
           git_version="$(./scripts/git-version.sh)"
           pnpm seed publish cli --ver ${git_version} --beta --log-level debug
 
+      - name: Publish Pre Prod CLI
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+          pnpm seed publish cli --ver "${git_version}" --pre-prod --log-level debug
+
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     environment: Fern Prod
@@ -177,6 +182,9 @@ jobs:
           # Publish beta CLI at the same version as prod
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug --beta
 
+          # Publish pre-prod CLI at the same version as prod
+          pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug --pre-prod
+
           # Publish prod CLI
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed register cli
@@ -219,6 +227,10 @@ jobs:
       - name: Publish Beta CLI
         run: |
           pnpm seed publish cli --ver ${{ inputs.version }} --beta --log-level debug
+
+      - name: Publish Pre Prod CLI
+        run: |
+          pnpm seed publish cli --ver ${{ inputs.version }} --pre-prod --log-level debug
 
       - name: Publish + Register CLI
         env:
