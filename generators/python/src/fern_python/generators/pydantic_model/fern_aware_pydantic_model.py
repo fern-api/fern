@@ -288,6 +288,9 @@ class FernAwarePydanticModel:
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
+    def add_root_validator(self, *, validator_name: str, body: AST.CodeWriter, pre: bool = False) -> None:
+        self._pydantic_model.add_root_validator(validator_name=validator_name, body=body, pre=pre)
+
     def set_root_type_v1_or_v2_only(
         self,
         root_type: ir_types.TypeReference,

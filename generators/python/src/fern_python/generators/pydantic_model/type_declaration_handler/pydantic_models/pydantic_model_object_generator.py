@@ -11,7 +11,7 @@ from ..object_generator import (
 )
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
-from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, sanitize_field_name
+from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, PydanticModel, sanitize_field_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
@@ -219,6 +219,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             )
         )
         self._add_xml_init(pydantic_model, properties=properties)
+        self._add_xml_list_coercion(pydantic_model, properties=properties)
         self._add_from_xml(pydantic_model, xml=xml, properties=properties)
         self._add_add_child_method(pydantic_model)
         self._add_add_text_method(pydantic_model)
@@ -480,6 +481,27 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 ),
             )
         )
+
+    def _add_xml_list_coercion(
+        self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]
+    ) -> None:
+        """Lets list-valued attributes and text be passed as one delimited string (`input="speech dtmf"`)."""
+        separators = {
+            _field_name(p): (p.xml.list_separator if p.xml is not None and p.xml.list_separator else " ")
+            for p in properties
+            if (_is_xml_attribute(p) or _is_xml_text(p)) and _unwrap_list_item_type(p.value_type) is not None
+        }
+        if not separators:
+            return
+        core_utilities = self._context.core_utilities
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            entries = ", ".join(f"{_quote(name)}: {_quote(separator)}" for name, separator in separators.items())
+            writer.write("return ")
+            writer.write_reference(core_utilities.get_xml_utility("coerce_xml_list_fields"))
+            writer.write_line(f"({PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, {{{entries}}})")
+
+        pydantic_model.add_root_validator(validator_name="_coerce_xml_lists", body=AST.CodeWriter(write_body), pre=True)
 
     def _parameter(
         self, pydantic_model: FernAwarePydanticModel, property: ObjectProperty

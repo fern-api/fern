@@ -474,6 +474,19 @@ def _split(value: str, separator: str) -> List[str]:
     return [item for item in value.split(separator or _DEFAULT_LIST_SEPARATOR) if item != ""]
 
 
+def coerce_xml_list_fields(values: Dict[str, Any], separators: Dict[str, str]) -> Dict[str, Any]:
+    """Pre-validation hook for list-valued attributes and text: a single delimited string
+    (e.g. `input="speech dtmf"`) is split on the field's separator so it validates as a list."""
+    if not isinstance(values, dict):
+        return values
+    coerced = dict(values)
+    for name, separator in separators.items():
+        value = coerced.get(name)
+        if isinstance(value, str):
+            coerced[name] = _split(value, separator)
+    return coerced
+
+
 def extra_xml_attributes(model: pydantic.BaseModel) -> List[XmlAttribute]:
     """Renders fields that were passed to the model but are not declared on it as XML attributes.
 
