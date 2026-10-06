@@ -938,7 +938,13 @@ export class WireTestGenerator {
 
 const EXAMPLE_STABLE_PRIMITIVES = new Set<string>(["STRING", "INTEGER", "LONG", "UINT", "UINT_64", "BOOLEAN", "UUID"]);
 
-/** Single-quoted Ruby literal: no interpolation, only `\\` and `'` need escaping. */
-function toRubyStringLiteral(value: string): string {
-    return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+/**
+ * Ruby string literal that satisfies RuboCop's `Style/StringLiterals: double_quotes`: single quotes (no
+ * interpolation, only `\\` and `'` escaped) when the value contains a double quote, double quotes otherwise.
+ */
+export function toRubyStringLiteral(value: string): string {
+    if (value.includes('"')) {
+        return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+    }
+    return `"${value.replace(/\\/g, "\\\\").replace(/#(?=[{$@])/g, "\\#")}"`;
 }

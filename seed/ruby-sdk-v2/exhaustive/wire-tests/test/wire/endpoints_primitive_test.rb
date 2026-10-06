@@ -64,7 +64,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/integer",
-      expected_body: JSON.parse('1')
+      expected_body: JSON.parse("1")
     )
   end
 
@@ -92,7 +92,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/long",
-      expected_body: JSON.parse('1000000')
+      expected_body: JSON.parse("1000000")
     )
   end
 
@@ -141,7 +141,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       test_id: test_id,
       method: "POST",
       url_path: "/primitive/boolean",
-      expected_body: JSON.parse('true')
+      expected_body: JSON.parse("true")
     )
   end
 
