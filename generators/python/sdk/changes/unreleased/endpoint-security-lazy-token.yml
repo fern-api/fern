@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With endpoint-security auth, the client now fetches an OAuth or inferred-auth token only when the
+    endpoint's security requirements reference that scheme. Previously every authenticated call fetched
+    one first, so an endpoint that doesn't use it (e.g. the token endpoint itself) made an extra token
+    request and failed if that fetch failed.
+  type: fix
