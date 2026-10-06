@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --docs` now registers each distinct API definition once per publish. Versioned
+    docs that reference the same API from every version no longer repeat its AI example
+    enhancement, dynamic snippet generation and upload for each version.
+  type: fix

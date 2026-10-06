@@ -36,8 +36,8 @@ import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { loadApis } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
-
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { createHash } from "crypto";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { existsSync } from "fs";
@@ -688,12 +688,14 @@ export class DocsDefinitionResolver {
                 `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
             );
             const deferredStart = performance.now();
+            // Versioned docs often reference the same API from every version; register each
+            // distinct definition once and reuse its ID.
+            const apiDefinitionIdsByRegistration = new Map<string, string>();
             for (const pending of this.pendingApiRegistrations) {
                 // Resolve .mdx/.md file path links in all IR description (docs) fields
                 this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
 
-                // Register the API with resolved descriptions
-                const realApiDefinitionId = await this.registerApi({
+                const registration = {
                     ir: pending.ir,
                     snippetsConfig: pending.snippetsConfig,
                     playgroundConfig: pending.playgroundConfig,
@@ -701,7 +703,15 @@ export class DocsDefinitionResolver {
                     workspace: pending.workspace,
                     graphqlOperations: pending.graphqlOperations,
                     graphqlTypes: pending.graphqlTypes
-                });
+                };
+                const registrationKey = createHash("sha256")
+                    .update(JSON.stringify({ ...registration, workspace: registration.workspace?.absoluteFilePath }))
+                    .digest("hex");
+                let realApiDefinitionId = apiDefinitionIdsByRegistration.get(registrationKey);
+                if (realApiDefinitionId == null) {
+                    realApiDefinitionId = await this.registerApi(registration);
+                    apiDefinitionIdsByRegistration.set(registrationKey, realApiDefinitionId);
+                }
 
                 // Update all apiDefinitionId references in the navigation subtree
                 updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
