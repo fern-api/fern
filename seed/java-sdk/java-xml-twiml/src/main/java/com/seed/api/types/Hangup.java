@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -25,11 +26,11 @@ import org.w3c.dom.Element;
 public final class Hangup implements XmlSerializable {
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
-    private Hangup(Map<String, Object> additionalProperties, List<XmlElement> additionalChildren) {
+    private Hangup(Map<String, Object> additionalProperties, List<XmlNode> content) {
         this.additionalProperties = additionalProperties;
-        this.additionalChildren = additionalChildren;
+        this.content = content;
     }
 
     @java.lang.Override
@@ -43,9 +44,20 @@ public final class Hangup implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     public static Builder builder() {
@@ -66,7 +78,7 @@ public final class Hangup implements XmlSerializable {
     public String toXml(boolean xmlDeclaration) {
         XmlWriter writer = new XmlWriter("Hangup");
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -79,9 +91,8 @@ public final class Hangup implements XmlSerializable {
 
     public static Hangup fromXml(Element element) {
         XmlReader.expect(element, "Hangup");
-        return new Hangup(
-                XmlReader.extraAttributes(element, Arrays.asList()),
-                XmlReader.unknownChildren(element, Arrays.asList()));
+        List<XmlNode> content = XmlReader.content(element, false, Arrays.asList(), e -> null);
+        return new Hangup(XmlReader.extraAttributes(element, Arrays.asList()), content);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -90,16 +101,17 @@ public final class Hangup implements XmlSerializable {
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
         public Builder from(Hangup other) {
+            content(other.getContent());
             return this;
         }
 
         public Hangup build() {
-            return new Hangup(additionalProperties, additionalChildren);
+            return new Hangup(additionalProperties, content);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -113,15 +125,33 @@ public final class Hangup implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
+            this.content.add(XmlNode.element(child));
+            return this;
+        }
+
+        /**
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
             return this;
         }
 
         public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
             return this;
         }
 
@@ -136,7 +166,6 @@ public final class Hangup implements XmlSerializable {
             Hangup parsed = Hangup.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }

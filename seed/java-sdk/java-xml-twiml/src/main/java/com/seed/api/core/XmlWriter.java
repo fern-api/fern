@@ -122,6 +122,23 @@ public final class XmlWriter {
     }
 
     /**
+     * Adds ordered mixed content: text segments are escaped, elements are serialized without a declaration.
+     */
+    public XmlWriter content(Collection<XmlNode> nodes) {
+        if (nodes == null) {
+            return this;
+        }
+        for (XmlNode node : nodes) {
+            if (node.isText()) {
+                content.add(escape(node.getText().get()));
+            } else {
+                content.add(node.getElement().get().toXml(false));
+            }
+        }
+        return this;
+    }
+
+    /**
      * Adds child elements wrapped in a container element with the given name. Nothing is emitted when the value is
      * absent.
      */
