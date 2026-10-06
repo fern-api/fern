@@ -1760,7 +1760,7 @@ class ClientWrapperGenerator:
             )
 
         oauth_configuration = oauth_scheme.configuration.get_as_union()
-        if oauth_configuration.type != "clientCredentials":
+        if oauth_configuration.type != "clientCredentials" and oauth_configuration.type != "refreshToken":
             return (
                 ClientWrapperGenerator.AUTHORIZATION_HEADER,
                 ClientWrapperGenerator.BEARER_AUTH_PREFIX,

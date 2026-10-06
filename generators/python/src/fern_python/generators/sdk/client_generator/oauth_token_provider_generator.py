@@ -11,6 +11,7 @@ import fern.ir.resources as ir_types
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
 GRANT_TYPE_WIRE_VALUE = "grant_type"
 CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials"
+REFRESH_TOKEN_GRANT_TYPE = "refresh_token"
 
 
 class OAuthTokenProviderGenerator:
@@ -31,9 +32,291 @@ class OAuthTokenProviderGenerator:
 
     def generate(self, source_file: SourceFile) -> None:
         oauth_configuration = self._oauth_scheme.configuration.get_as_union()
-        if oauth_configuration.type != "clientCredentials":
-            return
-        self._generate_client_credentials_classes(source_file=source_file, client_credentials=oauth_configuration)
+        if oauth_configuration.type == "clientCredentials":
+            self._generate_client_credentials_classes(source_file=source_file, client_credentials=oauth_configuration)
+        elif oauth_configuration.type == "refreshToken":
+            self._generate_refresh_token_classes(source_file=source_file, refresh_token=oauth_configuration)
+
+    def _generate_refresh_token_classes(
+        self, source_file: SourceFile, refresh_token: ir_types.OAuthRefreshToken
+    ) -> None:
+        source_file.add_class_declaration(
+            declaration=self._create_refresh_token_class_declaration(refresh_token, is_async=False),
+            should_export=False,
+        )
+        source_file.add_class_declaration(
+            declaration=self._create_refresh_token_class_declaration(refresh_token, is_async=True),
+            should_export=False,
+        )
+
+    def _create_refresh_token_class_declaration(
+        self, refresh_token: ir_types.OAuthRefreshToken, *, is_async: bool
+    ) -> AST.ClassDeclaration:
+        """
+        The refresh token supplied by the SDK user is the only credential. It is exchanged at the
+        refresh endpoint for an access token, which is cached until it expires. A refresh token
+        returned by the endpoint replaces the current one (refresh token rotation).
+        """
+        refresh_endpoint = refresh_token.refresh_endpoint
+        # Expiry is always tracked: without `expires-in` the access token is refreshed after a default lifetime.
+        has_expires_in = True
+        constructor_parameters = [
+            ConstructorParameter(
+                constructor_parameter_name=self._get_refresh_token_constructor_parameter_name(),
+                private_member_name=self._get_refresh_token_member_name(),
+                type_hint=AST.TypeHint.str_(),
+            ),
+            ConstructorParameter(
+                constructor_parameter_name=self._get_client_wrapper_constructor_parameter_name(),
+                private_member_name=self._get_client_wrapper_member_name(),
+                type_hint=AST.TypeHint(self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async)),
+            ),
+        ]
+
+        private_member_initialization_exprs: List[AST.Expression] = [
+            AST.Expression(
+                AST.CodeWriter(
+                    self._get_write_member_initialization(
+                        member_name=self._get_access_token_member_name(),
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initialization=AST.Expression("None"),
+                    ),
+                ),
+            ),
+        ]
+        if has_expires_in:
+            private_member_initialization_exprs.append(
+                AST.Expression(
+                    AST.CodeWriter(
+                        self._get_write_member_initialization(
+                            member_name=self._get_expires_at_member_name(),
+                            type_hint=AST.TypeHint.datetime(),
+                            initialization=AST.Expression(self._get_datetime_now_invocation()),
+                        ),
+                    ),
+                ),
+            )
+        private_member_initialization_exprs.append(
+            AST.Expression(
+                AST.CodeWriter(
+                    self._get_write_auth_client_initialization(
+                        subpackage_id=self._get_subpackage_id_for_endpoint_id(
+                            endpoint_id=refresh_endpoint.endpoint_reference.endpoint_id
+                        ),
+                        auth_client_member_name=self._get_auth_client_member_name(),
+                        is_async=is_async,
+                    ),
+                ),
+            ),
+        )
+
+        class_declaration = AST.ClassDeclaration(
+            name=self._async_class_name if is_async else self._class_name,
+            constructor=AST.ClassConstructor(
+                signature=AST.FunctionSignature(
+                    named_parameters=[
+                        AST.NamedFunctionParameter(
+                            name=param.constructor_parameter_name,
+                            type_hint=param.type_hint,
+                            initializer=param.initializer,
+                        )
+                        for param in constructor_parameters
+                    ],
+                ),
+                body=AST.CodeWriter(
+                    self._get_write_constructor_body(
+                        constructor_parameters=constructor_parameters,
+                        private_member_initialization_exprs=private_member_initialization_exprs,
+                        is_async=is_async,
+                    )
+                ),
+            ),
+        )
+        class_declaration.add_class_var(
+            AST.VariableDeclaration(
+                name=self._get_buffer_in_minutes_member_name(),
+                initializer=AST.Expression("2"),
+            ),
+        )
+        class_declaration.add_method(
+            self._create_get_token_function_declaration(has_expires_in=has_expires_in, is_async=is_async)
+        )
+        class_declaration.add_method(
+            self._get_refresh_token_flow_refresh_function_declaration(
+                refresh_endpoint=refresh_endpoint, is_async=is_async
+            )
+        )
+        if has_expires_in:
+            class_declaration.add_method(self._get_expires_at_function_declaration())
+        return class_declaration
+
+    def _get_refresh_token_flow_refresh_function_declaration(
+        self, refresh_endpoint: ir_types.OAuthRefreshEndpoint, *, is_async: bool
+    ) -> AST.FunctionDeclaration:
+        http_endpoint = self._get_endpoint_for_id(refresh_endpoint.endpoint_reference.endpoint_id)
+        kwargs: List[Tuple[str, AST.Expression]] = [
+            (
+                self._get_request_property_parameter_name(refresh_endpoint.request_properties.refresh_token),
+                AST.Expression(f"self.{self._get_refresh_token_member_name()}"),
+            ),
+        ]
+        grant_type_property = self._get_refresh_grant_type_property(http_endpoint)
+        if grant_type_property is not None:
+            kwargs.append(
+                (
+                    resolve_name(get_name_from_wire_value(grant_type_property[0])).snake_case.safe_name,
+                    self._get_grant_type_value_expression(
+                        type_reference=grant_type_property[1], grant_type=REFRESH_TOKEN_GRANT_TYPE
+                    ),
+                )
+            )
+        refresh_invocation = AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(
+                    f"self.{self._get_auth_client_member_name()}.{resolve_name(http_endpoint.name).snake_case.safe_name}",
+                ),
+            ),
+            kwargs=kwargs,
+        )
+        response_properties = refresh_endpoint.response_properties
+
+        def _write_refresh_body(writer: AST.NodeWriter) -> None:
+            writer.write("token_response = await " if is_async else "token_response = ")
+            writer.write_node(refresh_invocation)
+            writer.write_newline_if_last_line_not()
+            writer.write_node(
+                AST.CodeWriter(
+                    self._get_write_response_property_setter(
+                        response_property=response_properties.access_token,
+                        member_name=self._get_access_token_member_name(),
+                    ),
+                ),
+            )
+            if response_properties.refresh_token is not None:
+                writer.write_node(
+                    AST.CodeWriter(self._get_write_rotated_refresh_token_setter(response_properties.refresh_token)),
+                )
+            if response_properties.expires_in is not None:
+                writer.write_node(
+                    AST.CodeWriter(
+                        self._get_write_expires_at_setter(
+                            expires_in_property=response_properties.expires_in,
+                            member_name=self._get_expires_at_member_name(),
+                        ),
+                    ),
+                )
+            else:
+                writer.write_line(
+                    f"self.{self._get_expires_at_member_name()} = self.{self._get_expires_at_method_name()}("
+                    f"expires_in_seconds={DEFAULT_EXPIRES_IN_SECONDS}, "
+                    f"buffer_in_minutes=self.{self._get_buffer_in_minutes_member_name()})"
+                )
+            writer.write_newline_if_last_line_not()
+            writer.write_line(f"return self.{self._get_access_token_member_name()}")
+
+        return AST.FunctionDeclaration(
+            name=self._get_refresh_token_method_name(),
+            is_async=is_async,
+            docstring=None,
+            signature=AST.FunctionSignature(
+                return_type=AST.TypeHint.str_(),
+            ),
+            body=AST.CodeWriter(_write_refresh_body),
+        )
+
+    def _get_write_rotated_refresh_token_setter(
+        self, response_property: ir_types.ResponseProperty
+    ) -> AST.CodeWriterFunction:
+        def _write_rotated_refresh_token_setter(writer: AST.NodeWriter) -> None:
+            property_path_names = (
+                [item.name for item in response_property.property_path] if response_property.property_path else None
+            )
+            property_name = resolve_name(get_name_from_wire_value(response_property.property.name)).snake_case.safe_name
+            property_value = f"token_response.{self._get_response_property_path(property_path_names)}{property_name}"
+            member = f"self.{self._get_refresh_token_member_name()}"
+            if self._context.resolved_schema_is_optional_or_unknown(response_property.property.value_type):
+                writer.write_line(f"if {property_value} is not None:")
+                with writer.indent():
+                    writer.write_line(f"{member} = {property_value}")
+            else:
+                writer.write_line(f"{member} = {property_value}")
+
+        return _write_rotated_refresh_token_setter
+
+    def _get_refresh_grant_type_property(
+        self, endpoint: ir_types.HttpEndpoint
+    ) -> Optional[Tuple[Union[str, ir_types.NameAndWireValue], ir_types.TypeReference]]:
+        """
+        A required, non-literal grant_type body property is sent as "refresh_token" (RFC 6749 §6),
+        since nothing else supplies it when the spec models it as a plain string. The property may
+        be declared inline, on an extended type, or on a referenced request body type.
+        """
+        for name, value_type in self._get_request_body_properties(endpoint):
+            if get_original_name(get_name_from_wire_value(name)) != GRANT_TYPE_WIRE_VALUE:
+                continue
+            if self._is_literal_type(value_type) or self._is_optional_type(value_type):
+                return None
+            return name, value_type
+        return None
+
+    def _get_request_body_properties(
+        self, endpoint: ir_types.HttpEndpoint
+    ) -> List[Tuple[Union[str, ir_types.NameAndWireValue], ir_types.TypeReference]]:
+        if endpoint.request_body is None:
+            return []
+        request_body = endpoint.request_body.get_as_union()
+        pydantic_context = self._context.pydantic_generator_context
+        if request_body.type == "inlinedRequestBody":
+            properties = [(body_property.name, body_property.value_type) for body_property in request_body.properties]
+            for extended in request_body.extends:
+                properties.extend(
+                    (object_property.name, object_property.value_type)
+                    for object_property in pydantic_context.get_all_properties_including_extensions(extended.type_id)
+                )
+            return properties
+        if request_body.type == "reference":
+            body_type = request_body.request_body_type.get_as_union()
+            if body_type.type != "named":
+                return []
+            declaration = pydantic_context.get_declaration_for_type_id(body_type.type_id)
+            if declaration.shape.get_as_union().type != "object":
+                return []
+            return [
+                (object_property.name, object_property.value_type)
+                for object_property in pydantic_context.get_all_properties_including_extensions(body_type.type_id)
+            ]
+        return []
+
+    def _get_grant_type_value_expression(
+        self, *, type_reference: ir_types.TypeReference, grant_type: str
+    ) -> AST.Expression:
+        """
+        grant_type is sent as a string literal, unless it is an enum generated as a Python Enum class
+        (`enum_type: python_enums` / `forward_compatible_python_enums`), where the enum is constructed
+        from that value so the generated SDK type-checks.
+        """
+        value = AST.Expression(f'"{grant_type}"')
+        enum_type_id = self._get_enum_type_id(type_reference)
+        if enum_type_id is None or self._context.pydantic_generator_context.use_str_enums:
+            return value
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self._context.pydantic_generator_context.get_class_reference_for_type_id(
+                    enum_type_id, as_request=True
+                ),
+                args=[value],
+            )
+        )
+
+    def _get_enum_type_id(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
+        type_union = type_reference.get_as_union()
+        if type_union.type != "named":
+            return None
+        shape = self._context.pydantic_generator_context.get_declaration_for_type_id(type_union.type_id).shape
+        shape_union = shape.get_as_union()
+        if shape_union.type == "enum":
+            return type_union.type_id
+        return None
 
     def _generate_client_credentials_classes(
         self, source_file: SourceFile, client_credentials: ir_types.OAuthClientCredentials
@@ -88,7 +371,9 @@ class OAuthTokenProviderGenerator:
             ),
         )
         class_declaration.add_method(
-            self._get_token_function_declaration(client_credentials=client_credentials, is_async=is_async)
+            self._create_get_token_function_declaration(
+                has_expires_in=self._has_expires_in_property(client_credentials), is_async=is_async
+            )
         )
         class_declaration.add_method(
             self._get_refresh_function_declaration(client_credentials=client_credentials, is_async=is_async)
@@ -359,11 +644,11 @@ class OAuthTokenProviderGenerator:
 
         return _write_auth_client_initialization
 
-    def _get_token_function_declaration(
-        self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
+    def _create_get_token_function_declaration(
+        self, *, has_expires_in: bool, is_async: bool
     ) -> AST.FunctionDeclaration:
         def _write_get_token_body(writer: AST.NodeWriter) -> None:
-            if self._has_expires_in_property(client_credentials):
+            if has_expires_in:
                 writer.write(
                     f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
                 )
@@ -379,7 +664,7 @@ class OAuthTokenProviderGenerator:
             else:
                 writer.write_line(f"with self.{self._get_lock_member_name()}:")
             with writer.indent():
-                if self._has_expires_in_property(client_credentials):
+                if has_expires_in:
                     writer.write(
                         f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
                     )
@@ -651,7 +936,13 @@ class OAuthTokenProviderGenerator:
                 kwargs.append(
                     (
                         self._get_request_property_parameter_name(grant_type_property),
-                        AST.Expression(f'"{CLIENT_CREDENTIALS_GRANT_TYPE}"'),
+                        self._get_grant_type_value_expression(
+                            type_reference=grant_type_property.property.visit(
+                                query=lambda q: q.value_type,
+                                body=lambda b: b.value_type,
+                            ),
+                            grant_type=CLIENT_CREDENTIALS_GRANT_TYPE,
+                        ),
                     )
                 )
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(

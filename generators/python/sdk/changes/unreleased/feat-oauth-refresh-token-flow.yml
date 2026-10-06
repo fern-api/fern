@@ -1,0 +1,7 @@
+- summary: |
+    Support the OAuth `refresh-token` flow. The generated client takes a `refresh_token`
+    (or reads it from the configured `refresh-token-env` variable), exchanges it at the
+    `refresh-token` endpoint for an access token, caches the access token until it expires,
+    and stores the new refresh token when the endpoint rotates it. Sync and async clients are
+    both supported, and no client ID or secret is needed.
+  type: feat

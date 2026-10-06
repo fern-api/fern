@@ -10,6 +10,7 @@ import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertIr } from "../utils/convertIr.js";
+import { getOAuthRefreshEndpointId } from "./getOAuthRefreshEndpointId.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 /**
@@ -672,6 +673,9 @@ export class WireTestGenerator {
                 if (endpoint.id === tokenEndpointId) {
                     return true;
                 }
+            }
+            if (scheme.type === "oauth" && getOAuthRefreshEndpointId(scheme) === endpoint.id) {
+                return true;
             }
         }
         return false;

@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { resolveDefaultEnvironmentName } from "../reference/buildReference.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getOAuthRefreshEndpointId } from "../wire-tests/getOAuthRefreshEndpointId.js";
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -97,7 +98,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                       }
                   }
                 : undefined),
-            ...(this.hasOAuthScheme()
+            ...(this.hasOAuthClientCredentialsScheme()
                 ? {
                       [ReadmeSnippetBuilder.OAUTH_TOKEN_OVERRIDE_FEATURE_ID]: {
                           renderer: this.renderOAuthTokenOverrideSnippet.bind(this)
@@ -317,6 +318,10 @@ asyncio.run(main())`
                     break;
                 }
                 case "oauth":
+                    if (getOAuthRefreshEndpointId(scheme) != null) {
+                        args.push(`    refresh_token="YOUR_REFRESH_TOKEN",`);
+                        break;
+                    }
                     args.push(`    client_id="YOUR_CLIENT_ID",`);
                     args.push(`    client_secret="YOUR_CLIENT_SECRET",`);
                     break;
@@ -771,11 +776,15 @@ ${constructorArg}
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
     }
 
-    private hasOAuthScheme(): boolean {
+    // The token override section documents client_id/client_secret, so other OAuth flows
+    // (e.g. refresh-token) are excluded on purpose.
+    private hasOAuthClientCredentialsScheme(): boolean {
         if (this.context.ir.auth == null) {
             return false;
         }
-        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+        return this.context.ir.auth.schemes.some(
+            (scheme) => scheme.type === "oauth" && scheme.configuration.type === "clientCredentials"
+        );
     }
 
     private getFirstWebsocketChannel():

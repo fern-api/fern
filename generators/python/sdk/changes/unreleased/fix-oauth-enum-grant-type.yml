@@ -1,0 +1,6 @@
+- summary: |
+    The OAuth token provider now constructs `grant_type` from its enum class when the token
+    endpoint models `grant_type` as an enum and `enum_type` is `python_enums` or
+    `forward_compatible_python_enums`. Before, it passed a bare string, which failed mypy in the
+    generated SDK.
+  type: fix
