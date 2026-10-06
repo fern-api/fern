@@ -7,7 +7,14 @@ import { ts } from "ts-morph";
 import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
+import { hasEnvVarFallback } from "./sdkVariables.js";
 import { getServerVariableOptions, urlTemplateToTemplateLiteral } from "./serverVariables.js";
+
+interface SdkVariableEnvFallbacks {
+    section: string;
+    returnFields: string;
+    normalizedTypeFields: string;
+}
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
@@ -394,6 +401,7 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
+        const sdkVariableFallbacks = this.getSdkVariableEnvFallbacks(context);
         const serverVariableInterpolation = this.getServerVariableInterpolation(context);
         const emitBaseUrlSection =
             this.ir.environments?.baseUrlEnvVar != null && !serverVariableInterpolation.declaresBaseUrl;
@@ -405,8 +413,8 @@ export type BaseClientOptions = {
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptions<T> {${headersSection}${serverVariableInterpolation.section}${baseUrlSection}    return {
-        ...options,${rootPathParamDefaults}${baseUrlReturnFields}${serverVariableInterpolation.returnFields}
+): NormalizedClientOptions<T> {${headersSection}${sdkVariableFallbacks.section}${serverVariableInterpolation.section}${baseUrlSection}    return {
+        ...options,${rootPathParamDefaults}${sdkVariableFallbacks.returnFields}${baseUrlReturnFields}${serverVariableInterpolation.returnFields}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
@@ -579,6 +587,52 @@ ${entries.join("\n")}
         return "\n" + lines.join("\n");
     }
 
+    private sdkVariableEnvFallbacks: SdkVariableEnvFallbacks | undefined;
+
+    /**
+     * String SDK variables that declare an `envVar` are optional client options. Resolves each one
+     * (explicit option first, then the environment variable) inside `normalizeClientOptions`
+     * and fails fast when neither is set, so generated paths never interpolate `undefined`.
+     */
+    private getSdkVariableEnvFallbacks(context: FileContext): SdkVariableEnvFallbacks {
+        if (this.sdkVariableEnvFallbacks != null) {
+            return this.sdkVariableEnvFallbacks;
+        }
+        const sections: string[] = [];
+        const returnFields: string[] = [];
+        const normalizedTypeFields: string[] = [];
+        for (const variable of this.ir.variables) {
+            if (!hasEnvVarFallback(variable, context.type)) {
+                continue;
+            }
+            const propertyName = this.caseConverter.camelUnsafe(variable.name);
+            const propertyKey = getPropertyKey(propertyName);
+            const optionAccess = propertyKey === propertyName ? `.${propertyName}` : `[${propertyKey}]`;
+            const localName = `_${propertyName}`;
+            const envValue = emitEnvVarValue({
+                envConstant: JSON.stringify(variable.envVar),
+                guarded: this.guardProcessEnvAccess
+            });
+            const errorMessage = JSON.stringify(
+                `${propertyName} is required. Pass it to the client or set the ${variable.envVar} environment variable.`
+            );
+            sections.push(`    const ${localName} = ${OPTIONS_PARAMETER_NAME}?${optionAccess} ?? ${envValue};
+    if (${localName} == null) {
+        throw new Error(${errorMessage});
+    }
+
+`);
+            returnFields.push(`\n        ${propertyKey}: ${localName},`);
+            normalizedTypeFields.push(`\n    ${propertyKey}: string;`);
+        }
+        this.sdkVariableEnvFallbacks = {
+            section: sections.join(""),
+            returnFields: returnFields.join(""),
+            normalizedTypeFields: normalizedTypeFields.join("")
+        };
+        return this.sdkVariableEnvFallbacks;
+    }
+
     private shouldGenerateAuthCode(): boolean {
         return this.ir.auth.schemes.length > 0;
     }
@@ -590,9 +644,11 @@ ${entries.join("\n")}
             ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
             : "";
 
+        const sdkVariableFields = this.getSdkVariableEnvFallbacks(context).normalizedTypeFields;
+
         let typesCode = `
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
-    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
+    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}${sdkVariableFields}
 }`;
 
         if (shouldGenerateAuthCode) {
