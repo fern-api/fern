@@ -2080,7 +2080,8 @@ export class DocsDefinitionResolver {
                         audiences: item.audiences,
                         enableUniqueErrorsPerEndpoint: true,
                         generateV1Examples: false,
-                        logWarnings: false
+                        logWarnings: false,
+                        cacheResult: true
                     },
                     { docsVisibility: this.docsVisibility }
                 );

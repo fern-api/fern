@@ -173,6 +173,12 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        // `valid-markdown-links` and the publish below each resolve the full docs definition;
+        // build each API's IR once and share it.
+        for (const ossWorkspace of await filterOssWorkspaces(project)) {
+            ossWorkspace.enableResultCaching();
+        }
+
         await validateDocsWorkspaceAndLogIssues({
             workspace: docsWorkspace,
             context,
