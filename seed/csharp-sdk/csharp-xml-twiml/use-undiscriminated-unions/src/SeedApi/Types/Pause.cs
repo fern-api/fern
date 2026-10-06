@@ -68,9 +68,14 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
-    /// Serializes this value to an XML string.
+    /// Serializes this value to an XML document, prefixed with the XML declaration.
     /// </summary>
-    public string ToXml() => XmlUtils.Serialize(ToXElement());
+    public string ToXml() => ToXml(true);
+
+    /// <summary>
+    /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
     /// Adds an arbitrary child element (for elements not covered by the typed model) and returns this instance for chaining.
@@ -81,9 +86,8 @@ public record Pause : IJsonOnDeserialized, IXmlNode
         return this;
     }
 
-    /// <inheritdoc />
-    public override string ToString()
-    {
-        return JsonUtils.Serialize(this);
-    }
+    /// <summary>
+    /// Returns the XML representation of this value.
+    /// </summary>
+    public override string ToString() => ToXml();
 }

@@ -445,11 +445,10 @@ impl AuthProvider for RoutingAuthProvider {
             Some(reqs) => reqs,
         };
 
-        // With an explicitly named `--profile`, prefer a requirement this
-        // profile actually stored credentials for over the first merely
-        // satisfiable one. Without it, spec order decides as it always has —
-        // ambient selection (`<BIN>_PROFILE`, `profiles use`) must not start
-        // overriding env vars for existing users.
+        // With a profile in play (however it was selected), prefer a
+        // requirement this profile actually stored credentials for over the
+        // first merely satisfiable one. Unprofiled, spec order decides as it
+        // always has.
         //
         // `all(has_stored_credentials)` is deliberately strict: an AND
         // requirement mixing a keyring-backed scheme with an env-backed one
@@ -588,12 +587,18 @@ mod tests {
 
     #[tokio::test]
     #[serial_test::serial]
-    async fn any_auth_prefers_first_provider_without_named_profile() {
-        let _state = precedence_state(SelectionSource::Active, true);
-        let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
+    async fn any_auth_prefers_stored_provider_for_ambient_profile() {
+        for source in [SelectionSource::Active, SelectionSource::Env] {
+            let _state = precedence_state(source, true);
+            let any = AnyAuthProvider::new(vec![basic_env_provider(), stored_bearer_provider()]);
 
-        let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
-        assert!(auth_header(r).unwrap().starts_with("Basic "));
+            let r = any.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+            assert_eq!(
+                auth_header(r).as_deref(),
+                Some("Bearer stored-token"),
+                "{source:?}"
+            );
+        }
     }
 
     #[tokio::test]
@@ -867,12 +872,18 @@ mod tests {
 
     #[tokio::test]
     #[serial_test::serial]
-    async fn routing_prefers_first_requirement_without_named_profile() {
-        let _state = precedence_state(SelectionSource::Active, true);
-        let out = precedence_routing()
-            .apply(req(), &precedence_endpoint())
-            .unwrap();
-        assert!(auth_header(out).unwrap().starts_with("Basic "));
+    async fn routing_prefers_stored_requirement_for_ambient_profile() {
+        for source in [SelectionSource::Active, SelectionSource::Env] {
+            let _state = precedence_state(source, true);
+            let out = precedence_routing()
+                .apply(req(), &precedence_endpoint())
+                .unwrap();
+            assert_eq!(
+                auth_header(out).as_deref(),
+                Some("Bearer stored-token"),
+                "{source:?}"
+            );
+        }
     }
 
     #[tokio::test]

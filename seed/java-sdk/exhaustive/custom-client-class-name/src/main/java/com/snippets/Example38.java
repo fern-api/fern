@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 
 public class Example38 {
     public static void main(String[] args) {
@@ -10,9 +10,7 @@ public class Example38 {
 
         client.endpoints()
                 .params()
-                .getWithInlinePathAndQuery(GetWithInlinePathAndQuery.builder()
-                        .param("param")
-                        .query("query")
-                        .build());
+                .getWithPathAndQuery(
+                        "param", GetWithPathAndQuery.builder().query("query").build());
     }
 }

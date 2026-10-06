@@ -4,6 +4,7 @@
 package com.seed.deepCursorPath.resources.deepcursorpath;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.deepCursorPath.core.BodyProperties;
 import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.MediaTypes;
 import com.seed.deepCursorPath.core.ObjectMappers;
@@ -72,7 +73,9 @@ public class AsyncRawDeepCursorPathClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
@@ -191,7 +194,9 @@ public class AsyncRawDeepCursorPathClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }
@@ -310,7 +315,9 @@ public class AsyncRawDeepCursorPathClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedDeepCursorPathException("Failed to serialize request", e);
         }

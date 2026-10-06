@@ -8,9 +8,13 @@ enum Example37 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.getWithPathAndQuery(
-            param: "param",
-            query: "query"
+        _ = try await client.endpoints.params.getWithAllowMultipleQuery(
+            query: [
+                "query"
+            ],
+            number: [
+                1
+            ]
         )
     }
 }

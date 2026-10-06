@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.httpmethods;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 import java.lang.Boolean;
@@ -30,56 +31,140 @@ public class AsyncHttpMethodsClient {
   }
 
   public CompletableFuture<String> testGet(String id) {
-    return this.rawClient.testGet(id).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.testGet(id);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<String> testGet(String id, RequestOptions requestOptions) {
-    return this.rawClient.testGet(id, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture = this.rawClient.testGet(id, requestOptions);
+    CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request) {
-    return this.rawClient.testPost(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPost(request);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPost(ObjectWithRequiredField request,
       RequestOptions requestOptions) {
-    return this.rawClient.testPost(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPost(request, requestOptions);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPut(String id,
       ObjectWithRequiredField request) {
-    return this.rawClient.testPut(id, request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPut(id, request);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPut(String id,
       ObjectWithRequiredField request, RequestOptions requestOptions) {
-    return this.rawClient.testPut(id, request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPut(id, request, requestOptions);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id) {
-    return this.rawClient.testPatch(id).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPatch(id);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       RequestOptions requestOptions) {
-    return this.rawClient.testPatch(id, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPatch(id, requestOptions);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       ObjectWithOptionalField request) {
-    return this.rawClient.testPatch(id, request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPatch(id, request);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       ObjectWithOptionalField request, RequestOptions requestOptions) {
-    return this.rawClient.testPatch(id, request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.testPatch(id, request, requestOptions);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Boolean> testDelete(String id) {
-    return this.rawClient.testDelete(id).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.testDelete(id);
+    CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Boolean> testDelete(String id, RequestOptions requestOptions) {
-    return this.rawClient.testDelete(id, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> rawFuture = this.rawClient.testDelete(id, requestOptions);
+    CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

@@ -25,10 +25,12 @@ type OutboundCallConversationsRequest struct {
 }
 
 func (o *OutboundCallConversationsRequest) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetToPhoneNumber sets the ToPhoneNumber field and marks it as non-optional;
@@ -71,6 +73,11 @@ var (
 	outboundCallConversationsResponseFieldDryRun         = big.NewInt(1 << 1)
 )
 
+// outboundCallConversationsResponseNullableFields maps the wire names of OutboundCallConversationsResponse's nullable fields (required or optional) to their field bits.
+var outboundCallConversationsResponseNullableFields = map[string]*big.Int{
+	"conversation_id": outboundCallConversationsResponseFieldConversationID,
+}
+
 type OutboundCallConversationsResponse struct {
 	// Always null when dry_run is true.
 	ConversationID any `json:"conversation_id,omitempty" url:"conversation_id,omitempty"`
@@ -106,10 +113,12 @@ func (o *OutboundCallConversationsResponse) GetExtraProperties() map[string]inte
 }
 
 func (o *OutboundCallConversationsResponse) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetConversationID sets the ConversationID field and marks it as non-optional;
@@ -138,6 +147,13 @@ func (o *OutboundCallConversationsResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, outboundCallConversationsResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		o.require(presentFields)
+	}
 	o.rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -5,6 +5,7 @@ package com.seed.unionQueryParameters.resources.events;
 
 import com.seed.unionQueryParameters.core.ClientOptions;
 import com.seed.unionQueryParameters.core.RequestOptions;
+import com.seed.unionQueryParameters.core.SeedUnionQueryParametersHttpResponse;
 import com.seed.unionQueryParameters.resources.events.requests.SubscribeEventsRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -30,7 +31,14 @@ public class AsyncEventsClient {
      * scalar enum value or a list of enum values.
      */
     public CompletableFuture<String> subscribe() {
-        return this.rawClient.subscribe().thenApply(response -> response.body());
+        CompletableFuture<SeedUnionQueryParametersHttpResponse<String>> rawFuture = this.rawClient.subscribe();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -38,7 +46,15 @@ public class AsyncEventsClient {
      * scalar enum value or a list of enum values.
      */
     public CompletableFuture<String> subscribe(RequestOptions requestOptions) {
-        return this.rawClient.subscribe(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionQueryParametersHttpResponse<String>> rawFuture =
+                this.rawClient.subscribe(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -46,7 +62,14 @@ public class AsyncEventsClient {
      * scalar enum value or a list of enum values.
      */
     public CompletableFuture<String> subscribe(SubscribeEventsRequest request) {
-        return this.rawClient.subscribe(request).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionQueryParametersHttpResponse<String>> rawFuture = this.rawClient.subscribe(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -54,6 +77,14 @@ public class AsyncEventsClient {
      * scalar enum value or a list of enum values.
      */
     public CompletableFuture<String> subscribe(SubscribeEventsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.subscribe(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedUnionQueryParametersHttpResponse<String>> rawFuture =
+                this.rawClient.subscribe(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

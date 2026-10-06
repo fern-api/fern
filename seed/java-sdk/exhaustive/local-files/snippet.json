@@ -92,6 +92,19 @@
             }
         },
         {
+            "example_identifier": "441894ab",
+            "id": {
+                "method": "POST",
+                "path": "/container/map-integer-to-object",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfIntegerToObject"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().container().getAndReturnMapOfIntegerToObject(\n            new HashMap<Integer, ObjectWithRequiredField>() {{\n                put(1, ObjectWithRequiredField\n                    .builder()\n                    .string(\"string\")\n                    .build());\n            }}\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().container().getAndReturnMapOfIntegerToObject(\n            new HashMap<Integer, ObjectWithRequiredField>() {{\n                put(1, ObjectWithRequiredField\n                    .builder()\n                    .string(\"string\")\n                    .build());\n            }}\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "5cea1cb",
             "id": {
                 "method": "POST",

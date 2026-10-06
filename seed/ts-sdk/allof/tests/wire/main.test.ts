@@ -92,7 +92,14 @@ describe("SeedApiClient", () => {
     test("createPlant", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { species: "species", family: "family", genus: "genus", sunExposure: "full" };
+        const rawRequestBody = {
+            species: "species",
+            family: "family",
+            genus: "genus",
+            commonName: "commonName",
+            wateringFrequency: "daily",
+            sunExposure: "full",
+        };
         const rawResponseBody = { species: "species", family: "family", genus: "genus" };
 
         server
@@ -108,6 +115,8 @@ describe("SeedApiClient", () => {
             species: "species",
             family: "family",
             genus: "genus",
+            commonName: "commonName",
+            wateringFrequency: "daily",
             sunExposure: "full",
         });
         expect(response).toEqual(rawResponseBody);
@@ -116,7 +125,7 @@ describe("SeedApiClient", () => {
     test("createTree", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { id: "id" };
+        const rawRequestBody = { treeName: "treeName", id: "id", treeSpecies: "treeSpecies" };
         const rawResponseBody = {
             treeName: "treeName",
             treeDescription: "treeDescription",
@@ -136,7 +145,9 @@ describe("SeedApiClient", () => {
             .build();
 
         const response = await client.createTree({
+            treeName: "treeName",
             id: "id",
+            treeSpecies: "treeSpecies",
         });
         expect(response).toEqual(rawResponseBody);
     });

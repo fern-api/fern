@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -11,8 +12,11 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAsync(
-            "param"
+        await client.Endpoints.Pagination.ListItemsAsync(
+            new ListItemsRequest {
+                Cursor = "cursor",
+                Limit = 1
+            }
         );
     }
 

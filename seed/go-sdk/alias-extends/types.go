@@ -22,10 +22,12 @@ type InlinedChildRequest struct {
 }
 
 func (i *InlinedChildRequest) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetChild sets the Child field and marks it as non-optional;
@@ -96,10 +98,12 @@ func (c *Child) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Child) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetParent sets the Parent field and marks it as non-optional;
@@ -187,10 +191,12 @@ func (p *Parent) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Parent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetParent sets the Parent field and marks it as non-optional;

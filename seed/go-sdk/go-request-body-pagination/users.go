@@ -714,6 +714,11 @@ var (
 	listUsersNullableAliasCursorResponseFieldData       = big.NewInt(1 << 1)
 )
 
+// listUsersNullableAliasCursorResponseNullableFields maps the wire names of ListUsersNullableAliasCursorResponse's nullable fields (required or optional) to their field bits.
+var listUsersNullableAliasCursorResponseNullableFields = map[string]*big.Int{
+	"next_cursor": listUsersNullableAliasCursorResponseFieldNextCursor,
+}
+
 type ListUsersNullableAliasCursorResponse struct {
 	NextCursor NullableCursor `json:"next_cursor,omitempty" url:"next_cursor,omitempty"`
 	Data       []*User        `json:"data" url:"data"`
@@ -781,6 +786,13 @@ func (l *ListUsersNullableAliasCursorResponse) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	l.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, listUsersNullableAliasCursorResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		l.require(presentFields)
+	}
 	l.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1413,12 +1425,12 @@ func (w *WithCursor) String() string {
 	return fmt.Sprintf("%#v", w)
 }
 
-// Mirrors an options object that carries both the offset and the page size.
 var (
 	withOffsetFieldOffset = big.NewInt(1 << 0)
 	withOffsetFieldCount  = big.NewInt(1 << 1)
 )
 
+// Mirrors an options object that carries both the offset and the page size.
 type WithOffset struct {
 	Offset *int `json:"offset,omitempty" url:"offset,omitempty"`
 	Count  *int `json:"count,omitempty" url:"count,omitempty"`

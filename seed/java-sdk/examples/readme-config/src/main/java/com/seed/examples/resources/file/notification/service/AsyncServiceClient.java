@@ -5,6 +5,7 @@ package com.seed.examples.resources.file.notification.service;
 
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.RequestOptions;
+import com.seed.examples.core.SeedExamplesHttpResponse;
 import com.seed.examples.resources.types.types.Exception;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,25 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Exception> getException(String notificationId) {
-        return this.rawClient.getException(notificationId).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Exception>> rawFuture = this.rawClient.getException(notificationId);
+        CompletableFuture<Exception> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Exception> getException(String notificationId, RequestOptions requestOptions) {
-        return this.rawClient.getException(notificationId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Exception>> rawFuture =
+                this.rawClient.getException(notificationId, requestOptions);
+        CompletableFuture<Exception> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

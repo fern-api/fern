@@ -5,6 +5,7 @@ package com.seed.mixedCase.resources.service;
 
 import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.RequestOptions;
+import com.seed.mixedCase.core.SeedMixedCaseHttpResponse;
 import com.seed.mixedCase.resources.service.requests.ListResourcesRequest;
 import com.seed.mixedCase.resources.service.types.Resource;
 import java.util.List;
@@ -28,19 +29,49 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Resource> getResource(String resourceId) {
-        return this.rawClient.getResource(resourceId).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedCaseHttpResponse<Resource>> rawFuture = this.rawClient.getResource(resourceId);
+        CompletableFuture<Resource> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Resource> getResource(String resourceId, RequestOptions requestOptions) {
-        return this.rawClient.getResource(resourceId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedCaseHttpResponse<Resource>> rawFuture =
+                this.rawClient.getResource(resourceId, requestOptions);
+        CompletableFuture<Resource> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Resource>> listResources(ListResourcesRequest request) {
-        return this.rawClient.listResources(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedCaseHttpResponse<List<Resource>>> rawFuture = this.rawClient.listResources(request);
+        CompletableFuture<List<Resource>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Resource>> listResources(
             ListResourcesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listResources(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedCaseHttpResponse<List<Resource>>> rawFuture =
+                this.rawClient.listResources(request, requestOptions);
+        CompletableFuture<List<Resource>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -8,10 +8,10 @@ enum Example25 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request: [
-            "string": .object([
+        _ = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(request: ObjectWithDocumentedUnknownType(
+            documentedUnknownType: .object([
                 "key": .string("value")
             ])
-        ])
+        ))
     }
 }

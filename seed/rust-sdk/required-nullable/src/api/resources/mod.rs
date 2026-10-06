@@ -88,6 +88,7 @@ impl ApiClient {
     ///                 nullable_text: Some("nullable_text".to_string()),
     ///                 nullable_number: Some(1.1),
     ///                 non_nullable_text: Some("non_nullable_text".to_string()),
+    ///                 required_nullable_text: Some("required_nullable_text".to_string()),
     ///                 ..Default::default()
     ///             },
     ///             Some(RequestOptions::new().additional_header("X-Idempotency-Key", "X-Idempotency-Key")),

@@ -1,3 +1,4 @@
+import { NamedArgument } from "@fern-api/base-generator";
 import { WithGeneration } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -7,36 +8,64 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 import urlJoin from "url-join";
 import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { HttpEndpointGenerator } from "../http/HttpEndpointGenerator.js";
 import { isPagerPagination } from "../utils/isPagerPagination.js";
 import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator.js";
+
+interface FormattedClientSnippet {
+    imports: string | undefined;
+    body: string;
+}
 
 export class SnippetJsonGenerator extends WithGeneration {
     private readonly context: SdkGeneratorContext;
     private readonly rootClientGenerator: RootClientGenerator;
+    private readonly httpEndpointGenerator: HttpEndpointGenerator;
     constructor({ context }: { context: SdkGeneratorContext }) {
         super(context.generation);
         this.context = context;
         this.rootClientGenerator = new RootClientGenerator(context);
+        this.httpEndpointGenerator = new HttpEndpointGenerator({ context });
     }
 
-    public async generate(): Promise<FernGeneratorExec.Snippets> {
-        const rootClientSnippet = await this.rootClientGenerator
-            .generateExampleClientInstantiationSnippet({ asSnippet: true, includeEnvVarArguments: true })
+    private async formatClientInstantiation(clientOptions: NamedArgument[]): Promise<FormattedClientSnippet> {
+        const clientOptionsArgument =
+            clientOptions.length > 0
+                ? this.csharp.instantiateClass({
+                      classReference: this.Types.ClientOptions,
+                      arguments_: clientOptions,
+                      multiline: true
+                  })
+                : undefined;
+        return await this.rootClientGenerator
+            .generateExampleClientInstantiationSnippet({
+                asSnippet: true,
+                includeEnvVarArguments: true,
+                clientOptionsArgument
+            })
             .toFormattedSnippetAsync({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),
                 generation: this.generation,
                 formatter: this.context.formatter
             });
-        const rootClientImportList = rootClientSnippet.imports?.split("\n") ?? [];
+    }
 
-        function getCsharpSnippet(endpointSnippet: SingleEndpointSnippet, isPager: boolean): string {
+    public async generate(): Promise<FernGeneratorExec.Snippets> {
+        const rootClientSnippet = await this.formatClientInstantiation([]);
+
+        function getCsharpSnippet(
+            endpointSnippet: SingleEndpointSnippet,
+            clientSnippet: FormattedClientSnippet,
+            isPager: boolean
+        ): string {
             let snippet = "";
+            const clientImportList = clientSnippet.imports?.split("\n") ?? [];
             const snippetImportList = endpointSnippet.imports?.split("\n") ?? [];
-            const uniqueOrderedImports = Array.from(new Set([...rootClientImportList, ...snippetImportList]))
+            const uniqueOrderedImports = Array.from(new Set([...clientImportList, ...snippetImportList]))
                 .filter((importString) => importString !== "")
                 .sort();
-            snippet = `${snippet}${uniqueOrderedImports.join("\n")}\n\nvar client = ${rootClientSnippet.body}`;
+            snippet = `${snippet}${uniqueOrderedImports.join("\n")}\n\nvar client = ${clientSnippet.body}`;
 
             if (isPager) {
                 snippet = `${snippet}var items = `;
@@ -72,20 +101,38 @@ export class SnippetJsonGenerator extends WithGeneration {
                             _other: () => false
                         }) ?? false;
                     const snippets = this.getSnippetsForEndpoint(httpEndpoint.id);
-                    return snippets.map((endpointSnippet) => {
-                        const csharpSnippet = getCsharpSnippet(endpointSnippet, isPager || isStreaming);
-                        return {
-                            exampleIdentifier: endpointSnippet?.exampleIdentifier,
-                            id: {
-                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(httpEndpoint)),
-                                method: httpEndpoint.method,
-                                identifierOverride: httpEndpoint.id
-                            },
-                            snippet: FernGeneratorExec.EndpointSnippet.csharp({
-                                client: csharpSnippet
-                            })
-                        };
-                    });
+                    return Promise.all(
+                        snippets.map(async (endpointSnippet) => {
+                            // SDK variables bound to the endpoint's path parameters are configured on the
+                            // client, so the client instantiation carries the example values.
+                            const sdkVariableClientOptions =
+                                this.httpEndpointGenerator.getSdkVariableClientOptionArguments({
+                                    endpoint: httpEndpoint,
+                                    example: endpointSnippet.example,
+                                    parseDatetimes: false
+                                });
+                            const clientSnippet =
+                                sdkVariableClientOptions.length > 0
+                                    ? await this.formatClientInstantiation(sdkVariableClientOptions)
+                                    : rootClientSnippet;
+                            const csharpSnippet = getCsharpSnippet(
+                                endpointSnippet,
+                                clientSnippet,
+                                isPager || isStreaming
+                            );
+                            return {
+                                exampleIdentifier: endpointSnippet?.exampleIdentifier,
+                                id: {
+                                    path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(httpEndpoint)),
+                                    method: httpEndpoint.method,
+                                    identifierOverride: httpEndpoint.id
+                                },
+                                snippet: FernGeneratorExec.EndpointSnippet.csharp({
+                                    client: csharpSnippet
+                                })
+                            };
+                        })
+                    );
                 })
             )
         ).then((endpoints) => endpoints.flat());
