@@ -35,6 +35,7 @@ function extractEmittedHelperSource(): string {
             rootFolderName: "seed",
             custom_pager_class_name: "CustomPager",
             omitFernHeaders: false,
+            userAgentOnly: false,
             includePlatformHeaders: false,
             allowUserAgentAppInfo: true,
             allowCustomHttpClient: false,
