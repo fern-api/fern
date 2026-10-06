@@ -1,4 +1,6 @@
+import { createHash } from "crypto";
 import express from "express";
+import { readFile } from "fs/promises";
 import type { Server } from "http";
 import { type AstroPreviewFile, type AstroPreviewModel, fileKey } from "./buildAstroPreviewModel.js";
 
@@ -104,15 +106,21 @@ export class LocalLedgerMirror {
             const model = this.model;
             const key = decodeKey(req.params[0]);
             const file = key != null && model != null ? fileFromKey(key, model) : undefined;
-            if (file == null) {
+            if (file == null || key == null || model == null) {
                 res.status(404).end();
                 return;
             }
-            res.sendFile(file.absoluteFilePath, { headers: { "Content-Type": file.contentType } }, (error) => {
-                if (error != null && !res.headersSent) {
-                    res.status(404).end();
-                }
-            });
+            readFile(file.absoluteFilePath).then(
+                (bytes) => {
+                    const hash = createHash("sha256").update(new Uint8Array(bytes)).digest("hex");
+                    if (!key.startsWith(`${model.domain}/${hash}/`)) {
+                        res.status(404).end();
+                        return;
+                    }
+                    res.type(file.contentType).send(bytes);
+                },
+                () => res.status(404).end()
+            );
         });
 
         app.use((_req, res) => {

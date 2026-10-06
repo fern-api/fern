@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { mkdtemp, writeFile } from "fs/promises";
+import { mkdtemp, readFile, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -7,7 +7,7 @@ import type { AstroPreviewModel } from "../astro/buildAstroPreviewModel.js";
 import { LocalLedgerMirror } from "../astro/LocalLedgerMirror.js";
 
 const HASH = "a".repeat(64);
-const FILE_HASH = "b".repeat(64);
+const FILE_HASH = "ea80334363eed145dfeee51ebae7dc3f1cd7d0c7879f8bfd2070c061d3c33f56"; // sha256 of "png-bytes"
 const ORG = "acme";
 const DOMAIN = "acme.docs.buildwithfern.com";
 
@@ -94,6 +94,22 @@ describe("LocalLedgerMirror", () => {
         expect(await fetchStatus(`${base}/files/${DOMAIN}/${FILE_HASH}/assets/logo.png`)).toBe(200);
         expect(await fetchStatus(`${base}/files/${DOMAIN}/${FILE_HASH}/assets/copy/logo.png`)).toBe(200);
         mirror.replaceModel(current);
+    });
+
+    it("refuses to serve bytes that no longer match the requested hash", async () => {
+        const current = mirror.getModel();
+        const original = current?.files.get(`${FILE_HASH}/assets/logo.png`);
+        if (current == null || original == null) {
+            throw new Error("fixture file missing");
+        }
+        const originalBytes = await readFile(original.absoluteFilePath);
+        await writeFile(original.absoluteFilePath, "changed-bytes");
+        try {
+            expect(await fetchStatus(`${base}/files/${DOMAIN}/${FILE_HASH}/assets/logo.png`)).toBe(404);
+        } finally {
+            await writeFile(original.absoluteFilePath, originalBytes);
+        }
+        expect(await fetchStatus(`${base}/files/${DOMAIN}/${FILE_HASH}/assets/logo.png`)).toBe(200);
     });
 
     it("fails open for dynamic IR", async () => {
