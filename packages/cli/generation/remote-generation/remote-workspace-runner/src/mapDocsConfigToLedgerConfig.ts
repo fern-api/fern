@@ -2,10 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
-// TODO: Drop the `embedding` shim once the published @fern-api/fdr-sdk
-// DocsConfig / LedgerConfig types include it.
-type EmbeddingConfig = { allowedOrigins: string[] };
-type DocsConfig = DocsV1Write.DocsConfig & { embedding?: EmbeddingConfig };
+type DocsConfig = DocsV1Write.DocsConfig;
 
 /**
  * Resolve a FileId reference produced by the classic docs publish flow
@@ -277,10 +274,7 @@ export function mapDocsConfigToLedgerConfig({
     fileManifest: Record<string, FileManifestEntry> | undefined;
     fileIdToPath: Map<string, string> | undefined;
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
-}): LedgerConfig & {
-    editThisPageGithub?: { owner: string; repo: string; branch: string; host: string };
-    embedding?: EmbeddingConfig;
-} {
+}): LedgerConfig & { editThisPageGithub?: { owner: string; repo: string; branch: string; host: string } } {
     return {
         title: docsConfig.title,
         defaultLanguage: docsConfig.defaultLanguage,
@@ -306,7 +300,6 @@ export function mapDocsConfigToLedgerConfig({
         aiChatConfig: docsConfig.aiChatConfig,
         pageActions: docsConfig.pageActions,
         editThisPageLaunch: docsConfig.editThisPageLaunch,
-        embedding: docsConfig.embedding,
         editThisPageGithub:
             editThisPage?.github != null
                 ? {
