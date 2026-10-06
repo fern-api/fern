@@ -76,7 +76,7 @@ class Break_ extends XmlSerializableType
     {
         XmlUtils::requireName($element, 'break');
         $result = new self([
-            'strength' => XmlUtils::parseEnum($element->getAttribute('strength'), BreakStrength::class)?->value,
+            'strength' => XmlUtils::parseEnumValue($element->getAttribute('strength'), BreakStrength::class),
             'time' => $element->getAttribute('time'),
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['strength', 'time']));

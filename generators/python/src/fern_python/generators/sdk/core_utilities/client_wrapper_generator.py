@@ -672,34 +672,45 @@ class ClientWrapperGenerator:
                 )
             )
             writer.write_line(" = {}")
+            # Only resolve credentials that may fetch a token (OAuth, inferred auth) when the
+            # endpoint can use them, so e.g. the token endpoint doesn't first fetch a token.
+            if (len(token_schemes) > 0 and bearer_auth_scheme is not None) or inferred_auth_scheme is not None:
+                writer.write_line(
+                    f"_required_scheme_keys = {{scheme_key for requirement in {security_param} for scheme_key in requirement}}"
+                )
 
             # Bearer / OAuth token schemes
             if len(token_schemes) > 0 and bearer_auth_scheme is not None:
                 token_getter = names.get_token_getter_name(bearer_auth_scheme)
-                if is_async:
-                    # Forward-declare so both branches (async token -> str, sync getter ->
-                    # str | None) unify to Optional[str]; otherwise mypy infers `str` from the
-                    # first assignment and rejects the else branch.
-                    writer.write_line("_token: typing.Optional[str]")
-                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
-                    with writer.indent():
-                        writer.write_line(f"_token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
-                    writer.write_line("else:")
-                    with writer.indent():
-                        writer.write_line(f"_token = self.{token_getter}()")
-                else:
-                    writer.write_line(f"_token = self.{token_getter}()")
-                writer.write_line("if _token is not None:")
+                token_condition = " or ".join(
+                    f"{json.dumps(key)} in _required_scheme_keys" for key, _, _ in token_schemes
+                )
+                writer.write_line(f"if {token_condition}:")
                 with writer.indent():
-                    for key, token_header, token_prefix in token_schemes:
-                        token_value = self._get_prefixed_header_value(
-                            token_prefix,
-                            "_token",
-                            raw_value_for_empty_prefix=True,
-                        )
-                        writer.write_line(
-                            f"{available_var}[{json.dumps(key)}] = {{{json.dumps(token_header)}: {token_value}}}"
-                        )
+                    if is_async:
+                        # Forward-declare so both branches (async token -> str, sync getter ->
+                        # str | None) unify to Optional[str]; otherwise mypy infers `str` from the
+                        # first assignment and rejects the else branch.
+                        writer.write_line("_token: typing.Optional[str]")
+                        writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
+                        with writer.indent():
+                            writer.write_line(f"_token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
+                        writer.write_line("else:")
+                        with writer.indent():
+                            writer.write_line(f"_token = self.{token_getter}()")
+                    else:
+                        writer.write_line(f"_token = self.{token_getter}()")
+                    writer.write_line("if _token is not None:")
+                    with writer.indent():
+                        for key, token_header, token_prefix in token_schemes:
+                            token_value = self._get_prefixed_header_value(
+                                token_prefix,
+                                "_token",
+                                raw_value_for_empty_prefix=True,
+                            )
+                            writer.write_line(
+                                f"{available_var}[{json.dumps(key)}] = {{{json.dumps(token_header)}: {token_value}}}"
+                            )
 
             # Header auth schemes (e.g. X-API-Key)
             for header_auth_scheme in header_auth_schemes:
@@ -743,23 +754,27 @@ class ClientWrapperGenerator:
 
             # Inferred auth
             if inferred_auth_scheme is not None:
-                if is_async:
-                    writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
-                    with writer.indent():
+                writer.write_line(f"if {json.dumps(inferred_auth_scheme.key)} in _required_scheme_keys:")
+                with writer.indent():
+                    if is_async:
                         writer.write_line(
-                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())'
+                            f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:"
                         )
-                    writer.write_line(f"elif self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
-                    with writer.indent():
-                        writer.write_line(
-                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
-                        )
-                else:
-                    writer.write_line(f"if self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
-                    with writer.indent():
-                        writer.write_line(
-                            f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
-                        )
+                        with writer.indent():
+                            writer.write_line(
+                                f'{available_var}["{inferred_auth_scheme.key}"] = dict(await self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME}())'
+                            )
+                        writer.write_line(f"elif self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
+                        with writer.indent():
+                            writer.write_line(
+                                f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
+                            )
+                    else:
+                        writer.write_line(f"if self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME} is not None:")
+                        with writer.indent():
+                            writer.write_line(
+                                f'{available_var}["{inferred_auth_scheme.key}"] = dict(self.{ClientWrapperGenerator.AUTH_HEADERS_MEMBER_NAME}())'
+                            )
 
             # OR across requirements: pick the first fully-satisfiable requirement.
             writer.write_line(f"for requirement in {security_param}:")
@@ -936,6 +951,7 @@ class ClientWrapperGenerator:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             omit_fern_headers = self._context.custom_config.omit_fern_headers
             include_platform_headers = self._context.custom_config.include_platform_headers
+            user_agent_only = self._context.custom_config.user_agent_only
             allow_user_agent_app_info = self._context.custom_config.allow_user_agent_app_info
             user_agent_header = self._context.ir.sdk_config.platform_headers.user_agent
 
@@ -979,9 +995,47 @@ class ClientWrapperGenerator:
                 _get_user_agent_coordinate_prefix(user_agent_prefix) if user_agent_prefix is not None else None
             )
 
+            # A User-Agent declared as a global header suppresses the IR User-Agent and is
+            # written later under its own casing, so no default one is added on top of it.
+            has_global_user_agent_header = any(
+                header_key is not None and header_key.lower() == "user-agent"
+                for header_key in [param.header_key for param in constructor_parameters]
+                + [literal_header.header_key for literal_header in literal_headers]
+            )
+            # An optional global User-Agent may be unset at runtime, so only a literal or
+            # required one can stand in for the discrete identification headers.
+            always_sends_global_user_agent_header = any(
+                literal_header.header_key is not None and literal_header.header_key.lower() == "user-agent"
+                for literal_header in literal_headers
+            ) or any(
+                param.header_key is not None
+                and param.header_key.lower() == "user-agent"
+                and not param.type_hint.is_optional
+                for param in constructor_parameters
+            )
+            # Emit the default `{package}/{version}` User-Agent when no structured or templated
+            # one is configured but app-info (needs a base to append to) or user_agent_only
+            # (needs the User-Agent to carry the SDK identity) is on. Off by default, keeping
+            # default output byte-identical.
+            emit_default_user_agent = (
+                not emit_structured_user_agent
+                and user_agent_header is None
+                and project._project_config is not None
+                and (allow_user_agent_app_info or (user_agent_only and not has_global_user_agent_header))
+            )
+            # user_agent_only only drops the discrete headers when a User-Agent is actually
+            # sent, so the SDK is never left without any identification header.
+            drop_discrete_headers = user_agent_only and (
+                emit_structured_user_agent
+                or user_agent_header is not None
+                or emit_default_user_agent
+                or always_sends_global_user_agent_header
+            )
+
             if not omit_fern_headers:
-                writer.write_line("import platform")
-                writer.write_line("")
+                if emit_structured_user_agent or not drop_discrete_headers:
+                    writer.write_line("import platform")
+                    writer.write_line("")
                 if runtime_version_active and project._project_config is not None:
                     # Resolve the installed distribution version at runtime; fall back to
                     # the generation-time version when the package is not installed
@@ -1029,11 +1083,7 @@ class ClientWrapperGenerator:
                     else:
                         user_agent_value_expr = f'"{user_agent_header.value}"'
                     writer.write_line(f'"{user_agent_header.header}": {_with_app_info(user_agent_value_expr)},')
-                elif allow_user_agent_app_info and project._project_config is not None:
-                    # No structured or templated User-Agent is configured, but app-info was
-                    # opted into: emit the default `{package}/{version}` User-Agent so the
-                    # caller's product token has a base to append to. Only emitted when the
-                    # flag is on, keeping default output byte-identical.
+                elif emit_default_user_agent and project._project_config is not None:
                     if runtime_version_active:
                         default_user_agent_expr = f'"{project._project_config.package_name}/" + _sdk_version'
                     else:
@@ -1041,11 +1091,12 @@ class ClientWrapperGenerator:
                             f'"{project._project_config.package_name}/{project._project_config.package_version}"'
                         )
                     writer.write_line(f'"User-Agent": {_with_app_info(default_user_agent_expr)},')
-                writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
-                if not emit_structured_user_agent:
+                if not drop_discrete_headers:
+                    writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
+                if not emit_structured_user_agent and not drop_discrete_headers:
                     writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
                     writer.write_line("f'X-Fern-Platform': f\"{platform.system().lower()}/{platform.release()}\",")
-                if project._project_config is not None:
+                if project._project_config is not None and not drop_discrete_headers:
                     writer.write_line(
                         f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
                     )

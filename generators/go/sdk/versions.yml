@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.69.1
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `FromXml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of returning an error, and it round-trips
+        through `ToXml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.69.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omitFernHeaders` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.68.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via a `VerifySignatureWithAlgorithm(...)` method (`VerifySignature` keeps the configured default),
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 1.67.0
   changelogEntry:
     - summary: |

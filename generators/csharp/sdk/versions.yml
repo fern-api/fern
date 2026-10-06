@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.90.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user-agent-only` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `include-platform-headers`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omit-fern-headers` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+    - summary: |
+        Fix the generated `XmlElementTests` test project failing to compile because its `FakeNode` test
+        double did not implement `IXmlNode.ToXml(bool)`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.89.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 2.88.0
   changelogEntry:
     - summary: |

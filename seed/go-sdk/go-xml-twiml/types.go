@@ -117,10 +117,7 @@ func BreakFromXmlElement(element *core.XmlElement) (*Break, error) {
 	for _, attribute := range element.Attributes {
 		switch attribute.Name {
 		case "strength":
-			value, err := NewBreakStrengthFromString(attribute.Value)
-			if err != nil {
-				return nil, fmt.Errorf("Break.strength: %w", err)
-			}
+			value := BreakStrength(attribute.Value)
 			result.Strength = &value
 		case "time":
 			value := attribute.Value
@@ -395,10 +392,7 @@ func DialFromXmlElement(element *core.XmlElement) (*Dial, error) {
 			}
 		case "record":
 			for _, item := range core.SplitXmlList(attribute.Value, " ") {
-				value, err := NewDialRecordItemFromString(item)
-				if err != nil {
-					return nil, fmt.Errorf("Dial.record: %w", err)
-				}
+				value := DialRecordItem(item)
 				result.Record = append(result.Record, value)
 			}
 		default:

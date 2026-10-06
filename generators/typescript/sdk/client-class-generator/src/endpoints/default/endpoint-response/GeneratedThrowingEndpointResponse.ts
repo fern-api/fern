@@ -410,46 +410,94 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createArrayLiteralExpression([], false)
         );
 
-        // loadPage
-        const incrementOffset =
+        // loadPage: only advance `_offset` once the next page has loaded, so retrying a failed
+        // getNextPage() re-requests the same offset instead of skipping a page.
+        const offsetIncrement =
             offset.step != null && this.offsetSemantics === "item-index"
-                ? ts.factory.createExpressionStatement(
-                      ts.factory.createBinaryExpression(
-                          ts.factory.createIdentifier("_offset"),
-                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
-                          ts.factory.createConditionalExpression(
-                              ts.factory.createBinaryExpression(
-                                  itemsPropertyAccess,
-                                  ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                  ts.factory.createNull()
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                              ts.factory.createPropertyAccessExpression(
-                                  itemsPropertyAccessWithoutOptional,
-                                  ts.factory.createIdentifier("length")
-                              ),
-                              ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                              ts.factory.createNumericLiteral("1")
-                          )
-                      )
-                  )
-                : ts.factory.createExpressionStatement(
-                      ts.factory.createBinaryExpression(
-                          ts.factory.createIdentifier("_offset"),
-                          ts.factory.createToken(ts.SyntaxKind.PlusEqualsToken),
+                ? ts.factory.createParenthesizedExpression(
+                      ts.factory.createConditionalExpression(
+                          ts.factory.createBinaryExpression(
+                              itemsPropertyAccess,
+                              ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                              ts.factory.createNull()
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                          ts.factory.createPropertyAccessExpression(
+                              itemsPropertyAccessWithoutOptional,
+                              ts.factory.createIdentifier("length")
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.ColonToken),
                           ts.factory.createNumericLiteral("1")
                       )
-                  );
-        const callEndpoint = ts.factory.createReturnStatement(
-            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                context.coreUtilities.utils.setObjectProperty._invoke({
-                    referenceToObject: ts.factory.createIdentifier("request"),
-                    path: pagePropertyPathForSet,
-                    value: ts.factory.createIdentifier("_offset")
-                })
-            ])
+                  )
+                : ts.factory.createNumericLiteral("1");
+        const nextOffset = ts.factory.createIdentifier("_nextOffset");
+        const declareNextOffset = ts.factory.createVariableStatement(
+            undefined,
+            ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        nextOffset,
+                        undefined,
+                        undefined,
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier("_offset"),
+                            ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                            offsetIncrement
+                        )
+                    )
+                ],
+                ts.NodeFlags.Const
+            )
         );
-        const loadPage = [incrementOffset, callEndpoint];
+        const pageResponse = ts.factory.createIdentifier("_pageResponse");
+        const callEndpoint = ts.factory.createReturnStatement(
+            context.coreUtilities.fetcher.HttpResponsePromise.fromPromise(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                                    context.coreUtilities.utils.setObjectProperty._invoke({
+                                        referenceToObject: ts.factory.createIdentifier("request"),
+                                        path: pagePropertyPathForSet,
+                                        value: nextOffset
+                                    })
+                                ]),
+                                ts.factory.createIdentifier("withRawResponse")
+                            ),
+                            undefined,
+                            []
+                        ),
+                        ts.factory.createIdentifier("then")
+                    ),
+                    undefined,
+                    [
+                        ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [ts.factory.createParameterDeclaration(undefined, undefined, pageResponse)],
+                            undefined,
+                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createExpressionStatement(
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createIdentifier("_offset"),
+                                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                            nextOffset
+                                        )
+                                    ),
+                                    ts.factory.createReturnStatement(pageResponse)
+                                ],
+                                true
+                            )
+                        )
+                    ]
+                )
+            )
+        );
+        const loadPage = [declareNextOffset, callEndpoint];
 
         return {
             type: offset.step != null && this.offsetSemantics === "item-index" ? "offset-step" : "offset",

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `<Markdown src="..." />` snippets now resolve when a prop value contains `>`, e.g.
+    `<Markdown src="/snippets/intro.mdx" returnType="Promise<void>" />`. Previously the `>` inside the
+    quoted value ended the tag early, so the snippet was never inlined and the page rendered incorrectly.
+  type: fix
