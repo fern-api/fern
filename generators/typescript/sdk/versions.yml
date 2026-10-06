@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.100.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed children and undeclared `XmlElement` children in a single
+        ordered `content` sequence, so `toXml()` preserves the exact insertion/document order across child
+        types (e.g. `<Say>a</Say><Custom/><Say>b</Say>`) and `fromXml()` reconstructs it. Builders gain
+        `addText(text)` to interleave text with child elements (`Say.builder({ message: "Hi " }).addBreak(...).addText(" world")`),
+        and `addChild(XmlElement)` now appends in place rather than after all typed children.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 3.99.1
   changelogEntry:
     - summary: |
