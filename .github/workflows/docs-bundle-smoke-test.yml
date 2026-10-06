@@ -44,6 +44,11 @@ jobs:
       - name: Build CLI (prod)
         run: pnpm fern:build
 
+      # The Astro leg runs the dev CLI, which downloads the Astro preview bundle
+      # from the dev2 bucket (populated on every merge to fern-platform `app`).
+      - name: Build CLI (dev)
+        run: pnpm fern-dev:build
+
       # The build writes "catalog:" as the @boundaryml/baml version (pnpm-
       # specific) and `npm pkg fix` strips it. Resolve the real version from
       # the workspace catalog so `npm install` works in the smoke-test jobs.
@@ -58,21 +63,31 @@ jobs:
           ")
           echo "Resolved @boundaryml/baml version: $BAML_VERSION"
 
-          node -e "
-            const fs = require('fs');
-            const pkg = JSON.parse(fs.readFileSync('packages/cli/cli/dist/prod/package.json', 'utf8'));
-            pkg.dependencies = pkg.dependencies || {};
-            pkg.dependencies['@boundaryml/baml'] = process.argv[1];
-            fs.writeFileSync('packages/cli/cli/dist/prod/package.json', JSON.stringify(pkg, null, 2) + '\n');
-          " "$BAML_VERSION"
-          echo "Patched package.json:"
-          cat packages/cli/cli/dist/prod/package.json
+          for DIST in prod dev; do
+            node -e "
+              const fs = require('fs');
+              const file = 'packages/cli/cli/dist/' + process.argv[2] + '/package.json';
+              const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
+              pkg.dependencies = pkg.dependencies || {};
+              pkg.dependencies['@boundaryml/baml'] = process.argv[1];
+              fs.writeFileSync(file, JSON.stringify(pkg, null, 2) + '\n');
+            " "$BAML_VERSION" "$DIST"
+            echo "Patched $DIST package.json:"
+            cat "packages/cli/cli/dist/$DIST/package.json"
+          done
 
-      - name: Upload CLI artifact
+      - name: Upload CLI artifact (prod)
         uses: actions/upload-artifact@v6
         with:
-          name: fern-cli
+          name: fern-cli-prod
           path: packages/cli/cli/dist/prod/
+          retention-days: 1
+
+      - name: Upload CLI artifact (dev)
+        uses: actions/upload-artifact@v6
+        with:
+          name: fern-cli-dev
+          path: packages/cli/cli/dist/dev/
           retention-days: 1
 
   smoke-test:
@@ -82,7 +97,17 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [22, 24, 26]
+        renderer: [next]
+        # `fern docs dev --astro` (experimental): dev CLI + Astro preview-SSR bundle.
+        include:
+          - os: ubuntu-latest
+            node-version: 22
+            renderer: astro
+          - os: ubuntu-latest
+            node-version: 24
+            renderer: astro
     runs-on: ${{ matrix.os }}
+    name: smoke-test (${{ matrix.renderer }}, ${{ matrix.os }}, node ${{ matrix.node-version }})
     timeout-minutes: 30
 
     steps:
@@ -122,7 +147,7 @@ jobs:
         if: steps.node-check.outputs.available == 'true'
         uses: actions/download-artifact@v7
         with:
-          name: fern-cli
+          name: fern-cli-${{ matrix.renderer == 'astro' && 'dev' || 'prod' }}
           path: cli-dist/
 
       # Simulate what a customer does: npm install -g fern-api
@@ -165,6 +190,8 @@ jobs:
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         env:
           FERN_NO_VERSION_REDIRECTION: "true"
+          FERN_DOCS_DEV_ARGS: ${{ matrix.renderer == 'astro' && '--astro' || '' }}
+          SMOKE_RENDERER: ${{ matrix.renderer }}
         with:
           timeout_minutes: 15
           max_attempts: 3
@@ -187,7 +214,7 @@ jobs:
 
             # Start the fern docs dev server
             cd docs-preview-smoke-test/fern
-            fern docs dev > "$LOG_FILE" 2>&1 &
+            fern docs dev $FERN_DOCS_DEV_ARGS > "$LOG_FILE" 2>&1 &
             FERN_PID=$!
             cd "$GITHUB_WORKSPACE"
 
@@ -264,7 +291,7 @@ jobs:
         if: always() && steps.node-check.outputs.available == 'true'
         continue-on-error: true
         with:
-          name: smoke-test-playwright-report-${{ matrix.os }}-node${{ matrix.node-version }}
+          name: smoke-test-playwright-report-${{ matrix.renderer }}-${{ matrix.os }}-node${{ matrix.node-version }}
           path: docs-preview-smoke-test/playwright/playwright-report/
           retention-days: 7
 

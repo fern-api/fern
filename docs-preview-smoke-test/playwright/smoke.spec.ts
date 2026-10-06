@@ -1,5 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { readFile, writeFile } from "fs/promises";
+import { join } from "path";
 import { PAGES } from "./pages";
+
+const WELCOME_MDX = join(__dirname, "..", "fern", "docs", "pages", "welcome.mdx");
 
 test.describe("Smoke test: all pages load", () => {
     for (const pagePath of PAGES) {
@@ -107,6 +111,31 @@ test.describe("Image rendering validation", () => {
 
             // Must not contain raw backslashes
             expect(img.src, `Image src should not contain backslashes: ${img.src}`).not.toContain("\\");
+        }
+    });
+});
+
+test.describe("Live reload", () => {
+    // The Astro preview server rebuilds the docs model and evicts the renderer on
+    // every edit; assert an edited page is served with the new content.
+    test.skip(process.env.SMOKE_RENDERER !== "astro", "live-reload assertion only runs for the Astro renderer");
+
+    test("editing a markdown page is reflected on the next request", async ({ page }) => {
+        const original = await readFile(WELCOME_MDX, "utf-8");
+        const marker = `Smoke-test live reload marker ${Date.now()}`;
+        try {
+            await writeFile(WELCOME_MDX, `${original}\n\n${marker}\n`);
+            await expect
+                .poll(
+                    async () => {
+                        const response = await page.goto("/welcome", { waitUntil: "domcontentloaded" });
+                        return response?.status() === 200 && (await page.content()).includes(marker);
+                    },
+                    { timeout: 60_000, intervals: [1_000] }
+                )
+                .toBe(true);
+        } finally {
+            await writeFile(WELCOME_MDX, original);
         }
     });
 });

@@ -180,7 +180,6 @@ export async function runAstroPreviewServer({
             MIRROR_ENDPOINT: mirrorEndpoint,
             MIRROR_FILES_ENDPOINT: `${mirrorEndpoint}/files`,
             EDGE_CONFIG: `${mirrorEndpoint}/edge-config`,
-            DISABLE_FILE_MIRRORING: "true",
             DISABLE_IMAGE_OPTIMIZATION: "true",
             MIRROR_ALLOW_ASSET_MISS: "true",
             NEXT_PUBLIC_DOCS_DOMAIN: domain,
@@ -194,7 +193,7 @@ export async function runAstroPreviewServer({
     rendererProcess.stderr?.on("data", (data: Buffer) => context.logger.debug(`[Astro] ${data.toString().trimEnd()}`));
 
     const reloadClients = new Set<http.ServerResponse>();
-    const proxy = createFrontProxy({ rendererPort, rendererHost, reloadClients });
+    const proxy = createFrontProxy({ rendererPort, rendererHost, mirrorPort: backendPort, basepath, reloadClients });
 
     let cleanedUp = false;
     let rejectRun: (err: Error) => void = () => undefined;
@@ -393,15 +392,26 @@ async function readBundle(root: AbsoluteFilePath): Promise<AstroBundle> {
  * Loopback proxy in front of the renderer. Adds `x-fern-host`, serves the
  * live-reload event stream, and appends the reload listener to HTML responses.
  */
+/**
+ * The renderer emits uploaded assets as same-origin `{basepath}/_fern-files/{domain}/{hash}/{path}`
+ * URLs (served by docs-router in production); here they are answered by the mirror's `/files` route.
+ */
+const MIRRORED_FILES_DIR = "_fern-files";
+
 function createFrontProxy({
     rendererPort,
     rendererHost,
+    mirrorPort,
+    basepath,
     reloadClients
 }: {
     rendererPort: number;
     rendererHost: string;
+    mirrorPort: number;
+    basepath: string;
     reloadClients: Set<http.ServerResponse>;
 }): http.Server {
+    const mirroredFilesPrefix = `${basepath}/${MIRRORED_FILES_DIR}/`;
     return http.createServer((req, res) => {
         if (req.url === RELOAD_EVENTS_PATH) {
             res.writeHead(200, {
@@ -415,14 +425,23 @@ function createFrontProxy({
             return;
         }
 
+        const isMirroredFile = req.url != null && req.url.startsWith(mirroredFilesPrefix);
         const upstream = http.request(
-            {
-                host: "127.0.0.1",
-                port: rendererPort,
-                method: req.method,
-                path: req.url,
-                headers: { ...req.headers, [X_FERN_HOST_HEADER]: rendererHost }
-            },
+            isMirroredFile
+                ? {
+                      host: "127.0.0.1",
+                      port: mirrorPort,
+                      method: req.method,
+                      path: `/files/${req.url?.slice(mirroredFilesPrefix.length) ?? ""}`,
+                      headers: req.headers
+                  }
+                : {
+                      host: "127.0.0.1",
+                      port: rendererPort,
+                      method: req.method,
+                      path: req.url,
+                      headers: { ...req.headers, [X_FERN_HOST_HEADER]: rendererHost }
+                  },
             (upstreamRes) => {
                 const headers = { ...upstreamRes.headers };
                 const isHtml =
