@@ -2002,7 +2002,7 @@ export async function generateLanguageSpecificDynamicIRs({
     skipLanguages?: Set<string>;
 }): Promise<Record<string, DynamicIr> | undefined> {
     let languageSpecificIRs: Record<string, DynamicIr> = {};
-    const failedLanguages = new Set<string>();
+    const dynamicIrFailures = new Map<string, string>();
 
     if (!workspace) {
         return undefined;
@@ -2110,11 +2110,16 @@ export async function generateLanguageSpecificDynamicIRs({
                 context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
             }
         } catch (error) {
-            failedLanguages.add(generatorInvocation.language);
-            context.logger.warn(
-                `Skipping ${generatorInvocation.language} SDK snippets for API "${workspace.workspaceName ?? ""}": could not build the dynamic snippets IR (${error instanceof Error ? error.message : String(error)}). The rest of the docs will still publish.`
-            );
+            dynamicIrFailures.set(generatorInvocation.language, error instanceof Error ? error.message : String(error));
             context.logger.debug(error instanceof Error ? (error.stack ?? error.message) : String(error));
+        }
+    }
+
+    for (const [language, message] of dynamicIrFailures) {
+        if (languageSpecificIRs[language] == null) {
+            context.logger.warn(
+                `Skipping ${language} SDK snippets for API "${workspace.workspaceName ?? ""}": could not build the dynamic snippets IR (${message}). The rest of the docs will still publish.`
+            );
         }
     }
 
@@ -2124,7 +2129,7 @@ export async function generateLanguageSpecificDynamicIRs({
             packageName &&
             !Object.keys(languageSpecificIRs).includes(language) &&
             !skipLanguages.has(language) &&
-            !failedLanguages.has(language)
+            !dynamicIrFailures.has(language)
         ) {
             context.logger.warn();
             context.logger.warn(
