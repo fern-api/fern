@@ -97,8 +97,8 @@ export function formatTypeAnnotation(type: string | null | undefined): string {
 /**
  * Create MDX frontmatter.
  */
-export function createFrontmatter(slug: string, title?: string): string {
-    const parts = ["---", "layout: overview", `slug: ${slug}`];
+export function createFrontmatter(title?: string): string {
+    const parts = ["---", "layout: overview"];
     if (title) {
         parts.push(`title: ${title}`);
     }
@@ -112,13 +112,4 @@ export function createFrontmatter(slug: string, title?: string): string {
  */
 export function escapeTableCell(text: string): string {
     return escapeJsxChars(text.replace(/\|/g, "\\|").replace(/\n/g, " "));
-}
-
-/**
- * Prepend an optional slug prefix (e.g., "api-reference") to a slug.
- * Leading and trailing slashes on the prefix are ignored.
- */
-export function withSlugPrefix(slug: string, slugPrefix: string | undefined): string {
-    const prefix = slugPrefix?.replace(/^\/+|\/+$/g, "") ?? "";
-    return prefix.length > 0 ? `${prefix}/${slug}` : slug;
 }

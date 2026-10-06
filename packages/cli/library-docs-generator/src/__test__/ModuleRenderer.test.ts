@@ -95,23 +95,18 @@ function makeAttr(overrides: Partial<FdrAPI.libraryDocs.AttributeIr>): FdrAPI.li
 }
 
 describe("renderModulePage (frontmatter)", () => {
-    it("renders frontmatter with slug and title from module path", () => {
+    it("renders a title from the module path and no slug", () => {
         const mod = makeModule({ name: "mymod", path: "pkg.mymod" });
         const result = renderModulePage(mod, emptyCtx());
-        expect(result).toContain("slug: reference/python/mymod");
         expect(result).toContain("title: pkg.mymod");
+        expect(result).not.toMatch(/^slug:/m);
     });
 
-    it("builds slug from parentPath when provided", () => {
+    it("omits the slug for nested modules", () => {
         const mod = makeModule({ name: "sub", path: "pkg.sub" });
         const result = renderModulePage(mod, emptyCtx(), "pkg");
-        expect(result).toContain("slug: reference/python/pkg/sub");
-    });
-
-    it("uses module name as root slug component when no parentPath", () => {
-        const mod = makeModule({ name: "nemo_rl", path: "nemo_rl" });
-        const result = renderModulePage(mod, emptyCtx());
-        expect(result).toContain("slug: reference/python/nemo_rl");
+        expect(result).toContain("title: pkg.sub");
+        expect(result).not.toMatch(/^slug:/m);
     });
 
     it("includes layout: overview in frontmatter", () => {
@@ -667,7 +662,7 @@ describe("renderAllModulePages", () => {
         expect(pages["reference/python/pkg.mdx"]).toContain("This module has documentation.");
     });
 
-    it("page content contains correct frontmatter slug", () => {
+    it("page content contains frontmatter title", () => {
         const root = makeModule({
             name: "pkg",
             path: "pkg",
@@ -681,8 +676,8 @@ describe("renderAllModulePages", () => {
         });
         const pages = renderAllModulePages(root, emptyCtx());
 
-        expect(pages["reference/python/pkg.mdx"]).toContain("slug: reference/python/pkg");
-        expect(pages["reference/python/pkg/sub.mdx"]).toContain("slug: reference/python/pkg/sub");
+        expect(pages["reference/python/pkg.mdx"]).toContain("title: pkg");
+        expect(pages["reference/python/pkg/sub.mdx"]).toContain("title: pkg.sub");
     });
 });
 
@@ -693,7 +688,6 @@ describe("renderModulePage (NeMo fixtures)", () => {
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl/algorithms");
 
         // Frontmatter
-        expect(result).toContain("slug: reference/python/nemo_rl/algorithms/distillation");
         expect(result).toContain("title: nemo_rl.algorithms.distillation");
 
         // Module Contents (leaf, no submodules)
@@ -732,8 +726,6 @@ describe("renderModulePage (NeMo fixtures)", () => {
         // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["leaf_attributes_only"]!;
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl");
-
-        expect(result).toContain("slug: reference/python/nemo_rl/package_info");
         expect(result).toContain("title: nemo_rl.package_info");
 
         // No classes or functions sections
@@ -755,8 +747,6 @@ describe("renderModulePage (NeMo fixtures)", () => {
         // biome-ignore lint/style/noNonNullAssertion: fixture lookup
         const mod = NEMO_MODULES["package_with_content"]!;
         const result = renderModulePage(mod, emptyCtx());
-
-        expect(result).toContain("slug: reference/python/nemo_rl");
         expect(result).toContain("title: nemo_rl");
 
         // Every submodule only contains an empty stub -> no pages exist for them, so no links
@@ -799,8 +789,6 @@ describe("renderModulePage (NeMo fixtures)", () => {
             submodules: fixture.submodules.map((sub) => ({ ...sub, docstring: LEAF_DOCSTRING }))
         };
         const result = renderModulePage(mod, emptyCtx(), "nemo_rl");
-
-        expect(result).toContain("slug: reference/python/nemo_rl/evals");
         expect(result).toContain("title: nemo_rl.evals");
 
         // Has submodules (both are leaf nodes)

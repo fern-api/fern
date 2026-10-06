@@ -14,7 +14,6 @@ import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { mkdirSync, writeFileSync } from "fs";
 import jsYaml from "js-yaml";
 import { dirname, join } from "path";
-import { withSlugPrefix } from "../utils/mdx.js";
 import { moduleHasContent, moduleIsPackage, moduleIsPrivate } from "../utils/modulePages.js";
 
 /** A navigation node — either a page or a section. */
@@ -38,8 +37,6 @@ export interface NavSectionNode {
     title: string;
     /** Stable slug derived from module path (e.g., "reference/python/nemo_rl") */
     slug: string;
-    /** Section path relative to the output directory, set only when it differs from `slug` (i.e. `output.slug` is set) */
-    path?: string;
     /** Child nodes (pages or nested sections) */
     children: NavNode[];
 }
@@ -53,33 +50,23 @@ export interface NavSectionNode {
  *
  * @param rootModule - The root module from the library IR
  * @param baseSlug - Base slug prefix (e.g., "reference/python")
- * @param slugPrefix - Optional URL prefix for node slugs that does not affect page IDs (e.g., "api-reference")
  * @returns Navigation items for the root module's children
  */
-export function buildNavigation(
-    rootModule: FdrAPI.libraryDocs.PythonModuleIr,
-    baseSlug: string,
-    slugPrefix?: string
-): NavNode[] {
-    return generateModuleNav(rootModule, "", baseSlug, slugPrefix);
+export function buildNavigation(rootModule: FdrAPI.libraryDocs.PythonModuleIr, baseSlug: string): NavNode[] {
+    return generateModuleNav(rootModule, "", baseSlug);
 }
 
 /**
  * Recursively generate navigation for a module and its children.
  */
-function generateModuleNav(
-    module: FdrAPI.libraryDocs.PythonModuleIr,
-    parentPath: string,
-    baseSlug: string,
-    slugPrefix: string | undefined
-): NavNode[] {
+function generateModuleNav(module: FdrAPI.libraryDocs.PythonModuleIr, parentPath: string, baseSlug: string): NavNode[] {
     const items: NavNode[] = [];
     if (moduleIsPrivate(module)) {
         return items;
     }
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
-    const pageId = `${baseSlug}/${modulePath}.mdx`;
-    const slug = withSlugPrefix(`${baseSlug}/${modulePath}`, slugPrefix);
+    const slug = `${baseSlug}/${modulePath}`;
+    const pageId = `${slug}.mdx`;
 
     const hasContent = moduleHasContent(module);
     const isRoot = parentPath === "";
@@ -93,18 +80,16 @@ function generateModuleNav(
 
     // Process submodules
     for (const submodule of module.submodules) {
-        const subItems = generateModuleNav(submodule, modulePath, baseSlug, slugPrefix);
+        const subItems = generateModuleNav(submodule, modulePath, baseSlug);
         if (subItems.length === 0) {
             continue;
         }
 
-        const submodulePath = `${baseSlug}/${modulePath}/${submodule.name}`;
-        const sectionSlug = withSlugPrefix(submodulePath, slugPrefix);
+        const submodulePath = `${modulePath}/${submodule.name}`;
         items.push({
             type: "section",
             title: submodule.name,
-            slug: sectionSlug,
-            ...(sectionSlug !== submodulePath ? { path: submodulePath } : {}),
+            slug: `${baseSlug}/${submodulePath}`,
             children: subItems
         });
     }

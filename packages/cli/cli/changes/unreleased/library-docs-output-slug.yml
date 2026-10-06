@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Add an optional `output.slug` setting to `libraries` in `docs.yml`. For Python libraries,
-    `fern docs md generate` prepends it to every generated frontmatter slug and navigation slug
-    (e.g. `slug: api-reference` publishes pages under `/api-reference/<library>/...`), so generated
-    reference pages can live under a tab or section. File paths and relative cross-page links are unchanged.
-  type: feat

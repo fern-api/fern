@@ -118,10 +118,10 @@ export function renderModulePage(
     const lines: string[] = [];
 
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
-    const slug = `${ctx.baseSlug}/${modulePath}`;
 
-    // Frontmatter (includes title, so no separate H1 needed)
-    lines.push(createFrontmatter(slug, module.path), "");
+    // No frontmatter slug: a slug there would be absolute from the docs root and skip the
+    // tab/section the page is mounted under, so the URL comes from the navigation instead.
+    lines.push(createFrontmatter(module.path), "");
 
     // Module docstring
     if (module.docstring) {

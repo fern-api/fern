@@ -691,8 +691,7 @@ export const PathLibraryInputSchema = z.object({
 export const LibraryInputConfiguration = z.union([GitLibraryInputSchema, PathLibraryInputSchema]);
 
 export const LibraryOutputConfiguration = z.object({
-    path: z.string(),
-    slug: z.string().optional()
+    path: z.string()
 });
 
 export const LibraryConfiguration = z.object({

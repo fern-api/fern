@@ -61,17 +61,16 @@ interface LibraryNavNode {
     title: string;
     slug: string;
     pageId?: string;
-    /** Section path within the output directory; present only when it differs from `slug`. */
-    path?: string;
     children?: LibraryNavNode[];
 }
 
-/** File path of a library nav node (without extension), which differs from its URL slug when `output.slug` is set. */
-function getLibraryNavNodePath(node: LibraryNavNode): string {
-    if (node.type === "page" && node.pageId != null) {
-        return node.pageId.replace(/\.mdx$/, "");
-    }
-    return node.path ?? node.slug;
+/**
+ * URL segment for a library nav node. The node's `slug` is its path within the output directory
+ * (e.g. `my-lib/my_lib/utils`), not a URL from the docs root, so only its last segment is appended
+ * to the parent's URL; recursion through sections keeps the module tree.
+ */
+function getLibraryNavNodeUrlSegment(node: LibraryNavNode): string {
+    return node.slug.split("/").pop() ?? node.slug;
 }
 
 interface DocsTranslationsConfig {
@@ -2462,13 +2461,11 @@ export class DocsDefinitionResolver {
         // root page, so fall back to the single page written under the library's slug folder.
         let overviewPageId: FernNavigation.PageId | undefined;
         if (navNodes.length > 0) {
-            const firstNode = navNodes[0];
-            const rootPath =
-                firstNode != null ? getLibraryNavNodePath(firstNode).split("/").slice(0, -1).join("/") : "";
-            if (rootPath) {
+            const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
+            if (rootSlug) {
                 overviewPageId =
-                    (await this.registerLibraryMdxPage(outputDir, `${rootPath}/index.mdx`, { quiet: true })) ??
-                    (await this.registerLibraryMdxPage(outputDir, `${rootPath}.mdx`));
+                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
             }
         } else {
             const rootPage = await this.findSoleLibraryRootPage(outputDir, item.libraryName);
@@ -2606,10 +2603,7 @@ export class DocsDefinitionResolver {
                     continue;
                 }
 
-                const slug = parentSlug.apply({
-                    fullSlug: node.slug.split("/"),
-                    urlSlug: kebabCase(node.title)
-                });
+                const slug = parentSlug.apply({ urlSlug: getLibraryNavNodeUrlSegment(node) });
 
                 children.push({
                     id: this.#idgen.get(pageId),
@@ -2628,16 +2622,12 @@ export class DocsDefinitionResolver {
                     availability: undefined
                 });
             } else if (node.type === "section") {
-                const sectionSlug = parentSlug.apply({
-                    fullSlug: node.slug.split("/"),
-                    urlSlug: kebabCase(node.title)
-                });
+                const sectionSlug = parentSlug.apply({ urlSlug: getLibraryNavNodeUrlSegment(node) });
                 const sectionId = this.#idgen.get(`library-section/${node.slug}`);
 
-                const sectionPath = getLibraryNavNodePath(node);
                 const overviewPageId =
-                    (await this.registerLibraryMdxPage(outputDir, `${sectionPath}/index.mdx`, { quiet: true })) ??
-                    (await this.registerLibraryMdxPage(outputDir, `${sectionPath}.mdx`));
+                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`));
 
                 // Filter out child pages whose slug matches the section's slug
                 // (they're already represented by the section's overview page)
