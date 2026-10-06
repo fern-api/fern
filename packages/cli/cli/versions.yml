@@ -1,4 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.147.4
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now registers each distinct API definition once per publish. Versioned
+        docs that reference the same API from every version no longer repeat its AI example
+        enhancement, dynamic snippet generation and upload for each version.
+      type: fix
+    - summary: |
+        `fern generate --docs` now builds each OpenAPI workspace's IR once per run. The publish
+        reuses the IR that the `valid-markdown-links` check already built, instead of converting
+        every spec a second time.
+      type: fix
+    - summary: |
+        `fern generate --docs` and `fern docs publish` no longer build the docs navigation twice.
+        The `missing-redirects` check now runs on the navigation the publish already resolves,
+        instead of resolving the docs a second time during validation. Its warnings are now
+        printed during publishing, and `missing-redirects: error` still stops the publish.
+      type: fix
+    - summary: |
+        `fern generate --docs` no longer calls the AI example enhancement service while publishing,
+        so publishing API reference pages is faster. The service has been returning errors since
+        August, so examples on published pages were not being enhanced anyway. The `ai-examples`
+        setting in `docs.yml` is still accepted but has no effect. Existing
+        `ai_examples_override.yml` files next to OpenAPI specs are still applied.
+      type: chore
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 5.147.3
   changelogEntry:
     - summary: |

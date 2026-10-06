@@ -51,6 +51,35 @@ export declare namespace OSSWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
+// `structuredClone` rejects IR union values, which carry `_visit` methods; copy those by reference.
+function cloneIntermediateRepresentation<T>(value: T): T {
+    if (Array.isArray(value)) {
+        return value.map(cloneIntermediateRepresentation) as T;
+    }
+    if (value == null || typeof value !== "object") {
+        return value;
+    }
+    const clone: Record<string, unknown> = {};
+    for (const [key, entry] of Object.entries(value)) {
+        clone[key] = cloneIntermediateRepresentation(entry);
+    }
+    return clone as T;
+}
+
+function getOrCreateCached<T>(cache: Map<string, Promise<T>>, key: string, create: () => Promise<T>): Promise<T> {
+    let cached = cache.get(key);
+    if (cached == null) {
+        cached = create();
+        cache.set(key, cached);
+        cached.catch(() => {
+            if (cache.get(key) === cached) {
+                cache.delete(key);
+            }
+        });
+    }
+    return cached;
+}
+
 /**
  * Collapses a boolean per-spec setting into a single workspace-level value.
  *
@@ -122,6 +151,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
     /** Guards the orphaned-`auth-schemes` warning so one command warns once. */
     private hasWarnedOrphanedAuthSchemes = false;
+    // Set by `enableResultCaching()`, keyed by the call's arguments.
+    private intermediateRepresentationCache: Map<string, Promise<IntermediateRepresentation>> | undefined;
+    private fernWorkspaceCache: Map<string, Promise<FernWorkspace>> | undefined;
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
@@ -316,7 +348,43 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
      * @internal
      * @owner dsinghvi
      */
+    /**
+     * Memoizes `getIntermediateRepresentation()` and `toFernWorkspace()` on this workspace
+     * for the rest of the process, so a command that resolves the same docs more than once
+     * (`fern generate --docs` validates, then publishes) builds each API once. Only IR calls that
+     * pass `cacheResult: true` are cached, so one-off IRs aren't kept in memory. Specs must not
+     * change on disk while caching is enabled. Each IR caller gets its own clone, since the
+     * docs resolver rewrites IR descriptions in place. Failed calls are not cached.
+     */
+    public enableResultCaching(): void {
+        this.intermediateRepresentationCache ??= new Map();
+        this.fernWorkspaceCache ??= new Map();
+    }
+
     public async getIntermediateRepresentation(
+        args: {
+            context: TaskContext;
+            audiences: Audiences;
+            enableUniqueErrorsPerEndpoint: boolean;
+            generateV1Examples: boolean;
+            logWarnings: boolean;
+            /** Reuse the result across calls once `enableResultCaching()` is on. */
+            cacheResult?: boolean;
+        },
+        settings?: OSSWorkspace.Settings
+    ): Promise<IntermediateRepresentation> {
+        const cache = this.intermediateRepresentationCache;
+        if (cache == null || args.cacheResult !== true) {
+            return this.buildIntermediateRepresentation(args, settings);
+        }
+        const { context, cacheResult, ...cacheArgs } = args;
+        const ir = await getOrCreateCached(cache, JSON.stringify({ ...cacheArgs, settings }), () =>
+            this.buildIntermediateRepresentation(args, settings)
+        );
+        return cloneIntermediateRepresentation(ir);
+    }
+
+    private async buildIntermediateRepresentation(
         {
             context,
             audiences,
@@ -625,6 +693,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
 
+        const cache = this.fernWorkspaceCache;
+        if (cache == null) {
+            return this.buildFernWorkspace({ context }, settings);
+        }
+        return getOrCreateCached(cache, JSON.stringify(settings ?? null), () =>
+            this.buildFernWorkspace({ context }, settings)
+        );
+    }
+
+    private async buildFernWorkspace(
+        { context }: { context: TaskContext },
+        settings?: OSSWorkspace.Settings
+    ): Promise<FernWorkspace> {
         // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
         let effectiveSettings = settings;
         if (this.generatorsConfiguration?.api?.auth == null && settings?.auth == null) {

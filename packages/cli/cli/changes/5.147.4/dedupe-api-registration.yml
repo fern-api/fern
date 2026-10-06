@@ -1,0 +1,10 @@
+- summary: |
+    `fern generate --docs` now registers each distinct API definition once per publish. Versioned
+    docs that reference the same API from every version no longer repeat its AI example
+    enhancement, dynamic snippet generation and upload for each version.
+  type: fix
+- summary: |
+    `fern generate --docs` now builds each OpenAPI workspace's IR once per run. The publish
+    reuses the IR that the `valid-markdown-links` check already built, instead of converting
+    every spec a second time.
+  type: fix

@@ -375,6 +375,25 @@ final class XmlUtils
     }
 
     /**
+     * Normalizes a list-valued attribute or text given either as an array or as a single
+     * separator-delimited string (e.g. `'speech dtmf'`).
+     *
+     * @template T
+     * @param array<T>|string|null $value
+     * @param non-empty-string $separator
+     * @return ?array<T>
+     */
+    public static function toList(array|string|null $value, string $separator): ?array
+    {
+        if ($value === null || is_array($value)) {
+            return $value;
+        }
+        /** @var array<T> $items */
+        $items = self::parseList($value, $separator, fn (string $item): string => $item);
+        return $items;
+    }
+
+    /**
      * Joins scalar values with a separator (for separator-delimited list attributes and text).
      *
      * @param ?iterable<mixed> $values

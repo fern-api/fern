@@ -77,6 +77,43 @@ export class XmlObjectGenerator {
         ].map((property) => this.analyzeProperty(property));
     }
 
+    /**
+     * Constructor overrides for list-valued attributes/text with string-like items: the `$values` key also
+     * accepts a single separator-delimited string (the legacy `['input' => 'speech dtmf']` style), which
+     * `XmlUtils::toList` splits before assignment.
+     */
+    public getFieldConstructorOverrides(
+        objectProperty: FernIr.ObjectProperty
+    ): Pick<php.Field.Args, "constructorType" | "constructorValueWrapper"> | undefined {
+        const fieldName = this.context.getPropertyName(objectProperty.name);
+        const property = this.properties.find((candidate) => candidate.fieldName === fieldName);
+        if (property == null || !this.acceptsDelimitedString(property)) {
+            return undefined;
+        }
+        const type = this.context.phpTypeMapper.convert({ reference: objectProperty.valueType });
+        return {
+            constructorType: this.widenListType(type),
+            constructorValueWrapper: (rawValue) =>
+                php.codeblock((writer) => {
+                    writer.writeNode(this.context.getXmlUtilsClassReference());
+                    writer.write(`::toList(${rawValue}, ${this.phpString(property.listSeparator)})`);
+                })
+        };
+    }
+
+    private acceptsDelimitedString(property: XmlProperty): boolean {
+        return (
+            property.isList &&
+            property.kind !== FernIr.XmlPropertyKind.Element &&
+            (property.value.type === "enum" || (property.value.type === "scalar" && property.value.kind === "string"))
+        );
+    }
+
+    private widenListType(type: php.Type): php.Type {
+        const union = php.Type.union([type.isOptional() ? type.underlyingType() : type, php.Type.string()]);
+        return type.isOptional() ? php.Type.optional(union) : union;
+    }
+
     public addXmlMembers(clazz: php.DataClass): void {
         clazz.addMethod(this.getToXmlElementMethod());
         clazz.addMethod(this.getFromXmlMethod());
@@ -796,13 +833,16 @@ export class XmlObjectGenerator {
         const textProperty = childProperties.find((child) => child.xml?.kind === FernIr.XmlPropertyKind.Text);
         const textFieldName = textProperty != null ? this.context.getPropertyName(textProperty.name) : undefined;
         const textIsOptional = textProperty != null && this.isOptionalTypeReference(textProperty.valueType);
+        const childXml = childType.encoding?.xml;
+        const childGenerator =
+            childXml != null ? new XmlObjectGenerator(this.context, childType, childShape, childXml) : undefined;
         const attributeEntries = childProperties
             .filter((child) => child !== textProperty)
             .map((child) => {
                 const type = this.context.phpTypeMapper.convert({ reference: child.valueType });
                 return {
                     key: this.context.getPropertyName(child.name),
-                    valueType: type,
+                    valueType: childGenerator?.getFieldConstructorOverrides(child)?.constructorType ?? type,
                     optional: type.isOptional(),
                     docs: child.docs
                 };
