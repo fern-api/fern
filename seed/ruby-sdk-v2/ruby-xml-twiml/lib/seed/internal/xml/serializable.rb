@@ -140,7 +140,7 @@ module Seed
               nodes = if value.nil?
                         []
                       elsif property.list
-                        value
+                        Utils.list_items(value)
                       else
                         [value]
                       end
@@ -323,7 +323,7 @@ module Seed
           return if value.nil?
 
           target = property.wrapped ? (wrapped[property.xml_name] ||= []) : typed
-          values = property.list ? value : [value]
+          values = property.list ? Utils.list_items(value) : [value]
           values.each do |item|
             next if item.nil?
 
