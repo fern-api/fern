@@ -12,6 +12,7 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 - [Errors](#errors)
 - [Request Options](#request-options)
 - [Advanced](#advanced)
+  - [Additional Body Properties](#additional-body-properties)
   - [Response Headers](#response-headers)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -56,12 +57,14 @@ func do() {
 
 ## Environments
 
-You can choose between different environments by using the `option.WithBaseURL` option. You can configure any arbitrary base
-URL, which is particularly useful in test environments.
+You can choose between different environments by passing one of the predefined `Environments` to the
+`option.WithEnvironment` option. Each environment carries the base URL of every service the SDK talks to.
+`option.WithBaseURL` points every request at one arbitrary base URL instead, which is particularly useful in
+test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(api.Environments.Production),
+    option.WithEnvironment(api.Environments.Production),
 )
 ```
 
@@ -112,6 +115,23 @@ response, err := client.Auth.Gettoken(
 ```
 
 ## Advanced
+
+### Additional Body Properties
+
+If you need to send a request body property that isn't part of the generated request type (e.g. an
+undocumented or beta field), use the `option.WithBodyProperties` request option. Keys are sent exactly as
+provided (use the API's wire-format names), and they override any generated field with the same name. If the
+endpoint has no request body, a JSON body is created from the given properties. Body properties are applied to
+JSON and form URL encoded request bodies; they are not applied to multipart file upload or raw byte requests.
+
+```go
+response, err := client.Auth.Gettoken(
+    ...,
+    option.WithBodyProperties(map[string]interface{}{
+        "custom_field": "custom-value",
+    }),
+)
+```
 
 ### Response Headers
 

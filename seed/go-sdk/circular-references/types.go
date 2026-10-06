@@ -38,10 +38,12 @@ func (i *ImportingA) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *ImportingA) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetA sets the A field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (r *RootType) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RootType) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetS sets the S field and marks it as non-optional;

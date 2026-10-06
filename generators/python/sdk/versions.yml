@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.34.4
+  changelogEntry:
+    - summary: |
+        On Python 3.10 and older, `str()` on a generated enum member now returns its value (e.g. `WALMART_US`)
+        instead of `ClassName.WALMART_US`, matching `enum.StrEnum` on Python 3.11+. Previously, enum query
+        parameters were sent as `ClassName.MEMBER` on those versions when `enum_type: forward_compatible_python_enums`
+        or `python_enums` was used.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.34.3
+  changelogEntry:
+    - summary: |
+        Redact every header auth scheme's header (e.g. `PLAID-SECRET`) in debug logs, in addition to
+        `Authorization` and API-key headers, and merge request headers case-insensitively so a
+        `plaid-secret` override replaces `PLAID-SECRET` instead of sending both.
+      type: fix
+    - summary: |
+        Map `4XX`/`5XX` wildcard error responses to their typed error classes (concrete status codes
+        still win) and keep the real HTTP status code on the raised error.
+      type: fix
+    - summary: |
+        Fix offset pagination when the offset is an omitted body parameter (no more `OMIT + 1`), and
+        advance nested offsets such as `$request.options.offset` on each page, creating `options` when
+        it was omitted (through its model, so aliased fields keep their wire names) and preserving its
+        other fields.
+      type: fix
+    - summary: |
+        Read environment-variable-backed client parameters (e.g. API keys) when the client is
+        constructed instead of when the module is imported. Passing `api_key=None` explicitly now
+        falls back to the environment variable, the same as omitting the argument.
+      type: fix
+    - summary: |
+        Generate README.md for GitHub output even when no snippet path is configured (e.g. `fern generate --local`),
+        and document binary (`format: binary`) body parameters as `bytes` in reference.md.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
 - version: 5.34.2
   changelogEntry:
     - summary: |

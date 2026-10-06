@@ -5,6 +5,7 @@ package com.seed.api.resources.contacts;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.contacts.requests.CreateContactRequest;
 import com.seed.api.resources.contacts.requests.GetContactsRequest;
 import com.seed.api.types.Contact;
@@ -32,41 +33,84 @@ public class AsyncContactsClient {
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
     public CompletableFuture<Optional<Contact>> create(CreateContactRequest request) {
-        return this.rawClient.create(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Optional<Contact>>> rawFuture = this.rawClient.create(request);
+        CompletableFuture<Optional<Contact>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Creates a new contact. Returns 200 with the contact or 204 with no content.
      */
     public CompletableFuture<Optional<Contact>> create(CreateContactRequest request, RequestOptions requestOptions) {
-        return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Optional<Contact>>> rawFuture =
+                this.rawClient.create(request, requestOptions);
+        CompletableFuture<Optional<Contact>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<Contact> get(String id) {
-        return this.rawClient.get(id).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Contact>> rawFuture = this.rawClient.get(id);
+        CompletableFuture<Contact> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<Contact> get(String id, RequestOptions requestOptions) {
-        return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Contact>> rawFuture = this.rawClient.get(id, requestOptions);
+        CompletableFuture<Contact> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<Contact> get(String id, GetContactsRequest request) {
-        return this.rawClient.get(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Contact>> rawFuture = this.rawClient.get(id, request);
+        CompletableFuture<Contact> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Gets a contact by ID. Returns 200 with the contact.
      */
     public CompletableFuture<Contact> get(String id, GetContactsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Contact>> rawFuture = this.rawClient.get(id, request, requestOptions);
+        CompletableFuture<Contact> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

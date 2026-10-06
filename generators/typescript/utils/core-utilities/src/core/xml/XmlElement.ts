@@ -47,11 +47,13 @@ export class XmlElement implements XmlSerializable {
         });
     }
 
-    public toXml(): string {
+    /** Serializes the element, without an XML declaration unless `xmlDeclaration` is `true`. */
+    public toXml(xmlDeclaration = false): string {
         return serializeXmlElement({
             name: this.name,
             attributes: Object.entries(this.attributes).map(([name, value]) => ({ name, value })),
             content: this.content,
+            xmlDeclaration,
         });
     }
 

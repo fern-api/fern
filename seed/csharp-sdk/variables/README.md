@@ -45,8 +45,8 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedVariables;
 
-var client = new SeedVariablesClient();
-await client.Service.PostAsync("endpointParam");
+var client = new SeedVariablesClient(clientOptions: new ClientOptions { RootVariable = "endpointParam" });
+await client.Service.PostAsync();
 ```
 
 ## Exception Handling
@@ -188,7 +188,10 @@ var response = await client.Service.PostAsync(
 ### Additional Body Properties
 
 If you would like to send additional body properties as part of the request, use the `AdditionalBodyProperties` request option.
-This is only applied to JSON requests.
+These properties are merged into the serialized JSON body using their wire-format names; on a key collision the additional
+property wins, and nested objects are merged recursively. If the endpoint has no request body, the additional properties
+are sent as the JSON body. Form-urlencoded requests merge the additional properties the same way before encoding;
+multipart (file upload) requests are not supported.
 
 ```csharp
 var response = await client.Service.PostAsync(

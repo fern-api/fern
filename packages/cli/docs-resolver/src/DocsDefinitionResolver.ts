@@ -41,7 +41,7 @@ import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/wo
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { existsSync } from "fs";
-import { readFile } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
 import jsYaml from "js-yaml";
 import { camelCase, kebabCase } from "lodash-es";
@@ -619,14 +619,10 @@ export class DocsDefinitionResolver {
         const imageParseStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
-                const { filepaths, markdown: newMarkdown } = parseImagePaths(
-                    markdown,
-                    {
-                        absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                        absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-                    },
-                    this.taskContext
-                );
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                });
 
                 // store the updated markdown in pages
                 this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
@@ -1335,6 +1331,7 @@ export class DocsDefinitionResolver {
         const { defaultLocale, translations } = translationsConfig;
         const fernFolder = this.docsWorkspace.absoluteFilePath;
         const result = new Map<string, IntermediateRepresentation>();
+        const useV3Parser = this.shouldUseOpenApiParserV3();
 
         for (const locale of translations) {
             if (locale === defaultLocale) {
@@ -1347,16 +1344,30 @@ export class DocsDefinitionResolver {
             }
 
             try {
-                const translatedIr = await translatedWorkspace.getIntermediateRepresentation(
-                    {
-                        context: this.taskContext,
-                        audiences: item.audiences,
-                        enableUniqueErrorsPerEndpoint: true,
-                        generateV1Examples: false,
-                        logWarnings: false
-                    },
-                    { docsVisibility: this.docsVisibility }
-                );
+                let translatedIr: IntermediateRepresentation | undefined;
+                if (useV3Parser) {
+                    try {
+                        translatedIr = await translatedWorkspace.getIntermediateRepresentation(
+                            {
+                                context: this.taskContext,
+                                audiences: item.audiences,
+                                enableUniqueErrorsPerEndpoint: true,
+                                generateV1Examples: false,
+                                logWarnings: false
+                            },
+                            { docsVisibility: this.docsVisibility }
+                        );
+                    } catch (error) {
+                        this.taskContext.logger.warn(
+                            `v3 parser failed for translated API definition (locale "${locale}"): ${extractErrorMessage(
+                                error
+                            )}. Falling back to the v2 parser.`
+                        );
+                    }
+                }
+                if (translatedIr == null) {
+                    translatedIr = await this.buildIrWithFernWorkspace(translatedWorkspace, item.audiences);
+                }
                 result.set(locale, translatedIr);
                 this.taskContext.logger.debug(
                     `Built translated API definition for locale "${locale}" (api: ${
@@ -1375,6 +1386,60 @@ export class DocsDefinitionResolver {
         }
 
         return result.size > 0 ? result : undefined;
+    }
+
+    private shouldUseOpenApiParserV3(): boolean {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        return openapiParserV3 == null || openapiParserV3;
+    }
+
+    private async toFernWorkspaceForDocs(apiWorkspace: AbstractAPIWorkspace<unknown>): Promise<FernWorkspace> {
+        return apiWorkspace.toFernWorkspace(
+            { context: this.taskContext },
+            {
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false,
+                objectQueryParameters: true,
+                preserveSchemaIds: true,
+                docsVisibility: this.docsVisibility
+            }
+        );
+    }
+
+    private generateIrFromFernWorkspace(
+        workspace: FernWorkspace,
+        audiences: docsYml.DocsNavigationItem.ApiSection["audiences"]
+    ): IntermediateRepresentation {
+        return generateIntermediateRepresentation({
+            workspace,
+            audiences,
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false,
+            exampleGeneration: {
+                disabled: false,
+                skipAutogenerationIfManualExamplesExist: true,
+                skipErrorAutogenerationIfManualErrorExamplesExist: true
+            },
+            readme: undefined,
+            version: undefined,
+            packageName: undefined,
+            context: this.taskContext,
+            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+        });
+    }
+
+    /**
+     * The v2 ("Fern workspace") parser path: converts the API workspace to a Fern
+     * definition and generates the IR from it. Used when the v3 OpenAPI parser is
+     * disabled or fails.
+     */
+    private async buildIrWithFernWorkspace(
+        apiWorkspace: AbstractAPIWorkspace<unknown>,
+        audiences: docsYml.DocsNavigationItem.ApiSection["audiences"]
+    ): Promise<IntermediateRepresentation> {
+        const workspace = await this.toFernWorkspaceForDocs(apiWorkspace);
+        return this.generateIrFromFernWorkspace(workspace, audiences);
     }
 
     /**
@@ -1949,8 +2014,7 @@ export class DocsDefinitionResolver {
         let workspace: FernWorkspace | undefined = undefined;
         let openapiWorkspace: OSSWorkspace | undefined = undefined;
         let openapiError: unknown = undefined;
-        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
-        const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        const useV3Parser = this.shouldUseOpenApiParserV3();
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser && shouldAttemptOpenApiIr) {
             try {
@@ -2009,51 +2073,17 @@ export class DocsDefinitionResolver {
             if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await (
+            workspace = await this.toFernWorkspaceForDocs(
                 directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
-            ).toFernWorkspace(
-                { context: this.taskContext },
-                {
-                    enableUniqueErrorsPerEndpoint: true,
-                    detectGlobalHeaders: false,
-                    objectQueryParameters: true,
-                    preserveSchemaIds: true,
-                    docsVisibility: this.docsVisibility
-                }
             );
-            ir = generateIntermediateRepresentation({
-                workspace,
-                audiences: item.audiences,
-                generationLanguage: undefined,
-                keywords: undefined,
-                smartCasing: false,
-                exampleGeneration: {
-                    disabled: false,
-                    skipAutogenerationIfManualExamplesExist: true,
-                    skipErrorAutogenerationIfManualErrorExamplesExist: true
-                },
-                readme: undefined,
-                version: undefined,
-                packageName: undefined,
-                context: this.taskContext,
-                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-            });
+            ir = this.generateIrFromFernWorkspace(workspace, item.audiences);
         } else {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
             // access to the resolved API source file paths.
             try {
-                workspace = await (
+                workspace = await this.toFernWorkspaceForDocs(
                     directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
-                ).toFernWorkspace(
-                    { context: this.taskContext },
-                    {
-                        enableUniqueErrorsPerEndpoint: true,
-                        detectGlobalHeaders: false,
-                        objectQueryParameters: true,
-                        preserveSchemaIds: true,
-                        docsVisibility: this.docsVisibility
-                    }
                 );
             } catch (error) {
                 // If we can't load the workspace, log a warning but continue
@@ -2081,17 +2111,17 @@ export class DocsDefinitionResolver {
             );
         }
 
-        // Resolve the workspace for GraphQL extraction: prefer the already-resolved
-        // openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
-        let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
-        if (graphqlWorkspace == null) {
+        // Resolve the OSS workspace for GraphQL extraction and translated API builds: prefer the
+        // already-resolved openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
+        let resolvedOssWorkspace: OSSWorkspace | undefined = openapiWorkspace;
+        if (resolvedOssWorkspace == null) {
             try {
-                graphqlWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                resolvedOssWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
             } catch {
                 // expected for Fern Definition APIs (no OSS workspace)
             }
         }
-        const graphqlData = await this.extractGraphQLData(graphqlWorkspace, {
+        const graphqlData = await this.extractGraphQLData(resolvedOssWorkspace, {
             failOnError: directApiWorkspace != null
         });
 
@@ -2163,11 +2193,11 @@ export class DocsDefinitionResolver {
 
         const apiReferenceNode = node.get();
 
-        // Only the v3 (OpenAPI) parser path supports translated API IRs, since it needs
-        // an OSS workspace whose spec file paths can be remapped to the translated dir.
+        // Translated API IRs need an OSS workspace whose spec file paths can be remapped to the
+        // translated dir; they're built with the same parser (v3, or v2) as the base locale.
         let translatedIrsByLocale: Map<string, IntermediateRepresentation> | undefined;
-        if (this.buildTranslatedApiDefinitions && openapiWorkspace != null) {
-            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, openapiWorkspace);
+        if (this.buildTranslatedApiDefinitions && resolvedOssWorkspace != null) {
+            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, resolvedOssWorkspace);
         }
 
         // Store pending registration for deferred processing after markdownFilesToPathName is available
@@ -2413,7 +2443,9 @@ export class DocsDefinitionResolver {
         });
         const sectionId = this.#idgen.get(`library/${item.libraryName}`);
 
-        // Derive root page from nav nodes' common parent slug (same pattern as section overviews)
+        // Derive root page from nav nodes' common parent slug (same pattern as section overviews).
+        // A library whose only children are private modules has no nav nodes but still has a
+        // root page, so fall back to the single page written under the library's slug folder.
         let overviewPageId: FernNavigation.PageId | undefined;
         if (navNodes.length > 0) {
             const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
@@ -2422,6 +2454,10 @@ export class DocsDefinitionResolver {
                     (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
                     (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
             }
+        } else {
+            const rootPage = await this.findSoleLibraryRootPage(outputDir, item.libraryName);
+            overviewPageId =
+                rootPage != null ? await this.registerLibraryMdxPage(outputDir, rootPage, { quiet: true }) : undefined;
         }
 
         const children = await this.convertLibraryNavNodes(navNodes, outputDir, sectionSlug);
@@ -2482,6 +2518,33 @@ export class DocsDefinitionResolver {
             );
             return null;
         }
+    }
+
+    /**
+     * Locate the root page of a library whose `_navigation.yml` is empty. Generated output
+     * lives under `<outputDir>/<libraryName>/`; the root module is either `<root>.mdx` or
+     * `<root>/index.mdx`. Returns the relative path only when exactly one candidate exists.
+     */
+    private async findSoleLibraryRootPage(
+        outputDir: AbsoluteFilePath,
+        libraryName: string
+    ): Promise<string | undefined> {
+        const libraryDir = join(outputDir, RelativeFilePath.of(libraryName));
+        if (!existsSync(libraryDir)) {
+            return undefined;
+        }
+        const candidates: string[] = [];
+        for (const entry of await readdir(libraryDir, { withFileTypes: true })) {
+            if (entry.isFile() && entry.name.endsWith(".mdx")) {
+                candidates.push(`${libraryName}/${entry.name}`);
+            } else if (entry.isDirectory()) {
+                const indexPath = `${libraryName}/${entry.name}/index.mdx`;
+                if (existsSync(join(outputDir, RelativeFilePath.of(indexPath)))) {
+                    candidates.push(indexPath);
+                }
+            }
+        }
+        return candidates.length === 1 ? candidates[0] : undefined;
     }
 
     /**

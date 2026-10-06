@@ -13,6 +13,7 @@
 
 import type { CppVariableIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta } from "../context.js";
+import { getShortName } from "../context.js";
 import {
     renderDescriptionBlocksDeduped,
     renderSeeAlso,
@@ -21,7 +22,12 @@ import {
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
 import { isSfinaeParam, renderClassTemplateParams } from "./ParamRenderer.js";
-import { normalizeAngleBracketSpacing, renderBareCodeBlock } from "./SignatureRenderer.js";
+import {
+    buildTypeInfoLinks,
+    normalizeAngleBracketSpacing,
+    renderBareCodeBlock,
+    renderLinkedCodeBlock
+} from "./SignatureRenderer.js";
 import {
     formatTemplateParam,
     renderDocstringCallouts,
@@ -149,7 +155,8 @@ export function renderVariablePage(variable: CppVariableIr, meta: CompoundMeta):
         // Signature
         const signature = formatVariableSignature(variable);
         sections.push("");
-        sections.push(renderBareCodeBlock(signature));
+        const links = buildTypeInfoLinks(variable.typeInfo, [variable.name, getShortName(variable.path)]);
+        sections.push(renderLinkedCodeBlock(signature, links));
 
         // Description blocks
         if (docstring?.description && docstring.description.length > 0) {

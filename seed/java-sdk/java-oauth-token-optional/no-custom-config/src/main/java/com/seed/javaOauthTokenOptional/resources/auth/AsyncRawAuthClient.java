@@ -4,6 +4,7 @@
 package com.seed.javaOauthTokenOptional.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.javaOauthTokenOptional.core.BodyProperties;
 import com.seed.javaOauthTokenOptional.core.ClientOptions;
 import com.seed.javaOauthTokenOptional.core.ObjectMappers;
 import com.seed.javaOauthTokenOptional.core.RequestOptions;
@@ -14,6 +15,8 @@ import com.seed.javaOauthTokenOptional.core.SeedJavaOauthTokenOptionalHttpRespon
 import com.seed.javaOauthTokenOptional.resources.auth.requests.CreateOauth2TokenRequest;
 import com.seed.javaOauthTokenOptional.resources.auth.types.TokenResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -50,10 +53,16 @@ public class AsyncRawAuthClient {
         }
         FormBody.Builder body = new FormBody.Builder();
         try {
-            body.add("client_id", String.valueOf(request.getClientId()));
-            body.add("client_secret", String.valueOf(request.getClientSecret()));
+            Map<String, Object> formParams = new LinkedHashMap<>();
+            formParams.put("client_id", request.getClientId());
+            formParams.put("client_secret", request.getClientSecret());
             if (request.getGrantType().isPresent()) {
-                body.add("grant_type", String.valueOf(request.getGrantType().get()));
+                formParams.put("grant_type", request.getGrantType().get());
+            }
+            for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
+                            formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
+                    .entrySet()) {
+                body.add(entry.getKey(), String.valueOf(entry.getValue()));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -79,7 +88,8 @@ public class AsyncRawAuthClient {
                     .build();
         }
         CompletableFuture<SeedJavaOauthTokenOptionalHttpResponse<TokenResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -107,6 +117,11 @@ public class AsyncRawAuthClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOauthTokenOptionalException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

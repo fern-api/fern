@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.66.0
+  changelogEntry:
+    - summary: |
+        Support SDK variables (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). Path
+        parameters bound to a variable via `x-fern-sdk-variable` are removed from endpoint
+        signatures and request wrappers and are configured once on the client with the generated
+        `option.With<Variable>(...)` helper (also accepted per request). Variables that declare an
+        `env` fall back to that environment variable, and a string variable that is still unset
+        fails with a clear error before the request is sent.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.65.3
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `String()` instead of JSON, and `ToXml()` prepends the
+        `<?xml version="1.0" encoding="UTF-8"?>` declaration. Use
+        `ToXmlElement().ToXml()` to serialize without the declaration.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.65.2
+  changelogEntry:
+    - summary: |
+        `option.WithBodyProperties` now overrides generated request fields that share the same wire-format key
+        instead of returning a `cannot add extra property` error, so you can force or replace any JSON or form URL
+        encoded request body property. The generated README documents the option in a new "Additional Body
+        Properties" section, including that it isn't applied to multipart file upload or raw byte requests.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.65.1
+  changelogEntry:
+    - summary: |
+        The generated README's client snippets use the configured client constructor (`clientName`,
+        `exportedClientName`, `clientConstructorName`) instead of always writing `client.NewClient`,
+        and the Environments section of a multi-URL SDK passes the environment through
+        `option.WithEnvironment` instead of `option.WithBaseURL`, which takes a string and does not
+        compile against an environment struct.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.65.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `legacyNullableAliasPointers` custom config option. When enabled, optional or
+        nullable fields that reference an alias which already renders as a Go pointer
+        (e.g. `type DiscoveryURL = *string`) keep the outer pointer (`*DiscoveryURL`), matching
+        SDKs generated before v1.46.1. Field types, setters, and code snippets all use the legacy
+        shape. The option is off by default, so existing output is unchanged.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.64.3
+  changelogEntry:
+    - summary: |
+        Restore pointer types for optional fields that reference a nullable list, map, or
+        `unknown` alias (for example a `type: [object, "null"]` schema with
+        `additionalProperties`, or a `type: [array, "null"]` schema). Since 1.46.1 these
+        fields were generated as bare values (`Metadata MetadataAlias`) instead of
+        pointers (`Metadata *MetadataAlias`), which was a breaking change for existing
+        SDKs. The double-pointer guard now only applies to aliases that actually render
+        as Go pointers (nullable primitives, enums, objects, and unions). Dynamic snippets
+        now render `&Alias{...}` literals for these fields (including aliases of such
+        aliases), take the address of `unknown` alias values, and no longer emit `&&` for
+        aliases that already render as pointers.
+      type: fix
+  createdAt: "2026-10-01"
+  irVersion: 67
 - version: 1.64.2
   changelogEntry:
     - summary: |

@@ -196,12 +196,51 @@ public class PaginationPathUtils {
                     .build());
         }
 
-        for (EnrichedCursorPathGetter enrichedGetter : enrichedGetters) {
+        for (int i = 0; i < enrichedGetters.size(); i++) {
+            EnrichedCursorPathGetter enrichedGetter = enrichedGetters.get(i);
+            TypeReference enrichedGetterTypeReference = referencesByIndex.get(enrichedItems.size() - 1 - i);
             ImmutableEnrichedCursorPathSetter.Builder builder =
                     EnrichedCursorPathSetter.builder().getter(enrichedGetter);
+            String setPropertyName = enrichedGetter.previous().isEmpty()
+                    ? propertyOverrideOnRequest
+                    : enrichedGetter.previous().get().propertyName();
+            String setPropertyValue = enrichedGetter.previous().isEmpty()
+                    ? propertyOverrideValueOnRequest
+                    : enrichedGetter.previous().get().optional()
+                            ? enrichedGetter.previous().get().variableName() + "_"
+                            : enrichedGetter.previous().get().variableName();
+            boolean createWhenAbsent = enrichedGetter.optional()
+                    && canBuildWithSingleProperty(enrichedGetterTypeReference, setPropertyName, generatorContext);
+            CodeBlock createWhenAbsentBlock = CodeBlock.of(
+                    ".orElseGet(() -> $T.builder().$L($L).build())",
+                    enrichedGetter.typeName(),
+                    setPropertyName,
+                    setPropertyValue);
 
             if (enrichedGetter.previous().isEmpty()) {
-                if (enrichedGetter.optional()) {
+                if (createWhenAbsent) {
+                    builder.setter(CodeBlock.builder()
+                            .add(
+                                    "$T $L = $T.of(",
+                                    ParameterizedTypeName.get(ClassName.get(Optional.class), enrichedGetter.typeName()),
+                                    enrichedGetter.variableName(),
+                                    Optional.class)
+                            .add(
+                                    "$L.map(($T $L) -> ",
+                                    enrichedGetter.getter(),
+                                    enrichedGetter.typeName(),
+                                    enrichedGetter.variableName() + "_")
+                            .add(
+                                    "$T.builder().from($L).$L($L).build()",
+                                    enrichedGetter.typeName(),
+                                    enrichedGetter.variableName() + "_",
+                                    propertyOverrideOnRequest,
+                                    propertyOverrideValueOnRequest)
+                            .add(")")
+                            .add(createWhenAbsentBlock)
+                            .add(")")
+                            .build());
+                } else if (enrichedGetter.optional()) {
                     builder.setter(CodeBlock.builder()
                             .add(
                                     "$T $L = ",
@@ -233,7 +272,34 @@ public class PaginationPathUtils {
                 }
             } else {
                 if (enrichedGetter.previous().get().optional()) {
-                    if (enrichedGetter.optional()) {
+                    if (createWhenAbsent) {
+                        builder.setter(CodeBlock.builder()
+                                .add(
+                                        "$T $L = ",
+                                        ParameterizedTypeName.get(
+                                                ClassName.get(Optional.class), enrichedGetter.typeName()),
+                                        enrichedGetter.variableName())
+                                .add(
+                                        "$L.map(($T $L) -> ",
+                                        enrichedGetter.previous().get().variableName(),
+                                        enrichedGetter.previous().get().typeName(),
+                                        enrichedGetter.previous().get().variableName() + "_")
+                                .add(
+                                        "$L.map(($T $L) -> ",
+                                        enrichedGetter.getter(),
+                                        enrichedGetter.typeName(),
+                                        enrichedGetter.variableName() + "_")
+                                .add(
+                                        "$T.builder().from($L).$L($L).build()",
+                                        enrichedGetter.typeName(),
+                                        enrichedGetter.variableName() + "_",
+                                        enrichedGetter.previous().get().propertyName(),
+                                        enrichedGetter.previous().get().variableName() + "_")
+                                .add(")")
+                                .add(createWhenAbsentBlock)
+                                .add(")")
+                                .build());
+                    } else if (enrichedGetter.optional()) {
                         builder.setter(CodeBlock.builder()
                                 .add(
                                         "$T $L = ",
@@ -277,7 +343,30 @@ public class PaginationPathUtils {
                                 .build());
                     }
                 } else {
-                    if (enrichedGetter.optional()) {
+                    if (createWhenAbsent) {
+                        builder.setter(CodeBlock.builder()
+                                .add(
+                                        "$T $L = $T.of(",
+                                        ParameterizedTypeName.get(
+                                                ClassName.get(Optional.class), enrichedGetter.typeName()),
+                                        enrichedGetter.variableName(),
+                                        Optional.class)
+                                .add(
+                                        "$L.map(($T $L) -> ",
+                                        enrichedGetter.getter(),
+                                        enrichedGetter.typeName(),
+                                        enrichedGetter.variableName() + "_")
+                                .add(
+                                        "$T.builder().from($L).$L($L).build()",
+                                        enrichedGetter.typeName(),
+                                        enrichedGetter.variableName() + "_",
+                                        enrichedGetter.previous().get().propertyName(),
+                                        enrichedGetter.previous().get().variableName())
+                                .add(")")
+                                .add(createWhenAbsentBlock)
+                                .add(")")
+                                .build());
+                    } else if (enrichedGetter.optional()) {
                         builder.setter(CodeBlock.builder()
                                 .add(
                                         "$T $L = ",
@@ -315,6 +404,35 @@ public class PaginationPathUtils {
         }
 
         return result;
+    }
+
+    // True when an instance of the referenced object can be built by setting only the given property,
+    // i.e. every other property is optional, nullable, a collection, or a literal.
+    private static boolean canBuildWithSingleProperty(
+            TypeReference typeReference, String propertyName, AbstractGeneratorContext<?, ?> generatorContext) {
+        Optional<ObjectTypeDeclaration> maybeObject = typeReference
+                .visit(new TypeReferenceResolver(generatorContext))
+                .flatMap(declaration -> declaration.getShape().getObject());
+        if (maybeObject.isEmpty()) {
+            return false;
+        }
+        ObjectTypeDeclaration objectDeclaration = maybeObject.get();
+        List<ObjectProperty> properties = new ArrayList<>(objectDeclaration.getProperties());
+        objectDeclaration.getExtendedProperties().ifPresent(properties::addAll);
+        return properties.stream()
+                .filter(property -> !NameUtils.getName(property.getName())
+                        .getCamelCase()
+                        .getUnsafeName()
+                        .equals(propertyName))
+                .allMatch(property -> property.getValueType()
+                        .getContainer()
+                        .map(container -> container.isOptional()
+                                || container.isNullable()
+                                || container.isList()
+                                || container.isSet()
+                                || container.isMap()
+                                || container.isLiteral())
+                        .orElse(false));
     }
 
     // Produces a unique local variable name for each path item. Items whose camelCase property

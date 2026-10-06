@@ -1,0 +1,240 @@
+{
+  "specVersion": "1.0.0",
+  "title": "SDK variables with environment variable fallback",
+  "servers": [
+    {
+      "url": "https://api.example.com"
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createMessage",
+      "tags": [
+        "Messages"
+      ],
+      "pathParameters": [
+        {
+          "name": "accountId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "CreateMessageRequestAccountId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "variableReference": "accountId",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "regionCode",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "CreateMessageRequestRegionCode",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "variableReference": "regionCode",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateMessageRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createMessageRequestBody",
+              "key": "body",
+              "schema": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreateMessageRequestBody",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CreateMessageRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Created",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createMessageResponseSid",
+              "key": "sid",
+              "schema": {
+                "generatedName": "CreateMessageResponseSid",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CreateMessageResponseSid",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CreateMessageResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/accounts/{accountId}/regions/{regionCode}/messages",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "accountId",
+              "value": {
+                "value": {
+                  "value": "accountId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "regionCode",
+              "value": {
+                "value": {
+                  "value": "regionCode",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "body": {
+                "value": {
+                  "value": "body",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "sid": {
+                  "value": {
+                    "value": "sid",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {
+    "accountId": {
+      "schema": {
+        "generatedName": "AccountId",
+        "schema": {
+          "type": "string"
+        },
+        "description": "The account to operate on. Falls back to the ACCOUNT_ID environment variable."
+      },
+      "envVar": "ACCOUNT_ID"
+    },
+    "regionCode": {
+      "schema": {
+        "generatedName": "RegionCode",
+        "schema": {
+          "type": "string"
+        },
+        "description": "A required variable without an environment variable fallback."
+      }
+    }
+  },
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

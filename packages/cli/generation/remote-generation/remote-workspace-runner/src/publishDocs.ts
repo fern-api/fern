@@ -11,6 +11,7 @@ import {
     DocsDefinitionResolver,
     findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
+    markUntranslatedNavNodesNoindex,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -1109,7 +1110,7 @@ export async function publishDocs({
                                             editThisPageUrl,
                                             editThisPageLaunch: basePage?.editThisPageLaunch
                                         }
-                                    ];
+                                    ] as const;
                                 } catch (pageError) {
                                     context.logger.warn(
                                         `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
@@ -1119,13 +1120,12 @@ export async function publishDocs({
                             })
                         );
 
+                        const successfulTranslatedPageEntries = translatedPageEntries.filter(
+                            (entry): entry is NonNullable<typeof entry> => entry != null
+                        );
                         const translatedPages = {
                             ...docsDefinition.pages,
-                            ...Object.fromEntries(
-                                translatedPageEntries.filter(
-                                    (entry): entry is NonNullable<typeof entry> => entry != null
-                                )
-                            )
+                            ...Object.fromEntries(successfulTranslatedPageEntries)
                         };
                         let updatedRoot = applyTranslatedFrontmatterToNavTree(
                             docsDefinition.config.root,
@@ -1152,6 +1152,7 @@ export async function publishDocs({
                         // then repoint the nav's apiDefinitionId references at the translated
                         // definitions registered above.
                         const localeApiIdMap = translatedApiIdsByLocale.get(locale);
+                        const translatedApiDefinitionIds = new Set<string>();
                         if (localeApiIdMap != null && localeApiIdMap.size > 0 && updatedRoot != null) {
                             const baseApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
                             const translatedApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
@@ -1213,8 +1214,13 @@ export async function publishDocs({
                                     continue;
                                 }
                                 updateApiDefinitionIdInTree(updatedRoot, baseApiId, translatedApiId);
+                                translatedApiDefinitionIds.add(translatedApiId);
                             }
                         }
+                        updatedRoot = markUntranslatedNavNodesNoindex(updatedRoot, {
+                            translatedPageIds: new Set(successfulTranslatedPageEntries.map(([path]) => path)),
+                            translatedApiDefinitionIds
+                        });
 
                         const translatedDefinition: DocsDefinition = {
                             ...docsDefinition,

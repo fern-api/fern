@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "f834287e",
+            "id": {
+                "method": "POST",
+                "path": "/asset_report/pdf/get",
+                "identifier_override": "endpoint_assetReport.getPdf"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.AssetReportPdfGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.assetReport().getPdf(\n            AssetReportPdfGetRequest\n                .builder()\n                .assetReportToken(\"asset_report_token\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.AssetReportPdfGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.assetReport().getPdf(\n            AssetReportPdfGetRequest\n                .builder()\n                .assetReportToken(\"asset_report_token\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f60e3f03",
+            "id": {
+                "method": "POST",
+                "path": "/asset_report/get",
+                "identifier_override": "endpoint_assetReport.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.AssetReportPdfGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.assetReport().get(\n            AssetReportPdfGetRequest\n                .builder()\n                .assetReportToken(\"asset_report_token\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.AssetReportPdfGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.assetReport().get(\n            AssetReportPdfGetRequest\n                .builder()\n                .assetReportToken(\"asset_report_token\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

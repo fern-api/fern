@@ -37,16 +37,13 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 //	client.Service.Post(
 //	    context.TODO(),
-//	    "<endpointParam>",
 //	)
 func (c *Client) Post(
 	ctx context.Context,
-	endpointParam string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
 		ctx,
-		endpointParam,
 		opts...,
 	)
 	if err != nil {

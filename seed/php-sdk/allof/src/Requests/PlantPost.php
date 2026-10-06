@@ -3,16 +3,28 @@
 namespace Seed\Requests;
 
 use Seed\Core\Json\JsonSerializableType;
-use Seed\Traits\PlantBase;
-use Seed\Types\PlantPostSunExposure;
+use Seed\Traits\PlantStrict;
 use Seed\Core\Json\JsonProperty;
+use Seed\Types\PlantBaseWateringFrequency;
+use Seed\Types\PlantPostSunExposure;
 use DateTime;
 use Seed\Core\Types\Date;
-use Seed\Types\PlantBaseWateringFrequency;
 
 class PlantPost extends JsonSerializableType
 {
-    use PlantBase;
+    use PlantStrict;
+
+    /**
+     * @var string $commonName The common name of the plant.
+     */
+    #[JsonProperty('commonName')]
+    public string $commonName;
+
+    /**
+     * @var value-of<PlantBaseWateringFrequency> $wateringFrequency
+     */
+    #[JsonProperty('wateringFrequency')]
+    public string $wateringFrequency;
 
     /**
      * @var value-of<PlantPostSunExposure> $sunExposure Required sun exposure level.
@@ -34,24 +46,24 @@ class PlantPost extends JsonSerializableType
 
     /**
      * @param array{
+     *   commonName: string,
+     *   wateringFrequency: value-of<PlantBaseWateringFrequency>,
      *   sunExposure: value-of<PlantPostSunExposure>,
      *   species: string,
      *   family: string,
      *   genus: string,
      *   plantedAt?: ?DateTime,
      *   soilType?: ?string,
-     *   commonName?: ?string,
-     *   wateringFrequency?: ?value-of<PlantBaseWateringFrequency>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->commonName = $values['commonName'];
+        $this->wateringFrequency = $values['wateringFrequency'];
         $this->sunExposure = $values['sunExposure'];
         $this->plantedAt = $values['plantedAt'] ?? null;
         $this->soilType = $values['soilType'] ?? null;
-        $this->commonName = $values['commonName'] ?? null;
-        $this->wateringFrequency = $values['wateringFrequency'] ?? null;
         $this->species = $values['species'];
         $this->family = $values['family'];
         $this->genus = $values['genus'];

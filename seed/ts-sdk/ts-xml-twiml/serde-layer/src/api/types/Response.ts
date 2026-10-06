@@ -61,13 +61,14 @@ export class Response implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Response>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Response",
             attributes: [...core.xml.extraXmlAttributes(this.additionalAttributes)],
             children: [],
             content: core.xml.orderXmlContent(this.content, this.children),
-            xmlDeclaration: true,
+            xmlDeclaration,
         });
     }
 
@@ -190,8 +191,8 @@ export namespace Response {
             });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

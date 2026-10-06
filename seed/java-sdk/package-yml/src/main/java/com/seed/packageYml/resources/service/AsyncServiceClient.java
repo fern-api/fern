@@ -5,6 +5,7 @@ package com.seed.packageYml.resources.service;
 
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.RequestOptions;
+import com.seed.packageYml.core.SeedPackageYmlHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -25,10 +26,24 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> nop(String nestedId) {
-        return this.rawClient.nop(nestedId).thenApply(response -> response.body());
+        CompletableFuture<SeedPackageYmlHttpResponse<Void>> rawFuture = this.rawClient.nop(nestedId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> nop(String nestedId, RequestOptions requestOptions) {
-        return this.rawClient.nop(nestedId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPackageYmlHttpResponse<Void>> rawFuture = this.rawClient.nop(nestedId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

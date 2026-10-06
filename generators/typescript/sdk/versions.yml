@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.99.0
+  changelogEntry:
+    - summary: |
+        SDK variables that declare an environment variable fallback (`env` in `api.yml` or `x-fern-env` on
+        `x-fern-sdk-variables`) are now optional client options. `normalizeClientOptions` resolves them from the
+        option first and then from the environment variable, and throws a clear error at client construction
+        when neither is set, instead of interpolating `undefined` into request paths.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.98.5
+  changelogEntry:
+    - summary: |
+        Fix `waitForOpen()` on generated WebSocket clients hanging forever when the socket closes without opening.
+        It now rejects when the socket is already closed, when `close()` is called or the `abortSignal` fires
+        (including before the underlying WebSocket is created, or when the signal is already aborted), and when the
+        connection closes with no reconnect pending. `readyState` now reports `CLOSED` after an abort or `close()`
+        even if the underlying WebSocket was never created.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 3.98.4
+  changelogEntry:
+    - summary: |
+        Restore WebSocket retries after connection errors and timeouts, and allow manual reconnect after retry exhaustion.
+        Internal socket cleanup now emits close notifications without consulting `shouldReconnect`, which continues to
+        control server-initiated closes. Error retries and manual reconnects respect explicit `close()`, abort signals,
+        and retry limits.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 3.98.3
   changelogEntry:
     - summary: |

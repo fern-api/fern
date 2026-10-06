@@ -184,7 +184,6 @@ function createMockContext(declarations: FernIr.TypeDeclaration[]) {
 function generate(
     declaration: FernIr.TypeDeclaration,
     others: FernIr.TypeDeclaration[],
-    isXmlRoot: boolean,
     { noOptionalProperties = false }: { noOptionalProperties?: boolean } = {}
 ): string {
     if (declaration.shape.type !== "object" || declaration.encoding?.xml == null) {
@@ -209,7 +208,6 @@ function generate(
         generateReadWriteOnlyTypes: false,
         caseConverter,
         xml: declaration.encoding.xml,
-        isXmlRoot,
         useBigInt: false
     });
     const context = createMockContext([declaration, ...others]);
@@ -296,25 +294,25 @@ function syntaxErrors(source: string): string[] {
 
 describe("XmlObjectGenerator", () => {
     it("uses bracket access and unique safe locals for property keys that are not identifiers", () => {
-        const output = generate(labelDeclaration, [breakDeclaration], false);
+        const output = generate(labelDeclaration, [breakDeclaration]);
         expect(syntaxErrors(output)).toEqual([]);
         expect(output).toMatchSnapshot();
     });
 
     it("generates a root element with text, attributes and typed children", () => {
-        expect(generate(sayDeclaration, [breakDeclaration], true)).toMatchSnapshot();
+        expect(generate(sayDeclaration, [breakDeclaration])).toMatchSnapshot();
     });
 
     it("generates a nested element with namespace, wrapped list and separator, using add-prefix on collisions", () => {
-        expect(generate(dialDeclaration, [numberDeclaration], false)).toMatchSnapshot();
+        expect(generate(dialDeclaration, [numberDeclaration])).toMatchSnapshot();
     });
 
     it("distinguishes nullable from optional and supports set-valued properties", () => {
-        expect(generate(collectionsDeclaration, [breakDeclaration], false)).toMatchSnapshot();
+        expect(generate(collectionsDeclaration, [breakDeclaration])).toMatchSnapshot();
     });
 
     it("keeps optional keys required when noOptionalProperties is enabled", () => {
-        expect(generate(sayDeclaration, [breakDeclaration], true, { noOptionalProperties: true })).toMatchSnapshot();
+        expect(generate(sayDeclaration, [breakDeclaration], { noOptionalProperties: true })).toMatchSnapshot();
     });
 
     it("leaves non-xml objects as interfaces", () => {

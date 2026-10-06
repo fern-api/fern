@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.endpoints.put;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
 import com.seed.exhaustive.resources.endpoints.put.types.PutResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,25 @@ public class AsyncPutClient {
     }
 
     public CompletableFuture<PutResponse> add(PutRequest request) {
-        return this.rawClient.add(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> rawFuture = this.rawClient.add(request);
+        CompletableFuture<PutResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<PutResponse> add(PutRequest request, RequestOptions requestOptions) {
-        return this.rawClient.add(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> rawFuture =
+                this.rawClient.add(request, requestOptions);
+        CompletableFuture<PutResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

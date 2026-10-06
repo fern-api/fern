@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.endpoints.container;
 
+import com.seed.exhaustive.core.BestHttpResponse;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
@@ -31,97 +32,261 @@ public class AsyncContainerClient {
     }
 
     public CompletableFuture<List<String>> getAndReturnListOfPrimitives(List<String> request) {
-        return this.rawClient.getAndReturnListOfPrimitives(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<List<String>>> rawFuture =
+                this.rawClient.getAndReturnListOfPrimitives(request);
+        CompletableFuture<List<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<String>> getAndReturnListOfPrimitives(
             List<String> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getAndReturnListOfPrimitives(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<List<String>>> rawFuture =
+                this.rawClient.getAndReturnListOfPrimitives(request, requestOptions);
+        CompletableFuture<List<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request) {
-        return this.rawClient.getAndReturnListOfObjects(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<List<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnListOfObjects(request);
+        CompletableFuture<List<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<ObjectWithRequiredField>> getAndReturnListOfObjects(
             List<ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        return this.rawClient.getAndReturnListOfObjects(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<List<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnListOfObjects(request, requestOptions);
+        CompletableFuture<List<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(Set<String> request) {
-        return this.rawClient.getAndReturnSetOfPrimitives(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Set<String>>> rawFuture =
+                this.rawClient.getAndReturnSetOfPrimitives(request);
+        CompletableFuture<Set<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Set<String>> getAndReturnSetOfPrimitives(
             Set<String> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getAndReturnSetOfPrimitives(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Set<String>>> rawFuture =
+                this.rawClient.getAndReturnSetOfPrimitives(request, requestOptions);
+        CompletableFuture<Set<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request) {
-        return this.rawClient.getAndReturnSetOfObjects(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Set<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnSetOfObjects(request);
+        CompletableFuture<Set<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Set<ObjectWithRequiredField>> getAndReturnSetOfObjects(
             Set<ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        return this.rawClient.getAndReturnSetOfObjects(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Set<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnSetOfObjects(request, requestOptions);
+        CompletableFuture<Set<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, String>> getAndReturnMapPrimToPrim(Map<String, String> request) {
-        return this.rawClient.getAndReturnMapPrimToPrim(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Map<String, String>>> rawFuture =
+                this.rawClient.getAndReturnMapPrimToPrim(request);
+        CompletableFuture<Map<String, String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, String>> getAndReturnMapPrimToPrim(
             Map<String, String> request, RequestOptions requestOptions) {
-        return this.rawClient.getAndReturnMapPrimToPrim(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Map<String, String>>> rawFuture =
+                this.rawClient.getAndReturnMapPrimToPrim(request, requestOptions);
+        CompletableFuture<Map<String, String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request) {
-        return this.rawClient.getAndReturnMapOfPrimToObject(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Map<String, ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnMapOfPrimToObject(request);
+        CompletableFuture<Map<String, ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, ObjectWithRequiredField>> getAndReturnMapOfPrimToObject(
             Map<String, ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getAndReturnMapOfPrimToObject(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Map<String, ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnMapOfPrimToObject(request, requestOptions);
+        CompletableFuture<Map<String, ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
             Map<String, MixedType> request) {
-        return this.rawClient
-                .getAndReturnMapOfPrimToUndiscriminatedUnion(request)
-                .thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Map<String, MixedType>>> rawFuture =
+                this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request);
+        CompletableFuture<Map<String, MixedType>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
             Map<String, MixedType> request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Map<String, MixedType>>> rawFuture =
+                this.rawClient.getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions);
+        CompletableFuture<Map<String, MixedType>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Map<Integer, ObjectWithRequiredField>> getAndReturnMapOfIntegerToObject(
+            Map<Integer, ObjectWithRequiredField> request) {
+        CompletableFuture<BestHttpResponse<Map<Integer, ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnMapOfIntegerToObject(request);
+        CompletableFuture<Map<Integer, ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Map<Integer, ObjectWithRequiredField>> getAndReturnMapOfIntegerToObject(
+            Map<Integer, ObjectWithRequiredField> request, RequestOptions requestOptions) {
+        CompletableFuture<BestHttpResponse<Map<Integer, ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnMapOfIntegerToObject(request, requestOptions);
+        CompletableFuture<Map<Integer, ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional() {
-        return this.rawClient.getAndReturnOptional().thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Optional<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnOptional();
+        CompletableFuture<Optional<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(RequestOptions requestOptions) {
-        return this.rawClient.getAndReturnOptional(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Optional<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnOptional(requestOptions);
+        CompletableFuture<Optional<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
-        return this.rawClient.getAndReturnOptional(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Optional<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnOptional(request);
+        CompletableFuture<Optional<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
-        return this.rawClient.getAndReturnOptional(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Optional<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.getAndReturnOptional(request, requestOptions);
+        CompletableFuture<Optional<ObjectWithRequiredField>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

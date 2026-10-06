@@ -10,6 +10,17 @@
                 "type": "typescript",
                 "client": "import { SeedFileDownloadClient } from \"@fern/file-download\";\n\nconst client = new SeedFileDownloadClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
             }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_service.downloadFile"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedFileDownloadClient } from \"@fern/file-download\";\n\nconst client = new SeedFileDownloadClient({ baseUrl: \"YOUR_BASE_URL\" });\nawait client.service.downloadFile();\n"
+            }
         }
     ],
     "types": {}

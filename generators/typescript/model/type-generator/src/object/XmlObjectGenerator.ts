@@ -33,7 +33,6 @@ export declare namespace XmlObjectGenerator {
         docs: string | undefined;
         shape: FernIr.ObjectTypeDeclaration;
         xml: FernIr.XmlEncoding;
-        isXmlRoot: boolean;
         useBigInt: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
@@ -85,7 +84,6 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private readonly docs: string | undefined;
     private readonly shape: FernIr.ObjectTypeDeclaration;
     private readonly xml: FernIr.XmlEncoding;
-    private readonly isXmlRoot: boolean;
     private readonly useBigInt: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly noOptionalProperties: boolean;
@@ -97,7 +95,6 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         this.docs = init.docs;
         this.shape = init.shape;
         this.xml = init.xml;
-        this.isXmlRoot = init.isXmlRoot;
         this.useBigInt = init.useBigInt;
         this.includeSerdeLayer = init.includeSerdeLayer;
         this.noOptionalProperties = init.noOptionalProperties;
@@ -176,6 +173,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 },
                 {
                     name: "toXml",
+                    docs: [
+                        {
+                            description: `Serializes this value as a \`<${this.xml.name}>\` element, prefixed with the XML declaration unless \`xmlDeclaration\` is \`false\`.`
+                        }
+                    ],
+                    parameters: [{ name: "xmlDeclaration", type: "boolean", initializer: "true" }],
                     returnType: "string",
                     statements: [`return ${this.generateSerializeExpression(context, properties)};`]
                 },
@@ -437,7 +440,12 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 statements: [`this.${contentName}.push(text);`, "return this;"]
             },
             { name: "build", returnType: this.typeName, statements: buildStatements },
-            { name: "toXml", returnType: "string", statements: ["return this.build().toXml();"] },
+            {
+                name: "toXml",
+                parameters: [{ name: "xmlDeclaration", type: "boolean", initializer: "true" }],
+                returnType: "string",
+                statements: ["return this.build().toXml(xmlDeclaration);"]
+            },
             { name: "toString", returnType: "string", statements: ["return this.toXml();"] }
         );
 
@@ -798,9 +806,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 ...contentProperties.map((property) => accessProperty("this", property.key))
             ].join(", ")})`
         );
-        if (this.isXmlRoot) {
-            args.push("xmlDeclaration: true");
-        }
+        args.push("xmlDeclaration");
         return `${this.xmlRef(context, "serializeXmlElement")}({ ${args.join(", ")} })`;
     }
 

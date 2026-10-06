@@ -12,10 +12,11 @@ import (
 )
 
 var (
-	variableDeclarationFieldDocs = big.NewInt(1 << 0)
-	variableDeclarationFieldId   = big.NewInt(1 << 1)
-	variableDeclarationFieldName = big.NewInt(1 << 2)
-	variableDeclarationFieldType = big.NewInt(1 << 3)
+	variableDeclarationFieldDocs   = big.NewInt(1 << 0)
+	variableDeclarationFieldId     = big.NewInt(1 << 1)
+	variableDeclarationFieldName   = big.NewInt(1 << 2)
+	variableDeclarationFieldType   = big.NewInt(1 << 3)
+	variableDeclarationFieldEnvVar = big.NewInt(1 << 4)
 )
 
 type VariableDeclaration struct {
@@ -23,6 +24,9 @@ type VariableDeclaration struct {
 	Id   VariableId     `json:"id" url:"id"`
 	Name *common.Name   `json:"name" url:"name"`
 	Type *TypeReference `json:"type" url:"type"`
+	// The name of an environment variable the generated SDK reads at client
+	// construction when the caller does not pass the variable explicitly.
+	EnvVar *string `json:"envVar,omitempty" url:"envVar,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -56,6 +60,13 @@ func (v *VariableDeclaration) GetType() *TypeReference {
 		return nil
 	}
 	return v.Type
+}
+
+func (v *VariableDeclaration) GetEnvVar() *string {
+	if v == nil {
+		return nil
+	}
+	return v.EnvVar
 }
 
 func (v *VariableDeclaration) GetExtraProperties() map[string]interface{} {
@@ -95,6 +106,13 @@ func (v *VariableDeclaration) SetName(name *common.Name) {
 func (v *VariableDeclaration) SetType(type_ *TypeReference) {
 	v.Type = type_
 	v.require(variableDeclarationFieldType)
+}
+
+// SetEnvVar sets the EnvVar field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (v *VariableDeclaration) SetEnvVar(envVar *string) {
+	v.EnvVar = envVar
+	v.require(variableDeclarationFieldEnvVar)
 }
 
 func (v *VariableDeclaration) UnmarshalJSON(data []byte) error {

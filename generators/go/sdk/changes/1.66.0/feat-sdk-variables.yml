@@ -1,0 +1,8 @@
+- summary: |
+    Support SDK variables (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). Path
+    parameters bound to a variable via `x-fern-sdk-variable` are removed from endpoint
+    signatures and request wrappers and are configured once on the client with the generated
+    `option.With<Variable>(...)` helper (also accepted per request). Variables that declare an
+    `env` fall back to that environment variable, and a string variable that is still unset
+    fails with a clear error before the request is sent.
+  type: feat

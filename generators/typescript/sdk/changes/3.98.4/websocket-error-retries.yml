@@ -1,0 +1,6 @@
+- summary: |
+    Restore WebSocket retries after connection errors and timeouts, and allow manual reconnect after retry exhaustion.
+    Internal socket cleanup now emits close notifications without consulting `shouldReconnect`, which continues to
+    control server-initiated closes. Error retries and manual reconnects respect explicit `close()`, abort signals,
+    and retry limits.
+  type: fix

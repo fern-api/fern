@@ -533,7 +533,7 @@ public class RetriesTests
                     .Create()
                     .WithStatusCode(200)
                     .WithBody("Success")
-                    .WithDelay(TimeSpan.FromSeconds(5))
+                    .WithDelay(TimeSpan.FromSeconds(3))
             );
 
         var rawClient = new RawClient(
@@ -548,7 +548,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new SeedExhaustive.Core.EmptyRequest
+        var request = new SeedContentTypes.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -577,10 +577,7 @@ public class RetriesTests
             .InScenario("PerAttemptTimeout")
             .WillSetStateTo("Second")
             .RespondWith(
-                WireMockResponse
-                    .Create()
-                    .WithStatusCode(429)
-                    .WithDelay(TimeSpan.FromSeconds(2))
+                WireMockResponse.Create().WithStatusCode(429).WithDelay(TimeSpan.FromSeconds(2))
             );
 
         _server
@@ -589,10 +586,7 @@ public class RetriesTests
             .WhenStateIs("Second")
             .WillSetStateTo("Third")
             .RespondWith(
-                WireMockResponse
-                    .Create()
-                    .WithStatusCode(429)
-                    .WithDelay(TimeSpan.FromSeconds(2))
+                WireMockResponse.Create().WithStatusCode(429).WithDelay(TimeSpan.FromSeconds(2))
             );
 
         _server
@@ -619,7 +613,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new SeedExhaustive.Core.EmptyRequest
+        var request = new SeedContentTypes.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -647,7 +641,7 @@ public class RetriesTests
                     .Create()
                     .WithStatusCode(200)
                     .WithBody("Success")
-                    .WithDelay(TimeSpan.FromSeconds(5))
+                    .WithDelay(TimeSpan.FromSeconds(2))
             );
 
         var rawClient = new RawClient(
@@ -662,7 +656,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new SeedExhaustive.Core.EmptyRequest
+        var request = new SeedContentTypes.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,

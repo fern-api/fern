@@ -109,6 +109,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "IdempotentRequestOptions");
     }
 
+    public ClassName getBodyPropertiesClassName() {
+        return ClassName.get(getCorePackage(), "BodyProperties");
+    }
+
     public ClassName getMediaTypesClassName() {
         return ClassName.get(getCorePackage(), "MediaTypes");
     }

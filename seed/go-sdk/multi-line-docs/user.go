@@ -27,10 +27,12 @@ type CreateUserRequest struct {
 }
 
 func (c *CreateUserRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68,15 +70,15 @@ func (c *CreateUserRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// A user object. This type is used throughout the following APIs:
-//   - createUser
-//   - getUser
 var (
 	userFieldID   = big.NewInt(1 << 0)
 	userFieldName = big.NewInt(1 << 1)
 	userFieldAge  = big.NewInt(1 << 2)
 )
 
+// A user object. This type is used throughout the following APIs:
+//   - createUser
+//   - getUser
 type User struct {
 	ID string `json:"id" url:"id"`
 	// The user's name. This name is unique to each user. A few examples are included below:
@@ -123,10 +125,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

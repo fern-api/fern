@@ -10,11 +10,11 @@ async fn main() {
     client
         .create_plant(
             &PlantPost {
-                common_name: Some("commonName".to_string()),
-                watering_frequency: Some(PlantBaseWateringFrequency::Daily),
                 species: "species".to_string(),
                 family: "family".to_string(),
                 genus: "genus".to_string(),
+                common_name: "commonName".to_string(),
+                watering_frequency: PlantBaseWateringFrequency::Daily,
                 sun_exposure: PlantPostSunExposure::Full,
                 planted_at: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 soil_type: Some("soilType".to_string()),

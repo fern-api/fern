@@ -5,6 +5,7 @@ package com.seed.exhaustive.endpoints;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.core.SyncPagingIterable;
 import com.seed.exhaustive.endpoints.types.ListItemsRequest;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
@@ -31,21 +32,48 @@ public class AsyncPaginationClient {
      * List items with cursor pagination
      */
     public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems() {
-        return this.rawClient.listItems().thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.listItems();
+        CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List items with cursor pagination
      */
     public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems(RequestOptions requestOptions) {
-        return this.rawClient.listItems(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.listItems(requestOptions);
+        CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List items with cursor pagination
      */
     public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems(ListItemsRequest request) {
-        return this.rawClient.listItems(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.listItems(request);
+        CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -53,6 +81,15 @@ public class AsyncPaginationClient {
      */
     public CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> listItems(
             ListItemsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listItems(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> rawFuture =
+                this.rawClient.listItems(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<ObjectWithRequiredField>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

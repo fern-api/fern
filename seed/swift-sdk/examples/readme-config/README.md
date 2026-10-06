@@ -1,11 +1,11 @@
-# Seed Swift Library
+# CustomName Swift Library
 
 ![](https://www.fernapi.com)
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FSwift)
 ![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-orange.svg)
 
-The Seed Swift library provides convenient access to the Seed APIs from Swift.
+The CustomName Swift library provides convenient access to the CustomName APIs from Swift.
 
 ## Table of Contents
 
@@ -22,6 +22,7 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Additional Body Properties](#additional-body-properties)
   - [Timeouts](#timeouts)
   - [Custom Networking Client](#custom-networking-client)
 - [Contributing](#contributing)
@@ -168,6 +169,19 @@ If you would like to send additional query string parameters as part of the requ
 try await client.service.createMovie(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Additional Body Properties
+
+If you would like to send additional properties as part of a JSON request body (for example, undocumented or beta fields), use the `additionalBodyProperties` request option. Keys are sent as-is, values can be any JSON value, and they override any generated fields with the same name. If the endpoint has no request body, a JSON body is created from these properties (except for GET and HEAD requests, which are sent without a body). Multipart and raw binary request bodies are not modified. The `additionalBodyParameters` request option accepts string values only and is merged the same way; if both options set the same key, `additionalBodyProperties` wins.
+
+```swift
+try await client.service.createMovie(..., requestOptions: .init(
+    additionalBodyProperties: [
+        "beta_feature": true, 
+        "beta_options": ["mode": "fast"]
     ]
 ))
 ```

@@ -73,7 +73,8 @@ export class Say implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Say>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Say",
             attributes: [
@@ -84,6 +85,7 @@ export class Say implements core.xml.XmlSerializable {
             text: this.message,
             children: [],
             content: core.xml.orderXmlContent(this.content, this.children),
+            xmlDeclaration,
         });
     }
 
@@ -206,8 +208,8 @@ export namespace Say {
             });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

@@ -2,6 +2,7 @@ package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
 import com.seed.exhaustive.resources.types.object.types.DocumentedUnknownType;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import java.util.HashMap;
 
 public class Example25 {
@@ -11,14 +12,14 @@ public class Example25 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
-            {
-                put("string", DocumentedUnknownType.of(new HashMap<String, Object>() {
-                    {
-                        put("key", "value");
-                    }
-                }));
-            }
-        });
+        client.endpoints()
+                .object()
+                .getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType.builder()
+                        .documentedUnknownType(DocumentedUnknownType.of(new HashMap<String, Object>() {
+                            {
+                                put("key", "value");
+                            }
+                        }))
+                        .build());
     }
 }

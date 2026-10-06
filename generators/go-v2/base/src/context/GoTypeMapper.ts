@@ -91,7 +91,7 @@ export class GoTypeMapper {
      */
     private isPointerAliasReference(reference: FernIr.TypeReference): boolean {
         if (reference.type === "named") {
-            return this.isAliasToPointerType(reference.typeId);
+            return this.omitsPointerForAlias(reference.typeId);
         }
         if (
             reference.type === "container" &&
@@ -100,42 +100,81 @@ export class GoTypeMapper {
             const inner =
                 reference.container.type === "optional" ? reference.container.optional : reference.container.nullable;
             if (inner.type === "named") {
-                return this.isAliasToPointerType(inner.typeId);
+                return this.omitsPointerForAlias(inner.typeId);
             }
         }
         return false;
     }
 
     /**
-     * Checks if a named type is an alias that already generates as a pointer in Go
-     * (e.g. a nullable primitive like *time.Time). This prevents double pointers when
-     * nullable(named(NullableDateAlias)) would otherwise produce *NullableDateAlias = **time.Time.
+     * Returns true if an optional reference to the alias should not add another pointer because
+     * the alias already generates as a pointer in Go (e.g. a nullable primitive like *time.Time).
+     * With `legacyNullableAliasPointers`, only date and datetime aliases omit the pointer because
+     * their fields are marshaled through *time.Time.
      */
-    private isAliasToPointerType(typeId: FernIr.TypeId): boolean {
+    private omitsPointerForAlias(typeId: FernIr.TypeId): boolean {
+        const target = this.resolvePointerAliasTarget(typeId);
+        if (target == null) {
+            return false;
+        }
+        if (this.context.customConfig.legacyNullableAliasPointers !== true) {
+            return true;
+        }
+        return target.type === "primitive" && (target.primitive.v1 === "DATE" || target.primitive.v1 === "DATE_TIME");
+    }
+
+    /**
+     * Returns the unwrapped target of an alias that already generates as a pointer in Go,
+     * traversing alias chains. Returns undefined for any other type.
+     */
+    private resolvePointerAliasTarget(typeId: FernIr.TypeId): FernIr.TypeReference | undefined {
         const seen = new Set<FernIr.TypeId>();
         let currentTypeId: FernIr.TypeId = typeId;
         while (true) {
             if (seen.has(currentTypeId)) {
-                return false;
+                return undefined;
             }
             seen.add(currentTypeId);
             const typeDeclaration = this.context.ir.types[currentTypeId];
             if (typeDeclaration == null || typeDeclaration.shape.type !== "alias") {
-                return false;
+                return undefined;
             }
             const aliasOf = typeDeclaration.shape.aliasOf;
             if (
                 aliasOf.type === "container" &&
                 (aliasOf.container.type === "optional" || aliasOf.container.type === "nullable")
             ) {
-                return true;
+                const inner = this.unwrapOptionalOrNullable(aliasOf);
+                return this.isPointerRequiredForOptionalInner(inner) ? inner : undefined;
             }
             if (aliasOf.type === "named") {
                 currentTypeId = aliasOf.typeId;
                 continue;
             }
+            return undefined;
+        }
+    }
+
+    private unwrapOptionalOrNullable(reference: FernIr.TypeReference): FernIr.TypeReference {
+        let inner = reference;
+        while (
+            inner.type === "container" &&
+            (inner.container.type === "optional" || inner.container.type === "nullable")
+        ) {
+            inner = inner.container.type === "optional" ? inner.container.optional : inner.container.nullable;
+        }
+        return inner;
+    }
+
+    /**
+     * Lists, maps, sets, and unknown values are already nil-able, so an optional/nullable
+     * wrapper around them renders without a pointer.
+     */
+    private isPointerRequiredForOptionalInner(inner: FernIr.TypeReference): boolean {
+        if (inner.type === "unknown") {
             return false;
         }
+        return inner.type !== "container" || inner.container.type === "literal";
     }
 
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): go.Type {

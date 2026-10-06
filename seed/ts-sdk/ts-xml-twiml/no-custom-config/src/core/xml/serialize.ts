@@ -1,7 +1,11 @@
 export const XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>';
 
 export interface XmlSerializable {
-    toXml(): string;
+    /**
+     * Serializes the value to XML. Implementations choose their own default for
+     * `xmlDeclaration`; nested serialization always passes `false`.
+     */
+    toXml(xmlDeclaration?: boolean): string;
 }
 
 /** One item of an element's ordered content: a text segment or a child element. */
@@ -145,7 +149,7 @@ export function serializeXmlElement({
                 }
             }
         } else {
-            body.push(item.toXml());
+            body.push(item.toXml(false));
         }
     }
 
@@ -227,7 +231,7 @@ function renderChild({ name, value, wrapped = false }: XmlChild, wrapperFragment
             continue;
         }
         if (isXmlSerializable(item)) {
-            rendered.push(item.toXml());
+            rendered.push(item.toXml(false));
         } else {
             rendered.push(serializeXmlElement({ name, text: item }));
         }
@@ -240,7 +244,7 @@ function renderChild({ name, value, wrapped = false }: XmlChild, wrapperFragment
         for (const [attributeName, attributeValue] of Object.entries(fragment.attributes)) {
             wrapperAttributes.push(` ${attributeName}="${escapeXml(attributeValue)}"`);
         }
-        rendered.push(...fragment.children.map((child) => child.toXml()));
+        rendered.push(...fragment.children.map((child) => child.toXml(false)));
     }
     const open = `<${name}${wrapperAttributes.join("")}`;
     return [rendered.length === 0 ? `${open} />` : `${open}>${rendered.join("")}</${name}>`];

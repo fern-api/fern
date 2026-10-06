@@ -48,10 +48,12 @@ func (b *BinaryTreeNodeAndTreeValue) GetExtraProperties() map[string]interface{}
 }
 
 func (b *BinaryTreeNodeAndTreeValue) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetNodeID sets the NodeID field and marks it as non-optional;
@@ -148,10 +150,12 @@ func (d *DebugKeyValuePairs) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DebugKeyValuePairs) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetKey sets the Key field and marks it as non-optional;
@@ -239,10 +243,12 @@ func (d *DebugMapValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DebugMapValue) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetKeyValuePairs sets the KeyValuePairs field and marks it as non-optional;
@@ -790,10 +796,12 @@ func (d *DoublyLinkedListNodeAndListValue) GetExtraProperties() map[string]inter
 }
 
 func (d *DoublyLinkedListNodeAndListValue) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetNodeID sets the NodeID field and marks it as non-optional;
@@ -890,10 +898,12 @@ func (f *FileInfo) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FileInfo) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetFilename sets the Filename field and marks it as non-optional;
@@ -990,10 +1000,12 @@ func (g *GenericValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GenericValue) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetStringifiedType sets the StringifiedType field and marks it as non-optional;
@@ -1090,10 +1102,12 @@ func (s *SinglyLinkedListNodeAndListValue) GetExtraProperties() map[string]inter
 }
 
 func (s *SinglyLinkedListNodeAndListValue) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetNodeID sets the NodeID field and marks it as non-optional;
@@ -1190,10 +1204,12 @@ func (t *TestCase) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TestCase) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1290,10 +1306,12 @@ func (t *TestCaseWithExpectedResult) GetExtraProperties() map[string]interface{}
 }
 
 func (t *TestCaseWithExpectedResult) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetTestCase sets the TestCase field and marks it as non-optional;

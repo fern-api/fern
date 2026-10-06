@@ -117,7 +117,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
-import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -342,8 +342,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         // Redirection is off (e.g. local dev builds), so we won't re-exec at the
         // org bounds — but still surface a warning if the running version is out
         // of range, otherwise enforcement would be silently invisible here.
+        // `upgrade` is skipped: it is about to move the project off this version.
         const orgId = await getOrganization(cliContext);
-        if (orgId != null) {
+        if (orgId != null && getInvokedCommandName(process.argv) !== "upgrade") {
             await warnIfVersionOutsideOrgBounds({
                 cliContext,
                 orgId,
@@ -2798,6 +2799,12 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "number",
                     description: "Indentation width in spaces (default: 2)",
                     default: 2
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: [] as string[],
+                    description: "Only export endpoints, webhooks, and types for the provided audiences"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2814,7 +2821,8 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath),
-                indent: argv.indent
+                indent: argv.indent,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
             });
         }
     );

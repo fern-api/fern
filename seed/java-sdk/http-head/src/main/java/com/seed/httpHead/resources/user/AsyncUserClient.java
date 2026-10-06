@@ -5,6 +5,7 @@ package com.seed.httpHead.resources.user;
 
 import com.seed.httpHead.core.ClientOptions;
 import com.seed.httpHead.core.RequestOptions;
+import com.seed.httpHead.core.SeedHttpHeadHttpResponse;
 import com.seed.httpHead.resources.user.requests.ListUsersRequest;
 import com.seed.httpHead.resources.user.types.User;
 import java.util.List;
@@ -28,18 +29,47 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<Void> head() {
-        return this.rawClient.head().thenApply(response -> response.body());
+        CompletableFuture<SeedHttpHeadHttpResponse<Void>> rawFuture = this.rawClient.head();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> head(RequestOptions requestOptions) {
-        return this.rawClient.head(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedHttpHeadHttpResponse<Void>> rawFuture = this.rawClient.head(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> list(ListUsersRequest request) {
-        return this.rawClient.list(request).thenApply(response -> response.body());
+        CompletableFuture<SeedHttpHeadHttpResponse<List<User>>> rawFuture = this.rawClient.list(request);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> list(ListUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.list(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedHttpHeadHttpResponse<List<User>>> rawFuture =
+                this.rawClient.list(request, requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

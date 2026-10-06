@@ -51,7 +51,8 @@ export class Break implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<break>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "break",
             attributes: [
@@ -61,6 +62,7 @@ export class Break implements core.xml.XmlSerializable {
             ],
             children: [],
             content: core.xml.orderXmlContent(this.content),
+            xmlDeclaration,
         });
     }
 
@@ -149,8 +151,8 @@ export namespace Break {
             return new Break({ ...this.fields, content: built.content });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

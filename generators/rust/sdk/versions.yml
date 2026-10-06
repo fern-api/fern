@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.53.0
+  changelogEntry:
+    - summary: |
+        Add `RequestOptions::additional_body_param` (backed by `additional_body_params`) for sending
+        extra request body properties, such as undocumented or beta fields, without a new SDK release.
+        Properties are merged into the serialized body under their wire-format keys and override
+        generated fields with the same key. When an endpoint has no body, a JSON object containing only
+        the additional properties is sent. JSON and form-urlencoded bodies are supported; multipart and
+        raw bytes bodies are sent unchanged.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        The generated prelude now re-exports `futures::StreamExt`, so `use <crate>::prelude::*;` is enough to
+        iterate SSE streams and paginators without adding `futures` as a direct dependency.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 0.51.0
   changelogEntry:
     - summary: |
