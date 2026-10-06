@@ -283,5 +283,7 @@ public class XmlElementTests
         public XElement ToXElement() => new XElement(_name);
 
         public string ToXml() => ToXElement().ToString(SaveOptions.DisableFormatting);
+
+        public string ToXml(bool xmlDeclaration) => ToXml();
     }
 }
