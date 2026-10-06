@@ -5,12 +5,17 @@ import * as core from "../../core/index.js";
 export class Hangup implements core.xml.XmlSerializable {
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Hangup.Fields = {}) {
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Hangup.Fields = {}): Hangup.Builder {
@@ -20,9 +25,10 @@ export class Hangup implements core.xml.XmlSerializable {
     /** Parses a `<Hangup>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Hangup {
         const node = core.xml.parseXml(xml, "Hangup");
+        const content = core.xml.xmlContent(node);
         return new Hangup({
             additionalAttributes: core.xml.xmlExtraAttributes(node, []),
-            additionalChildren: core.xml.xmlUnknownChildren(node, []),
+            content,
         });
     }
 
@@ -32,7 +38,7 @@ export class Hangup implements core.xml.XmlSerializable {
             name: "Hangup",
             attributes: [...core.xml.extraXmlAttributes(this.additionalAttributes)],
             children: [],
-            additionalChildren: this.additionalChildren,
+            content: core.xml.orderXmlContent(this.content),
             xmlDeclaration,
         });
     }
@@ -46,13 +52,17 @@ export namespace Hangup {
     export interface Fields {
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Hangup> {
         private readonly fields: Partial<Hangup.Fields>;
+        private content: core.xml.XmlContent[];
 
         constructor(fields: Partial<Hangup.Fields> = {}) {
-            this.fields = { ...fields };
+            const { content, additionalChildren, ...rest } = fields;
+            this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
         }
 
         /** Parses a `<Hangup>` element into a builder. */
@@ -66,14 +76,21 @@ export namespace Hangup {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
             return this;
         }
 
         build(): Hangup {
-            return new Hangup({ ...this.fields });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Hangup({ ...this.fields, content: built.content });
         }
 
         toXml(xmlDeclaration: boolean = true): string {
