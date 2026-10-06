@@ -84,6 +84,13 @@ describe("Type", () => {
         expect(integer.typeDefinitionToString(writerConfig)).toMatchSnapshot();
     });
 
+    test("float", () => {
+        const float = Type.float();
+
+        expect(float.typeDefinitionToString(writerConfig)).toMatchSnapshot();
+        expect(float.toString(writerConfig)).toBe("Float");
+    });
+
     test("unions", () => {
         const union = Type.union([Type.string(), Type.integer()]);
 

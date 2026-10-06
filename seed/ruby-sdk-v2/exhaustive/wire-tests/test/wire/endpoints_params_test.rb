@@ -210,7 +210,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_create_with_body_and_query_with_wiremock
     test_id = "endpoints.params.create_with_body_and_query.0"
 
-    @client.endpoints.params.create_with_body_and_query(
+    result = @client.endpoints.params.create_with_body_and_query(
       fields: "_fields",
       string: "string",
       request_options: {
@@ -226,6 +226,15 @@ class EndpointsParamsWireTest < WireMockTestCase
       url_path: "/params/body-and-query",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 

@@ -153,7 +153,7 @@ class EndpointsContainerWireTest < WireMockTestCase
   def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock
     test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
 
-    @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+    result = @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
       request: {
         string: 1.1
       },
@@ -170,6 +170,13 @@ class EndpointsContainerWireTest < WireMockTestCase
       url_path: "/container/map-prim-to-union",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/string" => 1.1
+      }
     )
   end
 

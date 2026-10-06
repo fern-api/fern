@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate `float` and `double` fields and parameters as Ruby `Float` instead of `Integer`.
+    Decimal values (e.g. a balance of `100.57`) previously lost their fractional part when a
+    response was decoded or a request was sent. Integer types stay `Integer`.
+    Generated wire tests now also assert that numbers in request bodies reach the wire unchanged
+    and that numbers in mocked responses decode unchanged.
+  type: fix
