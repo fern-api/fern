@@ -704,8 +704,11 @@ export class DocsDefinitionResolver {
                     graphqlOperations: pending.graphqlOperations,
                     graphqlTypes: pending.graphqlTypes
                 };
+                const sourceFiles = registration.workspace
+                    ?.getSources()
+                    .map((source) => [source.absoluteFilePath, source.absoluteFilePathToOverrides]);
                 const registrationKey = createHash("sha256")
-                    .update(JSON.stringify({ ...registration, workspace: registration.workspace?.absoluteFilePath }))
+                    .update(JSON.stringify({ ...registration, workspace: sourceFiles }))
                     .digest("hex");
                 let realApiDefinitionId = apiDefinitionIdsByRegistration.get(registrationKey);
                 if (realApiDefinitionId == null) {

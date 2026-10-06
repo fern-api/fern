@@ -78,35 +78,34 @@ describe("DocsDefinitionResolver direct API specs", () => {
         expect(registerApi.mock.calls[0]?.[0]).toMatchObject({ apiName: "payments" });
     });
 
-    it("registers an API referenced by several sections once", async () => {
+    it("registers an API referenced by several sections once per spec file", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-api-"));
         temporaryDirectories.push(directory);
         const fernDirectory = path.join(directory, "fern");
         await mkdir(path.join(directory, "specs"));
         await mkdir(fernDirectory);
-        await writeFile(
-            path.join(directory, "specs", "openapi.yml"),
-            [
-                "openapi: 3.0.0",
-                "info:",
-                "  title: Payments",
-                "  version: 1.0.0",
-                "paths:",
-                "  /payments:",
-                "    get:",
-                "      operationId: listPayments",
-                "      responses:",
-                "        '200':",
-                "          description: Success",
-                ""
-            ].join("\n")
-        );
-        const apiSection = (title: string, apiName: string) => [
+        const spec = [
+            "openapi: 3.0.0",
+            "info:",
+            "  title: Payments",
+            "  version: 1.0.0",
+            "paths:",
+            "  /payments:",
+            "    get:",
+            "      operationId: listPayments",
+            "      responses:",
+            "        '200':",
+            "          description: Success",
+            ""
+        ].join("\n");
+        await writeFile(path.join(directory, "specs", "openapi.yml"), spec);
+        await writeFile(path.join(directory, "specs", "openapi-copy.yml"), spec);
+        const apiSection = (title: string, apiName: string, specFile = "openapi.yml") => [
             `  - api: ${title}`,
             `    api-name: ${apiName}`,
             "    specs:",
             "      - type: openapi",
-            "        path: ../specs/openapi.yml"
+            `        path: ../specs/${specFile}`
         ];
         await writeFile(
             path.join(fernDirectory, "docs.yml"),
@@ -116,6 +115,7 @@ describe("DocsDefinitionResolver direct API specs", () => {
                 ...apiSection("Payments v1", "payments"),
                 ...apiSection("Payments v2", "payments"),
                 ...apiSection("Billing", "billing"),
+                ...apiSection("Payments copy", "payments", "openapi-copy.yml"),
                 ""
             ].join("\n")
         );
@@ -140,7 +140,11 @@ describe("DocsDefinitionResolver direct API specs", () => {
 
         const definition = await resolver.resolve();
 
-        expect(registerApi.mock.calls.map(([opts]) => opts.apiName)).toEqual(["payments", "billing"]);
+        expect(registerApi.mock.calls.map(([opts]) => opts.apiName).sort()).toEqual([
+            "billing",
+            "payments",
+            "payments"
+        ]);
         const serialized = JSON.stringify(definition.config.root);
         expect(serialized).toContain("payments-definition");
         expect(serialized).toContain("billing-definition");
