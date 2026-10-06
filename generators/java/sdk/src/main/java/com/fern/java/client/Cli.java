@@ -196,6 +196,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
                 .includePlatformHeaders(customConfig.includePlatformHeaders())
                 .allowUserAgentAppInfo(customConfig.allowUserAgentAppInfo())
+                .userAgentOnly(customConfig.userAgentOnly())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
