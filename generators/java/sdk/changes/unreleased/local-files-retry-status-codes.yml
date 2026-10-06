@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Honor `retry-status-codes` when generating to the local file system. The setting was
+    dropped in local-file-system output mode, so `retry-status-codes: recommended` still
+    produced a client that retried every 5xx (including 500).
+  type: fix

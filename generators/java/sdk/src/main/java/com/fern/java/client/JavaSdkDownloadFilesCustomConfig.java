@@ -95,6 +95,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("retry-status-codes")
+    default String retryStatusCodes() {
+        return "legacy";
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

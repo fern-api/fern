@@ -157,6 +157,11 @@ fixtures:
     - outputFolder: auto-generate-idempotency-key
       customConfig:
         auto-generate-idempotency-key: true
+    - outputFolder: local-files-retry-status-codes-recommended
+      customConfig:
+        retry-status-codes: recommended
+      outputMode: local_files
+      skipScripts: true
   java-idempotency-headers-file-upload:
     - outputFolder: default
     - outputFolder: auto-generate-idempotency-key
