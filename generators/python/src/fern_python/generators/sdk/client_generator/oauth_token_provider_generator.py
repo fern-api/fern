@@ -58,7 +58,8 @@ class OAuthTokenProviderGenerator:
         returned by the endpoint replaces the current one (refresh token rotation).
         """
         refresh_endpoint = refresh_token.refresh_endpoint
-        has_expires_in = refresh_endpoint.response_properties.expires_in is not None
+        # Expiry is always tracked: without `expires-in` the access token is refreshed after a default lifetime.
+        has_expires_in = True
         constructor_parameters = [
             ConstructorParameter(
                 constructor_parameter_name=self._get_refresh_token_constructor_parameter_name(),
@@ -159,9 +160,16 @@ class OAuthTokenProviderGenerator:
                 AST.Expression(f"self.{self._get_refresh_token_member_name()}"),
             ),
         ]
-        grant_type_parameter_name = self._get_refresh_grant_type_parameter_name(http_endpoint)
-        if grant_type_parameter_name is not None:
-            kwargs.append((grant_type_parameter_name, AST.Expression(f'"{REFRESH_TOKEN_GRANT_TYPE}"')))
+        grant_type_property = self._get_refresh_grant_type_property(http_endpoint)
+        if grant_type_property is not None:
+            kwargs.append(
+                (
+                    resolve_name(get_name_from_wire_value(grant_type_property.name)).snake_case.safe_name,
+                    self._get_grant_type_value_expression(
+                        type_reference=grant_type_property.value_type, grant_type=REFRESH_TOKEN_GRANT_TYPE
+                    ),
+                )
+            )
         refresh_invocation = AST.FunctionInvocation(
             function_definition=AST.Reference(
                 qualified_name_excluding_import=(
@@ -197,6 +205,12 @@ class OAuthTokenProviderGenerator:
                         ),
                     ),
                 )
+            else:
+                writer.write_line(
+                    f"self.{self._get_expires_at_member_name()} = self.{self._get_expires_at_method_name()}("
+                    f"expires_in_seconds={DEFAULT_EXPIRES_IN_SECONDS}, "
+                    f"buffer_in_minutes=self.{self._get_buffer_in_minutes_member_name()})"
+                )
             writer.write_newline_if_last_line_not()
             writer.write_line(f"return self.{self._get_access_token_member_name()}")
 
@@ -229,7 +243,9 @@ class OAuthTokenProviderGenerator:
 
         return _write_rotated_refresh_token_setter
 
-    def _get_refresh_grant_type_parameter_name(self, endpoint: ir_types.HttpEndpoint) -> Optional[str]:
+    def _get_refresh_grant_type_property(
+        self, endpoint: ir_types.HttpEndpoint
+    ) -> Optional[ir_types.InlinedRequestBodyProperty]:
         """
         A required, non-literal grant_type body property is sent as "refresh_token" (RFC 6749 §6),
         since nothing else supplies it when the spec models it as a plain string.
@@ -244,7 +260,38 @@ class OAuthTokenProviderGenerator:
                 continue
             if self._is_literal_type(body_property.value_type) or self._is_optional_type(body_property.value_type):
                 return None
-            return resolve_name(get_name_from_wire_value(body_property.name)).snake_case.safe_name
+            return body_property
+        return None
+
+    def _get_grant_type_value_expression(
+        self, *, type_reference: ir_types.TypeReference, grant_type: str
+    ) -> AST.Expression:
+        """
+        grant_type is sent as a string literal, unless it is an enum generated as a Python Enum class
+        (`enum_type: python_enums` / `forward_compatible_python_enums`), where the enum is constructed
+        from that value so the generated SDK type-checks.
+        """
+        value = AST.Expression(f'"{grant_type}"')
+        enum_type_id = self._get_enum_type_id(type_reference)
+        if enum_type_id is None or self._context.pydantic_generator_context.use_str_enums:
+            return value
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self._context.pydantic_generator_context.get_class_reference_for_type_id(
+                    enum_type_id, as_request=True
+                ),
+                args=[value],
+            )
+        )
+
+    def _get_enum_type_id(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
+        type_union = type_reference.get_as_union()
+        if type_union.type != "named":
+            return None
+        shape = self._context.pydantic_generator_context.get_declaration_for_type_id(type_union.type_id).shape
+        shape_union = shape.get_as_union()
+        if shape_union.type == "enum":
+            return type_union.type_id
         return None
 
     def _generate_client_credentials_classes(
@@ -865,7 +912,13 @@ class OAuthTokenProviderGenerator:
                 kwargs.append(
                     (
                         self._get_request_property_parameter_name(grant_type_property),
-                        AST.Expression(f'"{CLIENT_CREDENTIALS_GRANT_TYPE}"'),
+                        self._get_grant_type_value_expression(
+                            type_reference=grant_type_property.property.visit(
+                                query=lambda q: q.value_type,
+                                body=lambda b: b.value_type,
+                            ),
+                            grant_type=CLIENT_CREDENTIALS_GRANT_TYPE,
+                        ),
                     )
                 )
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(

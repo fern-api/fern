@@ -1263,6 +1263,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             use_oauth_token_provider = self._oauth_scheme is not None
             oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
             is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+            is_oauth_refresh_token = oauth_union is not None and oauth_union.type == "refreshToken"
             inferred_auth_scheme = self._get_inferred_auth_scheme()
 
             if use_oauth_token_provider and is_oauth_client_credentials:
@@ -1301,7 +1302,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             AST.Expression(self.REFRESH_TOKEN_PARAMETER_NAME),
                         ),
                     ]
-                    if oauth_union is not None and oauth_union.type == "refreshToken"
+                    if is_oauth_refresh_token
                     else [
                         (
                             "client_id",

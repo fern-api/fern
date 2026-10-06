@@ -5,6 +5,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { resolveDefaultEnvironmentName } from "../reference/buildReference.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getOAuthRefreshEndpointId } from "../wire-tests/getOAuthRefreshEndpointId.js";
 
 interface EndpointWithFilepath {
     endpoint: FernIr.HttpEndpoint;
@@ -317,8 +318,7 @@ asyncio.run(main())`
                     break;
                 }
                 case "oauth":
-                    // The refresh-token flow (IR `OAuthConfiguration.refreshToken`) is not modeled by this IR SDK version.
-                    if ((scheme.configuration as unknown as { type: string }).type === "refreshToken") {
+                    if (getOAuthRefreshEndpointId(scheme) != null) {
                         args.push(`    refresh_token="YOUR_REFRESH_TOKEN",`);
                         break;
                     }
@@ -776,6 +776,8 @@ ${constructorArg}
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
     }
 
+    // The token override section documents client_id/client_secret, so other OAuth flows
+    // (e.g. refresh-token) are excluded on purpose.
     private hasOAuthClientCredentialsScheme(): boolean {
         if (this.context.ir.auth == null) {
             return false;

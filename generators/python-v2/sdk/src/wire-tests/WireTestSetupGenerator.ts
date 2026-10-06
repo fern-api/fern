@@ -797,13 +797,14 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 // endpoint-security we always take the client-credentials path so the
                 // shared token slot and the inferred-auth token endpoint can both be
                 // driven by client_id/client_secret.
-                if (scheme.configuration?.type === "clientCredentials" || isEndpointSecurity) {
+                if (getOAuthRefreshEndpointId(scheme) != null) {
+                    // The refresh token is the only credential for the refresh-token flow,
+                    // including under endpoint-security.
+                    params.push(`        refresh_token="test_refresh_token",`);
+                } else if (scheme.configuration?.type === "clientCredentials" || isEndpointSecurity) {
                     // For client credentials OAuth, use client_id and client_secret
                     params.push(`        client_id="test_client_id",`);
                     params.push(`        client_secret="test_client_secret",`);
-                } else if (getOAuthRefreshEndpointId(scheme) != null) {
-                    // The refresh token is the only credential for the refresh-token flow.
-                    params.push(`        refresh_token="test_refresh_token",`);
                 } else {
                     // For other OAuth types, use a token callback
                     params.push(`        token=lambda: "test_token",`);
