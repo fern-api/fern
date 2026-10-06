@@ -162,6 +162,13 @@ class EndpointsParamsWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      expected_body: JSON.parse('"string"')
+    )
   end
 
   def test_endpoints_params_modify_with_inline_path_with_wiremock
@@ -183,6 +190,13 @@ class EndpointsParamsWireTest < WireMockTestCase
       url_path: "/params/path/param",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      expected_body: JSON.parse('"string"')
     )
   end
 
