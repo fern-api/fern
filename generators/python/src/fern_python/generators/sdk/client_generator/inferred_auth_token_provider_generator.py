@@ -5,7 +5,7 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
+from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -19,6 +19,9 @@ class CredentialProperty:
     is_literal: bool
     literal_value: Optional[str]
     is_optional: bool
+    # Set when the auth scheme fixes this property's value (e.g. `grant_type` for `type: refresh-token`).
+    # Such properties are treated like literals for the client constructor and sent with this value.
+    fixed_value: Optional[str] = None
 
 
 class InferredAuthTokenProviderGenerator:
@@ -458,6 +461,9 @@ class InferredAuthTokenProviderGenerator:
     ) -> AST.FunctionInvocation:
         kwargs = []
         for prop in credential_properties:
+            if prop.fixed_value is not None:
+                kwargs.append((prop.field_name, AST.Expression(repr(prop.fixed_value))))
+                continue
             if prop.is_literal:
                 continue
             kwargs.append(
@@ -540,19 +546,7 @@ class InferredAuthTokenProviderGenerator:
             request_body = http_endpoint.request_body.get_as_union()
             if request_body.type == "inlinedRequestBody":
                 for prop in request_body.properties:
-                    field_name = resolve_name(get_name_from_wire_value(prop.name)).snake_case.safe_name
-                    is_literal = self._is_literal_type(prop.value_type)
-                    literal_value = self._extract_literal_value(prop.value_type) if is_literal else None
-                    is_optional = self._is_optional_type(prop.value_type)
-                    properties.append(
-                        CredentialProperty(
-                            field_name=field_name,
-                            constructor_param_name=field_name,
-                            is_literal=is_literal,
-                            literal_value=literal_value,
-                            is_optional=is_optional,
-                        )
-                    )
+                    properties.append(self._get_body_credential_property(prop.name, prop.value_type))
             elif request_body.type == "reference":
                 type_id = self._get_type_id_from_type_reference(request_body.request_body_type)
                 if type_id is not None:
@@ -560,21 +554,34 @@ class InferredAuthTokenProviderGenerator:
                         self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id)
                     )
                     for object_prop in object_properties:
-                        field_name = resolve_name(get_name_from_wire_value(object_prop.name)).snake_case.safe_name
-                        is_literal = self._is_literal_type(object_prop.value_type)
-                        literal_value = self._extract_literal_value(object_prop.value_type) if is_literal else None
-                        is_optional = self._is_optional_type(object_prop.value_type)
-                        properties.append(
-                            CredentialProperty(
-                                field_name=field_name,
-                                constructor_param_name=field_name,
-                                is_literal=is_literal,
-                                literal_value=literal_value,
-                                is_optional=is_optional,
-                            )
-                        )
+                        properties.append(self._get_body_credential_property(object_prop.name, object_prop.value_type))
 
         return properties
+
+    def _get_body_credential_property(
+        self, name: ir_types.NameAndWireValueOrString, value_type: ir_types.TypeReference
+    ) -> CredentialProperty:
+        field_name = resolve_name(get_name_from_wire_value(name)).snake_case.safe_name
+        fixed_value = self._get_fixed_grant_type_value(name)
+        is_literal = fixed_value is not None or self._is_literal_type(value_type)
+        literal_value = self._extract_literal_value(value_type) if is_literal else None
+        return CredentialProperty(
+            field_name=field_name,
+            constructor_param_name=field_name,
+            is_literal=is_literal,
+            literal_value=literal_value,
+            is_optional=self._is_optional_type(value_type),
+            fixed_value=fixed_value if not self._is_literal_type(value_type) else None,
+        )
+
+    def _get_fixed_grant_type_value(self, name: ir_types.NameAndWireValueOrString) -> Optional[str]:
+        grant_type = self._inferred_auth_scheme.token_endpoint.grant_type
+        if grant_type is None or grant_type.request_property.property_path:
+            return None
+        grant_type_property = grant_type.request_property.property.get_as_union()
+        if grant_type_property.type != "body" or get_wire_value(grant_type_property.name) != get_wire_value(name):
+            return None
+        return grant_type.value
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(

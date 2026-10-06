@@ -1,0 +1,6 @@
+- summary: |
+    Support inferred bearer auth with `type: refresh-token`. The generated `InferredAuthTokenProvider`
+    always sends `grant_type="refresh_token"` to the get-token endpoint, and `grant_type` is no longer
+    a client constructor parameter. Users pass only the refresh token (and any other non-literal
+    token endpoint parameters).
+  type: feat
