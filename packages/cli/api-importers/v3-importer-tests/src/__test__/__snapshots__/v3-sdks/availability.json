@@ -105,10 +105,26 @@
       },
       "shape": {
         "aliasOf": {
-          "type": "unknown"
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          },
+          "name": "DeprecatedParam",
+          "typeId": "DeprecatedParam",
+          "inline": false,
+          "displayName": "DeprecatedParam",
+          "type": "named"
         },
         "resolvedType": {
-          "type": "unknown"
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          },
+          "name": "DeprecatedParam",
+          "typeId": "DeprecatedParam",
+          "inline": false,
+          "displayName": "DeprecatedParam",
+          "type": "named"
         },
         "type": "alias"
       },

@@ -193,10 +193,26 @@
       },
       "shape": {
         "aliasOf": {
-          "type": "unknown"
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          },
+          "name": "Region",
+          "typeId": "Region",
+          "inline": false,
+          "displayName": "Region",
+          "type": "named"
         },
         "resolvedType": {
-          "type": "unknown"
+          "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+          },
+          "name": "Region",
+          "typeId": "Region",
+          "inline": false,
+          "displayName": "Region",
+          "type": "named"
         },
         "type": "alias"
       },

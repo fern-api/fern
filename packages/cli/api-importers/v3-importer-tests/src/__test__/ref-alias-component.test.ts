@@ -1,0 +1,85 @@
+/**
+ * A component schema that is only a `$ref` to another component should be converted
+ * to an alias of the referenced type, not to an alias of `unknown`.
+ */
+
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { createMockTaskContext } from "@fern-api/task-context";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+
+const FIXTURE_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/ref-alias-component/fern"));
+
+interface IRTypeReference {
+    _type: string;
+    typeId?: string;
+}
+
+interface IRType {
+    name: { name: string; typeId: string };
+    shape: { _type: string; aliasOf?: IRTypeReference };
+}
+
+interface IR {
+    types: Record<string, IRType>;
+}
+
+function getType(ir: IR, name: string): IRType {
+    const type = Object.values(ir.types).find((t) => t.name.name === name);
+    if (type == null) {
+        throw new Error(`Type ${name} not found`);
+    }
+    return type;
+}
+
+describe("component schema that is only a $ref", () => {
+    let ir: IR;
+
+    beforeAll(async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: FIXTURE_DIR,
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "ref-alias-component"
+        });
+        if (!workspace.didSucceed) {
+            throw new Error(`Failed to load fixture: ${JSON.stringify(workspace.failures)}`);
+        }
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error("Expected OSSWorkspace (V3 importer) but got a different workspace type");
+        }
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: false,
+            generateV1Examples: true,
+            logWarnings: false
+        });
+        ir = JSON.parse(
+            JSON.stringify(intermediateRepresentation, (_key, value) => {
+                if (value && typeof value === "object" && "_visit" in value && "type" in value) {
+                    const { type, _visit, ...rest } = value;
+                    return { _type: type, ...rest };
+                }
+                return value;
+            })
+        ) as IR;
+    }, 30_000);
+
+    it("aliases the referenced object type", () => {
+        const base = getType(ir, "PlantBatchBase");
+        const request = getType(ir, "CopyPlantsBatchRequest");
+        expect(request.shape._type).toBe("alias");
+        expect(request.shape.aliasOf?._type).toBe("named");
+        expect(request.shape.aliasOf?.typeId).toBe(base.name.typeId);
+    });
+
+    it("aliases through a chain of $ref components", () => {
+        const request = getType(ir, "CopyPlantsBatchRequest");
+        const move = getType(ir, "MovePlantsBatchRequest");
+        expect(move.shape._type).toBe("alias");
+        expect(move.shape.aliasOf?._type).toBe("named");
+        expect(move.shape.aliasOf?.typeId).toBe(request.name.typeId);
+    });
+});
