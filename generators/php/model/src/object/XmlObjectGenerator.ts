@@ -75,9 +75,12 @@ export class XmlObjectGenerator {
     }
 
     /**
-     * Constructor overrides for list-valued attributes/text with string-like items: the `$values` key also
-     * accepts a single separator-delimited string (the legacy `['input' => 'speech dtmf']` style), which
-     * `XmlUtils::toList` splits before assignment.
+     * Constructor overrides that widen what the `$values` key for an attribute/text property accepts
+     * beyond the field's own type, normalizing on assignment:
+     * - enum-typed values also accept the enum case (`['strength' => BreakStrength::Weak]`), unwrapped
+     *   to its backing value by `XmlUtils::enumValue`;
+     * - list-valued string/enum properties also accept a single separator-delimited string (the legacy
+     *   `['input' => 'speech dtmf']` style) and enum cases as items, normalized by `XmlUtils::toList`.
      */
     public getFieldConstructorOverrides(
         objectProperty: FernIr.ObjectProperty
@@ -105,7 +108,9 @@ export class XmlObjectGenerator {
                 constructorValueWrapper: (rawValue) =>
                     php.codeblock((writer) => {
                         writer.writeNode(utils);
-                        writer.write(`::toList(${rawValue}, ${this.phpString(property.listSeparator)})`);
+                        writer.write("::toList(");
+                        writer.writeNode(rawValue);
+                        writer.write(`, ${this.phpString(property.listSeparator)})`);
                     })
             };
         }
@@ -118,7 +123,9 @@ export class XmlObjectGenerator {
             constructorValueWrapper: (rawValue) =>
                 php.codeblock((writer) => {
                     writer.writeNode(utils);
-                    writer.write(`::enumValue(${rawValue})`);
+                    writer.write("::enumValue(");
+                    writer.writeNode(rawValue);
+                    writer.write(")");
                 })
         };
     }

@@ -82,12 +82,17 @@ export class DataClass extends AstNode {
                             writer.write("/** @var ");
                             field.type.write(writer, { comment: true });
                             writer.writeLine(` ${local} */`);
+                            const defaulted = php.codeblock((inner) => {
+                                inner.write(rawValue);
+                                if (field.type.isOptional()) {
+                                    inner.write(" ?? null");
+                                } else if (field.initializer != null) {
+                                    inner.write(" ?? ");
+                                    field.initializer.write(inner);
+                                }
+                            });
                             writer.write(`${local} = `);
-                            writer.writeNode(
-                                field.constructorValueWrapper(
-                                    field.type.isOptional() ? `${rawValue} ?? null` : rawValue
-                                )
-                            );
+                            writer.writeNode(field.constructorValueWrapper(defaulted));
                             writer.writeLine(";");
                             writer.write(`$this->${field.name} = ${local};`);
                             if (index < orderedFields.length - 1) {
