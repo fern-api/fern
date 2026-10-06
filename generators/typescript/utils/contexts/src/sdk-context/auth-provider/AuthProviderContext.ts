@@ -116,7 +116,7 @@ export class AuthProviderContext {
             const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
             const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
             return requestProperties
-                .filter((property) => property.name !== grantTypeKey)
+                .filter((property) => getPropertyKey(property.name) !== grantTypeKey)
                 .map((property) => ({
                     name: property.safeName,
                     wireKey: property.name,
@@ -129,7 +129,9 @@ export class AuthProviderContext {
         // For justRequestBody endpoints (e.g. form-encoded token endpoints),
         // extract properties directly from the request body type.
         const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
-        return this.getPropertiesFromRequestBody(endpoint).filter((property) => property.wireKey !== grantTypeKey);
+        return this.getPropertiesFromRequestBody(endpoint).filter(
+            (property) => getPropertyKey(property.wireKey) !== grantTypeKey
+        );
     }
 
     /**

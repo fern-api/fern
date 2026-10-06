@@ -579,7 +579,11 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         const grantType = context.authProvider.getInferredAuthGrantType(this.authScheme);
         if (
             grantType != null &&
-            this.getAllRequestProperties({ context, requestWrapper }).some((p) => p.name === grantType.requestKey)
+            // Without a wrapper, getInferredAuthGrantType already found the key in the request body.
+            (requestWrapper == null ||
+                requestWrapper
+                    .getRequestProperties(context)
+                    .some((p) => getPropertyKey(p.name) === grantType.requestKey))
         ) {
             propertyAssignments.push(
                 ts.factory.createPropertyAssignment(
@@ -626,7 +630,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         requestWrapper: GeneratedRequestWrapper | undefined;
     }): GeneratedRequestWrapper.Property[] {
         const grantTypeKey = context.authProvider.getInferredAuthGrantType(this.authScheme)?.requestKey;
-        return this.getAllRequestProperties({ context, requestWrapper }).filter((p) => p.name !== grantTypeKey);
+        return this.getAllRequestProperties({ context, requestWrapper }).filter(
+            (p) => getPropertyKey(p.name) !== grantTypeKey
+        );
     }
 
     private getAllRequestProperties({
