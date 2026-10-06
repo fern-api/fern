@@ -31,11 +31,18 @@ class UpdateFooRequest extends JsonSerializableType
     public ?string $nonNullableText;
 
     /**
+     * @var ?string $requiredNullableText Must be sent, but may be null to clear the value
+     */
+    #[JsonProperty('required_nullable_text')]
+    public ?string $requiredNullableText;
+
+    /**
      * @param array{
      *   xIdempotencyKey: string,
      *   nullableText?: ?string,
      *   nullableNumber?: ?float,
      *   nonNullableText?: ?string,
+     *   requiredNullableText?: ?string,
      * } $values
      */
     public function __construct(
@@ -45,5 +52,6 @@ class UpdateFooRequest extends JsonSerializableType
         $this->nullableText = $values['nullableText'] ?? null;
         $this->nullableNumber = $values['nullableNumber'] ?? null;
         $this->nonNullableText = $values['nonNullableText'] ?? null;
+        $this->requiredNullableText = $values['requiredNullableText'] ?? null;
     }
 }

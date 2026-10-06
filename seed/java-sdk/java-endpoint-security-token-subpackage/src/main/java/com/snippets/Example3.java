@@ -9,6 +9,6 @@ public class Example3 {
                         .url("https://api.fern.com")
                         .build();
 
-        client.user().getAnonymous();
+        client.user().getWithBearer();
     }
 }

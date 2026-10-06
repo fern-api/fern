@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.25.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.25.0
+  changelogEntry:
+    - summary: |
+        Add support for SDK variables (`x-fern-sdk-variables` / `variables` in `api.yml`). Each variable
+        becomes an optional, named constructor parameter on the root client (also settable through the
+        `options` array and per request). Path parameters bound to a variable are removed from endpoint
+        method signatures and request classes and resolved from the client instead. String variables
+        that declare an environment variable fall back to `getenv()` when no value is passed, and a
+        clear `InvalidArgumentException` is thrown when a bound variable is still unset at call time.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.24.2
+  changelogEntry:
+    - summary: |
+        Fix `JsonSerializableType::jsonDeserialize` throwing `Unexpected non-string type for date.`
+        when a `#[Date]`-annotated property receives an explicit JSON `null`. Nullable date and
+        date-time fields now deserialize `null` to `null`, matching how omitted keys and the
+        serializer already behave; non-string, non-null values are still rejected.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 2.24.1
   changelogEntry:
     - summary: |

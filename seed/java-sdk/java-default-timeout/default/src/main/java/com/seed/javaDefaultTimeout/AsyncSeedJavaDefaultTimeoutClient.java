@@ -5,6 +5,7 @@ package com.seed.javaDefaultTimeout;
 
 import com.seed.javaDefaultTimeout.core.ClientOptions;
 import com.seed.javaDefaultTimeout.core.RequestOptions;
+import com.seed.javaDefaultTimeout.core.SeedJavaDefaultTimeoutHttpResponse;
 import com.seed.javaDefaultTimeout.types.User;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,16 +27,31 @@ public class AsyncSeedJavaDefaultTimeoutClient implements AutoCloseable {
     }
 
     public CompletableFuture<User> getUser() {
-        return this.rawClient.getUser().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaDefaultTimeoutHttpResponse<User>> rawFuture = this.rawClient.getUser();
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getUser(RequestOptions requestOptions) {
-        return this.rawClient.getUser(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaDefaultTimeoutHttpResponse<User>> rawFuture = this.rawClient.getUser(requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

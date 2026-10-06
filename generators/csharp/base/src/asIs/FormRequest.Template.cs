@@ -11,7 +11,7 @@ internal record FormRequest : BaseRequest
 
     internal override HttpContent? CreateContent()
     {
-        if (Body is null)
+        if (Body is null && Options?.AdditionalBodyProperties is null)
         {
             return null;
         }
@@ -23,7 +23,7 @@ internal record FormRequest : BaseRequest
         );
         
         var content = new StringContent(
-            FormUrlEncoder.EncodeAsForm(Body).ReadAsStringAsync().Result,
+            FormUrlEncoder.EncodeAsForm(GetFormBody()).ReadAsStringAsync().Result,
             encoding,
             mediaType
         );
@@ -34,5 +34,16 @@ internal record FormRequest : BaseRequest
         }
 
         return content;
+    }
+
+    private object GetFormBody()
+    {
+        if (Options?.AdditionalBodyProperties is null)
+        {
+            return Body!;
+        }
+        return JsonUtils.Deserialize<global::System.Text.Json.JsonElement>(
+            JsonUtils.SerializeWithAdditionalProperties(Body, Options.AdditionalBodyProperties)
+        );
     }
 }

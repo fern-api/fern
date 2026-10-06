@@ -11,11 +11,14 @@ async fn main() {
     client
         .endpoints
         .container
-        .get_and_return_optional(
-            &Some(ObjectWithRequiredField {
-                string: "string".to_string(),
-                ..Default::default()
-            }),
+        .get_and_return_map_of_integer_to_object(
+            &HashMap::from([(
+                1,
+                ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            )]),
             None,
         )
         .await;

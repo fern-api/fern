@@ -5,6 +5,7 @@ package com.seed.api.resources.teammember;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.teammember.requests.UpdateTeamMemberRequest;
 import com.seed.api.types.TeamMember;
 import java.util.concurrent.CompletableFuture;
@@ -27,21 +28,50 @@ public class AsyncTeamMemberClient {
     }
 
     public CompletableFuture<TeamMember> updateTeamMember(String teamMemberId) {
-        return this.rawClient.updateTeamMember(teamMemberId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TeamMember>> rawFuture = this.rawClient.updateTeamMember(teamMemberId);
+        CompletableFuture<TeamMember> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TeamMember> updateTeamMember(String teamMemberId, RequestOptions requestOptions) {
-        return this.rawClient.updateTeamMember(teamMemberId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TeamMember>> rawFuture =
+                this.rawClient.updateTeamMember(teamMemberId, requestOptions);
+        CompletableFuture<TeamMember> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TeamMember> updateTeamMember(String teamMemberId, UpdateTeamMemberRequest request) {
-        return this.rawClient.updateTeamMember(teamMemberId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TeamMember>> rawFuture =
+                this.rawClient.updateTeamMember(teamMemberId, request);
+        CompletableFuture<TeamMember> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TeamMember> updateTeamMember(
             String teamMemberId, UpdateTeamMemberRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .updateTeamMember(teamMemberId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TeamMember>> rawFuture =
+                this.rawClient.updateTeamMember(teamMemberId, request, requestOptions);
+        CompletableFuture<TeamMember> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

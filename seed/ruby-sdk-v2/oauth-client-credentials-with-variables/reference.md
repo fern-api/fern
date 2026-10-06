@@ -264,7 +264,7 @@ client.nested.api.get_something
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">post</a>(endpoint_param:) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">post</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -288,14 +288,6 @@ client.service.post
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**endpoint_param:** `String` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>

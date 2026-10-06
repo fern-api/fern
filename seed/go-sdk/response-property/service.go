@@ -40,10 +40,12 @@ func (s *StringResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *StringResponse) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -124,10 +126,12 @@ func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WithMetadata) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
@@ -217,10 +221,12 @@ func (m *Movie) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *Movie) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -328,10 +334,12 @@ func (r *Response) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Response) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
@@ -426,10 +434,12 @@ func (w *WithDocs) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WithDocs) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetDocs sets the Docs field and marks it as non-optional;

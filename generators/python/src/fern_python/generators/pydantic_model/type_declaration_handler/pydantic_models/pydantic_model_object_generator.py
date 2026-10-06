@@ -198,17 +198,19 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                         AST.NamedFunctionParameter(
                             name="xml_declaration",
                             type_hint=AST.TypeHint.bool_(),
-                            initializer=AST.Expression("False"),
+                            initializer=AST.Expression("True"),
                         )
                     ],
                     return_type=AST.TypeHint.str_(),
                 ),
                 body=AST.CodeWriter(write_to_xml_body),
-                docstring=AST.CodeWriter(f"Serializes this object as a `<{xml.name}>` XML element."),
+                docstring=AST.CodeWriter(
+                    f"Serializes this object as a `<{xml.name}>` XML element, "
+                    "prefixed with the XML declaration unless `xml_declaration` is False."
+                ),
             )
         )
-        # Root documents (never nested in another element) stringify with the XML declaration.
-        str_body = "return self.to_xml(xml_declaration=True)" if self._is_xml_root() else "return self.to_xml()"
+        str_body = "return self.to_xml()"
         pydantic_model.add_method_unsafe(
             AST.FunctionDeclaration(
                 name="__str__",
@@ -437,28 +439,6 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 ),
             )
         )
-
-    def _is_xml_root(self) -> bool:
-        if self._name is None:
-            return False
-        for declaration in self._context.ir.types.values():
-            if declaration.encoding is None or declaration.encoding.xml is None:
-                continue
-            for ir_property in declaration.shape.visit(
-                alias=lambda _: [],
-                enum=lambda _: [],
-                object=lambda object_: object_.properties,
-                union=lambda _: [],
-                undiscriminated_union=lambda _: [],
-            ):
-                property = ObjectProperty(
-                    name=ir_property.name, value_type=ir_property.value_type, docs=ir_property.docs, xml=ir_property.xml
-                )
-                if _is_xml_element(property) and self._name.type_id in self._get_xml_object_type_ids(
-                    property.value_type
-                ):
-                    return False
-        return True
 
     def _add_xml_init(self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]) -> None:
         """Lets the text body be passed positionally (`Say("Hello", voice=...)`), accepts extra attributes and

@@ -228,60 +228,6 @@ export class XmlObjectGenerator {
         return this.context.phpTypeMapper.convertToClassReference(declaration.name);
     }
 
-    private isRootType(): boolean {
-        for (const declaration of Object.values(this.context.ir.types)) {
-            if (declaration.encoding?.xml == null || declaration.shape.type !== "object") {
-                continue;
-            }
-            const properties = [...(declaration.shape.extendedProperties ?? []), ...declaration.shape.properties];
-            for (const property of properties) {
-                if (property.xml != null && property.xml.kind !== FernIr.XmlPropertyKind.Element) {
-                    continue;
-                }
-                const children = this.collectChildTypeIds(property.valueType, new Set());
-                if (children.has(this.typeDeclaration.name.typeId)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private collectChildTypeIds(typeReference: FernIr.TypeReference, seen: Set<FernIr.TypeId>): Set<FernIr.TypeId> {
-        if (typeReference.type === "container") {
-            const container = typeReference.container;
-            switch (container.type) {
-                case "optional":
-                    return this.collectChildTypeIds(container.optional, seen);
-                case "nullable":
-                    return this.collectChildTypeIds(container.nullable, seen);
-                case "list":
-                    return this.collectChildTypeIds(container.list, seen);
-                case "set":
-                    return this.collectChildTypeIds(container.set, seen);
-                case "map":
-                case "literal":
-                    return seen;
-                default:
-                    assertNever(container);
-            }
-        }
-        if (typeReference.type !== "named" || seen.has(typeReference.typeId)) {
-            return seen;
-        }
-        seen.add(typeReference.typeId);
-        const declaration = this.context.getTypeDeclarationOrThrow(typeReference.typeId);
-        if (declaration.shape.type === "alias") {
-            return this.collectChildTypeIds(declaration.shape.aliasOf, seen);
-        }
-        if (declaration.shape.type === "undiscriminatedUnion") {
-            for (const member of declaration.shape.members) {
-                this.collectChildTypeIds(member.type, seen);
-            }
-        }
-        return seen;
-    }
-
     // ---------------------------------------------------------------------------------------------
     // Serialization
     // ---------------------------------------------------------------------------------------------
@@ -943,7 +889,7 @@ export class XmlObjectGenerator {
             parameters: [],
             return_: php.Type.string(),
             body: php.codeblock((writer) => {
-                writer.writeLine(`return $this->toXml(${this.isRootType() ? "xmlDeclaration: true" : ""});`);
+                writer.writeLine("return $this->toXml();");
             })
         });
     }

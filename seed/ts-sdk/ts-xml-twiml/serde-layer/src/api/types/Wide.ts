@@ -1058,7 +1058,8 @@ export class Wide implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Wide>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Wide",
             attributes: [
@@ -1322,7 +1323,7 @@ export class Wide implements core.xml.XmlSerializable {
             ],
             children: [{ name: "children", value: this.children }],
             additionalChildren: this.additionalChildren,
-            xmlDeclaration: true,
+            xmlDeclaration,
         });
     }
 
@@ -2923,8 +2924,8 @@ export namespace Wide {
             return new Wide({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

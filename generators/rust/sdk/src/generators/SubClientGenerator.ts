@@ -2701,7 +2701,7 @@ export class SubClientGenerator {
                 streaming: (streaming) => {
                     return streaming._visit({
                         json: () => "Complete JSON response (fetched at once, not streaming)",
-                        sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
+                        sse: () => "Server-Sent Events stream (use StreamExt from the prelude to iterate)",
                         text: () => "Text streaming response",
                         _other: () => "Streaming response"
                     });

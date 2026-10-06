@@ -84,6 +84,12 @@ export const AsIsFiles = {
     // HTTP tests
     TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
 
+    // JSON tests
+    TestJsonRequest: "test/unit/internal/json/test_request.Template.rb",
+
+    // URL-encoded tests
+    TestUrlEncodedRequest: "test/unit/internal/url_encoded/test_request.Template.rb",
+
     // Multipart tests
     TestMultipartFormData: "test/unit/internal/multipart/test_form_data.Template.rb",
 

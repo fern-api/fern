@@ -22,9 +22,9 @@ from ..core.xml_utilities import (
 class Hangup(UniversalBaseModel):
     _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
 
-    def to_xml(self, *, xml_declaration: bool = False) -> str:
+    def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
-        Serializes this object as a `<Hangup>` XML element.
+        Serializes this object as a `<Hangup>` XML element, prefixed with the XML declaration unless `xml_declaration` is False.
         """
         return serialize_xml_element(
             name="Hangup",

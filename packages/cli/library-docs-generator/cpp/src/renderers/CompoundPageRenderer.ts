@@ -1,7 +1,7 @@
 /**
  * Dispatcher that routes compound IR entries to the appropriate page renderer.
  *
- * Handles: class, concept, function, enum, typedef, variable
+ * Handles: class, concept, function, enum, typedef, variable, macro
  */
 
 import { CliError } from "@fern-api/task-context";
@@ -10,6 +10,7 @@ import type {
     CppConceptIr,
     CppEnumIr,
     CppFunctionIr,
+    CppMacroIr,
     CppTypedefIr,
     CppVariableIr
 } from "../../../src/types/CppLibraryDocsIr.js";
@@ -18,6 +19,7 @@ import { renderClassPage } from "./ClassPageRenderer.js";
 import { renderConceptPage } from "./ConceptPageRenderer.js";
 import { renderEnumPage } from "./EnumPageRenderer.js";
 import { renderFunctionPage } from "./FunctionPageRenderer.js";
+import { renderMacroPage } from "./MacroPageRenderer.js";
 import { renderTypedefPage } from "./TypedefPageRenderer.js";
 import { renderVariablePage } from "./VariablePageRenderer.js";
 
@@ -30,7 +32,8 @@ export type CppCompoundIr =
     | { kind: "function"; data: CppFunctionIr[] }
     | { kind: "enum"; data: CppEnumIr }
     | { kind: "typedef"; data: CppTypedefIr }
-    | { kind: "variable"; data: CppVariableIr };
+    | { kind: "variable"; data: CppVariableIr }
+    | { kind: "macro"; data: CppMacroIr };
 
 /**
  * Render a compound page, dispatching to the appropriate renderer.
@@ -49,6 +52,8 @@ export function renderCompoundPage(compound: CppCompoundIr, meta: CompoundMeta):
             return renderTypedefPage(compound.data, meta);
         case "variable":
             return renderVariablePage(compound.data, meta);
+        case "macro":
+            return renderMacroPage(compound.data, meta);
         default: {
             const _exhaustive: never = compound;
             throw new CliError({

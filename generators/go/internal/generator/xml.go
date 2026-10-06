@@ -87,7 +87,7 @@ func (t *typeVisitor) newXmlResolver() *xmlResolver {
 }
 
 func (r *xmlResolver) goType(typeReference *ir.TypeReference) string {
-	return typeReferenceToGoType(typeReference, r.types, r.visitor.writer.scope, r.baseImportPath, r.importPath, false)
+	return typeReferenceToGoType(typeReference, r.types, r.visitor.writer.scope, r.baseImportPath, r.importPath, false, r.visitor.writer.legacyNullableAliasPointers)
 }
 
 // resolve resolves the given type reference into an xmlValue, following aliases and
@@ -428,9 +428,19 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	t.writer.P()
 
 	// ToXml
-	t.writer.P("// ToXml serializes the ", t.typeName, " to an XML string.")
+	t.writer.P("// ToXml serializes the ", t.typeName, " to an XML document, prefixed with the XML declaration.")
 	t.writer.P("func (", receiver, " *", t.typeName, ") ToXml() string {")
-	t.writer.P("return ", receiver, ".ToXmlElement().ToXml()")
+	t.writer.P("return ", receiver, ".ToXmlElement().ToXmlDocument()")
+	t.writer.P("}")
+	t.writer.P()
+
+	// String
+	t.writer.P("// String implements fmt.Stringer and returns the XML representation of the ", t.typeName, ".")
+	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P("return \"<nil>\"")
+	t.writer.P("}")
+	t.writer.P("return ", receiver, ".ToXml()")
 	t.writer.P("}")
 	t.writer.P()
 

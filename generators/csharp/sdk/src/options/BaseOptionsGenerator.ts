@@ -299,7 +299,8 @@ export class BaseOptionsGenerator extends WithGeneration {
             origin: classOrInterface.explicit("AdditionalBodyProperties"),
             access: ast.Access.Public,
             type: this.context.getAdditionalBodyPropertiesType(),
-            summary: "Additional body properties sent with the request.\nThis is only applied to JSON requests.",
+            summary:
+                "Additional body properties sent with the request.\nThis is applied to JSON and form-urlencoded requests (not multipart requests).",
             get: true,
             init: true,
             initializer: includeInitializer ? this.csharp.codeblock("null") : undefined

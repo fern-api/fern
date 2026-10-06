@@ -5,6 +5,7 @@ package com.seed.extraProperties.resources.user;
 
 import com.seed.extraProperties.core.ClientOptions;
 import com.seed.extraProperties.core.RequestOptions;
+import com.seed.extraProperties.core.SeedExtraPropertiesHttpResponse;
 import com.seed.extraProperties.resources.user.requests.CreateUserRequest;
 import com.seed.extraProperties.resources.user.types.User;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,25 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<User> createUser(CreateUserRequest request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExtraPropertiesHttpResponse<User>> rawFuture = this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExtraPropertiesHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

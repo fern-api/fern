@@ -101,7 +101,6 @@ export const SPECIAL_TOKENS = [
     "ASIN",
     "MPN",
     "MSRP",
-    "MAP",
     "RRP",
     "MSRP",
 

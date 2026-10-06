@@ -35,7 +35,11 @@ function stringifyPathPartsForLocator(path: APIV1Read.EndpointPathPart[]): strin
 interface TranslatedNodeMatch {
     /** The id of the matching node in the translated API (may equal the base id). */
     translatedId: string;
-    /** The translated, human-readable title, when present. */
+    /**
+     * The translated, human-readable title, when present and different from the
+     * default-locale title. An unchanged title leaves the nav title as-is, so a
+     * title set by a navigation overlay is not reverted to the spec's text.
+     */
     title: string | undefined;
 }
 
@@ -107,12 +111,19 @@ function buildResolverForKind<TDef>(
         }
     }
 
+    const changedTitle = (baseDef: TDef | undefined, translatedDef: TDef | undefined): string | undefined => {
+        const translatedTitle = translatedDef != null ? titleOf(translatedDef) : undefined;
+        return translatedTitle != null && translatedTitle !== (baseDef != null ? titleOf(baseDef) : undefined)
+            ? translatedTitle
+            : undefined;
+    };
+
     return (baseNavId: string): TranslatedNodeMatch | undefined => {
+        const baseDef = baseEntries.get(baseNavId);
         const exact = translatedEntries.get(baseNavId);
         if (exact != null) {
-            return { translatedId: baseNavId, title: titleOf(exact) };
+            return { translatedId: baseNavId, title: changedTitle(baseDef, exact) };
         }
-        const baseDef = baseEntries.get(baseNavId);
         if (baseDef == null) {
             return undefined;
         }
@@ -120,8 +131,7 @@ function buildResolverForKind<TDef>(
         if (translatedId == null) {
             return undefined;
         }
-        const translatedDef = translatedEntries.get(translatedId);
-        return { translatedId, title: translatedDef != null ? titleOf(translatedDef) : undefined };
+        return { translatedId, title: changedTitle(baseDef, translatedEntries.get(translatedId)) };
     };
 }
 

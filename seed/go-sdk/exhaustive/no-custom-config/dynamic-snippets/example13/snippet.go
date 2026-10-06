@@ -20,9 +20,8 @@ func do() {
     request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-    client.Endpoints.HTTPMethods.TestPut(
+    client.Endpoints.HTTPMethods.TestPost(
         context.TODO(),
-        "id",
         request,
     )
 }

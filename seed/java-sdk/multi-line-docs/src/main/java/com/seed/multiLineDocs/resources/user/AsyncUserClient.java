@@ -5,6 +5,7 @@ package com.seed.multiLineDocs.resources.user;
 
 import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.RequestOptions;
+import com.seed.multiLineDocs.core.SeedMultiLineDocsHttpResponse;
 import com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;
 import com.seed.multiLineDocs.resources.user.types.User;
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +32,14 @@ public class AsyncUserClient {
      * This endpoint is used to retrieve a user.
      */
     public CompletableFuture<Void> getUser(String userId) {
-        return this.rawClient.getUser(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiLineDocsHttpResponse<Void>> rawFuture = this.rawClient.getUser(userId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -39,7 +47,15 @@ public class AsyncUserClient {
      * This endpoint is used to retrieve a user.
      */
     public CompletableFuture<Void> getUser(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUser(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiLineDocsHttpResponse<Void>> rawFuture =
+                this.rawClient.getUser(userId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -47,7 +63,14 @@ public class AsyncUserClient {
      * This endpoint is used to create a new user.
      */
     public CompletableFuture<User> createUser(CreateUserRequest request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiLineDocsHttpResponse<User>> rawFuture = this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -55,6 +78,14 @@ public class AsyncUserClient {
      * This endpoint is used to create a new user.
      */
     public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMultiLineDocsHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

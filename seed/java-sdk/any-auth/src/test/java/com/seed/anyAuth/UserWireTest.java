@@ -24,6 +24,7 @@ public class UserWireTest {
         server.start();
         client = SeedAnyAuthClient.withCredentials("test-client-id", "test-client-secret")
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .build();
     }
 

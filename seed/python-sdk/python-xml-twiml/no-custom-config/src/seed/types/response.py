@@ -34,9 +34,9 @@ class Response(UniversalBaseModel):
     children: typing.Optional[typing.List[ResponseChildrenItem]] = None
     _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
 
-    def to_xml(self, *, xml_declaration: bool = False) -> str:
+    def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
-        Serializes this object as a `<Response>` XML element.
+        Serializes this object as a `<Response>` XML element, prefixed with the XML declaration unless `xml_declaration` is False.
         """
         return serialize_xml_element(
             name="Response",
@@ -49,7 +49,7 @@ class Response(UniversalBaseModel):
         )
 
     def __str__(self) -> str:
-        return self.to_xml(xml_declaration=True)
+        return self.to_xml()
 
     def __init__(
         self, *, children: typing.Optional[typing.List[ResponseChildrenItem]] = None, **extra_attributes: str

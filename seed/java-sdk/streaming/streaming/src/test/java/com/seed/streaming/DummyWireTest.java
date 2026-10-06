@@ -23,7 +23,10 @@ public class DummyWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedStreamingClient.builder().url(server.url("/").toString()).build();
+        client = SeedStreamingClient.builder()
+                .url(server.url("/").toString())
+                .maxRetries(0)
+                .build();
     }
 
     @AfterEach

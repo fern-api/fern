@@ -38,13 +38,14 @@ export class Response implements core.xml.XmlSerializable {
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Response>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Response",
             attributes: [...core.xml.extraXmlAttributes(this.additionalAttributes)],
             children: [{ name: "children", value: this.children }],
             additionalChildren: this.additionalChildren,
-            xmlDeclaration: true,
+            xmlDeclaration,
         });
     }
 
@@ -152,8 +153,8 @@ export namespace Response {
             return new Response({ ...this.fields, children: core.xml.xmlBuildAll(this.elements.children) });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.build().toXml(xmlDeclaration);
         }
 
         toString(): string {

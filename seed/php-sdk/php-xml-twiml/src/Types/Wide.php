@@ -739,6 +739,6 @@ class Wide extends XmlSerializableType
      */
     public function __toString(): string
     {
-        return $this->toXml(xmlDeclaration: true);
+        return $this->toXml();
     }
 }

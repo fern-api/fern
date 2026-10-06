@@ -12,10 +12,9 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithQueryAsync(
-            new GetWithQuery {
-                Query = "query",
-                Number = 1
+        await client.Endpoints.Params.GetWithInlinePathAsync(
+            new GetWithInlinePath {
+                Param = "param"
             }
         );
     }

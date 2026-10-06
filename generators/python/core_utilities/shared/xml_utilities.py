@@ -124,7 +124,7 @@ def serialize_xml_element(
         elif isinstance(item, XmlElement) and id(item) in rendered_markers:
             body.append(rendered_markers[id(item)])
         else:
-            body.append(item.to_xml())
+            body.append(item.to_xml(xml_declaration=False))
 
     if not body:
         parts.append(" />")
@@ -548,7 +548,7 @@ def _render_wrapper(name: str, items: Sequence[str], marker: Optional[XmlElement
     attributes: List[str] = []
     if marker is not None:
         attributes.extend(f" {key}={quoteattr(value)}" for key, value in marker.attributes.items())
-        body.extend(escape(item) if isinstance(item, str) else item.to_xml() for item in marker.content)
+        body.extend(escape(item) if isinstance(item, str) else item.to_xml(xml_declaration=False) for item in marker.content)
     open_tag = f"<{name}{''.join(attributes)}"
     return f"{open_tag}>{''.join(body)}</{name}>" if body else f"{open_tag} />"
 
@@ -565,7 +565,7 @@ def _render_child_item(name: str, item: Union[XmlScalar, XmlSerializable]) -> st
             f"Cannot serialize <{name}> child of type {type(item).__name__} to XML: "
             "only scalars and xml-encoded models (with a to_xml() method) are supported"
         )
-    return item.to_xml()
+    return item.to_xml(xml_declaration=False)
 
 
 def _scalar_to_string(value: XmlScalar) -> str:
