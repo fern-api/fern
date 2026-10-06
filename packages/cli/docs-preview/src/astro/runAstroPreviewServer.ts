@@ -154,7 +154,13 @@ export async function runAstroPreviewServer({
             )
         );
     }
-    const watcher = await createDocsPreviewWatcher({ absoluteFilePathToFern, additionalFilepaths, context });
+    let watcher: Awaited<ReturnType<typeof createDocsPreviewWatcher>>;
+    try {
+        watcher = await createDocsPreviewWatcher({ absoluteFilePathToFern, additionalFilepaths, context });
+    } catch (err) {
+        await mirror.close();
+        throw err;
+    }
 
     const rendererPort = await getFreePort();
     const rendererProcess = runExeca(context.logger, process.execPath, [bundle.entry], {
@@ -183,6 +189,7 @@ export async function runAstroPreviewServer({
         },
         doNotPipeOutput: true
     });
+    rendererProcess.catch(() => undefined);
     rendererProcess.stdout?.on("data", (data: Buffer) => context.logger.debug(`[Astro] ${data.toString().trimEnd()}`));
     rendererProcess.stderr?.on("data", (data: Buffer) => context.logger.debug(`[Astro] ${data.toString().trimEnd()}`));
 

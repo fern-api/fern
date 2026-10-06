@@ -36,7 +36,7 @@ describe("LocalLedgerMirror", () => {
             blobs: new Map([[HASH, { bytes: Buffer.from("blob"), contentType: "application/json" }]]),
             files: new Map([
                 [
-                    FILE_HASH,
+                    `${FILE_HASH}/assets/logo.png`,
                     {
                         absoluteFilePath: AbsoluteFilePath.of(imagePath),
                         contentType: "image/png",
@@ -79,6 +79,23 @@ describe("LocalLedgerMirror", () => {
         expect(await fetchStatus(`${base}/cas/not-a-hash`)).toBe(404);
     });
 
+    it("serves identical bytes published under several paths", async () => {
+        const current = mirror.getModel();
+        if (current == null) {
+            throw new Error("model not set");
+        }
+        const original = current.files.get(`${FILE_HASH}/assets/logo.png`);
+        if (original == null) {
+            throw new Error("fixture file missing");
+        }
+        const files = new Map(current.files);
+        files.set(`${FILE_HASH}/assets/copy/logo.png`, { ...original, fullPath: "assets/copy/logo.png" });
+        mirror.replaceModel({ ...current, files });
+        expect(await fetchStatus(`${base}/files/${DOMAIN}/${FILE_HASH}/assets/logo.png`)).toBe(200);
+        expect(await fetchStatus(`${base}/files/${DOMAIN}/${FILE_HASH}/assets/copy/logo.png`)).toBe(200);
+        mirror.replaceModel(current);
+    });
+
     it("fails open for dynamic IR", async () => {
         expect(await fetchStatus(`${base}/dynamic-ir/${HASH}`)).toBe(404);
     });
@@ -104,6 +121,9 @@ describe("LocalLedgerMirror", () => {
         expect(await fetchStatus(`${base}/cas/${HASH}`, { method: "POST" })).toBe(405);
         expect(await fetchStatus(`${base}/cas/${HASH}`, { method: "DELETE" })).toBe(405);
         expect(await fetchStatus(`${base}/manifest/v1/fdr.json`, { method: "POST" })).toBe(405);
+        const casDelete = await fetch(`${base}/cas/${HASH}`, { method: "DELETE" });
+        expect(casDelete.headers.get("allow")).toBe("GET, HEAD");
+        expect(await fetchStatus(`${base}/unknown/route`, { method: "POST" })).toBe(404);
         expect(await fetchStatus(`${base}/`)).toBe(404);
         expect(await fetchStatus(`${base}/etc/passwd`)).toBe(404);
     });

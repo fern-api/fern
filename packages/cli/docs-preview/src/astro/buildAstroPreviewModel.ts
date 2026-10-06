@@ -62,7 +62,7 @@ export interface AstroPreviewModel {
     basepath: string;
     manifest: Buffer;
     blobs: ReadonlyMap<string, AstroPreviewBlob>;
-    /** Keyed by file content hash. */
+    /** Keyed by `{hash}/{fullPath}`; identical bytes under several paths get one entry each. */
     files: ReadonlyMap<string, AstroPreviewFile>;
 }
 
@@ -265,10 +265,18 @@ async function buildFileManifest(
             ...(image != null ? { width: image.width, height: image.height } : {})
         };
         fileIdToPath.set(file.fileId, sanitizedPath);
-        files.set(hash, { absoluteFilePath: file.absoluteFilePath, contentType, fullPath: sanitizedPath });
+        files.set(fileKey(hash, sanitizedPath), {
+            absoluteFilePath: file.absoluteFilePath,
+            contentType,
+            fullPath: sanitizedPath
+        });
     }
 
     return { fileManifest, fileIdToPath, files };
+}
+
+export function fileKey(hash: string, fullPath: string): string {
+    return `${hash}/${fullPath}`;
 }
 
 function tagFiles(entries: TransformFileEntry[]): PublishParams["files"] {

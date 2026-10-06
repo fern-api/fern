@@ -339,6 +339,13 @@ export async function getPreviewDocsDefinition({
                 editThisPageLaunch: previousValue?.editThisPageLaunch,
                 rawMarkdown: stripMdxComments(markdown)
             };
+            const previousWritePage = previousPreviewResult?.ledgerSource.writeDocsDefinition.pages[pageId];
+            if (previousPreviewResult != null && previousWritePage != null) {
+                previousPreviewResult.ledgerSource.writeDocsDefinition.pages[pageId] = {
+                    ...previousWritePage,
+                    markdown: stripMdxComments(finalMarkdown)
+                };
+            }
         }
 
         if (allMarkdownFiles && !navAffectingChange && previousPreviewResult != null) {

@@ -1,9 +1,10 @@
 import express from "express";
 import type { Server } from "http";
-import type { AstroPreviewFile, AstroPreviewModel } from "./buildAstroPreviewModel.js";
+import { type AstroPreviewFile, type AstroPreviewModel, fileKey } from "./buildAstroPreviewModel.js";
 
 const HASH_PATTERN = /^[0-9a-f]{64}$/;
 const MANIFEST_FILENAME = "v1/fdr.json";
+const CONTENT_ROUTE_PATTERN = /^\/(manifest|cas|dynamic-ir|files|edge-config)(?=\/|$)/;
 
 /**
  * Loopback HTTP server exposing an {@link AstroPreviewModel} in the layout the
@@ -47,9 +48,11 @@ export class LocalLedgerMirror {
             res.type("text/plain").send("evicted 0\n");
         });
 
-        app.use((req, res, next) => {
+        app.use(CONTENT_ROUTE_PATTERN, (req, res, next) => {
             if (req.method !== "GET" && req.method !== "HEAD") {
-                res.set("Allow", "GET, HEAD, DELETE").status(405).end();
+                res.set("Allow", req.baseUrl.startsWith("/manifest") ? "GET, HEAD, DELETE" : "GET, HEAD")
+                    .status(405)
+                    .end();
                 return;
             }
             if (this.model == null) {
@@ -187,9 +190,5 @@ function fileFromKey(key: string, model: AstroPreviewModel): AstroPreviewFile | 
     if (domain !== model.domain || hash == null || !HASH_PATTERN.test(hash)) {
         return undefined;
     }
-    const file = model.files.get(hash);
-    if (file == null || rest.join("/") !== file.fullPath) {
-        return undefined;
-    }
-    return file;
+    return model.files.get(fileKey(hash, rest.join("/")));
 }
