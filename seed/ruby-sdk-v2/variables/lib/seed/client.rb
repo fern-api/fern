@@ -3,11 +3,14 @@
 module Seed
   class Client
     # @param base_url [String, nil]
+    # @param root_variable [String, nil]
     # @param max_retries [Integer]
     # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, max_retries: 2, timeout: 60)
+    def initialize(base_url: nil, root_variable: ENV.fetch("ROOT_VARIABLE", nil), max_retries: 2, timeout: 60)
+      @root_variable = root_variable
+
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
@@ -21,7 +24,7 @@ module Seed
 
     # @return [Seed::Service::Client]
     def service
-      @service ||= Seed::Service::Client.new(client: @raw_client)
+      @service ||= Seed::Service::Client.new(client: @raw_client, root_variable: @root_variable)
     end
   end
 end

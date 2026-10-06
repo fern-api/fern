@@ -1,4 +1,4 @@
-import { CaseConverter, File, GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, File, GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
@@ -169,7 +169,7 @@ export class WireTestGenerator {
         lines.push(`class ${this.toPascalCase(serviceName)}WireTest < WireMockTestCase`);
 
         // Setup method that creates the client once (base class handles skip logic)
-        lines.push(...this.generateSetupMethod());
+        lines.push(...this.generateSetupMethod([...endpointTestCases.values()].map((testCase) => testCase.endpoint)));
 
         // Test methods
         const testMethods: string[][] = [];
@@ -197,7 +197,7 @@ export class WireTestGenerator {
      * This follows the PHP/Python pattern of client reuse for better performance.
      * The base class (WireMockTestCase) handles the skip logic for wire tests.
      */
-    private generateSetupMethod(): string[] {
+    private generateSetupMethod(endpoints: FernIr.HttpEndpoint[]): string[] {
         const lines: string[] = [];
 
         lines.push("  def setup");
@@ -205,7 +205,7 @@ export class WireTestGenerator {
         lines.push("");
 
         // Build auth parameters for the client constructor
-        const authParams = this.buildAuthParamsForSetup();
+        const authParams = [...this.buildAuthParamsForSetup(), ...this.buildSdkVariableParamsForSetup(endpoints)];
         const clientClassName = `${this.context.getRootModuleName()}::${this.context.getRootClientClassName()}`;
 
         // Generate client instantiation with auth and base_url
@@ -223,6 +223,54 @@ export class WireTestGenerator {
         lines.push("  end");
 
         return lines;
+    }
+
+    /**
+     * SDK variables bound to path parameters are configured on the client, not passed to the
+     * endpoint, so seed the client with the value from the first example that provides one.
+     */
+    private buildSdkVariableParamsForSetup(endpoints: FernIr.HttpEndpoint[]): string[] {
+        const options = this.context.getSdkVariableOptions();
+        if (options.length === 0) {
+            return [];
+        }
+        const exampleValues = this.collectSdkVariableExampleValues(endpoints);
+        const params: string[] = [];
+        for (const option of options) {
+            const value = exampleValues.get(option.variable.id);
+            if (value != null) {
+                params.push(`${option.optionName}: ${JSON.stringify(value)}`);
+            }
+        }
+        return params;
+    }
+
+    /** First example value per SDK variable id, collected in a single pass over the endpoints. */
+    private collectSdkVariableExampleValues(endpoints: FernIr.HttpEndpoint[]): Map<string, unknown> {
+        const values = new Map<string, unknown>();
+        for (const endpoint of endpoints) {
+            const boundParameters = endpoint.allPathParameters.filter(
+                (pathParameter) => pathParameter.variable != null
+            );
+            if (boundParameters.length === 0) {
+                continue;
+            }
+            const example = this.getDynamicEndpointExample(endpoint);
+            if (example?.pathParameters == null) {
+                continue;
+            }
+            for (const pathParameter of boundParameters) {
+                const variableId = pathParameter.variable;
+                if (variableId == null || values.has(variableId)) {
+                    continue;
+                }
+                const value = example.pathParameters[getOriginalName(pathParameter.name)];
+                if (value != null) {
+                    values.set(variableId, value);
+                }
+            }
+        }
+        return values;
     }
 
     /**
