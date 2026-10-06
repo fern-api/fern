@@ -50,6 +50,12 @@ public class ResponseChildrenItem
     public static ResponseChildrenItem FromHangup(SeedApi.Hangup value) => new("hangup", value);
 
     /// <summary>
+    /// Factory method to create a union from a <see cref="SeedApi.Redirect"/> value.
+    /// </summary>
+    public static ResponseChildrenItem FromRedirect(SeedApi.Redirect value) =>
+        new("redirect", value);
+
+    /// <summary>
     /// Returns true if <see cref="Type"/> is "say"
     /// </summary>
     public bool IsSay() => Type == "say";
@@ -68,6 +74,11 @@ public class ResponseChildrenItem
     /// Returns true if <see cref="Type"/> is "hangup"
     /// </summary>
     public bool IsHangup() => Type == "hangup";
+
+    /// <summary>
+    /// Returns true if <see cref="Type"/> is "redirect"
+    /// </summary>
+    public bool IsRedirect() => Type == "redirect";
 
     /// <summary>
     /// Returns the value as a <see cref="SeedApi.Say"/> if <see cref="Type"/> is 'say', otherwise throws an exception.
@@ -98,6 +109,15 @@ public class ResponseChildrenItem
         IsHangup()
             ? (SeedApi.Hangup)Value!
             : throw new SeedApiException("Union type is not 'hangup'");
+
+    /// <summary>
+    /// Returns the value as a <see cref="SeedApi.Redirect"/> if <see cref="Type"/> is 'redirect', otherwise throws an exception.
+    /// </summary>
+    /// <exception cref="SeedApiException">Thrown when <see cref="Type"/> is not 'redirect'.</exception>
+    public SeedApi.Redirect AsRedirect() =>
+        IsRedirect()
+            ? (SeedApi.Redirect)Value!
+            : throw new SeedApiException("Union type is not 'redirect'");
 
     /// <summary>
     /// Attempts to cast the value to a <see cref="SeedApi.Say"/> and returns true if successful.
@@ -155,11 +175,26 @@ public class ResponseChildrenItem
         return false;
     }
 
+    /// <summary>
+    /// Attempts to cast the value to a <see cref="SeedApi.Redirect"/> and returns true if successful.
+    /// </summary>
+    public bool TryGetRedirect(out SeedApi.Redirect? value)
+    {
+        if (Type == "redirect")
+        {
+            value = (SeedApi.Redirect)Value!;
+            return true;
+        }
+        value = null;
+        return false;
+    }
+
     public T Match<T>(
         Func<SeedApi.Say, T> onSay,
         Func<SeedApi.Dial, T> onDial,
         Func<SeedApi.Pause, T> onPause,
-        Func<SeedApi.Hangup, T> onHangup
+        Func<SeedApi.Hangup, T> onHangup,
+        Func<SeedApi.Redirect, T> onRedirect
     )
     {
         return Type switch
@@ -168,6 +203,7 @@ public class ResponseChildrenItem
             "dial" => onDial(AsDial()),
             "pause" => onPause(AsPause()),
             "hangup" => onHangup(AsHangup()),
+            "redirect" => onRedirect(AsRedirect()),
             _ => throw new SeedApiException($"Unknown union type: {Type}"),
         };
     }
@@ -176,7 +212,8 @@ public class ResponseChildrenItem
         Action<SeedApi.Say> onSay,
         Action<SeedApi.Dial> onDial,
         Action<SeedApi.Pause> onPause,
-        Action<SeedApi.Hangup> onHangup
+        Action<SeedApi.Hangup> onHangup,
+        Action<SeedApi.Redirect> onRedirect
     )
     {
         switch (Type)
@@ -192,6 +229,9 @@ public class ResponseChildrenItem
                 break;
             case "hangup":
                 onHangup(AsHangup());
+                break;
+            case "redirect":
+                onRedirect(AsRedirect());
                 break;
             default:
                 throw new SeedApiException($"Unknown union type: {Type}");
@@ -243,6 +283,9 @@ public class ResponseChildrenItem
     public static implicit operator ResponseChildrenItem(SeedApi.Hangup value) =>
         new("hangup", value);
 
+    public static implicit operator ResponseChildrenItem(SeedApi.Redirect value) =>
+        new("redirect", value);
+
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<ResponseChildrenItem>
     {
@@ -267,6 +310,7 @@ public class ResponseChildrenItem
                     ("dial", typeof(SeedApi.Dial)),
                     ("pause", typeof(SeedApi.Pause)),
                     ("hangup", typeof(SeedApi.Hangup)),
+                    ("redirect", typeof(SeedApi.Redirect)),
                 };
 
                 foreach (var (key, type) in types)
@@ -305,6 +349,7 @@ public class ResponseChildrenItem
             }
 
             value.Visit(
+                obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),
                 obj => JsonSerializer.Serialize(writer, obj, options),

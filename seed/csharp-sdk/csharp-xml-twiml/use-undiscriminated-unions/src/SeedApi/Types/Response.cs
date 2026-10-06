@@ -43,7 +43,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
         item is global::SeedApi.Say
         || item is global::SeedApi.Dial
         || item is global::SeedApi.Pause
-        || item is global::SeedApi.Hangup;
+        || item is global::SeedApi.Hangup
+        || item is global::SeedApi.Redirect;
 
     private static ResponseChildrenItem ToChildrenItem(object item)
     {
@@ -56,6 +57,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
             case global::SeedApi.Pause value:
                 return value;
             case global::SeedApi.Hangup value:
+                return value;
+            case global::SeedApi.Redirect value:
                 return value;
             default:
                 throw new ArgumentException(
@@ -76,6 +79,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
                 return global::SeedApi.Pause.FromXElement(child);
             case "Hangup":
                 return global::SeedApi.Hangup.FromXElement(child);
+            case "Redirect":
+                return global::SeedApi.Redirect.FromXElement(child);
             default:
                 return null;
         }
@@ -236,6 +241,38 @@ public record Response : IJsonOnDeserialized, IXmlNode
     public Response Hangup()
     {
         return Hangup(new global::SeedApi.Hangup());
+    }
+
+    /// <summary>
+    /// Adds a <c>&lt;Redirect&gt;</c> child element after any content added so far and returns this instance for chaining.
+    /// <para>
+    /// Text element with a required attribute.
+    /// </para>
+    /// </summary>
+    /// <param name="redirect">The <c>&lt;Redirect&gt;</c> element to add.</param>
+    public Response Redirect(Redirect redirect)
+    {
+        Children = XmlUtils.Append<ResponseChildrenItem>(Children, redirect);
+        Content.Add(redirect);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a <c>&lt;Redirect&gt;</c> child element built from the given values and returns this instance for chaining.
+    /// <para>
+    /// Text element with a required attribute.
+    /// </para>
+    /// </summary>
+    public Response Redirect(string url, string method, string? kind = null)
+    {
+        return Redirect(
+            new global::SeedApi.Redirect
+            {
+                Url = url,
+                Method = method,
+                Kind = kind,
+            }
+        );
     }
 
     /// <summary>

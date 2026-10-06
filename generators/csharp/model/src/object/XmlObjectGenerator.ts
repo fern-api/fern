@@ -44,7 +44,7 @@ interface GeneratedField {
     type: ast.Type;
 }
 
-interface XmlProperty {
+export interface XmlProperty {
     irProperty: ObjectProperty;
     field: GeneratedField;
     wireName: string;
@@ -87,6 +87,22 @@ export class XmlObjectGenerator {
             }
             return this.toXmlProperty(property, field);
         });
+    }
+
+    public getProperties(): readonly XmlProperty[] {
+        return this.properties;
+    }
+
+    public getXmlEncoding(): FernIr.XmlEncoding {
+        return this.xml;
+    }
+
+    public getContentProperties(): readonly XmlProperty[] {
+        return this.contentProperties;
+    }
+
+    public isWrappedListProperty(property: XmlProperty): boolean {
+        return this.isWrappedList(property);
     }
 
     public generate(): void {
