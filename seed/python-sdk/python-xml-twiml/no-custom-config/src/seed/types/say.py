@@ -8,18 +8,19 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.xml_utilities import (
     XmlAttribute,
-    XmlChild,
+    XmlContent,
     XmlElement,
     XmlNode,
     append_xml_child,
     build_xml_model,
     extra_xml_attributes,
+    order_xml_content,
     parse_xml,
     serialize_xml_element,
     xml_attribute,
-    xml_children,
-    xml_text,
-    xml_unknown_children,
+    xml_content,
+    xml_content_items,
+    xml_leading_text,
 )
 from .break_ import Break
 from .break_strength import BreakStrength
@@ -50,7 +51,7 @@ class Say(UniversalBaseModel):
     Nested TwiML elements, rendered in order.
     """
 
-    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
+    _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
@@ -64,10 +65,8 @@ class Say(UniversalBaseModel):
                 *extra_xml_attributes(self),
             ],
             text=self.message,
-            children=[
-                XmlChild(name="children", value=self.children),
-            ],
-            additional_children=self._additional_children,
+            children=[],
+            content=order_xml_content(self._content, self.children),
             xml_declaration=xml_declaration,
         )
 
@@ -102,34 +101,43 @@ class Say(UniversalBaseModel):
             Additional XML attributes not declared in the API definition.
         """
         super().__init__(**dict(message=message, voice=voice, loop=loop, children=children), **extra_attributes)
+        self._content.extend(order_xml_content([], self.children))
 
     @classmethod
     def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Say:
         """
         Parses a `<Say>` XML element from a document string or a parsed node.
 
-        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes; text segments and child elements (declared or not) are preserved in document order.
         """
         node = parse_xml(xml, "Say")
+        content = xml_content(node, {"break": Break}, skip_leading_text=True)
         model = build_xml_model(
             cls,
             dict(
-                message=xml_text(node),
+                message=xml_leading_text(node),
                 voice=xml_attribute(node, "voice"),
                 loop=xml_attribute(node, "loop"),
-                children=xml_children(node, {"break": Break}, optional=True),
+                children=xml_content_items(content, (Break,), optional=True),
             ),
             node,
             {"voice", "loop"},
         )
-        model._additional_children.extend(xml_unknown_children(node, {"break"}))
+        model._content[:] = content
         return model
 
     def add_child(self, child: XmlElement) -> Say:
         """
-        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        Appends an arbitrary child element (one the schema does not define) after the content added so far and returns this element.
         """
-        self._additional_children.append(child)
+        self._content.append(child)
+        return self
+
+    def add_text(self, text: str) -> Say:
+        """
+        Appends a text segment after the children added so far and returns this element, so text and child elements can be interleaved.
+        """
+        self._content.append(text)
         return self
 
     def append(self, child: Break) -> Say:
@@ -173,4 +181,5 @@ class Say(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            copy_on_model_validation = "none"
             extra = pydantic.Extra.allow

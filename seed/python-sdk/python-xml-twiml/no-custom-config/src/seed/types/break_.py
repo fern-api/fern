@@ -8,14 +8,16 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.xml_utilities import (
     XmlAttribute,
+    XmlContent,
     XmlElement,
     XmlNode,
     build_xml_model,
     extra_xml_attributes,
+    order_xml_content,
     parse_xml,
     serialize_xml_element,
     xml_attribute,
-    xml_unknown_children,
+    xml_content,
 )
 from .break_strength import BreakStrength
 
@@ -35,7 +37,7 @@ class Break(UniversalBaseModel):
     Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms
     """
 
-    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
+    _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
@@ -49,7 +51,7 @@ class Break(UniversalBaseModel):
                 *extra_xml_attributes(self),
             ],
             children=[],
-            additional_children=self._additional_children,
+            content=order_xml_content(self._content),
             xml_declaration=xml_declaration,
         )
 
@@ -61,9 +63,10 @@ class Break(UniversalBaseModel):
         """
         Parses a `<break>` XML element from a document string or a parsed node.
 
-        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes; text segments and child elements (declared or not) are preserved in document order.
         """
         node = parse_xml(xml, "break")
+        content = xml_content(node, {})
         model = build_xml_model(
             cls,
             dict(
@@ -73,14 +76,21 @@ class Break(UniversalBaseModel):
             node,
             {"strength", "time"},
         )
-        model._additional_children.extend(xml_unknown_children(node, ()))
+        model._content[:] = content
         return model
 
     def add_child(self, child: XmlElement) -> Break:
         """
-        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        Appends an arbitrary child element (one the schema does not define) after the content added so far and returns this element.
         """
-        self._additional_children.append(child)
+        self._content.append(child)
+        return self
+
+    def add_text(self, text: str) -> Break:
+        """
+        Appends a text segment after the children added so far and returns this element, so text and child elements can be interleaved.
+        """
+        self._content.append(text)
         return self
 
     if IS_PYDANTIC_V2:
@@ -90,4 +100,5 @@ class Break(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            copy_on_model_validation = "none"
             extra = pydantic.Extra.allow
