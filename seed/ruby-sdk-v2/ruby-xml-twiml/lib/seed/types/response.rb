@@ -24,6 +24,7 @@ module Seed
       def say(message = nil, **attributes)
         child = message.is_a?(Seed::Types::Say) ? message : Seed::Types::Say.new(**attributes, message: message)
         self.children = [*children, child]
+        record_content(child)
         child
       end
 
@@ -38,6 +39,7 @@ module Seed
       def dial(number = nil, **attributes)
         child = number.is_a?(Seed::Types::Dial) ? number : Seed::Types::Dial.new(**attributes, number: number)
         self.children = [*children, child]
+        record_content(child)
         child
       end
 
@@ -51,6 +53,7 @@ module Seed
       def pause(**attributes)
         child = Seed::Types::Pause.new(**attributes)
         self.children = [*children, child]
+        record_content(child)
         child
       end
 
@@ -61,6 +64,7 @@ module Seed
       def hangup(**attributes)
         child = Seed::Types::Hangup.new(**attributes)
         self.children = [*children, child]
+        record_content(child)
         child
       end
 
@@ -76,6 +80,7 @@ module Seed
       def redirect(url = nil, **attributes)
         child = url.is_a?(Seed::Types::Redirect) ? url : Seed::Types::Redirect.new(**attributes, url: url)
         self.children = [*children, child]
+        record_content(child)
         child
       end
     end
