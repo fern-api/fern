@@ -5,11 +5,14 @@ module Seed
     # @param client_id [String]
     # @param client_secret [String]
     # @param base_url [String, nil]
+    # @param root_variable [String, nil]
     # @param max_retries [Integer]
     # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(client_id:, client_secret:, base_url: nil, max_retries: 2, timeout: 60)
+    def initialize(client_id:, client_secret:, base_url: nil, root_variable: nil, max_retries: 2, timeout: 60)
+      @root_variable = root_variable
+
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -42,27 +45,27 @@ module Seed
 
     # @return [Seed::Auth::Client]
     def auth
-      @auth ||= Seed::Auth::Client.new(client: @raw_client)
+      @auth ||= Seed::Auth::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::NestedNoAuth::Client]
     def nested_no_auth
-      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client)
+      @nested_no_auth ||= Seed::NestedNoAuth::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::Nested::Client]
     def nested
-      @nested ||= Seed::Nested::Client.new(client: @raw_client)
+      @nested ||= Seed::Nested::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::Service::Client]
     def service
-      @service ||= Seed::Service::Client.new(client: @raw_client)
+      @service ||= Seed::Service::Client.new(client: @raw_client, root_variable: @root_variable)
     end
 
     # @return [Seed::Simple::Client]
     def simple
-      @simple ||= Seed::Simple::Client.new(client: @raw_client)
+      @simple ||= Seed::Simple::Client.new(client: @raw_client, root_variable: @root_variable)
     end
   end
 end
