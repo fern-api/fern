@@ -479,16 +479,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         if (!this.context.customConfig.omitFernHeaders) {
             const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-            headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.language}'`),
-                value: php.codeblock("'PHP'")
-            });
-            headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.sdkName}'`),
-                value: php.codeblock(`'${this.context.getRootNamespace()}'`)
-            });
+            const userAgentOnly = this.context.customConfig.userAgentOnly ?? false;
+            if (!userAgentOnly) {
+                headerEntries.push({
+                    key: php.codeblock(`'${platformHeaders.language}'`),
+                    value: php.codeblock("'PHP'")
+                });
+                headerEntries.push({
+                    key: php.codeblock(`'${platformHeaders.sdkName}'`),
+                    value: php.codeblock(`'${this.context.getRootNamespace()}'`)
+                });
+            }
             const sdkVersion = this.context.getSdkVersion();
-            if (sdkVersion != null) {
+            if (sdkVersion != null && !userAgentOnly) {
                 headerEntries.push({
                     key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
                     value: php.codeblock(`'${sdkVersion}'`)

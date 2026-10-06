@@ -31,6 +31,7 @@ export const BasePhpCustomConfigSchema = z.object({
     rejectEmptyDateTimeStrings: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
     allowUserAgentAppInfo: z.boolean().optional(),
+    userAgentOnly: z.boolean().optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
