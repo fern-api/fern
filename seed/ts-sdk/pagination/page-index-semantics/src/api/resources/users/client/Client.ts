@@ -420,8 +420,15 @@ export class UsersClient {
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -503,8 +510,15 @@ export class UsersClient {
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -577,8 +591,15 @@ export class UsersClient {
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "pagination.page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "pagination.page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -660,8 +681,15 @@ export class UsersClient {
                 (request?.limit == null || (response?.data ?? []).length >= request?.limit),
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -751,8 +779,15 @@ export class UsersClient {
                     (request?.limit == null || (response?.data ?? []).length >= request?.limit)),
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -1134,8 +1169,15 @@ export class UsersClient {
             hasNextPage: (response) => (response?.results ?? []).length > 0,
             getItems: (response) => response?.results ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "offset", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "offset", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -1211,8 +1253,15 @@ export class UsersClient {
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
