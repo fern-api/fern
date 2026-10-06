@@ -183,6 +183,11 @@ export class WebhooksHelperGenerator {
     }
 }
 
+interface GoParameter {
+    name: string;
+    type: string;
+}
+
 class HmacHelperWriter {
     private readonly context: SdkGeneratorContext;
     private readonly className: string;
@@ -225,12 +230,12 @@ class HmacHelperWriter {
             );
             writer.writeLine(`func (h ${this.className}) VerifySignature(`);
             for (const parameter of this.buildParameters()) {
-                writer.writeLine(`\t${parameter},`);
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
             }
             writer.writeLine(") (bool, error) {");
             writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
-            for (const argument of this.buildDelegateArguments()) {
-                writer.writeLine(`\t\t${argument},`);
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t\t${parameter.name},`);
             }
             writer.writeLine(`\t\t"${defaultAlgorithm}",`);
             writer.writeLine("\t)");
@@ -243,7 +248,7 @@ class HmacHelperWriter {
             writer.writeLine('// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.');
             writer.writeLine(`func (${this.className}) VerifySignatureWithAlgorithm(`);
             for (const parameter of this.buildParameters()) {
-                writer.writeLine(`\t${parameter},`);
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
             }
             writer.writeLine("\talgorithm string,");
             writer.writeLine(") (bool, error) {");
@@ -252,25 +257,25 @@ class HmacHelperWriter {
         });
     }
 
-    private buildDelegateArguments(): string[] {
-        return this.buildParameters().map((parameter) => parameter.split(" ")[0] ?? parameter);
-    }
-
-    private buildParameters(): string[] {
+    private buildParameters(): GoParameter[] {
         // When bodySort is set, the request body accepts either a raw string or a
         // map[string][]string-shaped multimap, so it is widened to interface{}.
         const bodyType = this.hasBodySort ? "interface{}" : "string";
-        const parameters: string[] = [`requestBody ${bodyType}`, "signatureHeader string", "signatureKey string"];
+        const parameters: GoParameter[] = [
+            { name: "requestBody", type: bodyType },
+            { name: "signatureHeader", type: "string" },
+            { name: "signatureKey", type: "string" }
+        ];
         for (const component of this.components) {
             if (component === "NOTIFICATION_URL") {
-                parameters.push("notificationUrl string");
+                parameters.push({ name: "notificationUrl", type: "string" });
             } else if (component === "MESSAGE_ID") {
-                parameters.push("messageId string");
+                parameters.push({ name: "messageId", type: "string" });
             }
         }
         // The timestamp header is needed either for timestamp validation or as a payload component.
         if (this.hasTimestamp || this.components.includes("TIMESTAMP")) {
-            parameters.push("timestampHeader string");
+            parameters.push({ name: "timestampHeader", type: "string" });
         }
         return parameters;
     }

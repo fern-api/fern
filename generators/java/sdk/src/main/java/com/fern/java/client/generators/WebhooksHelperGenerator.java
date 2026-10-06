@@ -190,11 +190,12 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifySignature")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(TypeName.BOOLEAN)
-                .addJavadoc(buildJavadoc())
-                .addParameters(buildParameters(requestBodyType));
+                .addJavadoc(buildJavadoc());
+        List<ParameterSpec> parameters = buildParameters(requestBodyType);
+        method.addParameters(parameters);
         CodeBlock.Builder invocation = CodeBlock.builder().add("return verifySignature(");
         boolean first = true;
-        for (ParameterSpec parameter : buildParameters(requestBodyType)) {
+        for (ParameterSpec parameter : parameters) {
             invocation.add(first ? "$L" : ", $L", parameter.name);
             first = false;
         }
