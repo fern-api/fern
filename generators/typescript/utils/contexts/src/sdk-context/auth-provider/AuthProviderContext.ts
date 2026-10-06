@@ -1,5 +1,6 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getPropertyKey } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { FileContext } from "../file-context/FileContext.js";
 import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
@@ -113,18 +114,64 @@ export class AuthProviderContext {
                 endpoint.name
             );
             const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
-            return requestProperties.map((property) => ({
-                name: property.safeName,
-                wireKey: property.name,
-                type: property.type,
-                isOptional: property.isOptional,
-                docs: property.docs
-            }));
+            const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
+            return requestProperties
+                .filter((property) => property.name !== grantTypeKey)
+                .map((property) => ({
+                    name: property.safeName,
+                    wireKey: property.name,
+                    type: property.type,
+                    isOptional: property.isOptional,
+                    docs: property.docs
+                }));
         }
 
         // For justRequestBody endpoints (e.g. form-encoded token endpoints),
         // extract properties directly from the request body type.
-        return this.getPropertiesFromRequestBody(endpoint);
+        const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
+        return this.getPropertiesFromRequestBody(endpoint).filter((property) => property.wireKey !== grantTypeKey);
+    }
+
+    /**
+     * For inferred auth with a fixed grant type (`type: refresh-token`), returns the key of the
+     * grant type property in the token endpoint request object and the value the SDK sends for it.
+     */
+    public getInferredAuthGrantType(
+        authScheme: FernIr.InferredAuthScheme
+    ): { requestKey: string; value: string } | undefined {
+        const grantType = authScheme.tokenEndpoint.grantType;
+        if (grantType == null || (grantType.requestProperty.propertyPath?.length ?? 0) > 0) {
+            return undefined;
+        }
+        const property = grantType.requestProperty.property;
+        const endpoint = this.getInferredAuthTokenEndpoint(authScheme);
+        const hasWrappedRequest = endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper";
+
+        let requestKey: string;
+        if (hasWrappedRequest) {
+            const generatedRequestWrapper = this.context.requestWrapper.getGeneratedRequestWrapper(
+                authScheme.tokenEndpoint.endpoint.subpackageId
+                    ? { isRoot: false, subpackageId: authScheme.tokenEndpoint.endpoint.subpackageId }
+                    : { isRoot: true },
+                endpoint.name
+            );
+            requestKey =
+                property.type === "query"
+                    ? generatedRequestWrapper.getPropertyNameOfQueryParameterFromName(property.name).propertyName
+                    : generatedRequestWrapper.getInlinedRequestBodyPropertyKeyFromName(property.name).propertyName;
+        } else {
+            const wireValue = getWireValue(property.name);
+            const requestKeyFromBody = this.getPropertiesFromRequestBody(endpoint).find(
+                (bodyProperty) =>
+                    bodyProperty.wireKey === wireValue ||
+                    bodyProperty.wireKey === this.context.case.camelSafe(property.name)
+            )?.wireKey;
+            if (requestKeyFromBody == null) {
+                return undefined;
+            }
+            requestKey = requestKeyFromBody;
+        }
+        return { requestKey: getPropertyKey(requestKey), value: grantType.value };
     }
 
     private getPropertiesFromRequestBody(

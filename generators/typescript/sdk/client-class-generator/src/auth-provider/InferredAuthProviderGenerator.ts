@@ -573,6 +573,22 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             return ts.factory.createPropertyAssignment(ts.factory.createIdentifier(p.name), valueExpression);
         });
 
+        // The grant type is fixed by the auth scheme (e.g. `type: refresh-token`), so it is sent as a
+        // constant instead of being read from the client options. Literal grant types are already
+        // set by the endpoint itself and are not part of the request properties.
+        const grantType = context.authProvider.getInferredAuthGrantType(this.authScheme);
+        if (
+            grantType != null &&
+            this.getAllRequestProperties({ context, requestWrapper }).some((p) => p.name === grantType.requestKey)
+        ) {
+            propertyAssignments.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier(grantType.requestKey),
+                    ts.factory.createStringLiteral(grantType.value)
+                )
+            );
+        }
+
         return [ts.factory.createObjectLiteralExpression(propertyAssignments, true)];
     }
 
@@ -603,6 +619,17 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
      * to extracting properties from the endpoint's request body (for justRequestBody endpoints).
      */
     private getRequestProperties({
+        context,
+        requestWrapper
+    }: {
+        context: FileContext;
+        requestWrapper: GeneratedRequestWrapper | undefined;
+    }): GeneratedRequestWrapper.Property[] {
+        const grantTypeKey = context.authProvider.getInferredAuthGrantType(this.authScheme)?.requestKey;
+        return this.getAllRequestProperties({ context, requestWrapper }).filter((p) => p.name !== grantTypeKey);
+    }
+
+    private getAllRequestProperties({
         context,
         requestWrapper
     }: {

@@ -1,0 +1,6 @@
+- summary: |
+    Support inferred bearer auth with `type: refresh-token`. The SDK always sends
+    `grant_type: "refresh_token"` to the get-token endpoint, and `grantType` is no longer
+    exposed as a client auth option. Users pass only the refresh token (and any other
+    non-literal token endpoint parameters).
+  type: feat
