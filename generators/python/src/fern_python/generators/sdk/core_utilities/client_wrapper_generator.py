@@ -987,6 +987,17 @@ class ClientWrapperGenerator:
                 for header_key in [param.header_key for param in constructor_parameters]
                 + [literal_header.header_key for literal_header in literal_headers]
             )
+            # An optional global User-Agent may be unset at runtime, so only a literal or
+            # required one can stand in for the discrete identification headers.
+            always_sends_global_user_agent_header = any(
+                literal_header.header_key is not None and literal_header.header_key.lower() == "user-agent"
+                for literal_header in literal_headers
+            ) or any(
+                param.header_key is not None
+                and param.header_key.lower() == "user-agent"
+                and not param.type_hint.is_optional
+                for param in constructor_parameters
+            )
             # Emit the default `{package}/{version}` User-Agent when no structured or templated
             # one is configured but app-info (needs a base to append to) or user_agent_only
             # (needs the User-Agent to carry the SDK identity) is on. Off by default, keeping
@@ -1003,7 +1014,7 @@ class ClientWrapperGenerator:
                 emit_structured_user_agent
                 or user_agent_header is not None
                 or emit_default_user_agent
-                or has_global_user_agent_header
+                or always_sends_global_user_agent_header
             )
 
             if not omit_fern_headers:
