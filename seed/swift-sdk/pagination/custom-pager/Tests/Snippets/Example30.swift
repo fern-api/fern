@@ -8,6 +8,6 @@ enum Example30 {
             token: "<token>"
         )
 
-        _ = try await client.users.listWithOptionalData(page: 1)
+        _ = try await client.users.listWithGlobalConfig(offset: 1)
     }
 }

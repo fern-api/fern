@@ -4,6 +4,7 @@
 package com.seed._enum.resources.inlinedrequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed._enum.core.BodyProperties;
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.MediaTypes;
 import com.seed._enum.core.ObjectMappers;
@@ -45,7 +46,9 @@ public class RawInlinedRequestClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedEnumException("Failed to serialize request", e);
         }

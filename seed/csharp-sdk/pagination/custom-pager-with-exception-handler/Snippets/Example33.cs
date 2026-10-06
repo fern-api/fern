@@ -10,11 +10,9 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListWithAliasedDataAsync(
-            new ListUsersAliasedDataRequest {
-                Page = 1,
-                PerPage = 1,
-                StartingAfter = "starting_after"
+        await client.Users.ListWithOptionalDataAsync(
+            new ListUsersOptionalDataRequest {
+                Page = 1
             }
         );
     }

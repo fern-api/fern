@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +10,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->modifyWithInlinePath(
+$client->endpoints->params->modifyWithPath(
     'param',
-    new ModifyResourceAtInlinedPath([
-        'body' => 'string',
-    ]),
+    'string',
 );

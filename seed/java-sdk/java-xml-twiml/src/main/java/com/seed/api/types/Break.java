@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
@@ -92,18 +91,18 @@ public final class Break implements XmlSerializable {
         return Objects.hash(this.strength, this.time);
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
 
     @Override
+    public String toString() {
+        return toXml();
+    }
+
+    @Override
     public String toXml() {
-        return toXml(false);
+        return toXml(true);
     }
 
     @Override

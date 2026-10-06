@@ -5,6 +5,7 @@ package com.seed.trace.resources.sysprop;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.commons.types.Language;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -27,21 +28,51 @@ public class AsyncSyspropClient {
     }
 
     public CompletableFuture<Void> setNumWarmInstances(Language language, int numWarmInstances) {
-        return this.rawClient.setNumWarmInstances(language, numWarmInstances).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.setNumWarmInstances(language, numWarmInstances);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> setNumWarmInstances(
             Language language, int numWarmInstances, RequestOptions requestOptions) {
-        return this.rawClient
-                .setNumWarmInstances(language, numWarmInstances, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.setNumWarmInstances(language, numWarmInstances, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<Language, Integer>> getNumWarmInstances() {
-        return this.rawClient.getNumWarmInstances().thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Map<Language, Integer>>> rawFuture =
+                this.rawClient.getNumWarmInstances();
+        CompletableFuture<Map<Language, Integer>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Map<Language, Integer>> getNumWarmInstances(RequestOptions requestOptions) {
-        return this.rawClient.getNumWarmInstances(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Map<Language, Integer>>> rawFuture =
+                this.rawClient.getNumWarmInstances(requestOptions);
+        CompletableFuture<Map<Language, Integer>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

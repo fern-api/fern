@@ -1337,6 +1337,101 @@ func TestGettersUnionWithDuplicativeDiscriminants(t *testing.T) {
 
 }
 
+func TestGettersUnionWithGlobalNameCollisions(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithGlobalNameCollisions{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UnionWithGlobalNameCollisions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetDate", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithGlobalNameCollisions{}
+		var expected string
+		obj.Date = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDate(), "getter should return the property value")
+	})
+
+	t.Run("GetDate_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UnionWithGlobalNameCollisions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDate() // Should return zero value
+	})
+
+	t.Run("GetError", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithGlobalNameCollisions{}
+		var expected string
+		obj.Error = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetError(), "getter should return the property value")
+	})
+
+	t.Run("GetError_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UnionWithGlobalNameCollisions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetError() // Should return zero value
+	})
+
+	t.Run("GetAim", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UnionWithGlobalNameCollisions{}
+		var expected string
+		obj.Aim = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAim(), "getter should return the property value")
+	})
+
+	t.Run("GetAim_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UnionWithGlobalNameCollisions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAim() // Should return zero value
+	})
+
+}
+
 func TestGettersUnionWithLiteral(t *testing.T) {
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()

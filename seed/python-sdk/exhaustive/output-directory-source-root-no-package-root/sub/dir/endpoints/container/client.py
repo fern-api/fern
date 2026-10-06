@@ -239,6 +239,39 @@ class ContainerClient:
         _response = self._raw_client.get_and_return_map_of_prim_to_undiscriminated_union(request=request, request_options=request_options)
         return _response.data
     
+    def get_and_return_map_of_integer_to_object(self, *, request: typing.Dict[int, ObjectWithRequiredField], request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[int, ObjectWithRequiredField]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[int, ObjectWithRequiredField]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        typing.Dict[int, ObjectWithRequiredField]
+        
+        Examples
+        --------
+        from sub.dir import SeedExhaustive
+        from sub.dir.types.object import ObjectWithRequiredField
+        
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_map_of_integer_to_object(
+            request={
+                1: ObjectWithRequiredField(
+                    string="string",
+                )
+            },
+        )
+        """
+        _response = self._raw_client.get_and_return_map_of_integer_to_object(request=request, request_options=request_options)
+        return _response.data
+    
     def get_and_return_optional(self, *, request: typing.Optional[ObjectWithRequiredField] = None, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[ObjectWithRequiredField]:
         """
         Parameters
@@ -552,6 +585,47 @@ class AsyncContainerClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_and_return_map_of_prim_to_undiscriminated_union(request=request, request_options=request_options)
+        return _response.data
+    
+    async def get_and_return_map_of_integer_to_object(self, *, request: typing.Dict[int, ObjectWithRequiredField], request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[int, ObjectWithRequiredField]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[int, ObjectWithRequiredField]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        typing.Dict[int, ObjectWithRequiredField]
+        
+        Examples
+        --------
+        import asyncio
+        
+        from sub.dir import AsyncSeedExhaustive
+        from sub.dir.types.object import ObjectWithRequiredField
+        
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        
+        
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_map_of_integer_to_object(
+                request={
+                    1: ObjectWithRequiredField(
+                        string="string",
+                    )
+                },
+            )
+        
+        
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_map_of_integer_to_object(request=request, request_options=request_options)
         return _response.data
     
     async def get_and_return_optional(self, *, request: typing.Optional[ObjectWithRequiredField] = None, request_options: typing.Optional[RequestOptions] = None) -> typing.Optional[ObjectWithRequiredField]:

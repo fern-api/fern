@@ -58,6 +58,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         enable-wire-tests: true
+  errors:
+    - outputFolder: .
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - customConfig:
         enable-wire-tests: true

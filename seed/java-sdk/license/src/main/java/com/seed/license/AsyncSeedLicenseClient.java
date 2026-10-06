@@ -5,6 +5,7 @@ package com.seed.license;
 
 import com.seed.license.core.ClientOptions;
 import com.seed.license.core.RequestOptions;
+import com.seed.license.core.SeedLicenseHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSeedLicenseClient implements AutoCloseable {
@@ -25,16 +26,31 @@ public class AsyncSeedLicenseClient implements AutoCloseable {
     }
 
     public CompletableFuture<Void> get() {
-        return this.rawClient.get().thenApply(response -> response.body());
+        CompletableFuture<SeedLicenseHttpResponse<Void>> rawFuture = this.rawClient.get();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> get(RequestOptions requestOptions) {
-        return this.rawClient.get(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedLicenseHttpResponse<Void>> rawFuture = this.rawClient.get(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

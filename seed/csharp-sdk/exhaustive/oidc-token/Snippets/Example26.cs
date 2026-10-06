@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using SeedExhaustive.Types;
 
 public partial class Examples
 {
@@ -11,12 +10,13 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
-            new ObjectWithMixedRequiredAndOptionalFields {
-                RequiredString = "hello",
-                RequiredInteger = 0,
-                OptionalString = "world",
-                RequiredLong = 0L
+        await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
+            new Dictionary<string, object>(){
+                ["string"] = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+                ,
             }
         );
     }

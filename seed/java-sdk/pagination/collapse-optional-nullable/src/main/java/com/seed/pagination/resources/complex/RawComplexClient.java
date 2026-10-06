@@ -4,6 +4,7 @@
 package com.seed.pagination.resources.complex;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.pagination.core.BodyProperties;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
@@ -55,7 +56,9 @@ public class RawComplexClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPaginationException("Failed to serialize request", e);
         }

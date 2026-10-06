@@ -42,26 +42,29 @@ public class FileUploadExampleClient {
         return this.rawClient.uploadFile(file, request, requestOptions).body();
     }
 
-    public String uploadFile(Optional<File> file, InputStream stream, String filename) {
-        return this.rawClient.uploadFile(file, stream, filename).body();
+    public String uploadFile(UploadFileRequest request, InputStream stream, String filename) {
+        return this.rawClient.uploadFile(request, stream, filename).body();
     }
 
-    public String uploadFile(Optional<File> file, InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.uploadFile(file, stream, filename, mediaType).body();
-    }
-
-    public String uploadFile(Optional<File> file, InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.uploadFile(file, stream, filename, requestOptions).body();
+    public String uploadFile(UploadFileRequest request, InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.uploadFile(request, stream, filename, mediaType).body();
     }
 
     public String uploadFile(
-            Optional<File> file,
+            UploadFileRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .uploadFile(request, stream, filename, requestOptions)
+                .body();
+    }
+
+    public String uploadFile(
+            UploadFileRequest request,
             InputStream stream,
             String filename,
             MediaType mediaType,
             RequestOptions requestOptions) {
         return this.rawClient
-                .uploadFile(file, stream, filename, mediaType, requestOptions)
+                .uploadFile(request, stream, filename, mediaType, requestOptions)
                 .body();
     }
 }

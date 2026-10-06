@@ -15,23 +15,19 @@ func do() {
         ),
     )
     request := &fern.TreeRecord{
-        TreeSpecies: fern.String(
-            "treeSpecies",
-        ),
-        HeightInFeet: fern.Float64(
-            1.1,
-        ),
         ID: "id",
-        TreeName: fern.String(
-            "treeName",
-        ),
-        TreeDescription: fern.String(
-            "treeDescription",
-        ),
+        TreeName: "treeName",
+        TreeSpecies: "treeSpecies",
         PlantedDate: fern.Time(
             fern.MustParseDate(
                 "2023-01-15",
             ),
+        ),
+        HeightInFeet: fern.Float64(
+            1.1,
+        ),
+        TreeDescription: fern.String(
+            "treeDescription",
         ),
     }
     client.CreateTree(
