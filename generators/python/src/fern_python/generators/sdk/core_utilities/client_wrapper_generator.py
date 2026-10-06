@@ -936,6 +936,7 @@ class ClientWrapperGenerator:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             omit_fern_headers = self._context.custom_config.omit_fern_headers
             include_platform_headers = self._context.custom_config.include_platform_headers
+            user_agent_only = self._context.custom_config.user_agent_only
             allow_user_agent_app_info = self._context.custom_config.allow_user_agent_app_info
             user_agent_header = self._context.ir.sdk_config.platform_headers.user_agent
 
@@ -979,7 +980,7 @@ class ClientWrapperGenerator:
                 _get_user_agent_coordinate_prefix(user_agent_prefix) if user_agent_prefix is not None else None
             )
 
-            if not omit_fern_headers:
+            if not omit_fern_headers and (emit_structured_user_agent or not user_agent_only):
                 writer.write_line("import platform")
                 writer.write_line("")
                 if runtime_version_active and project._project_config is not None:
@@ -1029,7 +1030,7 @@ class ClientWrapperGenerator:
                     else:
                         user_agent_value_expr = f'"{user_agent_header.value}"'
                     writer.write_line(f'"{user_agent_header.header}": {_with_app_info(user_agent_value_expr)},')
-                elif allow_user_agent_app_info and project._project_config is not None:
+                elif (allow_user_agent_app_info or user_agent_only) and project._project_config is not None:
                     # No structured or templated User-Agent is configured, but app-info was
                     # opted into: emit the default `{package}/{version}` User-Agent so the
                     # caller's product token has a base to append to. Only emitted when the
@@ -1041,11 +1042,12 @@ class ClientWrapperGenerator:
                             f'"{project._project_config.package_name}/{project._project_config.package_version}"'
                         )
                     writer.write_line(f'"User-Agent": {_with_app_info(default_user_agent_expr)},')
-                writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
-                if not emit_structured_user_agent:
+                if not user_agent_only:
+                    writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
+                if not emit_structured_user_agent and not user_agent_only:
                     writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
                     writer.write_line("f'X-Fern-Platform': f\"{platform.system().lower()}/{platform.release()}\",")
-                if project._project_config is not None:
+                if project._project_config is not None and not user_agent_only:
                     writer.write_line(
                         f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
                     )
