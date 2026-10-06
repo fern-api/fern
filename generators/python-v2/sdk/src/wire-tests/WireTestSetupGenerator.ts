@@ -819,6 +819,10 @@ def pytest_unconfigure(config: pytest.Config) -> None:
      * body properties, so pass a fake value for each required one.
      */
     private getInferredAuthParams(scheme: FernIr.InferredAuthScheme): string[] {
+        // The Python root client only takes inferred auth credentials when inferred is the sole scheme.
+        if (this.ir.auth.schemes.length !== 1) {
+            return [];
+        }
         const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
         const endpoint = this.ir.services[tokenEndpointRef.serviceId]?.endpoints.find(
             (e) => e.id === tokenEndpointRef.endpointId
@@ -834,7 +838,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         if (requestBody?.type === "inlinedRequestBody") {
             properties.push(...requestBody.properties);
         } else if (requestBody?.type === "reference" && requestBody.requestBodyType.type === "named") {
-            const shape = this.ir.types[requestBody.requestBodyType.typeId]?.shape;
+            const shape = this.resolveAliasedShape(requestBody.requestBodyType.typeId);
             if (shape?.type === "object") {
                 properties.push(...(shape.extendedProperties ?? []), ...shape.properties);
             }
@@ -846,6 +850,16 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 const paramName = this.context.caseConverter.snakeSafe(getNameFromWireValue(property.name));
                 return `        ${paramName}="test_${paramName}",`;
             });
+    }
+
+    private resolveAliasedShape(typeId: FernIr.TypeId): FernIr.Type | undefined {
+        const visited = new Set<FernIr.TypeId>();
+        let shape = this.ir.types[typeId]?.shape;
+        while (shape?.type === "alias" && shape.aliasOf.type === "named" && !visited.has(shape.aliasOf.typeId)) {
+            visited.add(shape.aliasOf.typeId);
+            shape = this.ir.types[shape.aliasOf.typeId]?.shape;
+        }
+        return shape;
     }
 
     private isRequiredNonLiteral(typeReference: FernIr.TypeReference): boolean {
