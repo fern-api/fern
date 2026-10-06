@@ -22,9 +22,8 @@ from xml.dom import minidom
 from xml.parsers.expat import ExpatError
 from xml.sax.saxutils import escape, quoteattr
 
-from .pydantic_utilities import IS_PYDANTIC_V2
-
 import pydantic
+from .pydantic_utilities import IS_PYDANTIC_V2
 
 XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>'
 
