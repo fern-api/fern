@@ -164,9 +164,9 @@ class OAuthTokenProviderGenerator:
         if grant_type_property is not None:
             kwargs.append(
                 (
-                    resolve_name(get_name_from_wire_value(grant_type_property.name)).snake_case.safe_name,
+                    resolve_name(get_name_from_wire_value(grant_type_property[0])).snake_case.safe_name,
                     self._get_grant_type_value_expression(
-                        type_reference=grant_type_property.value_type, grant_type=REFRESH_TOKEN_GRANT_TYPE
+                        type_reference=grant_type_property[1], grant_type=REFRESH_TOKEN_GRANT_TYPE
                     ),
                 )
             )
@@ -245,23 +245,47 @@ class OAuthTokenProviderGenerator:
 
     def _get_refresh_grant_type_property(
         self, endpoint: ir_types.HttpEndpoint
-    ) -> Optional[ir_types.InlinedRequestBodyProperty]:
+    ) -> Optional[Tuple[Union[str, ir_types.NameAndWireValue], ir_types.TypeReference]]:
         """
         A required, non-literal grant_type body property is sent as "refresh_token" (RFC 6749 §6),
-        since nothing else supplies it when the spec models it as a plain string.
+        since nothing else supplies it when the spec models it as a plain string. The property may
+        be declared inline, on an extended type, or on a referenced request body type.
         """
-        if endpoint.request_body is None:
-            return None
-        request_body = endpoint.request_body.get_as_union()
-        if request_body.type != "inlinedRequestBody":
-            return None
-        for body_property in request_body.properties:
-            if get_original_name(get_name_from_wire_value(body_property.name)) != GRANT_TYPE_WIRE_VALUE:
+        for name, value_type in self._get_request_body_properties(endpoint):
+            if get_original_name(get_name_from_wire_value(name)) != GRANT_TYPE_WIRE_VALUE:
                 continue
-            if self._is_literal_type(body_property.value_type) or self._is_optional_type(body_property.value_type):
+            if self._is_literal_type(value_type) or self._is_optional_type(value_type):
                 return None
-            return body_property
+            return name, value_type
         return None
+
+    def _get_request_body_properties(
+        self, endpoint: ir_types.HttpEndpoint
+    ) -> List[Tuple[Union[str, ir_types.NameAndWireValue], ir_types.TypeReference]]:
+        if endpoint.request_body is None:
+            return []
+        request_body = endpoint.request_body.get_as_union()
+        pydantic_context = self._context.pydantic_generator_context
+        if request_body.type == "inlinedRequestBody":
+            properties = [(body_property.name, body_property.value_type) for body_property in request_body.properties]
+            for extended in request_body.extends:
+                properties.extend(
+                    (object_property.name, object_property.value_type)
+                    for object_property in pydantic_context.get_all_properties_including_extensions(extended.type_id)
+                )
+            return properties
+        if request_body.type == "reference":
+            body_type = request_body.request_body_type.get_as_union()
+            if body_type.type != "named":
+                return []
+            declaration = pydantic_context.get_declaration_for_type_id(body_type.type_id)
+            if declaration.shape.get_as_union().type != "object":
+                return []
+            return [
+                (object_property.name, object_property.value_type)
+                for object_property in pydantic_context.get_all_properties_including_extensions(body_type.type_id)
+            ]
+        return []
 
     def _get_grant_type_value_expression(
         self, *, type_reference: ir_types.TypeReference, grant_type: str
