@@ -1,3 +1,4 @@
+import { xmlSiblingCommentsOf } from "./XmlComment.js";
 export const XML_DECLARATION = '<?xml version="1.0" encoding="UTF-8"?>';
 
 export interface XmlSerializable {
@@ -47,6 +48,8 @@ interface XmlWrapperFragment extends XmlSerializable {
     attributes: Record<string, string>;
     text?: undefined;
     children: XmlSerializable[];
+    /** Ordered undeclared children and comments; preferred over `children` so comments round-trip too. */
+    content?: XmlContent[];
 }
 
 function isXmlWrapperFragment(value: XmlSerializable): value is XmlWrapperFragment {
@@ -231,7 +234,12 @@ function renderChild({ name, value, wrapped = false }: XmlChild, wrapperFragment
             continue;
         }
         if (isXmlSerializable(item)) {
-            rendered.push(item.toXml(false));
+            const siblings = xmlSiblingCommentsOf(item);
+            rendered.push(
+                ...(siblings?.before ?? []).map((comment) => comment.toXml()),
+                item.toXml(false),
+                ...(siblings?.after ?? []).map((comment) => comment.toXml()),
+            );
         } else {
             rendered.push(serializeXmlElement({ name, text: item }));
         }
@@ -244,7 +252,8 @@ function renderChild({ name, value, wrapped = false }: XmlChild, wrapperFragment
         for (const [attributeName, attributeValue] of Object.entries(fragment.attributes)) {
             wrapperAttributes.push(` ${attributeName}="${escapeXml(attributeValue)}"`);
         }
-        rendered.push(...fragment.children.map((child) => child.toXml(false)));
+        const extra = fragment.content?.filter((item) => typeof item !== "string") ?? fragment.children;
+        rendered.push(...extra.map((child) => child.toXml(false)));
     }
     const open = `<${name}${wrapperAttributes.join("")}`;
     return [rendered.length === 0 ? `${open} />` : `${open}>${rendered.join("")}</${name}>`];
