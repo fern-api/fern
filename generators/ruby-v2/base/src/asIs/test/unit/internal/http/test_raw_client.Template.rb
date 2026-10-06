@@ -251,6 +251,7 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
       assert_equal "POST", http_request.method
       assert_equal "yes", http_request["X-Custom"]
 <% if (!omitFernHeaders && !userAgentOnly) { %>      assert_equal "Ruby", http_request["X-Fern-Language"]
+<% } else { %>      assert_nil http_request["X-Fern-Language"]
 <% } %>      assert_equal '{"name":"widget"}', http_request.body
     end
 

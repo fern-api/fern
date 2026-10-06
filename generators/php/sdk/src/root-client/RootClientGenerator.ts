@@ -479,8 +479,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         if (!this.context.customConfig.omitFernHeaders) {
             const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-            const userAgentOnly = this.context.customConfig.userAgentOnly ?? false;
-            if (!userAgentOnly) {
+            const userAgent = this.context.getUserAgent();
+            // userAgentOnly only drops the discrete headers when a User-Agent is actually
+            // emitted, so the SDK is never left without any identification header.
+            const dropDiscreteHeaders = (this.context.customConfig.userAgentOnly ?? false) && userAgent != null;
+            if (!dropDiscreteHeaders) {
                 headerEntries.push({
                     key: php.codeblock(`'${platformHeaders.language}'`),
                     value: php.codeblock("'PHP'")
@@ -489,15 +492,14 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     key: php.codeblock(`'${platformHeaders.sdkName}'`),
                     value: php.codeblock(`'${this.context.getRootNamespace()}'`)
                 });
+                const sdkVersion = this.context.getSdkVersion();
+                if (sdkVersion != null) {
+                    headerEntries.push({
+                        key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
+                        value: php.codeblock(`'${sdkVersion}'`)
+                    });
+                }
             }
-            const sdkVersion = this.context.getSdkVersion();
-            if (sdkVersion != null && !userAgentOnly) {
-                headerEntries.push({
-                    key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                    value: php.codeblock(`'${sdkVersion}'`)
-                });
-            }
-            const userAgent = this.context.getUserAgent();
             if (userAgent != null) {
                 const escapedUserAgentValue = userAgent.value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
                 // The base User-Agent expression, covering all three branches: the

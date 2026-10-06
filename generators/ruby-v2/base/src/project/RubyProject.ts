@@ -211,7 +211,10 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
-                    userAgentOnly: this.rubyContext.customConfig.userAgentOnly,
+                    // Only drops the default X-Fern-* headers when a User-Agent is emitted.
+                    userAgentOnly:
+                        this.rubyContext.customConfig.userAgentOnly === true &&
+                        this.rubyContext.ir.sdkConfig.platformHeaders.userAgent != null,
                     allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,

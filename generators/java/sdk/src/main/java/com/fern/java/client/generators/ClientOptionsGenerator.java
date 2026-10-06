@@ -638,13 +638,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     fallbackVersion = lastSlash >= 0 ? userAgentValue.substring(lastSlash + 1) : userAgentValue;
                 }
             }
+            // userAgentOnly only drops the discrete headers when a User-Agent is actually emitted, so the SDK is
+            // never left without any identification header.
+            boolean dropDiscreteHeaders = userAgentOnly
+                    && userAgentHeaderName.isPresent()
+                    && platformHeaderEntries.containsKey(userAgentHeaderName.get());
             StringBuilder putStatements = new StringBuilder();
             boolean referencesRuntimeVersion = false;
             for (Map.Entry<String, String> entry : platformHeaderEntries.entrySet()) {
                 boolean isUserAgentHeader = userAgentHeaderName.isPresent()
                         && userAgentHeaderName.get().equals(entry.getKey());
                 boolean isSdkVersionHeader = runtimeVersion && entry.getKey().equals(sdkVersionHeaderName);
-                if (userAgentOnly && !isUserAgentHeader) {
+                if (dropDiscreteHeaders && !isUserAgentHeader) {
                     continue;
                 }
                 if (isUserAgentHeader && includePlatformHeaders) {

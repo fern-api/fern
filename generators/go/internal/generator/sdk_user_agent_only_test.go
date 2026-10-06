@@ -11,6 +11,15 @@ import (
 
 func emitPlatformHeaders(t *testing.T, userAgent userAgentConfig) string {
 	t.Helper()
+	var ua ir.UserAgent
+	if err := json.Unmarshal([]byte(`{"header":"User-Agent","value":"github.com/acme/test/1.0.0"}`), &ua); err != nil {
+		t.Fatalf("failed to build UserAgent: %v", err)
+	}
+	return emitPlatformHeadersWithIRUserAgent(t, userAgent, &ua)
+}
+
+func emitPlatformHeadersWithIRUserAgent(t *testing.T, userAgent userAgentConfig, ua *ir.UserAgent) string {
+	t.Helper()
 	f := newFileWriter(
 		"request_option.go",
 		"core",
@@ -33,16 +42,12 @@ func emitPlatformHeaders(t *testing.T, userAgent userAgentConfig) string {
 		nil,
 		(*coordinator.Client)(nil),
 	)
-	var ua ir.UserAgent
-	if err := json.Unmarshal([]byte(`{"header":"User-Agent","value":"github.com/acme/test/1.0.0"}`), &ua); err != nil {
-		t.Fatalf("failed to build UserAgent: %v", err)
-	}
 	sdkConfig := &ir.SdkConfig{
 		PlatformHeaders: &ir.PlatformHeaders{
 			Language:   "X-Fern-Language",
 			SdkName:    "X-Fern-SDK-Name",
 			SdkVersion: "X-Fern-SDK-Version",
-			UserAgent:  &ua,
+			UserAgent:  ua,
 		},
 	}
 	if err := f.writePlatformHeaders(sdkConfig, &ModuleConfig{Path: "github.com/acme/test"}, "1.0.0"); err != nil {
@@ -84,5 +89,14 @@ func TestPlatformHeadersOmitFernHeadersWinsOverUserAgentOnly(t *testing.T) {
 	src := emitPlatformHeaders(t, userAgentConfig{omitFernHeaders: true, userAgentOnly: true})
 	if strings.Contains(src, "User-Agent") || strings.Contains(src, "X-Fern-") {
 		t.Errorf("expected no platform headers with omitFernHeaders:\n%s", src)
+	}
+}
+
+func TestPlatformHeadersUserAgentOnlyKeepsDiscreteHeadersWithoutUserAgent(t *testing.T) {
+	src := emitPlatformHeadersWithIRUserAgent(t, userAgentConfig{userAgentOnly: true}, nil)
+	for _, want := range []string{`"X-Fern-Language"`, `"X-Fern-SDK-Name"`, `"X-Fern-SDK-Version"`} {
+		if !strings.Contains(src, want) {
+			t.Errorf("expected %s in output:\n%s", want, src)
+		}
 	}
 }

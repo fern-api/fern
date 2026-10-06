@@ -657,9 +657,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Add X-Fern-Language header
             const hasParams = inferredParams.length > 0;
-            if (!this.context.customConfig.userAgentOnly) {
-                writer.writeLine(`"X-Fern-Language" => "Ruby"${hasParams ? "," : ""}`);
-            }
+            writer.writeLine(`${this.getAuthClientPlatformHeaderEntry()}${hasParams ? "," : ""}`);
 
             // Add any header-based auth params to the auth client headers
             for (let i = 0; i < inferredParams.length; i++) {
@@ -837,9 +835,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
             writer.writeLine(`headers: {`);
             writer.indent();
-            if (!this.context.customConfig.userAgentOnly) {
-                writer.writeLine(`"X-Fern-Language" => "Ruby"`);
-            }
+            writer.writeLine(this.getAuthClientPlatformHeaderEntry());
             writer.dedent();
             writer.writeLine(`},`);
             if (this.emitHttpClientOption()) {
@@ -1352,7 +1348,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
             }
 
-            if (!this.context.customConfig.userAgentOnly) {
+            if (!this.userAgentOnlyDropsDiscreteHeaders()) {
                 headers.push({
                     key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
                     value: ruby.TypeLiteral.string("Ruby")
@@ -1450,6 +1446,36 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * when `omitFernHeaders` is set (no User-Agent is sent in that case), so flag-off
      * output stays byte-identical.
      */
+    /**
+     * Whether `userAgentOnly` drops the discrete X-Fern-* headers. Only when a User-Agent
+     * is actually emitted, so the SDK is never left without any identification header.
+     */
+    private userAgentOnlyDropsDiscreteHeaders(): boolean {
+        return (
+            this.context.customConfig.userAgentOnly === true &&
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.ir.sdkConfig.platformHeaders.userAgent != null
+        );
+    }
+
+    /**
+     * The platform header entry sent on the unauthenticated client used for OAuth /
+     * inferred-auth token requests: the User-Agent when `userAgentOnly` drops the
+     * discrete headers, otherwise `X-Fern-Language`.
+     */
+    private getAuthClientPlatformHeaderEntry(): string {
+        const userAgent = this.context.ir.sdkConfig.platformHeaders.userAgent;
+        if (!this.userAgentOnlyDropsDiscreteHeaders() || userAgent == null) {
+            return `"X-Fern-Language" => "Ruby"`;
+        }
+        const escapedUserAgent = JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#");
+        if (this.context.customConfig.includePlatformHeaders) {
+            const rootModuleName = this.context.getRootModule().name;
+            return `"User-Agent" => ${rootModuleName}::Internal::Http::RawClient.user_agent(${escapedUserAgent})`;
+        }
+        return `"User-Agent" => ${escapedUserAgent}`;
+    }
+
     private emitAppInfoOption(): boolean {
         return (
             this.context.customConfig.allowUserAgentAppInfo === true &&

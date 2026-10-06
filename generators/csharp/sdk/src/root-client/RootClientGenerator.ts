@@ -450,23 +450,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
         if (!this.settings.omitFernHeaders) {
             const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-            if (!this.settings.userAgentOnly) {
-                platformHeaderEntries.push({
-                    key: this.csharp.codeblock(`"${platformHeaders.language}"`),
-                    value: this.csharp.codeblock('"C#"')
-                });
-                platformHeaderEntries.push({
-                    key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                    // Use the package identity (NuGet package id or nuget filesystem
-                    // publish target) so the SDK-name header matches the `User-Agent`;
-                    // falls back to the root namespace when neither is configured.
-                    value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
-                });
-                platformHeaderEntries.push({
-                    key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-                    value: this.context.getCurrentVersionValueAccess()
-                });
-            }
             // When the opt-in `allow-user-agent-app-info` config is set, wrap the
             // computed User-Agent value expression in the emitted
             // `AppendAppInfoToUserAgent` helper, which appends the caller-supplied
@@ -487,14 +470,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 });
             };
 
+            let userAgentHeaderEntry: ast.Dictionary.MapEntry | undefined;
             if (this.settings.includePlatformHeaders) {
                 // Emit a single structured `User-Agent` consolidating the SDK
                 // name/version with the OS, architecture, and runtime, all
                 // resolved at runtime by the `BuildUserAgent` helper.
-                platformHeaderEntries.push({
+                userAgentHeaderEntry = {
                     key: this.csharp.codeblock(`"${platformHeaders.userAgent?.header ?? "User-Agent"}"`),
                     value: withAppInfo(this.csharp.codeblock(`${BUILD_USER_AGENT_METHOD_NAME}()`))
-                });
+                };
             } else {
                 // When `user-agent-name-from-package` is enabled, falls back to
                 // `$"<NuGetPackageId>/{Version.Current}"` when the IR has no
@@ -509,11 +493,34 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     userAgentNameFromPackage: this.settings.userAgentNameFromPackage
                 });
                 if (userAgentEntry != null) {
-                    platformHeaderEntries.push({
+                    userAgentHeaderEntry = {
                         key: userAgentEntry.key,
                         value: withAppInfo(userAgentEntry.value)
-                    });
+                    };
                 }
+            }
+
+            // user-agent-only only drops the discrete headers when a User-Agent is
+            // actually emitted, so the SDK is never left without any identification header.
+            if (!(this.settings.userAgentOnly && userAgentHeaderEntry != null)) {
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.language}"`),
+                    value: this.csharp.codeblock('"C#"')
+                });
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
+                    // Use the package identity (NuGet package id or nuget filesystem
+                    // publish target) so the SDK-name header matches the `User-Agent`;
+                    // falls back to the root namespace when neither is configured.
+                    value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
+                });
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+                    value: this.context.getCurrentVersionValueAccess()
+                });
+            }
+            if (userAgentHeaderEntry != null) {
+                platformHeaderEntries.push(userAgentHeaderEntry);
             }
         }
 
