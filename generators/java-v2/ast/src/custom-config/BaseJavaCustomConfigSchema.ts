@@ -46,6 +46,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "custom-interceptors": z.boolean().optional(),
     "omit-fern-headers": z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
+    userAgentOnly: z.boolean().optional(),
     "retry-status-codes": z.optional(z.enum(["legacy", "recommended"])),
 
     // Hidden options (for debugging).

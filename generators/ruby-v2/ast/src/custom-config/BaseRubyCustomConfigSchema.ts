@@ -40,6 +40,10 @@ export const BaseRubyCustomConfigSchema = z.object({
     // appended to the User-Agent header (RFC 9110). Disabled by default so existing
     // output is byte-identical.
     allowUserAgentAppInfo: z.boolean().optional(),
+    // Opt-in: send only the User-Agent platform header (in whatever form the other
+    // configs produce) and omit X-Fern-Language, X-Fern-SDK-Name, and
+    // X-Fern-SDK-Version. Disabled by default; still subject to omitFernHeaders.
+    userAgentOnly: z.boolean().optional(),
     // RuboCop Naming/VariableNumber style for field names with numbers
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)

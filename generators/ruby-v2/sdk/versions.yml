@@ -1,4 +1,77 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.35.2
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes and text accept a space-separated String or a single
+        value (including a Symbol) in addition to an Array, matching the legacy call style:
+        `response.gather(input: "speech dtmf")` and `dial(status_callback_event: :answered)` no
+        longer raise `NoMethodError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.35.1
+  changelogEntry:
+    - summary: |
+        Fluent XML (TwiML) child methods accept the text content as a keyword as well as positionally,
+        matching the legacy call style: `response.say(message: "x")`, `response.dial(number: "+1555")` and
+        `response.message(body: "hi")` now emit the text instead of silently dropping it. Passing the text
+        both positionally and as a keyword raises `ArgumentError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.35.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types support the legacy twilio-ruby building style: constructors and fluent child methods yield the
+        new element to a block (`VoiceResponse.new { |r| r.say("hi") }`, `r.gather { |g| g.say("one") }`), and
+        `add_child` also accepts an element name with text and attributes (`r.add_child("Custom", "v", a: "1")`).
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.2
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `from_xml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of raising, and it round-trips through
+        `to_xml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.1
+  changelogEntry:
+    - summary: |
+        Endpoints whose request body is an array, set, map, primitive, enum, optional/nullable object, or an alias of
+        one of these now send the body argument itself (e.g. `[{"name":"Monstera"}]`) instead of wrapping it with the
+        other keyword arguments (e.g. `{"request": [...]}`). This also applies to such bodies on endpoints with headers
+        or query parameters, which no longer leak into the body. Objects inside these bodies (optional/nullable objects,
+        list and set items, and map values) are serialized through their model so fields use their wire names, sets are
+        sent as JSON arrays, and an omitted optional body is still sent without a body.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.34.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omitFernHeaders` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 1.32.0
   changelogEntry:
     - summary: |

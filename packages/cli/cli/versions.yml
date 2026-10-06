@@ -1,4 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.147.3
+  changelogEntry:
+    - summary: |
+        Fix component schemas that are only a `$ref` to another schema (for example
+        `CopyBatchArg: { $ref: '#/components/schemas/RelocationBatchArgBase' }`) being imported
+        as `unknown`. Their API reference pages showed "any" instead of the referenced type's
+        fields. These schemas now become an alias of the referenced type.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now registers API definitions with FDR four at a time instead of one
+        after another, which shortens publishes for docs sites with many APIs or API versions. Set
+        `FERN_DOCS_API_REGISTRATION_CONCURRENCY` to change the limit (`1` restores serial registration).
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.1
+  changelogEntry:
+    - summary: |
+        `<Markdown src="..." />` snippets now resolve when a prop value contains `>`, e.g.
+        `<Markdown src="/snippets/intro.mdx" returnType="Promise<void>" />`. Previously the `>` inside the
+        quoted value ended the tag early, so the snippet was never inlined and the page rendered incorrectly.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.147.0
+  changelogEntry:
+    - summary: |
+        `fern init` can now create `sdk-config.yml` for new OpenAPI projects. Initialized OpenAPI
+        files are bundled into the Fern workspace, while URL sources are preserved in the generated configuration.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 5.146.2
   changelogEntry:
     - summary: |

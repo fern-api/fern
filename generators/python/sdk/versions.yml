@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.1
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        a list, matching the legacy call style: `response.gather(input="speech dtmf")` no longer
+        raises a validation error and serializes as `input="speech dtmf"`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.37.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user_agent_only` config (also accepted as `userAgentOnly`). When enabled,
+        generated clients send the `User-Agent` header (including the structured form from
+        `include_platform_headers`) but omit the `X-Fern-Language`, `X-Fern-SDK-Name`,
+        `X-Fern-SDK-Version`, `X-Fern-Runtime`, and `X-Fern-Platform` headers. Disabled by default,
+        so existing generated output is unchanged. `omit_fern_headers` still takes precedence and
+        drops the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.36.1
+  changelogEntry:
+    - summary: |
+        With endpoint-security auth, the client now fetches an OAuth or inferred-auth token only when the
+        endpoint's security requirements reference that scheme. Previously every authenticated call fetched
+        one first, so an endpoint that doesn't use it (e.g. the token endpoint itself) made an extra token
+        request and failed if that fetch failed.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.36.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 5.35.0
   changelogEntry:
     - summary: |

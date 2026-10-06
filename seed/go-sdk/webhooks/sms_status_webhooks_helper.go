@@ -22,12 +22,30 @@ import (
 // The signature is verified against several normalized forms of the notification URL, succeeding if any candidate matches.
 type SmsStatusWebhooksHelper struct{}
 
-// VerifySignature verifies an HMAC webhook signature.
-func (SmsStatusWebhooksHelper) VerifySignature(
+// VerifySignature verifies an HMAC webhook signature using the configured "sha1" algorithm.
+func (h SmsStatusWebhooksHelper) VerifySignature(
 	requestBody interface{},
 	signatureHeader string,
 	signatureKey string,
 	notificationUrl string,
+) (bool, error) {
+	return h.VerifySignatureWithAlgorithm(
+		requestBody,
+		signatureHeader,
+		signatureKey,
+		notificationUrl,
+		"sha1",
+	)
+}
+
+// VerifySignatureWithAlgorithm verifies an HMAC webhook signature using the given HMAC algorithm
+// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.
+func (SmsStatusWebhooksHelper) VerifySignatureWithAlgorithm(
+	requestBody interface{},
+	signatureHeader string,
+	signatureKey string,
+	notificationUrl string,
+	algorithm string,
 ) (bool, error) {
 	if requestBody == nil || signatureHeader == "" || signatureKey == "" {
 		return false, errors.New("Missing required parameters for webhook signature verification")
@@ -98,7 +116,7 @@ func (SmsStatusWebhooksHelper) VerifySignature(
 		} else {
 			payload = strings.Join([]string{candidateUrl, bodyString}, "")
 		}
-		expected, err := core.ComputeHmacSignature(payload, signatureKey, "sha1", "base64")
+		expected, err := core.ComputeHmacSignature(payload, signatureKey, algorithm, "base64")
 		if err != nil {
 			return false, err
 		}

@@ -6,13 +6,15 @@ import {
     join,
     RelativeFilePath
 } from "@fern-api/fs-utils";
-import { copyFile, writeFile } from "fs/promises";
+import { copyFile, readFile, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "./init.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const SDK_CONFIG_ENV = { FERN_USE_SDK_GEN_API: "true" };
 
 describe("fern init", () => {
     it.concurrent("no existing fern directory", async ({ expect, signal }) => {
@@ -243,5 +245,138 @@ describe("fern init", () => {
         });
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory, { skipBinaryContents: true })).toMatchSnapshot();
+    }, 180_000);
+
+    it.concurrent("initializes an SDK Config API when SDK generation is enabled", async ({ expect, signal }) => {
+        const pathOfDirectory = await init({ env: SDK_CONFIG_ENV, signal });
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+
+        await runFernCli(["check"], {
+            cwd: pathOfDirectory,
+            env: { FERN_USE_SDK_GEN_API: "false" },
+            signal
+        });
+
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("sdk-config.yml")))).toBe(true);
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("generators.yml")))).toBe(false);
+        const sdkConfig = yaml.load(
+            await readFile(join(fernDirectory, RelativeFilePath.of("sdk-config.yml")), "utf8")
+        ) as {
+            source: { specs: Array<{ path: string }> };
+            targets: Array<{ generatorVersion?: string; language: string }>;
+        };
+        expect(sdkConfig.source.specs[0]?.path).toBe("./openapi.yml");
+        expect(sdkConfig.targets).toStrictEqual([
+            { language: "typescript", output: { delivery: "files", path: "../sdks/typescript" } }
+        ]);
+        expect(sdkConfig.targets[0]?.generatorVersion).toBeUndefined();
+    }, 180_000);
+
+    it.concurrent("materializes --openapi input in an SDK Config API workspace", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const sourceOpenAPI = join(
+            FIXTURES_DIR,
+            RelativeFilePath.of("openapi"),
+            RelativeFilePath.of("petstore-openapi.yml")
+        );
+        const targetOpenAPI = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("petstore-openapi.yml"));
+        await copyFile(sourceOpenAPI, targetOpenAPI);
+
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--openapi", value: "petstore-openapi.yml" }],
+            directory: AbsoluteFilePath.of(tmpDir.path),
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("openapi.yml")))).toBe(true);
+        const sdkConfig = yaml.load(
+            await readFile(join(fernDirectory, RelativeFilePath.of("sdk-config.yml")), "utf8")
+        ) as { source: { specs: Array<{ path: string }> } };
+        expect(sdkConfig.source.specs[0]?.path).toBe("./openapi.yml");
+    }, 180_000);
+
+    it.concurrent("supports repeated initialization across SDK Config and legacy modes", async ({ expect, signal }) => {
+        const pathOfDirectory = await init({ env: SDK_CONFIG_ENV, signal });
+
+        await init({
+            directory: pathOfDirectory,
+            env: { FERN_USE_SDK_GEN_API: "false" },
+            signal
+        });
+        await runFernCli(["check"], {
+            cwd: pathOfDirectory,
+            env: { FERN_USE_SDK_GEN_API: "false" },
+            signal
+        });
+
+        const apisDirectory = join(
+            pathOfDirectory,
+            RelativeFilePath.of(FERN_DIRECTORY),
+            RelativeFilePath.of(APIS_DIRECTORY)
+        );
+        expect(
+            await doesPathExist(join(apisDirectory, RelativeFilePath.of("api"), RelativeFilePath.of("sdk-config.yml")))
+        ).toBe(true);
+        expect(
+            await doesPathExist(join(apisDirectory, RelativeFilePath.of("api"), RelativeFilePath.of("openapi.yml")))
+        ).toBe(true);
+        expect(
+            await doesPathExist(join(apisDirectory, RelativeFilePath.of("api1"), RelativeFilePath.of("generators.yml")))
+        ).toBe(true);
+    }, 180_000);
+
+    it.concurrent("relocates an existing OpenAPI input while preserving the SDK output default", async ({
+        expect,
+        signal
+    }) => {
+        const pathOfDirectory = await init({ env: SDK_CONFIG_ENV, signal });
+
+        await init({
+            directory: pathOfDirectory,
+            additionalArgs: [{ name: "--openapi", value: "fern/openapi.yml" }],
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+
+        const apisDirectory = join(
+            pathOfDirectory,
+            RelativeFilePath.of(FERN_DIRECTORY),
+            RelativeFilePath.of(APIS_DIRECTORY)
+        );
+        const originalConfig = yaml.load(
+            await readFile(join(apisDirectory, RelativeFilePath.of("api/sdk-config.yml")), "utf8")
+        ) as { targets: Array<{ output: { path?: string } }> };
+        const newConfig = yaml.load(
+            await readFile(join(apisDirectory, RelativeFilePath.of("api1/sdk-config.yml")), "utf8")
+        ) as { targets: Array<{ output: { path?: string } }> };
+
+        expect(await doesPathExist(join(apisDirectory, RelativeFilePath.of("api/openapi.yml")))).toBe(true);
+        expect(await doesPathExist(join(apisDirectory, RelativeFilePath.of("api1/openapi.yml")))).toBe(true);
+        expect(originalConfig.targets[0]?.output.path).toBe("../sdks/typescript");
+        expect(newConfig.targets[0]?.output.path).toBe("../sdks/typescript");
+    }, 180_000);
+
+    it.concurrent("rejects Fern Definition initialization without exposing internal details", async ({
+        expect,
+        signal
+    }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+
+        const result = await runFernCli(["init", "--organization", "fern", "--fern-definition"], {
+            cwd: pathOfDirectory,
+            env: SDK_CONFIG_ENV,
+            reject: false,
+            signal
+        });
+
+        const output = result.stdout + result.stderr;
+        expect(result.exitCode).not.toBe(0);
+        expect(output).toContain("fern init --openapi <path-or-url>");
+        expect(output).not.toContain("FERN_USE_SDK_GEN_API");
+        expect(output).not.toContain("SDK Gen API");
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))).toBe(false);
     }, 180_000);
 });

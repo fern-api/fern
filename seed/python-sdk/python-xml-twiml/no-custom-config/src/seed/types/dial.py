@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, universal_root_validator
 from ..core.xml_utilities import (
     XmlAttribute,
     XmlChild,
@@ -14,6 +14,7 @@ from ..core.xml_utilities import (
     XmlNode,
     append_xml_child,
     build_xml_model,
+    coerce_xml_list_fields,
     extra_xml_attributes,
     order_xml_content,
     parse_xml,
@@ -78,6 +79,10 @@ class Dial(UniversalBaseModel):
         super().__init__(
             **dict(number=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
         )
+
+    @universal_root_validator(pre=True)
+    def _coerce_xml_lists(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        return coerce_xml_list_fields(values, {"status_callback_event": " "})
 
     @classmethod
     def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Dial:

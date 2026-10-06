@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the generated `XmlElementTests` test project failing to compile because its `FakeNode` test
+    double did not implement `IXmlNode.ToXml(bool)`.
+  type: fix

@@ -561,9 +561,9 @@ export class XmlObjectGenerator {
             }
             if (value.type === "enum") {
                 writer.writeNode(utils);
-                writer.write(`::parseEnum(${property.isOptional ? rawOptional : rawRequired}, `);
+                writer.write(`::parseEnumValue(${property.isOptional ? rawOptional : rawRequired}, `);
                 writer.writeNode(value.enum);
-                writer.write(`::class)${property.isOptional ? "?" : ""}->value`);
+                writer.write("::class)");
                 return;
             }
             if (value.type === "literal") {

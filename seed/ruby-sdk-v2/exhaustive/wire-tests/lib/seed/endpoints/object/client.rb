@@ -304,7 +304,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field-list",
-            body: params,
+            body: params[:request]&.map { |item| Seed::Types::Object_::Types::NestedObjectWithRequiredField.new(item).to_h },
             request_options: request_options
           )
           begin
@@ -417,7 +417,7 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/object/get-and-return-map-of-documented-unknown-type",
-            body: params,
+            body: params[:request],
             request_options: request_options
           )
           begin

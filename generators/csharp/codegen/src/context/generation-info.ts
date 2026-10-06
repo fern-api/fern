@@ -250,6 +250,8 @@ export class Generation {
         includePlatformHeaders: () => this.customConfig["include-platform-headers"] ?? false,
         /** When true, exposes an `AppInfo` client option whose sanitized product token is appended to the `User-Agent` header (RFC 9110). Default: false. Independent of includePlatformHeaders; still subject to omitFernHeaders. */
         allowUserAgentAppInfo: () => this.customConfig["allow-user-agent-app-info"] ?? false,
+        /** When true, sends only the `User-Agent` platform header, omitting X-Fern-Language and X-Fern-SDK-Name/Version. Default: false. Still subject to omitFernHeaders. */
+        userAgentOnly: () => this.customConfig["user-agent-only"] ?? false,
         /** When true, falls back to `<NuGetPackageId>/<version>` for the `User-Agent` header when the IR doesn't supply one. Default: false. */
         userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */

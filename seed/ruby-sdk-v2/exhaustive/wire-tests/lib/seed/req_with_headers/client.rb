@@ -37,7 +37,7 @@ module Seed
           method: "POST",
           path: "/test-headers/custom-header",
           headers: headers,
-          body: params,
+          body: params[:body],
           request_options: request_options
         )
         begin

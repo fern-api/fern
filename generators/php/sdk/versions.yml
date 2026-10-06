@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.28.2
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        an array, matching the legacy call style: `new Gather(['input' => 'speech dtmf'])` and
+        `$response->gather(['input' => 'speech dtmf'])` no longer throw a `TypeError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.28.1
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `fromXml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of throwing, and it round-trips through
+        `toXml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.28.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omitFernHeaders` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.27.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 2.26.0
   changelogEntry:
     - summary: |

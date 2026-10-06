@@ -803,23 +803,22 @@ final class XmlUtils
     }
 
     /**
-     * Validates that a raw value is one of the enum's backing values and returns it unchanged.
+     * Reads an enum-valued attribute or text. Enums are open on the wire: a value the enum does not
+     * declare is returned unchanged, so documents written by a newer API version still parse and
+     * round-trip.
      *
      * @template T of BackedEnum
      * @param class-string<T> $enum
-     * @return ($raw is null ? null : T)
-     * @throws InvalidArgumentException If the value is not a member of the enum.
+     * @return ($raw is null ? null : value-of<T>)
      */
-    public static function parseEnum(?string $raw, string $enum): ?BackedEnum
+    public static function parseEnumValue(?string $raw, string $enum): mixed
     {
         if ($raw === null) {
             return null;
         }
-        $case = $enum::tryFrom($raw);
-        if ($case === null) {
-            throw new InvalidArgumentException("'$raw' is not a valid value for $enum");
-        }
-        return $case;
+        /** @var value-of<T> $value */
+        $value = $enum::tryFrom($raw)?->value ?? $raw;
+        return $value;
     }
 
     /**
@@ -861,13 +860,12 @@ final class XmlUtils
     }
 
     /**
-     * Validates every raw item against the enum's backing values.
+     * Reads a list of enum values; unknown items are kept as-is (see {@see parseEnumValue}).
      *
      * @template T of BackedEnum
      * @param ?list<string> $raw
      * @param class-string<T> $enum
      * @return ($raw is null ? null : list<value-of<T>>)
-     * @throws InvalidArgumentException If an item is not a member of the enum.
      */
     public static function enumValues(?array $raw, string $enum): ?array
     {
@@ -876,7 +874,7 @@ final class XmlUtils
         }
         $result = [];
         foreach ($raw as $item) {
-            $result[] = self::parseEnum($item, $enum)->value;
+            $result[] = self::parseEnumValue($item, $enum);
         }
         return $result;
     }

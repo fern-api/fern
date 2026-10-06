@@ -54,11 +54,17 @@ export const xmlDate: XmlScalarParser<Date> = (raw, location) => {
     return value;
 };
 
+const MAX_ENUM_VALUES_IN_ERROR = 10;
+
 export function xmlEnum<T extends string>(values: readonly T[]): XmlScalarParser<T> {
     return (raw, location) => {
         const match = values.find((value) => value === raw);
         if (match == null) {
-            throw invalidValue(raw, `one of ${values.map((value) => `"${value}"`).join(", ")}`, location);
+            const shown = values.slice(0, MAX_ENUM_VALUES_IN_ERROR).map((value) => `"${value}"`);
+            if (values.length > MAX_ENUM_VALUES_IN_ERROR) {
+                shown.push(`… (${values.length - MAX_ENUM_VALUES_IN_ERROR} more)`);
+            }
+            throw invalidValue(raw, `one of ${shown.join(", ")}`, location);
         }
         return match;
     };

@@ -89,6 +89,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("userAgentOnly")
+    default Boolean userAgentOnly() {
+        return false;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }
