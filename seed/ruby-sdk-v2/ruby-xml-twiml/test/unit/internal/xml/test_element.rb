@@ -168,6 +168,7 @@ describe Seed::Internal::Xml::Element do
         const_set(:WEAK, "weak")
         const_set(:STRONG, "strong")
       end
+
       assert_equal "weak", XmlTestUtils.parse_enum(" weak ", strength)
       assert_equal "bogus", XmlTestUtils.parse_enum("bogus", strength)
       assert_equal "bogus", XmlTestUtils.parse_enum(" bogus ", strength)
