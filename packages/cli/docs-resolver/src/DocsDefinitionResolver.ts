@@ -154,8 +154,8 @@ const DEFAULT_API_REGISTRATION_CONCURRENCY = 4;
 
 /** Max APIs registered with FDR at once; override with `FERN_DOCS_API_REGISTRATION_CONCURRENCY` (1 = serial). */
 function getApiRegistrationConcurrency(): number {
-    const parsed = Number.parseInt(process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY ?? "", 10);
-    return Number.isFinite(parsed) && parsed >= 1 ? parsed : DEFAULT_API_REGISTRATION_CONCURRENCY;
+    const value = process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY?.trim();
+    return value != null && /^[1-9]\d*$/.test(value) ? Number(value) : DEFAULT_API_REGISTRATION_CONCURRENCY;
 }
 
 const defaultUploadFiles: UploadFilesFn = (files) => {

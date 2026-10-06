@@ -51,8 +51,21 @@ describe("mapWithConcurrency", () => {
                 }
             })
         ).rejects.toThrow("boom");
-        await new Promise((resolve) => setTimeout(resolve, 30));
         expect(started).toEqual([0, 1]);
+    });
+
+    it("waits for in-flight calls before rejecting", async () => {
+        let finished = 0;
+        await expect(
+            mapWithConcurrency([0, 1, 2], 3, async (item) => {
+                if (item === 0) {
+                    throw new Error("boom");
+                }
+                await new Promise((resolve) => setTimeout(resolve, 10));
+                finished++;
+            })
+        ).rejects.toThrow("boom");
+        expect(finished).toBe(2);
     });
 
     it("handles an empty list", async () => {
