@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `withRawResponse()` to every client that has endpoints. Its endpoints return
+    `HttpResponse<T>`: `getBody()` (what the plain client returns), `getStatusCode()` and the
+    response headers. `BaseApiException` now carries the response headers as well.
+  type: feat
