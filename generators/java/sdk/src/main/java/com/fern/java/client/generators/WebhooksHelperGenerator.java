@@ -144,7 +144,11 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder helper = TypeSpec.classBuilder(className)
                 .addField(FieldSpec.builder(
-                                java.util.logging.Logger.class, "LOGGER", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                                java.util.logging.Logger.class,
+                                "LOGGER",
+                                Modifier.PRIVATE,
+                                Modifier.STATIC,
+                                Modifier.FINAL)
                         .initializer("$T.getLogger($T.class.getName())", java.util.logging.Logger.class, className)
                         .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
