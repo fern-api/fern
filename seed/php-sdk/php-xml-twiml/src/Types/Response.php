@@ -128,7 +128,10 @@ class Response extends XmlSerializableType
      *   |string
      * )|null,
      *   record?: (
-     *    array<value-of<DialRecordItem>>
+     *    array<(
+     *    value-of<DialRecordItem>
+     *   |DialRecordItem
+     * )>
      *   |string
      * )|null,
      *   numbers?: ?array<Number>,

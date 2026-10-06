@@ -352,18 +352,31 @@ final class XmlUtils
     }
 
     /**
-     * Normalizes a list-valued attribute or text given either as an array or as a single
-     * separator-delimited string (e.g. `'speech dtmf'`).
+     * Normalizes an enum-valued attribute or text given either as the enum case or as its value.
+     */
+    public static function enumValue(BackedEnum|string|null $value): ?string
+    {
+        return $value instanceof BackedEnum ? (string) $value->value : $value;
+    }
+
+    /**
+     * Normalizes a list-valued attribute or text given either as an array (of values or enum cases)
+     * or as a single separator-delimited string (e.g. `'speech dtmf'`).
      *
      * @template T
-     * @param array<T>|string|null $value
+     * @param array<T|BackedEnum>|string|null $value
      * @param non-empty-string $separator
      * @return ?array<T>
      */
     public static function toList(array|string|null $value, string $separator): ?array
     {
-        if ($value === null || is_array($value)) {
-            return $value;
+        if ($value === null) {
+            return null;
+        }
+        if (is_array($value)) {
+            /** @var array<T> $items */
+            $items = array_map(fn ($item) => $item instanceof BackedEnum ? $item->value : $item, $value);
+            return $items;
         }
         /** @var array<T> $items */
         $items = self::parseList($value, $separator, fn (string $item): string => $item);

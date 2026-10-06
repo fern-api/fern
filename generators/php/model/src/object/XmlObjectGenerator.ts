@@ -84,30 +84,47 @@ export class XmlObjectGenerator {
     ): Pick<php.Field.Args, "constructorType" | "constructorValueWrapper"> | undefined {
         const fieldName = this.context.getPropertyName(objectProperty.name);
         const property = this.properties.find((candidate) => candidate.fieldName === fieldName);
-        if (property == null || !this.acceptsDelimitedString(property)) {
+        if (property == null || property.kind === FernIr.XmlPropertyKind.Element) {
+            return undefined;
+        }
+        const value = property.value;
+        const isEnum = value.type === "enum";
+        const isString = value.type === "scalar" && value.kind === "string";
+        if (!isEnum && !isString) {
             return undefined;
         }
         const type = this.context.phpTypeMapper.convert({ reference: objectProperty.valueType });
+        const utils = this.context.getXmlUtilsClassReference();
+        if (property.isList) {
+            // accept the legacy separator-delimited string, and enum instances alongside their values
+            const itemType = isEnum
+                ? php.Type.union([php.Type.enumString(value.enum), php.Type.reference(value.enum)])
+                : php.Type.string();
+            return {
+                constructorType: this.widen(type, [php.Type.array(itemType), php.Type.string()]),
+                constructorValueWrapper: (rawValue) =>
+                    php.codeblock((writer) => {
+                        writer.writeNode(utils);
+                        writer.write(`::toList(${rawValue}, ${this.phpString(property.listSeparator)})`);
+                    })
+            };
+        }
+        if (!isEnum) {
+            return undefined;
+        }
+        // the field stays a `value-of<Enum>` string; an enum instance is unwrapped on construction
         return {
-            constructorType: this.widenListType(type),
+            constructorType: this.widen(type, [php.Type.enumString(value.enum), php.Type.reference(value.enum)]),
             constructorValueWrapper: (rawValue) =>
                 php.codeblock((writer) => {
-                    writer.writeNode(this.context.getXmlUtilsClassReference());
-                    writer.write(`::toList(${rawValue}, ${this.phpString(property.listSeparator)})`);
+                    writer.writeNode(utils);
+                    writer.write(`::enumValue(${rawValue})`);
                 })
         };
     }
 
-    private acceptsDelimitedString(property: XmlProperty): boolean {
-        return (
-            property.isList &&
-            property.kind !== FernIr.XmlPropertyKind.Element &&
-            (property.value.type === "enum" || (property.value.type === "scalar" && property.value.kind === "string"))
-        );
-    }
-
-    private widenListType(type: php.Type): php.Type {
-        const union = php.Type.union([type.isOptional() ? type.underlyingType() : type, php.Type.string()]);
+    private widen(type: php.Type, members: php.Type[]): php.Type {
+        const union = php.Type.union(members);
         return type.isOptional() ? php.Type.optional(union) : union;
     }
 

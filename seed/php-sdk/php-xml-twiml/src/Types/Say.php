@@ -118,7 +118,10 @@ class Say extends XmlSerializableType
      * @param (
      *    Break_
      *   |array{
-     *   strength?: ?value-of<BreakStrength>,
+     *   strength?: (
+     *    value-of<BreakStrength>
+     *   |BreakStrength
+     * )|null,
      *   time?: ?string,
      * }
      * ) $child The <break> to add, or the properties to construct it with.
