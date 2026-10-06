@@ -216,11 +216,10 @@ function resolveRefreshEndpoint({
     const reqProps = refreshTokenConfig["request-properties"];
     const resProps = refreshTokenConfig["response-properties"];
 
-    const refreshTokenReqProp = findRequestBodyProperty({
-        ir,
-        endpoint,
-        wireValue: extractWireName(reqProps?.["refresh-token"], "refresh_token")
-    });
+    const refreshTokenWireValue = extractWireName(reqProps?.["refresh-token"], "refresh_token");
+    const refreshTokenReqProp =
+        findRequestBodyProperty({ ir, endpoint, wireValue: refreshTokenWireValue }) ??
+        findQueryParameterProperty({ endpoint, wireValue: refreshTokenWireValue });
     const accessTokenProp = findResponseProperty({
         ir,
         endpoint,
@@ -346,6 +345,23 @@ function findRequestBodyProperty({
     return {
         propertyPath: undefined,
         property: RequestPropertyValue.body({ ...prop })
+    };
+}
+
+function findQueryParameterProperty({
+    endpoint,
+    wireValue
+}: {
+    endpoint: FernIr.HttpEndpoint;
+    wireValue: string;
+}): FernIr.RequestProperty | undefined {
+    const queryParameter = endpoint.queryParameters.find((param) => getWireValue(param.name) === wireValue);
+    if (queryParameter == null) {
+        return undefined;
+    }
+    return {
+        propertyPath: undefined,
+        property: RequestPropertyValue.query(queryParameter)
     };
 }
 
