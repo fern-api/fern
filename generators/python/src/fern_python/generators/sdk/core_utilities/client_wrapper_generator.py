@@ -674,9 +674,10 @@ class ClientWrapperGenerator:
             writer.write_line(" = {}")
             # Only resolve credentials that may fetch a token (OAuth, inferred auth) when the
             # endpoint can use them, so e.g. the token endpoint doesn't first fetch a token.
-            writer.write_line(
-                f"_required_scheme_keys = {{scheme_key for requirement in {security_param} for scheme_key in requirement}}"
-            )
+            if (len(token_schemes) > 0 and bearer_auth_scheme is not None) or inferred_auth_scheme is not None:
+                writer.write_line(
+                    f"_required_scheme_keys = {{scheme_key for requirement in {security_param} for scheme_key in requirement}}"
+                )
 
             # Bearer / OAuth token schemes
             if len(token_schemes) > 0 and bearer_auth_scheme is not None:
