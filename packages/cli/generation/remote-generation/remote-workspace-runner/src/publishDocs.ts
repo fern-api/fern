@@ -42,7 +42,9 @@ type DynamicIRUpload = APIV1Write.DynamicIRUpload;
 type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
+import { logViolations } from "@fern-api/api-workspace-validator";
 import { stitchGlobalTheme } from "@fern-api/docs-resolver";
+import { validateMissingRedirects } from "@fern-api/docs-validator";
 import {
     AbsoluteFilePath,
     convertToFernHostRelativeFilePath,
@@ -847,6 +849,25 @@ export async function publishDocs({
         context.logger.debug(
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
+
+        const missingRedirects = await validateMissingRedirects({
+            workspace: docsWorkspace,
+            docsDefinition,
+            logger: context.logger
+        });
+        logViolations({
+            context,
+            violations: missingRedirects,
+            logWarnings: true,
+            logSummary: false,
+            logBreadcrumbs: false
+        });
+        if (missingRedirects.some((violation) => violation.severity === "error")) {
+            doUnlock();
+            return context.failAndThrow("Failed to publish docs.", "Some removed pages have no redirect.", {
+                code: CliError.Code.ValidationError
+            });
+        }
 
         if (docsRegistrationId == null && deployMode !== "ledger") {
             doUnlock();

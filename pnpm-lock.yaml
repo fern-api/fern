@@ -6387,6 +6387,9 @@ importers:
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../../../docs-resolver
+      '@fern-api/docs-validator':
+        specifier: workspace:*
+        version: link:../../../yaml/docs-validator
       '@fern-api/fai-sdk':
         specifier: 'catalog:'
         version: 0.0.6-2ee1b7e28
@@ -9667,10 +9670,6 @@ packages:
 
   '@fern-fern/ir-sdk@67.22.0':
     resolution: {integrity: sha512-WSKMwlqNubDJ/pKMFX1/qZ4CwSQvDtYFDviugtWqcmnid/xSY13i7N7TpPC2j6CAeUJSA/Pcdq8/nALWeythsw==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-sdk@67.28.0':
-    resolution: {integrity: sha512-mKtoj/V7ot0rAfYy+bKmtnaXcutpbnTeznuWvQwxe1GuLd6lKyNzRtNjMhmcs5EZqothpnLbqJZoggN2NSdydA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-sdk@67.29.0':
@@ -16702,8 +16701,6 @@ snapshots:
   '@fern-fern/ir-sdk@67.21.0': {}
 
   '@fern-fern/ir-sdk@67.22.0': {}
-
-  '@fern-fern/ir-sdk@67.28.0': {}
 
   '@fern-fern/ir-sdk@67.29.0': {}
 
