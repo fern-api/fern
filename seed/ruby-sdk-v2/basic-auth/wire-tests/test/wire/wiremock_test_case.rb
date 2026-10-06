@@ -53,6 +53,32 @@ class WireMockTestCase < Minitest::Test
     assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
   end
 
+  # Verifies the JSON body of the request made to WireMock for the given test ID.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param expected_body [Object] The expected request body, as parsed JSON
+  def verify_request_body(test_id:, method:, url_path:, expected_body:)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+    result = JSON.parse(response.body)
+    requests = result["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id} (#{method} #{url_path})"
+    actual_body = JSON.parse(requests.first["body"])
+
+    assert_equal expected_body, actual_body
+  end
+
   # Verifies that the Authorization header on captured requests matches the expected value.
   #
   # @param test_id [String] The test ID used to filter requests

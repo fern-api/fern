@@ -36,6 +36,7 @@ export declare namespace XmlObjectGenerator {
         useBigInt: boolean;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
+        enableForwardCompatibleEnums: boolean;
         getPropertyKey: (property: FernIr.ObjectProperty) => string;
         getTypeForObjectProperty: (context: Context, property: FernIr.ObjectProperty) => TypeReferenceNode;
     }
@@ -87,6 +88,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private readonly useBigInt: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly noOptionalProperties: boolean;
+    private readonly enableForwardCompatibleEnums: boolean;
     private readonly getPropertyKey: (property: FernIr.ObjectProperty) => string;
     private readonly getTypeForObjectProperty: (context: Context, property: FernIr.ObjectProperty) => TypeReferenceNode;
 
@@ -98,6 +100,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         this.useBigInt = init.useBigInt;
         this.includeSerdeLayer = init.includeSerdeLayer;
         this.noOptionalProperties = init.noOptionalProperties;
+        this.enableForwardCompatibleEnums = init.enableForwardCompatibleEnums;
         this.getPropertyKey = init.getPropertyKey;
         this.getTypeForObjectProperty = init.getTypeForObjectProperty;
     }
@@ -707,6 +710,11 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                 const declaration = context.type.getTypeDeclaration(itemType);
                 switch (declaration.shape.type) {
                     case "enum":
+                        // Forward-compatible enums are typed `... | string`, so unknown wire values are
+                        // kept instead of rejected.
+                        if (this.enableForwardCompatibleEnums) {
+                            return this.xmlRef(context, "xmlString");
+                        }
                         return `${this.xmlRef(context, "xmlEnum")}([${declaration.shape.values
                             .map((value) => JSON.stringify(getWireValue(value.name)))
                             .join(", ")}])`;

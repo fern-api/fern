@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { isUrlEncodedRequestBody, unwrapTypeReference } from "../utils/requestBody.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
@@ -451,6 +452,19 @@ export class WireTestGenerator {
             lines.push(`      expected: 1`);
             lines.push(`    )`);
 
+            const expectedRequestBody = this.getExpectedRawRequestBody(endpoint);
+            if (expectedRequestBody != null) {
+                lines.push(``);
+                lines.push(`    verify_request_body(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(
+                    `      expected_body: JSON.parse(${toRubyStringLiteral(JSON.stringify(expectedRequestBody))})`
+                );
+                lines.push(`    )`);
+            }
+
             if (this.context.isEndpointSecurity()) {
                 // Per-endpoint security: the SDK routes only the auth scheme(s) this endpoint
                 // declares, so assert the routed scheme's header(s) are present (and every other
@@ -481,6 +495,75 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Returns the example body for endpoints whose referenced body is passed as a single argument (a
+     * primitive, enum, optional/nullable object, or a list/set/map of those) and serializes back to
+     * the example JSON exactly, so the captured request body must equal it. Top-level object bodies
+     * and types with formatted values (dates, base64, big integers) or unknowns/unions are skipped.
+     */
+    private getExpectedRawRequestBody(endpoint: FernIr.HttpEndpoint): unknown {
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type !== "reference" || isUrlEncodedRequestBody(requestBody)) {
+            return undefined;
+        }
+        const bodyType = requestBody.requestBodyType;
+        const resolved = this.unwrapTypeReference(bodyType);
+        const isTopLevelObject =
+            bodyType.type === "named" &&
+            resolved.type === "named" &&
+            this.context.getTypeDeclarationOrThrow(resolved.typeId).shape.type === "object";
+        if (isTopLevelObject || !this.serializesToExampleJson(bodyType, new Set())) {
+            return undefined;
+        }
+        return this.getDynamicEndpointExample(endpoint)?.requestBody ?? undefined;
+    }
+
+    private serializesToExampleJson(typeReference: FernIr.TypeReference, visiting: Set<FernIr.TypeId>): boolean {
+        const resolved = this.unwrapTypeReference(typeReference);
+        switch (resolved.type) {
+            case "primitive":
+                return EXAMPLE_STABLE_PRIMITIVES.has(resolved.primitive.v1);
+            case "named": {
+                if (visiting.has(resolved.typeId)) {
+                    return false;
+                }
+                const shape = this.context.getTypeDeclarationOrThrow(resolved.typeId).shape;
+                if (shape.type === "enum") {
+                    return true;
+                }
+                if (shape.type !== "object") {
+                    return false;
+                }
+                const next = new Set(visiting).add(resolved.typeId);
+                return [...shape.properties, ...(shape.extendedProperties ?? [])].every((property) =>
+                    this.serializesToExampleJson(property.valueType, next)
+                );
+            }
+            case "container": {
+                const container = resolved.container;
+                switch (container.type) {
+                    case "list":
+                        return this.serializesToExampleJson(container.list, visiting);
+                    case "set":
+                        return this.serializesToExampleJson(container.set, visiting);
+                    case "map":
+                        return (
+                            this.serializesToExampleJson(container.keyType, visiting) &&
+                            this.serializesToExampleJson(container.valueType, visiting)
+                        );
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
+    }
+
+    private unwrapTypeReference(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        return unwrapTypeReference(typeReference, (typeId) => this.context.getTypeDeclarationOrThrow(typeId));
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
@@ -851,4 +934,17 @@ export class WireTestGenerator {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join("");
     }
+}
+
+const EXAMPLE_STABLE_PRIMITIVES = new Set<string>(["STRING", "INTEGER", "LONG", "UINT", "UINT_64", "BOOLEAN", "UUID"]);
+
+/**
+ * Ruby string literal that satisfies RuboCop's `Style/StringLiterals: double_quotes`: single quotes (no
+ * interpolation, only `\\` and `'` escaped) when the value contains a double quote, double quotes otherwise.
+ */
+export function toRubyStringLiteral(value: string): string {
+    if (value.includes('"')) {
+        return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+    }
+    return `"${value.replace(/\\/g, "\\\\").replace(/#(?=[{$@])/g, "\\#")}"`;
 }

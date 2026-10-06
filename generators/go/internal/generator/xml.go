@@ -279,14 +279,6 @@ func xmlFromElementFunc(goType string) string {
 	return goType + "FromXmlElement"
 }
 
-// xmlEnumFromStringFunc returns the name of the enum's FromString constructor.
-func xmlEnumFromStringFunc(goType string) string {
-	if index := strings.LastIndex(goType, "."); index >= 0 {
-		return goType[:index+1] + "New" + goType[index+1:] + "FromString"
-	}
-	return "New" + goType + "FromString"
-}
-
 // xmlFormatExpression returns a Go expression formatting the (non-pointer) value as an XML string.
 func xmlFormatExpression(value *xmlValue, expression string) string {
 	switch value.kind {
@@ -355,10 +347,9 @@ func (t *typeVisitor) writeXmlParseValue(value *xmlValue, input string, output s
 		t.writer.P(fail)
 		t.writer.P("}")
 	case xmlValueEnum:
-		t.writer.P(output, ", err := ", xmlEnumFromStringFunc(value.goType), "(", input, ")")
-		t.writer.P("if err != nil {")
-		t.writer.P(fail)
-		t.writer.P("}")
+		// Enums are open on the wire: unknown values are kept as-is so documents written by a
+		// newer API version still parse and round-trip.
+		t.writer.P(output, " := ", value.goType, "(", input, ")")
 	}
 }
 

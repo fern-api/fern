@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.1
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        a list, matching the legacy call style: `response.gather(input="speech dtmf")` no longer
+        raises a validation error and serializes as `input="speech dtmf"`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 5.37.0
   changelogEntry:
     - summary: |

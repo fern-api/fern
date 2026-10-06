@@ -252,6 +252,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             breadcrumbs: this.breadcrumbs,
             skipErrorCollector: true
         });
+        if (resolvedSchema != null && this.context.isReferenceObject(resolvedSchema)) {
+            return new ExampleConverter({
+                breadcrumbs: this.breadcrumbs,
+                context: this.context,
+                schema: resolvedSchema,
+                example: this.example,
+                depth: this.depth,
+                generateOptionalProperties: this.generateOptionalProperties,
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
+            }).convert();
+        }
         if (resolvedSchema == null) {
             return {
                 isValid: false,

@@ -225,68 +225,91 @@ export async function writeAiExamplesOverride({
     const overrideFilePath = AbsoluteFilePath.of(`${dirname(sourceFilePath)}/ai_examples_override.yml`);
 
     try {
-        let existingOverride: {
-            paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
-        } = {};
+        // APIs that share a source directory share this file, and docs registrations run concurrently,
+        // so the read/merge/write is serialized per file.
+        await withOverrideFileLock(overrideFilePath, async () => {
+            let existingOverride: {
+                paths?: Record<string, Record<string, { "x-fern-examples"?: unknown[] }>>;
+            } = {};
 
-        try {
-            const existingContent = await readFile(overrideFilePath, "utf-8");
-            const parsed = yaml.load(existingContent);
-            if (parsed && typeof parsed === "object") {
-                existingOverride = parsed as typeof existingOverride;
+            try {
+                const existingContent = await readFile(overrideFilePath, "utf-8");
+                const parsed = yaml.load(existingContent);
+                if (parsed && typeof parsed === "object") {
+                    existingOverride = parsed as typeof existingOverride;
+                }
+            } catch (readError) {
+                context.logger.debug(`No existing ai_examples_override.yml found, creating new file`);
             }
-        } catch (readError) {
-            context.logger.debug(`No existing ai_examples_override.yml found, creating new file`);
-        }
 
-        const mergedStructure: {
-            paths: Record<string, Record<string, { "x-fern-examples": Record<string, unknown>[] }>>;
-        } = {
-            paths: {}
-        };
+            const mergedStructure: {
+                paths: Record<string, Record<string, { "x-fern-examples": Record<string, unknown>[] }>>;
+            } = {
+                paths: {}
+            };
 
-        if (existingOverride.paths) {
-            for (const [path, methods] of Object.entries(existingOverride.paths)) {
-                if (methods && typeof methods === "object") {
-                    mergedStructure.paths[path] = {};
-                    for (const [method, methodData] of Object.entries(methods)) {
-                        if (methodData && typeof methodData === "object" && "x-fern-examples" in methodData) {
-                            mergedStructure.paths[path][method] = {
-                                "x-fern-examples": (methodData["x-fern-examples"] as unknown[]) || []
-                            } as { "x-fern-examples": Record<string, unknown>[] };
+            if (existingOverride.paths) {
+                for (const [path, methods] of Object.entries(existingOverride.paths)) {
+                    if (methods && typeof methods === "object") {
+                        mergedStructure.paths[path] = {};
+                        for (const [method, methodData] of Object.entries(methods)) {
+                            if (methodData && typeof methodData === "object" && "x-fern-examples" in methodData) {
+                                mergedStructure.paths[path][method] = {
+                                    "x-fern-examples": (methodData["x-fern-examples"] as unknown[]) || []
+                                } as { "x-fern-examples": Record<string, unknown>[] };
+                            }
                         }
                     }
                 }
             }
-        }
 
-        for (const [path, methods] of Object.entries(overrideStructure.paths)) {
-            if (!mergedStructure.paths[path]) {
-                mergedStructure.paths[path] = {};
-            }
+            for (const [path, methods] of Object.entries(overrideStructure.paths)) {
+                if (!mergedStructure.paths[path]) {
+                    mergedStructure.paths[path] = {};
+                }
 
-            for (const [method, methodData] of Object.entries(methods)) {
-                if (!mergedStructure.paths[path][method]) {
-                    mergedStructure.paths[path][method] = methodData;
-                    context.logger.debug(`Adding new examples for ${method.toUpperCase()} ${path}`);
-                } else {
-                    context.logger.debug(
-                        `Skipping ${method.toUpperCase()} ${path} - examples already exist in override file`
-                    );
+                for (const [method, methodData] of Object.entries(methods)) {
+                    if (!mergedStructure.paths[path][method]) {
+                        mergedStructure.paths[path][method] = methodData;
+                        context.logger.debug(`Adding new examples for ${method.toUpperCase()} ${path}`);
+                    } else {
+                        context.logger.debug(
+                            `Skipping ${method.toUpperCase()} ${path} - examples already exist in override file`
+                        );
+                    }
                 }
             }
-        }
 
-        const yamlContent = yaml.dump(mergedStructure, {
-            indent: 2,
-            lineWidth: -1,
-            noRefs: true
+            const yamlContent = yaml.dump(mergedStructure, {
+                indent: 2,
+                lineWidth: -1,
+                noRefs: true
+            });
+
+            await writeFile(overrideFilePath, yamlContent, "utf-8");
+            context.logger.debug(`AI enhanced examples written to: ${overrideFilePath}`);
         });
-
-        await writeFile(overrideFilePath, yamlContent, "utf-8");
-        context.logger.debug(`AI enhanced examples written to: ${overrideFilePath}`);
     } catch (error) {
         context.logger.warn(`Failed to write AI examples override file: ${error}`);
         throw error;
+    }
+}
+
+const overrideFileLocks = new Map<string, Promise<void>>();
+
+async function withOverrideFileLock(filePath: string, fn: () => Promise<void>): Promise<void> {
+    const previous = overrideFileLocks.get(filePath) ?? Promise.resolve();
+    const current = previous.then(fn, fn);
+    const settled = current.then(
+        () => undefined,
+        () => undefined
+    );
+    overrideFileLocks.set(filePath, settled);
+    try {
+        await current;
+    } finally {
+        if (overrideFileLocks.get(filePath) === settled) {
+            overrideFileLocks.delete(filePath);
+        }
     }
 }
