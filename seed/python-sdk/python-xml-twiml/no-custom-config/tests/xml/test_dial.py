@@ -34,7 +34,7 @@ def test_from_xml_rejects_wrong_root_element() -> None:
 
 def test_from_xml_rejects_malformed_xml() -> None:
     with pytest.raises(ValueError):
-        Dial.from_xml("<tw:Dial><unclosed>")
+        Dial.from_xml('<tw:Dial xmlns:tw="https://www.twilio.com/twiml"><unclosed>')
 
 
 def test_from_xml_rejects_doctype() -> None:

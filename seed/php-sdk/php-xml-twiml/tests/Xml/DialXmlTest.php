@@ -39,7 +39,7 @@ class DialXmlTest extends TestCase
     public function testFromXmlRejectsMalformedXml(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        Dial::fromXml('<tw:Dial><unclosed>');
+        Dial::fromXml('<tw:Dial xmlns:tw="https://www.twilio.com/twiml"><unclosed>');
     }
 
     public function testFromXmlRejectsDoctype(): void

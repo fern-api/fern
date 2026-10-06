@@ -262,7 +262,7 @@ class _XmlModelTest:
             "",
             "def test_from_xml_rejects_malformed_xml() -> None:",
             "    with pytest.raises(ValueError):",
-            f"        {self._class_name}.from_xml({f'<{root}><unclosed>'!r})",
+            f"        {self._class_name}.from_xml({self._start_tag('') + '<unclosed>'!r})",
             "",
             "",
             "def test_from_xml_rejects_doctype() -> None:",
@@ -312,10 +312,37 @@ class _XmlModelTest:
         children = self._generator.xml_object_declarations(property.item_type)
         if not children:
             return ""
-        element = _empty_element(children[0])
+        element = self._sample_element(children[0])
         if property.xml.wrapped and property.is_list:
             return f"<{property.wire_name}>{element}</{property.wire_name}>"
         return element
+
+    def _sample_element(self, declaration: ir_types.TypeDeclaration) -> str:
+        """A child element carrying sample values for its own required attributes/text, so it parses."""
+        xml = declaration.encoding.xml if declaration.encoding is not None else None
+        if xml is None:
+            return ""
+        required: List[Tuple[_Property, _Sample]] = []
+        object_declaration = declaration.shape.get_as_union()
+        if object_declaration.type == "object":
+            for ir_property in [*(object_declaration.extended_properties or []), *object_declaration.properties]:
+                if ir_property.xml is None:
+                    continue
+                property = self._describe(ir_property)
+                sample = self._sample_value(property) if property.is_required else None
+                if sample is not None:
+                    required.append((property, sample))
+        attributes = "".join(f' {p.wire_name}="{sample.xml}"' for p, sample in required if _kind(p) == "attribute")
+        text = next((sample.xml for p, sample in required if _kind(p) == "text"), None)
+        name = f"{xml.prefix}:{xml.name}" if xml.prefix is not None else xml.name
+        namespace = ""
+        if xml.namespace is not None:
+            namespace = (
+                f' xmlns:{xml.prefix}="{xml.namespace}"' if xml.prefix is not None else f' xmlns="{xml.namespace}"'
+            )
+        if text is None:
+            return f"<{name}{namespace}{attributes} />"
+        return f"<{name}{namespace}{attributes}>{text}</{name}>"
 
     def _content_child_names(self) -> List[str]:
         """Element names of non-namespaced child types that live in the ordered content (not wrapped)."""
@@ -412,14 +439,3 @@ def _kind(property: _Property) -> str:
 
 def _attr(value: str) -> str:
     return f'"{value}"'
-
-
-def _empty_element(declaration: ir_types.TypeDeclaration) -> str:
-    xml = declaration.encoding.xml if declaration.encoding is not None else None
-    if xml is None:
-        return ""
-    if xml.prefix is not None and xml.namespace is not None:
-        return f'<{xml.prefix}:{xml.name} xmlns:{xml.prefix}="{xml.namespace}" />'
-    if xml.namespace is not None:
-        return f'<{xml.name} xmlns="{xml.namespace}" />'
-    return f"<{xml.name} />"

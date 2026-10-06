@@ -194,7 +194,7 @@ export class XmlTestGenerator {
             ].join("\n");
         return [
             rejects("RejectsWrongRootElement", `<NotThe${root}/>`),
-            rejects("RejectsMalformedXml", `<${root}><unclosed>`),
+            rejects("RejectsMalformedXml", `${this.startTag("")}<unclosed>`),
             rejects("RejectsDoctype", doctype)
         ];
     }
@@ -253,11 +253,43 @@ export class XmlTestGenerator {
         if (first == null) {
             return "";
         }
-        const element = emptyElement(first);
+        const element = this.sampleElement(first);
         if (property.xml.wrapped && property.isList) {
             return `<${property.wireName}>${element}</${property.wireName}>`;
         }
         return element;
+    }
+
+    /** A child element carrying sample values for its own required attributes/text, so it parses. */
+    private sampleElement(declaration: FernIr.TypeDeclaration): string {
+        const xml = declaration.encoding?.xml;
+        if (xml == null) {
+            return "";
+        }
+        const required =
+            declaration.shape.type === "object"
+                ? [...(declaration.shape.extendedProperties ?? []), ...declaration.shape.properties]
+                      .filter((property) => property.xml != null)
+                      .map((property) => this.describe(property))
+                      .filter((property) => property.isRequired)
+                      .map((property) => ({ property, sample: this.sampleValue(property) }))
+                      .filter((entry): entry is { property: XmlProperty; sample: Sample } => entry.sample != null)
+                : [];
+        const attributes = required
+            .filter(({ property }) => property.kind === "ATTRIBUTE")
+            .map(({ property, sample }) => ` ${property.wireName}="${sample.xml}"`)
+            .join("");
+        const text = required.find(({ property }) => property.kind === "TEXT")?.sample.xml;
+        const name = xml.prefix != null ? `${xml.prefix}:${xml.name}` : xml.name;
+        let namespaceDeclaration = "";
+        if (xml.namespace != null) {
+            namespaceDeclaration =
+                xml.prefix != null ? ` xmlns:${xml.prefix}="${xml.namespace}"` : ` xmlns="${xml.namespace}"`;
+        }
+        if (text == null) {
+            return `<${name}${namespaceDeclaration}${attributes}/>`;
+        }
+        return `<${name}${namespaceDeclaration}${attributes}>${text}</${name}>`;
     }
 
     /** Element names of non-namespaced child types that live in the ordered content (not wrapped). */
@@ -363,6 +395,7 @@ export class XmlTestGenerator {
         }
     }
 
+    /** Single-quoted PHP literal: no interpolation, so only `\\` and `'` need escaping. */
     private phpString(value: string): string {
         return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
     }
@@ -412,18 +445,4 @@ function primitiveKind(typeReference: FernIr.TypeReference): "string" | "integer
         default:
             return undefined;
     }
-}
-
-function emptyElement(declaration: FernIr.TypeDeclaration): string {
-    const xml = declaration.encoding?.xml;
-    if (xml == null) {
-        return "";
-    }
-    if (xml.prefix != null && xml.namespace != null) {
-        return `<${xml.prefix}:${xml.name} xmlns:${xml.prefix}="${xml.namespace}"/>`;
-    }
-    if (xml.namespace != null) {
-        return `<${xml.name} xmlns="${xml.namespace}"/>`;
-    }
-    return `<${xml.name}/>`;
 }

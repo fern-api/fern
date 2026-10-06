@@ -79,7 +79,10 @@ public class DialXmlTest
     [NUnit.Framework.Test]
     public void FromXml_RejectsMalformedXml()
     {
-        Assert.That(() => Dial.FromXml("<tw:Dial><unclosed>"), Throws.ArgumentException);
+        Assert.That(
+            () => Dial.FromXml("<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\"><unclosed>"),
+            Throws.ArgumentException
+        );
     }
 
     [NUnit.Framework.Test]

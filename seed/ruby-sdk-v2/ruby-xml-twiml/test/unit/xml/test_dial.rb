@@ -36,7 +36,7 @@ describe Seed::Types::Dial do
   end
 
   it "rejects malformed XML" do
-    assert_raises(ArgumentError) { Seed::Types::Dial.from_xml("<tw:Dial><unclosed>") }
+    assert_raises(ArgumentError) { Seed::Types::Dial.from_xml("<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\"><unclosed>") }
   end
 
   it "rejects a DOCTYPE declaration" do

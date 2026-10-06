@@ -4,9 +4,9 @@ import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } fro
 import {
     generateModels,
     generateTests as generateModelTests,
-    generateXmlTests,
     generateVersion,
-    generateWellKnownProtobufFiles
+    generateWellKnownProtobufFiles,
+    generateXmlTests
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

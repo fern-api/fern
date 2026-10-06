@@ -45,19 +45,28 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             origin: this.model.explicit(this.typeDeclaration, "XmlTest"),
             namespace: this.namespaces.test
         });
-        // Analyze the properties the same way the model generator does, on a throwaway class.
+        this.xmlGenerator = this.analyze(this.typeDeclaration, objectDeclaration, xml);
+    }
+
+    /** Analyzes the properties the same way the model generator does, on a throwaway class. */
+    private analyze(
+        typeDeclaration: TypeDeclaration,
+        objectDeclaration: FernIr.ObjectTypeDeclaration,
+        xml: FernIr.XmlEncoding
+    ): XmlObjectGenerator {
+        const reference = this.context.csharpTypeMapper.convertToClassReference(typeDeclaration);
         const scratch = this.csharp.class_({
-            reference: this.classBeingTested,
+            reference,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record
         });
         const properties = [...(objectDeclaration.extendedProperties ?? []), ...objectDeclaration.properties];
         const fields = generateFields(scratch, {
             properties,
-            className: this.classBeingTested.name,
+            className: reference.name,
             context: this.context
         });
-        this.xmlGenerator = new XmlObjectGenerator(this.context, scratch, properties, fields, xml);
+        return new XmlObjectGenerator(this.context, scratch, properties, fields, xml);
     }
 
     protected doGenerate(): CSharpFile {
@@ -238,7 +247,7 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine(
-                    `Assert.That(() => ${this.classBeingTested.name}.FromXml("<${this.rootName()}><unclosed>"), Throws.ArgumentException);`
+                    `Assert.That(() => ${this.classBeingTested.name}.FromXml(${this.literal(`${this.rootStartTag("")}<unclosed>`)}), Throws.ArgumentException);`
                 );
             })
         });
@@ -297,25 +306,42 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
         if (child == null) {
             return "";
         }
-        const element = this.emptyElement(child);
+        const element = this.sampleElement(child);
         if (this.xmlGenerator.isWrappedListProperty(property)) {
             return `<${property.wireName}>${element}</${property.wireName}>`;
         }
         return element;
     }
 
-    private emptyElement(declaration: TypeDeclaration): string {
+    /** A child element carrying sample values for its own required attributes/text, so it parses. */
+    private sampleElement(declaration: TypeDeclaration): string {
         const xml = declaration.encoding?.xml;
         if (xml == null) {
             return "";
         }
-        if (xml.prefix != null && xml.namespace != null) {
-            return `<${xml.prefix}:${xml.name} xmlns:${xml.prefix}="${xml.namespace}" />`;
-        }
+        const name = xml.prefix != null ? `${xml.prefix}:${xml.name}` : xml.name;
+        let namespaceDeclaration = "";
         if (xml.namespace != null) {
-            return `<${xml.name} xmlns="${xml.namespace}" />`;
+            namespaceDeclaration =
+                xml.prefix != null ? ` xmlns:${xml.prefix}="${xml.namespace}"` : ` xmlns="${xml.namespace}"`;
         }
-        return `<${xml.name} />`;
+        const required =
+            declaration.shape.type === "object"
+                ? this.analyze(declaration, declaration.shape, xml)
+                      .getProperties()
+                      .filter((property) => !property.isOptional && !property.isNullable)
+                      .map((property) => ({ property, sample: this.sampleValue(property) }))
+                      .filter((entry): entry is { property: XmlProperty; sample: SampleValue } => entry.sample != null)
+                : [];
+        const attributes = required
+            .filter(({ property }) => property.kind === "ATTRIBUTE")
+            .map(({ property, sample }) => ` ${property.wireName}="${sample.xml}"`)
+            .join("");
+        const text = required.find(({ property }) => property.kind === "TEXT")?.sample.xml;
+        if (text == null) {
+            return `<${name}${namespaceDeclaration}${attributes} />`;
+        }
+        return `<${name}${namespaceDeclaration}${attributes}>${text}</${name}>`;
     }
 
     /** Element names of non-namespaced, non-wrapped child types that live in the ordered content. */
@@ -369,7 +395,11 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
         return `${this.rootStartTag(`${requiredAttributes}${attributes}`)}${content}</${this.rootName()}>`;
     }
 
+    /** Sample for an attribute/text property (element properties are sampled as child elements instead). */
     private sampleValue(property: XmlProperty): SampleValue | undefined {
+        if (property.kind !== "ATTRIBUTE" && property.kind !== "TEXT") {
+            return undefined;
+        }
         const item = this.sampleItem(property);
         if (item == null) {
             return undefined;
