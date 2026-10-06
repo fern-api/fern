@@ -393,6 +393,30 @@ def test_generated_full_twilio_form_path_multimap() -> None:
     )
 
 
+def test_generated_algorithm_override_defaults_to_configured_and_accepts_sha256() -> None:
+    """Shared-key webhooks may be signed with HMAC-SHA256; callers pick the algorithm per request."""
+    helper = _render_helper(
+        "AlgorithmOverrideHelper",
+        _hmac_config(
+            payloadFormat=_BODY_SORT_FORMAT,
+            bodyHashBinding=_BODY_HASH_BINDING,
+            notificationUrlNormalization=_URL_NORMALIZATION,
+        ),
+    )
+    url = _notification_url()
+    sha1_signature = _sign(url)
+    sha256_signature = base64.b64encode(
+        hmac.new(_SECRET.encode("utf-8"), url.encode("utf-8"), hashlib.sha256).digest()
+    ).decode("utf-8")
+
+    common = dict(request_body=_BODY, signature_key=_SECRET, notification_url=url)
+    assert helper.verify_signature(signature_header=sha1_signature, **common)
+    assert helper.verify_signature(signature_header=sha1_signature, algorithm="sha1", **common)
+    assert helper.verify_signature(signature_header=sha256_signature, algorithm="sha256", **common)
+    assert not helper.verify_signature(signature_header=sha256_signature, **common)
+    assert not helper.verify_signature(signature_header=sha1_signature, algorithm="sha256", **common)
+
+
 def test_generated_full_twilio_wrong_secret() -> None:
     helper = _twilio_helper()
     body_hash = hashlib.sha256(_BODY.encode("utf-8")).hexdigest()

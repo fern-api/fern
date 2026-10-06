@@ -1,0 +1,6 @@
+- summary: |
+    The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via a `verifySignature(...)` overload taking an `algorithm` argument,
+    one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+    `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+    legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+  type: feat

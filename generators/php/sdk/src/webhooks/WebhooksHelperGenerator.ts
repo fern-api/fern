@@ -209,6 +209,13 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null || config.payloadFormat.components.includes("TIMESTAMP")) {
             parameters.push(php.parameter({ name: "timestampHeader", type: nullableString }));
         }
+        parameters.push(
+            php.parameter({
+                name: "algorithm",
+                type: nullableString,
+                initializer: php.codeblock("null")
+            })
+        );
         return parameters;
     }
 
@@ -297,7 +304,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine(`payload: ${payloadExpression},`);
         writer.writeLine("secret: $signatureKey,");
-        writer.writeLine(`algorithm: ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
+        writer.writeLine(`algorithm: $algorithm ?? ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
         writer.writeLine(`encoding: ${this.phpString(this.mapEncoding(config.encoding))},`);
         writer.dedent();
         writer.writeLine(");");

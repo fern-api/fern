@@ -353,6 +353,30 @@ describe("WebhooksHelperGenerator", () => {
             expect(text).toMatchSnapshot();
         });
 
+        it("accepts an optional per-call algorithm override defaulting to the configured one", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
+                notificationUrlNormalization: undefined,
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain('algorithm?: "sha1" | "sha256" | "sha384" | "sha512"');
+            expect(text).toContain('algorithm: algorithm ?? "sha1"');
+            expect(text).toMatchSnapshot();
+        });
+
         it("writes HMAC SHA384 algorithm variant", () => {
             const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
                 bodyHashBinding: undefined,

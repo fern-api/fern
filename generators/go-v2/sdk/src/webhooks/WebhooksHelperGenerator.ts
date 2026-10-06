@@ -219,15 +219,41 @@ class HmacHelperWriter {
             writer.writeLine(`type ${this.className} struct{}`);
             writer.newLine();
 
-            writer.writeLine("// VerifySignature verifies an HMAC webhook signature.");
-            writer.writeLine(`func (${this.className}) VerifySignature(`);
+            const defaultAlgorithm = this.mapAlgorithm(this.config.algorithm);
+            writer.writeLine(
+                `// VerifySignature verifies an HMAC webhook signature using the configured "${defaultAlgorithm}" algorithm.`
+            );
+            writer.writeLine(`func (h ${this.className}) VerifySignature(`);
             for (const parameter of this.buildParameters()) {
                 writer.writeLine(`\t${parameter},`);
             }
             writer.writeLine(") (bool, error) {");
+            writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
+            for (const argument of this.buildDelegateArguments()) {
+                writer.writeLine(`\t\t${argument},`);
+            }
+            writer.writeLine(`\t\t"${defaultAlgorithm}",`);
+            writer.writeLine("\t)");
+            writer.writeLine("}");
+            writer.newLine();
+
+            writer.writeLine(
+                "// VerifySignatureWithAlgorithm verifies an HMAC webhook signature using the given HMAC algorithm"
+            );
+            writer.writeLine('// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.');
+            writer.writeLine(`func (${this.className}) VerifySignatureWithAlgorithm(`);
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t${parameter},`);
+            }
+            writer.writeLine("\talgorithm string,");
+            writer.writeLine(") (bool, error) {");
             this.writeBody(writer, coreAlias, errorsAlias);
             writer.writeLine("}");
         });
+    }
+
+    private buildDelegateArguments(): string[] {
+        return this.buildParameters().map((parameter) => parameter.split(" ")[0] ?? parameter);
     }
 
     private buildParameters(): string[] {
@@ -290,10 +316,9 @@ class HmacHelperWriter {
         }
 
         writer.newLine();
-        const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
         writer.writeLine(
-            `\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+            `\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, algorithm, "${encoding}")`
         );
         writer.writeLine("\tif err != nil {");
         writer.writeLine("\t\treturn false, err");
@@ -356,7 +381,6 @@ class HmacHelperWriter {
         normalization: FernIr.WebhookNotificationUrlNormalization
     ): void {
         const binding = this.config.bodyHashBinding;
-        const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
 
         writer.newLine();
@@ -407,7 +431,7 @@ class HmacHelperWriter {
             writer.writeLine(`\t\tpayload := ${formPayloadExpr}`);
         }
         writer.writeLine(
-            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, algorithm, "${encoding}")`
         );
         writer.writeLine("\t\tif err != nil {");
         writer.writeLine("\t\t\treturn false, err");

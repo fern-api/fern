@@ -259,8 +259,7 @@ class _HmacHelperWriter:
             if timestamp.format == ir_types.WebhookTimestampFormat.ISO_8601:
                 imports.append("import datetime")
             imports.append("import time")
-        if self._has_body_sort:
-            imports.append("import typing")
+        imports.append("import typing")
         imports.append("")
         signature_imports = ["compute_hmac_signature"]
         if self._body_hash_binding is not None:
@@ -304,6 +303,7 @@ class _HmacHelperWriter:
             params.append("notification_url: str")
         if self._has_timestamp:
             params.append("timestamp_header: str")
+        params.append('algorithm: typing.Optional[typing.Literal["sha1", "sha256", "sha384", "sha512"]] = None')
         return params
 
     def _build_body(self) -> List[str]:
@@ -347,7 +347,7 @@ class _HmacHelperWriter:
         lines.append("expected = compute_hmac_signature(")
         lines.append("    payload=payload,")
         lines.append("    secret=signature_key,")
-        lines.append(f'    algorithm="{algorithm}",')
+        lines.append(f'    algorithm=algorithm or "{algorithm}",')
         lines.append(f'    encoding="{encoding}",')
         lines.append(")")
 
@@ -430,7 +430,7 @@ class _HmacHelperWriter:
                 "    expected = compute_hmac_signature(",
                 "        payload=payload,",
                 "        secret=signature_key,",
-                f'        algorithm="{algorithm}",',
+                f'        algorithm=algorithm or "{algorithm}",',
                 f'        encoding="{encoding}",',
                 "    )",
                 f"    if timing_safe_equal({signature_expr}, expected):",

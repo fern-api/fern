@@ -422,6 +422,13 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             params.push(ruby.parameters.keyword({ name: "timestamp_header", type: ruby.Type.string() }));
         }
+        params.push(
+            ruby.parameters.keyword({
+                name: "algorithm",
+                type: ruby.Type.nilable(ruby.Type.string()),
+                initializer: ruby.codeblock("nil")
+            })
+        );
         return params;
     }
 
@@ -474,7 +481,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine("payload: payload,");
         writer.writeLine("secret: signature_key,");
-        writer.writeLine(`algorithm: "${algorithm}",`);
+        writer.writeLine(`algorithm: algorithm || "${algorithm}",`);
         writer.writeLine(`encoding: "${encoding}"`);
         writer.dedent();
         writer.writeLine(")");
@@ -774,7 +781,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine("payload: payload,");
         writer.writeLine("secret: signature_key,");
-        writer.writeLine(`algorithm: "${algorithm}",`);
+        writer.writeLine(`algorithm: algorithm || "${algorithm}",`);
         writer.writeLine(`encoding: "${encoding}"`);
         writer.dedent();
         writer.writeLine(")");

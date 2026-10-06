@@ -117,6 +117,13 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             parameters.push(this.csharp.parameter({ name: "timestampHeader", type: this.Primitive.string }));
         }
 
+        parameters.push(
+            this.csharp.parameter({
+                name: "algorithm",
+                type: this.Primitive.string.asNullable(),
+                initializer: "null"
+            })
+        );
         return parameters;
     }
 
@@ -194,7 +201,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.write("var expected = ");
         writer.writeNode(webhookSignatureReference);
         writer.writeTextStatement(
-            `.ComputeHmacSignature(payload, signatureKey, "${this.mapAlgorithm(this.config.algorithm)}", ` +
+            `.ComputeHmacSignature(payload, signatureKey, algorithm ?? "${this.mapAlgorithm(this.config.algorithm)}", ` +
                 `"${this.mapEncoding(this.config.encoding)}")`
         );
         writer.newLine();
@@ -400,7 +407,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.write("var expected = ");
         writer.writeNode(webhookSignatureReference);
         writer.writeTextStatement(
-            `.ComputeHmacSignature(payload, signatureKey, "${this.mapAlgorithm(this.config.algorithm)}", ` +
+            `.ComputeHmacSignature(payload, signatureKey, algorithm ?? "${this.mapAlgorithm(this.config.algorithm)}", ` +
                 `"${this.mapEncoding(this.config.encoding)}")`
         );
         writer.write("if (");

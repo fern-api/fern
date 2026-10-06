@@ -4,6 +4,10 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { Scope, ts } from "ts-morph";
 
+type HelperParameter = { name: string; type: string; optional?: boolean };
+
+const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
+
 interface MethodBodyResult {
     fileConstants: string[];
     body: string;
@@ -45,7 +49,7 @@ export class WebhooksHelperGenerator {
 
     private writeClass(
         context: FileContext,
-        parameters: Array<{ name: string; type: string }>,
+        parameters: HelperParameter[],
         result: MethodBodyResult,
         jsDoc: string
     ): void {
@@ -68,7 +72,8 @@ export class WebhooksHelperGenerator {
                     scope: Scope.Public,
                     parameters: parameters.map((p) => ({
                         name: p.name,
-                        type: p.type
+                        type: p.type,
+                        hasQuestionToken: p.optional
                     })),
                     returnType: "Promise<boolean>",
                     statements: result.body
@@ -77,10 +82,10 @@ export class WebhooksHelperGenerator {
         });
     }
 
-    private buildHmacParameters(config: FernIr.HmacSignatureVerification): Array<{ name: string; type: string }> {
+    private buildHmacParameters(config: FernIr.HmacSignatureVerification): HelperParameter[] {
         const requestBodyType =
             config.payloadFormat.bodySort != null ? "string | Record<string, string | string[]>" : "string";
-        const params: Array<{ name: string; type: string }> = [
+        const params: HelperParameter[] = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" },
             { name: "signatureKey", type: "string" }
@@ -89,16 +94,15 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             params.push({ name: "timestampHeader", type: "string" });
         }
+        params.push({ name: "algorithm", type: HMAC_ALGORITHM_TYPE, optional: true });
         return params;
     }
 
-    private buildAsymmetricParameters(
-        config: FernIr.AsymmetricKeySignatureVerification
-    ): Array<{ name: string; type: string }> {
+    private buildAsymmetricParameters(config: FernIr.AsymmetricKeySignatureVerification): HelperParameter[] {
         const payloadFormat = config.payloadFormat;
         const hasBodySort = payloadFormat?.bodySort != null;
         const requestBodyType = hasBodySort ? "string | Record<string, string | string[]>" : "string";
-        const params: Array<{ name: string; type: string }> = [
+        const params: HelperParameter[] = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" }
         ];
@@ -126,10 +130,7 @@ export class WebhooksHelperGenerator {
         return params;
     }
 
-    private addPayloadParameters(
-        params: Array<{ name: string; type: string }>,
-        payloadFormat: FernIr.WebhookPayloadFormat
-    ): void {
+    private addPayloadParameters(params: HelperParameter[], payloadFormat: FernIr.WebhookPayloadFormat): void {
         for (const component of payloadFormat.components) {
             switch (component) {
                 case "NOTIFICATION_URL":
@@ -203,7 +204,10 @@ export class WebhooksHelperGenerator {
             [
                 ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
                 ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment(
+                    "algorithm",
+                    ts.factory.createIdentifier(`algorithm ?? "${algorithm}"`)
+                ),
                 ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
             ],
             false
@@ -606,7 +610,10 @@ export class WebhooksHelperGenerator {
             [
                 ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
                 ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment(
+                    "algorithm",
+                    ts.factory.createIdentifier(`algorithm ?? "${algorithm}"`)
+                ),
                 ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
             ],
             false
