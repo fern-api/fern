@@ -1,6 +1,7 @@
 import dataclasses
 from typing import Dict, List, Optional, Sequence, Set, Tuple
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
@@ -9,13 +10,12 @@ from ..object_generator import (
     AbstractObjectSnippetGenerator,
     ObjectProperty,
 )
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, sanitize_field_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
-
-import fern.ir.resources as ir_types
 
 
 class PydanticModelObjectGenerator(AbstractObjectGenerator):
@@ -33,6 +33,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         xml: Optional[ir_types.XmlEncoding] = None,
     ):
         self._xml = xml
+        self._text_attribute_override: Optional[str] = None
         super().__init__(
             name=name,
             extends=extends,
@@ -96,6 +97,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             extends = []
             properties = all_properties
 
+        if self._xml is not None:
+            self._text_attribute_override = self._get_text_attribute_override(all_properties)
+
         with FernAwarePydanticModel(
             class_name=self._class_name,
             type_name=self._name,
@@ -110,7 +114,11 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             for property in properties:
                 resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                 pydantic_model.add_field(
-                    name=resolved_prop_name.snake_case.safe_name,
+                    name=(
+                        self._text_attribute_override
+                        if self._text_attribute_override is not None and _is_xml_text(property)
+                        else resolved_prop_name.snake_case.safe_name
+                    ),
                     pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
                     type_reference=property.value_type,
                     json_field_name=get_wire_value(property.name),
@@ -118,6 +126,39 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 )
             if self._xml is not None:
                 self._add_xml_methods(pydantic_model, xml=self._xml, properties=all_properties)
+
+    def _get_text_attribute_override(self, properties: List[ObjectProperty]) -> Optional[str]:
+        """The text field keeps its name as the constructor keyword (`Dial(number=...)`), but when a child
+        builder would take the same name (`dial.number(...)`) the attribute is stored under a trailing
+        underscore (`dial.number_`) so the method stays callable, as in the legacy SDKs."""
+        text_property = next((p for p in properties if _is_xml_text(p)), None)
+        if text_property is None:
+            return None
+        text_name = _field_name(text_property)
+        reserved_names: Set[str] = {
+            _field_name(p) for p in properties if p is not text_property
+        } | _RESERVED_METHOD_NAMES
+        for property in properties:
+            if not _is_xml_element(property):
+                continue
+            item_type = _unwrap_list_item_type(property.value_type)
+            if item_type is None:
+                continue
+            builder_names = set(self._builder_method_names(item_type, reserved_names).values())
+            reserved_names |= builder_names
+            if text_name in builder_names:
+                attribute_name = f"{text_name}_"
+                while attribute_name in reserved_names:
+                    attribute_name = f"{attribute_name}_"
+                return attribute_name
+        return None
+
+    def _attribute_name(self, property: ObjectProperty) -> str:
+        """Python attribute holding the property; differs from the constructor keyword only for the text field
+        when it collides with a child builder (see `_get_text_attribute_override`)."""
+        if self._text_attribute_override is not None and _is_xml_text(property):
+            return self._text_attribute_override
+        return _field_name(property)
 
     def _add_xml_methods(
         self, pydantic_model: FernAwarePydanticModel, *, xml: ir_types.XmlEncoding, properties: List[ObjectProperty]
@@ -140,7 +181,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                         if not _is_xml_attribute(property):
                             continue
                         writer.write_reference(core_utilities.get_xml_utility("XmlAttribute"))
-                        writer.write(f"(name={_quote(_xml_name(property))}, value=self.{_field_name(property)}")
+                        writer.write(
+                            f"(name={_quote(_xml_name(property))}, value=self.{self._attribute_name(property)}"
+                        )
                         separator = property.xml.list_separator if property.xml is not None else None
                         if separator is not None:
                             writer.write(f", separator={_quote(separator)}")
@@ -151,7 +194,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 writer.write_line("],")
                 for property in properties:
                     if _is_xml_text(property):
-                        writer.write_line(f"text=self.{_field_name(property)},")
+                        writer.write_line(f"text=self.{self._attribute_name(property)},")
                         separator = property.xml.list_separator if property.xml is not None else None
                         if separator is not None:
                             writer.write_line(f"text_separator={_quote(separator)},")
@@ -163,7 +206,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                         if not _is_xml_element(property) or property in inline_properties:
                             continue
                         writer.write_reference(core_utilities.get_xml_utility("XmlChild"))
-                        writer.write(f"(name={_quote(_xml_name(property))}, value=self.{_field_name(property)}")
+                        writer.write(
+                            f"(name={_quote(_xml_name(property))}, value=self.{self._attribute_name(property)}"
+                        )
                         if property.xml is not None and property.xml.wrapped:
                             writer.write(", wrapped=True")
                         writer.write_line("),")
@@ -172,7 +217,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 writer.write_reference(core_utilities.get_xml_utility("order_xml_content"))
                 writer.write(f"(self.{_CONTENT}")
                 for property in inline_properties:
-                    writer.write(f", self.{_field_name(property)}")
+                    writer.write(f", self.{self._attribute_name(property)}")
                 writer.write_line("),")
                 writer.write_line("xml_declaration=xml_declaration,")
             writer.write_line(")")
@@ -453,14 +498,14 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 
         def write_body(writer: AST.NodeWriter) -> None:
             # Fields go through a dict: the pydantic mypy plugin only knows this class's `__init__`, not the base's.
-            fields = ", ".join(f"{_field_name(p)}={_field_name(p)}" for p in all_properties)
+            fields = ", ".join(f"{self._attribute_name(p)}={_field_name(p)}" for p in all_properties)
             writer.write_line(f"super().__init__(**dict({fields}), **{_EXTRA_ATTRIBUTES})")
             if inline_properties:
                 writer.write(f"self.{_CONTENT}.extend(")
                 writer.write_reference(core_utilities.get_xml_utility("order_xml_content"))
                 writer.write("([]")
                 for property in inline_properties:
-                    writer.write(f", self.{_field_name(property)}")
+                    writer.write(f", self.{self._attribute_name(property)}")
                 writer.write_line("))")
 
         pydantic_model.add_method_unsafe(
@@ -510,9 +555,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         if len(list_properties) == 0:
             return
 
-        reserved_names: Set[str] = {_field_name(property) for property in properties} | _RESERVED_METHOD_NAMES
+        reserved_names: Set[str] = {self._attribute_name(property) for property in properties} | _RESERVED_METHOD_NAMES
         for property, item_type in list_properties:
-            field_name = _field_name(property)
+            field_name = self._attribute_name(property)
             # Wrapped lists render inside their wrapper element, so they are not part of the ordered content.
             inline = not (property.xml is not None and property.xml.wrapped)
             if len(list_properties) == 1:

@@ -5,7 +5,9 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from ..core.xml_utilities import (
     XmlAttribute,
     XmlChild,
@@ -27,7 +29,9 @@ from .number import Number
 
 
 class Dial(UniversalBaseModel):
-    number: typing.Optional[str] = None
+    number_: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="number"), pydantic.Field(alias="number")
+    ] = None
     status_callback_event: typing.Optional[typing.List[str]] = None
     numbers: typing.Optional[typing.List[Number]] = None
     _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
@@ -44,7 +48,7 @@ class Dial(UniversalBaseModel):
                 XmlAttribute(name="statusCallbackEvent", value=self.status_callback_event, separator=" "),
                 *extra_xml_attributes(self),
             ],
-            text=self.number,
+            text=self.number_,
             children=[
                 XmlChild(name="Numbers", value=self.numbers, wrapped=True),
             ],
@@ -76,7 +80,7 @@ class Dial(UniversalBaseModel):
             Additional XML attributes not declared in the API definition.
         """
         super().__init__(
-            **dict(number=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
+            **dict(number_=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
         )
 
     @classmethod
@@ -122,7 +126,7 @@ class Dial(UniversalBaseModel):
         append_xml_child(self, "numbers", child, inline=False)
         return self
 
-    def add_number(
+    def number(
         self,
         phone_number: typing.Optional[str] = None,
         *,
