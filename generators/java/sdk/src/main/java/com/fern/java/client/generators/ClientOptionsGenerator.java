@@ -617,6 +617,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             boolean runtimeVersion = clientGeneratorContext.getCustomConfig().runtimeVersion();
             boolean allowUserAgentAppInfo =
                     clientGeneratorContext.getCustomConfig().allowUserAgentAppInfo();
+            boolean userAgentOnly = clientGeneratorContext.getCustomConfig().userAgentOnly();
             Optional<String> userAgentHeaderName = generatorContext
                     .getIr()
                     .getSdkConfig()
@@ -643,6 +644,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 boolean isUserAgentHeader = userAgentHeaderName.isPresent()
                         && userAgentHeaderName.get().equals(entry.getKey());
                 boolean isSdkVersionHeader = runtimeVersion && entry.getKey().equals(sdkVersionHeaderName);
+                if (userAgentOnly && !isUserAgentHeader) {
+                    continue;
+                }
                 if (isUserAgentHeader && includePlatformHeaders) {
                     userAgentMethod = Optional.of(buildUserAgentMethod(entry.getValue(), runtimeVersion));
                     if (runtimeVersion) {
