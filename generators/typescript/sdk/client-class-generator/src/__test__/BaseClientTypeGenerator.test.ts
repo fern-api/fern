@@ -1018,6 +1018,22 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).not.toContain("X-Fern-Runtime");
         });
 
+        it("keeps the discrete headers when userAgentOnly is true but no User-Agent can be produced", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.userAgent = undefined;
+            const gen = createGenerator({ omitFernHeaders: false, userAgentOnly: true, ir });
+            const context = createMockContext({ npmPackage: null });
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("User-Agent");
+            expect(normalizeFunc).toContain("X-Fern-Language");
+            expect(normalizeFunc).toContain("X-Fern-Runtime");
+        });
+
         it("omits the User-Agent too when omitFernHeaders and userAgentOnly are true", () => {
             const gen = createGenerator({ omitFernHeaders: true, userAgentOnly: true });
             const context = createMockContext();

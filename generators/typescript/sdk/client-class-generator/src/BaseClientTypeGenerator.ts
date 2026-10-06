@@ -304,26 +304,6 @@ export type BaseClientOptions = {
         };
 
         if (!this.omitFernHeaders) {
-            if (!this.userAgentOnly) {
-                fernHeaderEntries.push([
-                    this.ir.sdkConfig.platformHeaders.language,
-                    ts.factory.createStringLiteral("JavaScript")
-                ]);
-            }
-
-            if (!this.userAgentOnly && context.npmPackage != null) {
-                fernHeaderEntries.push(
-                    [
-                        this.ir.sdkConfig.platformHeaders.sdkName,
-                        ts.factory.createStringLiteral(context.npmPackage.packageName)
-                    ],
-                    [
-                        this.ir.sdkConfig.platformHeaders.sdkVersion,
-                        ts.factory.createStringLiteral(context.npmPackage.version)
-                    ]
-                );
-            }
-
             // When includePlatformHeaders is enabled we emit a single structured
             // User-Agent (`{sdkName}/{version} ({os}; {arch}) {runtime}/{version}`)
             // that consolidates the platform + runtime information. This supersedes
@@ -339,6 +319,29 @@ export type BaseClientOptions = {
                       ? { name: context.npmPackage.packageName, version: context.npmPackage.version }
                       : undefined;
             const useRichUserAgent = this.includePlatformHeaders && coordinate != null && coordinate.version.length > 0;
+            const emitsUserAgent = useRichUserAgent || irUserAgent != null || context.npmPackage != null;
+            // userAgentOnly only drops the discrete headers when a User-Agent is actually
+            // emitted, so the SDK is never left without any identification header.
+            const dropDiscreteHeaders = this.userAgentOnly && emitsUserAgent;
+
+            if (!dropDiscreteHeaders) {
+                fernHeaderEntries.push([
+                    this.ir.sdkConfig.platformHeaders.language,
+                    ts.factory.createStringLiteral("JavaScript")
+                ]);
+                if (context.npmPackage != null) {
+                    fernHeaderEntries.push(
+                        [
+                            this.ir.sdkConfig.platformHeaders.sdkName,
+                            ts.factory.createStringLiteral(context.npmPackage.packageName)
+                        ],
+                        [
+                            this.ir.sdkConfig.platformHeaders.sdkVersion,
+                            ts.factory.createStringLiteral(context.npmPackage.version)
+                        ]
+                    );
+                }
+            }
 
             if (useRichUserAgent && coordinate != null) {
                 fernHeaderEntries.push([
@@ -350,10 +353,10 @@ export type BaseClientOptions = {
                         )
                     )
                 ]);
-            } else if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+            } else if (irUserAgent != null) {
                 fernHeaderEntries.push([
-                    this.ir.sdkConfig.platformHeaders.userAgent.header,
-                    withAppInfo(ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value))
+                    irUserAgent.header,
+                    withAppInfo(ts.factory.createStringLiteral(irUserAgent.value))
                 ]);
             } else if (context.npmPackage != null) {
                 fernHeaderEntries.push([
@@ -366,7 +369,7 @@ export type BaseClientOptions = {
                 ]);
             }
 
-            if (!useRichUserAgent && !this.userAgentOnly) {
+            if (!useRichUserAgent && !dropDiscreteHeaders) {
                 fernHeaderEntries.push(
                     ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
                     ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
