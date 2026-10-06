@@ -22,6 +22,7 @@ export declare namespace BaseClientTypeGenerator {
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        userAgentOnly: boolean;
         allowUserAgentAppInfo: boolean;
         guardProcessEnvAccess?: boolean;
         retainOriginalCasing: boolean;
@@ -121,6 +122,7 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
     private readonly includePlatformHeaders: boolean;
+    private readonly userAgentOnly: boolean;
     private readonly allowUserAgentAppInfo: boolean;
     private readonly guardProcessEnvAccess: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -132,6 +134,7 @@ export class BaseClientTypeGenerator {
         ir,
         omitFernHeaders,
         includePlatformHeaders,
+        userAgentOnly,
         allowUserAgentAppInfo,
         guardProcessEnvAccess,
         retainOriginalCasing,
@@ -142,6 +145,7 @@ export class BaseClientTypeGenerator {
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
         this.includePlatformHeaders = includePlatformHeaders;
+        this.userAgentOnly = userAgentOnly;
         this.allowUserAgentAppInfo = allowUserAgentAppInfo;
         this.guardProcessEnvAccess = guardProcessEnvAccess ?? false;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -300,13 +304,14 @@ export type BaseClientOptions = {
         };
 
         if (!this.omitFernHeaders) {
-            // X-Fern-Language header
-            fernHeaderEntries.push([
-                this.ir.sdkConfig.platformHeaders.language,
-                ts.factory.createStringLiteral("JavaScript")
-            ]);
+            if (!this.userAgentOnly) {
+                fernHeaderEntries.push([
+                    this.ir.sdkConfig.platformHeaders.language,
+                    ts.factory.createStringLiteral("JavaScript")
+                ]);
+            }
 
-            if (context.npmPackage != null) {
+            if (!this.userAgentOnly && context.npmPackage != null) {
                 fernHeaderEntries.push(
                     [
                         this.ir.sdkConfig.platformHeaders.sdkName,
@@ -361,7 +366,7 @@ export type BaseClientOptions = {
                 ]);
             }
 
-            if (!useRichUserAgent) {
+            if (!useRichUserAgent && !this.userAgentOnly) {
                 fernHeaderEntries.push(
                     ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
                     ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
