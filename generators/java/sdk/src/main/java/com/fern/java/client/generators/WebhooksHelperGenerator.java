@@ -183,9 +183,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     private static final ParameterSpec ALGORITHM_PARAMETER =
             ParameterSpec.builder(String.class, "algorithm").build();
 
-    /**
-     * Overload without the {@code algorithm} parameter: verifies using the configured default HMAC algorithm.
-     */
+    /** Overload without the {@code algorithm} parameter: verifies using the configured default HMAC algorithm. */
     private MethodSpec buildDefaultAlgorithmOverload(TypeName requestBodyType) {
         MethodSpec.Builder method = MethodSpec.methodBuilder("verifySignature")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
