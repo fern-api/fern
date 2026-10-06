@@ -450,21 +450,23 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
         if (!this.settings.omitFernHeaders) {
             const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-            platformHeaderEntries.push({
-                key: this.csharp.codeblock(`"${platformHeaders.language}"`),
-                value: this.csharp.codeblock('"C#"')
-            });
-            platformHeaderEntries.push({
-                key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                // Use the package identity (NuGet package id or nuget filesystem
-                // publish target) so the SDK-name header matches the `User-Agent`;
-                // falls back to the root namespace when neither is configured.
-                value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
-            });
-            platformHeaderEntries.push({
-                key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-                value: this.context.getCurrentVersionValueAccess()
-            });
+            if (!this.settings.userAgentOnly) {
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.language}"`),
+                    value: this.csharp.codeblock('"C#"')
+                });
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
+                    // Use the package identity (NuGet package id or nuget filesystem
+                    // publish target) so the SDK-name header matches the `User-Agent`;
+                    // falls back to the root namespace when neither is configured.
+                    value: this.csharp.codeblock(`"${this.generation.names.project.packageId}"`)
+                });
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+                    value: this.context.getCurrentVersionValueAccess()
+                });
+            }
             // When the opt-in `allow-user-agent-app-info` config is set, wrap the
             // computed User-Agent value expression in the emitted
             // `AppendAppInfoToUserAgent` helper, which appends the caller-supplied
