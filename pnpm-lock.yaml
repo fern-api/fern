@@ -6581,6 +6581,9 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
+      '@postman/sdk-config':
+        specifier: 'catalog:'
+        version: 0.6.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0

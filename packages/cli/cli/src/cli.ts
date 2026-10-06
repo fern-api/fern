@@ -44,6 +44,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
+import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -477,24 +478,27 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
+                const useSdkConfig = isFernSdkGenApiEnabled();
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
+                let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
-                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
+                        openApiUrl = argv.openapi;
+                        if (!useSdkConfig) {
+                            const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
 
-                        if (result.status === LoadOpenAPIStatus.Failure) {
-                            cliContext.failAndThrow(result.errorMessage, undefined, {
-                                code: CliError.Code.NetworkError
-                            });
+                            if (result.status === LoadOpenAPIStatus.Failure) {
+                                cliContext.failAndThrow(result.errorMessage, undefined, {
+                                    code: CliError.Code.NetworkError
+                                });
+                            }
+
+                            absoluteOpenApiPath = AbsoluteFilePath.of(result.filePath);
                         }
-
-                        const tmpFilepath = result.filePath;
-                        absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
                     } else {
                         absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
                     }
-                    const pathExists = await doesPathExist(absoluteOpenApiPath);
-                    if (!pathExists) {
+                    if (absoluteOpenApiPath != null && !(await doesPathExist(absoluteOpenApiPath))) {
                         cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`, undefined, {
                             code: CliError.Code.ConfigError
                         });
@@ -506,7 +510,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
                         openApiPath: absoluteOpenApiPath,
-                        useFernDefinition: argv["fern-definition"] === true
+                        openApiUrl,
+                        useFernDefinition: argv["fern-definition"] === true,
+                        useSdkConfig
                     });
                 });
             }
