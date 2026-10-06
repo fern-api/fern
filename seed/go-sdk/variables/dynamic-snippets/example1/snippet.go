@@ -12,9 +12,11 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        option.WithRootVariable(
+            "<endpointParam>",
+        ),
     )
     client.Service.Post(
         context.TODO(),
-        "<endpointParam>",
     )
 }
