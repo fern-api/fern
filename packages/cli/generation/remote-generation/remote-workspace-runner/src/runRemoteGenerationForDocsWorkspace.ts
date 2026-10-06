@@ -148,8 +148,6 @@ export async function runRemoteGenerationForDocsWorkspace({
                 editThisPage: maybeInstance.editThisPage,
                 disableTemplates,
                 skipUpload,
-                withAiExamples:
-                    docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
                 excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
                 targetAudiences: maybeInstance.audiences
                     ? Array.isArray(maybeInstance.audiences)
