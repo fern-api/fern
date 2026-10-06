@@ -176,7 +176,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return undefined;
         }
         const reference: OpenAPIV3_1.ReferenceObject = this.schema;
-        if (this.visitedRefs.has(reference.$ref) || reference.$ref.endsWith(`/schemas/${this.id}`)) {
+        if (this.visitedRefs.has(reference.$ref) || reference.$ref === `#/components/schemas/${this.id}`) {
             return undefined;
         }
         const response = this.context.convertReferenceToTypeReference({
@@ -193,6 +193,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 typeDeclaration: this.createTypeDeclaration({
                     shape: FernIr.Type.alias({
                         aliasOf: response.reference,
+                        // Placeholder; replaced with the terminal named type by resolveAliasResolvedTypes.
                         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                         resolvedType: response.reference as any
                     }),
