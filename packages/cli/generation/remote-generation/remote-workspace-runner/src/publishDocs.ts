@@ -1986,7 +1986,7 @@ async function computeSemanticVersionForLanguage({
     }
 }
 
-async function generateLanguageSpecificDynamicIRs({
+export async function generateLanguageSpecificDynamicIRs({
     workspace,
     apiWorkspaces,
     organization,
@@ -2002,6 +2002,7 @@ async function generateLanguageSpecificDynamicIRs({
     skipLanguages?: Set<string>;
 }): Promise<Record<string, DynamicIr> | undefined> {
     let languageSpecificIRs: Record<string, DynamicIr> = {};
+    const failedLanguages = new Set<string>();
 
     if (!workspace) {
         return undefined;
@@ -2068,44 +2069,51 @@ async function generateLanguageSpecificDynamicIRs({
         }
 
         // generate a dynamic IR for configuration that matches the requested api snippet
-        const irForDynamicSnippets = generateIntermediateRepresentation({
-            workspace,
-            generationLanguage: generatorInvocation.language,
-            keywords: undefined,
-            smartCasing: generatorInvocation.smartCasing,
-            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-            exampleGeneration: {
-                disabled: true,
-                skipAutogenerationIfManualExamplesExist: true,
-                skipErrorAutogenerationIfManualErrorExamplesExist: true
-            },
-            audiences: {
-                type: "all"
-            },
-            readme: undefined,
-            packageName: packageName,
-            version: undefined,
-            context,
-            sourceResolver: new SourceResolverImpl(context, workspace),
-            dynamicGeneratorConfig
-        });
+        try {
+            const irForDynamicSnippets = generateIntermediateRepresentation({
+                workspace,
+                generationLanguage: generatorInvocation.language,
+                keywords: undefined,
+                smartCasing: generatorInvocation.smartCasing,
+                smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                exampleGeneration: {
+                    disabled: true,
+                    skipAutogenerationIfManualExamplesExist: true,
+                    skipErrorAutogenerationIfManualErrorExamplesExist: true
+                },
+                audiences: {
+                    type: "all"
+                },
+                readme: undefined,
+                packageName: packageName,
+                version: undefined,
+                context,
+                sourceResolver: new SourceResolverImpl(context, workspace),
+                dynamicGeneratorConfig
+            });
 
-        const dynamicIR = convertIrToDynamicSnippetsIr({
-            ir: irForDynamicSnippets,
-            disableExamples: true,
-            smartCasing: generatorInvocation.smartCasing,
-            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-            generationLanguage: generatorInvocation.language,
-            generatorConfig: dynamicGeneratorConfig
-        });
+            const dynamicIR = convertIrToDynamicSnippetsIr({
+                ir: irForDynamicSnippets,
+                disableExamples: true,
+                smartCasing: generatorInvocation.smartCasing,
+                smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
+                generationLanguage: generatorInvocation.language,
+                generatorConfig: dynamicGeneratorConfig
+            });
 
-        // include metadata along with the dynamic IR
-        if (dynamicIR) {
-            languageSpecificIRs[generatorInvocation.language] = {
-                dynamicIR
-            };
-        } else {
-            context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
+            // include metadata along with the dynamic IR
+            if (dynamicIR) {
+                languageSpecificIRs[generatorInvocation.language] = {
+                    dynamicIR
+                };
+            } else {
+                context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
+            }
+        } catch (error) {
+            failedLanguages.add(generatorInvocation.language);
+            context.logger.warn(
+                `Skipping ${generatorInvocation.language} SDK snippets for API "${workspace.workspaceName ?? ""}": could not build the dynamic snippets IR (${error instanceof Error ? error.message : String(error)}). The rest of the docs will still publish.`
+            );
         }
     }
 
@@ -2114,7 +2122,8 @@ async function generateLanguageSpecificDynamicIRs({
             language &&
             packageName &&
             !Object.keys(languageSpecificIRs).includes(language) &&
-            !skipLanguages.has(language)
+            !skipLanguages.has(language) &&
+            !failedLanguages.has(language)
         ) {
             context.logger.warn();
             context.logger.warn(
