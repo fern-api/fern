@@ -93,6 +93,7 @@ import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { mapWithConcurrency } from "./utils/mapWithConcurrency.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
@@ -148,6 +149,14 @@ export interface TranslatedApiSpec {
 }
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AIChatConfig | undefined }) => AsyncOrSync<void>;
+
+const DEFAULT_API_REGISTRATION_CONCURRENCY = 4;
+
+/** Max APIs registered with FDR at once; override with `FERN_DOCS_API_REGISTRATION_CONCURRENCY` (1 = serial). */
+function getApiRegistrationConcurrency(): number {
+    const parsed = Number.parseInt(process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY ?? "", 10);
+    return Number.isFinite(parsed) && parsed >= 1 ? parsed : DEFAULT_API_REGISTRATION_CONCURRENCY;
+}
 
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
@@ -688,20 +697,33 @@ export class DocsDefinitionResolver {
                 `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
             );
             const deferredStart = performance.now();
-            for (const pending of this.pendingApiRegistrations) {
-                // Resolve .mdx/.md file path links in all IR description (docs) fields
+            const pendingRegistrations = this.pendingApiRegistrations;
+            // Resolve .mdx/.md file path links in all IR description (docs) fields
+            for (const pending of pendingRegistrations) {
                 this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
-
-                // Register the API with resolved descriptions
-                const realApiDefinitionId = await this.registerApi({
-                    ir: pending.ir,
-                    snippetsConfig: pending.snippetsConfig,
-                    playgroundConfig: pending.playgroundConfig,
-                    apiName: pending.apiName,
-                    workspace: pending.workspace,
-                    graphqlOperations: pending.graphqlOperations,
-                    graphqlTypes: pending.graphqlTypes
-                });
+            }
+            // Registrations are independent, so a few run at once; FDR caps concurrent
+            // registrations per task and queues the rest.
+            const realApiDefinitionIds = await mapWithConcurrency(
+                pendingRegistrations,
+                getApiRegistrationConcurrency(),
+                async (pending) =>
+                    await this.registerApi({
+                        ir: pending.ir,
+                        snippetsConfig: pending.snippetsConfig,
+                        playgroundConfig: pending.playgroundConfig,
+                        apiName: pending.apiName,
+                        workspace: pending.workspace,
+                        graphqlOperations: pending.graphqlOperations,
+                        graphqlTypes: pending.graphqlTypes
+                    })
+            );
+            // Apply results in registration order so the nav tree and translated specs stay deterministic.
+            for (const [index, pending] of pendingRegistrations.entries()) {
+                const realApiDefinitionId = realApiDefinitionIds[index];
+                if (realApiDefinitionId == null) {
+                    continue;
+                }
 
                 // Update all apiDefinitionId references in the navigation subtree
                 updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
