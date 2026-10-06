@@ -1020,7 +1020,12 @@ describe("WebhooksHelperGenerator", () => {
             // the HMAC verification path never throws
             expect(text).not.toContain("throw new Error");
             // null-arg guard and timestamp guards fail closed
-            expect(text).toContain("if (requestBody == null || signatureHeader == null || signatureKey == null)");
+            expect(text).toContain('if (signatureHeader == null || signatureHeader === "")');
+            expect(text).toContain(
+                'console.warn("Webhook signature verification could not run: missing signature header")'
+            );
+            expect(text).toContain("if (requestBody == null || signatureKey == null)");
+            expect(text).toContain('console.warn("Webhook signature verification failed: signature mismatch")');
             expect(text).toContain("return false;");
         });
 

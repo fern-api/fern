@@ -6,6 +6,9 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { Comments } from "../utils/comments.js";
 
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
 const DEFAULT_HELPER_CLASS_NAME = "WebhooksHelper";
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -435,9 +438,13 @@ export class WebhooksHelperGenerator {
     private static writeMethodBody(writer: ruby.Writer, config: FernIr.HmacSignatureVerification): void {
         // Input validation. A verification helper returns a boolean and never raises, so
         // missing inputs fail closed with `false`.
-        writer.writeLine(
-            "return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?"
-        );
+        writer.writeLine("if signature_header.nil? || signature_header.empty?");
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
+        writer.writeLine("return false if request_body.nil? || signature_key.nil? || signature_key.empty?");
 
         if (config.timestamp != null) {
             writer.newLine();
@@ -487,7 +494,9 @@ export class WebhooksHelperGenerator {
         writer.writeLine(")");
 
         writer.newLine();
-        writer.writeLine(`Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
+        writer.writeLine(`valid = Internal::WebhookSignature.timing_safe_equal(${signatureExpr}, expected)`);
+        writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)}) unless valid`);
+        writer.writeLine("valid");
     }
 
     private static writeTimestampValidation(writer: ruby.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
@@ -712,8 +721,13 @@ export class WebhooksHelperGenerator {
         writer.dedent();
         writer.writeLine(")");
         writer.writeLine(
-            "return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
+            "unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, transmitted_body_hash)"
         );
+        writer.indent();
+        writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)})`);
+        writer.writeLine("return false");
+        writer.dedent();
+        writer.writeLine("end");
     }
 
     /**
@@ -789,6 +803,7 @@ export class WebhooksHelperGenerator {
         writer.dedent();
         writer.writeLine("end");
         writer.newLine();
+        writer.writeLine(`warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)})`);
         writer.writeLine("false");
     }
 

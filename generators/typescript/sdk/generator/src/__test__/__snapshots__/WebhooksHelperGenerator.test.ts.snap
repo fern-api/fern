@@ -10,7 +10,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > accepts an optional per-c
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -31,7 +35,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -45,7 +53,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC SHA1 algorith
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -53,7 +65,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -67,7 +83,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC SHA512 class 
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -75,7 +95,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha512", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -91,7 +115,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with AL
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -112,7 +140,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -128,7 +160,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with AL
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -149,7 +185,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -166,7 +206,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with IS
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -187,7 +231,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -201,7 +249,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with NO
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -209,7 +261,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -226,7 +282,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with UN
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -248,7 +308,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -265,7 +329,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with UN
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -287,7 +355,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -304,7 +376,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with mu
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, messageId: string, timestampHeader: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -326,7 +402,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -342,7 +422,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with si
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -354,7 +438,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(sig, expected);
+        const valid = await webhookCrypto.timingSafeEqual(sig, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -368,7 +456,11 @@ exports[`WebhooksHelperGenerator > HMAC verification > writes basic HMAC SHA256 
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -376,7 +468,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha256", encoding: "hex" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -617,7 +713,11 @@ exports[`WebhooksHelperGenerator > body-hash binding > computes a body hash and 
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -626,6 +726,7 @@ export class WebhooksHelper {
         if (transmittedBodyHash != null) {
             const expectedBodyHash = await webhookCrypto.computeHash({ payload: requestBody, algorithm: "sha256", encoding: "hex" });
             if (!(await webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+                console.warn("Webhook signature verification failed: signature mismatch");
                 return false;
             }
             payload = notificationUrl;
@@ -635,7 +736,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -651,7 +756,11 @@ exports[`WebhooksHelperGenerator > multi-value form parameters > emits sorted(un
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -672,7 +781,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "
@@ -689,7 +802,11 @@ exports[`WebhooksHelperGenerator > notification-URL normalization > loops over c
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -714,6 +831,7 @@ export class WebhooksHelper {
                 return true;
             }
         }
+        console.warn("Webhook signature verification failed: signature mismatch");
         return false;
     }
 }
@@ -734,7 +852,11 @@ exports[`WebhooksHelperGenerator > notification-URL normalization > verifies aga
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -742,6 +864,7 @@ export class WebhooksHelper {
         if (transmittedBodyHash != null) {
             const expectedBodyHash = await webhookCrypto.computeHash({ payload: requestBody as string, algorithm: "sha256", encoding: "hex" });
             if (!(await webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+                console.warn("Webhook signature verification failed: signature mismatch");
                 return false;
             }
         }
@@ -766,6 +889,7 @@ export class WebhooksHelper {
                 return true;
             }
         }
+        console.warn("Webhook signature verification failed: signature mismatch");
         return false;
     }
 }
@@ -785,7 +909,11 @@ exports[`WebhooksHelperGenerator > runtime body-hash branch > branches on the bo
  */
 export class WebhooksHelper {
     public static async verifySignature(requestBody: string | Record<string, string | string[]>, signatureHeader: string, signatureKey: string, notificationUrl: string, algorithm?: "sha1" | "sha256" | "sha384" | "sha512"): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+        if (signatureHeader == null || signatureHeader === "") {
+            console.warn("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if (requestBody == null || signatureKey == null) {
             return false;
         }
 
@@ -794,6 +922,7 @@ export class WebhooksHelper {
         if (transmittedBodyHash != null) {
             const expectedBodyHash = await webhookCrypto.computeHash({ payload: requestBody as string, algorithm: "sha256", encoding: "hex" });
             if (!(await webhookCrypto.timingSafeEqual(expectedBodyHash, transmittedBodyHash))) {
+                console.warn("Webhook signature verification failed: signature mismatch");
                 return false;
             }
             payload = notificationUrl;
@@ -816,7 +945,11 @@ export class WebhooksHelper {
 
         const expected = await webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: algorithm ?? "sha1", encoding: "base64" });
 
-        return await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        const valid = await webhookCrypto.timingSafeEqual(signatureHeader, expected);
+        if (!valid) {
+            console.warn("Webhook signature verification failed: signature mismatch");
+        }
+        return valid;
     }
 }
 "

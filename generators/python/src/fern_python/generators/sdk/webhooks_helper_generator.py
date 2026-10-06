@@ -12,6 +12,9 @@ import fern.ir.resources as ir_types
 
 WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
+MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header"
+VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch"
+
 DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300
 
 
@@ -259,6 +262,7 @@ class _HmacHelperWriter:
             if timestamp.format == ir_types.WebhookTimestampFormat.ISO_8601:
                 imports.append("import datetime")
             imports.append("import time")
+        imports.append("import logging")
         imports.append("import typing")
         imports.append("")
         signature_imports = ["compute_hmac_signature"]
@@ -271,7 +275,7 @@ class _HmacHelperWriter:
         return imports
 
     def _build_constants(self) -> List[str]:
-        constants: List[str] = []
+        constants: List[str] = ["_logger = logging.getLogger(__name__)"]
         if self._has_timestamp:
             tolerance = DEFAULT_TIMESTAMP_TOLERANCE_SECONDS
             if self._config.timestamp is not None and self._config.timestamp.tolerance is not None:
@@ -311,7 +315,10 @@ class _HmacHelperWriter:
 
         # A verification helper returns a boolean and never raises, so missing inputs fail
         # closed with False rather than throwing.
-        lines.append("if request_body is None or signature_header is None or signature_key is None:")
+        lines.append('if signature_header is None or signature_header == "":')
+        lines.append(f"    _logger.warning({json.dumps(MISSING_SIGNATURE_MESSAGE)})")
+        lines.append("    return False")
+        lines.append("if request_body is None or signature_key is None:")
         lines.append("    return False")
 
         if self._has_timestamp and self._config.timestamp is not None:
@@ -352,7 +359,10 @@ class _HmacHelperWriter:
         lines.append(")")
 
         lines.append("")
-        lines.append(f"return timing_safe_equal({signature_expr}, expected)")
+        lines.append(f"valid = timing_safe_equal({signature_expr}, expected)")
+        lines.append("if not valid:")
+        lines.append(f"    _logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})")
+        lines.append("return valid")
         return lines
 
     def _build_body_hash_branched_payload(self, binding: ir_types.WebhookBodyHashBinding) -> List[str]:
@@ -370,6 +380,7 @@ class _HmacHelperWriter:
             f'        encoding="{encoding}",',
             "    )",
             "    if not timing_safe_equal(expected_body_hash, transmitted_body_hash):",
+            f"        _logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})",
             "        return False",
             "    payload = notification_url",
             "else:",
@@ -404,6 +415,7 @@ class _HmacHelperWriter:
                     f'        encoding="{body_hash_encoding}",',
                     "    )",
                     "    if not timing_safe_equal(expected_body_hash, transmitted_body_hash):",
+                    f"        _logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})",
                     "        return False",
                 ]
             )
@@ -435,6 +447,7 @@ class _HmacHelperWriter:
                 "    )",
                 f"    if timing_safe_equal({signature_expr}, expected):",
                 "        return True",
+                f"_logger.warning({json.dumps(VERIFICATION_FAILED_MESSAGE)})",
                 "return False",
             ]
         )

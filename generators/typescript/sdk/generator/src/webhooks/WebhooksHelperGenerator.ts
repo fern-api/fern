@@ -6,6 +6,9 @@ import { Scope, ts } from "ts-morph";
 
 type HelperParameter = { name: string; type: string; optional?: boolean };
 
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
 const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
 
 interface MethodBodyResult {
@@ -152,7 +155,11 @@ export class WebhooksHelperGenerator {
         // Input validation. A verification helper returns a boolean and never throws,
         // so missing inputs fail closed with `false` rather than raising.
         lines.push(
-            "if (requestBody == null || signatureHeader == null || signatureKey == null) {",
+            'if (signatureHeader == null || signatureHeader === "") {',
+            `    console.warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)});`,
+            "    return false;",
+            "}",
+            "if (requestBody == null || signatureKey == null) {",
             "    return false;",
             "}"
         );
@@ -221,7 +228,9 @@ export class WebhooksHelperGenerator {
             ts.factory.createIdentifier(sigIdentifier),
             ts.factory.createIdentifier("expected")
         );
-        lines.push(`return ${getTextOfTsNode(compareCall)};`);
+        lines.push(`const valid = ${getTextOfTsNode(compareCall)};`);
+        lines.push("if (!valid) {", `    console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`, "}");
+        lines.push("return valid;");
 
         return { fileConstants, body: lines.join("\n") };
     }
@@ -499,7 +508,12 @@ export class WebhooksHelperGenerator {
             ts.factory.createIdentifier("expectedBodyHash"),
             ts.factory.createIdentifier("transmittedBodyHash")
         );
-        lines.push(`    if (!(${getTextOfTsNode(compareCall)})) {`, "        return false;", "    }");
+        lines.push(
+            `    if (!(${getTextOfTsNode(compareCall)})) {`,
+            `        console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`,
+            "        return false;",
+            "    }"
+        );
         lines.push("    payload = notificationUrl;");
 
         // Classic form path: URL + sorted/deduped form params, no body-hash check.
@@ -568,7 +582,12 @@ export class WebhooksHelperGenerator {
                 ts.factory.createIdentifier("expectedBodyHash"),
                 ts.factory.createIdentifier("transmittedBodyHash")
             );
-            lines.push(`    if (!(${getTextOfTsNode(bodyCompare)})) {`, "        return false;", "    }");
+            lines.push(
+                `    if (!(${getTextOfTsNode(bodyCompare)})) {`,
+                `        console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`,
+                "        return false;",
+                "    }"
+            );
             lines.push("}");
         }
 
@@ -626,6 +645,7 @@ export class WebhooksHelperGenerator {
         );
         lines.push(`    if (${getTextOfTsNode(compare)}) {`, "        return true;", "    }");
         lines.push("}");
+        lines.push(`console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`);
         lines.push("return false;");
     }
 

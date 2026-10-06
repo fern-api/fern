@@ -6,6 +6,9 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
 export declare namespace WebhooksHelperGenerator {
@@ -149,7 +152,14 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         // Input validation. A verification helper returns a boolean and never throws, so
         // missing inputs fail closed with `false` rather than raising.
-        writer.writeLine("if (requestBody == null || signatureHeader == null || signatureKey == null)");
+        writer.writeLine("if (string.IsNullOrEmpty(signatureHeader))");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${MISSING_SIGNATURE_MESSAGE}")`);
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("if (requestBody == null || signatureKey == null)");
         writer.writeLine("{");
         writer.indent();
         writer.writeTextStatement("return false");
@@ -206,9 +216,16 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         );
         writer.newLine();
 
-        writer.write(`return `);
+        writer.write(`var valid = `);
         writer.writeNode(webhookSignatureReference);
         writer.writeTextStatement(`.TimingSafeEqual(${signatureVar}, expected)`);
+        writer.writeLine("if (!valid)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${VERIFICATION_FAILED_MESSAGE}")`);
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("return valid");
     }
 
     private writeTimestampValidation(writer: ast.Writer, timestamp: FernIr.WebhookTimestampConfig): void {
@@ -312,6 +329,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeLine(".TimingSafeEqual(expectedBodyHash, transmittedBodyHash))");
         writer.writeLine("{");
         writer.indent();
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${VERIFICATION_FAILED_MESSAGE}")`);
         writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
@@ -420,6 +438,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeLine("}");
         writer.dedent();
         writer.writeLine("}");
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${VERIFICATION_FAILED_MESSAGE}")`);
         writer.writeTextStatement("return false");
     }
 

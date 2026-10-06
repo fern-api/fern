@@ -143,6 +143,10 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder helper = TypeSpec.classBuilder(className)
+                .addField(FieldSpec.builder(
+                                java.util.logging.Logger.class, "LOGGER", Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+                        .initializer("$T.getLogger($T.class.getName())", java.util.logging.Logger.class, className)
+                        .build())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
@@ -180,6 +184,11 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     private static final TypeName MAP_REQUEST_BODY_TYPE = ParameterizedTypeName.get(
             ClassName.get(Map.class), ClassName.get(String.class), WildcardTypeName.subtypeOf(Object.class));
 
+    private static final String MISSING_SIGNATURE_MESSAGE =
+            "Webhook signature verification could not run: missing signature header";
+    private static final String VERIFICATION_FAILED_MESSAGE =
+            "Webhook signature verification failed: signature mismatch";
+
     private static final ParameterSpec ALGORITHM_PARAMETER =
             ParameterSpec.builder(String.class, "algorithm").build();
 
@@ -214,8 +223,12 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .addJavadoc(buildAlgorithmJavadoc())
                 .addParameters(buildParameters(String.class))
                 .addParameter(ALGORITHM_PARAMETER)
+                .beginControlFlow("if (signatureHeader == null || signatureHeader.isEmpty())")
+                .addStatement("LOGGER.warning($S)", MISSING_SIGNATURE_MESSAGE)
+                .addStatement("return false")
+                .endControlFlow()
                 .beginControlFlow(
-                        "if (requestBody == null || requestBody.isEmpty() || signatureHeader == null || signatureHeader.isEmpty() || signatureKey == null || signatureKey.isEmpty())")
+                        "if (requestBody == null || requestBody.isEmpty() || signatureKey == null || signatureKey.isEmpty())")
                 .addStatement("return false")
                 .endControlFlow();
 
@@ -263,9 +276,13 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                         mapHmacAlgorithm(config.getAlgorithm()),
                         mapEncoding(config.getEncoding()))
                 .addStatement(
-                        "return $T.timingSafeEqual($L, expected)",
+                        "boolean valid = $T.timingSafeEqual($L, expected)",
                         generatorContext.getPoetClassNameFactory().getCoreClassName("WebhookSignature"),
-                        signatureExpression);
+                        signatureExpression)
+                .beginControlFlow("if (!valid)")
+                .addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE)
+                .endControlFlow()
+                .addStatement("return valid");
         return method.build();
     }
 
@@ -450,6 +467,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 mapBodyHashAlgorithm(binding.getAlgorithm()),
                 mapEncoding(binding.getEncoding()));
         method.beginControlFlow("if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
+                .addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE)
                 .addStatement("return false")
                 .endControlFlow();
         method.addStatement("payload = notificationUrl");
@@ -492,6 +510,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                     mapBodyHashAlgorithm(binding.getAlgorithm()),
                     mapEncoding(binding.getEncoding()));
             method.beginControlFlow("if (!$T.timingSafeEqual(expectedBodyHash, transmittedBodyHash))", signatureClass)
+                    .addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE)
                     .addStatement("return false")
                     .endControlFlow();
             method.endControlFlow();
@@ -526,6 +545,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .addStatement("return true")
                 .endControlFlow();
         method.endControlFlow();
+        method.addStatement("LOGGER.warning($S)", VERIFICATION_FAILED_MESSAGE);
         method.addStatement("return false");
     }
 
