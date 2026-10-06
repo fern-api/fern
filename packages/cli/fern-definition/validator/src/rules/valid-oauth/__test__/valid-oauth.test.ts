@@ -404,6 +404,7 @@ describe("valid-oauth", () => {
             )
         });
         expect(violations.map((violation) => violation.message)).toEqual([
+            "OAuth refresh-token flow uses the refresh token as its only credential and does not support `client-id-env`, `client-secret-env`.",
             "OAuth refresh-token flow does not use `get-token`; configure the token exchange under `refresh-token` instead.",
             "OAuth refresh-token flow requires a `refresh-token` endpoint."
         ]);

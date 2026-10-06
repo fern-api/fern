@@ -8,6 +8,7 @@ import {
     RequestPropertyValue
 } from "@fern-api/ir-sdk";
 import { getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 
 const HTTP_METHOD_MAP: Record<string, HttpMethod | undefined> = {
     GET: HttpMethod.Get,
@@ -170,13 +171,21 @@ function resolveOAuthRefreshTokenScheme({
     key: string;
     oauthScheme: RawSchemas.OAuthSchemeSchema;
 }): AuthScheme | undefined {
+    // Unlike client-credentials, falling back to the plain bearer scheme here would silently ask SDK
+    // users for an access token instead of a refresh token, so misconfigurations are errors.
     const refreshTokenConfig = oauthScheme["refresh-token"];
     if (refreshTokenConfig == null) {
-        return undefined;
+        throw new CliError({
+            message: `Auth scheme '${key}': OAuth refresh-token flow requires a \`refresh-token\` endpoint.`,
+            code: CliError.Code.ValidationError
+        });
     }
     const refreshEndpoint = resolveRefreshEndpoint({ ir, refreshTokenConfig });
     if (refreshEndpoint == null) {
-        return undefined;
+        throw new CliError({
+            message: `Auth scheme '${key}': failed to resolve the OAuth refresh-token endpoint '${refreshTokenConfig.endpoint}', or it is missing the configured \`refresh-token\` request property or \`access-token\` response property.`,
+            code: CliError.Code.ValidationError
+        });
     }
     return AuthScheme.oauth({
         key,

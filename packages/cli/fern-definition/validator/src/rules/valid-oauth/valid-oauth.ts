@@ -93,6 +93,23 @@ export const ValidOauthRule: Rule = {
     }
 };
 
+const REFRESH_TOKEN_FLOW_UNSUPPORTED_FIELDS = [
+    "client-id",
+    "client-id-env",
+    "client-secret-env",
+    "scopes",
+    "authorization-url",
+    "device-authorization-url",
+    "token-url",
+    "refresh-url",
+    "redirect-uri",
+    "pkce",
+    "authorization-parameters",
+    "device-authorization-parameters",
+    "token-parameters",
+    "refresh-parameters"
+] as const satisfies readonly (keyof RawSchemas.OAuthSchemeSchema)[];
+
 /**
  * Validates the refresh-token flow. The SDK user supplies a refresh token as the only credential and
  * the SDK exchanges it at the `refresh-token` endpoint, so that endpoint is required and the
@@ -110,6 +127,15 @@ function validateRefreshTokenFlow({
     apiFile: ReturnType<typeof constructRootApiFileContext>;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [...rejectCallbackRedirectUrls(oauth)];
+    const unsupportedFields = REFRESH_TOKEN_FLOW_UNSUPPORTED_FIELDS.filter((field) => oauth[field] != null);
+    if (unsupportedFields.length > 0) {
+        violations.push({
+            severity: "fatal",
+            message: `OAuth refresh-token flow uses the refresh token as its only credential and does not support ${unsupportedFields
+                .map((field) => `\`${field}\``)
+                .join(", ")}.`
+        });
+    }
     if (oauth["get-token"] != null) {
         violations.push({
             severity: "fatal",
