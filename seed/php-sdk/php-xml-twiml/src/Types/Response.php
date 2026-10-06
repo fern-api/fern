@@ -123,8 +123,14 @@ class Response extends XmlSerializableType
      *   |null
      * ) $number The <Dial> to add, or its text content.
      * @param array{
-     *   statusCallbackEvent?: ?array<string>,
-     *   record?: ?array<value-of<DialRecordItem>>,
+     *   statusCallbackEvent?: (
+     *    array<string>
+     *   |string
+     * )|null,
+     *   record?: (
+     *    array<value-of<DialRecordItem>>
+     *   |string
+     * )|null,
      *   numbers?: ?array<Number>,
      * } $attributes Properties of the new <Dial> (ignored when a Dial is given).
      * @return Dial
