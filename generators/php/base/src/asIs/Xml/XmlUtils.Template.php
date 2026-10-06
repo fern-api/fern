@@ -87,7 +87,11 @@ final class XmlUtils
             $node->appendChild($document->createTextNode($element->text));
         }
         foreach ($element->children as $child) {
-            self::toDom($document, $node, $child->toXmlElement());
+            if ($child instanceof XmlText) {
+                $node->appendChild($document->createTextNode($child->text));
+            } else {
+                self::toDom($document, $node, $child->toXmlElement());
+            }
         }
         return $node;
     }
@@ -123,7 +127,7 @@ final class XmlUtils
      * instead of producing a second wrapper.
      *
      * @param array<string, string> $attributes
-     * @param list<XmlNode> $children
+     * @param list<XmlNode|XmlText> $children
      * @param list<string> $wrapperNames
      */
     public static function addAdditional(XmlElement $element, array $attributes, array $children, array $wrapperNames = []): void
@@ -154,6 +158,133 @@ final class XmlUtils
             }
             $element->addChild($child);
         }
+    }
+
+    /**
+     * Appends the typed children, the additional children and the text segments to $element in
+     * content order. $content decides the order; typed or additional children that are missing from
+     * it are appended after it (typed first), so directly assigned properties still render. Wrapped
+     * lists render as one wrapper element, placed where the first wrapper of that name or the first
+     * item of that list appears in $content. Elements in $content that are neither typed, additional nor text are not written.
+     *
+     * @param list<XmlNode|XmlText> $content
+     * @param list<XmlNode> $typed Typed child elements, in property order.
+     * @param array<string, list<XmlNode>> $wrapped Items of each wrapped list, keyed by wrapper name.
+     * @param list<XmlNode> $additional
+     * @param array<string, string> $attributes Additional attributes.
+     */
+    public static function addContent(
+        XmlElement $element,
+        array $content,
+        array $typed,
+        array $wrapped,
+        array $additional,
+        array $attributes = [],
+    ): void {
+        $remaining = [];
+        foreach ([...$typed, ...$additional] as $node) {
+            $id = spl_object_id($node);
+            $remaining[$id] = ($remaining[$id] ?? 0) + 1;
+        }
+        $wrapperOf = [];
+        foreach ($wrapped as $name => $items) {
+            foreach ($items as $item) {
+                $wrapperOf[spl_object_id($item)] = $name;
+            }
+        }
+        $wrappers = [];
+        $emitWrapper = static function (string $name) use (&$wrappers, $element, $wrapped): void {
+            if (isset($wrappers[$name])) {
+                return;
+            }
+            $wrapper = self::addWrapper($element, $name);
+            foreach ($wrapped[$name] as $item) {
+                $wrapper->addChild($item);
+            }
+            $wrappers[$name] = $wrapper;
+        };
+        foreach ($content as $node) {
+            if ($node instanceof XmlText) {
+                $element->addChild($node);
+                continue;
+            }
+            $id = spl_object_id($node);
+            if (($remaining[$id] ?? 0) > 0) {
+                $remaining[$id]--;
+                $element->addChild($node);
+                continue;
+            }
+            if (isset($wrapperOf[$id])) {
+                $emitWrapper($wrapperOf[$id]);
+            } elseif ($node instanceof XmlElement && array_key_exists($node->name, $wrapped)) {
+                $emitWrapper($node->name);
+            }
+        }
+        foreach ($typed as $node) {
+            $id = spl_object_id($node);
+            if (($remaining[$id] ?? 0) > 0) {
+                $remaining[$id]--;
+                $element->addChild($node);
+            }
+        }
+        foreach (array_keys($wrapped) as $name) {
+            $emitWrapper($name);
+        }
+        $leftover = [];
+        foreach ($additional as $node) {
+            $id = spl_object_id($node);
+            if (($remaining[$id] ?? 0) > 0) {
+                $remaining[$id]--;
+                $leftover[] = $node;
+            }
+        }
+        self::addAdditional($element, $attributes, $leftover, array_keys($wrapped));
+    }
+
+    /**
+     * Builds the content list of a parsed element: its text segments, the typed children (taken in
+     * document order from $typed), wrapper elements (as parsed) and the additional children.
+     *
+     * @param list<array{list<string>, list<XmlNode>}> $typed Pairs of element names and the typed
+     *   children parsed from elements with those names, in document order.
+     * @param list<XmlNode> $additional
+     * @param list<string> $wrapperNames
+     * @return list<XmlNode|XmlText>
+     */
+    public static function content(XmlElement $element, array $typed, array $additional, array $wrapperNames = []): array
+    {
+        $byName = [];
+        foreach ($typed as $index => [$names, $nodes]) {
+            foreach ($names as $name) {
+                $byName[$name] = $index;
+            }
+        }
+        $positions = array_fill(0, count($typed), 0);
+        $additionalIds = [];
+        foreach ($additional as $node) {
+            $additionalIds[spl_object_id($node)] = true;
+        }
+        $result = [];
+        foreach ($element->children as $child) {
+            if ($child instanceof XmlText) {
+                $result[] = $child;
+                continue;
+            }
+            $name = $child->toXmlElement()->name;
+            $index = $byName[$name] ?? null;
+            if ($index !== null) {
+                $node = $typed[$index][1][$positions[$index]] ?? null;
+                if ($node !== null) {
+                    $positions[$index]++;
+                    $result[] = $node;
+                }
+                continue;
+            }
+            if (in_array($name, $wrapperNames, true) || isset($additionalIds[spl_object_id($child)])) {
+                $result[] = $child;
+            }
+        }
+        return $result;
     }
 
     /**
@@ -344,17 +475,49 @@ final class XmlUtils
             }
         }
         $text = '';
+        $hasElement = false;
         foreach ($node->childNodes as $child) {
             if ($child instanceof DOMText) {
-                $text .= $child->wholeText;
+                if ($hasElement) {
+                    self::appendParsedText($element, $child->wholeText);
+                } else {
+                    $text .= $child->wholeText;
+                }
             } elseif ($child instanceof DOMElement) {
+                $hasElement = true;
                 $element->addChild(self::fromDom($child));
             }
         }
-        // Text nodes are concatenated (whitespace-only text is dropped); interleaving with child
-        // elements is not preserved, matching toDom() which writes text before children.
+        // Text before the first child element is the element's text (dropped when whitespace-only);
+        // text between and after child elements is kept as XmlText segments in document order.
         $element->text = trim($text) === '' ? null : $text;
         return $element;
+    }
+
+    /**
+     * Appends character data read after a child element. Whitespace-only text spanning a line break
+     * is pretty-print indentation and is dropped; adjacent segments are merged.
+     */
+    private static function appendParsedText(XmlElement $element, string $text): void
+    {
+        if (self::isIndentation($text)) {
+            return;
+        }
+        $count = count($element->children);
+        $last = $count > 0 ? $element->children[$count - 1] : null;
+        if ($last instanceof XmlText) {
+            $last->text .= $text;
+            return;
+        }
+        $element->addText($text);
+    }
+
+    /**
+     * Whether $text is whitespace-only and spans a line break (pretty-print indentation).
+     */
+    private static function isIndentation(string $text): bool
+    {
+        return trim($text) === '' && preg_match('/[\r\n]/', $text) === 1;
     }
 
     /**
@@ -499,6 +662,9 @@ final class XmlUtils
         }
         $result = [];
         foreach ($parent->children as $child) {
+            if ($child instanceof XmlText) {
+                continue;
+            }
             $element = $child->toXmlElement();
             $parse = $parsers[$element->name] ?? null;
             if ($parse !== null) {
@@ -518,6 +684,9 @@ final class XmlUtils
     public static function parseChild(XmlElement $parent, array $parsers): mixed
     {
         foreach ($parent->children as $child) {
+            if ($child instanceof XmlText) {
+                continue;
+            }
             $element = $child->toXmlElement();
             $parse = $parsers[$element->name] ?? null;
             if ($parse !== null) {
@@ -538,6 +707,9 @@ final class XmlUtils
     public static function requireChild(XmlElement $parent, array $parsers): mixed
     {
         foreach ($parent->children as $child) {
+            if ($child instanceof XmlText) {
+                continue;
+            }
             $element = $child->toXmlElement();
             $parse = $parsers[$element->name] ?? null;
             if ($parse !== null) {
@@ -712,6 +884,9 @@ final class XmlUtils
     {
         $result = [];
         foreach ($element->children as $child) {
+            if ($child instanceof XmlText) {
+                continue;
+            }
             $childElement = $child->toXmlElement();
             if (in_array($childElement->name, $knownNames, true)) {
                 continue;
@@ -730,7 +905,7 @@ final class XmlUtils
             );
             $rest->namespaceDeclarations = $childElement->namespaceDeclarations;
             foreach ($childElement->children as $item) {
-                if (!in_array($item->toXmlElement()->name, $knownItems, true)) {
+                if ($item instanceof XmlText || !in_array($item->toXmlElement()->name, $knownItems, true)) {
                     $rest->addChild($item);
                 }
             }

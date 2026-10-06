@@ -16,6 +16,13 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     private array $__additionalChildren = [];
 
     /**
+     * @var list<XmlNode|XmlText> Child elements and text segments in document order, including the
+     * typed children and the additional children (shared by reference). Decides the order in which
+     * toXml() writes them; typed children that are missing here are appended at the end.
+     */
+    private array $__content = [];
+
+    /**
      * Renders this value as a generic XML element tree.
      */
     abstract public function toXmlElement(): XmlElement;
@@ -82,11 +89,48 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     }
 
     /**
-     * Adds an arbitrary child element (for elements not covered by the typed model).
+     * @return list<XmlNode|XmlText> Child elements and text segments in document order.
+     */
+    public function getContent(): array
+    {
+        return $this->__content;
+    }
+
+    /**
+     * @param list<XmlNode|XmlText> $content
+     */
+    public function setContent(array $content): static
+    {
+        $this->__content = array_values($content);
+        return $this;
+    }
+
+    /**
+     * Adds an arbitrary child element (for elements not covered by the typed model) after the
+     * children added so far.
      */
     public function addChild(XmlNode $child): static
     {
         $this->__additionalChildren[] = $child;
+        $this->__content[] = $child;
         return $this;
+    }
+
+    /**
+     * Adds a text segment after the children added so far (for mixed content such as
+     * `<Say>Hi <break/> world</Say>`).
+     */
+    public function addText(string $text): static
+    {
+        $this->__content[] = new XmlText($text);
+        return $this;
+    }
+
+    /**
+     * Records a typed child added through a fluent builder so it keeps its position in the content.
+     */
+    protected function recordContent(XmlNode $child): void
+    {
+        $this->__content[] = $child;
     }
 }
