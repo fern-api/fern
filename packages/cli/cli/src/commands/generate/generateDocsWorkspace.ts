@@ -241,7 +241,8 @@ export async function generateDocsWorkspace({
 }
 
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
-    const excludeRules: string[] = [];
+    // publishDocs runs missing-redirects on the docs it resolves, so the navigation is built once.
+    const excludeRules: string[] = [Rules.MissingRedirectsRule.name];
     if (!brokenLinks && !strictBrokenLinks) {
         excludeRules.push(Rules.ValidMarkdownLinks.name);
     }
