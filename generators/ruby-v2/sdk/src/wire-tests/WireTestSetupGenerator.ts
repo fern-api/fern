@@ -356,11 +356,19 @@ class WireMockTestCase < Minitest::Test
 
     post_request.body = request_body.to_json
     response = http.request(post_request)
-    result = JSON.parse(response.body)
-    requests = result["requests"] || []
+
+    assert_equal "200", response.code, "WireMock request lookup failed for test_id #{test_id}: #{response.body}"
+    requests = JSON.parse(response.body)["requests"] || []
 
     refute_empty requests, "No requests found for test_id #{test_id}"
-    assert_json_numbers(expected, JSON.parse(requests.first["body"]), "request body for test_id #{test_id}")
+    body = requests.first["body"]
+    begin
+      document = JSON.parse(body)
+    rescue JSON::ParserError
+      flunk "Expected a JSON request body for test_id #{test_id}, got #{body.inspect}"
+    end
+
+    assert_json_numbers(expected, document, "request body for test_id #{test_id}")
   end
 
   # Verifies that numbers in the mocked JSON response decode unchanged into the SDK result,
@@ -383,7 +391,7 @@ class WireMockTestCase < Minitest::Test
 
   def json_pointer_get(document, pointer)
     pointer.split("/", -1).drop(1).reduce(document) do |node, token|
-      key = token.gsub("~1", "/").gsub("~0", "~")
+      key = token.gsub(/~[01]/, "~0" => "~", "~1" => "/")
       case node
       when ::Array then node[Integer(key, 10)]
       when ::Hash then node[key]

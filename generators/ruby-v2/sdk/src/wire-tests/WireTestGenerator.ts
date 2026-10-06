@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { isUrlEncodedRequestBody } from "../utils/requestBody.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
@@ -434,7 +435,11 @@ export class WireTestGenerator {
             // Check if endpoint uses lazy pagination (cursor or offset)
             // These return iterators that don't make HTTP requests until iterated
             const isLazyPagination = endpoint.pagination?.type === "cursor" || endpoint.pagination?.type === "offset";
-            const responseNumbers = isLazyPagination ? [] : this.getExpectedResponseNumbers(endpoint);
+            // Custom pagination returns a pager whose `current` is the response model; other
+            // pagination kinds return iterators, so their response numbers are not checked.
+            const isCustomPagination = endpoint.pagination?.type === "custom";
+            const responseNumbers =
+                endpoint.pagination == null || isCustomPagination ? this.getExpectedResponseNumbers(endpoint) : [];
             const requestBodyNumbers = this.getExpectedRequestBodyNumbers(endpoint);
 
             if (isLazyPagination) {
@@ -486,7 +491,7 @@ export class WireTestGenerator {
             if (responseNumbers.length > 0) {
                 lines.push("");
                 lines.push(`    verify_response_numbers(`);
-                lines.push(`      actual: result,`);
+                lines.push(`      actual: ${isCustomPagination ? "result.current" : "result"},`);
                 lines.push(...this.renderExpectedNumbers(responseNumbers));
                 lines.push(`    )`);
             }
@@ -541,10 +546,13 @@ export class WireTestGenerator {
     }
 
     private isObjectRequestBody(requestBody: FernIr.HttpRequestBody | undefined): boolean {
-        if (requestBody?.type === "inlinedRequestBody") {
+        if (requestBody == null || isUrlEncodedRequestBody(requestBody)) {
+            return false;
+        }
+        if (requestBody.type === "inlinedRequestBody") {
             return true;
         }
-        if (requestBody?.type !== "reference" || requestBody.requestBodyType.type !== "named") {
+        if (requestBody.type !== "reference" || requestBody.requestBodyType.type !== "named") {
             return false;
         }
         return this.context.ir.types[requestBody.requestBodyType.typeId]?.shape.type === "object";
