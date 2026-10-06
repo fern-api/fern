@@ -16,9 +16,11 @@ func do() {
             "<clientId>",
             "<clientSecret>",
         ),
+        option.WithRootVariable(
+            "<endpointParam>",
+        ),
     )
     client.Service.Post(
         context.TODO(),
-        "<endpointParam>",
     )
 }
