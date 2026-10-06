@@ -4,9 +4,7 @@ generated `from_xml`/`to_xml` round trip."""
 from dataclasses import dataclass
 from typing import List, Optional, Sequence, Tuple
 
-import fern.ir.resources as ir_types
 from .context.sdk_generator_context import SdkGeneratorContext
-
 from fern_python.codegen import Project
 from fern_python.generators.pydantic_model.type_declaration_handler.object_generator import ObjectProperty
 from fern_python.generators.pydantic_model.type_declaration_handler.pydantic_models.pydantic_model_object_generator import (
@@ -14,6 +12,8 @@ from fern_python.generators.pydantic_model.type_declaration_handler.pydantic_mod
     xml_list_item_type,
 )
 from fern_python.utils import get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 UNKNOWN_ENUM_VALUE = "bogus-value"
 SPECIAL_CHARACTERS = "a & b < c > d \"q\" 'r'"
