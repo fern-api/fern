@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.CreatePlantWithSchemaRequest;
 import com.seed.api.requests.UpdatePlantRequest;
 import com.seed.api.types.CreatePlantResponse;
@@ -12,7 +13,7 @@ import com.seed.api.types.CreatePlantWithSchemaResponse;
 import com.seed.api.types.UpdatePlantResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -33,21 +34,44 @@ public class AsyncSeedApiClient {
      * Creates a plant with example JSON but no request body schema.
      */
     public CompletableFuture<CreatePlantResponse> createPlant(Object request) {
-        return this.rawClient.createPlant(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CreatePlantResponse>> rawFuture = this.rawClient.createPlant(request);
+        CompletableFuture<CreatePlantResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Creates a plant with example JSON but no request body schema.
      */
     public CompletableFuture<CreatePlantResponse> createPlant(Object request, RequestOptions requestOptions) {
-        return this.rawClient.createPlant(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CreatePlantResponse>> rawFuture =
+                this.rawClient.createPlant(request, requestOptions);
+        CompletableFuture<CreatePlantResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Updates a plant with example JSON but no request body schema.
      */
     public CompletableFuture<UpdatePlantResponse> updatePlant(String plantId, UpdatePlantRequest request) {
-        return this.rawClient.updatePlant(plantId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UpdatePlantResponse>> rawFuture =
+                this.rawClient.updatePlant(plantId, request);
+        CompletableFuture<UpdatePlantResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -55,21 +79,45 @@ public class AsyncSeedApiClient {
      */
     public CompletableFuture<UpdatePlantResponse> updatePlant(
             String plantId, UpdatePlantRequest request, RequestOptions requestOptions) {
-        return this.rawClient.updatePlant(plantId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UpdatePlantResponse>> rawFuture =
+                this.rawClient.updatePlant(plantId, request, requestOptions);
+        CompletableFuture<UpdatePlantResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * A control endpoint that has both schema and example defined.
      */
     public CompletableFuture<CreatePlantWithSchemaResponse> createPlantWithSchema() {
-        return this.rawClient.createPlantWithSchema().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CreatePlantWithSchemaResponse>> rawFuture =
+                this.rawClient.createPlantWithSchema();
+        CompletableFuture<CreatePlantWithSchemaResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * A control endpoint that has both schema and example defined.
      */
     public CompletableFuture<CreatePlantWithSchemaResponse> createPlantWithSchema(RequestOptions requestOptions) {
-        return this.rawClient.createPlantWithSchema(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CreatePlantWithSchemaResponse>> rawFuture =
+                this.rawClient.createPlantWithSchema(requestOptions);
+        CompletableFuture<CreatePlantWithSchemaResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -77,7 +125,15 @@ public class AsyncSeedApiClient {
      */
     public CompletableFuture<CreatePlantWithSchemaResponse> createPlantWithSchema(
             CreatePlantWithSchemaRequest request) {
-        return this.rawClient.createPlantWithSchema(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CreatePlantWithSchemaResponse>> rawFuture =
+                this.rawClient.createPlantWithSchema(request);
+        CompletableFuture<CreatePlantWithSchemaResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -85,7 +141,25 @@ public class AsyncSeedApiClient {
      */
     public CompletableFuture<CreatePlantWithSchemaResponse> createPlantWithSchema(
             CreatePlantWithSchemaRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createPlantWithSchema(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<CreatePlantWithSchemaResponse>> rawFuture =
+                this.rawClient.createPlantWithSchema(request, requestOptions);
+        CompletableFuture<CreatePlantWithSchemaResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

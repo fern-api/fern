@@ -62,6 +62,7 @@
                 ],
               },
             },
+            "responseHeaders": undefined,
             "responseStatusCode": 200,
           },
         ],

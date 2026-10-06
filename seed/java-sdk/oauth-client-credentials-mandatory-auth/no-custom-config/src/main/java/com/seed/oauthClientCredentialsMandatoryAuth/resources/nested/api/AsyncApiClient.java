@@ -5,6 +5,7 @@ package com.seed.oauthClientCredentialsMandatoryAuth.resources.nested.api;
 
 import com.seed.oauthClientCredentialsMandatoryAuth.core.ClientOptions;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.RequestOptions;
+import com.seed.oauthClientCredentialsMandatoryAuth.core.SeedOauthClientCredentialsMandatoryAuthHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncApiClient {
@@ -25,10 +26,26 @@ public class AsyncApiClient {
     }
 
     public CompletableFuture<Void> getSomething() {
-        return this.rawClient.getSomething().thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsMandatoryAuthHttpResponse<Void>> rawFuture =
+                this.rawClient.getSomething();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> getSomething(RequestOptions requestOptions) {
-        return this.rawClient.getSomething(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsMandatoryAuthHttpResponse<Void>> rawFuture =
+                this.rawClient.getSomething(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

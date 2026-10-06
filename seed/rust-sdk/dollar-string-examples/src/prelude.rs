@@ -12,6 +12,7 @@ pub use crate::error::{ApiError, BuildError};
 pub use crate::api::*;
 
 // Re-export commonly used external types
+pub use futures::StreamExt;
 pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};

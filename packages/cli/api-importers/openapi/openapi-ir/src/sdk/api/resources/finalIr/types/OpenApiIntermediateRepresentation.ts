@@ -16,6 +16,11 @@ export interface OpenApiIntermediateRepresentation {
     specVersion: string | undefined;
     title: string | undefined;
     description: string | undefined;
+    /**
+     * Environment variable name populated via `x-fern-base-url-env` that
+     * generated SDKs read to override the base URL.
+     */
+    baseUrlEnv: string | undefined;
     basePath: string | undefined;
     /**
      * Root-level path parameters declared by the structured form of
@@ -35,7 +40,7 @@ export interface OpenApiIntermediateRepresentation {
     webhooks: FernOpenapiIr.Webhook[];
     channels: Record<string, FernOpenapiIr.WebsocketChannel>;
     groupedSchemas: FernOpenapiIr.Schemas;
-    variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
+    variables: Record<string, FernOpenapiIr.SdkVariable>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;
     securitySchemes: Record<FernOpenapiIr.SecuritySchemeId, FernOpenapiIr.SecurityScheme>;

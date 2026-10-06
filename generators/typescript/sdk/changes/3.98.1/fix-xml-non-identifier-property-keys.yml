@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix invalid TypeScript in generated XML (TwiML) classes and builders when a property key is not a
+    valid identifier (e.g. `interpret-as` or `default`). The generator now emits bracket access
+    (`this["interpret-as"]`) and camelCased locals (`interpretAs`) instead of `this.interpret-as`.
+  type: fix

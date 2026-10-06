@@ -58,6 +58,7 @@ class FernAwarePydanticModel:
         # With the addition of __root__ and root definitions conditionally to the Pydantic model
         # when leveraging union utils, we need to update refs to pick up the types.
         force_update_forward_refs: bool = False,
+        preserve_child_identity: bool = False,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -97,6 +98,7 @@ class FernAwarePydanticModel:
             universal_field_validator=self._context.core_utilities.universal_field_validator,
             universal_root_validator=self._context.core_utilities.universal_root_validator,
             is_root_model=is_root_model,
+            preserve_child_identity=preserve_child_identity,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,

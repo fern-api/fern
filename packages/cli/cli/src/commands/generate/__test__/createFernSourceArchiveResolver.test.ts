@@ -1,7 +1,11 @@
+import type { Spec } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { ConjureWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { createGroupedSpecsTarGzArchiveSettled } from "@fern-api/local-workspace-runner";
+import { ConjureWorkspace, LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import {
+    createGroupedSpecsTarGzArchiveSettled,
+    validateSdkConfigImportSettings
+} from "@fern-api/local-workspace-runner";
 import { type FernSourceArchiveRequest } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -11,7 +15,8 @@ import { createFernSourceArchiveResolver } from "../createFernSourceArchiveResol
 
 vi.mock("@fern-api/local-workspace-runner", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/local-workspace-runner")>()),
-    createGroupedSpecsTarGzArchiveSettled: vi.fn()
+    createGroupedSpecsTarGzArchiveSettled: vi.fn(),
+    validateSdkConfigImportSettings: vi.fn()
 }));
 
 function makeGenerator(): generatorsYml.GeneratorInvocation {
@@ -39,6 +44,7 @@ function makeGenerator(): generatorsYml.GeneratorInvocation {
 describe("createFernSourceArchiveResolver", () => {
     beforeEach(() => {
         vi.mocked(createGroupedSpecsTarGzArchiveSettled).mockReset();
+        vi.mocked(validateSdkConfigImportSettings).mockReset();
     });
 
     it("returns an actionable error when the workspace cannot expose source specs", async () => {
@@ -60,6 +66,7 @@ describe("createFernSourceArchiveResolver", () => {
         };
         const request: FernSourceArchiveRequest = {
             generatorIndex: 3,
+            sdkConfigTargetIndex: 1,
             generatorInvocation,
             sdkGenApiRoute: {
                 generatorId: generatorInvocation.name,
@@ -80,6 +87,75 @@ describe("createFernSourceArchiveResolver", () => {
         });
     });
 
+    it("builds an archive from a composed workspace's namespaced dependency specs", async () => {
+        const context = createMockTaskContext();
+        const generatorInvocation = makeGenerator();
+        const usersSpec: Spec = {
+            type: "openapi",
+            absoluteFilepath: AbsoluteFilePath.of("/apis/users-api/users-openapi.json"),
+            absoluteFilepathToOverrides: undefined,
+            absoluteFilepathToOverlays: undefined,
+            source: {
+                type: "openapi",
+                file: AbsoluteFilePath.of("/apis/users-api/users-openapi.json")
+            },
+            namespace: "users"
+        };
+        const paymentsSpec: Spec = {
+            type: "openapi",
+            absoluteFilepath: AbsoluteFilePath.of("/apis/payments-api/payments-openapi.json"),
+            absoluteFilepathToOverrides: undefined,
+            absoluteFilepathToOverlays: undefined,
+            source: { type: "openapi", file: AbsoluteFilePath.of("/apis/payments-api/payments-openapi.json") },
+            namespace: "payments"
+        };
+        const workspace = new LazyFernWorkspace({
+            context,
+            generatorsConfiguration: undefined,
+            workspaceName: "combined",
+            cliVersion: "0.0.0",
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/combined")
+        });
+        vi.spyOn(workspace, "getAllSpecsForGenerator").mockResolvedValue([usersSpec, paymentsSpec]);
+        const group: generatorsYml.GeneratorGroup = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [generatorInvocation],
+            reviewers: undefined
+        };
+        const request: FernSourceArchiveRequest = {
+            generatorIndex: 0,
+            sdkConfigTargetIndex: 0,
+            generatorInvocation,
+            sdkGenApiRoute: {
+                generatorId: generatorInvocation.name,
+                language: "typescript",
+                requestedVersion: generatorInvocation.version,
+                cutoverVersion: "4.0.0",
+                configKind: "sdk-config-v1",
+                payloadKind: "sdk-config-v1"
+            }
+        };
+        vi.mocked(createGroupedSpecsTarGzArchiveSettled).mockResolvedValue({
+            archive: {
+                buffer: Buffer.alloc(0),
+                manifest: { specs: [] },
+                specIndexesByGeneratorIndex: new Map([[0, [0, 1]]])
+            },
+            errorsByGeneratorIndex: new Map()
+        });
+
+        const resolution = await createFernSourceArchiveResolver({ workspace, context, group })([request]);
+
+        expect(resolution.errors).toEqual(new Map());
+        expect(resolution.sourceArchives.get(0)).toMatchObject({ specIndexes: [0, 1] });
+        expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
+            expect.objectContaining({
+                generatorSelections: [{ generatorIndex: 0, specs: [usersSpec, paymentsSpec] }]
+            })
+        );
+    });
+
     it("preserves the preparation error when archive outcomes violate the invariant", async () => {
         const context = createMockTaskContext();
         const generatorInvocation = makeGenerator();
@@ -98,7 +174,8 @@ describe("createFernSourceArchiveResolver", () => {
             reviewers: undefined
         };
         const request: FernSourceArchiveRequest = {
-            generatorIndex: 3,
+            generatorIndex: 1,
+            sdkConfigTargetIndex: 0,
             generatorInvocation,
             sdkGenApiRoute: {
                 generatorId: generatorInvocation.name,
@@ -114,9 +191,9 @@ describe("createFernSourceArchiveResolver", () => {
             archive: {
                 buffer: Buffer.alloc(0),
                 manifest: { specs: [] },
-                specIndexesByGeneratorIndex: new Map([[3, []]])
+                specIndexesByGeneratorIndex: new Map([[1, []]])
             },
-            errorsByGeneratorIndex: new Map([[3, preparationError]])
+            errorsByGeneratorIndex: new Map([[1, preparationError]])
         });
 
         await expect(
@@ -125,19 +202,88 @@ describe("createFernSourceArchiveResolver", () => {
                 context,
                 group,
                 sdkConfigV1: {
-                    body: Buffer.from("{}"),
                     sdkName: "api",
                     sdkVersion: "1.0.0",
                     audiences: [],
-                    targets: [{ language: "typescript" }]
+                    targets: [
+                        { body: Buffer.from("{}"), language: "typescript", clientPathParameterStyle: "inline" },
+                        { body: Buffer.from("{}"), language: "typescript", clientPathParameterStyle: "wrapped" }
+                    ]
                 }
             })([request])
         ).rejects.toMatchObject({
-            message: "Generator index 3 produced both a source archive and a source preparation error",
+            message: "Generator index 1 produced both a source archive and a source preparation error",
             cause: preparationError
         });
         expect(createGroupedSpecsTarGzArchiveSettled).toHaveBeenCalledWith(
             expect.objectContaining({ audiences: { type: "select", audiences: [] } })
         );
+        expect(validateSdkConfigImportSettings).toHaveBeenCalledWith([], {
+            clientPathParameterStyle: "inline"
+        });
+    });
+
+    it("uses the selected target path parameter style and falls back to the root style", async () => {
+        const context = createMockTaskContext();
+        const generatorInvocation = makeGenerator();
+        const workspace = new OSSWorkspace({
+            allSpecs: [],
+            specs: [],
+            generatorsConfiguration: undefined,
+            workspaceName: "openapi-api",
+            cliVersion: "0.0.0",
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/openapi-api")
+        });
+        const group: generatorsYml.GeneratorGroup = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [generatorInvocation],
+            reviewers: undefined
+        };
+        const route = {
+            generatorId: generatorInvocation.name,
+            language: "typescript" as const,
+            requestedVersion: generatorInvocation.version,
+            cutoverVersion: "4.0.0",
+            configKind: "sdk-config-v1" as const,
+            payloadKind: "sdk-config-v1" as const
+        };
+        const requests: FernSourceArchiveRequest[] = [
+            { generatorIndex: 0, sdkConfigTargetIndex: 1, generatorInvocation, sdkGenApiRoute: route },
+            { generatorIndex: 1, generatorInvocation, sdkGenApiRoute: route }
+        ];
+        vi.mocked(createGroupedSpecsTarGzArchiveSettled).mockResolvedValue({
+            archive: {
+                buffer: Buffer.alloc(0),
+                manifest: { specs: [] },
+                specIndexesByGeneratorIndex: new Map([
+                    [0, []],
+                    [1, []]
+                ])
+            },
+            errorsByGeneratorIndex: new Map()
+        });
+
+        await createFernSourceArchiveResolver({
+            workspace,
+            context,
+            group,
+            sdkConfigV1: {
+                sdkName: "api",
+                sdkVersion: "1.0.0",
+                clientPathParameterStyle: "inline",
+                targets: [
+                    { body: Buffer.from("{}"), language: "typescript" },
+                    { body: Buffer.from("{}"), language: "typescript", clientPathParameterStyle: "wrapped" }
+                ]
+            }
+        })(requests);
+
+        expect(validateSdkConfigImportSettings).toHaveBeenNthCalledWith(1, [], {
+            clientPathParameterStyle: "wrapped"
+        });
+        expect(validateSdkConfigImportSettings).toHaveBeenNthCalledWith(2, [], {
+            clientPathParameterStyle: "inline"
+        });
     });
 });

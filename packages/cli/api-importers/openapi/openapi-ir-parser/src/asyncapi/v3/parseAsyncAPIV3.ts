@@ -736,6 +736,7 @@ function convertMessageReferencesToWebsocketSchemas({
     messages.forEach((message, i) => {
         try {
             const channelMessage = context.resolveMessageReference(message.ref, true);
+            const resolvedMessage = context.resolveMessageReference(message.ref);
             let schemaId = channelMessage.name as string;
 
             if (duplicatedMessageIds.includes(schemaId)) {
@@ -748,6 +749,7 @@ function convertMessageReferencesToWebsocketSchemas({
                     origin,
                     name: schemaId ?? `${origin}Message${i + 1}`,
                     displayName: message.displayName,
+                    description: resolvedMessage.description ?? resolvedMessage.summary,
                     body: convertSchemaWithExampleToSchema(schema),
                     methodName: message.methodName
                 });

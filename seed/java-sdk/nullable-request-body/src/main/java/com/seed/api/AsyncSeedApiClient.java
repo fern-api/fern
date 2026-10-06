@@ -8,7 +8,7 @@ import com.seed.api.core.Suppliers;
 import com.seed.api.resources.testgroup.AsyncTestGroupClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncTestGroupClient> testGroupClient;
@@ -20,6 +20,16 @@ public class AsyncSeedApiClient {
 
     public AsyncTestGroupClient testGroup() {
         return this.testGroupClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

@@ -9,6 +9,7 @@ import { assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
+    AuthScheme,
     ContainerType,
     DeclaredTypeName,
     dynamic as DynamicSnippets,
@@ -400,6 +401,18 @@ export class DynamicSnippetsConverter {
         }
     }
 
+    private getAuthWrapperProperty(auth: ApiAuth, scheme: AuthScheme): DynamicSnippets.Name | undefined {
+        switch (auth.requirement) {
+            case "ANY":
+            case "ENDPOINT_SECURITY":
+                return this.fullCasingsGenerator.generateName(scheme.key);
+            case "ALL":
+                return undefined;
+            default:
+                assertNever(auth.requirement);
+        }
+    }
+
     private convertPathParameters({
         pathParameters
     }: {
@@ -419,7 +432,7 @@ export class DynamicSnippetsConverter {
     private convertBodyPropertiesToParameters({
         properties
     }: {
-        properties: ObjectProperty[];
+        properties: Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[];
     }): DynamicSnippets.NamedParameter[] {
         return properties.map((property) => ({
             name: this.inflateNameAndWireValue(property.name),
@@ -755,40 +768,54 @@ export class DynamicSnippetsConverter {
             return undefined;
         }
         const scheme = auth.schemes[0];
+        const wrapperProperty = this.getAuthWrapperProperty(auth, scheme);
         switch (scheme.type) {
             case "basic": {
-                return DynamicSnippets.Auth.basic({
+                const basicAuth = {
+                    wrapperProperty,
                     username: this.inflateName(scheme.username),
                     usernameOmit: scheme.usernameOmit,
                     password: this.inflateName(scheme.password),
                     passwordOmit: scheme.passwordOmit
-                });
+                };
+                return DynamicSnippets.Auth.basic(basicAuth);
             }
-            case "bearer":
-                return DynamicSnippets.Auth.bearer({
+            case "bearer": {
+                const bearerAuth = {
+                    wrapperProperty,
                     token: this.inflateName(scheme.token)
-                });
-            case "header":
-                return DynamicSnippets.Auth.header({
+                };
+                return DynamicSnippets.Auth.bearer(bearerAuth);
+            }
+            case "header": {
+                const headerAuth = {
+                    wrapperProperty,
                     header: {
                         name: this.inflateNameAndWireValue(scheme.name),
                         typeReference: this.convertTypeReference(scheme.valueType),
                         propertyAccess: undefined,
                         variable: undefined
                     }
-                });
+                };
+                return DynamicSnippets.Auth.header(headerAuth);
+            }
             case "oauth": {
                 const customProperties = this.getOAuthCustomProperties(scheme);
-                return DynamicSnippets.Auth.oauth({
+                const oauth = {
+                    wrapperProperty,
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
                     clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
                     customProperties: customProperties.length > 0 ? customProperties : undefined
-                });
+                };
+                return DynamicSnippets.Auth.oauth(oauth);
             }
-            case "inferred":
-                return DynamicSnippets.Auth.inferred({
+            case "inferred": {
+                const inferredAuth = {
+                    wrapperProperty,
                     parameters: this.getInferredAuthParameters(scheme)
-                });
+                };
+                return DynamicSnippets.Auth.inferred(inferredAuth);
+            }
             default:
                 assertNever(scheme);
         }
@@ -911,8 +938,10 @@ export class DynamicSnippetsConverter {
         return values;
     }
 
-    private getRequestBodyProperties(requestBody: HttpRequestBody): ObjectProperty[] {
-        const properties: ObjectProperty[] = [];
+    private getRequestBodyProperties(
+        requestBody: HttpRequestBody
+    ): Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] {
+        const properties: Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] = [];
 
         if (requestBody.type === "inlinedRequestBody") {
             properties.push(...requestBody.properties);

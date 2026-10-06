@@ -78,6 +78,9 @@ fixtures:
     - outputFolder: respect-auth-scheme-names
       customConfig:
         respectAuthSchemeNames: true
+    - outputFolder: require-auth-credentials
+      customConfig:
+        requireAuthCredentials: true
   basic-auth:
     - outputFolder: wire-tests
       customConfig:
@@ -128,9 +131,15 @@ fixtures:
       customConfig:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
+    - outputFolder: allow-custom-http-client
+      customConfig:
+        allowCustomHttpClient: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+    - outputFolder: wrap-invalid-json-responses
+      customConfig:
+        wrapInvalidJsonResponses: true
     - outputFolder: require-paths
       customConfig:
         requirePaths:

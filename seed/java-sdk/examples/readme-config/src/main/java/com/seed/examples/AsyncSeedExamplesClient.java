@@ -5,6 +5,7 @@ package com.seed.examples;
 
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.RequestOptions;
+import com.seed.examples.core.SeedExamplesHttpResponse;
 import com.seed.examples.core.Suppliers;
 import com.seed.examples.resources.file.AsyncFileClient;
 import com.seed.examples.resources.health.AsyncHealthClient;
@@ -14,7 +15,7 @@ import com.seed.examples.types.Type;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class AsyncSeedExamplesClient {
+public class AsyncSeedExamplesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedExamplesClient rawClient;
@@ -41,19 +42,48 @@ public class AsyncSeedExamplesClient {
     }
 
     public CompletableFuture<String> echo(String request) {
-        return this.rawClient.echo(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<String>> rawFuture = this.rawClient.echo(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> echo(String request, RequestOptions requestOptions) {
-        return this.rawClient.echo(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<String>> rawFuture = this.rawClient.echo(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Identifier> createType(Type request) {
-        return this.rawClient.createType(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Identifier>> rawFuture = this.rawClient.createType(request);
+        CompletableFuture<Identifier> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Identifier> createType(Type request, RequestOptions requestOptions) {
-        return this.rawClient.createType(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<Identifier>> rawFuture =
+                this.rawClient.createType(request, requestOptions);
+        CompletableFuture<Identifier> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncFileClient file() {
@@ -66,6 +96,16 @@ public class AsyncSeedExamplesClient {
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedExamplesClientBuilder builder() {

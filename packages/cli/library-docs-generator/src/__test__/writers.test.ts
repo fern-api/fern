@@ -192,6 +192,28 @@ describe("buildNavigation", () => {
         });
     });
 
+    it("treats a module whose submodules are all empty as a leaf page", () => {
+        const root = makeModule({
+            name: "pkg",
+            path: "pkg",
+            submodules: [
+                makeModule({
+                    name: "utils",
+                    path: "pkg.utils",
+                    functions: [makeFunction({ name: "f", path: "pkg.utils.f" })],
+                    submodules: [makeModule({ name: "stubs", path: "pkg.utils.stubs" })]
+                })
+            ]
+        });
+        const nav = buildNavigation(root, "ref");
+        expect(nav).toHaveLength(1);
+        const section = nav[0];
+        expect.assert(section?.type === "section");
+        expect(section.children).toEqual([
+            { type: "page", title: "utils", slug: "ref/pkg/utils", pageId: "ref/pkg/utils.mdx" }
+        ]);
+    });
+
     it("creates nested sections for submodule with grandchildren", () => {
         const root = makeModule({
             name: "pkg",

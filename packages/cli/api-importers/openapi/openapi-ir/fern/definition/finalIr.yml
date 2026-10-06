@@ -18,6 +18,11 @@ types:
         type: optional<string>
       title: optional<string>
       description: optional<string>
+      baseUrlEnv:
+        docs: |
+          Environment variable name populated via `x-fern-base-url-env` that
+          generated SDKs read to override the base URL.
+        type: optional<string>
       basePath: optional<string>
       basePathParameters:
         type: optional<list<PathParameter>>
@@ -39,7 +44,7 @@ types:
       webhooks: list<Webhook>
       channels: map<string, WebsocketChannel>
       groupedSchemas: Schemas
-      variables: map<string, PrimitiveSchema>
+      variables: map<string, SdkVariable>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
@@ -48,6 +53,16 @@ types:
       globalHeaders: optional<list<GlobalHeader>>
       globalParameters: optional<list<GlobalParameter>>
       idempotencyHeaders: optional<list<IdempotencyHeader>>
+
+  SdkVariable:
+    docs: A client-level SDK variable declared with `x-fern-sdk-variables`.
+    properties:
+      schema: PrimitiveSchema
+      envVar:
+        type: optional<string>
+        docs: |
+          Environment variable the generated SDK falls back to when the variable is not
+          passed to the client constructor (from the `x-fern-env` key on the variable).
 
   GlobalSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 
@@ -130,6 +145,9 @@ types:
       - commons.WithName
       - commons.WithSource
     properties:
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: True when this error was declared with a 4XX or 5XX wildcard response.
       schema: optional<Schema>
       examples: optional<list<ErrorExample>>
       namespace:
@@ -201,6 +219,7 @@ types:
     properties:
       name: string
       displayName: optional<string>
+      description: optional<string>
       origin: WebsocketMessageOrigin
       body: Schema
       methodName: optional<string>
@@ -420,9 +439,10 @@ types:
       request: optional<Request>
       response: optional<Response>
       errors:
-        type: map<commons.StatusCode, HttpError>
+        type: map<commons.ErrorStatusCodeKey, HttpError>
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
+          Keys are concrete status codes (e.g. "404") or wildcard patterns ("4XX", "5XX").
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       servers: list<HttpEndpointServer>
       examples: list<EndpointExample>
@@ -984,6 +1004,9 @@ types:
         docs: |
           An optional name override populated via `x-fern-property-name`.
       audiences: list<string>
+      xml:
+        type: optional<commons.XmlPropertyEncoding>
+        docs: Present only when the enclosing object schema is an XML element.
 
   ObjectPropertyConflictInfo:
     properties:

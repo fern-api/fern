@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated root clients (sync and async) now implement `AutoCloseable`. `close()` shuts down
+    the underlying `OkHttpClient`'s dispatcher executor and evicts its connection pool, but only
+    when the SDK created that `OkHttpClient` itself — a client supplied via `Builder.httpClient(...)`
+    is left running, since the caller owns its lifecycle. This lets short-lived applications (e.g.
+    CLIs, or code that finishes after using WebSockets) release the client's background threads
+    instead of relying on JVM shutdown.
+  type: feat

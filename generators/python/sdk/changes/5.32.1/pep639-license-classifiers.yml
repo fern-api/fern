@@ -1,0 +1,6 @@
+- summary: |
+    Stop emitting deprecated `License ::` PyPI classifiers alongside the PEP 639 `[project] license`
+    expression; modern setuptools rejects the combination. Inline `metadata.license: "MIT"` /
+    `"Apache-2.0"` now also writes the standard license text to `LICENSE` and declares it via
+    `license-files = ["LICENSE"]`.
+  type: fix

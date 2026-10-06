@@ -88,10 +88,12 @@ func (a *Account) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Account) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -236,10 +238,12 @@ func (b *BaseResource) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BaseResource) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -343,10 +347,12 @@ func (m *Memo) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *Memo) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetDescription sets the Description field and marks it as non-optional;
@@ -475,10 +481,12 @@ func (p *Patient) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Patient) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -630,10 +638,12 @@ func (p *Practitioner) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Practitioner) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -755,6 +765,70 @@ func (r *ResourceList) GetScript() *Script {
 }
 
 func (r *ResourceList) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name", "patient", "practitioner"}, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valueAccount := new(Account)
+		if err := json.Unmarshal(data, &valueAccount); err == nil {
+			r.typ = "Account"
+			r.Account = valueAccount
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name", "scripts"}, []string{"id", "related_resources", "memo", "resource_type", "name", "scripts"}) {
+		valuePatient := new(Patient)
+		if err := json.Unmarshal(data, &valuePatient); err == nil {
+			r.typ = "Patient"
+			r.Patient = valuePatient
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valuePractitioner := new(Practitioner)
+		if err := json.Unmarshal(data, &valuePractitioner); err == nil {
+			r.typ = "Practitioner"
+			r.Practitioner = valuePractitioner
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valueScript := new(Script)
+		if err := json.Unmarshal(data, &valueScript); err == nil {
+			r.typ = "Script"
+			r.Script = valueScript
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valueAccount := new(Account)
+		if err := json.Unmarshal(data, &valueAccount); err == nil {
+			r.typ = "Account"
+			r.Account = valueAccount
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name", "scripts"}) {
+		valuePatient := new(Patient)
+		if err := json.Unmarshal(data, &valuePatient); err == nil {
+			r.typ = "Patient"
+			r.Patient = valuePatient
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valuePractitioner := new(Practitioner)
+		if err := json.Unmarshal(data, &valuePractitioner); err == nil {
+			r.typ = "Practitioner"
+			r.Practitioner = valuePractitioner
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "related_resources", "memo", "resource_type", "name"}) {
+		valueScript := new(Script)
+		if err := json.Unmarshal(data, &valueScript); err == nil {
+			r.typ = "Script"
+			r.Script = valueScript
+			return nil
+		}
+	}
 	valueAccount := new(Account)
 	if err := json.Unmarshal(data, &valueAccount); err == nil {
 		r.typ = "Account"
@@ -882,10 +956,12 @@ func (s *Script) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *Script) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    OAuth2 client-credentials CLIs now send `grant_type=client_credentials` (and
+    `grant_type=refresh_token` on the refresh endpoint) when the spec declares
+    `grant_type` without a literal or default value, instead of exposing it as an
+    optional `<BIN>_<SCHEME>_TOKEN_GRANT_TYPE` env var that was silently omitted.
+  type: fix
+- summary: |
+    Cached OAuth2 tokens in `credentials.json` are now tagged with a fingerprint of
+    the client credentials they were minted for. Changing the client ID/secret env
+    vars no longer reuses the previous client's access or refresh token.
+  type: fix

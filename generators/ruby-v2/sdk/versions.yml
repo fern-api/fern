@@ -1,4 +1,243 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.32.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child models and raw `Element` children in a single
+        ordered `content` list, so `to_xml` emits them in the order they were added
+        (`response.say("a"); response.add_child(Element.new("Custom")); response.say("b")` yields
+        `<Say>a</Say><Custom/><Say>b</Say>`) and `from_xml` preserves document order, including the
+        position of unknown elements. Adds `add_text(String)` to XML types and `Element` for mixed content
+        such as `<Say>Hi <break strength="weak"/> world</Say>`. Typed child properties and additional
+        children remain available and are reconciled into the content order on serialization.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for SDK variables (`x-fern-sdk-variables` / `variables` in `api.yml`).
+        Each variable is exposed as an optional keyword on the root client (e.g.
+        `Client.new(target_account_sid: "AC...")`); path parameters bound to a variable are
+        removed from the endpoint methods and request classes, and the value is read from
+        the client instead. String variables declared with an `env` fall back to
+        `ENV.fetch("<ENV_VAR>", nil)` when the keyword is omitted, and endpoints raise an
+        `ArgumentError` with a clear message when a required variable is still unset.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        The `additional_body_parameters` request option is now applied to request bodies. Previously it was
+        documented on every endpoint method but silently ignored. Extra properties are merged into the serialized
+        JSON (or form-urlencoded) body using their API wire-format names, override SDK-set fields with the same name,
+        and create a body when the endpoint has none
+        (except GET and HEAD requests, which are still sent without a body). Multipart (file upload) requests are not affected.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Fix pagination for endpoints whose cursor or offset lives in the request body
+        (e.g. `$request.cursor` or `$request.options.offset`). The generated iterators
+        previously referenced an undeclared `query_params` and raised `NameError` on first
+        use; they now read and advance the body property, creating omitted parent objects.
+      type: fix
+    - summary: |
+        Nil values are no longer serialized as `{}` (`nil.to_h`), and `optional<nullable<T>>`
+        fields keep their nullable metadata so explicit `nil` values are preserved, while
+        omitted optional fields are still left out of the request.
+      type: fix
+    - summary: |
+        Add a `timeout:` option to the root client and honor `request_options[:timeout_in_seconds]`
+        per request (an explicit `0` is respected). The timeout also applies to OAuth and inferred-auth
+        token requests. Net::HTTP open/read/write timeouts are raised as the SDK's `TimeoutError`.
+        README timeout snippets now show the real API.
+      type: fix
+    - summary: |
+        Endpoints returning text, bytes, or a file download now return the raw response body
+        instead of `nil`.
+      type: fix
+    - summary: |
+        Generated `.rubocop.yml` disables `Style/CommentAnnotation` (API docstrings such as
+        "Note:" tripped it), and the generated retry tests follow the `retryStatusCodes` setting.
+      type: fix
+    - summary: |
+        Error responses now expose the body parsed into the endpoint's declared error type
+        as `error.body` (exact status codes take precedence over `4XX`/`5XX` wildcards).
+        `error.message` and `error.code` are unchanged; `body` is `nil` when no error type
+        matches or the body is not valid JSON.
+      type: feat
+    - summary: |
+        Add the opt-in `wrapInvalidJsonResponses` config. When enabled, a 2xx response whose
+        body is not valid JSON raises `Errors::ResponseError` (with the raw body and status
+        code) instead of leaking `JSON::ParserError`.
+      type: feat
+    - summary: |
+        Add the opt-in `requireAuthCredentials` config. When enabled, the client
+        constructor raises `ArgumentError` if a bearer or header credential is neither
+        passed nor set in its environment variable, instead of sending an empty auth header.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `allowCustomHttpClient` config. When enabled, the generated client
+        accepts an `http_client:` keyword — any object responding to
+        `request(url, http_request)` and returning a `Net::HTTPResponse` — that replaces the
+        SDK's built-in `Net::HTTP` transport. This lets callers configure proxies, custom TLS,
+        connection reuse, or request/response interceptors (logging, signing, header
+        injection). Retries still wrap the custom client, and it is also used for OAuth /
+        inferred-auth token requests. The custom client owns its own connection settings,
+        including timeouts.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        The README's Environments example for a multi-URL SDK passes the environment constant through
+        the client's `environment:` keyword instead of `base_url:`. With more than one URL per
+        environment the constant is a hash of URLs, and `base_url:` expects a string, so the example
+        built a client that could not make a request. Single-URL SDKs keep `base_url:`.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 1.28.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 1.28.1
+  changelogEntry:
+    - summary: |
+        Enum values (and other screaming-snake constants) named `begin` or `end` are now emitted
+        as `BEGIN_` / `END_`, since `BEGIN` and `END` are Ruby reserved words and `END = "end"`
+        is a syntax error.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Inline documentation on XML-encoded (TwiML) types: each `field` carries its property
+        description as a comment, and fluent child methods document the child type, the text
+        parameter's description, and every attribute via `@option attributes` entries.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.27.1
+  changelogEntry:
+    - summary: |
+        Cap generated request-wrapper filenames (`lib/<gem>/<service>/types/*_request.rb`) at
+        100 characters, matching the existing cap on type filenames, so `gem build` no longer
+        fails with `Gem::Package::TooLongFileName` for endpoints with long path-derived names
+        (e.g. operations without an `operationId`). Over-long names are truncated with a short
+        deterministic hash appended; the Ruby class name is unchanged.
+      type: fix
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 1.27.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 1.26.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 1.26.1
+  changelogEntry:
+    - summary: |
+        Honor the org-level whitelabel setting (`readmeConfig.whiteLabel`) and the `apiName`/`disabledSections` (IR `disabledFeatures`) readme
+        config options when generating README.md. Previously the "Built with Fern" badge was always emitted.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 1.26.0
+  changelogEntry:
+    - summary: |
+        Object types with an `xml` encoding (e.g. TwiML) now generate XML support: `to_xml`/`to_xml_element`,
+        `from_xml`/`from_xml_element`, fluent child builders (`response.say("Hello", voice: "alice")`, with an
+        `add_` prefix when a child tag collides with a field), and preservation of unknown attributes and child
+        elements (`additional_attributes`, `additional_children`, `add_child`). A REXML-based
+        `Internal::Xml` runtime (with DOCTYPE rejection) is emitted only when XML-encoded types exist.
+      type: feat
+  createdAt: "2026-09-21"
+  irVersion: 67
+- version: 1.25.0
+  changelogEntry:
+    - summary: |
+        A 503 now raises a typed error instead of `ArgumentError`.
+        `ServiceUnavailableError` inherited from `ApiError`, which accepts 0..1
+        positional arguments, while it is raised with the `(msg, code:)` signature
+        its siblings use — so constructing it threw from inside the SDK and the
+        caller lost the response during exactly the outage they needed to see. Every
+        other 5xx mapped correctly; this was a one-word divergence from
+        `ResponseError`.
+      type: fix
+    - summary: |
+        Add `respectNullableUnionFields` (opt-in). The undiscriminated-union matcher
+        tested a member's required fields against `optional` alone, so a field that
+        is required *and* `nullable` and legitimately arrives as `nil` read as a
+        missing required field. The arm was rejected, no member matched, and the
+        union silently degraded to an untyped Hash while the SDK documented the
+        model — callers then hit `NoMethodError` on the documented accessors.
+        `Model#to_h` already pairs the two flags this way. Opt-in because a caller
+        of an already published gem may be reading that Hash by key; enabling it
+        changes the returned type.
+      type: feat
+    - summary: |
+        Add `coerceAliasResponses` (opt-in). A type alias to a named type generated a
+        `load` that did a bare `JSON.parse`, so an endpoint whose response schema is
+        a `$ref` to another schema returned a string-keyed Hash while the SDK
+        documented the aliased model — and it parsed without `symbolize_names`,
+        unlike `Model.load`, so even hash access used different keys. With the flag,
+        `load` delegates to the aliased type's own coercion. Aliases to primitives,
+        containers and `unknown` are unaffected: there is no named type to delegate
+        to. Opt-in because a caller of an already published gem may be reading that
+        Hash by key.
+      type: feat
+  createdAt: "2026-09-15"
+  irVersion: 67
 - version: 1.24.1
   changelogEntry:
     - summary: |

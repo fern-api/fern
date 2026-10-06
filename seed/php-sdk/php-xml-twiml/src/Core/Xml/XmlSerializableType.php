@@ -1,0 +1,136 @@
+<?php
+
+namespace Seed\Core\Xml;
+
+use Seed\Core\Json\JsonSerializableType;
+
+/**
+ * Base class for generated types that have an XML wire representation.
+ */
+abstract class XmlSerializableType extends JsonSerializableType implements XmlNode
+{
+    /** @var array<string, string> XML attributes that are not part of the typed model. They are written back by toXml(). */
+    private array $__additionalAttributes = [];
+
+    /** @var list<XmlNode> Child elements that are not part of the typed model. They are written back by toXml(). */
+    private array $__additionalChildren = [];
+
+    /**
+     * @var list<XmlNode|XmlText> Child elements and text segments in document order, including the
+     * typed children and the additional children (shared by reference). Decides the order in which
+     * toXml() writes them; typed children that are missing here are appended at the end.
+     */
+    private array $__content = [];
+
+    /**
+     * Renders this value as a generic XML element tree.
+     */
+    abstract public function toXmlElement(): XmlElement;
+
+    /**
+     * Serializes this value to an XML document, prefixed with the `<?xml ...?>` declaration by default.
+     *
+     * @param bool $xmlDeclaration Whether to prepend the `<?xml ...?>` declaration.
+     */
+    public function toXml(bool $xmlDeclaration = true): string
+    {
+        return XmlUtils::serialize($this->toXmlElement(), $xmlDeclaration);
+    }
+
+    /**
+     * @return array<string, string> XML attributes that are not part of the typed model.
+     */
+    public function getAdditionalAttributes(): array
+    {
+        return $this->__additionalAttributes;
+    }
+
+    /**
+     * @param array<string, string|int|float|bool|\BackedEnum|null> $attributes
+     */
+    public function setAdditionalAttributes(array $attributes): static
+    {
+        $this->__additionalAttributes = [];
+        foreach ($attributes as $name => $value) {
+            $this->setAdditionalAttribute($name, $value);
+        }
+        return $this;
+    }
+
+    /**
+     * Sets (or, when $value is null, removes) an XML attribute that is not part of the typed model.
+     */
+    public function setAdditionalAttribute(string $name, string|int|float|bool|\BackedEnum|null $value): static
+    {
+        $string = XmlUtils::toXmlString($value);
+        if ($string === null) {
+            unset($this->__additionalAttributes[$name]);
+        } else {
+            $this->__additionalAttributes[$name] = $string;
+        }
+        return $this;
+    }
+
+    /**
+     * @return list<XmlNode> Child elements that are not part of the typed model.
+     */
+    public function getAdditionalChildren(): array
+    {
+        return $this->__additionalChildren;
+    }
+
+    /**
+     * @param list<XmlNode> $children
+     */
+    public function setAdditionalChildren(array $children): static
+    {
+        $this->__additionalChildren = array_values($children);
+        return $this;
+    }
+
+    /**
+     * @return list<XmlNode|XmlText> Child elements and text segments in document order.
+     */
+    public function getContent(): array
+    {
+        return $this->__content;
+    }
+
+    /**
+     * @param list<XmlNode|XmlText> $content
+     */
+    public function setContent(array $content): static
+    {
+        $this->__content = array_values($content);
+        return $this;
+    }
+
+    /**
+     * Adds an arbitrary child element (for elements not covered by the typed model) after the
+     * children added so far.
+     */
+    public function addChild(XmlNode $child): static
+    {
+        $this->__additionalChildren[] = $child;
+        $this->__content[] = $child;
+        return $this;
+    }
+
+    /**
+     * Adds a text segment after the children added so far (for mixed content such as
+     * `<Say>Hi <break/> world</Say>`).
+     */
+    public function addText(string $text): static
+    {
+        $this->__content[] = new XmlText($text);
+        return $this;
+    }
+
+    /**
+     * Records a typed child added through a fluent builder so it keeps its position in the content.
+     */
+    protected function recordContent(XmlNode $child): void
+    {
+        $this->__content[] = $child;
+    }
+}

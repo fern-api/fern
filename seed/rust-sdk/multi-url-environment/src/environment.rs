@@ -5,10 +5,26 @@ pub struct ProductionUrls {
     pub ec2: String,
     pub s3: String,
 }
+impl Default for ProductionUrls {
+    fn default() -> Self {
+        Self {
+            ec2: "https://ec2.aws.com".to_string(),
+            s3: "https://s3.aws.com".to_string(),
+        }
+    }
+}
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StagingUrls {
     pub ec2: String,
     pub s3: String,
+}
+impl Default for StagingUrls {
+    fn default() -> Self {
+        Self {
+            ec2: "https://staging.ec2.aws.com".to_string(),
+            s3: "https://staging.s3.aws.com".to_string(),
+        }
+    }
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Environment {
@@ -16,6 +32,14 @@ pub enum Environment {
     Staging(StagingUrls),
 }
 impl Environment {
+    pub fn production() -> Self {
+        Self::Production(ProductionUrls::default())
+    }
+
+    pub fn staging() -> Self {
+        Self::Staging(StagingUrls::default())
+    }
+
     pub fn url(&self) -> &str {
         match self {
             Self::Production(urls) => &urls.ec2,
@@ -39,9 +63,6 @@ impl Environment {
 }
 impl Default for Environment {
     fn default() -> Self {
-        Self::Production(ProductionUrls {
-            ec2: "https://ec2.aws.com".to_string(),
-            s3: "https://s3.aws.com".to_string(),
-        })
+        Self::Production(ProductionUrls::default())
     }
 }

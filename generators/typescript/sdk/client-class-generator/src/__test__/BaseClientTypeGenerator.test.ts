@@ -14,8 +14,12 @@ function createIR(opts?: {
     authRequirement?: FernIr.AuthSchemesRequirement;
     headers?: FernIr.HttpHeader[];
     pathParameters?: FernIr.PathParameter[];
+    variables?: FernIr.VariableDeclaration[];
 }): FernIr.IntermediateRepresentation {
     const ir = createMinimalIR();
+    if (opts?.variables) {
+        ir.variables = opts.variables;
+    }
     if (opts?.authSchemes || opts?.authRequirement) {
         ir.auth = {
             docs: undefined,
@@ -41,6 +45,20 @@ function createRootPathParameter(opts: { name: string; clientDefault?: FernIr.Li
         clientDefault: opts.clientDefault,
         v2Examples: undefined,
         explode: undefined,
+        docs: undefined
+    };
+}
+
+function createVariable(opts: {
+    name: string;
+    envVar?: string;
+    type?: FernIr.TypeReference;
+}): FernIr.VariableDeclaration {
+    return {
+        id: opts.name,
+        name: casingsGenerator.generateName(opts.name),
+        type: opts.type ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+        envVar: opts.envVar,
         docs: undefined
     };
 }
@@ -210,10 +228,10 @@ function createMockContext(opts?: {
             }
         },
         type: {
-            resolveTypeReference: () => ({
-                type: "primitive",
-                primitive: { v1: "STRING", v2: undefined }
-            })
+            resolveTypeReference: (typeReference: FernIr.TypeReference) =>
+                typeReference.type === "primitive"
+                    ? { type: "primitive", primitive: typeReference.primitive }
+                    : { type: "primitive", primitive: { v1: "STRING", v2: undefined } }
         },
         versionContext: {
             getGeneratedVersion: () => {
@@ -236,6 +254,7 @@ function createGenerator(opts?: {
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    guardProcessEnvAccess?: boolean;
 }): BaseClientTypeGenerator {
     return new BaseClientTypeGenerator({
         generateIdempotentRequestOptions: opts?.generateIdempotentRequestOptions ?? false,
@@ -243,6 +262,7 @@ function createGenerator(opts?: {
         omitFernHeaders: opts?.omitFernHeaders ?? false,
         includePlatformHeaders: opts?.includePlatformHeaders ?? false,
         allowUserAgentAppInfo: opts?.allowUserAgentAppInfo ?? false,
+        guardProcessEnvAccess: opts?.guardProcessEnvAccess,
         retainOriginalCasing: false,
         parameterNaming: "default",
         caseConverter
@@ -312,6 +332,92 @@ describe("BaseClientTypeGenerator", () => {
         });
     });
 
+    describe("SDK variable environment variable fallback", () => {
+        function getNormalizeFunction(context: { _captured: { statements: string[] } }): string | undefined {
+            return context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+        }
+
+        it("does not resolve variables that have no envVar", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("_rootVariable");
+            expect(normalizeFunction).not.toContain("process.env");
+        });
+
+        it("resolves the option, then the env var, and throws when neither is set", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).toContain(
+                'const _rootVariable = options?.rootVariable ?? process.env?.["ROOT_VARIABLE"];'
+            );
+            expect(normalizeFunction).toContain("if (_rootVariable == null) {");
+            expect(normalizeFunction).toContain(
+                'throw new Error("rootVariable is required. Pass it to the client or set the ROOT_VARIABLE environment variable.");'
+            );
+            expect(normalizeFunction).toContain("rootVariable: _rootVariable,");
+        });
+
+        it("ignores envVar on non-string variables", () => {
+            const ir = createIR({
+                variables: [
+                    createVariable({
+                        name: "rootVariable",
+                        envVar: "ROOT_VARIABLE",
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ]
+            });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("_rootVariable");
+            const normalizedType = context._captured.statements.find((s: string) =>
+                s.includes("export type NormalizedClientOptions<")
+            );
+            expect(normalizedType).not.toContain("rootVariable");
+        });
+
+        it("adds the resolved variable to NormalizedClientOptions", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizedType = context._captured.statements.find((s: string) =>
+                s.includes("export type NormalizedClientOptions<")
+            );
+            expect(normalizedType).toBeDefined();
+            expect(normalizedType).toContain("rootVariable: string;");
+        });
+
+        it("guards process access when guardProcessEnvAccess is enabled", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir, guardProcessEnvAccess: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toContain(
+                '(typeof process !== "undefined" ? process.env?.["ROOT_VARIABLE"] : undefined)'
+            );
+        });
+    });
+
     describe("OPTIONS_PARAMETER_NAME", () => {
         it("is 'options'", () => {
             expect(BaseClientTypeGenerator.OPTIONS_PARAMETER_NAME).toBe("options");
@@ -353,6 +459,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -376,6 +483,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -400,6 +508,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -427,6 +536,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -451,6 +561,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
@@ -473,7 +584,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -485,7 +597,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -501,7 +614,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -529,6 +643,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
@@ -551,7 +666,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -563,7 +679,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -579,7 +696,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -607,6 +725,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -635,6 +754,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -642,6 +762,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -669,6 +790,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -676,6 +798,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -928,6 +1051,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -957,6 +1081,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -985,6 +1110,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1010,6 +1136,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -1039,6 +1166,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
+                        playgroundDocs: undefined,
                         configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
@@ -1061,7 +1189,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     clientSecret: {
@@ -1073,7 +1202,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         })
                                     },
                                     scopes: undefined,
@@ -1089,7 +1219,8 @@ describe("BaseClientTypeGenerator", () => {
                                             docs: undefined,
                                             propertyAccess: undefined,
                                             defaultValue: undefined,
-                                            v2Examples: undefined
+                                            v2Examples: undefined,
+                                            xml: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -1118,6 +1249,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1125,6 +1257,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1157,6 +1290,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1164,6 +1298,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -1225,6 +1360,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1479,6 +1615,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1486,6 +1623,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.basic({
                         key: "basic",
+                        playgroundDocs: undefined,
                         username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
                         usernameOmit: undefined,
@@ -1498,6 +1636,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1507,6 +1646,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -1543,6 +1683,7 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
+                        playgroundDocs: undefined,
                         token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         tokenPlaceholder: undefined,
@@ -1550,6 +1691,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.header({
                         key: "apiKey",
+                        playgroundDocs: undefined,
                         name: createNameAndWireValue("X-API-Key"),
                         prefix: undefined,
                         headerEnvVar: undefined,
@@ -1559,6 +1701,7 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
+                        playgroundDocs: undefined,
                         tokenEndpoint: {
                             endpoint: {
                                 endpointId: "getToken",
@@ -1619,6 +1762,7 @@ describe("BaseClientTypeGenerator", () => {
             const ir = createIR();
             ir.environments = {
                 defaultEnvironment: "RegionalApiServer",
+                baseUrlEnvVar: undefined,
                 environments: FernIr.Environments.multipleBaseUrls({
                     baseUrls: [
                         { id: "base", name: casingsGenerator.generateName("base") },
@@ -1660,6 +1804,7 @@ describe("BaseClientTypeGenerator", () => {
             const ir = createIR();
             ir.environments = {
                 defaultEnvironment: "Default",
+                baseUrlEnvVar: undefined,
                 environments: FernIr.Environments.singleBaseUrl({
                     environments: [
                         {
@@ -1678,8 +1823,45 @@ describe("BaseClientTypeGenerator", () => {
             return ir;
         }
 
-        function getNormalizeFunction(ir: FernIr.IntermediateRepresentation): string {
-            const gen = createGenerator({ ir });
+        function createSingleBaseUrlWithoutServerVariablesIR(): FernIr.IntermediateRepresentation {
+            const ir = createIR();
+            ir.environments = {
+                defaultEnvironment: "Default",
+                baseUrlEnvVar: undefined,
+                environments: FernIr.Environments.singleBaseUrl({
+                    environments: [
+                        {
+                            id: "Default",
+                            name: casingsGenerator.generateName("Default"),
+                            url: "https://api.example.com",
+                            urlTemplate: undefined,
+                            urlVariables: [],
+                            audiences: undefined,
+                            defaultUrl: undefined,
+                            docs: undefined
+                        }
+                    ]
+                })
+            };
+            return ir;
+        }
+
+        function withBaseUrlEnvVar(
+            ir: FernIr.IntermediateRepresentation,
+            baseUrlEnvVar: string
+        ): FernIr.IntermediateRepresentation {
+            if (ir.environments == null) {
+                throw new Error("Expected environments config");
+            }
+            ir.environments.baseUrlEnvVar = baseUrlEnvVar;
+            return ir;
+        }
+
+        function getNormalizeFunction(
+            ir: FernIr.IntermediateRepresentation,
+            opts?: { guardProcessEnvAccess?: boolean }
+        ): string {
+            const gen = createGenerator({ ir, guardProcessEnvAccess: opts?.guardProcessEnvAccess });
             const context = createMockContext();
             gen.writeToFile(context);
             const normalizeFunction = context._captured.statements.find((s: string) =>
@@ -1729,6 +1911,35 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunction).toContain(
                 "baseUrl = _environmentUrls.get(options?.environment) ?? `https://api.${_region}.example.com`;"
             );
+        });
+
+        it("reads the base URL from the configured env var for single base URL environments", () => {
+            const normalizeFunction = getNormalizeFunction(
+                withBaseUrlEnvVar(createSingleBaseUrlWithoutServerVariablesIR(), "MY_API_BASE_URL")
+            );
+            expect(normalizeFunction).not.toContain('typeof process !== "undefined"');
+            expect(normalizeFunction).toMatchSnapshot();
+        });
+
+        it("guards the configured base URL env var when requested", () => {
+            const normalizeFunction = getNormalizeFunction(
+                withBaseUrlEnvVar(createSingleBaseUrlWithoutServerVariablesIR(), "MY_API_BASE_URL"),
+                { guardProcessEnvAccess: true }
+            );
+            expect(normalizeFunction).toContain('typeof process !== "undefined"');
+            expect(normalizeFunction).toMatchSnapshot();
+        });
+
+        it("reads the base URL from the configured env var for multiple base URL environments", () => {
+            expect(
+                getNormalizeFunction(withBaseUrlEnvVar(createMultipleBaseUrlsIR(), "MY_API_BASE_URL"))
+            ).toMatchSnapshot();
+        });
+
+        it("uses the configured env var in single base URL server variable interpolation", () => {
+            expect(
+                getNormalizeFunction(withBaseUrlEnvVar(createSingleBaseUrlIR(), "MY_API_BASE_URL"))
+            ).toMatchSnapshot();
         });
     });
 });

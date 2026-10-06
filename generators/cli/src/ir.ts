@@ -17,7 +17,12 @@ import { readFile } from "fs/promises";
  */
 export interface IrSummary {
     apiDisplayName: string | undefined;
-    auth: { schemes: FernIr.AuthScheme[] };
+    /**
+     * `requirement` is how the schemes compose (`ANY` / `ALL` /
+     * `ENDPOINT_SECURITY`, from `generators.yml`'s `api.auth`); it drives
+     * the `.auth_strategy(...)` emitted into `main.rs`.
+     */
+    auth: { requirement: FernIr.AuthSchemesRequirement; schemes: FernIr.AuthScheme[] };
     globalParameters: FernIr.GlobalParameter[];
     /**
      * The API-wide headers (`x-fern-global-headers` / the root API file's
@@ -68,7 +73,7 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
 
     return {
         apiDisplayName: ir.apiDisplayName,
-        auth: { schemes: ir.auth.schemes },
+        auth: { requirement: ir.auth.requirement, schemes: ir.auth.schemes },
         globalParameters: ir.globalParameters ?? [],
         headers: ir.headers,
         services: ir.services,

@@ -22,6 +22,13 @@ export const BasePhpCustomConfigSchema = z.object({
     // that body out of the call, and such a call sends neither a body nor a Content-Type
     // header. Disabled by default so existing signatures and output are unchanged.
     respectOptionalRequestBody: z.boolean().optional(),
+    // Opt-in: `deserializeDateTime("")` raises instead of returning the current time.
+    // PHP's `DateTime` constructor treats an empty string as "now" and does not throw,
+    // so a field the API sends as `""` to mean "not set" deserialized to a plausible,
+    // entirely fabricated timestamp. The sibling `deserializeDate` already rejects `""`,
+    // so this aligns the two. Disabled by default because it turns a value callers
+    // currently receive into an exception.
+    rejectEmptyDateTimeStrings: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
     allowUserAgentAppInfo: z.boolean().optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"])),

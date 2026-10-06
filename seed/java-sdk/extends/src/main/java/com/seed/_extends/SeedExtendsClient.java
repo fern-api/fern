@@ -7,7 +7,7 @@ import com.seed._extends.core.ClientOptions;
 import com.seed._extends.core.RequestOptions;
 import com.seed._extends.requests.Inlined;
 
-public class SeedExtendsClient {
+public class SeedExtendsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final RawSeedExtendsClient rawClient;
@@ -30,6 +30,16 @@ public class SeedExtendsClient {
 
     public void extendedInlineRequestBody(Inlined request, RequestOptions requestOptions) {
         this.rawClient.extendedInlineRequestBody(request, requestOptions).body();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedExtendsClientBuilder builder() {

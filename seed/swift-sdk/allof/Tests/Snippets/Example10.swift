@@ -9,6 +9,8 @@ enum Example10 {
             species: "species",
             family: "family",
             genus: "genus",
+            commonName: "commonName",
+            wateringFrequency: .daily,
             sunExposure: .full
         ))
     }

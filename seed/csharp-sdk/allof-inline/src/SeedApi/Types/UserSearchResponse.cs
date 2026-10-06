@@ -18,7 +18,7 @@ public record UserSearchResponse : IJsonOnDeserialized
     /// Current page of results from the requested resource.
     /// </summary>
     [JsonPropertyName("results")]
-    public IEnumerable<User>? Results { get; set; }
+    public IEnumerable<User> Results { get; set; } = new List<User>();
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

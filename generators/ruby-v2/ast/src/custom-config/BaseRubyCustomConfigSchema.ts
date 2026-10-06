@@ -65,7 +65,34 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Opt-in: credential keywords on the client follow the names configured on the auth
     // schemes (`token: { name: apiKey }` exposes `api_key:`). Disabled by default, since
     // renaming a keyword breaks callers of an already published gem.
-    respectAuthSchemeNames: z.boolean().optional()
+    respectAuthSchemeNames: z.boolean().optional(),
+    // Opt-in: the undiscriminated-union matcher treats a required field that is also
+    // `nullable` as satisfied when it arrives as `nil`. Without this, such a field looks
+    // like a missing required field, no member matches, and the union falls back to an
+    // untyped Hash instead of the documented model. Disabled by default because callers
+    // of a published gem may already read that Hash by key.
+    respectNullableUnionFields: z.boolean().optional(),
+    // Opt-in: a type alias to a named type coerces into that type rather than returning
+    // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
+    // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents
+    // the aliased model. Disabled by default because callers of a published gem may
+    // already read that Hash by key.
+    coerceAliasResponses: z.boolean().optional(),
+    // Opt-in: the client constructor raises `ArgumentError` if a bearer or header
+    // credential is neither passed nor set in its environment variable. Disabled by
+    // default because constructing a client without credentials currently succeeds and
+    // only fails once a request reaches the server.
+    requireAuthCredentials: z.boolean().optional(),
+    // Opt-in: a 2xx response whose body is not valid JSON raises `Errors::ResponseError`
+    // instead of `JSON::ParserError`. Disabled by default because callers may already
+    // rescue `JSON::ParserError`.
+    wrapInvalidJsonResponses: z.boolean().optional(),
+    // Opt-in: expose an optional `http_client` client keyword. The object must respond to
+    // `request(url, http_request)` (a URI and a Net::HTTPGenericRequest) and return a
+    // Net::HTTPResponse; it replaces the SDK's own Net::HTTP transport so callers can add
+    // proxies, custom TLS, connection reuse, or request/response interceptors. Retries still
+    // wrap the custom client. Disabled by default so existing output is byte-identical.
+    allowCustomHttpClient: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

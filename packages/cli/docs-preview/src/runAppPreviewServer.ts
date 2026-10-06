@@ -306,7 +306,8 @@ export async function runAppPreviewServer({
     backendPort,
     forceDownload,
     cacheDir,
-    logsDir
+    logsDir,
+    includePrivate
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -318,6 +319,8 @@ export async function runAppPreviewServer({
     forceDownload?: boolean;
     cacheDir?: AbsoluteFilePath;
     logsDir?: AbsoluteFilePath;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     if (forceDownload) {
         const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
@@ -599,7 +602,8 @@ export async function runAppPreviewServer({
                 context,
                 previousDocsDefinition: previewResult?.docsDefinition,
                 editedAbsoluteFilepaths,
-                previousPreviewResult: previewResult
+                previousPreviewResult: previewResult,
+                includePrivate
             });
             const docsGenTime = Date.now() - docsGenStartTime;
 

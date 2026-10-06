@@ -1,0 +1,4 @@
+- summary: |
+    Fix the generated README/reference pagination snippet, which assigned `page.getNextPage()`
+    without `await` and therefore did not type-check.
+  type: fix

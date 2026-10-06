@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { SchemaId } from "../../commons/types/SchemaId.js";
 import { WithAvailability } from "../../commons/types/WithAvailability.js";
+import { XmlPropertyEncoding } from "../../commons/types/XmlPropertyEncoding.js";
 import { ObjectPropertyConflictInfo } from "./ObjectPropertyConflictInfo.js";
 
 export const ObjectProperty: core.serialization.ObjectSchema<
@@ -20,6 +21,7 @@ export const ObjectProperty: core.serialization.ObjectSchema<
         generatedName: core.serialization.string(),
         nameOverride: core.serialization.string().optional(),
         audiences: core.serialization.list(core.serialization.string()),
+        xml: XmlPropertyEncoding.optional(),
     })
     .extend(WithAvailability);
 
@@ -33,5 +35,6 @@ export declare namespace ObjectProperty {
         generatedName: string;
         nameOverride?: string | null;
         audiences: string[];
+        xml?: XmlPropertyEncoding.Raw | null;
     }
 }

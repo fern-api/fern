@@ -7965,6 +7965,7 @@
         {
           "origin": "client",
           "name": "publish",
+          "description": "Send messages to the WebSocket",
           "body": {
             "value": {
               "description": "Send messages to the WebSocket",
@@ -8002,6 +8003,7 @@
         {
           "origin": "server",
           "name": "subscribe",
+          "description": "Receive messages from the WebSocket",
           "body": {
             "value": {
               "description": "Receive messages from the WebSocket",

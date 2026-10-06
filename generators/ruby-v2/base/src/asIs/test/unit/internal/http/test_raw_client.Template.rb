@@ -25,13 +25,13 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
     end
 
     it "retries on retryable 5xx statuses" do
-      [500, 502, 503, 504, 521, 522, 524].each do |status|
+      {{RETRYABLE_5XX_STATUSES}}.each do |status|
         assert client.should_retry?(make_response(status), 0), "expected retry for status #{status}"
       end
     end
 
     it "does not retry on non-retryable 5xx statuses" do
-      [501, 505, 510, 599].each do |status|
+      {{NON_RETRYABLE_5XX_STATUSES}}.each do |status|
         refute client.should_retry?(make_response(status), 0), "expected no retry for status #{status}"
       end
     end
@@ -192,4 +192,101 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
       refute_includes client_with(["x-api-version"]).protected_header_keys, "X-Api-Version"
     end
   end
-end
+<% if (allowCustomHttpClient) { %>
+  # A transport that records every request it receives and answers with canned
+  # responses, standing in for a caller-supplied `http_client`.
+  class RecordingHttpClient
+    attr_reader :calls
+
+    def initialize(*responses)
+      @responses = responses
+      @calls = []
+    end
+
+    def request(url, http_request)
+      @calls << [url, http_request]
+      @responses.shift
+    end
+  end
+
+  # Builds a Net::HTTPResponse without a socket. This leans on net/http's `@body` /
+  # `@read` instance variables, which `Net::HTTPResponse#body` consults once a
+  # response has been read.
+  def canned_response(status_code, body: "{}")
+    response = Net::HTTPResponse::CODE_TO_OBJ.fetch(status_code.to_s).new("1.1", status_code.to_s, "")
+    response.instance_variable_set(:@body, body)
+    response.instance_variable_set(:@read, true)
+    response
+  end
+
+  describe "custom http_client" do
+    def build_request(port)
+      <%= gem_namespace %>::Internal::JSON::Request.new(
+        base_url: "http://127.0.0.1:#{port}",
+        path: "/items",
+        method: "POST",
+        headers: { "X-Custom" => "yes" },
+        body: { "name" => "widget" }
+      )
+    end
+
+    it "routes requests through the supplied http_client instead of Net::HTTP" do
+      http_client = RecordingHttpClient.new(canned_response(200, body: '{"ok":true}'))
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(
+        base_url: "http://127.0.0.1:1",
+        max_retries: 0,
+        http_client: http_client
+      )
+
+      response = client.send(build_request(1))
+
+      assert_equal "200", response.code
+      assert_equal '{"ok":true}', response.body
+      assert_equal 1, http_client.calls.length
+      url, http_request = http_client.calls.first
+
+      assert_kind_of URI::Generic, url
+      assert_equal "/items", url.path
+      assert_kind_of Net::HTTPGenericRequest, http_request
+      assert_equal "POST", http_request.method
+      assert_equal "yes", http_request["X-Custom"]
+      assert_equal "Ruby", http_request["X-Fern-Language"]
+      assert_equal '{"name":"widget"}', http_request.body
+    end
+
+    it "retries through the custom http_client" do
+      http_client = RecordingHttpClient.new(canned_response(503), canned_response(200))
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(
+        base_url: "http://127.0.0.1:1",
+        max_retries: 1,
+        http_client: http_client
+      )
+
+      response = client.send(build_request(1))
+
+      assert_equal "200", response.code
+      assert_equal 2, http_client.calls.length
+    end
+
+    it "falls back to Net::HTTP when no http_client is given" do
+      server = TCPServer.new("127.0.0.1", 0)
+      port = server.addr[1]
+      server_thread = Thread.new do
+        socket = server.accept
+        loop do
+          line = socket.gets
+          break if line.nil? || line == "\r\n"
+        end
+        socket.write("HTTP/1.1 204 No Content\r\nContent-Length: 0\r\n\r\n")
+        socket.close
+      end
+
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "http://127.0.0.1:#{port}", max_retries: 0)
+      response = client.send(build_request(port))
+      server_thread.join
+      server.close
+
+      assert_equal "204", response.code
+    end
+  end
+<% } %>end

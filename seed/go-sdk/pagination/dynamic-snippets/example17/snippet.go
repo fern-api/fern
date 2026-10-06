@@ -19,10 +19,10 @@ func do() {
     )
     request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
         Cursor: fern.String(
-            "cursor",
+            "initial_cursor",
         ),
         Filter: fern.String(
-            "filter",
+            "active",
         ),
     }
     client.Users.ListWithTopLevelBodyCursorPagination(

@@ -15,11 +15,7 @@ describe("AuthClient", () => {
             clientSecret: "sk_live_abcdef123456789",
             environment: server.baseUrl,
         });
-        const rawRequestBody = {
-            client_id: "my_oauth_app_123",
-            client_secret: "sk_live_abcdef123456789",
-            grant_type: "client_credentials",
-        };
+        const rawRequestBody = { client_id: "my_oauth_app_123", client_secret: "sk_live_abcdef123456789" };
         const rawResponseBody = { access_token: "access_token", expires_in: 3600, refresh_token: "refresh_token" };
 
         server
@@ -34,7 +30,6 @@ describe("AuthClient", () => {
         const response = await client.auth.createOauth2Token({
             client_id: "my_oauth_app_123",
             client_secret: "sk_live_abcdef123456789",
-            grant_type: "client_credentials",
         });
         expect(response).toEqual(rawResponseBody);
     });

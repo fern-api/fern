@@ -18,6 +18,7 @@ import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js
 import { isAdditionalPropertiesAny } from "./convertAdditionalProperties.js";
 import { convertAvailability } from "./convertAvailability.js";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas.js";
+import { getXmlPropertyEncoding } from "./convertXml.js";
 import type { SchemaParserContext } from "./SchemaParserContext.js";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
 import { getGeneratedPropertyName } from "./utils/getSchemaName.js";
@@ -28,6 +29,8 @@ interface ReferencedAllOfInfo {
     schemaId: SchemaId;
     convertedSchema: ReferencedSchema;
     properties: Record<string, SchemaWithExample>;
+    required: Set<string>;
+    reference: OpenAPIV3.ReferenceObject;
 }
 
 export function convertObject({
@@ -75,7 +78,10 @@ export function convertObject({
     minProperties: number | undefined;
     maxProperties: number | undefined;
 }): SchemaWithExample {
-    const allRequired = [...(required ?? [])];
+    const requiredAcrossAllOf = collectRequiredAcrossAllOf({ allOf, context });
+    for (const key of required ?? []) {
+        requiredAcrossAllOf.add(key);
+    }
     const propertiesToConvert = { ...getNonIgnoredProperties({ properties, breadcrumbs, context }) };
     let inlinedParentProperties: ObjectPropertyWithExample[] = [];
     const parents: ReferencedAllOfInfo[] = [];
@@ -148,7 +154,9 @@ export function convertObject({
                     context.options.preserveSchemaIds,
                     context
                 ),
-                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
+                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace }),
+                required: collectRequiredAcrossAllOf({ allOf: [allOfElement], context }),
+                reference: allOfElement
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else if (isReferenceObject(allOfElement)) {
@@ -168,10 +176,7 @@ export function convertObject({
         } else {
             const required = allOfElement.required ?? [];
             inlinedParentProperties = inlinedParentProperties.map((property) => {
-                if (
-                    (property.schema.type === "optional" || property.schema.type === "nullable") &&
-                    required.includes(property.key)
-                ) {
+                if (property.schema.type === "optional" && required.includes(property.key)) {
                     return {
                         ...property,
                         schema: property.schema.value
@@ -205,7 +210,19 @@ export function convertObject({
                     }
                     mergedProperties[key] = merged;
                 }
-                mergedAllOfElement = { ...allOfElement, properties: mergedProperties };
+                // `required` is the union across all allOf branches: a property required by
+                // a sibling branch stays required when this branch redeclares it.
+                const mergedRequired = new Set(allOfElement.required ?? []);
+                for (const key of Object.keys(mergedProperties)) {
+                    if (requiredAcrossAllOf.has(key)) {
+                        mergedRequired.add(key);
+                    }
+                }
+                mergedAllOfElement = {
+                    ...allOfElement,
+                    properties: mergedProperties,
+                    required: mergedRequired.size > 0 ? [...mergedRequired] : allOfElement.required
+                };
             }
 
             // When an inline allOf element is a oneOf/anyOf (no type, no properties of its own),
@@ -273,6 +290,51 @@ export function convertObject({
         }
     }
 
+    // A property required by some allOf branch but defined only on a referenced parent (where it is
+    // not required) is redeclared on this schema so that the composed type marks it required. The
+    // parent's converted schema is reused so inline types (e.g. enums) keep the parent's name.
+    const inheritedRequiredProperties: ObjectPropertyWithExample[] = [];
+    const inlinedPropertyKeys = new Set(inlinedParentProperties.map((property) => property.key));
+    for (const key of requiredAcrossAllOf) {
+        if (key in propertiesToConvert || inlinedPropertyKeys.has(key)) {
+            continue;
+        }
+        for (const parent of parents) {
+            const inherited = findInheritedProperty({ schema: parent.reference, key, context });
+            if (inherited == null) {
+                continue;
+            }
+            const schema = parent.properties[key];
+            const isRequired = !inherited.readonly || context.options.respectReadonlySchemas;
+            if (!inherited.isRequired && isRequired && schema != null) {
+                inheritedRequiredProperties.push({
+                    key,
+                    schema,
+                    nameOverride: getExtension<string | undefined>(
+                        inherited.propertySchema,
+                        FernOpenAPIExtension.FERN_PROPERTY_NAME
+                    ),
+                    audiences: getExtension<string[]>(inherited.propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [],
+                    conflict: {},
+                    generatedName: getGeneratedPropertyName([...breadcrumbs, key]),
+                    availability: convertAvailability(inherited.propertySchema),
+                    readonly: inherited.readonly,
+                    writeonly: inherited.writeonly,
+                    xml:
+                        encoding?.type === "xml"
+                            ? getXmlPropertyEncoding({
+                                  propertySchema: inherited.propertySchema,
+                                  resolvedPropertySchema: isReferenceObject(inherited.propertySchema)
+                                      ? context.resolveSchemaReference(inherited.propertySchema)
+                                      : inherited.propertySchema
+                              })
+                            : undefined
+                });
+            }
+            break;
+        }
+    }
+
     const allPropertiesMap: Record<string, { schemas: SchemaWithExample[]; schemaIds: SchemaId[] }> = {};
     for (const parent of parents) {
         for (const [propertyKey, propertySchema] of Object.entries(parent.properties)) {
@@ -316,7 +378,7 @@ export function convertObject({
                 resolvedPropertySchema.writeOnly;
 
             const isRequired =
-                allRequired.includes(propertyName) && (!readonly || context.options.respectReadonlySchemas);
+                requiredAcrossAllOf.has(propertyName) && (!readonly || context.options.respectReadonlySchemas);
             const isPropertyOptional = !isRequired;
 
             const propertyNameOverride = getExtension<string | undefined>(
@@ -335,15 +397,7 @@ export function convertObject({
                 namespace
             );
 
-            const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
-            for (const parent of parents) {
-                const parentPropertySchema = parent.properties[propertyName];
-                if (parentPropertySchema != null && !isSchemaWithExampleEqual(schema, parentPropertySchema)) {
-                    conflicts[parent.schemaId] = { differentSchema: true };
-                } else if (parentPropertySchema != null) {
-                    conflicts[parent.schemaId] = { differentSchema: false };
-                }
-            }
+            const conflicts = getParentConflicts({ parents, key: propertyName, schema });
 
             return {
                 key: propertyName,
@@ -354,41 +408,38 @@ export function convertObject({
                 generatedName,
                 availability,
                 readonly,
-                writeonly
+                writeonly,
+                xml:
+                    encoding?.type === "xml"
+                        ? getXmlPropertyEncoding({ propertySchema, resolvedPropertySchema })
+                        : undefined
             };
         }
     );
 
     convertedProperties.push(
+        ...inheritedRequiredProperties.map((property) => ({
+            ...property,
+            conflict: getParentConflicts({ parents, key: property.key, schema: property.schema })
+        }))
+    );
+
+    convertedProperties.push(
         ...inlinedParentProperties.map((property) => {
-            const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = property.conflict;
-            for (const parent of parents) {
-                const parentPropertySchema = parent.properties[property.key];
-                if (parentPropertySchema != null && !isSchemaWithExampleEqual(property.schema, parentPropertySchema)) {
-                    conflicts[parent.schemaId] = { differentSchema: true };
-                } else if (parentPropertySchema != null) {
-                    conflicts[parent.schemaId] = { differentSchema: false };
-                }
-            }
-            // Apply top-level required to inlined allOf properties that may have been
-            // marked optional by their inline member's own (missing) required array.
-            if (
-                allRequired.includes(property.key) &&
-                (property.schema.type === "optional" || property.schema.type === "nullable")
-            ) {
+            // Apply the required union across allOf branches to inlined properties that may have
+            // been marked optional by their defining member's own (missing) required array.
+            let schema = property.schema;
+            if (requiredAcrossAllOf.has(property.key) && schema.type === "optional") {
                 const isPropertyReadonly = property.readonly;
                 const isRequired = !isPropertyReadonly || context.options.respectReadonlySchemas;
                 if (isRequired) {
-                    return {
-                        ...property,
-                        schema: property.schema.value,
-                        conflict: conflicts
-                    };
+                    schema = schema.value;
                 }
             }
             return {
                 ...property,
-                conflict: conflicts
+                schema,
+                conflict: { ...property.conflict, ...getParentConflicts({ parents, key: property.key, schema }) }
             };
         })
     );
@@ -505,6 +556,128 @@ export function wrapObject({
         });
     }
     return result;
+}
+
+function collectRequiredAcrossAllOf({
+    allOf,
+    context,
+    visited = new Set()
+}: {
+    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+    context: SchemaParserContext;
+    visited?: Set<string>;
+}): Set<string> {
+    const required = new Set<string>();
+    for (const allOfElement of allOf) {
+        let resolved: OpenAPIV3.SchemaObject;
+        if (isReferenceObject(allOfElement)) {
+            if (visited.has(allOfElement.$ref)) {
+                continue;
+            }
+            visited.add(allOfElement.$ref);
+            resolved = context.resolveSchemaReference(allOfElement);
+        } else {
+            resolved = allOfElement;
+        }
+        for (const key of resolved.required ?? []) {
+            required.add(key);
+        }
+        if (resolved.allOf != null) {
+            for (const key of collectRequiredAcrossAllOf({ allOf: resolved.allOf, context, visited })) {
+                required.add(key);
+            }
+        }
+    }
+    return required;
+}
+
+/**
+ * Compares a property against each referenced parent that also defines it. A child property that is
+ * required while the parent leaves it optional is a differing schema, so the parent gets inlined
+ * downstream instead of extended (an `extends` cannot tighten a parent's required-ness).
+ */
+function getParentConflicts({
+    parents,
+    key,
+    schema
+}: {
+    parents: ReferencedAllOfInfo[];
+    key: string;
+    schema: SchemaWithExample;
+}): Record<SchemaId, ObjectPropertyConflictInfo> {
+    const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
+    for (const parent of parents) {
+        const parentPropertySchema = parent.properties[key];
+        if (parentPropertySchema == null) {
+            continue;
+        }
+        const tightensRequired = schema.type !== "optional" && !parent.required.has(key);
+        conflicts[parent.schemaId] = {
+            differentSchema: tightensRequired || !isSchemaWithExampleEqual(schema, parentPropertySchema)
+        };
+    }
+    return conflicts;
+}
+
+interface InheritedProperty {
+    propertySchema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    isRequired: boolean;
+    readonly: boolean | undefined;
+    writeonly: boolean | undefined;
+}
+
+/**
+ * Locates the raw schema of `key` on a referenced allOf parent, walking its own allOf chain.
+ * `isRequired` reflects whether the schema that defines the property (or any schema between it
+ * and the starting reference) already lists it as required.
+ */
+function findInheritedProperty({
+    schema,
+    key,
+    context,
+    visited = new Set()
+}: {
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    key: string;
+    context: SchemaParserContext;
+    visited?: Set<string>;
+}): InheritedProperty | undefined {
+    let resolved: OpenAPIV3.SchemaObject;
+    if (isReferenceObject(schema)) {
+        if (visited.has(schema.$ref)) {
+            return undefined;
+        }
+        visited.add(schema.$ref);
+        resolved = context.resolveSchemaReference(schema);
+    } else {
+        resolved = schema;
+    }
+    const requiredHere =
+        (resolved.required ?? []).includes(key) ||
+        collectRequiredAcrossAllOf({ allOf: resolved.allOf ?? [], context }).has(key);
+    const ownPropertySchema = resolved.properties?.[key];
+    if (ownPropertySchema != null) {
+        const resolvedPropertySchema = isReferenceObject(ownPropertySchema)
+            ? context.resolveSchemaReference(ownPropertySchema)
+            : ownPropertySchema;
+        return {
+            propertySchema: ownPropertySchema,
+            isRequired: requiredHere,
+            readonly:
+                ("readOnly" in ownPropertySchema && ownPropertySchema.readOnly === true) ||
+                resolvedPropertySchema.readOnly,
+            writeonly:
+                ("writeOnly" in ownPropertySchema && ownPropertySchema.writeOnly === true) ||
+                resolvedPropertySchema.writeOnly
+        };
+    }
+    for (const allOfElement of resolved.allOf ?? []) {
+        const inherited = findInheritedProperty({ schema: allOfElement, key, context, visited });
+        if (inherited != null) {
+            return { ...inherited, isRequired: inherited.isRequired || requiredHere };
+        }
+    }
+    return undefined;
 }
 
 function getNonIgnoredProperties({

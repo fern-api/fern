@@ -1,4 +1,8 @@
-import { anyOfIsPresenceConstraint } from "@fern-api/core-utils";
+import {
+    anyOfIsPresenceConstraint,
+    oneOfIsPresenceConstraint,
+    requiredByPresenceConstraint
+} from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import {
     type Availability,
@@ -39,6 +43,7 @@ import {
     convertUndiscriminatedOneOf,
     convertUndiscriminatedOneOfWithDiscriminant
 } from "./convertUndiscriminatedOneOf.js";
+import { getXmlEncoding } from "./convertXml.js";
 import { getDefaultAsString } from "./defaults/getDefault.js";
 import {
     getExampleAsArray,
@@ -158,7 +163,11 @@ export function convertSchema(
     fallback?: string | number | boolean | unknown[]
 ): SchemaWithExample {
     const source = getSourceExtension(schema) ?? fileSource;
-    const encoding = getEncoding({ schema, logger: context.logger });
+    const encoding = getEncoding({
+        schema,
+        fallbackXmlName: getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds),
+        logger: context.logger
+    });
 
     // In OpenAPI 3.1+, $ref siblings are supported. Extract sibling examples from reference objects
     // before resolving the reference, so they take precedence over the referenced schema's examples.
@@ -936,6 +945,34 @@ export function convertSchemaObject(
 
         const isDiscriminated = getExtension<boolean>(schema, FernOpenAPIExtension.IS_DISCRIMINATED);
 
+        // A oneOf whose branches only mark sibling properties as required (e.g.
+        // `oneOf: [{ required: [domain] }, { required: [phone] }]`) is an "exactly one
+        // of" constraint over the declared object, not a set of variants. Converting
+        // it as a union produces shapeless variants and drops every sibling property.
+        // See oneOfIsPresenceConstraint.
+        if (isDiscriminated !== true && oneOfIsPresenceConstraint(schema)) {
+            context.logger.debug(
+                `Treating the oneOf at ${breadcrumbs.join(".")} as an "exactly one of" constraint over its ` +
+                    `sibling properties rather than a union, and converting the schema as an object.`
+            );
+            const alwaysRequired = requiredByPresenceConstraint(schema);
+            const { oneOf: _constraint, ...schemaWithoutOneOf } = schema;
+            if (alwaysRequired.length > 0) {
+                schemaWithoutOneOf.required = [...new Set([...(schemaWithoutOneOf.required ?? []), ...alwaysRequired])];
+            }
+            const convertedSchema = convertSchema(
+                schemaWithoutOneOf,
+                wrapAsOptional,
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                source,
+                namespace,
+                referencedAsRequest
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, namespace, groupName);
+        }
+
         // handle oneOf with IS_DISCRIMINATED extension
         if (schema.oneOf != null && schema.oneOf.length > 0) {
             if (isDiscriminated === false) {
@@ -1446,7 +1483,7 @@ export function convertSchemaObject(
                 fullExamples,
                 additionalProperties: schema.additionalProperties,
                 availability,
-                encoding,
+                encoding: encoding ?? getXmlEncoding({ schema, fallbackName: nameOverride ?? generatedName }),
                 source,
                 minProperties: schema.minProperties,
                 maxProperties: schema.maxProperties
@@ -2069,14 +2106,16 @@ export function getProperty<T>(object: object, property: string): T | undefined 
 
 function getEncoding({
     schema,
+    fallbackXmlName,
     logger
 }: {
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+    fallbackXmlName: string;
     logger: Logger;
 }): Encoding | undefined {
     const encoding = getFernEncoding({ schema, logger });
     if (encoding == null) {
         return undefined;
     }
-    return convertEncoding(encoding);
+    return convertEncoding({ encodingSchema: encoding, fallbackXmlName });
 }

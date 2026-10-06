@@ -2,6 +2,7 @@ import { isCommitSha, isGitAvailable } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
+import { realpath } from "fs/promises";
 import tmp from "tmp-promise";
 
 // Remove the materialized worktree temp dirs when the process exits. The dirs are cached
@@ -365,7 +366,24 @@ export async function materializeGitRef({
     const sha = await resolveRefToSha({ repoRoot, ref, context });
 
     // The fern folder occupies the same path relative to the repo root at any ref.
-    const fernFolderRelativeToRepoRoot = relative(AbsoluteFilePath.of(repoRoot), absolutePathToFernFolder);
+    // Git canonicalizes repository paths (for example, /var -> /private/var on macOS),
+    // while callers may retain the non-canonical spelling. Relativizing those two
+    // spellings can escape the materialized worktree and point back at the current
+    // checkout, causing ref-backed versions to silently use current-branch content.
+    let repoRootForRelative = AbsoluteFilePath.of(repoRoot);
+    let fernFolderForRelative = absolutePathToFernFolder;
+    try {
+        // Canonicalize the pair together. Falling back as a pair preserves the lexical
+        // relationship if either path disappears or cannot be resolved.
+        [repoRootForRelative, fernFolderForRelative] = await Promise.all([
+            realpath(repoRoot).then(AbsoluteFilePath.of),
+            realpath(absolutePathToFernFolder).then(AbsoluteFilePath.of)
+        ]);
+    } catch {
+        // The previous implementation was purely lexical, so realpath failures must
+        // not introduce a new failure mode.
+    }
+    const fernFolderRelativeToRepoRoot = relative(repoRootForRelative, fernFolderForRelative);
 
     const cacheKey = shaCacheKey(repoRoot, sha);
     const cached = materializedRefsBySha.get(cacheKey);

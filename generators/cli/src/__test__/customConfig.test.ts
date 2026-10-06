@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { resolveChannelAuth, validateCustomConfig } from "../customConfig.js";
+import { getCustomConfig, resolveChannelAuth, validateCustomConfig } from "../customConfig.js";
 
 describe("validateCustomConfig", () => {
     it("returns defaults (customCommands: true) for null/undefined", () => {
@@ -170,6 +170,44 @@ describe("validateCustomConfig", () => {
             keywords: ["email", "agent"]
         };
         expect(validateCustomConfig({ packageIdentity })).toEqual({ packageIdentity });
+    });
+
+    it("accepts extraDependencies as version strings or dependency tables", () => {
+        const extraDependencies = {
+            "google-cloud-auth": "1.16",
+            "google-cloud-iam-credentials-v1": { version: "1.12", features: ["default"], defaultFeatures: false }
+        };
+        const extraDevDependencies = { mockall: "0.11" };
+        expect(validateCustomConfig({ extraDependencies, extraDevDependencies })).toEqual({
+            extraDependencies,
+            extraDevDependencies
+        });
+    });
+
+    it("throws on malformed extraDependencies", () => {
+        expect(() => validateCustomConfig({ extraDependencies: { "bad crate!": "1" } })).toThrow(
+            /not a valid cargo crate name/
+        );
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: "" } })).toThrow(/must not be empty/);
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: 1 } })).toThrow(
+            /expected a version string or a dependency table, got number/
+        );
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: { features: ["full"] } } })).toThrow(
+            /at least one of `version`, `path`, or `git`/
+        );
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { tokio: { version: "1", features: "full" } } })
+        ).toThrow(/extraDevDependencies.tokio.features: expected an array of strings/);
+        expect(() =>
+            validateCustomConfig({ extraDependencies: { tokio: { version: "1", defaultfeatures: false } } })
+        ).toThrow(/extraDependencies.tokio: unknown field\(s\) `defaultfeatures`/);
+        expect(() => validateCustomConfig({ extraDependencies: ["tokio"] })).toThrow(/expected an object, got array/);
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { mockall: { version: "0.11", optional: true } } })
+        ).toThrow(/extraDevDependencies.mockall.optional: cargo does not allow optional dev-dependencies/);
+        expect(validateCustomConfig({ extraDependencies: { mockall: { version: "0.11", optional: true } } })).toEqual({
+            extraDependencies: { mockall: { version: "0.11", optional: true } }
+        });
     });
 
     it("throws on a packageIdentity name that cargo would reject", () => {
@@ -368,5 +406,85 @@ describe("resolveChannelAuth", () => {
                 defaultTokenSecret: "SCOOP_BUCKET_TOKEN"
             })
         ).toEqual({ type: "pat", tokenSecret: "BUCKET_PAT" });
+    });
+});
+
+describe("validateCustomConfig — profiles", () => {
+    it("is absent by default, so profiles ship off", () => {
+        expect(validateCustomConfig({}).profiles).toBeUndefined();
+        expect(getCustomConfig({ customConfig: undefined } as never).profiles).toBeUndefined();
+    });
+
+    it("accepts an enabled block with no command name", () => {
+        expect(validateCustomConfig({ profiles: { enabled: true } }).profiles).toEqual({ enabled: true });
+    });
+
+    it("accepts a renamed command group", () => {
+        expect(validateCustomConfig({ profiles: { enabled: true, commandName: "tenants" } }).profiles).toEqual({
+            enabled: true,
+            commandName: "tenants"
+        });
+    });
+
+    it("accepts a block that is present but not enabled, so the config can be staged", () => {
+        expect(validateCustomConfig({ profiles: { enabled: false } }).profiles).toEqual({ enabled: false });
+    });
+
+    it("rejects a non-boolean enabled", () => {
+        expect(() => validateCustomConfig({ profiles: { enabled: "yes" } })).toThrow(
+            /profiles.enabled: expected a boolean/
+        );
+    });
+
+    it("rejects a non-object block", () => {
+        expect(() => validateCustomConfig({ profiles: "on" })).toThrow(/profiles: expected an object/);
+        expect(() => validateCustomConfig({ profiles: [] })).toThrow(/profiles: expected an object/);
+    });
+
+    it("rejects a command name that is not a clap-safe kebab identifier", () => {
+        for (const commandName of ["Tenants", "my tenants", "1tenants", "tenants_x", ""]) {
+            expect(() => validateCustomConfig({ profiles: { enabled: true, commandName } })).toThrow(
+                /profiles.commandName/
+            );
+        }
+    });
+
+    it("rejects a command name that shadows a built-in group", () => {
+        // Folding the profiles built-ins into `auth` would put
+        // `auth create` beside `auth login`, which is nonsense.
+        for (const commandName of ["auth", "completion", "man", "errors", "help"]) {
+            expect(() => validateCustomConfig({ profiles: { enabled: true, commandName } })).toThrow(
+                /already a built-in command group/
+            );
+        }
+    });
+
+    it("accepts a dotted revokeOperation", () => {
+        expect(
+            validateCustomConfig({ profiles: { enabled: true, revokeOperation: "iam.keys.remove" } }).profiles
+                ?.revokeOperation
+        ).toBe("iam.keys.remove");
+    });
+
+    it("rejects a revokeOperation that is not a dotted command path", () => {
+        // It is split on `.` at runtime and matched against the command
+        // tree, so a malformed value silently matches nothing.
+        for (const revokeOperation of ["keysremove", "iam..remove", "IAM.keys.remove", ".keys", "keys."]) {
+            expect(() => validateCustomConfig({ profiles: { enabled: true, revokeOperation } })).toThrow(
+                /profiles.revokeOperation/
+            );
+        }
+    });
+
+    it("rejects a non-string revokeOperation", () => {
+        expect(() => validateCustomConfig({ profiles: { enabled: true, revokeOperation: 42 } })).toThrow(
+            /expected a string/
+        );
+    });
+
+    it("keeps `profiles` itself selectable — it is the default", () => {
+        expect(
+            validateCustomConfig({ profiles: { enabled: true, commandName: "profiles" } }).profiles?.commandName
+        ).toBe("profiles");
     });
 });

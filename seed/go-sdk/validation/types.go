@@ -27,10 +27,12 @@ type CreateRequest struct {
 }
 
 func (c *CreateRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDecimal sets the Decimal field and marks it as non-optional;
@@ -98,10 +100,12 @@ type GetRequest struct {
 }
 
 func (g *GetRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetDecimal sets the Decimal field and marks it as non-optional;
@@ -158,7 +162,6 @@ func (s Shape) Ptr() *Shape {
 
 type SmallInteger = int
 
-// Defines properties with default values and validation rules.
 var (
 	typeFieldDecimal = big.NewInt(1 << 0)
 	typeFieldEven    = big.NewInt(1 << 1)
@@ -166,6 +169,7 @@ var (
 	typeFieldShape   = big.NewInt(1 << 3)
 )
 
+// Defines properties with default values and validation rules.
 type Type struct {
 	Decimal float64 `json:"decimal" url:"decimal"`
 	Even    int     `json:"even" url:"even"`
@@ -215,10 +219,12 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *Type) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetDecimal sets the Decimal field and marks it as non-optional;

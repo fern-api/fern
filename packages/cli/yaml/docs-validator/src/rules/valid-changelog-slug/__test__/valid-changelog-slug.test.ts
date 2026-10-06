@@ -397,3 +397,50 @@ describe("versions nested under a product", () => {
         ).toEqual([]);
     });
 });
+
+describe("site-level changelog alongside products", () => {
+    const products: docsYml.RawSchemas.ProductConfig[] = [
+        { displayName: "Ferns", path: "./products/ferns.yml" },
+        { displayName: "Cacti", path: "./products/cacti.yml" }
+    ];
+
+    it("allows the default root changelog slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                products,
+                changelog: { changelog: "./changelog" }
+            })
+        ).toEqual([]);
+    });
+
+    it("allows an explicitly allowlisted root changelog slug", async () => {
+        expect(
+            await violationsFor({
+                instances: [],
+                products,
+                changelog: { changelog: "./changelog", slug: "release-notes" }
+            })
+        ).toEqual([]);
+    });
+
+    it("rejects a disallowed root changelog slug, reporting the root-level path", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            products,
+            changelog: { changelog: "./changelog", slug: "updates" }
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/updates"');
+    });
+
+    it("rejects a disallowed root changelog title when no slug is set", async () => {
+        const messages = await violationsFor({
+            instances: [],
+            products,
+            changelog: { changelog: "./changelog", title: "Updates" }
+        });
+        expect(messages).toHaveLength(1);
+        expect(messages[0]).toContain('resolves to URL path "/updates"');
+    });
+});

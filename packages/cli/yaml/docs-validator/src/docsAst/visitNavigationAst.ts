@@ -13,9 +13,10 @@ import {
 } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
-import { readdir, readFile, stat } from "fs/promises";
+import { readdir, stat } from "fs/promises";
 import path from "path";
 import { asyncPool } from "../utils/asyncPool.js";
+import { FileReadTimer } from "../utils/fileReadTimer.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { visitFilepath } from "./visitFilepath.js";
 
@@ -30,7 +31,33 @@ export declare namespace visitNavigationAst {
         absoluteFilepathToConfiguration: AbsoluteFilePath;
         apiWorkspaces: AbstractAPIWorkspace<unknown>[];
         context: TaskContext;
+        readTimer: FileReadTimer;
     }
+}
+
+/**
+ * Mirrors how the docs resolver picks the API workspace for an `api:` section:
+ * an explicit `api-name` must match a workspace; otherwise a single loaded workspace is used.
+ * Additionally accepts an unnamed workspace among several so validation never flags more than the build would.
+ */
+function getApiWorkspaceForApiSection({
+    apiSection,
+    apiWorkspaces
+}: {
+    apiSection: docsYml.RawSchemas.ApiReferenceConfiguration;
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+}): AbstractAPIWorkspace<unknown> | undefined {
+    if (apiSection.apiName != null) {
+        return apiWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
+    }
+    if (apiWorkspaces.length === 1) {
+        return apiWorkspaces[0];
+    }
+    return apiWorkspaces.find((workspace) => workspace.workspaceName == null);
+}
+
+function apiSectionHasInlineSpecs(apiSection: docsYml.RawSchemas.ApiReferenceConfiguration): boolean {
+    return apiSection.specs != null && apiSection.specs.length > 0;
 }
 
 export async function visitNavigationAst({
@@ -40,7 +67,8 @@ export async function visitNavigationAst({
     visitor,
     absoluteFilepathToConfiguration,
     context,
-    nodePath
+    nodePath,
+    readTimer
 }: visitNavigationAst.Args): Promise<void> {
     context.logger.debug(`Starting navigation validation with concurrency limit: ${VALIDATION_CONCURRENCY}`);
 
@@ -58,7 +86,8 @@ export async function visitNavigationAst({
                             nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
                             absoluteFilepathToConfiguration,
                             apiWorkspaces,
-                            context
+                            context,
+                            readTimer
                         });
                     }
                 );
@@ -78,7 +107,8 @@ export async function visitNavigationAst({
                         nodePath: [...nodePath, `${tabIdx}`, "variants", `${variantIdx}`, "layout", `${itemIdx}`],
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
-                        context
+                        context,
+                        readTimer
                     });
                 });
             }
@@ -92,7 +122,8 @@ export async function visitNavigationAst({
                 nodePath: [...nodePath, `${itemIdx}`],
                 absoluteFilepathToConfiguration,
                 apiWorkspaces,
-                context
+                context,
+                readTimer
             });
         });
     }
@@ -104,7 +135,8 @@ async function visitNavigationItem({
     nodePath,
     absoluteFilepathToConfiguration,
     apiWorkspaces,
-    context
+    context,
+    readTimer
 }: {
     absolutePathToFernFolder: AbsoluteFilePath;
     navigationItem: docsYml.RawSchemas.NavigationItem;
@@ -113,6 +145,7 @@ async function visitNavigationItem({
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
+    readTimer: FileReadTimer;
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
         alphabetized: noop,
@@ -179,7 +212,8 @@ async function visitNavigationItem({
                         nodePath: [...nodePath, "contents", `${idx}`],
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
-                        context
+                        context,
+                        readTimer
                     });
                 })
             );
@@ -204,13 +238,7 @@ async function visitNavigationItem({
                 context.logger.trace(`Processing large markdown file: ${markdownPath} (${fileSizeMB.toFixed(2)} MB)`);
             }
 
-            const startTime = performance.now();
-            const content = (await readFile(absoluteFilepath, "utf8")).toString();
-            const readTime = performance.now() - startTime;
-
-            if (readTime > 2000) {
-                context.logger.debug(`Slow file read: ${markdownPath} took ${readTime.toFixed(0)}ms`);
-            }
+            const content = await readTimer.read(absoluteFilepath);
 
             const title = getNavigationItemTitle(navigationItem);
             await visitor.markdownPage?.(
@@ -251,13 +279,21 @@ async function visitNavigationItem({
     }
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = getApiWorkspaceForApiSection({ apiSection: navigationItem, apiWorkspaces });
         if (workspace != null) {
             await visitor.apiSection?.(
                 {
                     config: navigationItem,
                     workspace,
                     context
+                },
+                [...nodePath, "api"]
+            );
+        } else if (!apiSectionHasInlineSpecs(navigationItem)) {
+            await visitor.unresolvedApiSection?.(
+                {
+                    config: navigationItem,
+                    apiWorkspaces
                 },
                 [...nodePath, "api"]
             );
@@ -272,7 +308,8 @@ async function visitNavigationItem({
                 absolutePathToFernFolder,
                 visitor,
                 nodePath: [...nodePath, "folder"],
-                context
+                context,
+                readTimer
             });
         }
     }
@@ -290,7 +327,7 @@ async function visitNavigationItem({
 
             await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
                 const absoluteFilepath = resolve(changelogDir, file);
-                const content = (await readFile(absoluteFilepath, "utf8")).toString();
+                const content = await readTimer.read(absoluteFilepath);
                 context.logger.trace(`Validating changelog file: ${file}`);
 
                 await visitor.markdownPage?.(
@@ -325,13 +362,15 @@ async function visitFolderMarkdownFiles({
     absolutePathToFernFolder,
     visitor,
     nodePath,
-    context
+    context,
+    readTimer
 }: {
     directoryPath: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     context: TaskContext;
+    readTimer: FileReadTimer;
 }): Promise<void> {
     const entries = await readdir(directoryPath, { withFileTypes: true });
 
@@ -355,7 +394,7 @@ async function visitFolderMarkdownFiles({
             );
         }
 
-        const content = (await readFile(absoluteFilepath, "utf8")).toString();
+        const content = await readTimer.read(absoluteFilepath);
         const title = path.basename(file.name, path.extname(file.name));
 
         await visitor.markdownPage?.(
@@ -395,7 +434,8 @@ async function visitFolderMarkdownFiles({
             absolutePathToFernFolder,
             visitor,
             nodePath: [...nodePath, subdir.name],
-            context
+            context,
+            readTimer
         });
     });
 }

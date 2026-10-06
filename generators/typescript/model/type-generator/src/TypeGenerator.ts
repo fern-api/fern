@@ -30,6 +30,7 @@ export declare namespace TypeGenerator {
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
         caseConverter: CaseConverter;
+        useBigInt?: boolean;
     }
 
     export namespace generateType {
@@ -43,6 +44,7 @@ export declare namespace TypeGenerator {
             includeSerdeLayer: boolean;
             retainOriginalCasing: boolean;
             inline: boolean;
+            xml?: FernIr.XmlEncoding;
         }
     }
 }
@@ -58,6 +60,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
     private readonly case: CaseConverter;
+    private readonly useBigInt: boolean;
 
     constructor({
         useBrandedStringAliases,
@@ -69,7 +72,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         retainOriginalCasing,
         enableInlineTypes,
         generateReadWriteOnlyTypes,
-        caseConverter
+        caseConverter,
+        useBigInt = false
     }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
@@ -81,6 +85,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
         this.case = caseConverter;
+        this.useBigInt = useBigInt;
     }
 
     public generateType({
@@ -90,7 +95,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         docs,
         fernFilepath,
         getReferenceToSelf,
-        inline
+        inline,
+        xml
     }: TypeGenerator.generateType.Args<Context>): GeneratedType<Context> {
         return FernIr.Type._visit<GeneratedType<Context>>(shape, {
             union: (shape) =>
@@ -105,7 +111,15 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
                     getReferenceToSelf
                 }),
             object: (shape) =>
-                this.generateObject({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
+                this.generateObject({
+                    typeName,
+                    shape,
+                    examples,
+                    docs,
+                    fernFilepath,
+                    getReferenceToSelf,
+                    xml
+                }),
             enum: (shape) => this.generateEnum({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
             alias: (shape) =>
                 this.generateAlias({
@@ -195,7 +209,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         examples,
         docs,
         fernFilepath,
-        getReferenceToSelf
+        getReferenceToSelf,
+        xml
     }: {
         typeName: string;
         shape: FernIr.ObjectTypeDeclaration;
@@ -203,6 +218,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
         docs: string | undefined;
         fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
+        xml: FernIr.XmlEncoding | undefined;
     }): GeneratedObjectType<Context> {
         return new GeneratedObjectTypeImpl({
             typeName,
@@ -211,6 +227,8 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             docs,
             fernFilepath,
             getReferenceToSelf,
+            xml,
+            useBigInt: this.useBigInt,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,

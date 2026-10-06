@@ -8,7 +8,7 @@ import com.seed.singleUrlEnvironmentNoDefault.core.Suppliers;
 import com.seed.singleUrlEnvironmentNoDefault.resources.dummy.AsyncDummyClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedSingleUrlEnvironmentNoDefaultClient {
+public class AsyncSeedSingleUrlEnvironmentNoDefaultClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncDummyClient> dummyClient;
@@ -20,6 +20,16 @@ public class AsyncSeedSingleUrlEnvironmentNoDefaultClient {
 
     public AsyncDummyClient dummy() {
         return this.dummyClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedSingleUrlEnvironmentNoDefaultClientBuilder builder() {

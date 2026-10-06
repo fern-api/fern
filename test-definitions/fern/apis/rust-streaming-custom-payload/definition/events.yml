@@ -1,0 +1,18 @@
+# SSE endpoint whose only reference to a generated type is the streamed payload.
+# The resource module must import crate::api::* for `SseStream<Event>` to resolve.
+types:
+  Event:
+    properties:
+      id: string
+      message: optional<string>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      path: /events
+      method: GET
+      response-stream:
+        type: Event
+        format: sse

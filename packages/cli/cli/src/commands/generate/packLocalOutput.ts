@@ -5,7 +5,8 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { createWriteStream } from "fs";
 import { copyFile, mkdir, readdir, readFile, rename, rm, rmdir, writeFile } from "fs/promises";
-import { basename } from "path";
+import { homedir } from "os";
+import { basename, resolve } from "path";
 import { ZipFile } from "yazl";
 
 /** Directory (inside each generator's local output) where packaged artifacts are written. */
@@ -24,6 +25,28 @@ const PACK_DOCKER_IMAGES: Record<string, string> = {
     php: "composer:2",
     rust: "rust:1"
 };
+
+/** Proxy settings forwarded from the host into `--package-mode docker` containers. */
+const PROXY_ENVIRONMENT_VARIABLES = ["HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "http_proxy", "https_proxy", "no_proxy"];
+
+/** Gradle user home inside the `gradle` toolchain container. */
+const DOCKER_GRADLE_USER_HOME = "/fern-gradle-home";
+/**
+ * Host directory backing the container's Gradle user home, so dependency caches persist across
+ * `--package-mode docker` runs. Deliberately not ~/.gradle itself: a Gradle daemon on the host holds
+ * cache locks that a containerized Gradle cannot ask it to release, which deadlocks the build.
+ */
+const DOCKER_GRADLE_USER_HOME_ON_HOST = RelativeFilePath.of(".fern/gradle-docker-home");
+/** Files from the host's Gradle user home mirrored (read-only) into the container's, e.g. mirror/proxy settings. */
+const GRADLE_USER_HOME_CONFIG_ENTRIES = ["gradle.properties", "init.d"];
+
+/**
+ * Maven Central mirror consulted before Maven Central / the Gradle plugin portal when packaging Java,
+ * since repo.maven.apache.org rate-limits (HTTP 429) uncached builds. Override with
+ * FERN_MAVEN_CENTRAL_MIRROR=<url> (e.g. an internal Artifactory) or disable with FERN_MAVEN_CENTRAL_MIRROR=off.
+ */
+const DEFAULT_MAVEN_CENTRAL_MIRROR = "https://maven-central.storage-download.googleapis.com/maven2/";
+const MAVEN_CENTRAL_MIRROR_ENVIRONMENT_VARIABLE = "FERN_MAVEN_CENTRAL_MIRROR";
 
 /**
  * Builds distributable package artifacts (e.g. an npm tarball, Python wheel, JAR, NuGet package,
@@ -53,6 +76,7 @@ export async function packLocalOutputForGroup({
     version?: string;
 }): Promise<void> {
     const failures: string[] = [];
+    let packagableGenerators = 0;
     for (const generator of group.generators) {
         const outputPath = generator.absolutePathToLocalOutput;
         if (outputPath == null) {
@@ -66,6 +90,7 @@ export async function packLocalOutputForGroup({
             context.logger.warn(`Skipping packaging for ${generator.name}: could not determine language.`);
             continue;
         }
+        packagableGenerators++;
         try {
             const artifactProduced = await packOutputForLanguage({
                 language,
@@ -94,6 +119,15 @@ export async function packLocalOutputForGroup({
     if (failures.length > 0) {
         context.failAndThrow(`Packaging failed for: ${failures.join(", ")}`);
     }
+    if (packagableGenerators === 0) {
+        const flag = packOnly ? "--package-only" : "--package";
+        const generatorNames = group.generators.map((generator) => generator.name).join(", ");
+        context.failAndThrow(
+            group.generators.length === 0
+                ? `Nothing to package in group '${group.groupName}': the group has no generators.`
+                : `Nothing to package in group '${group.groupName}': ${flag} only applies to generators with a known language whose output.location is local-file-system, and none of ${generatorNames} qualify.`
+        );
+    }
 }
 
 /** Packs one generator's output. Returns whether a package artifact was produced in fern-dist/. */
@@ -119,14 +153,16 @@ async function packOutputForLanguage({
     switch (language) {
         case "typescript": {
             await mkdir(distDir, { recursive: true });
-            await run([["npm", "install"]]);
+            await ensureNpmPackageVersion({ outputPath, version });
+            const packageManager = await getNodePackageManagerCommand(outputPath);
+            await run([[...packageManager, "install"]]);
             // Compile the package before packing so the tarball ships runnable JavaScript and
             // consumers can require() it right after npm install, without a post-install build.
             if (await hasNpmScript({ outputPath, script: "build" })) {
                 // Generated build scripts invoke pnpm, which isn't preinstalled on the host or in
                 // the node toolchain image — npx fetches it on demand and puts it on PATH for the
                 // nested `pnpm build:*` invocations.
-                await run([["npx", "--yes", "pnpm", "run", "build"]]);
+                await run([[...packageManager, "run", "build"]]);
             } else {
                 const tsconfig = await findTsconfig(outputPath);
                 if (tsconfig != null) {
@@ -224,7 +260,7 @@ async function packOutputForLanguage({
             try {
                 await run([
                     [
-                        "gradle",
+                        ...(await getGradleCommand({ outputPath, mode })),
                         "--init-script",
                         initScriptName,
                         "jar",
@@ -301,6 +337,53 @@ async function packOutputForLanguage({
     }
 }
 
+async function ensureNpmPackageVersion({
+    outputPath,
+    version
+}: {
+    outputPath: AbsoluteFilePath;
+    version: string | undefined;
+}): Promise<void> {
+    if (version == null) {
+        return;
+    }
+    const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
+    const packageJson: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+    if (typeof packageJson !== "object" || packageJson == null || Array.isArray(packageJson)) {
+        throw new Error("package.json must contain a JSON object.");
+    }
+    if ("version" in packageJson && typeof packageJson.version === "string" && packageJson.version.length > 0) {
+        return;
+    }
+    await writeFile(packageJsonPath, `${JSON.stringify({ ...packageJson, version }, null, 2)}\n`);
+}
+
+async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promise<string[]> {
+    const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
+    const packageJson: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+    if (typeof packageJson === "object" && packageJson != null && !Array.isArray(packageJson)) {
+        const packageManager = "packageManager" in packageJson ? packageJson.packageManager : undefined;
+        if (typeof packageManager === "string") {
+            if (packageManager === "npm" || packageManager.startsWith("npm@")) {
+                return ["npm"];
+            }
+            if (packageManager === "yarn" || packageManager.startsWith("yarn@")) {
+                return ["npx", "--yes", "yarn"];
+            }
+        }
+    }
+    if (
+        (await doesPathExist(join(outputPath, RelativeFilePath.of("package-lock.json")))) ||
+        (await doesPathExist(join(outputPath, RelativeFilePath.of("npm-shrinkwrap.json"))))
+    ) {
+        return ["npm"];
+    }
+    if (await doesPathExist(join(outputPath, RelativeFilePath.of("yarn.lock")))) {
+        return ["npx", "--yes", "yarn"];
+    }
+    return ["npx", "--yes", "pnpm"];
+}
+
 /**
  * Runs the toolchain commands for a language, either directly on the host (cwd = output dir) or
  * inside the language's official Docker image with the output directory mounted at /workspace.
@@ -349,6 +432,14 @@ async function runPackCommands({
         // Run as the invoking user on POSIX hosts so artifacts in the mounted volume aren't root-owned.
         if (process.getuid != null && process.getgid != null) {
             containerArgs.push("--user", `${process.getuid()}:${process.getgid()}`);
+        }
+        for (const variable of PROXY_ENVIRONMENT_VARIABLES) {
+            if (process.env[variable] != null) {
+                containerArgs.push("-e", variable);
+            }
+        }
+        if (language === "java") {
+            containerArgs.push(...(await getDockerGradleUserHomeArgs()));
         }
         await loggingExeca(context.logger, runner, [...containerArgs, image, executable, ...args], {
             cwd: outputPath
@@ -445,8 +536,65 @@ const JAVA_POM_PUBLICATION_NAME_CAPITALIZED = "FernLocalPack";
  * `generatePomFileFor...Publication` can emit a POM with the project's dependencies, even when
  * the generated build.gradle has no publishing configuration (the local-file-system case).
  */
+/**
+ * Resolves the Gradle command for the Java packaging build. On the host, the generated SDK's wrapper is
+ * preferred (it pins the Gradle version and works without a global install); the `gradle` toolchain image
+ * already ships Gradle, so docker mode always uses it.
+ */
+async function getGradleCommand({
+    outputPath,
+    mode
+}: {
+    outputPath: AbsoluteFilePath;
+    mode: PackMode;
+}): Promise<string[]> {
+    if (mode === "host") {
+        const wrapperScript = process.platform === "win32" ? "gradlew.bat" : "gradlew";
+        const hasWrapper =
+            (await doesPathExist(join(outputPath, RelativeFilePath.of(wrapperScript)))) &&
+            (await doesPathExist(join(outputPath, RelativeFilePath.of("gradle/wrapper/gradle-wrapper.jar"))));
+        if (hasWrapper) {
+            // The generated wrapper script is not always marked executable, so run it via the shell.
+            return process.platform === "win32" ? ["cmd", "/c", wrapperScript] : ["sh", wrapperScript];
+        }
+    }
+    return ["gradle"];
+}
+
+/**
+ * `docker run` arguments giving the Gradle container a persistent user home (see
+ * DOCKER_GRADLE_USER_HOME_ON_HOST) with the host's gradle.properties and init.d ($GRADLE_USER_HOME or
+ * ~/.gradle) layered in read-only.
+ */
+async function getDockerGradleUserHomeArgs(): Promise<string[]> {
+    const home = AbsoluteFilePath.of(homedir());
+    const cacheDir = join(home, DOCKER_GRADLE_USER_HOME_ON_HOST);
+    await mkdir(cacheDir, { recursive: true });
+    const args = ["-v", `${cacheDir}:${DOCKER_GRADLE_USER_HOME}`, "-e", `GRADLE_USER_HOME=${DOCKER_GRADLE_USER_HOME}`];
+    const hostGradleUserHome =
+        process.env.GRADLE_USER_HOME != null
+            ? AbsoluteFilePath.of(resolve(process.env.GRADLE_USER_HOME))
+            : join(home, RelativeFilePath.of(".gradle"));
+    for (const entry of GRADLE_USER_HOME_CONFIG_ENTRIES) {
+        const hostPath = join(hostGradleUserHome, RelativeFilePath.of(entry));
+        if (await doesPathExist(hostPath)) {
+            args.push("-v", `${hostPath}:${DOCKER_GRADLE_USER_HOME}/${entry}:ro`);
+        }
+    }
+    return args;
+}
+
+function getMavenCentralMirror(): string | undefined {
+    const configured = process.env[MAVEN_CENTRAL_MIRROR_ENVIRONMENT_VARIABLE]?.trim();
+    if (configured == null || configured === "") {
+        return DEFAULT_MAVEN_CENTRAL_MIRROR;
+    }
+    return ["off", "false", "none", "0"].includes(configured.toLowerCase()) ? undefined : configured;
+}
+
 function getJavaPomInitScript({ fallbackVersion }: { fallbackVersion: string }): string {
-    return `allprojects { project ->
+    return `${getJavaNetworkInitScript()}
+allprojects { project ->
     project.plugins.withId("java") {
         project.apply plugin: "maven-publish"
         project.afterEvaluate {
@@ -462,6 +610,88 @@ function getJavaPomInitScript({ fallbackVersion }: { fallbackVersion: string }):
                 }
             }
         }
+    }
+}
+`;
+}
+
+/**
+ * Gradle init-script fragment that (1) puts a Maven Central mirror ahead of every plugin/dependency
+ * repository and (2) derives JVM proxy properties from HTTP(S)_PROXY / NO_PROXY, which Gradle does not
+ * read on its own. Both are no-ops when the build already configures them.
+ */
+function getJavaNetworkInitScript(): string {
+    const mirror = getMavenCentralMirror();
+    const mirrorScript =
+        mirror == null
+            ? ""
+            : `def fernMirrorUrl = ${JSON.stringify(mirror)}
+def fernPrependMirror = { repositories ->
+    if (repositories.any { it instanceof MavenArtifactRepository && it.url.toString() == fernMirrorUrl }) {
+        return
+    }
+    def existing = repositories.toList()
+    repositories.clear()
+    repositories.maven { url = fernMirrorUrl }
+    existing.each { repositories.add(it) }
+}
+settingsEvaluated { settings ->
+    def pluginRepositories = settings.pluginManagement.repositories
+    if (pluginRepositories.isEmpty()) {
+        pluginRepositories.gradlePluginPortal()
+    }
+    fernPrependMirror(pluginRepositories)
+    def centralRepositories = settings.dependencyResolutionManagement.repositories
+    if (!centralRepositories.isEmpty()) {
+        fernPrependMirror(centralRepositories)
+    }
+}
+allprojects { project ->
+    fernPrependMirror(project.buildscript.repositories)
+    // Only mirror project repositories the build declares itself: adding one to a build that
+    // centralizes repositories in settings (RepositoriesMode.FAIL_ON_PROJECT_REPOS) would fail it.
+    project.afterEvaluate {
+        if (!project.repositories.isEmpty()) {
+            fernPrependMirror(project.repositories)
+        }
+    }
+}
+`;
+    return `${mirrorScript}def fernApplyProxy = { String scheme, String value ->
+    if (value == null || value.trim().isEmpty() || System.getProperty(scheme + ".proxyHost") != null) {
+        return
+    }
+    def uri = new URI(value.contains("://") ? value : "http://" + value)
+    if (uri.host == null) {
+        return
+    }
+    System.setProperty(scheme + ".proxyHost", uri.host)
+    if (uri.port != -1) {
+        System.setProperty(scheme + ".proxyPort", uri.port.toString())
+    }
+    if (uri.userInfo != null) {
+        def credentials = uri.userInfo.split(":", 2)
+        System.setProperty(scheme + ".proxyUser", credentials[0])
+        if (credentials.length > 1) {
+            System.setProperty(scheme + ".proxyPassword", credentials[1])
+        }
+    }
+}
+fernApplyProxy("https", System.getenv("HTTPS_PROXY") ?: System.getenv("https_proxy"))
+fernApplyProxy("http", System.getenv("HTTP_PROXY") ?: System.getenv("http_proxy"))
+// NO_PROXY suffixes (".example.com" / "example.com") become JVM patterns ("*.example.com|example.com");
+// CIDR blocks have no JVM equivalent and are dropped.
+def fernNoProxy = System.getenv("NO_PROXY") ?: System.getenv("no_proxy")
+if (fernNoProxy != null && !fernNoProxy.trim().isEmpty() && System.getProperty("http.nonProxyHosts") == null) {
+    def patterns = fernNoProxy.split(",").collect { it.trim() }.findAll { !it.isEmpty() && !it.contains("/") }.collectMany { entry ->
+        if (entry == "*" || entry.contains("*")) {
+            return [entry]
+        }
+        def host = entry.startsWith(".") ? entry.substring(1) : entry
+        return host.contains(":") ? [host] : ["*." + host, host]
+    }
+    if (!patterns.isEmpty()) {
+        System.setProperty("http.nonProxyHosts", patterns.unique().join("|"))
     }
 }
 `;

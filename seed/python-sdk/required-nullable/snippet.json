@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_.updateFoo"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.update_foo(\n    id=\"id\",\n    x_idempotency_key=\"X-Idempotency-Key\",\n    nullable_text=\"nullable_text\",\n    nullable_number=1.1,\n    non_nullable_text=\"non_nullable_text\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.update_foo(\n        id=\"id\",\n        x_idempotency_key=\"X-Idempotency-Key\",\n        nullable_text=\"nullable_text\",\n        nullable_number=1.1,\n        non_nullable_text=\"non_nullable_text\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.update_foo(\n    id=\"id\",\n    x_idempotency_key=\"X-Idempotency-Key\",\n    nullable_text=\"nullable_text\",\n    nullable_number=1.1,\n    non_nullable_text=\"non_nullable_text\",\n    required_nullable_text=\"required_nullable_text\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.update_foo(\n        id=\"id\",\n        x_idempotency_key=\"X-Idempotency-Key\",\n        nullable_text=\"nullable_text\",\n        nullable_number=1.1,\n        non_nullable_text=\"non_nullable_text\",\n        required_nullable_text=\"required_nullable_text\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

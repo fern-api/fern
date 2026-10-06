@@ -1572,6 +1572,90 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.encoding.XmlEncodingSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The element or attribute name on the wire, casing preserved. Defaults to the type or property name."
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The XML namespace URI."
+        },
+        "prefix": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The namespace prefix for the element name."
+        },
+        "attribute": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as an attribute of the parent element instead of a child element."
+        },
+        "text": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Serialize this property as the text content of the parent element."
+        },
+        "wrapped": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list properties, wrap the items in a container element named `name`."
+        },
+        "separator": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "For list-valued attributes or text, the string used to join items (e.g. a space)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "On a type declaration: marks the object as an XML element (e.g. a TwiML verb).\nOn an object property: controls how the property serializes within its parent element."
+    },
     "fernDefinition.encoding.EncodingSchema": {
       "type": "object",
       "properties": {
@@ -1579,6 +1663,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/fernDefinition.encoding.ProtobufTypeSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "xml": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.encoding.XmlEncodingSchema"
             },
             {
               "type": "null"
@@ -2358,6 +2452,122 @@
         "uint64"
       ]
     },
+    "generators.OpenAPIErrorResponsesSchemaSource": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "generators.OpenAPIErrorResponsesApplyTo": {
+      "type": "string",
+      "enum": [
+        "all",
+        "untyped"
+      ]
+    },
+    "generators.OpenAPIErrorResponsesHttpMethod": {
+      "type": "string",
+      "enum": [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+        "trace"
+      ]
+    },
+    "generators.OpenAPIErrorResponsesEnsureSchema": {
+      "type": "object",
+      "properties": {
+        "status-code": {
+          "type": "integer",
+          "description": "The 4xx/5xx status code to add when an operation does not declare it."
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.OpenAPIErrorResponsesHttpMethod"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "HTTP methods whose operations receive the response. Defaults to all methods."
+        }
+      },
+      "required": [
+        "status-code"
+      ],
+      "additionalProperties": false
+    },
+    "generators.OpenAPIErrorResponsesSchema": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchemaSource",
+          "description": "The OpenAPI schema used for error response bodies: either a path to a YAML/JSON file\n(relative to this generators.yml) or an inline schema object. It is registered under\n`components.schemas` and every affected response references it. Any `$ref` inside the\nschema must be a local `#/components/...` pointer into the OpenAPI spec it is applied to."
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of the generated error body type. Defaults to the schema's `title`, then `ProblemDetails`.\nIf the spec already defines a different schema under this name, it is replaced as long as\nnothing references it once the error responses have been rewritten (e.g. a legacy error\nbody only used by 4xx/5xx responses under `apply-to: all`); otherwise `fern check` fails."
+        },
+        "apply-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesApplyTo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "`all` replaces the body of every 4xx/5xx response with the configured schema.\n`untyped` only fills in 4xx/5xx responses that declare no body schema, leaving existing\ntyped error responses untouched.\nDefaults to `all`."
+        },
+        "ensure": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/generators.OpenAPIErrorResponsesEnsureSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Error responses to add to operations that do not already declare them\n(e.g. a `422` on every `post`, `put` and `patch`)."
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "additionalProperties": false
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -2820,6 +3030,17 @@
             }
           ],
           "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Standardize the body of every 4xx/5xx response on a single schema (for example an\nRFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a\nper-spec overlay that rewrites each error response by hand."
         }
       },
       "additionalProperties": false
@@ -3558,6 +3779,17 @@
           ],
           "description": "If true, an error whose body schema carries `x-fern-sdk-namespace` is declared in, and shared\nwithin, that namespace instead of the endpoint's namespace. Lets error types be scoped per\nnamespace while endpoints and other types stay at the root.\nDefaults to false."
         },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIErrorResponsesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Standardize the body of every 4xx/5xx response on a single schema (for example an\nRFC 9457 Problem Details object) before the spec is parsed. Replaces the need for a\nper-spec overlay that rewrites each error response by hand."
+        },
         "respect-nullable-schemas": {
           "oneOf": [
             {
@@ -3749,6 +3981,24 @@
             }
           ],
           "description": "Enable idempotency-key auto-generation for every generator in this API, so it\ndoes not have to be set on each generator's `config`. When enabled, generators\nauto-generate an idempotency key header on retry-unsafe (POST/PUT) requests\nunless the caller supplies one.\n\nAccepts either a boolean shorthand or an object with an optional custom\nheader name and eligible-method list:\n```yaml\napi:\n  settings:\n    auto-generate-idempotency-key: true\n    # or\n    auto-generate-idempotency-key:\n      header-name: \"Idempotency-Key\"\n      methods: [\"POST\", \"PUT\"]\n```\nA generator's own `config.auto-generate-idempotency-key` overrides this\nvalue for that generator."
+        },
+        "webhook-signature": {
+          "oneOf": [
+            {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "array",
+                "null"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Webhook signature scheme for the whole API, declared once here instead of in the\nAPI definition. Every generator in this API emits a shared webhook verification\nhelper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when\nthe spec models no webhooks. Uses the same shape as a webhook's `signature` block\nin a Fern definition:\n```yaml\napi:\n  settings:\n    webhook-signature:\n      type: hmac\n      header: X-Twilio-Signature\n      algorithm: sha1\n      encoding: base64\n      payload-format:\n        components: [notification-url, body]\n        delimiter: \"\"\n        body-sort: alphabetical\n```"
         }
       },
       "additionalProperties": false,
@@ -3790,6 +4040,17 @@
               "type": "null"
             }
           ]
+        },
+        "base-url-env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The name of an environment variable (e.g. MY_API_BASE_URL) that generated SDKs\nread to override the base URL. When the variable is set, it takes precedence over\nthe default environment; an explicitly provided base URL still wins."
         },
         "environments": {
           "oneOf": [
@@ -4223,6 +4484,7 @@
             "pypi",
             "postman",
             "local-file-system",
+            "fern-hosted",
             "nuget",
             "rubygems",
             "crates"
@@ -4422,6 +4684,27 @@
           "required": [
             "location",
             "path"
+          ]
+        },
+        {
+          "properties": {
+            "location": {
+              "const": "fern-hosted"
+            },
+            "slug": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to \"mcp\"."
+            }
+          },
+          "required": [
+            "location"
           ]
         },
         {

@@ -365,6 +365,7 @@ function convertToObjectProperty(objectProperty: ObjectProperty): ObjectProperty
         conflict: objectProperty.conflict,
         generatedName: objectProperty.generatedName,
         key: objectProperty.key,
+        xml: objectProperty.xml,
         schema: convertSchemaToSchemaWithExample(objectProperty.schema),
         audiences: objectProperty.audiences,
         nameOverride: objectProperty.nameOverride,

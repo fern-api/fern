@@ -1,0 +1,3 @@
+- summary: |
+    Hosted MCP deploys now fail fast, before uploading anything, when a generated tool name is longer than 64 characters or contains disallowed characters, and suggest an `x-fern-mcp-name` overlay for the operation (method + path). Deploy errors from the registry now include each validation issue instead of only the headline message.
+  type: fix

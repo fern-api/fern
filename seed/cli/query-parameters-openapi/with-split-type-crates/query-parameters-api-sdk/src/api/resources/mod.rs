@@ -119,8 +119,34 @@ impl ApiClient {
                     .serialize("optionalUser", request.optional_user.clone())
                     .serialize_array("excludeUser", request.exclude_user.clone())
                     .string_array("filter", request.filter.clone())
-                    .string_array("tags", request.tags.clone())
-                    .string_array("optionalTags", request.optional_tags.clone())
+                    .string("tags", {
+                        let joined = request
+                            .tags
+                            .iter()
+                            .flatten()
+                            .map(|value| value.to_string())
+                            .collect::<Vec<_>>()
+                            .join(",");
+                        if joined.is_empty() {
+                            None
+                        } else {
+                            Some(joined)
+                        }
+                    })
+                    .string("optionalTags", {
+                        let joined = request
+                            .optional_tags
+                            .iter()
+                            .flatten()
+                            .map(|value| value.to_string())
+                            .collect::<Vec<_>>()
+                            .join(",");
+                        if joined.is_empty() {
+                            None
+                        } else {
+                            Some(joined)
+                        }
+                    })
                     .serialize("neighbor", request.neighbor.clone())
                     .serialize("neighborRequired", Some(request.neighbor_required.clone()))
                     .build(),

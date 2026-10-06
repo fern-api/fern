@@ -5,6 +5,7 @@ package com.seed.pagination.resources.users;
 
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.AsyncFernCustomPaginator;
 import com.seed.pagination.resources.users.requests.ListWithCustomPagerRequest;
 import java.util.concurrent.CompletableFuture;
@@ -27,21 +28,57 @@ public class AsyncUsersClient {
     }
 
     public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager() {
-        return this.rawClient.listWithCustomPager().thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>> rawFuture =
+                this.rawClient.listWithCustomPager();
+        CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
             RequestOptions requestOptions) {
-        return this.rawClient.listWithCustomPager(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>> rawFuture =
+                this.rawClient.listWithCustomPager(requestOptions);
+        CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
             ListWithCustomPagerRequest request) {
-        return this.rawClient.listWithCustomPager(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>> rawFuture =
+                this.rawClient.listWithCustomPager(request);
+        CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> listWithCustomPager(
             ListWithCustomPagerRequest request, RequestOptions requestOptions) {
-        return this.rawClient.listWithCustomPager(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>> rawFuture =
+                this.rawClient.listWithCustomPager(request, requestOptions);
+        CompletableFuture<CompletableFuture<AsyncFernCustomPaginator<String>>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

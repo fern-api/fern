@@ -18,6 +18,8 @@
 
 Matches `gh` / `aws` / `gcloud` / `op`. Adding keyring is a new `AuthCredentialSource::Keyring { service, account }` variant slotted at priority 3 in the typed-builder default chains (`BearerAuth`, `ApiKeyAuth`, `OAuth2Auth`).
 
+> **Extended by [ADR-0011](0011-profile-resolution-precedence.md).** Named profiles do **not** add a fifth rung to this table. A selected profile only changes the `account` that priority 3 reads — `<scheme>` with no profile, `<scheme>#<credential>` with one — so two tenants can hold separate credentials for one scheme while the order above is unchanged. ADR-0011 also documents why a profile sits *below* env vars, for the same CI reason alternative (a) is rejected here.
+
 ### Storage
 
 [`keyring-rs`](https://docs.rs/keyring) is the primary backend (macOS Keychain / Windows Credential Manager / Linux secret-service). When the platform's keyring is unavailable — Linux containers, CI runners, bare SSH without secret-service — the framework **falls back silently** to `~/.config/<cli>/auth-keyring.json` (0600). The filename is intentionally distinct from the pre-existing `TokenCache` file (`credentials.json`) so the two cohabit a directory without clobbering each other: binaries already using `OAuth2TokenProvider::with_cache(...)` (e.g. `xero`) continue to read/write their existing `credentials.json` untouched. `auth status` always discloses which backend is in use.

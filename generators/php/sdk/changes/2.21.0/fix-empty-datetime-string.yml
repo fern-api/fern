@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `rejectEmptyDateTimeStrings` (opt-in). `deserializeDateTime("")` returned
+    the *current wall-clock time* rather than raising: PHP's `DateTime`
+    constructor treats an empty string as "construct for the current moment" and
+    does not throw, so the surrounding catch never fired. Any API that sends `""`
+    to mean "not set" therefore produced a plausible, entirely fabricated
+    timestamp with no way for the caller to detect it — a value that can be
+    written back to a database and is indistinguishable from real data
+    afterwards. A malformed string was always handled correctly; it was
+    specifically the empty string that slipped through. The sibling
+    `deserializeDate` already rejects `""`, so this also removes an
+    inconsistency between the two. Opt-in because it turns a value callers
+    currently receive into an exception.
+  type: feat

@@ -14,6 +14,8 @@ import {
     ts
 } from "ts-morph";
 
+export type WebsocketHandlerMode = "replace" | "accumulate";
+
 export declare namespace GeneratedWebsocketSocketClassImpl {
     export interface Init {
         packageId: PackageId;
@@ -23,6 +25,7 @@ export declare namespace GeneratedWebsocketSocketClassImpl {
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         skipResponseValidation: boolean;
+        websocketHandlerMode: WebsocketHandlerMode;
     }
 }
 
@@ -35,6 +38,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private static readonly EVENT_PARAMETER_NAME = "event";
     private static readonly CALLBACK_PARAMETER_NAME = "callback";
     private static readonly MESSAGE_PARAMETER_NAME = "message";
+    private static readonly EVENT_NAMES = ["open", "message", "close", "error"] as const;
     private static readonly CLOSE_CODE_VALUE = 1000;
 
     private readonly channel: FernIr.WebSocketChannel;
@@ -44,6 +48,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
     private readonly skipResponseValidation: boolean;
+    private readonly accumulateHandlers: boolean;
 
     constructor({
         packageId,
@@ -52,7 +57,8 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         serviceClassName,
         retainOriginalCasing,
         omitUndefined,
-        skipResponseValidation
+        skipResponseValidation,
+        websocketHandlerMode
     }: GeneratedWebsocketSocketClassImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.channel = channel;
@@ -61,6 +67,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.skipResponseValidation = skipResponseValidation;
+        this.accumulateHandlers = websocketHandlerMode === "accumulate";
     }
 
     public writeToFile(context: FileContext): void {
@@ -87,13 +94,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                     isReadonly: true,
                     scope: Scope.Public
                 },
-                {
-                    name: getPropertyKey(GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME),
-                    type: `${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_TYPE}`,
-                    isReadonly: true,
-                    scope: Scope.Protected,
-                    initializer: "{}"
-                }
+                this.generateEventHandlersProperty()
             ],
             ctors: [
                 {
@@ -128,6 +129,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
 
         const handlerRegister = this.generateHandlerRegister(context);
+        const handlerUnregister = this.generateHandlerUnregister();
         const sendHelperMethods = this.generateSendHelperMethods(context);
         const connectMethod = this.generateConnectMethod();
         const closeMethod = this.generateCloseMethod();
@@ -142,6 +144,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
         serviceClass.methods?.push(
             handlerRegister,
+            handlerUnregister,
             ...sendHelperMethods,
             connectMethod,
             closeMethod,
@@ -266,33 +269,85 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         };
     }
 
+    private getEventHandlersTypeReference(): string {
+        return `${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_TYPE}`;
+    }
+
+    private generateEventHandlersProperty(): PropertyDeclarationStructure {
+        const eventHandlersType = this.getEventHandlersTypeReference();
+        return {
+            kind: StructureKind.Property,
+            name: getPropertyKey(GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME),
+            type: this.accumulateHandlers
+                ? `{ [K in keyof ${eventHandlersType}]-?: Array<NonNullable<${eventHandlersType}[K]>> }`
+                : eventHandlersType,
+            isReadonly: true,
+            scope: Scope.Protected,
+            initializer: this.accumulateHandlers
+                ? `{ ${GeneratedWebsocketSocketClassImpl.EVENT_NAMES.map((name) => `${name}: []`).join(", ")} }`
+                : "{}"
+        };
+    }
+
+    private getHandlerMethodTypeParameters(): MethodDeclarationStructure["typeParameters"] {
+        return [
+            {
+                name: "T",
+                constraint: `keyof ${this.getEventHandlersTypeReference()}`
+            }
+        ];
+    }
+
+    private getHandlerMethodParameters(): MethodDeclarationStructure["parameters"] {
+        return [
+            {
+                name: GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME,
+                type: "T"
+            },
+            {
+                name: GeneratedWebsocketSocketClassImpl.CALLBACK_PARAMETER_NAME,
+                type: this.accumulateHandlers
+                    ? this.getAccumulatedHandlerType()
+                    : `${this.getEventHandlersTypeReference()}[T]`
+            }
+        ];
+    }
+
+    private getAccumulatedHandlerType(): string {
+        return `NonNullable<${this.getEventHandlersTypeReference()}[T]>`;
+    }
+
+    /**
+     * TypeScript resolves `this.eventHandlers[event]` against the union of all handler arrays,
+     * so the array is narrowed to the handler type for `T` before it is mutated.
+     */
+    private getAccumulatedHandlersStatement(): string {
+        return (
+            `const handlers = this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}` +
+            `[${GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME}] as Array<${this.getAccumulatedHandlerType()}>;`
+        );
+    }
+
     private generateHandlerRegister(context: FileContext): MethodDeclarationStructure {
+        const eventHandlers = GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME;
+        const event = GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME;
+        const callback = GeneratedWebsocketSocketClassImpl.CALLBACK_PARAMETER_NAME;
         return {
             kind: StructureKind.Method,
             name: "on",
             scope: Scope.Public,
             returnType: "void",
-            typeParameters: [
-                {
-                    name: "T",
-                    constraint: `keyof ${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_TYPE}`
-                }
-            ],
-            parameters: [
-                {
-                    name: GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME,
-                    type: "T"
-                },
-                {
-                    name: GeneratedWebsocketSocketClassImpl.CALLBACK_PARAMETER_NAME,
-                    type: `${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_TYPE}[T]`
-                }
-            ],
+            typeParameters: this.getHandlerMethodTypeParameters(),
+            parameters: this.getHandlerMethodParameters(),
             docs: [
                 {
                     description:
                         "@param event - The event to attach to.\n" +
                         "@param callback - The callback to run when the event is triggered.\n" +
+                        (this.accumulateHandlers
+                            ? "Handlers accumulate: registering another callback for the same event does not replace\n" +
+                              "the previous one. Handlers run in registration order.\n"
+                            : "") +
                         "Usage:\n" +
                         "```typescript\n" +
                         "this.on('open', () => {\n" +
@@ -301,11 +356,64 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                         "```"
                 }
             ],
-            statements: [
-                `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}[${GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME}]` +
-                    ` = ${GeneratedWebsocketSocketClassImpl.CALLBACK_PARAMETER_NAME};`
-            ]
+            statements: this.accumulateHandlers
+                ? [this.getAccumulatedHandlersStatement(), `handlers.push(${callback});`]
+                : [`this.${eventHandlers}[${event}] = ${callback};`]
         };
+    }
+
+    private generateHandlerUnregister(): MethodDeclarationStructure {
+        const eventHandlers = GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME;
+        const event = GeneratedWebsocketSocketClassImpl.EVENT_PARAMETER_NAME;
+        const callback = GeneratedWebsocketSocketClassImpl.CALLBACK_PARAMETER_NAME;
+        return {
+            kind: StructureKind.Method,
+            name: "off",
+            scope: Scope.Public,
+            returnType: "void",
+            typeParameters: this.getHandlerMethodTypeParameters(),
+            parameters: this.getHandlerMethodParameters(),
+            docs: [
+                {
+                    description:
+                        "@param event - The event to detach from.\n" +
+                        "@param callback - The callback previously registered with `on`. " +
+                        (this.accumulateHandlers
+                            ? "No-op if it is not registered for this event.\n"
+                            : "No-op if it is not the callback currently registered for this event.\n") +
+                        "Usage:\n" +
+                        "```typescript\n" +
+                        "const handler = () => console.log('The websocket is open');\n" +
+                        "this.on('open', handler);\n" +
+                        "this.off('open', handler);\n" +
+                        "```"
+                }
+            ],
+            statements: this.accumulateHandlers
+                ? [
+                      this.getAccumulatedHandlersStatement(),
+                      `const index = handlers.lastIndexOf(${callback});`,
+                      "if (index !== -1) {",
+                      "    handlers.splice(index, 1);",
+                      "}"
+                  ]
+                : [
+                      `if (this.${eventHandlers}[${event}] === ${callback}) {`,
+                      `    delete this.${eventHandlers}[${event}];`,
+                      "}"
+                  ]
+        };
+    }
+
+    private getDispatchStatement(
+        event: (typeof GeneratedWebsocketSocketClassImpl.EVENT_NAMES)[number],
+        args: string
+    ): string {
+        const target = `this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.${event}`;
+        if (!this.accumulateHandlers) {
+            return `${target}?.(${args});`;
+        }
+        return `for (const handler of [...${target}]) { handler(${args}); }`;
     }
 
     private generateSendHelperMethods(context: FileContext): MethodDeclarationStructure[] {
@@ -382,16 +490,25 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             statements: [
                 `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.reconnect();`,
                 "",
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", this.handleOpen);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}", this.handleMessage);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("close", this.handleClose);`,
-                `this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", this.handleError);`,
-                "",
+                ...(
+                    [
+                        ["open", "this.handleOpen"],
+                        [GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME, "this.handleMessage"],
+                        ["close", "this.handleClose"],
+                        ["error", "this.handleError"]
+                    ] as const
+                ).map(
+                    ([event, handler]) =>
+                        `if (!this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.hasEventListener("${event}", ${handler})) {\n` +
+                        `    this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("${event}", ${handler});\n` +
+                        `}`
+                ),
                 "return this;"
             ],
             docs: [
                 {
-                    description: "Connect to the websocket and register event handlers."
+                    description:
+                        "Connect to the websocket and register event handlers. Safe to call multiple times: each handler is only registered if it is not already attached."
                 }
             ]
         };
@@ -429,22 +546,13 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isAsync: true,
             returnType: `Promise<${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}>`,
             statements: [
-                `if (this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.readyState === ${getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())}.ReadyState.OPEN) {`,
-                `    return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`,
-                "}",
-                "return new Promise((resolve, reject) => {",
-                `    this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("open", () => {`,
-                `        resolve(this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME});`,
-                "    });",
-                "",
-                `    this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.addEventListener("error", (event: unknown) => {`,
-                "        reject(event);",
-                "    });",
-                "});"
+                `await this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME}.waitForOpen();`,
+                `return this.${GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME};`
             ],
             docs: [
                 {
-                    description: "Returns a promise that resolves when the websocket is open."
+                    description:
+                        "Returns a promise that resolves when the websocket is open, and rejects if it errors or closes before opening."
                 }
             ]
         };
@@ -529,14 +637,17 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             bodyLines.push(
                 `const parsedResponse = ${getTextOfTsNode(this.getUnionedParseResponse(context))};`,
                 "if (parsedResponse.ok) {",
-                `    this.eventHandlers.${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}?.(parsedResponse.value);`,
+                `    ${this.getDispatchStatement("message", "parsedResponse.value")}`,
                 "} else {",
-                '    this.eventHandlers.error?.(new Error("Received unknown message type"));',
+                `    ${this.getDispatchStatement("error", 'new Error("Received unknown message type")')}`,
                 "}"
             );
         } else {
             bodyLines.push(
-                `this.eventHandlers.message?.(data as ${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME});`
+                this.getDispatchStatement(
+                    "message",
+                    `data as ${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.RESPONSE_PROPERTY_NAME}`
+                )
             );
         }
 
@@ -558,7 +669,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             scope: Scope.Private,
             type: "() => void",
             initializer: `() => {
-        this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.open?.();
+        ${this.getDispatchStatement("open", "")}
     }`
         };
     }
@@ -570,7 +681,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             scope: Scope.Private,
             type: `(event: ${getTextOfTsNode(context.coreUtilities.websocket.CloseEvent._getReferenceToType())}) => void`,
             initializer: `event => {
-        this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.close?.(event);
+        ${this.getDispatchStatement("close", "event")}
     }`
         };
     }
@@ -583,7 +694,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             type: `(event: ${getTextOfTsNode(context.coreUtilities.websocket.ErrorEvent._getReferenceToType())}) => void`,
             initializer: `event => {
         const ${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME} = event.message;
-        this.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME}.error?.(new Error(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME}));
+        ${this.getDispatchStatement("error", `new Error(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME})`)}
     }`
         };
     }

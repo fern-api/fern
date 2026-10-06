@@ -268,6 +268,10 @@ function getTypeString(context: SdkGeneratorContext, typeReference: FernIr.TypeR
     switch (typeReference.type) {
         case "primitive": {
             const primitiveType = typeReference.primitive.v1;
+            const primitiveV2 = typeReference.primitive.v2;
+            if (primitiveV2?.type === "string" && primitiveV2.validation?.format === "binary") {
+                return "bytes";
+            }
             switch (primitiveType) {
                 case "STRING":
                 case "BASE_64":

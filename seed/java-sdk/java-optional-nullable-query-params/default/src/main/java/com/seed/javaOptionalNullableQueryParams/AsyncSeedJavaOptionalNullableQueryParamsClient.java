@@ -5,11 +5,12 @@ package com.seed.javaOptionalNullableQueryParams;
 
 import com.seed.javaOptionalNullableQueryParams.core.ClientOptions;
 import com.seed.javaOptionalNullableQueryParams.core.RequestOptions;
+import com.seed.javaOptionalNullableQueryParams.core.SeedJavaOptionalNullableQueryParamsHttpResponse;
 import com.seed.javaOptionalNullableQueryParams.requests.SearchRequest;
 import com.seed.javaOptionalNullableQueryParams.types.SearchResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaOptionalNullableQueryParamsClient {
+public class AsyncSeedJavaOptionalNullableQueryParamsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaOptionalNullableQueryParamsClient rawClient;
@@ -30,28 +31,70 @@ public class AsyncSeedJavaOptionalNullableQueryParamsClient {
      * Search endpoint with optional nullable query params with defaults
      */
     public CompletableFuture<SearchResponse> search() {
-        return this.rawClient.search().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.search();
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Search endpoint with optional nullable query params with defaults
      */
     public CompletableFuture<SearchResponse> search(RequestOptions requestOptions) {
-        return this.rawClient.search(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.search(requestOptions);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Search endpoint with optional nullable query params with defaults
      */
     public CompletableFuture<SearchResponse> search(SearchRequest request) {
-        return this.rawClient.search(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.search(request);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Search endpoint with optional nullable query params with defaults
      */
     public CompletableFuture<SearchResponse> search(SearchRequest request, RequestOptions requestOptions) {
-        return this.rawClient.search(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalNullableQueryParamsHttpResponse<SearchResponse>> rawFuture =
+                this.rawClient.search(request, requestOptions);
+        CompletableFuture<SearchResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaOptionalNullableQueryParamsClientBuilder builder() {

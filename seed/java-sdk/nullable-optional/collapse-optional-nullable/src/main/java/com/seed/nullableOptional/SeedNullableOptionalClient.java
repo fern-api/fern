@@ -8,7 +8,7 @@ import com.seed.nullableOptional.core.Suppliers;
 import com.seed.nullableOptional.resources.nullableoptional.NullableOptionalClient;
 import java.util.function.Supplier;
 
-public class SeedNullableOptionalClient {
+public class SeedNullableOptionalClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<NullableOptionalClient> nullableOptionalClient;
@@ -20,6 +20,16 @@ public class SeedNullableOptionalClient {
 
     public NullableOptionalClient nullableOptional() {
         return this.nullableOptionalClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedNullableOptionalClientBuilder builder() {

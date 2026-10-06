@@ -13,23 +13,23 @@ public class CreateTreeTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "plantedDate": "2023-01-15",
-              "treeSpecies": "treeSpecies",
-              "heightInFeet": 1.1,
-              "id": "id",
               "treeName": "treeName",
-              "treeDescription": "treeDescription"
+              "treeSpecies": "treeSpecies",
+              "plantedDate": "2023-01-15",
+              "heightInFeet": 1.1,
+              "treeDescription": "treeDescription",
+              "id": "id"
             }
             """;
 
         const string mockResponse = """
             {
-              "plantedDate": "2023-01-15",
-              "treeSpecies": "treeSpecies",
-              "heightInFeet": 1.1,
-              "id": "id",
               "treeName": "treeName",
-              "treeDescription": "treeDescription"
+              "treeSpecies": "treeSpecies",
+              "plantedDate": "2023-01-15",
+              "heightInFeet": 1.1,
+              "treeDescription": "treeDescription",
+              "id": "id"
             }
             """;
 
@@ -51,12 +51,12 @@ public class CreateTreeTest : BaseMockServerTest
         var response = await Client.CreateTreeAsync(
             new TreeRecord
             {
-                PlantedDate = new DateOnly(2023, 1, 15),
-                TreeSpecies = "treeSpecies",
-                HeightInFeet = 1.1,
-                Id = "id",
                 TreeName = "treeName",
+                TreeSpecies = "treeSpecies",
+                PlantedDate = new DateOnly(2023, 1, 15),
+                HeightInFeet = 1.1,
                 TreeDescription = "treeDescription",
+                Id = "id",
             }
         );
         JsonAssert.AreEqual(response, mockResponse);
@@ -67,7 +67,9 @@ public class CreateTreeTest : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "id": "id"
+              "treeName": "treeName",
+              "id": "id",
+              "treeSpecies": "treeSpecies"
             }
             """;
 
@@ -97,7 +99,14 @@ public class CreateTreeTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.CreateTreeAsync(new TreeRecord { Id = "id" });
+        var response = await Client.CreateTreeAsync(
+            new TreeRecord
+            {
+                TreeName = "treeName",
+                Id = "id",
+                TreeSpecies = "treeSpecies",
+            }
+        );
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

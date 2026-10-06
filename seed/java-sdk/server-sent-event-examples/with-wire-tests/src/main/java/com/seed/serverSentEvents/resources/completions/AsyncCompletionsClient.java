@@ -5,6 +5,7 @@ package com.seed.serverSentEvents.resources.completions;
 
 import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.RequestOptions;
+import com.seed.serverSentEvents.core.SeedServerSentEventsHttpResponse;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;
 import com.seed.serverSentEvents.resources.completions.requests.StreamEventsDiscriminantInDataRequest;
@@ -33,44 +34,108 @@ public class AsyncCompletionsClient {
     }
 
     public CompletableFuture<Iterable<StreamedCompletion>> stream(StreamCompletionRequest request) {
-        return this.rawClient.stream(request).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> rawFuture =
+                this.rawClient.stream(request);
+        CompletableFuture<Iterable<StreamedCompletion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamedCompletion>> stream(
             StreamCompletionRequest request, RequestOptions requestOptions) {
-        return this.rawClient.stream(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamedCompletion>>> rawFuture =
+                this.rawClient.stream(request, requestOptions);
+        CompletableFuture<Iterable<StreamedCompletion>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamEvent>> streamEvents(StreamEventsRequest request) {
-        return this.rawClient.streamEvents(request).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEvent>>> rawFuture =
+                this.rawClient.streamEvents(request);
+        CompletableFuture<Iterable<StreamEvent>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamEvent>> streamEvents(
             StreamEventsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.streamEvents(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEvent>>> rawFuture =
+                this.rawClient.streamEvents(request, requestOptions);
+        CompletableFuture<Iterable<StreamEvent>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamEventDiscriminantInData>> streamEventsDiscriminantInData(
             StreamEventsDiscriminantInDataRequest request) {
-        return this.rawClient.streamEventsDiscriminantInData(request).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>>> rawFuture =
+                this.rawClient.streamEventsDiscriminantInData(request);
+        CompletableFuture<Iterable<StreamEventDiscriminantInData>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamEventDiscriminantInData>> streamEventsDiscriminantInData(
             StreamEventsDiscriminantInDataRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamEventsDiscriminantInData(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventDiscriminantInData>>> rawFuture =
+                this.rawClient.streamEventsDiscriminantInData(request, requestOptions);
+        CompletableFuture<Iterable<StreamEventDiscriminantInData>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamEventContextProtocol>> streamEventsContextProtocol(
             StreamEventsContextProtocolRequest request) {
-        return this.rawClient.streamEventsContextProtocol(request).thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventContextProtocol>>> rawFuture =
+                this.rawClient.streamEventsContextProtocol(request);
+        CompletableFuture<Iterable<StreamEventContextProtocol>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Iterable<StreamEventContextProtocol>> streamEventsContextProtocol(
             StreamEventsContextProtocolRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .streamEventsContextProtocol(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedServerSentEventsHttpResponse<Iterable<StreamEventContextProtocol>>> rawFuture =
+                this.rawClient.streamEventsContextProtocol(request, requestOptions);
+        CompletableFuture<Iterable<StreamEventContextProtocol>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

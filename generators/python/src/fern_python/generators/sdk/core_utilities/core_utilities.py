@@ -1,5 +1,6 @@
+import json
 import os
-from typing import Optional, Set
+from typing import List, Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
@@ -32,6 +33,8 @@ class CoreUtilities:
         has_webhook_signature_verification: bool = False,
         generates_idempotency_key: bool = False,
         has_streaming_endpoints: bool = False,
+        has_xml_types: bool = False,
+        auth_header_names: Optional[List[str]] = None,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -57,6 +60,8 @@ class CoreUtilities:
         self._has_webhook_signature_verification = has_webhook_signature_verification
         self._stream_abstraction = custom_config.stream_abstraction
         self._has_streaming_endpoints = has_streaming_endpoints
+        self._has_xml_types = has_xml_types
+        self._auth_header_names = sorted({name.lower() for name in (auth_header_names or [])})
 
     def copy_to_project(self, *, project: Project) -> None:
         datetime_replacements = (
@@ -181,6 +186,11 @@ class CoreUtilities:
             if self._retry_status_codes == "recommended"
             else "response.status_code >= 500 or response.status_code in [429, 408, 409]"
         )
+        auth_headers_placeholder = "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()  # {{AUTH_HEADERS}}"
+        http_client_source = os.path.join(self._resolve_core_utilities_path("http_client.py"), "http_client.py")
+        with open(http_client_source, "r") as http_client_file:
+            if auth_headers_placeholder not in http_client_file.read():
+                raise RuntimeError(f"{http_client_source} is missing the {{{{AUTH_HEADERS}}}} placeholder line")
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="http_client.py",
@@ -191,6 +201,11 @@ class CoreUtilities:
             exports={"HttpClient", "AsyncHttpClient"} if not self._exclude_types_from_init_exports else set(),
             string_replacements={
                 "return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}": f"return {retry_status_check}",
+                auth_headers_placeholder: (
+                    f"_AUTH_HEADERS: typing.FrozenSet[str] = frozenset({{{', '.join(json.dumps(name) for name in self._auth_header_names)}}})"
+                    if len(self._auth_header_names) > 0
+                    else "_AUTH_HEADERS: typing.FrozenSet[str] = frozenset()"
+                ),
             },
         )
 
@@ -301,6 +316,17 @@ class CoreUtilities:
             if not self._exclude_types_from_init_exports
             else set(),
         )
+
+        if self._has_xml_types:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="xml_utilities.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="xml_utilities"),
+                ),
+                exports=set(),
+            )
 
         if self._has_standard_paginated_endpoints:
             self._copy_file_to_project(
@@ -943,6 +969,15 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pagination"),
                 named_import="AsyncPager" if is_async else "SyncPager",
+            ),
+        )
+
+    def get_reference_to_pagination_helper(self, name: str) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pagination"),
+                named_import=name,
             ),
         )
 

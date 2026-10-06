@@ -4,16 +4,19 @@ import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ProtobufTypeSchema } from "./ProtobufTypeSchema.js";
+import { XmlEncodingSchema } from "./XmlEncodingSchema.js";
 
 export const EncodingSchema: core.serialization.ObjectSchema<
     serializers.EncodingSchema.Raw,
     FernDefinition.EncodingSchema
 > = core.serialization.object({
     proto: ProtobufTypeSchema.optional(),
+    xml: XmlEncodingSchema.optional(),
 });
 
 export declare namespace EncodingSchema {
     export interface Raw {
         proto?: ProtobufTypeSchema.Raw | null;
+        xml?: XmlEncodingSchema.Raw | null;
     }
 }

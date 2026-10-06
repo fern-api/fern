@@ -43,10 +43,12 @@ func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DoubleOptional) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetOptionalAlias sets the OptionalAlias field and marks it as non-optional;
@@ -98,15 +100,15 @@ func (d *DoubleOptional) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
-// Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.
-// This type should NOT derive Default in Rust because the parent type
-// has a required enum field.
 var (
 	extendedObjectWithInheritedEnumFieldRequiredEnum        = big.NewInt(1 << 0)
 	extendedObjectWithInheritedEnumFieldRequiredString      = big.NewInt(1 << 1)
 	extendedObjectWithInheritedEnumFieldOptionalDescription = big.NewInt(1 << 2)
 )
 
+// Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.
+// This type should NOT derive Default in Rust because the parent type
+// has a required enum field.
 type ExtendedObjectWithInheritedEnum struct {
 	RequiredEnum        WeatherReport `json:"requiredEnum" url:"requiredEnum"`
 	RequiredString      string        `json:"requiredString" url:"requiredString"`
@@ -148,10 +150,12 @@ func (e *ExtendedObjectWithInheritedEnum) GetExtraProperties() map[string]interf
 }
 
 func (e *ExtendedObjectWithInheritedEnum) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetRequiredEnum sets the RequiredEnum field and marks it as non-optional;
@@ -258,10 +262,12 @@ func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interfac
 }
 
 func (n *NestedObjectWithOptionalField) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -358,10 +364,12 @@ func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interfac
 }
 
 func (n *NestedObjectWithRequiredField) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -420,14 +428,14 @@ func (n *NestedObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// This type tests that string fields containing datetime-like values
-// are NOT reformatted by the wire test generator. The string field
-// should preserve its exact value even if it looks like a datetime.
 var (
 	objectWithDatetimeLikeStringFieldDatetimeLikeString = big.NewInt(1 << 0)
 	objectWithDatetimeLikeStringFieldActualDatetime     = big.NewInt(1 << 1)
 )
 
+// This type tests that string fields containing datetime-like values
+// are NOT reformatted by the wire test generator. The string field
+// should preserve its exact value even if it looks like a datetime.
 type ObjectWithDatetimeLikeString struct {
 	// A string field that happens to contain a datetime-like value
 	DatetimeLikeString string `json:"datetimeLikeString" url:"datetimeLikeString"`
@@ -463,10 +471,12 @@ func (o *ObjectWithDatetimeLikeString) GetExtraProperties() map[string]interface
 }
 
 func (o *ObjectWithDatetimeLikeString) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetDatetimeLikeString sets the DatetimeLikeString field and marks it as non-optional;
@@ -533,11 +543,11 @@ func (o *ObjectWithDatetimeLikeString) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that unknown types are able to preserve their type names.
 var (
 	objectWithDocumentedUnknownTypeFieldDocumentedUnknownType = big.NewInt(1 << 0)
 )
 
+// Tests that unknown types are able to preserve their type names.
 type ObjectWithDocumentedUnknownType struct {
 	DocumentedUnknownType DocumentedUnknownType `json:"documentedUnknownType" url:"documentedUnknownType"`
 
@@ -563,10 +573,12 @@ func (o *ObjectWithDocumentedUnknownType) GetExtraProperties() map[string]interf
 }
 
 func (o *ObjectWithDocumentedUnknownType) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetDocumentedUnknownType sets the DocumentedUnknownType field and marks it as non-optional;
@@ -618,13 +630,13 @@ func (o *ObjectWithDocumentedUnknownType) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// A base object that has a required enum field, preventing Default derive
-// in Rust because enums don't implement Default.
 var (
 	objectWithInheritedRequiredEnumFieldRequiredEnum   = big.NewInt(1 << 0)
 	objectWithInheritedRequiredEnumFieldRequiredString = big.NewInt(1 << 1)
 )
 
+// A base object that has a required enum field, preventing Default derive
+// in Rust because enums don't implement Default.
 type ObjectWithInheritedRequiredEnum struct {
 	RequiredEnum   WeatherReport `json:"requiredEnum" url:"requiredEnum"`
 	RequiredString string        `json:"requiredString" url:"requiredString"`
@@ -658,10 +670,12 @@ func (o *ObjectWithInheritedRequiredEnum) GetExtraProperties() map[string]interf
 }
 
 func (o *ObjectWithInheritedRequiredEnum) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredEnum sets the RequiredEnum field and marks it as non-optional;
@@ -749,10 +763,12 @@ func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithMapOfMap) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetMap sets the Map field and marks it as non-optional;
@@ -804,9 +820,6 @@ func (o *ObjectWithMapOfMap) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that dynamic snippets include all required properties even when
-// the example data only provides a subset. In C#, properties marked as
-// `required` must be set in the object initializer.
 var (
 	objectWithMixedRequiredAndOptionalFieldsFieldRequiredString  = big.NewInt(1 << 0)
 	objectWithMixedRequiredAndOptionalFieldsFieldRequiredInteger = big.NewInt(1 << 1)
@@ -814,6 +827,9 @@ var (
 	objectWithMixedRequiredAndOptionalFieldsFieldRequiredLong    = big.NewInt(1 << 3)
 )
 
+// Tests that dynamic snippets include all required properties even when
+// the example data only provides a subset. In C#, properties marked as
+// `required` must be set in the object initializer.
 type ObjectWithMixedRequiredAndOptionalFields struct {
 	RequiredString  string  `json:"requiredString" url:"requiredString"`
 	RequiredInteger int     `json:"requiredInteger" url:"requiredInteger"`
@@ -863,10 +879,12 @@ func (o *ObjectWithMixedRequiredAndOptionalFields) GetExtraProperties() map[stri
 }
 
 func (o *ObjectWithMixedRequiredAndOptionalFields) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredString sets the RequiredString field and marks it as non-optional;
@@ -1077,10 +1095,12 @@ func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithOptionalField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -1228,13 +1248,13 @@ func (o *ObjectWithOptionalField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that a struct with a required field whose type extends a non-Default
-// base type does NOT incorrectly derive Default in Rust. Reproduces the bug
-// where namedTypeSupportsDefault only checked properties but not extends.
 var (
 	objectWithRequiredExtendedFieldFieldRequiredExtended = big.NewInt(1 << 0)
 )
 
+// Tests that a struct with a required field whose type extends a non-Default
+// base type does NOT incorrectly derive Default in Rust. Reproduces the bug
+// where namedTypeSupportsDefault only checked properties but not extends.
 type ObjectWithRequiredExtendedField struct {
 	RequiredExtended *ExtendedObjectWithInheritedEnum `json:"requiredExtended" url:"requiredExtended"`
 
@@ -1260,10 +1280,12 @@ func (o *ObjectWithRequiredExtendedField) GetExtraProperties() map[string]interf
 }
 
 func (o *ObjectWithRequiredExtendedField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredExtended sets the RequiredExtended field and marks it as non-optional;
@@ -1344,10 +1366,12 @@ func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithRequiredField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;
@@ -1399,14 +1423,14 @@ func (o *ObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that dynamic snippets recursively construct default objects for
-// required properties whose type is a named object. The nested object's
-// own required properties should also be filled with defaults.
 var (
 	objectWithRequiredNestedObjectFieldRequiredString = big.NewInt(1 << 0)
 	objectWithRequiredNestedObjectFieldRequiredObject = big.NewInt(1 << 1)
 )
 
+// Tests that dynamic snippets recursively construct default objects for
+// required properties whose type is a named object. The nested object's
+// own required properties should also be filled with defaults.
 type ObjectWithRequiredNestedObject struct {
 	RequiredString string                         `json:"requiredString" url:"requiredString"`
 	RequiredObject *NestedObjectWithRequiredField `json:"requiredObject" url:"requiredObject"`
@@ -1440,10 +1464,12 @@ func (o *ObjectWithRequiredNestedObject) GetExtraProperties() map[string]interfa
 }
 
 func (o *ObjectWithRequiredNestedObject) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetRequiredString sets the RequiredString field and marks it as non-optional;
@@ -1502,12 +1528,12 @@ func (o *ObjectWithRequiredNestedObject) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-// Tests that unknown/any values containing backslashes in map keys
-// are properly escaped in Go string literals.
 var (
 	objectWithUnknownFieldFieldUnknown = big.NewInt(1 << 0)
 )
 
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
 type ObjectWithUnknownField struct {
 	Unknown any `json:"unknown" url:"unknown"`
 
@@ -1533,10 +1559,12 @@ func (o *ObjectWithUnknownField) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectWithUnknownField) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetUnknown sets the Unknown field and marks it as non-optional;

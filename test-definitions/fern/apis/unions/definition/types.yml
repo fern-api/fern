@@ -191,6 +191,31 @@ types:
           type: datetime
           value: 1994-01-01T01:01:01Z
 
+  # A union whose member names collide with JavaScript built-ins. The
+  # TypeScript generator qualifies a shadowed *type reference* as
+  # `globalThis.X`, and that qualification was leaking into the discriminant's
+  # string literal — emitting `type: "globalThis.Date"` where the wire value is
+  # `"Date"`. `UnionWithTime` above covers the type-reference half (it has
+  # `value: globalThis.Date`) but no member named after a global, which is why
+  # the literal bug went unnoticed.
+  UnionWithGlobalNameCollisions:
+    union:
+      Date:
+        type: string
+      Error:
+        type: string
+      Aim:
+        type: string
+    examples:
+      - name: date
+        value:
+          type: Date
+          value: collides-with-the-js-global
+      - name: aim
+        value:
+          type: Aim
+          value: no-collision
+
   UnionWithOptionalTime:
     union:
       date: optional<date>

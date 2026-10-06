@@ -235,6 +235,40 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
+    @Test func getAndReturnMapOfIntegerToObject1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "1": {
+                    "string": "string"
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            1: ObjectWithRequiredField(
+                string: "string"
+            )
+        ]
+        let response = try await client.endpoints.container.getAndReturnMapOfIntegerToObject(
+            request: [
+                1: ObjectWithRequiredField(
+                    string: "string"
+                )
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getAndReturnOptional1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

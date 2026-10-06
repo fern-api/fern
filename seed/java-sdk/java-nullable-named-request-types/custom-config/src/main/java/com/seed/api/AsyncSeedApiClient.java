@@ -5,12 +5,13 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.NonNullableObject;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
 import com.seed.api.types.ResponseBody;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -29,41 +30,89 @@ public class AsyncSeedApiClient {
 
     public CompletableFuture<ResponseBody> postWithNullableNamedRequestBodyType(
             String pathId, PostWithNullableNamedRequestBodyTypeRequest request) {
-        return this.rawClient
-                .postWithNullableNamedRequestBodyType(pathId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ResponseBody>> rawFuture =
+                this.rawClient.postWithNullableNamedRequestBodyType(pathId, request);
+        CompletableFuture<ResponseBody> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ResponseBody> postWithNullableNamedRequestBodyType(
             String pathId, PostWithNullableNamedRequestBodyTypeRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .postWithNullableNamedRequestBodyType(pathId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ResponseBody>> rawFuture =
+                this.rawClient.postWithNullableNamedRequestBodyType(pathId, request, requestOptions);
+        CompletableFuture<ResponseBody> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(String pathId) {
-        return this.rawClient.postWithNonNullableNamedRequestBodyType(pathId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ResponseBody>> rawFuture =
+                this.rawClient.postWithNonNullableNamedRequestBodyType(pathId);
+        CompletableFuture<ResponseBody> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String pathId, RequestOptions requestOptions) {
-        return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(pathId, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ResponseBody>> rawFuture =
+                this.rawClient.postWithNonNullableNamedRequestBodyType(pathId, requestOptions);
+        CompletableFuture<ResponseBody> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String pathId, NonNullableObject request) {
-        return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(pathId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ResponseBody>> rawFuture =
+                this.rawClient.postWithNonNullableNamedRequestBodyType(pathId, request);
+        CompletableFuture<ResponseBody> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String pathId, NonNullableObject request, RequestOptions requestOptions) {
-        return this.rawClient
-                .postWithNonNullableNamedRequestBodyType(pathId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ResponseBody>> rawFuture =
+                this.rawClient.postWithNonNullableNamedRequestBodyType(pathId, request, requestOptions);
+        CompletableFuture<ResponseBody> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

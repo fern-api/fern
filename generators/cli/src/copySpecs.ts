@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import type { DetectedAuthBinding } from "./detectAuth.js";
+import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
 export interface RawSpecsManifestEntry {
@@ -22,6 +22,13 @@ export interface RawSpecsManifest {
  */
 // biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
 const SAFE_RUST_STRING_LITERAL = /^[^"\\\x00-\x1f]+$/;
+
+/**
+ * The `profiles` group name the SDK's `ProfilesConfig::new()` already
+ * defaults to. Matching it lets `renderMainRs` skip the `.command_name(...)`
+ * builder call in the common case.
+ */
+export const DEFAULT_PROFILES_COMMAND_NAME = "profiles";
 
 /** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
@@ -84,6 +91,22 @@ export async function copySpecs(args: {
      * flag/env name instead of the default `user-agent-suffix`.
      */
     userAgentSuffixFlag?: string;
+    /**
+     * When set, emit `.profiles(ProfilesConfig::new()...)` on the CliApp
+     * chain so the generated CLI gets the `profiles` group, the global
+     * `--profile` / `-p` flag, and profile-sourced defaults. Absent →
+     * no call is emitted at all and the feature is entirely inert.
+     */
+    profilesCommandName?: string;
+    /** Dotted command path for `profiles remove --revoke`. */
+    profilesRevokeOperation?: string;
+    /**
+     * When set and at least one auth binding exists, emit
+     * `.auth_strategy(AuthStrategy::<variant>)` on the OpenApiBinding chain so the
+     * runtime composes the bound schemes the way the IR's `auth.requirement`
+     * says, rather than deriving a strategy from the spec's `security`.
+     */
+    authStrategy?: AuthStrategyVariant;
 }): Promise<void> {
     const {
         outputDir,
@@ -93,7 +116,10 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
-        userAgentSuffixFlag
+        userAgentSuffixFlag,
+        profilesCommandName,
+        profilesRevokeOperation,
+        authStrategy
     } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
@@ -124,7 +150,10 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
-            userAgentSuffixFlag
+            userAgentSuffixFlag,
+            profilesCommandName,
+            profilesRevokeOperation,
+            authStrategy
         })
     );
 
@@ -217,9 +246,26 @@ function renderMainRs(args: {
     customCommands: boolean;
     rootGroup?: string;
     userAgentSuffixFlag?: string;
+    profilesCommandName?: string;
+    profilesRevokeOperation?: string;
+    authStrategy?: AuthStrategyVariant;
 }): string {
-    const { binaryName, entries, authBindings, globalParamBindings, customCommands, rootGroup, userAgentSuffixFlag } =
-        args;
+    const {
+        binaryName,
+        entries,
+        authBindings,
+        globalParamBindings,
+        customCommands,
+        rootGroup,
+        userAgentSuffixFlag,
+        profilesCommandName,
+        profilesRevokeOperation,
+        authStrategy
+    } = args;
+
+    // A strategy only means something once there is a scheme to compose;
+    // skip it (and its import) for unauthenticated APIs.
+    const emittedAuthStrategy = authBindings.length > 0 ? authStrategy : undefined;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -227,6 +273,9 @@ function renderMainRs(args: {
 
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
+    if (profilesCommandName != null) {
+        imports.push("use fern_cli_sdk::profiles::ProfilesConfig;");
+    }
     const authTypeImports = new Set<string>();
     for (const binding of [...rootAuthBindings, ...bindingAuthBindings]) {
         if (binding.authTypeImport != null) {
@@ -234,6 +283,9 @@ function renderMainRs(args: {
                 authTypeImports.add(imp.trim());
             }
         }
+    }
+    if (emittedAuthStrategy != null) {
+        authTypeImports.add("AuthStrategy");
     }
     if (authTypeImports.size > 0) {
         imports.push(`use fern_cli_sdk::auth::{${[...authTypeImports].sort().join(", ")}};`);
@@ -277,6 +329,35 @@ function renderMainRs(args: {
         lines.push(`        .user_agent_suffix_flag("${userAgentSuffixFlag}")`);
     }
 
+    // Named profiles. Emitted only when the consumer opted in, so a
+    // generation without the config block is byte-identical to one from
+    // before the feature existed.
+    if (profilesCommandName != null) {
+        if (!SAFE_RUST_STRING_LITERAL.test(profilesCommandName)) {
+            throw new Error(
+                `Unsafe profiles.commandName "${profilesCommandName}": contains characters that cannot ` +
+                    "be interpolated into a Rust string literal."
+            );
+        }
+        // `ProfilesConfig::new()` already defaults to `profiles`, so only a
+        // rename produces the extra builder call — keeping the common case's
+        // emitted main.rs as short as it was.
+        let config = "ProfilesConfig::new()";
+        if (profilesCommandName !== DEFAULT_PROFILES_COMMAND_NAME) {
+            config += `.command_name("${profilesCommandName}")`;
+        }
+        if (profilesRevokeOperation != null) {
+            if (!SAFE_RUST_STRING_LITERAL.test(profilesRevokeOperation)) {
+                throw new Error(
+                    `Unsafe profiles.revokeOperation "${profilesRevokeOperation}": contains characters ` +
+                        "that cannot be interpolated into a Rust string literal."
+                );
+            }
+            config += `.revoke_operation("${profilesRevokeOperation}")`;
+        }
+        lines.push(`        .profiles(${config})`);
+    }
+
     // Root-level auth bindings (typed builders)
     for (const binding of rootAuthBindings) {
         lines.push(`        ${binding.rustCall}`);
@@ -309,6 +390,11 @@ function renderMainRs(args: {
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
+    }
+    // Root `.auth(...)` registrations are merged into the binding at run
+    // time, so the strategy composing them is an `OpenApiBinding` setting.
+    if (emittedAuthStrategy != null) {
+        lines.push(`                .auth_strategy(AuthStrategy::${emittedAuthStrategy})`);
     }
     if (rootGroup != null) {
         lines.push(`                .command_namespace("${rootGroup}")`);

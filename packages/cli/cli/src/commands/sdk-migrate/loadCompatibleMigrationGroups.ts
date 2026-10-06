@@ -77,7 +77,7 @@ export async function loadCompatibleMigrationGroups({
     const mismatch = loaded.find((candidate) => migrationInputFingerprint(candidate) !== baselineFingerprint);
     if (mismatch != null) {
         throw new CliError({
-            message: `SDK targets '${targetName(baseline)}' and '${targetName(mismatch)}' resolve to different API schemas. Migrate them into separate SDK Config files.`,
+            message: `SDK targets '${targetName(baseline)}' and '${targetName(mismatch)}' resolve to different API sources, schemas, import settings, or audiences. Migrate them into separate SDK Config files.`,
             code: CliError.Code.ConfigError
         });
     }
@@ -124,8 +124,13 @@ function projectDefinition(definition: FernDefinition, seen: WeakSet<object>): u
         return { cycle: true };
     }
     seen.add(definition);
+    // This metadata is intentionally non-enumerable. Preserve `null` as a distinct fingerprint when a clone or
+    // spread has lost it, rather than treating unknown provenance as an empty source-header list.
+    const sourceDerivedGlobalHeaderNames = definition.sourceDerivedGlobalHeaderNames;
     const projected = {
         specVersion: definition.specVersion,
+        sourceDerivedGlobalHeaderNames:
+            sourceDerivedGlobalHeaderNames == null ? null : [...sourceDerivedGlobalHeaderNames].sort(),
         root: {
             contents: definition.rootApiFile.contents,
             defaultUrl: definition.rootApiFile.defaultUrl

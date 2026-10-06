@@ -1,0 +1,3 @@
+- summary: |
+    Route generators.yml `version: latest` through sdk-gen-api as an unpinned Fern generator request.
+  type: fix

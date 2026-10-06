@@ -446,17 +446,17 @@ for page in pager.iter_pages():
 
     private findPaginationEndpoint(): EndpointWithFilepath | undefined {
         const configuredEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID).filter(
-            (ep) => ep.endpoint.pagination != null
+            (ep) => this.isPaginatedEndpoint(ep.endpoint)
         );
         if (configuredEndpoints.length > 0) {
             return configuredEndpoints[0];
         }
-        return Object.values(this.endpointsById).find((ep) => ep.endpoint.pagination != null);
+        return Object.values(this.endpointsById).find((ep) => this.isPaginatedEndpoint(ep.endpoint));
     }
 
     private renderAccessRawResponseDataSnippet(endpoint: EndpointWithFilepath): string {
         // For paginated endpoints, show pager response pattern instead of .with_raw_response
-        if (endpoint.endpoint.pagination != null) {
+        if (this.isPaginatedEndpoint(endpoint.endpoint)) {
             const methodCall = this.getMethodCall(endpoint);
             const hasParams = this.endpointHasParameters(endpoint.endpoint);
             return this.writeCode(
@@ -752,10 +752,14 @@ ${constructorArg}
         return false;
     }
 
+    private isPaginatedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        return endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
+    }
+
     private hasPaginatedEndpoints(): boolean {
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
-                if (endpoint.pagination != null) {
+                if (this.isPaginatedEndpoint(endpoint)) {
                     return true;
                 }
             }

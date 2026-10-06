@@ -3,10 +3,14 @@
  */
 package com.seed.variables.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import okhttp3.OkHttpClient;
 
@@ -18,6 +22,12 @@ public final class ClientOptions {
     private final Map<String, Supplier<String>> headerSuppliers;
 
     private final OkHttpClient httpClient;
+
+    private final boolean ownsHttpClient;
+
+    private final AtomicBoolean closed;
+
+    private final Set<AutoCloseable> openWebSockets;
 
     private final int timeout;
 
@@ -38,6 +48,9 @@ public final class ClientOptions {
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
+            boolean ownsHttpClient,
+            AtomicBoolean closed,
+            Set<AutoCloseable> openWebSockets,
             int timeout,
             int maxRetries,
             Optional<Long> initialRetryDelayMillis,
@@ -58,6 +71,9 @@ public final class ClientOptions {
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.ownsHttpClient = ownsHttpClient;
+        this.closed = closed;
+        this.openWebSockets = openWebSockets;
         this.timeout = timeout;
         this.maxRetries = maxRetries;
         this.initialRetryDelayMillis = initialRetryDelayMillis;
@@ -122,6 +138,68 @@ public final class ClientOptions {
         return this.retryJitterFactor;
     }
 
+    /**
+     * Releases resources owned by this client. Only shuts down the underlying OkHttpClient's
+     * dispatcher executor and evicts its connection pool when this client created that
+     * OkHttpClient itself; an OkHttpClient supplied via httpClient is left running, since the
+     * caller owns its lifecycle.
+     * <p>
+     * In-flight calls are not cancelled or awaited, and any request issued after this method
+     * returns fails with a {@code RejectedExecutionException}. Options derived from this one via
+     * {@code Builder.from(...)} share the same dispatcher and connection pool, so closing either
+     * releases them for both. Calling this method more than once has no further effect.
+     * <p>
+     * WebSocket clients created from this client that are still connected are disconnected
+     * first (whether or not the OkHttpClient is owned), so they stop reconnecting before the
+     * dispatcher goes away. Any WebSocket connect or reconnect attempted afterwards fails with
+     * an {@code IllegalStateException} explaining that the client has been closed.
+     */
+    public void close() {
+        if (!this.closed.compareAndSet(false, true)) {
+            return;
+        }
+        for (AutoCloseable webSocket : new ArrayList<>(this.openWebSockets)) {
+            try {
+                webSocket.close();
+            } catch (Exception e) {
+                // best effort; keep closing the remaining sockets and the HTTP client
+            }
+        }
+        this.openWebSockets.clear();
+        if (!this.ownsHttpClient) {
+            return;
+        }
+        this.httpClient.dispatcher().executorService().shutdown();
+        this.httpClient.connectionPool().evictAll();
+    }
+
+    /**
+     * Returns whether {@link #close()} has been called on this client.
+     */
+    public boolean isClosed() {
+        return this.closed.get();
+    }
+
+    /**
+     * Tracks a connected WebSocket client so that {@link #close()} disconnects it.
+     *
+     * @throws IllegalStateException if this client has already been closed
+     */
+    public void registerWebSocket(AutoCloseable webSocket) {
+        this.openWebSockets.add(webSocket);
+        if (this.closed.get()) {
+            this.openWebSockets.remove(webSocket);
+            throw new IllegalStateException("root client has been closed");
+        }
+    }
+
+    /**
+     * Stops tracking a WebSocket client that has been disconnected.
+     */
+    public void unregisterWebSocket(AutoCloseable webSocket) {
+        this.openWebSockets.remove(webSocket);
+    }
+
     public Optional<LogConfig> logging() {
         return this.logging;
     }
@@ -152,6 +230,12 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private boolean ownsHttpClient = true;
+
+        private AtomicBoolean closed;
+
+        private Set<AutoCloseable> openWebSockets;
 
         private Optional<LogConfig> logging = Optional.empty();
 
@@ -222,8 +306,13 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:
+         * close() will not shut down its dispatcher executor or evict its connection pool.
+         */
         public Builder httpClient(OkHttpClient httpClient) {
             this.httpClient = httpClient;
+            this.ownsHttpClient = httpClient == null;
             return this;
         }
 
@@ -270,11 +359,18 @@ public final class ClientOptions {
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
+            AtomicBoolean closedToUse = this.closed != null ? this.closed : new AtomicBoolean(false);
+            Set<AutoCloseable> openWebSocketsToUse =
+                    this.openWebSockets != null ? this.openWebSockets : ConcurrentHashMap.newKeySet();
+
             return new ClientOptions(
                     environment,
                     headers,
                     headerSuppliers,
                     httpClient,
+                    this.ownsHttpClient,
+                    closedToUse,
+                    openWebSocketsToUse,
                     this.timeout.get(),
                     this.maxRetries,
                     this.initialRetryDelayMillis,
@@ -292,6 +388,9 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
+            builder.ownsHttpClient = clientOptions.ownsHttpClient;
+            builder.closed = clientOptions.closed;
+            builder.openWebSockets = clientOptions.openWebSockets;
             builder.headers.putAll(clientOptions.headers);
             builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
             builder.maxRetries = clientOptions.maxRetries();

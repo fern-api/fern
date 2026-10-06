@@ -12,6 +12,18 @@
                 "type": "csharp",
                 "client": "using SeedFileDownload;\n\nvar client = new SeedFileDownloadClient();\nawait client.Service.SimpleAsync();\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_service.downloadFile"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedFileDownload;\n\nvar client = new SeedFileDownloadClient();\nawait client.Service.DownloadFileAsync();\n"
+            }
         }
     ]
 }

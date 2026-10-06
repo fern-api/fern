@@ -5,6 +5,7 @@ package com.seed.nullable.resources.nullable;
 
 import com.seed.nullable.core.ClientOptions;
 import com.seed.nullable.core.RequestOptions;
+import com.seed.nullable.core.SeedNullableHttpResponse;
 import com.seed.nullable.resources.nullable.requests.CreateUserRequest;
 import com.seed.nullable.resources.nullable.requests.DeleteUserRequest;
 import com.seed.nullable.resources.nullable.requests.GetUsersRequest;
@@ -30,42 +31,115 @@ public class AsyncNullableClient {
     }
 
     public CompletableFuture<List<User>> getUsers() {
-        return this.rawClient.getUsers().thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<List<User>>> rawFuture = this.rawClient.getUsers();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getUsers(RequestOptions requestOptions) {
-        return this.rawClient.getUsers(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<List<User>>> rawFuture = this.rawClient.getUsers(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getUsers(GetUsersRequest request) {
-        return this.rawClient.getUsers(request).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<List<User>>> rawFuture = this.rawClient.getUsers(request);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getUsers(GetUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getUsers(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getUsers(request, requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> createUser(CreateUserRequest request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<User>> rawFuture = this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> deleteUser() {
-        return this.rawClient.deleteUser().thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<Boolean>> rawFuture = this.rawClient.deleteUser();
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> deleteUser(RequestOptions requestOptions) {
-        return this.rawClient.deleteUser(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<Boolean>> rawFuture = this.rawClient.deleteUser(requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> deleteUser(DeleteUserRequest request) {
-        return this.rawClient.deleteUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<Boolean>> rawFuture = this.rawClient.deleteUser(request);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Boolean> deleteUser(DeleteUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.deleteUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNullableHttpResponse<Boolean>> rawFuture =
+                this.rawClient.deleteUser(request, requestOptions);
+        CompletableFuture<Boolean> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

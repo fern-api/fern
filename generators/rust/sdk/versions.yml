@@ -1,4 +1,119 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.53.0
+  changelogEntry:
+    - summary: |
+        Add `RequestOptions::additional_body_param` (backed by `additional_body_params`) for sending
+        extra request body properties, such as undocumented or beta fields, without a new SDK release.
+        Properties are merged into the serialized body under their wire-format keys and override
+        generated fields with the same key. When an endpoint has no body, a JSON object containing only
+        the additional properties is sent. JSON and form-urlencoded bodies are supported; multipart and
+        raw bytes bodies are sent unchanged.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        The generated prelude now re-exports `futures::StreamExt`, so `use <crate>::prelude::*;` is enough to
+        iterate SSE streams and paginators without adding `futures` as a direct dependency.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 0.51.0
+  changelogEntry:
+    - summary: |
+        Add `preserveCrateNameHyphens` config option (default `false`). When enabled, hyphens in `crateName`
+        are kept in the generated `Cargo.toml` package name (e.g. `my-sdk` instead of `my_sdk`), as well as in the
+        docs.rs link, README install snippet, and default crates.io publish package name. Rust `use` paths keep
+        the underscored name (`use my_sdk::prelude::*`), matching how Cargo maps hyphenated package names.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.50.0
+  changelogEntry:
+    - summary: |
+        Add the `userAgentFromPlatformHeaders` config option. When it is set to `true`, the default
+        `ClientConfig.user_agent` uses the IR's platform `User-Agent` value (`<package-name>/<version>`
+        by default, or the `user-agent` template from generators.yml), matching the other SDK generators.
+        The option defaults to `false`, which keeps the existing `<ApiName> Rust SDK` value. The Rust SDK
+        also falls back to `<ApiName> Rust SDK` when the IR has no platform User-Agent.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.49.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.49.0
+  changelogEntry:
+    - summary: |
+        Every multi-URL environment now embeds its URLs: `impl Default for <Env>Urls` per
+        environment and a constructor per environment (`Environment::staging()`), so selecting a
+        non-default environment no longer means retyping URLs from `generators.yml`. The README
+        environments snippet of a multi-URL SDK sets `environment` through that constructor instead
+        of `Environment::Production.url()`, which does not compile against a tuple variant.
+      type: feat
+    - summary: |
+        In a multi-URL environment an explicit `base_url` now wins over the default environment.
+        `ClientConfig::default()` set both `base_url` and `environment`, and every endpoint let the
+        environment win, so `ClientConfig { base_url: "https://sandbox…", ..Default::default() }`
+        silently sent every request to the default (production) environment. Requests now go to
+        `base_url` whenever it is anything other than one of the configured environment's URLs (or
+        the default environment's URL that `Default` fills in); otherwise each request goes to the
+        environment's URL for its service, as before. `ClientConfig::service_url` carries the rule.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.48.0
+  changelogEntry:
+    - summary: |
+        Generate webhook signature verification helpers (`src/webhooks.rs` plus a
+        `core::webhook_signature` runtime) when the API defines HMAC-signed webhooks.
+        Helpers verify the configured signature header (HMAC-SHA1/256/384/512, base64 or
+        hex, optional prefix) with constant-time comparison, support sorted/deduplicated
+        form parameters, `bodySHA256`-style body-hash binding for JSON requests,
+        notification URL port/legacy-query normalization, and timestamp tolerance checks.
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 0.47.11
+  changelogEntry:
+    - summary: |
+        Client `mod.rs` files no longer emit `use crate::api::*;` when the glob is not
+        needed. Sub-client structs are already re-exported by the containing module, and
+        root-level endpoints only import the glob when they reference generated types.
+        Previously every nested resource module (and the root resources module) produced
+        an `unused_imports` warning on `cargo build`. Streaming (SSE and JSON-chunk)
+        response payloads now count as generated-type usage, so services whose only
+        generated type is a streamed payload keep the import they need.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 0.47.10
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 0.47.9
+  changelogEntry:
+    - summary: |
+        An undiscriminated union with a single member no longer emits an unreachable
+        `_ => None` arm in its `as_*` / `into_*` accessors. That arm produced an
+        `unreachable_patterns` warning in the generated crate, which blocks users who
+        publish with `-D warnings`.
+      type: fix
+  createdAt: "2026-09-18"
+  irVersion: 67
 - version: 0.47.8
   changelogEntry:
     - summary: |

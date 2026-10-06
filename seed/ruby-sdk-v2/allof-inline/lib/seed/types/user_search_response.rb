@@ -5,7 +5,7 @@ module Seed
     class UserSearchResponse < Internal::Types::Model
       field :paging, -> { Seed::Types::PagingCursors }, optional: false, nullable: false
 
-      field :results, -> { Internal::Types::Array[Seed::Types::User] }, optional: true, nullable: false
+      field :results, -> { Internal::Types::Array[Seed::Types::User] }, optional: false, nullable: false
     end
   end
 end

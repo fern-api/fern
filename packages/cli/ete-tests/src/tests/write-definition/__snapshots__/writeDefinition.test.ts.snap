@@ -211,6 +211,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -228,6 +229,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -347,6 +349,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -364,6 +367,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -741,6 +745,10 @@ channel:
   messages:
     marketData:
       body: streamRoot.Market
+      docs: >
+        The initial response message will show the existing state of the order
+        book. Subsequent messages will show all executed trades, as well as all
+        other changes to the order book from orders placed or canceled.
       origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:
@@ -792,6 +800,9 @@ channel:
       {
         "contents": "types:
   Booking:
+    encoding:
+      xml:
+        name: booking
     properties:
       has_bicycle:
         docs: Indicates whether the passenger has a bicycle.
@@ -1003,6 +1014,10 @@ channel:
     source:
       openapi: openapi/trains/openapi.yml
   Problem:
+    encoding:
+      xml:
+        name: problem
+        namespace: urn:ietf:rfc:7807
     properties:
       detail:
         docs: >-
@@ -1024,6 +1039,9 @@ channel:
     source:
       openapi: openapi/trains/openapi.yml
   Station:
+    encoding:
+      xml:
+        name: station
     properties:
       address:
         docs: The address of the station.
@@ -1049,6 +1067,9 @@ channel:
     source:
       openapi: openapi/trains/openapi.yml
   Trip:
+    encoding:
+      xml:
+        name: trip
     properties:
       arrival_time:
         docs: The date and time when the trip arrives
@@ -1095,6 +1116,9 @@ channel:
     docs: >-
       This is a generic request/response wrapper which contains both data and
       links which serve as hypermedia controls (HATEOAS).
+    encoding:
+      xml:
+        name: data
     properties:
       data:
         docs: The wrapper for a collection is an array of objects.
@@ -1947,6 +1971,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -1964,6 +1989,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -2999,6 +3025,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -3016,6 +3043,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -3125,6 +3153,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -3142,6 +3171,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2

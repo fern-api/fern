@@ -27,7 +27,7 @@ let page = await client.users.list({
     limit: 2
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response
@@ -94,7 +94,7 @@ let page = await client.users.listWithHasNextPage({
     limit: 10
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response

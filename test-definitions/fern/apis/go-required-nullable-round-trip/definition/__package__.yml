@@ -1,0 +1,47 @@
+types:
+  AccountBalance:
+    docs: |
+      Balance information with required-nullable scalars. A required-nullable
+      field that arrives as null must be re-encoded as null; a field that is
+      absent must stay absent.
+    properties:
+      available: double
+      current: double
+      limit: nullable<double>
+      iso_currency_code: nullable<string>
+      unofficial_currency_code: nullable<string>
+      last_updated_datetime: optional<datetime>
+  Account:
+    docs: An account with a nested model that also has required-nullable fields.
+    properties:
+      account_id: string
+      balances: AccountBalance
+      mask: nullable<string>
+      name: string
+      official_name: nullable<string>
+      subtype: nullable<string>
+      type: string
+      owner: nullable<Owner>
+  Owner:
+    properties:
+      name: string
+      email: nullable<string>
+  AccountsResponse:
+    properties:
+      accounts: list<Account>
+      request_id: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getAccounts:
+      method: POST
+      path: /accounts/get
+      request:
+        name: GetAccountsRequest
+        body:
+          properties:
+            access_token: string
+            account_ids: nullable<list<string>>
+      response: AccountsResponse

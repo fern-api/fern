@@ -8,7 +8,9 @@ import {
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
-    getUserAgentTemplateFromGeneratorConfig
+    getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig,
+    VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
@@ -75,7 +77,8 @@ export async function runLocalGenerationForWorkspace({
     generateTests,
     generateFullProject,
     verify,
-    disableTelemetry
+    disableTelemetry,
+    libraryVisibility
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -108,6 +111,11 @@ export async function runLocalGenerationForWorkspace({
      */
     generateFullProject?: boolean;
     disableTelemetry?: boolean;
+    /**
+     * Which `x-twilio.libraryVisibility` tiers of an OpenAPI spec to include in the generated SDK.
+     * `public` (default for `fern generate`) or `private` (`fern generate --private`); `hidden` is always dropped.
+     */
+    libraryVisibility?: VisibilityFilter;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -155,7 +163,10 @@ export async function runLocalGenerationForWorkspace({
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
-                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
+                    {
+                        ...getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
+                        libraryVisibility
+                    },
                     generatorInvocation.apiOverride?.specs
                 );
 
@@ -206,6 +217,7 @@ export async function runLocalGenerationForWorkspace({
                     packageName,
                     userAgentTemplate,
                     idempotencyKeyGeneration,
+                    webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, context),
                     organization: projectConfig.organization,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),
@@ -401,6 +413,10 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
+                const wantsRawSpecs =
+                    workspace instanceof OSSWorkspace &&
+                    generatorWantsSpecs(generatorInvocation.name, generatorInvocation.version);
+
                 const {
                     shouldCommit,
                     autoVersioningCommitMessage,
@@ -427,8 +443,8 @@ export async function runLocalGenerationForWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
                     writeUnitTests: true,
-                    generateOauthClients: orgBody?.oauthClientEnabled ?? false,
-                    generatePaginatedClients: orgBody?.paginationEnabled ?? false,
+                    generateOauthClients: orgBody?.oauthClientEnabled ?? true,
+                    generatePaginatedClients: orgBody?.paginationEnabled ?? true,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
@@ -441,10 +457,7 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
                     disableTelemetry,
-                    rawApiSpecs:
-                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
-                            ? workspace.allSpecs
-                            : undefined
+                    rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

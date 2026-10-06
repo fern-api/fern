@@ -1,0 +1,3 @@
+name: go-required-nullable-round-trip
+error-discrimination:
+  strategy: status-code

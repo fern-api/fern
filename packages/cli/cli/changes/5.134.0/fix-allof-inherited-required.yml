@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix OpenAPI `allOf` required-ness when a branch lists a property in `required` that is defined
+    only by another (parent) branch. The property is now required on the composed type, so a
+    `nullable: true` property becomes required-nullable and round-trips `null` in generated SDKs.
+    Multi-level `allOf` chains are handled; properties required in no branch stay optional.
+  type: fix
+- summary: |
+    When an OpenAPI `allOf` parent is inlined into a type or request body because of a property
+    conflict, the inlined properties now keep their metadata (`readOnly` filtering on write
+    request bodies, `x-fern-property-name`, `x-fern-audiences`, `deprecated`, access, and XML
+    encoding) instead of being copied as bare type references.
+  type: fix
+- summary: |
+    Fix `fern check` reporting duplicate properties when an OpenAPI schema with a `nullable: true`
+    `allOf` parent lists parent-defined properties in its own top-level `required`. The nullable
+    parent is now inlined (instead of being kept in `extends` alongside the redeclared property).
+  type: fix

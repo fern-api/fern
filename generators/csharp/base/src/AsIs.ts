@@ -82,6 +82,11 @@ export const AsIsFiles = {
         Optional: "Optional.Template.cs",
         OptionalAttribute: "OptionalAttribute.Template.cs"
     },
+    Xml: {
+        IXmlNode: "IXmlNode.Template.cs",
+        XmlElement: "XmlElement.Template.cs",
+        XmlUtils: "XmlUtils.Template.cs"
+    },
     Test: {
         HeadersBuilderTests: "test/HeadersBuilderTests.Template.cs",
         QueryStringBuilderTests: "test/QueryStringBuilderTests.Template.cs",
@@ -134,6 +139,9 @@ export const AsIsFiles = {
             WebSocketConnectionTests: "test/WebSockets/WebSocketConnectionTests.Template.cs",
             WebsocketExceptionTests: "test/WebSockets/WebsocketExceptionTests.Template.cs"
         },
+        Xml: {
+            XmlElementTests: "test/Xml/XmlElementTests.Template.cs"
+        },
         Json: {
             AdditionalPropertiesTests: "test/Json/AdditionalPropertiesTests.Template.cs",
             DateOnlyJsonTests: "test/Json/DateOnlyJsonTests.Template.cs",
@@ -141,6 +149,7 @@ export const AsIsFiles = {
             EnumSerializerTests: "test/Json/EnumSerializerTests.Template.cs",
             JsonAccessAttributeTests: "test/Json/JsonAccessAttributeTests.Template.cs",
             OneOfSerializerTests: "test/Json/OneOfSerializerTests.Template.cs",
+            SerializeWithAdditionalPropertiesTests: "test/Json/SerializeWithAdditionalPropertiesTests.Template.cs",
             StringEnumSerializerTests: "test/Json/StringEnumSerializerTests.Template.cs"
         }
     }

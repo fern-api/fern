@@ -7,8 +7,8 @@ pub struct UserSearchResponse {
     #[serde(default)]
     pub paging: PagingCursors,
     /// Current page of results from the requested resource.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub results: Option<Vec<User>>,
+    #[serde(default)]
+    pub results: Vec<User>,
 }
 
 impl UserSearchResponse {
@@ -38,10 +38,11 @@ impl UserSearchResponseBuilder {
     /// Consumes the builder and constructs a [`UserSearchResponse`].
     /// This method will fail if any of the following fields are not set:
     /// - [`paging`](UserSearchResponseBuilder::paging)
+    /// - [`results`](UserSearchResponseBuilder::results)
     pub fn build(self) -> Result<UserSearchResponse, BuildError> {
         Ok(UserSearchResponse {
             paging: self.paging.ok_or_else(|| BuildError::missing_field("paging"))?,
-            results: self.results,
+            results: self.results.ok_or_else(|| BuildError::missing_field("results"))?,
         })
     }
 }

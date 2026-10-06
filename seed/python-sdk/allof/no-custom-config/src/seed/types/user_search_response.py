@@ -9,7 +9,7 @@ from .user import User
 
 
 class UserSearchResponse(UniversalBaseModel):
-    results: typing.Optional[typing.List[User]] = pydantic.Field(default=None)
+    results: typing.List[User] = pydantic.Field()
     """
     Current page of results from the requested resource.
     """

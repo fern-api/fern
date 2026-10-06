@@ -31,9 +31,11 @@ module Seed
           merge_additional_headers(sdk_headers, protected_keys:)
         end
 
-        # @return [String, nil] The encoded HTTP request body.
+        # @return [String, nil] The encoded HTTP request body, including any additional_body_parameters
+        #   from request_options.
         def encode_body
-          @body.nil? ? nil : URI.encode_www_form(@body.to_h.compact)
+          body = merge_additional_body_parameters(@body)
+          body.nil? ? nil : URI.encode_www_form(body.to_h.compact)
         end
       end
     end

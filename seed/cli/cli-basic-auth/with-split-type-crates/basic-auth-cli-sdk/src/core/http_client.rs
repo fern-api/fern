@@ -1,4 +1,5 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
+use base64::Engine;
 use futures::{future::BoxFuture, Stream, StreamExt};
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue},
@@ -98,6 +99,17 @@ impl Stream for ByteStream {
             Poll::Ready(None) => Poll::Ready(None),
             Poll::Pending => Poll::Pending,
         }
+    }
+}
+
+/// Merges `RequestOptions::additional_body_params` (if any) into a serialized request body.
+fn merge_additional_body_params(
+    body: Option<serde_json::Value>,
+    options: &Option<RequestOptions>,
+) -> Option<serde_json::Value> {
+    match options {
+        Some(opts) => opts.merge_additional_body_params(body),
+        None => body,
     }
 }
 
@@ -292,7 +304,7 @@ impl HttpClient {
             }
         }
 
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 
@@ -327,7 +339,7 @@ impl HttpClient {
             }
         }
 
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 
@@ -366,7 +378,7 @@ impl HttpClient {
             }
         }
 
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 
@@ -402,6 +414,20 @@ impl HttpClient {
         options: &Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         let headers = request.headers_mut();
+
+        // Basic auth resolves to `Authorization: Basic <base64(user:pass)>`. Applied before the
+        // bearer branch below, which overwrites the same header when a token is also configured.
+        if let (Some(username), Some(password)) =
+            (self.config.username.as_ref(), self.config.password.as_ref())
+        {
+            let encoded = base64::engine::general_purpose::STANDARD
+                .encode(format!("{}:{}", username, password));
+            let basic_value = format!("Basic {}", encoded);
+            headers.insert(
+                "Authorization",
+                basic_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
+        }
 
         // Apply API key (request options override config)
         let api_key = options
@@ -784,7 +810,7 @@ impl HttpClient {
         }
 
         // Apply body if provided
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 
@@ -820,7 +846,7 @@ impl HttpClient {
             }
         }
 
-        if let Some(body) = body {
+        if let Some(body) = merge_additional_body_params(body, &options) {
             request = request.json(&body);
         }
 
@@ -1116,6 +1142,76 @@ mod tests {
             *self.seen.lock().expect("lock") = Some(request.headers().clone());
             Box::pin(async { Err("not sent".into()) })
         }
+    }
+
+    /// Captures the request body it is handed and refuses to send it.
+    struct BodyRecordingExecutor {
+        seen: std::sync::Mutex<Option<Vec<u8>>>,
+    }
+
+    impl RequestExecutor for BodyRecordingExecutor {
+        fn execute(
+            &self,
+            request: Request,
+        ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
+            *self.seen.lock().expect("lock") = request
+                .body()
+                .and_then(|body| body.as_bytes())
+                .map(|bytes| bytes.to_vec());
+            Box::pin(async { Err("not sent".into()) })
+        }
+    }
+
+    async fn sent_body(
+        body: Option<serde_json::Value>,
+        options: Option<RequestOptions>,
+    ) -> Option<serde_json::Value> {
+        let executor = Arc::new(BodyRecordingExecutor {
+            seen: std::sync::Mutex::new(None),
+        });
+        let config = ClientConfig {
+            base_url: "http://127.0.0.1:1".to_string(),
+            ..Default::default()
+        };
+        let client = HttpClient::with_executor(executor.clone(), config);
+        let _: Result<serde_json::Value, ApiError> = client
+            .execute_request(Method::POST, "/items", body, None, options)
+            .await;
+        let seen = executor.seen.lock().expect("lock").clone();
+        seen.map(|bytes| serde_json::from_slice(&bytes).expect("JSON body"))
+    }
+
+    #[tokio::test]
+    async fn test_execute_request_merges_additional_body_params() {
+        let options = RequestOptions::new()
+            .additional_body_param("name", "override")
+            .additional_body_param("beta", serde_json::json!({"enabled": true}));
+        let body = sent_body(
+            Some(serde_json::json!({"name": "fern", "count": 1})),
+            Some(options),
+        )
+        .await;
+        assert_eq!(
+            body,
+            Some(serde_json::json!({
+                "name": "override",
+                "count": 1,
+                "beta": {"enabled": true}
+            }))
+        );
+    }
+
+    #[tokio::test]
+    async fn test_execute_request_creates_body_from_additional_body_params() {
+        let options = RequestOptions::new().additional_body_param("beta", true);
+        let body = sent_body(None, Some(options)).await;
+        assert_eq!(body, Some(serde_json::json!({"beta": true})));
+    }
+
+    #[tokio::test]
+    async fn test_execute_request_without_body_or_additional_body_params_sends_no_body() {
+        assert_eq!(sent_body(None, None).await, None);
+        assert_eq!(sent_body(None, Some(RequestOptions::new())).await, None);
     }
 
     #[tokio::test]

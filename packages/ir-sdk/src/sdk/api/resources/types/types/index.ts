@@ -79,3 +79,6 @@ export * from "./UndiscriminatedUnionTypeDeclaration.js";
 export * from "./UnionDiscriminatorContext.js";
 export * from "./UnionTypeDeclaration.js";
 export * from "./UuidType.js";
+export * from "./XmlEncoding.js";
+export * from "./XmlPropertyEncoding.js";
+export * from "./XmlPropertyKind.js";

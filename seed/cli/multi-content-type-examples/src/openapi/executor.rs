@@ -16,7 +16,9 @@ use futures_util::StreamExt;
 use serde_json::{json, Map, Value};
 use tokio::io::AsyncWriteExt;
 
-use crate::auth::{handle_error_response, DynAuthProvider, EndpointAuthMetadata};
+use crate::auth::{
+    ensure_credentials_for, handle_error_response, DynAuthProvider, EndpointAuthMetadata,
+};
 use crate::error::CliError;
 use crate::openapi::discovery::{
     BodyEncoding, MethodParameter, PaginationConfig as EndpointPagination, RestDescription,
@@ -936,6 +938,46 @@ fn endpoint_metadata_for(
     EndpointAuthMetadata {
         security_requirements: method.security_requirements.clone(),
         base_url_override: base_url_override.map(str::to_string),
+    }
+}
+
+/// `metadata` with every scheme the caller already satisfies through a
+/// declared parameter dropped from each requirement: `Authorization` for
+/// HTTP/OAuth2 schemes, or the header / query parameter an `apiKey` scheme
+/// reads. A requirement left empty is fully caller-satisfied.
+fn without_caller_supplied_schemes(
+    doc: &RestDescription,
+    metadata: &EndpointAuthMetadata,
+    input: &ExecutionInput,
+) -> EndpointAuthMetadata {
+    use crate::openapi::discovery::SecurityScheme;
+    let has = |params: &[(String, String)], key: &str| {
+        params
+            .iter()
+            .any(|(name, _)| name.eq_ignore_ascii_case(key))
+    };
+    let supplied = |scheme_name: &str| match doc.security_schemes.get(scheme_name) {
+        Some(SecurityScheme::HttpBearer | SecurityScheme::HttpBasic | SecurityScheme::OAuth2) => {
+            has(&input.header_params, "authorization")
+        }
+        Some(SecurityScheme::ApiKeyHeader { name }) => has(&input.header_params, name),
+        Some(SecurityScheme::ApiKeyQuery { name }) => {
+            input.query_params.iter().any(|(k, _)| k == name)
+        }
+        Some(SecurityScheme::Other(_)) | None => false,
+    };
+    EndpointAuthMetadata {
+        security_requirements: metadata.security_requirements.as_ref().map(|reqs| {
+            reqs.iter()
+                .map(|req| {
+                    req.iter()
+                        .filter(|(name, _)| !supplied(name))
+                        .map(|(k, v)| (k.clone(), v.clone()))
+                        .collect()
+                })
+                .collect()
+        }),
+        base_url_override: metadata.base_url_override.clone(),
     }
 }
 
@@ -2276,6 +2318,10 @@ pub async fn execute_method(
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
     let auth_metadata = endpoint_metadata_for(method, base_url_override);
+    ensure_credentials_for(
+        auth_provider.as_ref(),
+        &without_caller_supplied_schemes(doc, &auth_metadata, &input),
+    )?;
 
     // Spawn an external pager when --page-all is active on a TTY.
     let fallback_label = format!(
@@ -2358,12 +2404,17 @@ pub async fn execute_method(
         // the server returns) rather than masking the original failure.
         // Disable retries when the body is a streamed stdin or multipart
         // body — those can't be replayed on a second attempt.
-        let default_retries = RetriesConfig::default();
+        // `--retries N` / `<NAME>_RETRIES` / the active profile override the
+        // spec's `max_attempts`. Resolved into an owned config because the
+        // override has to outlive the borrow of `method.retries`.
+        let default_retries = crate::openapi::discovery::with_retries_override(
+            method.retries.as_ref().unwrap_or(&RetriesConfig::default()),
+        );
         let retries_cfg =
             if binary_body_is_stdin(binary_body_path) || multipart_has_stdin(&multipart_parts) {
                 None
             } else {
-                Some(method.retries.as_ref().unwrap_or(&default_retries))
+                Some(&default_retries)
             };
 
         // Auto Idempotency-Key: generate once before the retry loop so the
@@ -13582,4 +13633,210 @@ fn test_global_param_multiple_locations() {
     );
     let body = input.body.expect("body should have currency");
     assert_eq!(body["currency"], "EUR");
+}
+
+#[cfg(test)]
+mod credential_preflight_tests {
+    use super::*;
+
+    /// Run a `GET /things` against a local server with a bearer provider reading
+    /// `token_env`, returning the result and how many requests reached the server.
+    async fn execute_against_mock(
+        security_requirements: Option<Vec<HashMap<String, Vec<String>>>>,
+        token_env: &str,
+        debug: bool,
+    ) -> (Result<Option<Value>, CliError>, usize) {
+        execute_against_mock_with(
+            HashMap::new(),
+            HashMap::new(),
+            security_requirements,
+            None,
+            token_env,
+            debug,
+        )
+        .await
+    }
+
+    /// [`execute_against_mock`] with the spec's security schemes, the method's
+    /// declared parameters, and the caller's `--params` JSON.
+    async fn execute_against_mock_with(
+        security_schemes: HashMap<String, crate::openapi::discovery::SecurityScheme>,
+        parameters: HashMap<String, crate::openapi::discovery::MethodParameter>,
+        security_requirements: Option<Vec<HashMap<String, Vec<String>>>>,
+        params_json: Option<&str>,
+        token_env: &str,
+        debug: bool,
+    ) -> (Result<Option<Value>, CliError>, usize) {
+        use wiremock::matchers::method as wm_method;
+        use wiremock::{Mock, MockServer, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(wm_method("GET"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(json!({"ok": true})))
+            .mount(&server)
+            .await;
+
+        let doc = RestDescription {
+            root_url: format!("{}/", server.uri()),
+            security_schemes,
+            ..Default::default()
+        };
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            id: Some("things.list".to_string()),
+            path: "things".to_string(),
+            parameters,
+            security_requirements,
+            ..Default::default()
+        };
+        let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+            "bearer",
+            crate::auth::AuthCredentialSource::from_env(token_env),
+        ));
+        let http_config = crate::http::HttpConfig::new("test").unwrap();
+        let result = execute_method(
+            &doc,
+            &method,
+            params_json,
+            None,
+            &provider,
+            None,
+            None,
+            None,
+            None,
+            false,
+            &PaginationConfig::default(),
+            &crate::formatter::OutputPipeline::default(),
+            true,
+            None,
+            &http_config,
+            false,
+            false,
+            false,
+            debug,
+            &[],
+            &[],
+        )
+        .await;
+        let hits = server.received_requests().await.unwrap().len();
+        (result, hits)
+    }
+
+    fn bearer_required() -> Option<Vec<HashMap<String, Vec<String>>>> {
+        Some(vec![HashMap::from([("bearer".to_string(), Vec::new())])])
+    }
+
+    #[tokio::test]
+    async fn test_required_auth_without_credentials_is_not_sent() {
+        std::env::remove_var("__FERN_TEST_EXEC_UNSET_TOKEN");
+        for debug in [false, true] {
+            let (result, hits) =
+                execute_against_mock(bearer_required(), "__FERN_TEST_EXEC_UNSET_TOKEN", debug)
+                    .await;
+            match result {
+                Err(CliError::Auth(msg)) => {
+                    assert!(msg.contains("__FERN_TEST_EXEC_UNSET_TOKEN"), "got: {msg}")
+                }
+                other => panic!("expected Auth (debug={debug}), got: {other:?}"),
+            }
+            assert_eq!(hits, 0, "no request may reach the server (debug={debug})");
+        }
+    }
+
+    #[tokio::test]
+    #[serial_test::serial]
+    async fn test_required_auth_with_credentials_is_sent() {
+        let mut guard = crate::auth::test_helpers::GlobalAuthStateGuard::new();
+        guard.set_env("__FERN_TEST_EXEC_SET_TOKEN", "t");
+        let (result, hits) =
+            execute_against_mock(bearer_required(), "__FERN_TEST_EXEC_SET_TOKEN", false).await;
+        assert!(result.is_ok(), "got: {result:?}");
+        assert_eq!(hits, 1);
+    }
+
+    #[tokio::test]
+    async fn test_undeclared_auth_without_credentials_is_still_sent() {
+        std::env::remove_var("__FERN_TEST_EXEC_UNDECLARED_TOKEN");
+        let (result, hits) =
+            execute_against_mock(None, "__FERN_TEST_EXEC_UNDECLARED_TOKEN", false).await;
+        assert!(result.is_ok(), "got: {result:?}");
+        assert_eq!(hits, 1);
+    }
+
+    fn param_in(location: &str) -> crate::openapi::discovery::MethodParameter {
+        crate::openapi::discovery::MethodParameter {
+            location: Some(location.to_string()),
+            ..Default::default()
+        }
+    }
+
+    #[tokio::test]
+    async fn test_api_key_query_param_satisfies_its_requirement() {
+        use crate::openapi::discovery::SecurityScheme;
+        std::env::remove_var("__FERN_TEST_EXEC_QUERY_KEY_UNSET");
+        let schemes = HashMap::from([(
+            "bearer".to_string(),
+            SecurityScheme::ApiKeyQuery {
+                name: "api_key".to_string(),
+            },
+        )]);
+        let params = HashMap::from([("api_key".to_string(), param_in("query"))]);
+        let (result, hits) = execute_against_mock_with(
+            schemes,
+            params,
+            bearer_required(),
+            Some(r#"{"api_key": "k"}"#),
+            "__FERN_TEST_EXEC_QUERY_KEY_UNSET",
+            false,
+        )
+        .await;
+        assert!(result.is_ok(), "got: {result:?}");
+        assert_eq!(hits, 1);
+    }
+
+    #[tokio::test]
+    async fn test_unrelated_api_key_header_does_not_satisfy_bearer() {
+        use crate::openapi::discovery::SecurityScheme;
+        std::env::remove_var("__FERN_TEST_EXEC_OTHER_HEADER_UNSET");
+        let schemes = HashMap::from([
+            ("bearer".to_string(), SecurityScheme::HttpBearer),
+            (
+                "other".to_string(),
+                SecurityScheme::ApiKeyHeader {
+                    name: "X-Other-Key".to_string(),
+                },
+            ),
+        ]);
+        let params = HashMap::from([("X-Other-Key".to_string(), param_in("header"))]);
+        let (result, hits) = execute_against_mock_with(
+            schemes,
+            params,
+            bearer_required(),
+            Some(r#"{"X-Other-Key": "k"}"#),
+            "__FERN_TEST_EXEC_OTHER_HEADER_UNSET",
+            false,
+        )
+        .await;
+        assert!(matches!(result, Err(CliError::Auth(_))), "got: {result:?}");
+        assert_eq!(hits, 0);
+    }
+
+    #[tokio::test]
+    async fn test_authorization_header_param_satisfies_bearer() {
+        use crate::openapi::discovery::SecurityScheme;
+        std::env::remove_var("__FERN_TEST_EXEC_AUTHZ_UNSET");
+        let schemes = HashMap::from([("bearer".to_string(), SecurityScheme::HttpBearer)]);
+        let params = HashMap::from([("Authorization".to_string(), param_in("header"))]);
+        let (result, hits) = execute_against_mock_with(
+            schemes,
+            params,
+            bearer_required(),
+            Some(r#"{"Authorization": "Bearer t"}"#),
+            "__FERN_TEST_EXEC_AUTHZ_UNSET",
+            false,
+        )
+        .await;
+        assert!(result.is_ok(), "got: {result:?}");
+        assert_eq!(hits, 1);
+    }
 }

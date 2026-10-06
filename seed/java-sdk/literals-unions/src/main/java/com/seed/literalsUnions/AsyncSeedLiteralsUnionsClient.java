@@ -5,11 +5,21 @@ package com.seed.literalsUnions;
 
 import com.seed.literalsUnions.core.ClientOptions;
 
-public class AsyncSeedLiteralsUnionsClient {
+public class AsyncSeedLiteralsUnionsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public AsyncSeedLiteralsUnionsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedLiteralsUnionsClientBuilder builder() {

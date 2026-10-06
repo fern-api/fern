@@ -273,6 +273,7 @@ describe("ReadmeConfigBuilder", () => {
                 packageName: "@acme/sdk",
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
+                        playgroundDocs: undefined,
                         configuration: {
                             type: "clientCredentials"
                         } as FernIr.OAuthConfiguration

@@ -5,7 +5,7 @@ module Seed
     class GetFooRequest < Internal::Types::Model
       field :optional_baz, -> { String }, optional: true, nullable: false
 
-      field :optional_nullable_baz, -> { String }, optional: true, nullable: false
+      field :optional_nullable_baz, -> { String }, optional: true, nullable: true
 
       field :required_baz, -> { String }, optional: false, nullable: false
 

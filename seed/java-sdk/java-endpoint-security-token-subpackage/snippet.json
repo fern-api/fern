@@ -43,6 +43,32 @@
             "example_identifier": "e61d75e3",
             "id": {
                 "method": "GET",
+                "path": "/users/bearer",
+                "identifier_override": "endpoint_user.getWithBearer"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithBearer();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithBearer();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
+                "path": "/users/basic",
+                "identifier_override": "endpoint_user.getWithBasic"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithBasic();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaEndpointSecurityTokenSubpackage.SeedJavaEndpointSecurityTokenSubpackageClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaEndpointSecurityTokenSubpackageClient client = SeedJavaEndpointSecurityTokenSubpackageClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.user().getWithBasic();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e61d75e3",
+            "id": {
+                "method": "GET",
                 "path": "/users/anonymous",
                 "identifier_override": "endpoint_user.getAnonymous"
             },

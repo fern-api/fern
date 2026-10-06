@@ -38,11 +38,21 @@ class SmsStatusWebhooksHelper
      *    string
      *   |null
      * ) $notificationUrl
+     * @param (
+     *    'sha1'
+     *   |'sha256'
+     *   |'sha384'
+     *   |'sha512'
+     * )|null $algorithm
      * @return bool
      */
-    public static function verifySignature(string|array|null $requestBody, string|null $signatureHeader, string|null $signatureKey, string|null $notificationUrl): bool
+    public static function verifySignature(string|array|null $requestBody, string|null $signatureHeader, string|null $signatureKey, string|null $notificationUrl, string|null $algorithm = null): bool
     {
-        if ($requestBody === null || $requestBody === '' || $requestBody === [] || $signatureHeader === null || $signatureHeader === '' || $signatureKey === null || $signatureKey === '') {
+        if ($signatureHeader === null || $signatureHeader === '') {
+            error_log("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if ($requestBody === null || $requestBody === '' || $requestBody === [] || $signatureKey === null || $signatureKey === '') {
             return false;
         }
 
@@ -53,6 +63,7 @@ class SmsStatusWebhooksHelper
             $rawBody = is_string($requestBody) ? $requestBody : '';
             $expectedBodyHash = WebhookSignature::computeHash($rawBody, "sha256", "hex");
             if (!WebhookSignature::timingSafeEqual($expectedBodyHash, $transmittedBodyHash)) {
+                error_log("Webhook signature verification failed: signature mismatch");
                 return false;
             }
         }
@@ -76,7 +87,7 @@ class SmsStatusWebhooksHelper
             $expected = WebhookSignature::computeHmacSignature(
                 payload: $payload,
                 secret: $signatureKey,
-                algorithm: "sha1",
+                algorithm: $algorithm ?? "sha1",
                 encoding: "base64",
             );
             if (WebhookSignature::timingSafeEqual($signature, $expected)) {
@@ -84,6 +95,7 @@ class SmsStatusWebhooksHelper
             }
         }
 
+        error_log("Webhook signature verification failed: signature mismatch");
         return false;
     }
 }

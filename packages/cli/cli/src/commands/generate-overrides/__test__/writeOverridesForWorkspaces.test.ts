@@ -106,7 +106,8 @@ function createMinimalIR(overrides?: {
         globalHeaders: undefined,
         globalParameters: undefined,
         idempotencyHeaders: undefined,
-        specVersion: undefined
+        specVersion: undefined,
+        baseUrlEnv: undefined
     };
 }
 

@@ -588,10 +588,12 @@ func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectValue) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {
@@ -687,10 +689,12 @@ func (t *T) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *T) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetChild sets the Child field and marks it as non-optional;
@@ -764,6 +768,38 @@ func (t *TorU) GetU() *U {
 }
 
 func (t *TorU) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"child"}, []string{"child"}) {
+		valueT := new(T)
+		if err := json.Unmarshal(data, &valueT); err == nil {
+			t.typ = "T"
+			t.T = valueT
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"child"}, []string{"child"}) {
+		valueU := new(U)
+		if err := json.Unmarshal(data, &valueU); err == nil {
+			t.typ = "U"
+			t.U = valueU
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"child"}) {
+		valueT := new(T)
+		if err := json.Unmarshal(data, &valueT); err == nil {
+			t.typ = "T"
+			t.T = valueT
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"child"}) {
+		valueU := new(U)
+		if err := json.Unmarshal(data, &valueU); err == nil {
+			t.typ = "U"
+			t.U = valueU
+			return nil
+		}
+	}
 	valueT := new(T)
 	if err := json.Unmarshal(data, &valueT); err == nil {
 		t.typ = "T"
@@ -833,10 +869,12 @@ func (u *U) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *U) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetChild sets the Child field and marks it as non-optional;

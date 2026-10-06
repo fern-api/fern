@@ -13,9 +13,9 @@ import { GlobalParameter } from "./GlobalParameter.js";
 import { GlobalSecurity } from "./GlobalSecurity.js";
 import { IdempotencyHeader } from "./IdempotencyHeader.js";
 import { PathParameter } from "./PathParameter.js";
-import { PrimitiveSchema } from "./PrimitiveSchema.js";
 import { Schemas } from "./Schemas.js";
 import { SdkGroupInfo } from "./SdkGroupInfo.js";
+import { SdkVariable } from "./SdkVariable.js";
 import { Tags } from "./Tags.js";
 import { Webhook } from "./Webhook.js";
 import { WebsocketChannel } from "./WebsocketChannel.js";
@@ -28,6 +28,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     specVersion: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
+    baseUrlEnv: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
     basePathParameters: core.serialization.list(PathParameter).optional(),
     servers: core.serialization.list(Server),
@@ -39,7 +40,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     webhooks: core.serialization.list(Webhook),
     channels: core.serialization.record(core.serialization.string(), WebsocketChannel),
     groupedSchemas: Schemas,
-    variables: core.serialization.record(core.serialization.string(), PrimitiveSchema),
+    variables: core.serialization.record(core.serialization.string(), SdkVariable),
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
     securitySchemes: core.serialization.record(SecuritySchemeId, SecurityScheme),
     security: GlobalSecurity.optional(),
@@ -54,6 +55,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         specVersion?: string | null;
         title?: string | null;
         description?: string | null;
+        baseUrlEnv?: string | null;
         basePath?: string | null;
         basePathParameters?: PathParameter.Raw[] | null;
         servers: Server.Raw[];
@@ -65,7 +67,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         webhooks: Webhook.Raw[];
         channels: Record<string, WebsocketChannel.Raw>;
         groupedSchemas: Schemas.Raw;
-        variables: Record<string, PrimitiveSchema.Raw>;
+        variables: Record<string, SdkVariable.Raw>;
         nonRequestReferencedSchemas: SchemaId.Raw[];
         securitySchemes: Record<SecuritySchemeId.Raw, SecurityScheme.Raw>;
         security?: GlobalSecurity.Raw | null;

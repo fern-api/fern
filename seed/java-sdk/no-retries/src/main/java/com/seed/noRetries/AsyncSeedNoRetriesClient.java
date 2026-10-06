@@ -8,7 +8,7 @@ import com.seed.noRetries.core.Suppliers;
 import com.seed.noRetries.resources.retries.AsyncRetriesClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedNoRetriesClient {
+public class AsyncSeedNoRetriesClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncRetriesClient> retriesClient;
@@ -20,6 +20,16 @@ public class AsyncSeedNoRetriesClient {
 
     public AsyncRetriesClient retries() {
         return this.retriesClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedNoRetriesClientBuilder builder() {

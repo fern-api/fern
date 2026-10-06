@@ -6,6 +6,8 @@ types:
       publishGa: PublishCommand
       publishRc: PublishCommand
       publishDev: PublishCommand
+      publishBeta: PublishCommand
+      publishPreProd: PublishCommand
       changelogLocation:
         type: optional<string>
         docs: |

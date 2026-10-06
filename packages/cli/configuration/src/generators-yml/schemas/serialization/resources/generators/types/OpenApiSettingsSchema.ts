@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema.js";
 import { DefaultIntegerFormat } from "./DefaultIntegerFormat.js";
 import { FormParameterEncoding } from "./FormParameterEncoding.js";
+import { OpenApiErrorResponsesSchema } from "./OpenApiErrorResponsesSchema.js";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema.js";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema.js";
 import { ResolveAliases } from "./ResolveAliases.js";
@@ -43,6 +44,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "respect-per-spec-base-path": core.serialization.boolean().optional(),
         "respect-operation-id-word-boundaries": core.serialization.boolean().optional(),
         "namespaced-errors": core.serialization.boolean().optional(),
+        "error-responses": OpenApiErrorResponsesSchema.optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -76,5 +78,6 @@ export declare namespace OpenApiSettingsSchema {
         "respect-per-spec-base-path"?: boolean | null;
         "respect-operation-id-word-boundaries"?: boolean | null;
         "namespaced-errors"?: boolean | null;
+        "error-responses"?: OpenApiErrorResponsesSchema.Raw | null;
     }
 }

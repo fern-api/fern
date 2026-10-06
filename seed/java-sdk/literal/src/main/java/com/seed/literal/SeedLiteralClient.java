@@ -12,7 +12,7 @@ import com.seed.literal.resources.query.QueryClient;
 import com.seed.literal.resources.reference.ReferenceClient;
 import java.util.function.Supplier;
 
-public class SeedLiteralClient {
+public class SeedLiteralClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<HeadersClient> headersClient;
@@ -52,6 +52,16 @@ public class SeedLiteralClient {
 
     public ReferenceClient reference() {
         return this.referenceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedLiteralClientBuilder builder() {

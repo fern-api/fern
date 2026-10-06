@@ -88,7 +88,41 @@
                 "name": "string",
               },
             },
+            "responseHeaders": {
+              "X-Api-Result": {
+                "content_type": "image/jpeg",
+              },
+              "X-Media-Example": {
+                "transport": "delta",
+              },
+              "X-RateLimit-Remaining": 99,
+              "X-Schema-Ref-Example": {
+                "content_type": "image/jpeg",
+              },
+            },
             "responseStatusCode": 200,
+          },
+          {
+            "codeSamples": undefined,
+            "description": undefined,
+            "headers": {},
+            "name": undefined,
+            "path": "/api/resource",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": undefined,
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "detail": "Request was throttled. Expected available in 10 seconds.",
+              },
+            },
+            "responseHeaders": {
+              "Retry-After": 10,
+            },
+            "responseStatusCode": 429,
           },
         ],
         "headers": [],
@@ -132,7 +166,71 @@
             },
           },
         },
-        "responseHeaders": [],
+        "responseHeaders": [
+          {
+            "availability": undefined,
+            "description": "Requests remaining in the current window.",
+            "key": "X-RateLimit-Remaining",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "type": "integer",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "JSON-encoded result metadata.",
+            "key": "X-Api-Result",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ApiResult",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Result declared via direct schema ref.",
+            "key": "X-Schema-Ref-Example",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ApiResult",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Example declared on the media type object.",
+            "key": "X-Media-Example",
+            "type": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "ApiResourceGetResponsesHeadersXMediaExample",
+              },
+              "type": "optional",
+            },
+          },
+        ],
         "responsesV2": {
           "responses": [
             {
@@ -157,7 +255,9 @@
     "graphqlOperations": [],
     "pointsTo": undefined,
     "subpackages": [],
-    "types": [],
+    "types": [
+      "ApiResult",
+    ],
     "webhooks": [],
     "websockets": [],
   },
@@ -174,6 +274,66 @@
   },
   "subpackages": {},
   "types": {
+    "ApiResourceGetResponsesHeadersXMediaExample": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ApiResourceGetResponsesHeadersXMediaExample",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "transport",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ApiResult": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ApiResult",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "content_type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
     "GetResourceRequestTooManyRequestsError": {
       "availability": undefined,
       "description": undefined,

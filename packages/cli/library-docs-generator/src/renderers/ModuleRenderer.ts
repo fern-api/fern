@@ -18,6 +18,7 @@
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
 import { createFrontmatter, escapeTableCell, generateAnchorId } from "../utils/mdx.js";
+import { moduleHasPage, moduleIsPackage } from "../utils/modulePages.js";
 import {
     extractLinksFromTypes,
     getTypeDisplay,
@@ -28,22 +29,25 @@ import { renderClassDetailed } from "./ClassRenderer.js";
 import { renderSimpleDocstring } from "./DocstringRenderer.js";
 import { renderFunctionDetailed } from "./FunctionRenderer.js";
 
+export { moduleHasPage, moduleIsPackage } from "../utils/modulePages.js";
+
 /**
  * Render a list of submodules, split into Subpackages (have children) and Submodules (leaf nodes).
  * This matches Python/Sphinx conventions where packages contain other modules.
  */
 function renderSubmodulesSection(
     submodules: FdrAPI.libraryDocs.PythonModuleIr[],
-    baseSlug: string,
+    ctx: RenderContext,
     modulePath: string
 ): string {
     const lines: string[] = [];
 
-    const packages = submodules.filter((sub) => sub.submodules.length > 0);
-    const modules = submodules.filter((sub) => sub.submodules.length === 0);
+    const linkable = submodules.filter(moduleHasPage);
+    const packages = linkable.filter(moduleIsPackage);
+    const modules = linkable.filter((sub) => !moduleIsPackage(sub));
 
     const renderItem = (sub: FdrAPI.libraryDocs.PythonModuleIr): string => {
-        const link = `/${baseSlug}/${modulePath}/${sub.name}`;
+        const link = ctx.linkToModuleFile?.(sub.path) ?? `/${ctx.baseSlug}/${modulePath}/${sub.name}`;
         return `- **[\`${sub.path}\`](${link})**`;
     };
 
@@ -129,7 +133,7 @@ export function renderModulePage(
 
     // Submodules section (before Module Contents)
     if (module.submodules.length > 0) {
-        lines.push(renderSubmodulesSection(module.submodules, ctx.baseSlug, modulePath));
+        lines.push(renderSubmodulesSection(module.submodules, ctx, modulePath));
     }
 
     // Content sections

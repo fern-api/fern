@@ -338,6 +338,10 @@ export class TypeLiteral extends AstNode {
         });
     }
 
+    public getObjectFields(): ObjectField[] | undefined {
+        return this.internalType.type === "object" ? this.internalType.fields : undefined;
+    }
+
     public static record({ entries }: { entries: RecordEntry[] }): TypeLiteral {
         return new this({
             type: "record",

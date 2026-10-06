@@ -97,9 +97,30 @@ pub fn is_version_flag(arg: &str) -> bool {
     matches!(arg, "--version" | "-V" | "version")
 }
 
-/// Resolve the API base URL override from the `--base-url` flag and the
-/// `{NAME}_BASE_URL` env var (flag wins). Validates the flag value for
-/// dangerous characters; the env var is treated as trusted.
+/// [`resolve_base_url_override`] without an `ArgMatches`.
+///
+/// For callers outside clap dispatch — `Binding::invoke_operation` — where
+/// there is no `--base-url` flag to read. Consults the selected profile and
+/// the env var, in the same order.
+pub fn resolve_base_url_override_for(app_name: &str) -> Result<Option<String>, CliError> {
+    let env_var_name = format!("{}_BASE_URL", app_name.to_uppercase().replace('-', "_"));
+    let from_env = std::env::var(env_var_name).ok();
+    if crate::profiles::outranks_env() {
+        return Ok(crate::profiles::base_url().or(from_env));
+    }
+    Ok(from_env.or_else(crate::profiles::base_url))
+}
+
+/// Resolve the API base URL override from the `--base-url` flag, the
+/// selected profile's `base_url`, and the `{NAME}_BASE_URL` env var, in that
+/// order. Validates the flag value for dangerous characters; the env var is
+/// treated as trusted, and the profile's value was validated by
+/// `profiles create`.
+///
+/// The env var fills in only what the profile leaves unset; with no profile
+/// selected it is the only override rung. The profile rung exists for
+/// specs that declare no `servers[].variables` to template — region/edge →
+/// URL shaping is then an overlay concern rather than framework code.
 pub fn resolve_base_url_override(
     matches: &clap::ArgMatches,
     app_name: &str,
@@ -110,7 +131,16 @@ pub fn resolve_base_url_override(
     }
     let env_var_name = format!("{}_BASE_URL", app_name.to_uppercase().replace('-', "_"));
     let base_url_env_var = std::env::var(env_var_name).ok();
-    Ok(base_url_flag.or(base_url_env_var))
+    // A selected profile outranks the env var, however it was selected.
+    // Same rung ordering as credentials — see `crate::profiles::outranks_env`.
+    if crate::profiles::outranks_env() {
+        return Ok(base_url_flag
+            .or_else(crate::profiles::base_url)
+            .or(base_url_env_var));
+    }
+    Ok(base_url_flag
+        .or(base_url_env_var)
+        .or_else(crate::profiles::base_url))
 }
 
 /// Resolve the consumer-supplied `User-Agent` suffix from the suffix

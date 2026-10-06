@@ -5,11 +5,21 @@ package com.seed.emptyClients;
 
 import com.seed.emptyClients.core.ClientOptions;
 
-public class SeedEmptyClientsClient {
+public class SeedEmptyClientsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public SeedEmptyClientsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedEmptyClientsClientBuilder builder() {

@@ -2,17 +2,10 @@
   "type": "object",
   "properties": {
     "results": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RuleType"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/RuleType"
+      },
       "description": "Current page of results from the requested resource."
     },
     "paging": {
@@ -20,6 +13,7 @@
     }
   },
   "required": [
+    "results",
     "paging"
   ],
   "additionalProperties": false,

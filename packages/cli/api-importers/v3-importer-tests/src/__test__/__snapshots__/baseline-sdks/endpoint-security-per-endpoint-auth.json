@@ -771,6 +771,25 @@
     "endpoints": {
       "endpoint_.getToken": {
         "auth": {
+          "wrapperProperty": {
+            "originalName": "PlantOAuth",
+            "camelCase": {
+              "unsafeName": "plantOAuth",
+              "safeName": "plantOAuth"
+            },
+            "snakeCase": {
+              "unsafeName": "plant_o_auth",
+              "safeName": "plant_o_auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PLANT_O_AUTH",
+              "safeName": "PLANT_O_AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "PlantOAuth",
+              "safeName": "PlantOAuth"
+            }
+          },
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -943,6 +962,25 @@
       },
       "endpoint_.getPlant": {
         "auth": {
+          "wrapperProperty": {
+            "originalName": "PlantOAuth",
+            "camelCase": {
+              "unsafeName": "plantOAuth",
+              "safeName": "plantOAuth"
+            },
+            "snakeCase": {
+              "unsafeName": "plant_o_auth",
+              "safeName": "plant_o_auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PLANT_O_AUTH",
+              "safeName": "PLANT_O_AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "PlantOAuth",
+              "safeName": "PlantOAuth"
+            }
+          },
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -1083,6 +1121,25 @@
       },
       "endpoint_.listPremiumPlants": {
         "auth": {
+          "wrapperProperty": {
+            "originalName": "PlantOAuth",
+            "camelCase": {
+              "unsafeName": "plantOAuth",
+              "safeName": "plantOAuth"
+            },
+            "snakeCase": {
+              "unsafeName": "plant_o_auth",
+              "safeName": "plant_o_auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PLANT_O_AUTH",
+              "safeName": "PLANT_O_AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "PlantOAuth",
+              "safeName": "PlantOAuth"
+            }
+          },
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -1163,6 +1220,25 @@
       },
       "endpoint_.listPublicPlants": {
         "auth": {
+          "wrapperProperty": {
+            "originalName": "PlantOAuth",
+            "camelCase": {
+              "unsafeName": "plantOAuth",
+              "safeName": "plantOAuth"
+            },
+            "snakeCase": {
+              "unsafeName": "plant_o_auth",
+              "safeName": "plant_o_auth"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PLANT_O_AUTH",
+              "safeName": "PLANT_O_AUTH"
+            },
+            "pascalCase": {
+              "unsafeName": "PlantOAuth",
+              "safeName": "PlantOAuth"
+            }
+          },
           "clientId": {
             "originalName": "clientId",
             "camelCase": {

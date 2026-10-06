@@ -5,6 +5,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { getDocsDevExcludeRules } from "./getDocsDevExcludeRules.js";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -15,7 +16,8 @@ export async function previewDocsWorkspace({
     legacyPreview,
     astro,
     backendPort,
-    forceDownload
+    forceDownload,
+    includePrivate = false
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -26,6 +28,8 @@ export async function previewDocsWorkspace({
     astro?: boolean;
     backendPort: number;
     forceDownload?: boolean;
+    /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -43,9 +47,9 @@ export async function previewDocsWorkspace({
         if (docsWorkspace == null) {
             return;
         }
-        const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
         const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
         await validateDocsWorkspaceWithoutExiting({
             workspace: docsWorkspace,
             context,
@@ -95,7 +99,8 @@ export async function previewDocsWorkspace({
                 validateProject: (project) => validateProject(project, context),
                 context,
                 port,
-                bundlePath
+                bundlePath,
+                includePrivate
             });
         });
     }
@@ -116,7 +121,8 @@ export async function previewDocsWorkspace({
             port,
             bundlePath,
             backendPort,
-            forceDownload
+            forceDownload,
+            includePrivate
         });
     });
 

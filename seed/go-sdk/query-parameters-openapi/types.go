@@ -59,10 +59,12 @@ type SearchRequest struct {
 }
 
 func (s *SearchRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetLimit sets the Limit field and marks it as non-optional;
@@ -229,10 +231,12 @@ func (n *NestedUser) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NestedUser) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -329,17 +333,21 @@ func (s *SearchRequestNeighbor) GetInteger() int {
 }
 
 func (s *SearchRequestNeighbor) UnmarshalJSON(data []byte) error {
-	valueUser := new(User)
-	if err := json.Unmarshal(data, &valueUser); err == nil {
-		s.typ = "User"
-		s.User = valueUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "tags"}, []string{}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			s.typ = "User"
+			s.User = valueUser
+			return nil
+		}
 	}
-	valueNestedUser := new(NestedUser)
-	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
-		s.typ = "NestedUser"
-		s.NestedUser = valueNestedUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "user"}, []string{}) {
+		valueNestedUser := new(NestedUser)
+		if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+			s.typ = "NestedUser"
+			s.NestedUser = valueNestedUser
+			return nil
+		}
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
@@ -351,6 +359,18 @@ func (s *SearchRequestNeighbor) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
 		s.typ = "Integer"
 		s.Integer = valueInteger
+		return nil
+	}
+	valueUser := new(User)
+	if err := json.Unmarshal(data, &valueUser); err == nil {
+		s.typ = "User"
+		s.User = valueUser
+		return nil
+	}
+	valueNestedUser := new(NestedUser)
+	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+		s.typ = "NestedUser"
+		s.NestedUser = valueNestedUser
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
@@ -456,17 +476,21 @@ func (s *SearchRequestNeighborRequired) GetInteger() int {
 }
 
 func (s *SearchRequestNeighborRequired) UnmarshalJSON(data []byte) error {
-	valueUser := new(User)
-	if err := json.Unmarshal(data, &valueUser); err == nil {
-		s.typ = "User"
-		s.User = valueUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "tags"}, []string{}) {
+		valueUser := new(User)
+		if err := json.Unmarshal(data, &valueUser); err == nil {
+			s.typ = "User"
+			s.User = valueUser
+			return nil
+		}
 	}
-	valueNestedUser := new(NestedUser)
-	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
-		s.typ = "NestedUser"
-		s.NestedUser = valueNestedUser
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "user"}, []string{}) {
+		valueNestedUser := new(NestedUser)
+		if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+			s.typ = "NestedUser"
+			s.NestedUser = valueNestedUser
+			return nil
+		}
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
@@ -478,6 +502,18 @@ func (s *SearchRequestNeighborRequired) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &valueInteger); err == nil {
 		s.typ = "Integer"
 		s.Integer = valueInteger
+		return nil
+	}
+	valueUser := new(User)
+	if err := json.Unmarshal(data, &valueUser); err == nil {
+		s.typ = "User"
+		s.User = valueUser
+		return nil
+	}
+	valueNestedUser := new(NestedUser)
+	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+		s.typ = "NestedUser"
+		s.NestedUser = valueNestedUser
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
@@ -574,10 +610,12 @@ func (s *SearchResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchResponse) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetResults sets the Results field and marks it as non-optional;
@@ -667,10 +705,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

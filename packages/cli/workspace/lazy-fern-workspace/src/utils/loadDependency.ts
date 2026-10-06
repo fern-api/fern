@@ -1,4 +1,4 @@
-import { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { FernDefinition, FernWorkspace, type IdentifiableSource, type Spec } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { createFiddleService } from "@fern-api/core";
 import { assertNever, extractErrorMessage, noop, visitObject } from "@fern-api/core-utils";
@@ -29,6 +29,8 @@ export declare namespace loadDependency {
     export interface SuccessfulResult {
         didSucceed: true;
         definition: FernDefinition;
+        specs: Spec[];
+        sources: IdentifiableSource[];
     }
 
     export interface FailedResult {
@@ -55,6 +57,8 @@ export async function loadDependency({
     loadAPIWorkspace?: LoadAPIWorkspace;
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
+    let specs: Spec[] = [];
+    let sources: IdentifiableSource[] = [];
     let failure: WorkspaceLoader.DependencyFailure = {
         type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
         dependencyName
@@ -81,15 +85,19 @@ export async function loadDependency({
                             loadAPIWorkspace
                         });
                         return;
-                    case "local":
-                        definition = await validateLocalDependencyAndGetDefinition({
+                    case "local": {
+                        const loaded = await validateLocalDependencyAndGetDefinition({
                             context: contextForDependency,
                             dependency,
                             cliVersion,
                             settings,
                             loadAPIWorkspace
                         });
+                        definition = loaded?.definition;
+                        specs = loaded?.specs ?? [];
+                        sources = loaded?.sources ?? [];
                         return;
+                    }
                     default:
                         assertNever(dependency);
                 }
@@ -98,7 +106,7 @@ export async function loadDependency({
     }
 
     if (definition != null) {
-        return { didSucceed: true, definition };
+        return { didSucceed: true, definition, specs, sources };
     } else {
         return { didSucceed: false, failure };
     }
@@ -132,7 +140,7 @@ async function validateLocalDependencyAndGetDefinition({
     context: TaskContext;
     cliVersion: string;
     settings?: OSSWorkspace.Settings;
-}): Promise<FernDefinition | undefined> {
+}): Promise<{ definition: FernDefinition; specs: Spec[]; sources: IdentifiableSource[] } | undefined> {
     if (loadAPIWorkspace == null) {
         context.failWithoutThrowing("Failed to load api definition", undefined, {
             code: CliError.Code.ResolutionError
@@ -156,7 +164,8 @@ async function validateLocalDependencyAndGetDefinition({
     }
 
     context.logger.info("Modifying source filepath ...");
-    const definition = await loadDependencyWorkspaceResult.workspace.getDefinition(
+    const dependencyWorkspace = loadDependencyWorkspaceResult.workspace;
+    const definition = await dependencyWorkspace.getDefinition(
         {
             context,
             relativePathToDependency: RelativeFilePath.of(dependency.path)
@@ -165,7 +174,11 @@ async function validateLocalDependencyAndGetDefinition({
     );
     context.logger.info("Loaded...");
 
-    return definition;
+    return {
+        definition,
+        specs: dependencyWorkspace instanceof OSSWorkspace ? dependencyWorkspace.allSpecs : [],
+        sources: dependencyWorkspace instanceof OSSWorkspace ? dependencyWorkspace.sources : []
+    };
 }
 
 async function validateVersionedDependencyAndGetDefinition({
@@ -361,6 +374,7 @@ async function getAreRootApiFilesEquivalent(
         headers: noop,
         "idempotency-headers": noop,
         "default-environment": noop,
+        "base-url-env": noop,
         environments: noop,
         "error-discrimination": (errorDiscrimination) => {
             const errorDiscriminationIsEqual = isEqual(

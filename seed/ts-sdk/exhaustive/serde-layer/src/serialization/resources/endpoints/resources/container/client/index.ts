@@ -1,5 +1,6 @@
 export * as getAndReturnListOfObjects from "./getAndReturnListOfObjects.js";
 export * as getAndReturnListOfPrimitives from "./getAndReturnListOfPrimitives.js";
+export * as getAndReturnMapOfIntegerToObject from "./getAndReturnMapOfIntegerToObject.js";
 export * as getAndReturnMapOfPrimToObject from "./getAndReturnMapOfPrimToObject.js";
 export * as getAndReturnMapOfPrimToUndiscriminatedUnion from "./getAndReturnMapOfPrimToUndiscriminatedUnion.js";
 export * as getAndReturnMapPrimToPrim from "./getAndReturnMapPrimToPrim.js";

@@ -4,16 +4,19 @@ import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 import { NamedParameter } from "../../types/types/NamedParameter.js";
+import { BaseAuth } from "./BaseAuth.js";
 
 export const InferredAuth: core.serialization.ObjectSchema<
     serializers.dynamic.InferredAuth.Raw,
     FernIr.dynamic.InferredAuth
-> = core.serialization.objectWithoutOptionalProperties({
-    parameters: core.serialization.list(NamedParameter).optional(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        parameters: core.serialization.list(NamedParameter).optional(),
+    })
+    .extend(BaseAuth);
 
 export declare namespace InferredAuth {
-    export interface Raw {
+    export interface Raw extends BaseAuth.Raw {
         parameters?: NamedParameter.Raw[] | null;
     }
 }

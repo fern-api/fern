@@ -1,0 +1,26 @@
+{
+  "oneOf": [
+    {
+      "$ref": "#/definitions/NullableTags"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "definitions": {
+    "NullableTags": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A list of tags, or null."
+    }
+  }
+}

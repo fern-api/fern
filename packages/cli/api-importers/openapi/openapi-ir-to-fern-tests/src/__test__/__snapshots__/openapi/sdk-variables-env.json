@@ -1,0 +1,176 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "messages.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createMessage": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "accountId": "accountId",
+                    "regionCode": "regionCode",
+                  },
+                  "request": {
+                    "body": "body",
+                  },
+                  "response": {
+                    "body": {
+                      "sid": "sid",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/accounts/{accountId}/regions/{regionCode}/messages",
+              "request": {
+                "body": {
+                  "properties": {
+                    "body": "string",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateMessageRequest",
+                "path-parameters": {
+                  "accountId": {
+                    "variable": "$accountId",
+                  },
+                  "regionCode": {
+                    "variable": "$regionCode",
+                  },
+                },
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Created",
+                "status-code": 200,
+                "type": "CreateMessageResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreateMessageResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "sid": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  CreateMessageResponse:
+    properties:
+      sid: optional<string>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createMessage:
+      path: /accounts/{accountId}/regions/{regionCode}/messages
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: CreateMessageRequest
+        path-parameters:
+          accountId:
+            variable: $accountId
+          regionCode:
+            variable: $regionCode
+        body:
+          properties:
+            body: string
+        content-type: application/json
+      response:
+        docs: Created
+        type: CreateMessageResponse
+        status-code: 200
+      examples:
+        - path-parameters:
+            accountId: accountId
+            regionCode: regionCode
+          request:
+            body: body
+          response:
+            body:
+              sid: sid
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "Default",
+      "display-name": "SDK variables with environment variable fallback",
+      "environments": {
+        "Default": "https://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+      "variables": {
+        "accountId": {
+          "docs": "The account to operate on. Falls back to the ACCOUNT_ID environment variable.",
+          "env": "ACCOUNT_ID",
+          "type": "string",
+        },
+        "regionCode": {
+          "docs": "A required variable without an environment variable fallback.",
+          "env": undefined,
+          "type": "string",
+        },
+      },
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: SDK variables with environment variable fallback
+environments:
+  Default: https://api.example.com
+default-environment: Default
+variables:
+  accountId:
+    type: string
+    docs: >-
+      The account to operate on. Falls back to the ACCOUNT_ID environment
+      variable.
+    env: ACCOUNT_ID
+  regionCode:
+    type: string
+    docs: A required variable without an environment variable fallback.
+",
+  },
+  "specVersion": "1.0.0",
+}

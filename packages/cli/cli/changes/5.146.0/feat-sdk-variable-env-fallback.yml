@@ -1,0 +1,7 @@
+- summary: |
+    SDK variables can now declare an environment variable fallback. In `api.yml`, use the
+    detailed form `variables: { myVar: { type: string, env: MY_VAR } }`; in OpenAPI, add
+    `x-fern-env: MY_VAR` to an `x-fern-sdk-variables` entry. The value is emitted as
+    `VariableDeclaration.envVar` in the IR so generators can make the variable optional at
+    client construction and read it from the environment when it is not passed explicitly.
+  type: feat

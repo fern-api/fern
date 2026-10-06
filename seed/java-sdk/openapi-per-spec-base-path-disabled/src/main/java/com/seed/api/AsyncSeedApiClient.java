@@ -5,13 +5,14 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.core.Suppliers;
 import com.seed.api.resources.oauth.AsyncOauthClient;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -32,15 +33,39 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<List<String>> listItems() {
-        return this.rawClient.listItems().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<List<String>>> rawFuture = this.rawClient.listItems();
+        CompletableFuture<List<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<String>> listItems(RequestOptions requestOptions) {
-        return this.rawClient.listItems(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<List<String>>> rawFuture = this.rawClient.listItems(requestOptions);
+        CompletableFuture<List<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncOauthClient oauth() {
         return this.oauthClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

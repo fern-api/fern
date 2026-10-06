@@ -357,6 +357,59 @@ await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfIntegerToObject</a>({ ...params }) -> Record&lt;number, SeedExhaustive.ObjectWithRequiredField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+    1: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<number, SeedExhaustive.ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField | undefined</code></summary>
 <dl>
 <dd>
@@ -1684,7 +1737,7 @@ let page = await client.endpoints.pagination.listItems({
     limit: 1
 });
 while (page.hasNextPage()) {
-    page = page.getNextPage();
+    page = await page.getNextPage();
 }
 
 // You can also access the underlying response

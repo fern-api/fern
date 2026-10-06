@@ -30,6 +30,13 @@ func (e *ErrorWithEnumBody) Unwrap() error {
 	return e.APIError
 }
 
+func (e *ErrorWithEnumBody) GetBody() WeatherReport {
+	if e == nil {
+		return ""
+	}
+	return e.Body
+}
+
 type NestedObjectWithOptionalFieldError struct {
 	*core.APIError
 	Body *NestedObjectWithOptionalField
@@ -51,6 +58,13 @@ func (n *NestedObjectWithOptionalFieldError) MarshalJSON() ([]byte, error) {
 
 func (n *NestedObjectWithOptionalFieldError) Unwrap() error {
 	return n.APIError
+}
+
+func (n *NestedObjectWithOptionalFieldError) GetBody() *NestedObjectWithOptionalField {
+	if n == nil {
+		return nil
+	}
+	return n.Body
 }
 
 type NestedObjectWithRequiredFieldError struct {
@@ -76,6 +90,13 @@ func (n *NestedObjectWithRequiredFieldError) Unwrap() error {
 	return n.APIError
 }
 
+func (n *NestedObjectWithRequiredFieldError) GetBody() *NestedObjectWithRequiredField {
+	if n == nil {
+		return nil
+	}
+	return n.Body
+}
+
 type ObjectWithOptionalFieldError struct {
 	*core.APIError
 	Body *ObjectWithOptionalField
@@ -97,6 +118,13 @@ func (o *ObjectWithOptionalFieldError) MarshalJSON() ([]byte, error) {
 
 func (o *ObjectWithOptionalFieldError) Unwrap() error {
 	return o.APIError
+}
+
+func (o *ObjectWithOptionalFieldError) GetBody() *ObjectWithOptionalField {
+	if o == nil {
+		return nil
+	}
+	return o.Body
 }
 
 type ObjectWithRequiredFieldError struct {
@@ -122,6 +150,13 @@ func (o *ObjectWithRequiredFieldError) Unwrap() error {
 	return o.APIError
 }
 
+func (o *ObjectWithRequiredFieldError) GetBody() *ObjectWithRequiredField {
+	if o == nil {
+		return nil
+	}
+	return o.Body
+}
+
 type ErrorWithUnionBody struct {
 	*core.APIError
 	Body *Animal
@@ -143,4 +178,11 @@ func (e *ErrorWithUnionBody) MarshalJSON() ([]byte, error) {
 
 func (e *ErrorWithUnionBody) Unwrap() error {
 	return e.APIError
+}
+
+func (e *ErrorWithUnionBody) GetBody() *Animal {
+	if e == nil {
+		return nil
+	}
+	return e.Body
 }
