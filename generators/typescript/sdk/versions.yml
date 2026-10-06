@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.99.0
+  changelogEntry:
+    - summary: |
+        SDK variables that declare an environment variable fallback (`env` in `api.yml` or `x-fern-env` on
+        `x-fern-sdk-variables`) are now optional client options. `normalizeClientOptions` resolves them from the
+        option first and then from the environment variable, and throws a clear error at client construction
+        when neither is set, instead of interpolating `undefined` into request paths.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 3.98.5
   changelogEntry:
     - summary: |
