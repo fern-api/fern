@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.147.0
+  changelogEntry:
+    - summary: |
+        `fern init` can now create `sdk-config.yml` for new OpenAPI projects. Initialized OpenAPI
+        files are bundled into the Fern workspace, while URL sources are preserved in the generated configuration.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 5.146.2
   changelogEntry:
     - summary: |
