@@ -32,7 +32,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/no-auth",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin

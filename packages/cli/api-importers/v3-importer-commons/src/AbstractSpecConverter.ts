@@ -16,6 +16,7 @@ import { AbstractConverter } from "./AbstractConverter.js";
 import { AbstractConverterContext } from "./AbstractConverterContext.js";
 import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
 import { FernIgnoreExtension } from "./extensions/index.js";
+import { resolveAliasResolvedTypes } from "./utils/resolveAliasResolvedTypes.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -171,6 +172,8 @@ export abstract class AbstractSpecConverter<
         resolveGlobalParameterApplicability(this.ir, {
             onWarning: (message) => this.context.logger.warn(message)
         });
+
+        resolveAliasResolvedTypes(this.ir.types);
 
         let ir: IntermediateRepresentation = {
             ...this.ir,

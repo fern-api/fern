@@ -131,6 +131,10 @@ fixtures:
       customConfig:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
     - outputFolder: allow-custom-http-client
       customConfig:
         allowCustomHttpClient: true

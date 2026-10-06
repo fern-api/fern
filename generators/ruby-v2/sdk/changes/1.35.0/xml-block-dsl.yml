@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) types support the legacy twilio-ruby building style: constructors and fluent child methods yield the
+    new element to a block (`VoiceResponse.new { |r| r.say("hi") }`, `r.gather { |g| g.say("one") }`), and
+    `add_child` also accepts an element name with text and attributes (`r.add_child("Custom", "v", a: "1")`).
+  type: feat

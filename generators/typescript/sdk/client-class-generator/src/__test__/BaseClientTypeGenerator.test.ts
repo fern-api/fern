@@ -253,6 +253,7 @@ function createGenerator(opts?: {
     ir?: FernIr.IntermediateRepresentation;
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
+    userAgentOnly?: boolean;
     allowUserAgentAppInfo?: boolean;
     guardProcessEnvAccess?: boolean;
 }): BaseClientTypeGenerator {
@@ -261,6 +262,7 @@ function createGenerator(opts?: {
         ir: opts?.ir ?? createIR(),
         omitFernHeaders: opts?.omitFernHeaders ?? false,
         includePlatformHeaders: opts?.includePlatformHeaders ?? false,
+        userAgentOnly: opts?.userAgentOnly ?? false,
         allowUserAgentAppInfo: opts?.allowUserAgentAppInfo ?? false,
         guardProcessEnvAccess: opts?.guardProcessEnvAccess,
         retainOriginalCasing: false,
@@ -970,6 +972,77 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).not.toContain("core.getUserAgent");
             expect(normalizeFunc).not.toContain("X-Fern-Platform");
             expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("emits only the User-Agent when userAgentOnly is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.sdkName = "X-Fern-SDK-Name";
+            ir.sdkConfig.platformHeaders.sdkVersion = "X-Fern-SDK-Version";
+            const gen = createGenerator({ omitFernHeaders: false, userAgentOnly: true, ir });
+            const context = createMockContext({ npmPackage: { packageName: "@acme/sdk", version: "2.0.0" } });
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain('"User-Agent"');
+            expect(normalizeFunc).toContain('"@acme/sdk/2.0.0"');
+            expect(normalizeFunc).not.toContain("X-Fern-Language");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Name");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Version");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("keeps the structured User-Agent when userAgentOnly and includePlatformHeaders are true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.sdkName = "X-Fern-SDK-Name";
+            ir.sdkConfig.platformHeaders.sdkVersion = "X-Fern-SDK-Version";
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: true,
+                userAgentOnly: true,
+                ir
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).not.toContain("X-Fern-Language");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Name");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Version");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("keeps the discrete headers when userAgentOnly is true but no User-Agent can be produced", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.userAgent = undefined;
+            const gen = createGenerator({ omitFernHeaders: false, userAgentOnly: true, ir });
+            const context = createMockContext({ npmPackage: null });
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("User-Agent");
+            expect(normalizeFunc).toContain("X-Fern-Language");
+            expect(normalizeFunc).toContain("X-Fern-Runtime");
+        });
+
+        it("omits the User-Agent too when omitFernHeaders and userAgentOnly are true", () => {
+            const gen = createGenerator({ omitFernHeaders: true, userAgentOnly: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("User-Agent");
         });
 
         it("omits fern headers when omitFernHeaders is true", () => {

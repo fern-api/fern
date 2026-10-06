@@ -117,6 +117,10 @@ fixtures:
         allow_user_agent_app_info: true
       outputFolder: include-platform-headers-app-info
     - customConfig:
+        include_platform_headers: true
+        user_agent_only: true
+      outputFolder: user-agent-only
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:

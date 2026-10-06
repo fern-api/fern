@@ -123,14 +123,26 @@ module <%= gem_namespace %>
           end
 
           # Joins a list of values with a separator for a list-valued attribute or text node.
+          # A String is already in wire form (e.g. "speech dtmf") and is written as-is; any
+          # other single value (for example a Symbol) is written on its own.
           #
-          # @param values [Enumerable, nil]
+          # @param values [Enumerable, String, Object, nil]
           # @param separator [String]
           # @return [String, nil]
           def join_values(values, separator)
             return nil if values.nil?
+            return to_xml_string(values) if values.is_a?(::String)
 
-            values.map { |value| to_xml_string(value) }.compact.join(separator)
+            list_items(values).map { |value| to_xml_string(value) }.compact.join(separator)
+          end
+
+          # Normalizes a list-valued property so a single value is treated as a one-item list.
+          # A Hash is a single (model-like) value, not a list of pairs.
+          #
+          # @param value [Enumerable, Object]
+          # @return [Array]
+          def list_items(value)
+            value.is_a?(::Enumerable) && !value.is_a?(::Hash) ? value.to_a : [value]
           end
 
           # Adds unknown attributes and children back onto an element. Unknown content found inside
@@ -475,13 +487,13 @@ module <%= gem_namespace %>
             raise ArgumentError, "Expected a boolean but found '#{raw}'"
           end
 
-          # @param enum [Module] an `Internal::Types::Enum`
-          # @raise [ArgumentError] if the value is not a member of the enum
-          def parse_enum(raw, enum)
-            value = raw.strip
-            raise ArgumentError, "'#{raw}' is not a valid #{enum.name}" unless enum.values.include?(value)
-
-            value
+          # Enums are open on the wire: a value the enum does not declare is kept so documents
+          # written by a newer API version still parse and round-trip.
+          #
+          # @param _enum [Module] an `Internal::Types::Enum`
+          # @return [String] the stripped value, whether or not it is a declared member
+          def parse_enum(raw, _enum)
+            raw.strip
           end
 
           # @raise [ArgumentError] if the value differs from the literal

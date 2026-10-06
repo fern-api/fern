@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.90.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user-agent-only` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `include-platform-headers`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omit-fern-headers` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+    - summary: |
+        Fix the generated `XmlElementTests` test project failing to compile because its `FakeNode` test
+        double did not implement `IXmlNode.ToXml(bool)`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 2.89.0
   changelogEntry:
     - summary: |

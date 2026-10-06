@@ -43,7 +43,7 @@ module <%= gem_namespace %>
           @timeout = timeout
           @auth_provider = auth_provider
 <% if (allowCustomHttpClient) { %>          @http_client = http_client
-<% } %>          @default_headers = <% if (!omitFernHeaders) { %>{
+<% } %>          @default_headers = <% if (!omitFernHeaders && !userAgentOnly) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"

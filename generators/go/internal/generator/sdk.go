@@ -1100,9 +1100,13 @@ func (f *fileWriter) writePlatformHeaders(
 	if sdkConfig.PlatformHeaders != nil {
 		f.P("func (r *RequestOptions) cloneHeader() http.Header {")
 		f.P("headers := r.HTTPHeader.Clone()")
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
-		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		// userAgentOnly only drops the discrete headers when a User-Agent is actually
+		// emitted, so the SDK is never left without any identification header.
+		if !f.userAgent.userAgentOnly || sdkConfig.PlatformHeaders.UserAgent == nil {
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
+			f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		}
 		if sdkConfig.PlatformHeaders.UserAgent != nil {
 			// Base is the User-Agent value the SDK would otherwise send: either the
 			// structured, runtime-computed value (includePlatformHeaders) or the raw

@@ -951,6 +951,7 @@ class ClientWrapperGenerator:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             omit_fern_headers = self._context.custom_config.omit_fern_headers
             include_platform_headers = self._context.custom_config.include_platform_headers
+            user_agent_only = self._context.custom_config.user_agent_only
             allow_user_agent_app_info = self._context.custom_config.allow_user_agent_app_info
             user_agent_header = self._context.ir.sdk_config.platform_headers.user_agent
 
@@ -994,9 +995,47 @@ class ClientWrapperGenerator:
                 _get_user_agent_coordinate_prefix(user_agent_prefix) if user_agent_prefix is not None else None
             )
 
+            # A User-Agent declared as a global header suppresses the IR User-Agent and is
+            # written later under its own casing, so no default one is added on top of it.
+            has_global_user_agent_header = any(
+                header_key is not None and header_key.lower() == "user-agent"
+                for header_key in [param.header_key for param in constructor_parameters]
+                + [literal_header.header_key for literal_header in literal_headers]
+            )
+            # An optional global User-Agent may be unset at runtime, so only a literal or
+            # required one can stand in for the discrete identification headers.
+            always_sends_global_user_agent_header = any(
+                literal_header.header_key is not None and literal_header.header_key.lower() == "user-agent"
+                for literal_header in literal_headers
+            ) or any(
+                param.header_key is not None
+                and param.header_key.lower() == "user-agent"
+                and not param.type_hint.is_optional
+                for param in constructor_parameters
+            )
+            # Emit the default `{package}/{version}` User-Agent when no structured or templated
+            # one is configured but app-info (needs a base to append to) or user_agent_only
+            # (needs the User-Agent to carry the SDK identity) is on. Off by default, keeping
+            # default output byte-identical.
+            emit_default_user_agent = (
+                not emit_structured_user_agent
+                and user_agent_header is None
+                and project._project_config is not None
+                and (allow_user_agent_app_info or (user_agent_only and not has_global_user_agent_header))
+            )
+            # user_agent_only only drops the discrete headers when a User-Agent is actually
+            # sent, so the SDK is never left without any identification header.
+            drop_discrete_headers = user_agent_only and (
+                emit_structured_user_agent
+                or user_agent_header is not None
+                or emit_default_user_agent
+                or always_sends_global_user_agent_header
+            )
+
             if not omit_fern_headers:
-                writer.write_line("import platform")
-                writer.write_line("")
+                if emit_structured_user_agent or not drop_discrete_headers:
+                    writer.write_line("import platform")
+                    writer.write_line("")
                 if runtime_version_active and project._project_config is not None:
                     # Resolve the installed distribution version at runtime; fall back to
                     # the generation-time version when the package is not installed
@@ -1044,11 +1083,7 @@ class ClientWrapperGenerator:
                     else:
                         user_agent_value_expr = f'"{user_agent_header.value}"'
                     writer.write_line(f'"{user_agent_header.header}": {_with_app_info(user_agent_value_expr)},')
-                elif allow_user_agent_app_info and project._project_config is not None:
-                    # No structured or templated User-Agent is configured, but app-info was
-                    # opted into: emit the default `{package}/{version}` User-Agent so the
-                    # caller's product token has a base to append to. Only emitted when the
-                    # flag is on, keeping default output byte-identical.
+                elif emit_default_user_agent and project._project_config is not None:
                     if runtime_version_active:
                         default_user_agent_expr = f'"{project._project_config.package_name}/" + _sdk_version'
                     else:
@@ -1056,11 +1091,12 @@ class ClientWrapperGenerator:
                             f'"{project._project_config.package_name}/{project._project_config.package_version}"'
                         )
                     writer.write_line(f'"User-Agent": {_with_app_info(default_user_agent_expr)},')
-                writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
-                if not emit_structured_user_agent:
+                if not drop_discrete_headers:
+                    writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
+                if not emit_structured_user_agent and not drop_discrete_headers:
                     writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
                     writer.write_line("f'X-Fern-Platform': f\"{platform.system().lower()}/{platform.release()}\",")
-                if project._project_config is not None:
+                if project._project_config is not None and not drop_discrete_headers:
                     writer.write_line(
                         f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
                     )
