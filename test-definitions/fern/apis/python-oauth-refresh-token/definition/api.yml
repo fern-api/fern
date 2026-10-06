@@ -1,4 +1,4 @@
-name: oauth-refresh-token
+name: python-oauth-refresh-token
 imports:
   auth: auth.yml
 
