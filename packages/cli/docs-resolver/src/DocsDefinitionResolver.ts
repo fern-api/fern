@@ -36,8 +36,8 @@ import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { loadApis } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
-
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { createHash } from "crypto";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { existsSync } from "fs";
@@ -698,16 +698,42 @@ export class DocsDefinitionResolver {
             );
             const deferredStart = performance.now();
             const pendingRegistrations = this.pendingApiRegistrations;
-            // Resolve .mdx/.md file path links in all IR description (docs) fields
+            // Versioned docs often reference the same API from every version; register each
+            // distinct definition once and reuse its ID.
+            const registrationKeys: string[] = [];
+            const uniqueRegistrations = new Map<string, (typeof pendingRegistrations)[number]>();
             for (const pending of pendingRegistrations) {
+                // Resolve .mdx/.md file path links in all IR description (docs) fields
                 this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
+
+                const sourceFiles = pending.workspace
+                    ?.getSources()
+                    .map((source) => [source.absoluteFilePath, source.absoluteFilePathToOverrides]);
+                const registrationKey = createHash("sha256")
+                    .update(
+                        JSON.stringify({
+                            ir: pending.ir,
+                            snippetsConfig: pending.snippetsConfig,
+                            playgroundConfig: pending.playgroundConfig,
+                            apiName: pending.apiName,
+                            workspace: sourceFiles,
+                            graphqlOperations: pending.graphqlOperations,
+                            graphqlTypes: pending.graphqlTypes
+                        })
+                    )
+                    .digest("hex");
+                registrationKeys.push(registrationKey);
+                if (!uniqueRegistrations.has(registrationKey)) {
+                    uniqueRegistrations.set(registrationKey, pending);
+                }
             }
             // Registrations are independent, so a few run at once; FDR caps concurrent
             // registrations per task and queues the rest.
-            const realApiDefinitionIds = await mapWithConcurrency(
-                pendingRegistrations,
+            const uniqueEntries = [...uniqueRegistrations.entries()];
+            const uniqueApiDefinitionIds = await mapWithConcurrency(
+                uniqueEntries,
                 getApiRegistrationConcurrency(),
-                async (pending) =>
+                async ([, pending]) =>
                     await this.registerApi({
                         ir: pending.ir,
                         snippetsConfig: pending.snippetsConfig,
@@ -718,9 +744,14 @@ export class DocsDefinitionResolver {
                         graphqlTypes: pending.graphqlTypes
                     })
             );
+            const apiDefinitionIdsByRegistration = new Map(
+                uniqueEntries.map(([registrationKey], index) => [registrationKey, uniqueApiDefinitionIds[index]])
+            );
             // Apply results in registration order so the nav tree and translated specs stay deterministic.
             for (const [index, pending] of pendingRegistrations.entries()) {
-                const realApiDefinitionId = realApiDefinitionIds[index];
+                const registrationKey = registrationKeys[index];
+                const realApiDefinitionId =
+                    registrationKey != null ? apiDefinitionIdsByRegistration.get(registrationKey) : undefined;
                 if (realApiDefinitionId == null) {
                     throw new Error(
                         `Registering API ${pending.apiName ?? pending.tempApiDefinitionId} returned no definition id`
@@ -2049,7 +2080,8 @@ export class DocsDefinitionResolver {
                         audiences: item.audiences,
                         enableUniqueErrorsPerEndpoint: true,
                         generateV1Examples: false,
-                        logWarnings: false
+                        logWarnings: false,
+                        cacheResult: true
                     },
                     { docsVisibility: this.docsVisibility }
                 );

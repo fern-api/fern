@@ -5,8 +5,8 @@ namespace Seed\Types;
 use Seed\Core\Xml\XmlSerializableType;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\ArrayType;
-use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
+use Seed\Core\Xml\XmlElement;
 use InvalidArgumentException;
 
 class Dial extends XmlSerializableType
@@ -38,8 +38,14 @@ class Dial extends XmlSerializableType
     /**
      * @param array{
      *   number?: ?string,
-     *   statusCallbackEvent?: ?array<string>,
-     *   record?: ?array<value-of<DialRecordItem>>,
+     *   statusCallbackEvent?: (
+     *    array<string>
+     *   |string
+     * )|null,
+     *   record?: (
+     *    array<value-of<DialRecordItem>>
+     *   |string
+     * )|null,
      *   numbers?: ?array<Number>,
      * } $values
      */
@@ -47,8 +53,13 @@ class Dial extends XmlSerializableType
         array $values = [],
     ) {
         $this->number = $values['number'] ?? null;
-        $this->statusCallbackEvent = $values['statusCallbackEvent'] ?? null;
-        $this->record = $values['record'] ?? null;
+        /** @var ?array<string> $statusCallbackEvent */
+        $statusCallbackEvent = XmlUtils::toList($values['statusCallbackEvent'] ?? null, ' ');
+        $this->statusCallbackEvent = $statusCallbackEvent;
+
+        /** @var ?array<value-of<DialRecordItem>> $record */
+        $record = XmlUtils::toList($values['record'] ?? null, ' ');
+        $this->record = $record;
         $this->numbers = $values['numbers'] ?? null;
     }
 

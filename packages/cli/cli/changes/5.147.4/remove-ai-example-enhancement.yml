@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` no longer calls the AI example enhancement service while publishing,
+    so publishing API reference pages is faster. The service has been returning errors since
+    August, so examples on published pages were not being enhanced anyway. The `ai-examples`
+    setting in `docs.yml` is still accepted but has no effect. Existing
+    `ai_examples_override.yml` files next to OpenAPI specs are still applied.
+  type: chore

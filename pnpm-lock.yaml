@@ -6387,6 +6387,9 @@ importers:
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../../../docs-resolver
+      '@fern-api/docs-validator':
+        specifier: workspace:*
+        version: link:../../../yaml/docs-validator
       '@fern-api/fai-sdk':
         specifier: 'catalog:'
         version: 0.0.6-2ee1b7e28
@@ -6906,33 +6909,18 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
-      '@fern-api/openapi-pruner':
-        specifier: workspace:*
-        version: link:../api-importers/openapi-pruner
       '@fern-api/openapi-to-ir':
         specifier: workspace:*
         version: link:../api-importers/openapi-to-ir
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/v3-importer-commons':
-        specifier: workspace:*
-        version: link:../api-importers/v3-importer-commons
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
-      '@types/js-yaml':
-        specifier: 'catalog:'
-        version: 4.0.9
-      js-yaml:
-        specifier: '>=4.2.0'
-        version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -9667,10 +9655,6 @@ packages:
 
   '@fern-fern/ir-sdk@67.22.0':
     resolution: {integrity: sha512-WSKMwlqNubDJ/pKMFX1/qZ4CwSQvDtYFDviugtWqcmnid/xSY13i7N7TpPC2j6CAeUJSA/Pcdq8/nALWeythsw==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-sdk@67.28.0':
-    resolution: {integrity: sha512-mKtoj/V7ot0rAfYy+bKmtnaXcutpbnTeznuWvQwxe1GuLd6lKyNzRtNjMhmcs5EZqothpnLbqJZoggN2NSdydA==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-sdk@67.29.0':
@@ -16702,8 +16686,6 @@ snapshots:
   '@fern-fern/ir-sdk@67.21.0': {}
 
   '@fern-fern/ir-sdk@67.22.0': {}
-
-  '@fern-fern/ir-sdk@67.28.0': {}
 
   '@fern-fern/ir-sdk@67.29.0': {}
 

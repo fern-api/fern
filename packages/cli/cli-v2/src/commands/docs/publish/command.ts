@@ -1,6 +1,7 @@
 import type { FernToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { Rules } from "@fern-api/docs-validator";
 import { CliError, TaskAbortSignal } from "@fern-api/task-context";
 
 import chalk from "chalk";
@@ -119,7 +120,13 @@ export class PublishCommand {
         docsTask.stage.validation.start();
         try {
             const checker = new DocsChecker({ context, task: docsTask.getTask() });
-            const checkResult = await checker.check({ workspace, strict: args.strict });
+            // publishDocs runs missing-redirects on the docs it resolves, so the navigation is built once.
+            // --strict keeps it here, because publishDocs only stops on errors and strict also fails on warnings.
+            const checkResult = await checker.check({
+                workspace,
+                strict: args.strict,
+                excludeRules: args.strict ? [] : [Rules.MissingRedirectsRule.name]
+            });
 
             if (checkResult.hasErrors || (args.strict && checkResult.hasWarnings)) {
                 throw new ValidationError(checkResult.violations);
