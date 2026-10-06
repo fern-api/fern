@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.resources.file.service.requests.GetFileRequest;
-import com.seed.examples.resources.types.types.File;
+import com.seed.examples.resources.types.errors.NotFoundError;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -24,6 +24,7 @@ public class FileServiceWireTest {
         server.start();
         client = SeedExamplesClient.builder()
                 .url(server.url("/").toString())
+                .maxRetries(0)
                 .token("test-token")
                 .build();
     }
@@ -36,11 +37,11 @@ public class FileServiceWireTest {
     @Test
     public void testGetFile() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(404).setBody("\"A file with that name was not found!\""));
-        File response = client.file()
+        NotFoundError exception = Assertions.assertThrows(NotFoundError.class, () -> client.file()
                 .service()
                 .getFile(
                         "file.txt",
-                        GetFileRequest.builder().xFileApiVersion("0.0.2").build());
+                        GetFileRequest.builder().xFileApiVersion("0.0.2").build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -51,12 +52,13 @@ public class FileServiceWireTest {
                 request.getHeader("X-File-API-Version"),
                 "Header 'X-File-API-Version' should match expected value");
 
-        // Validate response deserialization
-        Assertions.assertNotNull(response, "Response should not be null");
-        // Verify the response can be serialized back to JSON
-        String responseJson = objectMapper.writeValueAsString(response);
-        Assertions.assertNotNull(responseJson);
-        Assertions.assertFalse(responseJson.isEmpty());
+        // Validate error response
+        Assertions.assertEquals(404, exception.statusCode(), "Error status code does not match expected");
+        String actualErrorJson = objectMapper.writeValueAsString(exception.body());
+        String expectedErrorBody = "" + "\"A file with that name was not found!\"";
+        JsonNode actualErrorNode = objectMapper.readTree(actualErrorJson);
+        JsonNode expectedErrorNode = objectMapper.readTree(expectedErrorBody);
+        Assertions.assertTrue(jsonEquals(expectedErrorNode, actualErrorNode), "Error body does not match expected");
     }
 
     /**
