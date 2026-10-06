@@ -511,6 +511,7 @@ export class XmlObjectGenerator {
                 writer.writeLine(
                     `raise ArgumentError, "${textField} given both positionally and as a keyword" unless ${textField}.nil?`
                 );
+                writer.newLine();
                 writer.writeLine(`${textField} = attributes.delete(:${textField})`);
                 writer.dedent();
                 writer.writeLine("end");

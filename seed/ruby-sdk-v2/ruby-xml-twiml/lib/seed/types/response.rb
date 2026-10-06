@@ -24,6 +24,7 @@ module Seed
       def say(message = nil, **attributes)
         if attributes.key?(:message)
           raise ArgumentError, "message given both positionally and as a keyword" unless message.nil?
+
           message = attributes.delete(:message)
         end
         child = message.is_a?(Seed::Types::Say) ? message : Seed::Types::Say.new(**attributes, message: message)
@@ -43,6 +44,7 @@ module Seed
       def dial(number = nil, **attributes)
         if attributes.key?(:number)
           raise ArgumentError, "number given both positionally and as a keyword" unless number.nil?
+
           number = attributes.delete(:number)
         end
         child = number.is_a?(Seed::Types::Dial) ? number : Seed::Types::Dial.new(**attributes, number: number)
@@ -88,6 +90,7 @@ module Seed
       def redirect(url = nil, **attributes)
         if attributes.key?(:url)
           raise ArgumentError, "url given both positionally and as a keyword" unless url.nil?
+
           url = attributes.delete(:url)
         end
         child = url.is_a?(Seed::Types::Redirect) ? url : Seed::Types::Redirect.new(**attributes, url: url)
