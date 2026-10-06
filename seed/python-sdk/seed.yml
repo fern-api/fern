@@ -574,6 +574,11 @@ fixtures:
   openapi-per-spec-base-path-disabled:
     - customConfig: null
       outputFolder: no-custom-config
+allowedFailures:
+  # Needs the Python generator's refresh-token support (fern-api/fern#18101), which
+  # depends on the published IR 67.30.0 from this change.
+  - python-oauth-refresh-token
+  - python-oauth-refresh-token-openapi
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
