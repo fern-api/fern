@@ -96,7 +96,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             extends = []
             properties = all_properties
 
-        naming = self._compute_xml_naming(all_properties) if self._xml is not None else None
+        naming = (
+            self._compute_xml_naming(all_properties, declared_properties=properties) if self._xml is not None else None
+        )
 
         with FernAwarePydanticModel(
             class_name=self._class_name,
@@ -125,15 +127,21 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             if self._xml is not None and naming is not None:
                 self._add_xml_methods(pydantic_model, xml=self._xml, properties=all_properties, naming=naming)
 
-    def _compute_xml_naming(self, properties: List[ObjectProperty]) -> "_XmlNaming":
+    def _compute_xml_naming(
+        self, properties: List[ObjectProperty], *, declared_properties: List[ObjectProperty]
+    ) -> "_XmlNaming":
         """Fixes the fluent child builder names and the text field's attribute name together.
 
         Builders are named after the child tag (`dial.number(...)`); when that is also the text field's
         name the builder wins and the text is stored under a trailing underscore (`dial.number_`), as in
-        the legacy SDKs. The constructor keyword stays `number=`.
+        the legacy SDKs. The constructor keyword stays `number=`. A text field inherited from a parent
+        class cannot be renamed here, so the builder yields instead (`add_number`).
         """
         text_property = next((p for p in properties if _is_xml_text(p)), None)
-        taken: Set[str] = {_field_name(p) for p in properties if p is not text_property} | _RESERVED_METHOD_NAMES
+        renamable_text = text_property is not None and text_property in declared_properties
+        taken: Set[str] = {
+            _field_name(p) for p in properties if not (renamable_text and p is text_property)
+        } | _RESERVED_METHOD_NAMES
         builder_names: Dict[str, Dict[ir_types.TypeId, str]] = {}
         for property in properties:
             if not _is_xml_element(property):
@@ -145,7 +153,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             taken |= set(names.values())
             builder_names[_field_name(property)] = names
         text_attribute: Optional[str] = None
-        if text_property is not None and _field_name(text_property) in taken:
+        if renamable_text and text_property is not None and _field_name(text_property) in taken:
             text_attribute = f"{_field_name(text_property)}_"
             while text_attribute in taken:
                 text_attribute = f"{text_attribute}_"
