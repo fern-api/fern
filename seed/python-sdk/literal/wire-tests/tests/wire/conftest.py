@@ -46,6 +46,7 @@ def get_client(test_id: str) -> SeedLiteral:
         return SeedLiteral(
             base_url=base_url,
             headers=test_headers,
+            max_retries=0,
             version="test_version",
             audit_logging="test_audit_logging",
         )
@@ -53,6 +54,7 @@ def get_client(test_id: str) -> SeedLiteral:
     return SeedLiteral(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
+        max_retries=0,
         version="test_version",
         audit_logging="test_audit_logging",
     )

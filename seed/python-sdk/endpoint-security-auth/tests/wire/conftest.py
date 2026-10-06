@@ -47,6 +47,7 @@ def get_client(test_id: str) -> SeedEndpointSecurityAuth:
         return SeedEndpointSecurityAuth(
             base_url=base_url,
             headers=test_headers,
+            max_retries=0,
             api_key="test_api_key",
             client_id="test_client_id",
             client_secret="test_client_secret",
@@ -57,6 +58,7 @@ def get_client(test_id: str) -> SeedEndpointSecurityAuth:
     return SeedEndpointSecurityAuth(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
+        max_retries=0,
         api_key="test_api_key",
         client_id="test_client_id",
         client_secret="test_client_secret",
