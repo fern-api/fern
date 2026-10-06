@@ -296,6 +296,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return maybeLiteralExample;
         }
 
+        if (this.context.isReferenceObject(resolvedSchema)) {
+            return new ExampleConverter({
+                breadcrumbs: this.breadcrumbs,
+                context: this.context,
+                schema: resolvedSchema,
+                example: this.example,
+                depth: this.depth,
+                generateOptionalProperties: this.generateOptionalProperties,
+                exampleGenerationStrategy: this.exampleGenerationStrategy,
+                seenRefs: this.getMaybeUpdatedSeenRefs()
+            }).convert();
+        }
+
         if (Array.isArray(resolvedSchema.type)) {
             return this.convertSchemaTypeArray({
                 resolvedSchema
