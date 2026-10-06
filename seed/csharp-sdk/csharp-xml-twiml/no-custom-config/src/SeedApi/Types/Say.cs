@@ -123,6 +123,11 @@ public record Say : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
+    /// Hash code derived from the rendered XML, consistent with Equals.
+    /// </summary>
+    public override int GetHashCode() => XmlUtils.XmlHashCode(this);
+
+    /// <summary>
     /// Adds a <c>&lt;break&gt;</c> child element after any content added so far and returns this instance for chaining.
     /// <para>
     /// Adding a Pause in &lt;Say&gt;
@@ -166,6 +171,11 @@ public record Say : IJsonOnDeserialized, IXmlNode
         Content.Add(text);
         return this;
     }
+
+    /// <summary>
+    /// Two values are equal when they render to the same XML.
+    /// </summary>
+    public virtual bool Equals(Say? other) => XmlUtils.XmlEquals(this, other);
 
     /// <summary>
     /// Returns the XML representation of this value.
