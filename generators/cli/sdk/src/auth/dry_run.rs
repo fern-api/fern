@@ -12,16 +12,17 @@ use crate::auth::{AuthProvider, EndpointAuthMetadata};
 /// policy with the schemes the caller already supplied as explicit
 /// header/query parameters removed (same length, same order).
 ///
-/// Requirements are walked in spec order, mirroring
-/// [`RoutingAuthProvider::apply`](crate::auth::RoutingAuthProvider): the
-/// first one the provider can satisfy decides. `credentials` is one of:
-/// - `"not_required"` — `security: []`, an anonymous alternative is the
-///   first satisfiable one, or nothing is declared and the CLI has no
+/// The provider picks the requirement exactly as its `apply` would
+/// ([`AuthProvider::selected_requirement`]), so a selected profile's stored
+/// credentials win over an earlier spec-order alternative here too.
+/// `credentials` is one of:
+/// - `"not_required"` — `security: []`, the selected requirement is an
+///   anonymous alternative, or nothing is declared and the CLI has no
 ///   credential sources to draw from;
 /// - `"supplied"` — the caller passed the credential as a request parameter;
 /// - `"resolved"` — the provider holds credentials for `satisfied_by`.
-///   `configured_sources` lists every populated source the provider knows
-///   about (the `AuthProvider` API cannot scope hints to one requirement);
+///   `configured_sources` lists the populated sources of that requirement's
+///   schemes only ([`AuthProvider::populated_credential_hints_for`]);
 /// - `"missing"` — nothing satisfiable (`expected_sources` lists where to set
 ///   them).
 pub(crate) fn dry_run_auth_info(
@@ -40,7 +41,7 @@ pub(crate) fn dry_run_auth_info(
         &effective.security_requirements,
     ) else {
         if provider.has_credentials_for(effective) {
-            resolved(&mut info, provider, None);
+            resolved(&mut info, provider, effective, None);
         } else {
             missing(&mut info, provider, false);
         }
@@ -51,35 +52,42 @@ pub(crate) fn dry_run_auth_info(
         return info;
     }
 
-    for (declared_req, effective_req) in declared_reqs.iter().zip(effective_reqs) {
-        if effective_req.is_empty() {
-            if declared_req.is_empty() {
-                info["credentials"] = json!("not_required");
-            } else {
-                info["credentials"] = json!("supplied");
-                info["satisfied_by"] = json!(requirement_label(declared_req));
-            }
-            return info;
+    let Some(index) = provider.selected_requirement(effective) else {
+        missing(&mut info, provider, true);
+        return info;
+    };
+    let declared_req = &declared_reqs[index];
+    if effective_reqs[index].is_empty() {
+        if declared_req.is_empty() {
+            info["credentials"] = json!("not_required");
+        } else {
+            info["credentials"] = json!("supplied");
+            info["satisfied_by"] = json!(requirement_label(declared_req));
         }
-        let single = EndpointAuthMetadata {
-            security_requirements: Some(vec![effective_req.clone()]),
-            base_url_override: effective.base_url_override.clone(),
-        };
-        if provider.has_credentials_for(&single) {
-            resolved(&mut info, provider, Some(requirement_label(declared_req)));
-            return info;
-        }
+        return info;
     }
-    missing(&mut info, provider, true);
+    resolved(
+        &mut info,
+        provider,
+        effective,
+        Some(requirement_label(declared_req)),
+    );
     info
 }
 
-fn resolved(info: &mut Value, provider: &dyn AuthProvider, satisfied_by: Option<String>) {
+fn resolved(
+    info: &mut Value,
+    provider: &dyn AuthProvider,
+    effective: &EndpointAuthMetadata,
+    satisfied_by: Option<String>,
+) {
     info["credentials"] = json!("resolved");
     if let Some(label) = satisfied_by {
         info["satisfied_by"] = json!(label);
     }
-    info["configured_sources"] = json!(dedup_preserve_order(provider.populated_credential_hints()));
+    info["configured_sources"] = json!(dedup_preserve_order(
+        provider.populated_credential_hints_for(effective)
+    ));
 }
 
 fn missing(info: &mut Value, provider: &dyn AuthProvider, requires_auth: bool) {

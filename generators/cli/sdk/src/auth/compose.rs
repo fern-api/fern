@@ -71,29 +71,52 @@ impl AuthProvider for AnyAuthProvider {
             .any(|p| p.has_credentials_for(endpoint))
     }
 
+    fn selected_requirement(&self, endpoint: &EndpointAuthMetadata) -> Option<usize> {
+        self.selected(endpoint)
+            .and_then(|provider| provider.selected_requirement(endpoint))
+    }
+
+    fn populated_credential_hints_for(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        self.selected(endpoint)
+            .map(|provider| provider.populated_credential_hints_for(endpoint))
+            .unwrap_or_default()
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
         endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError> {
-        // Endpoint-aware filter: lets nested `RoutingAuthProvider` children
-        // tell us they can't satisfy *this* endpoint even though they have
-        // credentials for some scheme. Leaf providers (Bearer/Basic/Header)
-        // ignore the endpoint, so this degenerates to `has_credentials()`
-        // for them.
+        match self.selected(endpoint) {
+            Some(provider) => provider.apply(request, endpoint),
+            None => Ok(request),
+        }
+    }
+}
+
+impl AnyAuthProvider {
+    /// The child `apply` hands the request to: with a profile in play, the
+    /// first child holding stored credentials for `endpoint`; otherwise the
+    /// first child that can satisfy it.
+    ///
+    /// Endpoint-aware filter: lets nested `RoutingAuthProvider` children
+    /// tell us they can't satisfy *this* endpoint even though they have
+    /// credentials for some scheme. Leaf providers (Bearer/Basic/Header)
+    /// ignore the endpoint, so this degenerates to `has_credentials()`
+    /// for them.
+    fn selected(&self, endpoint: &EndpointAuthMetadata) -> Option<&DynAuthProvider> {
         if crate::profiles::outranks_env() {
-            for provider in &self.providers {
-                if provider.has_stored_credentials() && provider.has_credentials_for(endpoint) {
-                    return provider.apply(request, endpoint);
-                }
+            if let Some(provider) = self
+                .providers
+                .iter()
+                .find(|p| p.has_stored_credentials() && p.has_credentials_for(endpoint))
+            {
+                return Some(provider);
             }
         }
-        for provider in &self.providers {
-            if provider.has_credentials_for(endpoint) {
-                return provider.apply(request, endpoint);
-            }
-        }
-        Ok(request)
+        self.providers
+            .iter()
+            .find(|p| p.has_credentials_for(endpoint))
     }
 }
 
@@ -272,6 +295,14 @@ impl AuthProvider for LayeredAuthProvider {
         self.primary.has_credentials_for(endpoint)
     }
 
+    fn selected_requirement(&self, endpoint: &EndpointAuthMetadata) -> Option<usize> {
+        self.primary.selected_requirement(endpoint)
+    }
+
+    fn populated_credential_hints_for(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        self.primary.populated_credential_hints_for(endpoint)
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
@@ -427,6 +458,35 @@ impl AuthProvider for RoutingAuthProvider {
         }
     }
 
+    fn selected_requirement(&self, endpoint: &EndpointAuthMetadata) -> Option<usize> {
+        match &endpoint.security_requirements {
+            None => self
+                .default
+                .as_ref()
+                .and_then(|d| d.selected_requirement(endpoint)),
+            Some(requirements) => self.select_requirement(requirements),
+        }
+    }
+
+    fn populated_credential_hints_for(&self, endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        let requirements = match &endpoint.security_requirements {
+            None => {
+                return match &self.default {
+                    Some(d) => d.populated_credential_hints_for(endpoint),
+                    None => self.populated_credential_hints(),
+                };
+            }
+            Some(requirements) => requirements,
+        };
+        let Some(index) = self.select_requirement(requirements) else {
+            return Vec::new();
+        };
+        Self::sorted_scheme_names(&requirements[index])
+            .into_iter()
+            .flat_map(|name| self.schemes[name].populated_credential_hints_for(endpoint))
+            .collect()
+    }
+
     fn apply(
         &self,
         request: reqwest::RequestBuilder,
@@ -445,36 +505,7 @@ impl AuthProvider for RoutingAuthProvider {
             Some(reqs) => reqs,
         };
 
-        // With a profile in play (however it was selected), prefer a
-        // requirement this profile actually stored credentials for over the
-        // first merely satisfiable one. Unprofiled, spec order decides as it
-        // always has.
-        //
-        // `all(has_stored_credentials)` is deliberately strict: an AND
-        // requirement mixing a keyring-backed scheme with an env-backed one
-        // (bearer + a static account-id header) is never "all stored", so the
-        // preference doesn't engage for it and the fallthrough picks spec
-        // order. Loosening this to "any stored, all satisfiable" would cover
-        // that case but would also let one stored half of a requirement drag
-        // in an ambient other half — the same mixed-provenance trap
-        // `resolve_client_id` has to avoid. Left strict until a real API asks
-        // for it.
-        let satisfiable = if crate::profiles::outranks_env() {
-            requirements
-                .iter()
-                .find(|req| {
-                    req.keys().all(|name| {
-                        self.schemes
-                            .get(name)
-                            .is_some_and(|p| p.has_stored_credentials())
-                    })
-                })
-                .or_else(|| self.satisfiable_requirement(requirements))
-        } else {
-            self.satisfiable_requirement(requirements)
-        };
-
-        let Some(requirement) = satisfiable else {
+        let Some(index) = self.select_requirement(requirements) else {
             // No declared requirement is satisfiable. Diverges from the TS
             // generator (which throws): we let the request go out unauthed
             // so the server's 401/403 + `handle_error_response`
@@ -483,16 +514,9 @@ impl AuthProvider for RoutingAuthProvider {
         };
 
         let mut req = request;
-        // Sort the requirement's scheme names so multi-scheme requirements
-        // apply in a stable order regardless of `HashMap` iteration. Each
-        // provider sets a distinct header so order doesn't affect the wire
-        // payload, but reproducibility matters for tracing and snapshot
-        // tests.
-        let mut scheme_names: Vec<&String> = requirement.keys().collect();
-        scheme_names.sort();
-        for scheme_name in scheme_names {
-            // Safe: `satisfiable` filtered to requirements where every key
-            // has a registered provider.
+        for scheme_name in Self::sorted_scheme_names(&requirements[index]) {
+            // Safe: `select_requirement` only returns requirements where
+            // every key has a registered provider.
             let provider = &self.schemes[scheme_name];
             req = provider.apply(req, endpoint)?;
         }
@@ -501,17 +525,54 @@ impl AuthProvider for RoutingAuthProvider {
 }
 
 impl RoutingAuthProvider {
-    fn satisfiable_requirement<'a>(
-        &self,
-        requirements: &'a [HashMap<String, Vec<String>>],
-    ) -> Option<&'a HashMap<String, Vec<String>>> {
-        requirements.iter().find(|req| {
+    /// Index of the requirement `apply` attaches, or `None` when nothing is
+    /// satisfiable.
+    ///
+    /// With a profile in play (however it was selected), prefer a
+    /// requirement this profile actually stored credentials for over the
+    /// first merely satisfiable one. Unprofiled, spec order decides as it
+    /// always has.
+    ///
+    /// `all(has_stored_credentials)` is deliberately strict: an AND
+    /// requirement mixing a keyring-backed scheme with an env-backed one
+    /// (bearer + a static account-id header) is never "all stored", so the
+    /// preference doesn't engage for it and the fallthrough picks spec
+    /// order. Loosening this to "any stored, all satisfiable" would cover
+    /// that case but would also let one stored half of a requirement drag
+    /// in an ambient other half — the same mixed-provenance trap
+    /// `resolve_client_id` has to avoid. Left strict until a real API asks
+    /// for it.
+    fn select_requirement(&self, requirements: &[HashMap<String, Vec<String>>]) -> Option<usize> {
+        if crate::profiles::outranks_env() {
+            let stored = requirements.iter().position(|req| {
+                req.keys().all(|name| {
+                    self.schemes
+                        .get(name)
+                        .is_some_and(|p| p.has_stored_credentials())
+                })
+            });
+            if stored.is_some() {
+                return stored;
+            }
+        }
+        requirements.iter().position(|req| {
             req.keys().all(|name| {
                 self.schemes
                     .get(name)
                     .is_some_and(|p| p.has_credentials())
             })
         })
+    }
+
+    /// Sort the requirement's scheme names so multi-scheme requirements
+    /// apply in a stable order regardless of `HashMap` iteration. Each
+    /// provider sets a distinct header so order doesn't affect the wire
+    /// payload, but reproducibility matters for tracing and snapshot
+    /// tests.
+    fn sorted_scheme_names(requirement: &HashMap<String, Vec<String>>) -> Vec<&String> {
+        let mut scheme_names: Vec<&String> = requirement.keys().collect();
+        scheme_names.sort();
+        scheme_names
     }
 }
 

@@ -143,6 +143,36 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         self.credential_hints()
     }
 
+    /// Index into `endpoint.security_requirements` of the requirement
+    /// [`apply`](Self::apply) would attach, or `None` when nothing is
+    /// declared or nothing is satisfiable.
+    ///
+    /// The default walks the requirements in spec order and picks the first
+    /// one this provider can satisfy (an empty requirement — anonymous — is
+    /// always satisfiable). Wrappers whose `apply` chooses differently (a
+    /// [`RoutingAuthProvider`] prefers the requirement a selected profile
+    /// stored credentials for) override it so previews name the requirement
+    /// that would really be used.
+    fn selected_requirement(&self, endpoint: &EndpointAuthMetadata) -> Option<usize> {
+        let requirements = endpoint.security_requirements.as_ref()?;
+        requirements.iter().position(|requirement| {
+            requirement.is_empty()
+                || self.has_credentials_for(&EndpointAuthMetadata {
+                    security_requirements: Some(vec![requirement.clone()]),
+                    base_url_override: endpoint.base_url_override.clone(),
+                })
+        })
+    }
+
+    /// [`populated_credential_hints`](Self::populated_credential_hints)
+    /// restricted to the sources [`apply`](Self::apply) would actually draw
+    /// on for `endpoint`. Leaf providers have a single source set, so the
+    /// default is the unrestricted list; composition wrappers narrow it to
+    /// the child or requirement they would select.
+    fn populated_credential_hints_for(&self, _endpoint: &EndpointAuthMetadata) -> Vec<String> {
+        self.populated_credential_hints()
+    }
+
     /// The credential slots this provider reads, for `auth status`.
     ///
     /// See [`CredentialSlots`] for the required/alternative split.
