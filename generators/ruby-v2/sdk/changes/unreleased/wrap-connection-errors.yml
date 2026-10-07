@@ -6,5 +6,6 @@
     `EOFError`, `SocketError` (DNS) or `OpenSSL::SSL::SSLError`, so `rescue Errors::ApiError`
     catches every failed call as the README documents. The original exception is kept as `cause`.
     `Errno::ETIMEDOUT` now raises `Errors::TimeoutError` like the other socket timeouts.
-    Transport failures are still not retried. The README errors example shows the new class.
+    Code that rescued those classes directly should rescue `Errors::ConnectionError` instead (or inspect
+    `cause`). Transport failures are still not retried. The README errors example shows the new class.
   type: fix
