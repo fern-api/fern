@@ -6,7 +6,7 @@ from .example_models.types.core.unchecked_base_model import construct_type
 from .example_models.types.resources.types import ObjectWithOptionalField
 
 from tests.utils.example_models.types.resources.types.circle import Circle
-from tests.utils.example_models.types.resources.types.shape import Shape_Circle, Shape_Square
+from tests.utils.example_models.types.resources.types.shape import Shape, Shape_Circle, Shape_Square
 from tests.utils.example_models.types.resources.types.square import Square
 
 
@@ -1156,3 +1156,21 @@ def test_construct_bare_set() -> None:
     input_set = {1, 2, 3}
     result = construct_type(type_=set, object_=input_set)
     assert result == input_set
+
+
+def test_discriminated_union_unknown_or_missing_discriminant_keeps_data() -> None:
+    known = {"type": "circle", "radius": 1.0}
+    unknown = {"type": "triangle", "base": 2.0, "height": 3.0}
+    missing = {"radius": 4.0, "note": "no discriminant"}
+
+    shapes = construct_type(type_=List[Shape], object_=[known, unknown, missing])  # type: ignore
+
+    assert isinstance(shapes[0], Shape_Circle)
+    assert shapes[1] == unknown
+    assert not isinstance(shapes[1], (Shape_Circle, Shape_Square))
+    assert shapes[2] == missing
+    assert not isinstance(shapes[2], (Shape_Circle, Shape_Square))
+
+
+def test_undiscriminated_union_no_match_keeps_data() -> None:
+    assert construct_type(type_=Union[int, Shape_Square], object_={"foo": "bar"}) == {"foo": "bar"}  # type: ignore
