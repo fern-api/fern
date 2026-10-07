@@ -39,19 +39,177 @@ pub fn generate_man(cmd: Command, bin_name: &str) -> std::io::Result<()> {
     generate_man_to(cmd, bin_name, &mut std::io::stdout())
 }
 
+/// What `<cli> man ...` asked for: a page path (`man messages send` →
+/// `["messages", "send"]`, empty for the root page) and, with
+/// `--output-dir`, a directory to write every page into instead.
+#[derive(Debug, Default, PartialEq, Eq)]
+pub struct ManRequest {
+    pub command_path: Vec<String>,
+    pub output_dir: Option<String>,
+}
+
+/// Parse the tokens that follow the `man` subcommand. Flags other than
+/// `--output-dir` (e.g. global `--debug`) are ignored.
+pub fn parse_man_request(args: &[String]) -> ManRequest {
+    let mut request = ManRequest::default();
+    let mut tokens = args
+        .iter()
+        .skip(1)
+        .skip_while(|a| a.as_str() != "man")
+        .skip(1);
+    while let Some(token) = tokens.next() {
+        if token == "--output-dir" {
+            request.output_dir = tokens.next().cloned();
+        } else if let Some(dir) = token.strip_prefix("--output-dir=") {
+            request.output_dir = Some(dir.to_string());
+        } else if !token.starts_with('-') {
+            request.command_path.push(token.clone());
+        }
+    }
+    request
+}
+
+/// Render the page(s) a [`ManRequest`] names. A single page is written to
+/// `writer`; with `output_dir`, one `<bin>[-<sub>...].1` file per visible
+/// command is written there and their paths are listed on `writer`.
+pub fn run_man_request(
+    mut cmd: Command,
+    bin_name: &str,
+    request: &ManRequest,
+    writer: &mut dyn std::io::Write,
+) -> Result<(), crate::error::CliError> {
+    cmd = cmd.name(bin_name.to_owned());
+    cmd.build();
+    let version = cmd.get_version().map(str::to_owned);
+    let io_err = |e: std::io::Error| crate::error::CliError::Other(e.into());
+
+    let mut target = cmd;
+    let mut path: Vec<String> = Vec::new();
+    for segment in &request.command_path {
+        let next = target
+            .get_subcommands()
+            .find(|sub| sub.get_name() == segment || sub.get_all_aliases().any(|a| a == segment))
+            .cloned();
+        match next {
+            Some(sub) => {
+                path.push(sub.get_name().to_owned());
+                target = sub;
+            }
+            None => {
+                let shown = std::iter::once(bin_name)
+                    .chain(path.iter().map(String::as_str))
+                    .collect::<Vec<_>>()
+                    .join(" ");
+                return Err(crate::error::CliError::Validation(format!(
+                    "unknown command '{segment}' for `{shown}`. Run `{bin_name} man --help` for usage."
+                )));
+            }
+        }
+    }
+    let target = name_page(target, bin_name, &path, version.as_deref());
+
+    match &request.output_dir {
+        Some(dir) => {
+            let dir = std::path::Path::new(dir);
+            std::fs::create_dir_all(dir).map_err(io_err)?;
+            let mut written = Vec::new();
+            write_pages(
+                target,
+                bin_name,
+                &path,
+                version.as_deref(),
+                dir,
+                &mut written,
+            )
+            .map_err(io_err)?;
+            for file in written {
+                writeln!(writer, "{}", file.display()).map_err(io_err)?;
+            }
+            Ok(())
+        }
+        None => {
+            let mut buf = Vec::new();
+            man_page(target, bin_name, version.as_deref())
+                .render(&mut buf)
+                .map_err(io_err)?;
+            writer.write_all(&buf).map_err(io_err)
+        }
+    }
+}
+
+/// Give a (sub)command the identity its man page should carry: the page
+/// name `<bin>-<sub>` (which is also how the parent page cross-references
+/// it), the full invocation `<bin> <sub>` in the synopsis, and the root
+/// version so every page's footer says which CLI build it documents.
+fn name_page(cmd: Command, bin_name: &str, path: &[String], version: Option<&str>) -> Command {
+    let display = std::iter::once(bin_name)
+        .chain(path.iter().map(String::as_str))
+        .collect::<Vec<_>>();
+    let mut cmd = cmd
+        .display_name(display.join("-"))
+        .bin_name(display.join(" "));
+    if let Some(v) = version {
+        cmd = cmd.version(v.to_owned());
+    }
+    cmd
+}
+
+/// The page footer names the CLI build (`twilio-cli 1.2.0`), not the
+/// subcommand clap_mangen would otherwise use.
+fn man_page(cmd: Command, bin_name: &str, version: Option<&str>) -> clap_mangen::Man {
+    let source = match version {
+        Some(v) => format!("{bin_name} {v}"),
+        None => bin_name.to_owned(),
+    };
+    clap_mangen::Man::new(cmd).source(source)
+}
+
+fn write_pages(
+    cmd: Command,
+    bin_name: &str,
+    path: &[String],
+    version: Option<&str>,
+    dir: &std::path::Path,
+    written: &mut Vec<std::path::PathBuf>,
+) -> std::io::Result<()> {
+    for sub in cmd
+        .get_subcommands()
+        .filter(|s| !s.is_hide_set())
+    {
+        let mut child_path = path.to_vec();
+        child_path.push(sub.get_name().to_owned());
+        let child = name_page(sub.clone(), bin_name, &child_path, version);
+        write_pages(child, bin_name, &child_path, version, dir, written)?;
+    }
+    written.push(man_page(cmd, bin_name, version).generate_to(dir)?);
+    Ok(())
+}
+
 /// Build the `man` subcommand definition. Registered at the root of the
 /// command tree so `<cli> man` works.
 pub fn man_command() -> Command {
     Command::new("man")
-        .about("Generate a man page (roff format)")
+        .about("Generate man pages (roff format)")
+        .arg(
+            clap::Arg::new("command")
+                .value_name("COMMAND")
+                .num_args(0..)
+                .help("Command to render the page for (e.g. `messages` for <CLI>-messages(1)). Omit for the top-level page"),
+        )
+        .arg(
+            clap::Arg::new("output-dir")
+                .long("output-dir")
+                .value_name("DIR")
+                .help("Write a page for every command into DIR instead of printing one page"),
+        )
         .after_help(
             "EXAMPLES:\n    \
-             # macOS / Linux (user-local)\n    \
-             <CLI> man > ~/.local/share/man/man1/<CLI>.1\n    \
-             # System-wide (Linux)\n    \
+             # macOS / Linux (user-local), every page\n    \
+             <CLI> man --output-dir ~/.local/share/man/man1\n    \
+             # Top-level page only, system-wide (Linux)\n    \
              <CLI> man | sudo tee /usr/local/share/man/man1/<CLI>.1\n    \
-             # View directly without installing\n    \
-             <CLI> man | groff -Tutf8 -man | less",
+             # View a command's page directly without installing\n    \
+             <CLI> man <COMMAND> | groff -Tutf8 -man | less",
         )
 }
 
@@ -76,6 +234,51 @@ mod tests {
     #[test]
     fn wants_man_with_boolean_flag() {
         assert!(wants_man(&args(&["box", "--dry-run", "man"])));
+    }
+
+    #[test]
+    fn parse_man_request_reads_the_command_path_and_output_dir() {
+        assert_eq!(
+            parse_man_request(&args(&["box", "man"])),
+            ManRequest::default()
+        );
+        assert_eq!(
+            parse_man_request(&args(&["box", "--debug", "man", "items", "list"])),
+            ManRequest {
+                command_path: vec!["items".into(), "list".into()],
+                output_dir: None,
+            }
+        );
+        assert_eq!(
+            parse_man_request(&args(&["box", "man", "--output-dir", "out", "items"])),
+            ManRequest {
+                command_path: vec!["items".into()],
+                output_dir: Some("out".into()),
+            }
+        );
+        assert_eq!(
+            parse_man_request(&args(&["box", "man", "--output-dir=out"])).output_dir,
+            Some("out".into())
+        );
+    }
+
+    #[test]
+    fn run_man_request_renders_the_selected_page() {
+        let cmd = Command::new("box")
+            .version("1.2.3")
+            .subcommand(Command::new("items").about("Manage items"));
+        let request = ManRequest {
+            command_path: vec!["items".into()],
+            output_dir: None,
+        };
+        let mut buf = Vec::new();
+        run_man_request(cmd, "box", &request, &mut buf).expect("page renders");
+        let output = String::from_utf8(buf).unwrap();
+        assert!(
+            output.contains(".TH box-items 1  \"box 1.2.3\""),
+            "{output}"
+        );
+        assert!(output.contains("Manage items"), "{output}");
     }
 
     #[test]

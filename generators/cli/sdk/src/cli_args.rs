@@ -92,6 +92,151 @@ fn apply_required_usage(mut cmd: clap::Command) -> clap::Command {
     cmd.override_usage(format!("{default_usage} {}", required.join(" ")))
 }
 
+/// Fill the binary-specific placeholders that static help strings carry:
+/// `<NAME>_` becomes the env-var prefix (`<NAME>_RETRIES` → `ACME_CLI_RETRIES`)
+/// and `<CLI>` becomes the binary name. Help text is authored once in the
+/// shared runtime, before the binary name is known, so the substitution runs
+/// on the finished tree. Bare `<NAME>` (a clap value placeholder) is untouched.
+pub fn fill_help_placeholders(cmd: clap::Command, bin_name: &str) -> clap::Command {
+    let prefix = crate::text::env_var_prefix(bin_name);
+    fill_help_placeholders_with(cmd, &prefix, bin_name)
+}
+
+fn fill_placeholders_in(text: &str, prefix: &str, bin_name: &str) -> Option<String> {
+    if !text.contains("<NAME>_") && !text.contains("<CLI>") {
+        return None;
+    }
+    Some(
+        text.replace("<NAME>_", &format!("{prefix}_"))
+            .replace("<CLI>", bin_name),
+    )
+}
+
+fn fill_help_placeholders_with(
+    mut cmd: clap::Command,
+    prefix: &str,
+    bin_name: &str,
+) -> clap::Command {
+    let fill = |s: Option<&clap::builder::StyledStr>| {
+        s.and_then(|s| fill_placeholders_in(&s.to_string(), prefix, bin_name))
+    };
+    if let Some(about) = fill(cmd.get_about()) {
+        cmd = cmd.about(about);
+    }
+    if let Some(long_about) = fill(cmd.get_long_about()) {
+        cmd = cmd.long_about(long_about);
+    }
+    if let Some(after_help) = fill(cmd.get_after_help()) {
+        cmd = cmd.after_help(after_help);
+    }
+    if let Some(after_long_help) = fill(cmd.get_after_long_help()) {
+        cmd = cmd.after_long_help(after_long_help);
+    }
+    if let Some(before_help) = fill(cmd.get_before_help()) {
+        cmd = cmd.before_help(before_help);
+    }
+    cmd.mut_args(|arg| {
+        let help = fill(arg.get_help());
+        let long_help = fill(arg.get_long_help());
+        let arg = match help {
+            Some(h) => arg.help(h),
+            None => arg,
+        };
+        match long_help {
+            Some(h) => arg.long_help(h),
+            None => arg,
+        }
+    })
+    .mut_subcommands(|sub| fill_help_placeholders_with(sub, prefix, bin_name))
+}
+
+/// Collapse the inherited global flags in every subcommand's `--help` into a
+/// one-line index, so a leaf's own parameters are not buried under the full
+/// global block repeated on every page. The flags stay accepted (hidden, not
+/// removed); the root `--help` keeps their full descriptions together with
+/// the environment-variable and authentication footer, which the index
+/// points to.
+///
+/// Run on the parse tree only, after `completion`/`man` are rendered from the
+/// un-collapsed tree: both skip hidden args, and shell completion and man
+/// pages should keep offering the global flags on every subcommand.
+pub fn collapse_subcommand_global_help(cmd: clap::Command, bin_name: &str) -> clap::Command {
+    let pointer = format!("Run `{bin_name} --help` for details and environment variables.");
+    cmd.mut_subcommands(|sub| collapse_global_help_built(sub, &pointer))
+}
+
+fn collapse_global_help_built(cmd: clap::Command, pointer: &str) -> clap::Command {
+    let is_help_action = |arg: &clap::Arg| {
+        matches!(
+            arg.get_action(),
+            clap::ArgAction::Help | clap::ArgAction::HelpShort | clap::ArgAction::HelpLong
+        )
+    };
+    let flags: Vec<String> = cmd
+        .get_arguments()
+        .filter(|arg| {
+            arg.get_help_heading() == Some(HELP_HEADING_GLOBAL)
+                && !arg.is_hide_set()
+                && !is_help_action(arg)
+        })
+        .filter_map(|arg| arg.get_long().map(|long| format!("--{long}")))
+        .collect();
+    let mut cmd = cmd;
+    if !flags.is_empty() {
+        let hidden: std::collections::HashSet<String> = flags
+            .iter()
+            .map(|f| f.trim_start_matches("--").to_string())
+            .collect();
+        cmd = cmd.mut_args(|arg| {
+            let hide = arg.get_help_heading() == Some(HELP_HEADING_GLOBAL)
+                && !is_help_action(&arg)
+                && arg.get_long().is_some_and(|long| hidden.contains(long));
+            if hide {
+                arg.hide(true)
+            } else if is_help_action(&arg) && arg.get_help_heading() == Some(HELP_HEADING_GLOBAL) {
+                // The index below carries the `Global options` heading; a
+                // second section of that name holding only `--help` reads as
+                // a duplicate.
+                arg.help_heading(None::<&str>)
+            } else {
+                arg
+            }
+        });
+        let index = format!(
+            "{HELP_HEADING_GLOBAL}:\n{}\n  {pointer}",
+            wrap_flag_list(&flags, 76)
+        );
+        let after_help = match cmd.get_after_help().map(|s| s.to_string()) {
+            Some(existing) if !existing.trim().is_empty() => format!("{existing}\n\n{index}"),
+            _ => index,
+        };
+        cmd = cmd.after_help(after_help);
+    }
+    cmd.mut_subcommands(|sub| collapse_global_help_built(sub, pointer))
+}
+
+/// Comma-join `flags` into lines indented by two spaces, none wider than
+/// `width` columns.
+fn wrap_flag_list(flags: &[String], width: usize) -> String {
+    let mut lines: Vec<String> = Vec::new();
+    let mut current = String::from(" ");
+    for (i, flag) in flags.iter().enumerate() {
+        let token = if i + 1 < flags.len() {
+            format!("{flag},")
+        } else {
+            flag.clone()
+        };
+        if current.len() + 1 + token.len() > width && !current.trim().is_empty() {
+            lines.push(current);
+            current = String::from(" ");
+        }
+        current.push(' ');
+        current.push_str(&token);
+    }
+    lines.push(current);
+    lines.join("\n")
+}
+
 /// True for `--version`, `-V`, or the bare `version` subcommand.
 pub fn is_version_flag(arg: &str) -> bool {
     matches!(arg, "--version" | "-V" | "version")

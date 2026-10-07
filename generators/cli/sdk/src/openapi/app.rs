@@ -10,7 +10,9 @@ use std::collections::HashMap;
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
 use crate::error::CliError;
 use crate::formatter;
-use crate::openapi::discovery::{GlobalParameter, JsonSchema, RestDescription, RestMethod, RestResource};
+use crate::openapi::discovery::{
+    GlobalParameter, JsonSchema, RestDescription, RestMethod, RestResource, SdkGroupInfo,
+};
 use crate::openapi::executor;
 
 /// Split a slash-delimited prefix string into its path components, dropping
@@ -386,6 +388,14 @@ fn merge_tag_descriptions(
 ) {
     for (name, description) in incoming {
         acc.entry(name).or_insert(description);
+    }
+}
+
+/// Union `x-fern-groups` metadata across specs; the first spec wins on a
+/// shared group name, matching [`merge_tag_descriptions`].
+fn merge_groups(acc: &mut HashMap<String, SdkGroupInfo>, incoming: HashMap<String, SdkGroupInfo>) {
+    for (name, info) in incoming {
+        acc.entry(name).or_insert(info);
     }
 }
 
@@ -1450,6 +1460,26 @@ impl CliApp {
                 crate::openapi::load_openapi_spec_from_value(value, &self.name)?
             };
 
+            // A namespaced spec's top-level command describes the whole
+            // spec, so its `info.description` is the group's description
+            // unless `x-fern-groups` already provides one.
+            let mut spec_doc = spec_doc;
+            if let Some(namespace) = entry.prefix_path.last() {
+                if let Some(description) = spec_doc
+                    .description
+                    .clone()
+                    .filter(|d| !d.trim().is_empty())
+                {
+                    spec_doc
+                        .groups
+                        .entry(namespace.clone())
+                        .or_insert_with(|| SdkGroupInfo {
+                            summary: None,
+                            description: Some(description),
+                        });
+                }
+            }
+
             match merged {
                 None => {
                     let mut base = spec_doc;
@@ -1463,6 +1493,7 @@ impl CliApp {
                     merge_schemas(&mut acc.schemas, spec_doc.schemas)?;
                     merge_security_schemes(&mut acc.security_schemes, spec_doc.security_schemes);
                     merge_tag_descriptions(&mut acc.tag_descriptions, spec_doc.tag_descriptions);
+                    merge_groups(&mut acc.groups, spec_doc.groups);
                     merge_group_tag_names(&mut acc.group_tag_names, spec_doc.group_tag_names);
                     merge_group_tag_operation_counts(
                         &mut acc.group_tag_operation_counts,
