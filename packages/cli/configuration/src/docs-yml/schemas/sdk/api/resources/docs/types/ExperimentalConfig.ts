@@ -40,6 +40,8 @@ export interface ExperimentalConfig {
     excludeApis?: boolean;
     /** Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. */
     basepathAware?: boolean;
+    /** Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt. */
+    robotsTxtOnInstanceUrl?: boolean;
     /** Experimental flag: a list of external sitemaps (`sitemap.xml`), each either an absolute URL or an object with `url` and an optional `locale`. Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation. Each URL is routed to the search index of the site locale it belongs to (detected from `hreflang` or a leading locale path segment, defaulting to the site's default language); set `locale` to pin every URL in a sitemap to one of the site's locales instead. */
     externalSitemaps?: FernDocsConfig.ExternalSitemap[];
 }

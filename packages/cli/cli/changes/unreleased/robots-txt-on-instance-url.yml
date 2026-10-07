@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `experimental.robots-txt-on-instance-url` to `docs.yml`. When set to `true`, the custom
+    robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL
+    (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep
+    `X-Robots-Tag: noindex, nofollow`, so search engines still won't index them.
+  type: feat

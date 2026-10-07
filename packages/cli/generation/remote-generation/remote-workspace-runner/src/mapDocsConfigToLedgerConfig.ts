@@ -221,11 +221,15 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
     // llmsTxt / llmsFullTxt are intentionally dropped — the ledger contract
     // serves these well-known files by convention via file artifact lookup
     // (see LedgerConfigSchema doc comment in docs-ledger/contract.ts).
+    // `robotsTxtOnInstanceUrl` (docs.yml `experimental.robots-txt-on-instance-url`) is
+    // not in the published fdr-sdk types yet, so it is read and forwarded untyped.
+    const { robotsTxtOnInstanceUrl } = agents as { robotsTxtOnInstanceUrl?: boolean };
     return {
         pageDirective: agents.pageDirective,
         pageDescriptionSource: agents.pageDescriptionSource,
-        siteDescription: agents.siteDescription
-    };
+        siteDescription: agents.siteDescription,
+        ...(robotsTxtOnInstanceUrl != null && { robotsTxtOnInstanceUrl })
+    } as LedgerConfig["agents"];
 }
 
 function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig["integrations"] {

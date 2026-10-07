@@ -1129,12 +1129,14 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.agents != null ||
                 this.parsedDocsConfig.llmsTxtFile != null ||
                 this.parsedDocsConfig.llmsFullTxtFile != null ||
-                this.parsedDocsConfig.robotsTxtFile != null
+                this.parsedDocsConfig.robotsTxtFile != null ||
+                this.parsedDocsConfig.experimental?.robotsTxtOnInstanceUrl != null
                     ? ({
                           ...this.parsedDocsConfig.agents,
                           llmsTxt: this.getFileId(this.parsedDocsConfig.llmsTxtFile),
                           llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile),
-                          robotsTxt: this.getFileId(this.parsedDocsConfig.robotsTxtFile)
+                          robotsTxt: this.getFileId(this.parsedDocsConfig.robotsTxtFile),
+                          robotsTxtOnInstanceUrl: this.parsedDocsConfig.experimental?.robotsTxtOnInstanceUrl
                       } as DocsV1Write.DocsConfig["agents"])
                     : undefined,
             metadata: this.convertMetadata(),
