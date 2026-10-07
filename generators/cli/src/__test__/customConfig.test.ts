@@ -15,6 +15,37 @@ describe("validateCustomConfig", () => {
         expect(validateCustomConfig({ binaryName: "acme-cli" })).toEqual({ binaryName: "acme-cli" });
     });
 
+    it("accepts banner text and an optional colour gradient", () => {
+        expect(
+            validateCustomConfig({
+                banner: { text: "Fern CLI", colors: ["#4949F2", "#30F1B1"] }
+            })
+        ).toEqual({ banner: { text: "Fern CLI", colors: ["#4949F2", "#30F1B1"] } });
+    });
+
+    it("accepts a monochrome banner string shorthand", () => {
+        expect(validateCustomConfig({ banner: "Fern CLI" })).toEqual({ banner: "Fern CLI" });
+    });
+
+    it("rejects a banner colour that is not a 6-digit hex value", () => {
+        expect(() => validateCustomConfig({ banner: { text: "Fern", colors: ["#4949F2", "blue"] } })).toThrow(
+            'Invalid customConfig.banner.colors[1]: expected a 6-digit hex colour like "#4949F2", got "blue".'
+        );
+    });
+
+    it("rejects an empty banner text", () => {
+        expect(() => validateCustomConfig({ banner: { text: "" } })).toThrow(
+            'Invalid customConfig.banner.text: expected a non-empty string, got "".'
+        );
+        expect(() => validateCustomConfig({ banner: "" })).toThrow(
+            'Invalid customConfig.banner: expected non-empty text, got "".'
+        );
+    });
+
+    it("rejects unknown banner fields", () => {
+        expect(() => validateCustomConfig({ banner: { text: "Fern", color: "red" } })).toThrow(/unknown field/);
+    });
+
     it("ignores undefined binaryName explicitly set", () => {
         expect(validateCustomConfig({ binaryName: undefined })).toEqual({});
     });

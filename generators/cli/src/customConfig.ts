@@ -16,6 +16,13 @@ export interface FernCliCustomConfig {
     binaryName?: string;
 
     /**
+     * Opt-in banner shown above the generated CLI's root help. A string is
+     * monochrome text; the object form can add one solid colour or a
+     * multi-stop horizontal gradient.
+     */
+    banner?: string | { text: string; colors?: string[] };
+
+    /**
      * When true (the default), the generator produces the full custom
      * command infrastructure alongside the CLI binary:
      *   - `<binaryName>-types` library crate (typed serde structs)
@@ -381,6 +388,8 @@ const RESERVED_SUFFIX_FLAG_NAMES: ReadonlySet<string> = new Set([
     "debug",
     "schema"
 ]);
+const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors"]);
+const BANNER_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
     if (generatorConfig.customConfig == null) {
@@ -411,6 +420,9 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             throw new Error(`Invalid customConfig.binaryName: expected a string, got ${typeof obj.binaryName}.`);
         }
         result.binaryName = obj.binaryName;
+    }
+    if ("banner" in obj && obj.banner !== undefined) {
+        result.banner = validateBannerConfig(obj.banner);
     }
     if ("customCommands" in obj && obj.customCommands !== undefined) {
         if (typeof obj.customCommands !== "boolean") {
@@ -490,6 +502,65 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         result.distribution = validateDistribution(obj.distribution);
     }
     return result;
+}
+
+function validateBannerConfig(raw: unknown): string | { text: string; colors?: string[] } {
+    if (typeof raw === "string") {
+        if (raw.length === 0) {
+            throw new Error('Invalid customConfig.banner: expected non-empty text, got "".');
+        }
+        return raw;
+    }
+
+    const obj = asConfigObject(raw, "customConfig.banner");
+    const unknownKeys = Object.keys(obj).filter((key) => !BANNER_CONFIG_FIELDS.has(key));
+    if (unknownKeys.length > 0) {
+        throw new Error(
+            `Invalid customConfig.banner: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
+                "Supported fields: `text`, `colors`."
+        );
+    }
+
+    if (typeof obj.text !== "string" || obj.text.length === 0) {
+        throw new Error(
+            `Invalid customConfig.banner.text: expected a non-empty string, got ${describeConfigValue(obj.text)}.`
+        );
+    }
+
+    let colors: string[] | undefined;
+    if (obj.colors !== undefined) {
+        if (!Array.isArray(obj.colors)) {
+            throw new Error(
+                `Invalid customConfig.banner.colors: expected an array of 6-digit hex colours, got ${describeConfigValue(obj.colors)}.`
+            );
+        }
+        colors = obj.colors.map((color, index) => {
+            if (typeof color !== "string" || !BANNER_COLOR_PATTERN.test(color)) {
+                throw new Error(
+                    `Invalid customConfig.banner.colors[${index}]: expected a 6-digit hex colour like "#4949F2", got ${describeConfigValue(color)}.`
+                );
+            }
+            return color;
+        });
+    }
+
+    return colors == null ? { text: obj.text } : { text: obj.text, colors };
+}
+
+function describeConfigValue(value: unknown): string {
+    if (typeof value === "string") {
+        return JSON.stringify(value);
+    }
+    if (value === null) {
+        return "null";
+    }
+    if (Array.isArray(value)) {
+        return "array";
+    }
+    if (typeof value === "number" || typeof value === "boolean") {
+        return `${typeof value} ${value}`;
+    }
+    return typeof value;
 }
 
 const DEPENDENCY_SPEC_STRING_FIELDS = ["version", "package", "path", "git", "branch", "rev", "registry"] as const;

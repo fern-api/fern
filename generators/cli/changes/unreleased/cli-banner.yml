@@ -1,0 +1,10 @@
+- summary: |
+    Generated CLIs can opt into a monochrome or RGB-gradient startup banner:
+    ```yaml
+    config:
+      banner:
+        text: |
+          My CLI
+        colors: ["#4949F2", "#30F1B1"]
+    ```
+  type: feat
