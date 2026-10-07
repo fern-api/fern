@@ -17,21 +17,33 @@ module <%= gem_namespace %>
       #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [<%= gem_namespace %>::Internal::CursorPageIterator]
       def initialize(initial_cursor:, cursor_field:, &block)
-        @need_initial_load = initial_cursor.nil?
-        @cursor = initial_cursor
+        @initial_cursor = initial_cursor
         @cursor_field = cursor_field
         @get_next_page = block
         @http_response = nil
+        rewind
       end
 
-      # Iterates over each page returned by the API.
+      # Iterates over each page returned by the API, starting again from the first page on every call.
       #
       # @param block [Proc] The block which each retrieved page is yielded to.
-      # @return [NilClass]
+      # @return [NilClass, Enumerator] An Enumerator when no block is given.
       def each(&block)
+        return enum_for(:each) unless block_given?
+
+        rewind
         while (page = next_page)
           block.call(page)
         end
+      end
+
+      # Resets page-by-page iteration (`next_page` / `next?`) to the first page.
+      #
+      # @return [NilClass]
+      def rewind
+        @need_initial_load = @initial_cursor.nil?
+        @cursor = @initial_cursor
+        nil
       end
 
       # Whether another page will be available from the API.

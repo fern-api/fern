@@ -8,17 +8,30 @@ module <%= gem_namespace %>
       # The raw HTTP response from the most recent page response.
       # @return [Net::HTTPResponse, nil]
       def http_response
-        @page_iterator&.http_response
+        @item_pages&.http_response || @page_iterator&.http_response
       end
 
-      # Iterates over each item returned by the API.
+      # Iterates over each item returned by the API, starting again from the first page on every call.
       #
       # @param block [Proc] The block which each retrieved item is yielded to.
-      # @return [NilClass]
+      # @return [NilClass, Enumerator] An Enumerator when no block is given.
       def each(&block)
+        return enum_for(:each) unless block_given?
+
+        rewind
         while (item = next_element)
           block.call(item)
         end
+      end
+
+      # Resets item-by-item iteration (`next_element` / `next?`) to the first page.
+      #
+      # @return [NilClass]
+      def rewind
+        @item_pages.rewind
+        @page = nil
+        @item_index = 0
+        nil
       end
 
       # Whether another item will be available from the API.
@@ -45,20 +58,28 @@ module <%= gem_namespace %>
 
       private
 
-      def next_item_from_cached_page
-        return unless @page
+      def cached_page_items
+        return [] unless @page
 
-        @page.send(@item_field).shift
+        @page.send(@item_field) || []
+      end
+
+      def next_item_from_cached_page
+        items = cached_page_items
+        return if @item_index >= items.length
+
+        item = items[@item_index]
+        @item_index += 1
+        item
       end
 
       def any_items_in_cached_page?
-        return false unless @page
-
-        !@page.send(@item_field).empty?
+        @item_index < cached_page_items.length
       end
 
       def load_next_page
-        @page = @page_iterator.next_page
+        @page = @item_pages.next_page
+        @item_index = 0
       end
     end
   end

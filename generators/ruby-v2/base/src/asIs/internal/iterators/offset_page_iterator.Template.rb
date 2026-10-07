@@ -19,28 +19,38 @@ module <%= gem_namespace %>
       #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [<%= gem_namespace %>::Internal::OffsetPageIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
-        @page_number = initial_page || (step ? 0 : 1)
+        @initial_page = initial_page || (step ? 0 : 1)
         @item_field = item_field
         @has_next_field = has_next_field
         @step = step
         @get_next_page = block
-
-        # A cache of whether the API has another page, if it gives us that information...
-        @next_page = nil
-        # ...or the actual next page, preloaded, if it doesn't.
-        @has_next_page = nil
-
         @http_response = nil
+        rewind
       end
 
-      # Iterates over each page returned by the API.
+      # Iterates over each page returned by the API, starting again from the first page on every call.
       #
       # @param block [Proc] The block which each retrieved page is yielded to.
-      # @return [NilClass]
+      # @return [NilClass, Enumerator] An Enumerator when no block is given.
       def each(&block)
+        return enum_for(:each) unless block_given?
+
+        rewind
         while (page = next_page)
           block.call(page)
         end
+      end
+
+      # Resets page-by-page iteration (`next_page` / `next?`) to the first page.
+      #
+      # @return [NilClass]
+      def rewind
+        @page_number = @initial_page
+        # A cache of whether the API has another page, if it gives us that information...
+        @has_next_page = nil
+        # ...or the actual next page, preloaded, if it doesn't.
+        @next_page = nil
+        nil
       end
 
       # Whether another page will be available from the API.

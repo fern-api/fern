@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix paginated results silently skipping records. Every `each`/`map`/`to_a`/`first`/`any?`/`count`
+    over a pager (or its `pages`) now starts again from the first page, reading `pages` no longer
+    moves item iteration forward, items are no longer removed from fetched pages as they are read,
+    and `each` without a block returns an `Enumerator`. Manual `next_element`/`next_page` loops,
+    including retrying after a failed page, behave as before.
+  type: fix

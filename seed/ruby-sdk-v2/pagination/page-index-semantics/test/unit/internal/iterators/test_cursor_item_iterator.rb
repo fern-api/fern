@@ -189,4 +189,70 @@ class CursorItemIteratorTest < Minitest::Test
     assert_equal 7, @times_called
     assert_equal [10, 10, 10, 10, 10, 10, 5], lengths
   end
+
+  def test_items_iterator_restarts_from_the_first_page_on_every_loop
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_equal (1..2).to_a, iterator.first(2)
+    assert_equal (1..2).to_a, iterator.first(2)
+    assert_predicate iterator, :any?
+    assert_equal(NUMBERS, iterator.map { |card| card })
+    assert_equal NUMBERS.length, iterator.count
+    assert_equal NUMBERS, iterator.to_a
+  end
+
+  def test_reading_pages_does_not_skip_items
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_equal (1..10).to_a, iterator.pages.first.cards
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 7, iterator.pages.to_a.length
+    assert_equal NUMBERS, iterator.to_a
+  end
+
+  def test_items_iterator_does_not_mutate_pages
+    responses = NUMBERS.each_slice(10).map.with_index do |cards, index|
+      PageResponse.new(cards: cards, next_cursor: index < 6 ? index + 1 : nil)
+    end
+    iterator = Seed::Internal::CursorItemIterator.new(initial_cursor: nil, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+      responses[cursor || 0]
+    end
+
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal (1..10).to_a, responses.first.cards
+  end
+
+  def test_each_without_a_block_returns_an_enumerator
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_instance_of Enumerator, iterator.each
+    assert_equal NUMBERS, iterator.each.to_a
+    assert_instance_of Enumerator, iterator.pages.each
+    assert_equal 7, iterator.pages.each.to_a.length
+  end
+
+  def test_items_iterator_can_resume_after_a_failed_page
+    failed = false
+    iterator = Seed::Internal::CursorItemIterator.new(initial_cursor: 0, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+      if cursor == 20 && !failed
+        failed = true
+        raise IOError, "temporary failure"
+      end
+      next_cursor = cursor + 10
+      PageResponse.new(cards: NUMBERS[cursor...next_cursor], next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil)
+    end
+
+    items = []
+    begin
+      while (item = iterator.next_element)
+        items.push(item)
+      end
+    rescue IOError
+      retry
+    end
+
+    assert failed
+    assert_equal NUMBERS, items
+  end
 end

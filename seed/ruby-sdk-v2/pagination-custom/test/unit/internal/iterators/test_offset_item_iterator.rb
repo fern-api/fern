@@ -147,4 +147,35 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_equal 3, iterator.first(3).length
     assert_equal 3, @times_called
   end
+
+  def test_items_iterator_restarts_from_the_first_page_on_every_loop
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+    all_items = (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a
+
+    assert_equal [1, 2], iterator.first(2)
+    assert_equal [1, 2], iterator.first(2)
+    assert_predicate iterator, :any?
+    assert_equal(all_items, iterator.map { |item| item })
+    assert_equal all_items.length, iterator.count
+    assert_equal all_items, iterator.to_a
+  end
+
+  def test_reading_pages_does_not_skip_items
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+    all_items = (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a
+
+    assert_equal (1..10).to_a, iterator.pages.first.items
+    assert_equal all_items, iterator.to_a
+    assert_equal 7, iterator.pages.to_a.length
+    assert_equal all_items, iterator.to_a
+  end
+
+  def test_each_without_a_block_returns_an_enumerator
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+
+    assert_instance_of Enumerator, iterator.each
+    assert_equal (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a, iterator.each.to_a
+    assert_instance_of Enumerator, iterator.pages.each
+    assert_equal 7, iterator.pages.each.to_a.length
+  end
 end

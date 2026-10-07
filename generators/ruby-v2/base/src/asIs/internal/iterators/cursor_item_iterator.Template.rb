@@ -14,7 +14,10 @@ module <%= gem_namespace %>
         super()
         @item_field = item_field
         @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &)
+        # Items are read through their own page cursor so that reading `pages` never skips items.
+        @item_pages = CursorPageIterator.new(initial_cursor:, cursor_field:, &)
         @page = nil
+        @item_index = 0
       end
 
       # Returns the CursorPageIterator mediating access to the underlying API.
