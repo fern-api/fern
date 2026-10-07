@@ -8,6 +8,7 @@ buildCli({
         AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
         DEFAULT_SDK_GEN_API_ORIGIN: "https://sdk-gen.postman-beta.tech",
+        DEFAULT_USE_SDK_CONFIG: "false",
         DEFAULT_USE_SDK_GEN_API: "false",
         DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
         DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com",
