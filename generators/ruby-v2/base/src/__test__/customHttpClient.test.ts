@@ -51,7 +51,7 @@ describe("raw_client.Template.rb allowCustomHttpClient", () => {
         expect(rendered).toContain(
             "def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil)"
         );
-        expect(rendered).toContain("response = conn.request(http_request)");
+        expect(rendered).toContain("response = wrap_transport_errors { conn.request(http_request) }");
     });
 
     it("accepts and prefers a caller-supplied http_client when the flag is on", () => {
@@ -60,9 +60,9 @@ describe("raw_client.Template.rb allowCustomHttpClient", () => {
             "def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, overridable_headers: [], auth_provider: nil, http_client: nil)"
         );
         expect(rendered).toContain("@http_client = http_client");
-        expect(rendered).toContain("response = perform_request(url, http_request, timeout)");
+        expect(rendered).toContain("response = wrap_transport_errors { perform_request(url, http_request, timeout) }");
         expect(rendered).toContain("return @http_client.request(url, http_request) unless @http_client.nil?");
-        expect(rendered).not.toContain("response = conn.request(http_request)");
+        expect(rendered).not.toContain("response = wrap_transport_errors { conn.request(http_request) }");
     });
 
     it("gates the http_client unit tests on the flag", () => {
