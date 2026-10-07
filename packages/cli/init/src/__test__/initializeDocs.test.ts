@@ -70,8 +70,8 @@ describe("initializeDocs", () => {
         return yaml.load(await readFile(path.join(projectDirectory, "fern", "docs.yml"), "utf8"));
     }
 
-    function initialize(openApi?: string, taskContext = createMockTaskContext()): Promise<void> {
-        return initializeDocs({ organization: "acme", versionOfCli: "0.0.0", taskContext, openApi });
+    function initialize(openApi?: string, taskContext = createMockTaskContext(), useSdkConfig = true): Promise<void> {
+        return initializeDocs({ organization: "acme", versionOfCli: "0.0.0", taskContext, openApi, useSdkConfig });
     }
 
     it("copies the spec into fern/ and declares it under the api entry in docs.yml", async () => {
@@ -172,6 +172,19 @@ describe("initializeDocs", () => {
         expect(await readFile(path.join(projectDirectory, "fern", "docs.yml"), "utf8")).toBe(docsYmlBefore);
         expect(await existsInProject("fern", "openapi.json")).toBe(false);
         expect(warnings.join("\n")).toContain("The OpenAPI spec was not added");
+    });
+
+    it("ignores --openapi when SDK Config init is off", async () => {
+        await initialize(await writeSpec(), createMockTaskContext(), false);
+
+        expect(await readDocsYml()).toMatchObject({ navigation: [{ page: "Welcome", path: "pages/welcome.mdx" }] });
+        expect(await existsInProject("fern", "openapi.json")).toBe(false);
+    });
+
+    it("does not validate or download a spec when SDK Config init is off", async () => {
+        await initialize("./missing.json", createMockTaskContext(), false);
+
+        expect(loadOpenAPIFromUrl).not.toHaveBeenCalled();
     });
 
     it("does not validate or download the spec when docs.yml already exists", async () => {
