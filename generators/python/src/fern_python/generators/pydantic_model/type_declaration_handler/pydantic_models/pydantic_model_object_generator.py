@@ -865,6 +865,16 @@ def _field_name(property: ObjectProperty) -> str:
     return sanitize_field_name(resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name)
 
 
+def xml_field_name(property: ObjectProperty) -> str:
+    """The pydantic field name an xml-encoded property is declared under (shared with the generated XML tests)."""
+    return _field_name(property)
+
+
+def xml_list_item_type(type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
+    """Returns the item type of a (possibly optional/nullable) list, or None if not a list."""
+    return _unwrap_list_item_type(type_reference)
+
+
 def _snake_name(name: str) -> str:
     return resolve_name(get_name_from_wire_value(name)).snake_case.safe_name
 
