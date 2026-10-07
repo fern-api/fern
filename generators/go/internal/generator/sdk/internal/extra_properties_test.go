@@ -319,6 +319,26 @@ func TestExtractExtraProperties(t *testing.T) {
 		}
 	})
 
+	t.Run("pointer is decoded into", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		value := &user{Name: "old"}
+		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "new", "age": 42}`), value)
+		require.NoError(t, err)
+		assert.Equal(t, "new", value.Name)
+		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
+	})
+
+	t.Run("value that is not a struct", func(t *testing.T) {
+		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "alice"}`), map[string]interface{}{})
+		require.NoError(t, err)
+		assert.Nil(t, extraProperties)
+
+		_, err = ExtractExtraProperties([]byte(`{"name": `), map[string]interface{}{})
+		assert.Error(t, err)
+	})
+
 	t.Run("exclude", func(t *testing.T) {
 		type user struct {
 			Name string `json:"name"`

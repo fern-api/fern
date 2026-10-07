@@ -66,10 +66,26 @@ func ExtractExtraProperties(bytes []byte, value any, exclude ...string) (map[str
 		}
 		val = val.Elem()
 	}
+	if reflect.ValueOf(value).Kind() == reflect.Ptr {
+		// A caller that passes a pointer has always had the bytes decoded into
+		// it as well. Generated code passes the struct by value and skips this.
+		// Decoded through a copy: taking the parameter's address would move it
+		// to the heap on every call, this branch or not.
+		target := value
+		if err := json.Unmarshal(bytes, &target); err != nil {
+			return nil, err
+		}
+	}
+	if !json.Valid(bytes) || val.Kind() != reflect.Struct {
+		// Not a valid document, or nothing that declares properties: answer
+		// as encoding/json does, an error for anything but an object or null.
+		var extraProperties map[string]any
+		return nil, json.Unmarshal(bytes, &extraProperties)
+	}
 	start := skipJSONSpace(bytes, 0)
-	if !json.Valid(bytes) || start == len(bytes) || bytes[start] != '{' {
-		// Not a valid object: answer as encoding/json does, an error for
-		// anything but null.
+	if bytes[start] != '{' {
+		// Valid JSON that is not an object: null answers no extra properties,
+		// anything else the error encoding/json gives.
 		var extraProperties map[string]any
 		return nil, json.Unmarshal(bytes, &extraProperties)
 	}
@@ -78,7 +94,8 @@ func ExtractExtraProperties(bytes []byte, value any, exclude ...string) (map[str
 	for i := skipJSONSpace(bytes, start+1); i < len(bytes) && bytes[i] != '}'; {
 		nameEnd := skipJSONString(bytes, i)
 		quotedName := bytes[i:nameEnd]
-		valueStart := skipJSONSpace(bytes, skipJSONSpace(bytes, nameEnd)+1)
+		colon := skipJSONSpace(bytes, nameEnd)
+		valueStart := skipJSONSpace(bytes, colon+1)
 		valueEnd := skipJSONValue(bytes, valueStart)
 		i = skipJSONSpace(bytes, valueEnd)
 		if i < len(bytes) && bytes[i] == ',' {
