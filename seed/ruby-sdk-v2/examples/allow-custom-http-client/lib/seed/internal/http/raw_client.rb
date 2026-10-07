@@ -68,11 +68,7 @@ module Seed
               auth_headers: auth_headers
             )
 
-            begin
-              response = perform_request(url, http_request, timeout)
-            rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout => e
-              raise Seed::Errors::TimeoutError, e.message
-            end
+            response = wrap_transport_errors { perform_request(url, http_request, timeout) }
 
             break unless should_retry?(response, attempt)
 
@@ -82,6 +78,19 @@ module Seed
           end
 
           response
+        end
+
+        # Runs a single request attempt, re-raising transport failures as SDK errors so that
+        # rescuing `Errors::ApiError` covers them. The original exception is kept as `cause`.
+        # These failures are not retried: the server may already have processed the request.
+        # @return [Net::HTTPResponse] The HTTP response.
+        def wrap_transport_errors
+          yield
+        rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout, Errno::ETIMEDOUT => e
+          raise Seed::Errors::TimeoutError, e.message
+        rescue IOError, SocketError, SystemCallError, OpenSSL::SSL::SSLError,
+               Net::ProtocolError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError => e
+          raise Seed::Errors::ConnectionError, e.message
         end
 
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.

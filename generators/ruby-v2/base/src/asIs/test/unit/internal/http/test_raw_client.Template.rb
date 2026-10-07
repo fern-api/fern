@@ -192,6 +192,107 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
       refute_includes client_with(["x-api-version"]).protected_header_keys, "X-Api-Version"
     end
   end
+
+  describe "transport failures" do
+    def transport_request(port)
+      <%= gem_namespace %>::Internal::JSON::Request.new(
+        base_url: "http://127.0.0.1:#{port}",
+        method: "GET",
+        path: "/test"
+      )
+    end
+
+    # Starts a server that handles each connection with the given block and counts connections.
+    def with_server(handler)
+      server = TCPServer.new("127.0.0.1", 0)
+      connections = 0
+      server_thread = Thread.new do
+        loop do
+          socket = server.accept
+          connections += 1
+          handler.call(socket)
+        rescue IOError, SystemCallError
+          break
+        end
+      end
+      yield server.addr[1], -> { connections }
+    ensure
+      server_thread&.kill
+      server&.close
+    end
+
+    def read_request_head(socket)
+      loop do
+        line = socket.gets
+        break if line.nil? || line == "\r\n"
+      end
+    end
+
+    it "raises ConnectionError with the original cause when the connection is refused" do
+      closed = TCPServer.new("127.0.0.1", 0)
+      port = closed.addr[1]
+      closed.close
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "http://127.0.0.1:#{port}", max_retries: 2)
+
+      error = assert_raises(<%= gem_namespace %>::Errors::ConnectionError) { client.send(transport_request(port)) }
+
+      assert_kind_of <%= gem_namespace %>::Errors::ApiError, error
+      assert_kind_of Errno::ECONNREFUSED, error.cause
+    end
+
+    it "raises ConnectionError without retrying when the server closes the connection without answering" do
+      handler = ->(socket) do
+        read_request_head(socket)
+        socket.close
+      end
+      with_server(handler) do |port, connections|
+        client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "http://127.0.0.1:#{port}", max_retries: 2)
+
+        error = assert_raises(<%= gem_namespace %>::Errors::ConnectionError) { client.send(transport_request(port)) }
+
+        assert_kind_of EOFError, error.cause
+        assert_equal 1, connections.call
+      end
+    end
+
+    it "raises ConnectionError when the TLS handshake fails" do
+      handler = ->(socket) do
+        socket.write("not a TLS server\r\n\r\n")
+        socket.close
+      end
+      with_server(handler) do |port, _connections|
+        client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "https://localhost:#{port}", max_retries: 0)
+        request = <%= gem_namespace %>::Internal::JSON::Request.new(
+          base_url: "https://localhost:#{port}",
+          method: "GET",
+          path: "/test"
+        )
+
+        error = assert_raises(<%= gem_namespace %>::Errors::ConnectionError) { client.send(request) }
+
+        assert_kind_of OpenSSL::SSL::SSLError, error.cause
+      end
+    end
+
+    it "still raises TimeoutError when the server does not answer in time" do
+      handler = ->(socket) do
+        read_request_head(socket)
+        sleep 2
+        socket.close
+      end
+      with_server(handler) do |port, _connections|
+        client = <%= gem_namespace %>::Internal::Http::RawClient.new(
+          base_url: "http://127.0.0.1:#{port}",
+          max_retries: 0,
+          timeout: 0.2
+        )
+
+        error = assert_raises(<%= gem_namespace %>::Errors::TimeoutError) { client.send(transport_request(port)) }
+
+        assert_kind_of Net::ReadTimeout, error.cause
+      end
+    end
+  end
 <% if (allowCustomHttpClient) { %>
   # A transport that records every request it receives and answers with canned
   # responses, standing in for a caller-supplied `http_client`.
