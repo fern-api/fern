@@ -5,6 +5,11 @@ export {
     discoverSdkGenApiGeneratorVersions,
     type SdkGenApiGeneratorVersions
 } from "./discoverSdkGenApiGeneratorVersions.js";
+export {
+    isDynamicIrWorkerThread,
+    registerDynamicIrWorkerEntrypoint,
+    runDynamicIrWorkerThread
+} from "./dynamicIr/DynamicIrWorkerPool.js";
 export type {
     FernSdkConfigV1Payload,
     FernSdkGenApiPackageConfig,

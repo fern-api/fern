@@ -44,7 +44,12 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import {
+    isDynamicIrWorkerThread,
+    isFernSdkGenApiEnabled,
+    registerDynamicIrWorkerEntrypoint,
+    runDynamicIrWorkerThread
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -146,7 +151,12 @@ if (process.env.UV_THREADPOOL_SIZE == null) {
     process.env.UV_THREADPOOL_SIZE = "8";
 }
 
-void runCli();
+if (isDynamicIrWorkerThread()) {
+    runDynamicIrWorkerThread();
+} else {
+    registerDynamicIrWorkerEntrypoint(typeof __filename === "string" ? __filename : undefined);
+    void runCli();
+}
 
 async function runCli() {
     // Shell completion must be fast and side-effect-free. When the shell

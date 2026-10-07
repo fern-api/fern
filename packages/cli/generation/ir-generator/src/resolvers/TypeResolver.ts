@@ -1,5 +1,4 @@
 import { FernWorkspace, getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
-import { RelativeFilePath } from "@fern-api/path-utils";
 import {
     DefinitionFileSchema,
     isRawAliasDefinition,
@@ -8,6 +7,7 @@ import {
     recursivelyVisitRawTypeReference
 } from "@fern-api/fern-definition-schema";
 import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
 import { parseInlineType } from "../utils/parseInlineType.js";
