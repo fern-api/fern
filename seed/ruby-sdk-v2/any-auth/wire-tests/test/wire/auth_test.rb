@@ -20,7 +20,7 @@ class AuthWireTest < WireMockTestCase
   def test_auth_get_token_with_wiremock
     test_id = "auth.get_token.0"
 
-    @client.auth.get_token(
+    result = @client.auth.get_token(
       client_id: "client_id",
       client_secret: "client_secret",
       audience: "https://api.example.com",
@@ -38,6 +38,13 @@ class AuthWireTest < WireMockTestCase
       url_path: "/token",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/expires_in" => 1
+      }
     )
   end
 end
