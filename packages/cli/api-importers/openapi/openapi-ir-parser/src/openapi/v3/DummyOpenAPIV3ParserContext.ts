@@ -3,7 +3,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 
 import { ParseOpenAPIOptions } from "../../options.js";
-import { SchemaParserContext } from "../../schema/SchemaParserContext.js";
 import {
     AbstractOpenAPIV3ParserContext,
     DiscriminatedUnionMetadata,
@@ -37,7 +36,7 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         });
     }
 
-    public getDummy(): SchemaParserContext {
+    public getDummy(): AbstractOpenAPIV3ParserContext {
         return this;
     }
 

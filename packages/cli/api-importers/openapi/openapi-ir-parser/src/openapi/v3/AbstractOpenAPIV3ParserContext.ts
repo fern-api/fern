@@ -34,7 +34,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly taskContext: TaskContext;
     public readonly authHeaders: Set<string>;
     public readonly refOccurrences: Record<string, number>;
-    public readonly DUMMY: SchemaParserContext;
+    public readonly DUMMY: AbstractOpenAPIV3ParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
@@ -284,7 +284,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract getReferencedSchemas(): Set<SchemaId>;
 
-    public abstract getDummy(): SchemaParserContext;
+    public abstract getDummy(): AbstractOpenAPIV3ParserContext;
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
