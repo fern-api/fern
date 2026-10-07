@@ -3,7 +3,7 @@
 - summary: |
     `fern generate --docs` no longer re-parses every OpenAPI spec of an API reference that sets
     `tag-description-pages: true`. Tag descriptions are now read straight from the specs' `tags`,
-    which saves about a second per spec on large (4–5 MB) specs.
+    which saves about 0.4s per spec on a large (4.8 MB) spec.
   type: fix
 - summary: |
     OpenAPI specs with external `$ref`s to remote files convert faster. Each remote file is now
