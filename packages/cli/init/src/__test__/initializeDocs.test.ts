@@ -173,4 +173,13 @@ describe("initializeDocs", () => {
         expect(await existsInProject("fern", "openapi.json")).toBe(false);
         expect(warnings.join("\n")).toContain("The OpenAPI spec was not added");
     });
+
+    it("does not validate or download the spec when docs.yml already exists", async () => {
+        await initialize();
+
+        await initialize("https://example.com/openapi.json");
+        await initialize("./missing.json");
+
+        expect(loadOpenAPIFromUrl).not.toHaveBeenCalled();
+    });
 });

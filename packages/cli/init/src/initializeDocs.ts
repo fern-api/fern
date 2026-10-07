@@ -4,6 +4,7 @@ import {
     DEFINITION_DIRECTORY,
     DOCS_CONFIGURATION_FILENAME,
     docsYml,
+    FERN_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     OPENAPI_DIRECTORY
@@ -35,7 +36,23 @@ export async function initializeDocs({
     /** Path or URL of an OpenAPI spec to render as the API reference. It is declared in `docs.yml`. */
     openApi?: string;
 }): Promise<void> {
-    // Resolve first so a bad spec fails before anything is created.
+    // The fern directory is always `./fern`, so this can be checked before anything is created or downloaded.
+    const docsYmlPath = join(
+        cwd(),
+        RelativeFilePath.of(FERN_DIRECTORY),
+        RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
+    );
+    if (await doesPathExist(docsYmlPath)) {
+        taskContext.logger.info(chalk.yellow(`Docs configuration already exists at: ${docsYmlPath}`));
+        if (openApi != null) {
+            taskContext.logger.warn(
+                "The OpenAPI spec was not added because docs.yml already exists. Add it under an `api` entry's `specs` in docs.yml."
+            );
+        }
+        return;
+    }
+
+    // Resolve before creating anything, so a bad spec fails without leaving a half-initialized fern directory.
     const openApiPath = openApi != null ? await resolveOpenApiPath({ openApi, taskContext }) : undefined;
 
     const createDirectoryResponse = await createFernDirectoryAndWorkspace({
@@ -45,56 +62,40 @@ export async function initializeDocs({
     });
 
     if (createDirectoryResponse.absolutePathToFernDirectory) {
-        const docsYmlPath = join(
-            createDirectoryResponse.absolutePathToFernDirectory,
-            RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
-        );
-
-        if (await doesPathExist(docsYmlPath)) {
-            taskContext.logger.info(chalk.yellow(`Docs configuration already exists at: ${docsYmlPath}`));
-            if (openApiPath != null) {
-                taskContext.logger.warn(
-                    "The OpenAPI spec was not added because docs.yml already exists. Add it under an `api` entry's `specs` in docs.yml."
-                );
-            }
-            return;
-        } else {
-            try {
-                const specPathInDocsYml =
-                    openApiPath != null
-                        ? await copySpecIntoFernDirectory({
-                              absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
-                              openApiPath,
-                              taskContext
-                          })
-                        : undefined;
-                const hasApi =
-                    specPathInDocsYml != null ||
-                    (await hasLoadableApiWorkspace({
-                        absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
-                        taskContext,
-                        versionOfCli
-                    }));
-                if (!hasApi) {
-                    await writeWelcomePage({
-                        absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
-                        organization: createDirectoryResponse.organization
-                    });
-                }
-                const docsConfig = getDocsConfig({
-                    organization: createDirectoryResponse.organization,
-                    hasApi,
-                    specPathInDocsYml
+        try {
+            const specPathInDocsYml =
+                openApiPath != null
+                    ? await copySpecIntoFernDirectory({
+                          absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
+                          openApiPath,
+                          taskContext
+                      })
+                    : undefined;
+            const hasApi =
+                specPathInDocsYml != null ||
+                (await hasLoadableApiWorkspace({
+                    absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
+                    taskContext,
+                    versionOfCli
+                }));
+            if (!hasApi) {
+                await writeWelcomePage({
+                    absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
+                    organization: createDirectoryResponse.organization
                 });
-                await writeFile(docsYmlPath, yaml.dump(docsConfig));
-                taskContext.logger.info(chalk.green("Created docs configuration"));
-                return;
-            } catch (writeError) {
-                const errorMessage = extractErrorMessage(writeError);
-                taskContext.logger.debug(`Encountered an error while writing docs configuration: ${errorMessage}`);
-                taskContext.logger.error(chalk.red("Failed to write docs configuration"));
-                throw writeError;
             }
+            const docsConfig = getDocsConfig({
+                organization: createDirectoryResponse.organization,
+                hasApi,
+                specPathInDocsYml
+            });
+            await writeFile(docsYmlPath, yaml.dump(docsConfig));
+            taskContext.logger.info(chalk.green("Created docs configuration"));
+        } catch (writeError) {
+            const errorMessage = extractErrorMessage(writeError);
+            taskContext.logger.debug(`Encountered an error while writing docs configuration: ${errorMessage}`);
+            taskContext.logger.error(chalk.red("Failed to write docs configuration"));
+            throw writeError;
         }
     }
 }
