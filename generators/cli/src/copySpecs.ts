@@ -1,5 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
+import type { FernCliCustomConfig } from "./customConfig.js";
 import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
@@ -85,6 +86,8 @@ export async function copySpecs(args: {
     customCommands?: boolean;
     /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
     rootGroup?: string;
+    /** When set, emit a root help banner on the CliApp builder. */
+    banner?: FernCliCustomConfig["banner"];
     /**
      * When set, emit `.user_agent_suffix_flag("<name>")` on the CliApp
      * chain so the generated CLI exposes the consumer suffix under this
@@ -116,6 +119,7 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
+        banner,
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
@@ -150,6 +154,7 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
+            banner,
             userAgentSuffixFlag,
             profilesCommandName,
             profilesRevokeOperation,
@@ -245,6 +250,7 @@ function renderMainRs(args: {
     globalParamBindings: DetectedGlobalParam[];
     customCommands: boolean;
     rootGroup?: string;
+    banner?: FernCliCustomConfig["banner"];
     userAgentSuffixFlag?: string;
     profilesCommandName?: string;
     profilesRevokeOperation?: string;
@@ -257,6 +263,7 @@ function renderMainRs(args: {
         globalParamBindings,
         customCommands,
         rootGroup,
+        banner,
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
@@ -273,6 +280,9 @@ function renderMainRs(args: {
 
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
+    if (banner != null) {
+        imports.push("use fern_cli_sdk::app::Banner;");
+    }
     if (profilesCommandName != null) {
         imports.push("use fern_cli_sdk::profiles::ProfilesConfig;");
     }
@@ -315,6 +325,16 @@ function renderMainRs(args: {
     }
 
     lines.push(...imports, "", "fn main() {", `    let app = CliApp::new("${binaryName}")`);
+
+    if (banner != null) {
+        const text = typeof banner === "string" ? banner : banner.text;
+        const colors = typeof banner === "string" ? undefined : banner.colors;
+        let bannerBuilder = `Banner::new("${escapeRustStringLiteral(text)}")`;
+        if (colors != null && colors.length > 0) {
+            bannerBuilder += `.colors(&[${colors.map((color) => `"${escapeRustStringLiteral(color)}"`).join(", ")}])`;
+        }
+        lines.push(`        .banner(${bannerBuilder})`);
+    }
 
     // Consumer User-Agent suffix flag/env override (defaults to
     // `user-agent-suffix` in the SDK when this is absent). Emitted before
@@ -412,4 +432,36 @@ function renderMainRs(args: {
     lines.push("}");
     lines.push("");
     return lines.join("\n");
+}
+
+function escapeRustStringLiteral(value: string): string {
+    let escaped = "";
+    for (const character of value) {
+        switch (character) {
+            case "\\":
+                escaped += "\\\\";
+                break;
+            case '"':
+                escaped += '\\"';
+                break;
+            case "\n":
+                escaped += "\\n";
+                break;
+            case "\r":
+                escaped += "\\r";
+                break;
+            case "\t":
+                escaped += "\\t";
+                break;
+            default: {
+                const codePoint = character.codePointAt(0);
+                if (codePoint != null && (codePoint < 0x20 || (codePoint >= 0x7f && codePoint <= 0x9f))) {
+                    escaped += `\\u{${codePoint.toString(16)}}`;
+                } else {
+                    escaped += character;
+                }
+            }
+        }
+    }
+    return escaped;
 }

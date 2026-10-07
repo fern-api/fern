@@ -17,11 +17,14 @@
 //! for why the single-binding fast path was removed.
 
 use std::any::Any;
+use std::io::IsTerminal;
 
 use serde_json::Value;
 
 use crate::auth::root_builder::AuthSchemeBuilder;
 use crate::auth::SchemeBinding;
+pub use crate::banner::Banner;
+use crate::banner::BannerMode;
 use crate::binding::{Binding, DispatchResult};
 use crate::error::{write_error_json, CliError, ErrorDisplayContext};
 use crate::formatter;
@@ -124,6 +127,9 @@ pub struct CliApp {
     /// Adding a top-level subcommand to every existing generated CLI is a
     /// surface change, so it ships opt-in (see `ProfilesConfig`).
     profiles: Option<crate::profiles::ProfilesConfig>,
+    banner: Option<Banner>,
+    #[cfg(test)]
+    banner_mode_override: Option<BannerMode>,
 }
 
 impl CliApp {
@@ -141,7 +147,25 @@ impl CliApp {
             global_parameters: Vec::new(),
             error_docs_base_url: None,
             profiles: None,
+            banner: None,
+            #[cfg(test)]
+            banner_mode_override: None,
         }
+    }
+
+    fn banner_mode(&self) -> BannerMode {
+        #[cfg(test)]
+        if let Some(mode) = self.banner_mode_override {
+            return mode;
+        }
+
+        let no_color = std::env::var_os("NO_COLOR");
+        let term = std::env::var_os("TERM");
+        crate::banner::banner_mode(
+            std::io::stdout().is_terminal(),
+            no_color.as_deref(),
+            term.as_deref(),
+        )
     }
 
     // ── CLI metadata ────────────────────────────────────────────────
@@ -155,6 +179,17 @@ impl CliApp {
     /// Set the top-level `--help` description for this CLI.
     pub fn description(mut self, d: &str) -> Self {
         self.description = Some(d.to_string());
+        self
+    }
+
+    pub fn banner(mut self, banner: Banner) -> Self {
+        self.banner = Some(banner);
+        self
+    }
+
+    #[cfg(test)]
+    fn banner_mode_for_test(mut self, mode: BannerMode) -> Self {
+        self.banner_mode_override = Some(mode);
         self
     }
 
@@ -811,6 +846,11 @@ impl CliApp {
         profile_error: Option<CliError>,
         out: &mut W,
     ) -> i32 {
+        let banner_mode = if self.banner.is_some() {
+            self.banner_mode()
+        } else {
+            BannerMode::Off
+        };
         let str_args: Vec<String> = args.iter()
             .filter_map(|a| a.to_str().map(String::from))
             .collect();
@@ -828,7 +868,7 @@ impl CliApp {
             // in whichever representation the caller already asked for.
             format: crate::formatter::resolve_format_from_raw_args(&str_args, &self.name),
         };
-        match self.dispatch_pipeline(args, profile_error, out).await {
+        match self.dispatch_pipeline(args, profile_error, banner_mode, out).await {
             Ok(PipelineOutcome::Success) => 0,
             Ok(PipelineOutcome::HelpShown) => 0,
             Err(err) => {
@@ -843,6 +883,7 @@ impl CliApp {
         &self,
         args: Vec<std::ffi::OsString>,
         profile_error: Option<CliError>,
+        banner_mode: BannerMode,
         out: &mut W,
     ) -> Result<PipelineOutcome, CliError> {
         if self.bindings.is_empty() {
@@ -1221,6 +1262,18 @@ impl CliApp {
         // help leads with the operation's own required/optional parameters.
         cli = crate::cli_args::apply_global_help_heading(cli);
 
+        if let Some(banner) = &self.banner {
+            match banner_mode {
+                BannerMode::Off => {}
+                BannerMode::Plain => cli = cli.before_help(banner.render(false)),
+                BannerMode::Color => {
+                    cli = cli
+                        .before_help(banner.render(true))
+                        .styles(clap::builder::Styles::plain());
+                }
+            }
+        }
+
         // 1f. Validate hook patterns against the command tree.
         self.hooks.validate_patterns(&cli)?;
 
@@ -1273,7 +1326,11 @@ impl CliApp {
                         == clap::error::ErrorKind::DisplayHelpOnMissingArgumentOrSubcommand
                     || e.kind() == clap::error::ErrorKind::DisplayVersion =>
             {
-                let _ = std::io::Write::write_fmt(out, format_args!("{e}"));
+                if banner_mode == BannerMode::Color {
+                    let _ = std::io::Write::write_fmt(out, format_args!("{}", e.render().ansi()));
+                } else {
+                    let _ = std::io::Write::write_fmt(out, format_args!("{e}"));
+                }
                 let _ = out.flush();
                 return Ok(PipelineOutcome::HelpShown);
             }
@@ -2116,6 +2173,61 @@ mod tests {
 
     fn p(s: &[&str]) -> Vec<String> {
         s.iter().map(|x| x.to_string()).collect()
+    }
+
+    fn app_with_binding() -> CliApp {
+        CliApp::new("test")
+            .title("Test CLI")
+            .binding(TestBinding::new(
+                "test",
+                clap::Command::new("test").subcommand(clap::Command::new("users")),
+            ))
+    }
+
+    fn help_output(app: CliApp, args: &[&str]) -> String {
+        let mut output = Vec::new();
+        let exit_code = app.try_run_from_with_output(args, &mut output);
+        assert_eq!(exit_code, 0);
+        String::from_utf8(output).unwrap()
+    }
+
+    #[test]
+    fn banner_colors_root_help_but_not_subcommand_help() {
+        let root_help = help_output(
+            app_with_binding()
+                .banner(Banner::new("LOGO\n").colors(&["#ff0000"]))
+                .banner_mode_for_test(BannerMode::Color),
+            &["test", "--help"],
+        );
+
+        assert!(root_help.starts_with("\x1b[38;2;255;0;0mL"));
+        assert!(root_help.contains("\x1b[38;2;"));
+        assert!(root_help.contains("Test CLI"));
+
+        let subcommand_help = help_output(
+            app_with_binding()
+                .banner(Banner::new("LOGO\n").colors(&["#ff0000"]))
+                .banner_mode_for_test(BannerMode::Color),
+            &["test", "users", "--help"],
+        );
+        assert!(!subcommand_help.contains("LOGO"));
+        assert!(!subcommand_help.contains("\x1b[38;2;"));
+    }
+
+    #[test]
+    fn banner_off_root_help_matches_app_without_a_banner() {
+        let with_banner = help_output(
+            app_with_binding()
+                .banner(Banner::new("LOGO\n").colors(&["#ff0000"]))
+                .banner_mode_for_test(BannerMode::Off),
+            &["test", "--help"],
+        );
+        let without_banner = help_output(
+            app_with_binding().banner_mode_for_test(BannerMode::Off),
+            &["test", "--help"],
+        );
+
+        assert_eq!(with_banner, without_banner);
     }
 
     #[test]

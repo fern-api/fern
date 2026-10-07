@@ -121,6 +121,41 @@ describe("copySpecs", () => {
         expect(main).not.toContain(".spec_under");
         expect(main).toContain("use fern_cli_sdk::app::CliApp;");
         expect(main).toContain("use fern_cli_sdk::openapi::OpenApiBinding;");
+        expect(main).not.toContain("Banner");
+    });
+
+    it("emits an escaped banner literal with configured colours", async () => {
+        const { specsDir, outputDir } = await scaffold();
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            banner: { text: 'line\\path "quoted"\nnext\u001b', colors: ["#4949F2", "#30F1B1"] }
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::app::Banner;");
+        expect(main).toContain(
+            '        .banner(Banner::new("line\\\\path \\"quoted\\"\\nnext\\u{1b}").colors(&["#4949F2", "#30F1B1"]))'
+        );
+    });
+
+    it("emits a monochrome banner for the string shorthand", async () => {
+        const { specsDir, outputDir } = await scaffold();
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            banner: "Fern CLI"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.banner(Banner::new("Fern CLI"))');
+        expect(main).not.toContain(".colors(");
     });
 
     it("custom.rs example uses OpenApiBinding::handler, since a bare closure does not compile", async () => {
