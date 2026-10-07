@@ -189,14 +189,6 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: .
-  python-oauth-inferred-refresh-token-endpoint-security:
-    - customConfig:
-        enable_wire_tests: true
-      outputFolder: .
-  python-oauth-inferred-refresh-token-any:
-    - customConfig:
-        enable_wire_tests: true
-      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
