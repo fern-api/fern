@@ -16,8 +16,10 @@ use futures_util::StreamExt;
 use serde_json::{json, Map, Value};
 use tokio::io::AsyncWriteExt;
 
+use crate::auth::dry_run::dry_run_auth_info;
 use crate::auth::{
-    ensure_credentials_for, handle_error_response, DynAuthProvider, EndpointAuthMetadata,
+    ensure_credentials_for, handle_error_response, DynAuthProvider,
+    EndpointAuthMetadata,
 };
 use crate::error::CliError;
 use crate::openapi::discovery::{
@@ -2236,11 +2238,23 @@ pub async fn execute_method(
                 }
             })
             .collect();
+        let sensitive_query_param_names = spec_sensitive_query_param_names(doc);
+        let redacted_query_params: Vec<(String, String)> = input
+            .query_params
+            .iter()
+            .map(|(name, value)| {
+                if crate::debug::is_sensitive_query_param(name, &sensitive_query_param_names) {
+                    (name.clone(), "[REDACTED]".to_string())
+                } else {
+                    (name.clone(), value.clone())
+                }
+            })
+            .collect();
         let mut dry_run_info = json!({
             "dry_run": true,
             "url": input.full_url,
             "method": method.http_method,
-            "query_params": input.query_params,
+            "query_params": redacted_query_params,
             "headers": redacted_headers,
             "body": input.body,
             "is_multipart_upload": input.is_upload,
@@ -2302,12 +2316,18 @@ pub async fn execute_method(
                 .collect();
             dry_run_info["multipart_form_data"] = json!(part_info);
         }
+        let auth_metadata = endpoint_metadata_for(method, base_url_override);
+        dry_run_info["auth"] = dry_run_auth_info(
+            auth_provider.as_ref(),
+            &auth_metadata,
+            &without_caller_supplied_schemes(doc, &auth_metadata, &input),
+        );
         if capture_output {
             return Ok(Some(dry_run_info));
         }
         let mut out = std::io::stdout().lock();
         pipeline
-            .emit(&mut out, &dry_run_info, false, true)
+            .emit_record(&mut out, &dry_run_info)
             .context("Failed to write output")?;
         return Ok(None);
     }
@@ -2344,16 +2364,7 @@ pub async fn execute_method(
         Vec::new()
     };
     let additional_sensitive_query_params: Vec<&str> = if debug {
-        doc.security_schemes
-            .values()
-            .filter_map(|s| {
-                if let crate::openapi::discovery::SecurityScheme::ApiKeyQuery { name } = s {
-                    Some(name.as_str())
-                } else {
-                    None
-                }
-            })
-            .collect()
+        spec_sensitive_query_param_names(doc)
     } else {
         Vec::new()
     };
@@ -3756,6 +3767,19 @@ pub(crate) fn spec_sensitive_header_names(doc: &RestDescription) -> Vec<&str> {
         .values()
         .filter_map(|s| {
             if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
+                Some(name.as_str())
+            } else {
+                None
+            }
+        })
+        .collect()
+}
+
+pub(crate) fn spec_sensitive_query_param_names(doc: &RestDescription) -> Vec<&str> {
+    doc.security_schemes
+        .values()
+        .filter_map(|s| {
+            if let crate::openapi::discovery::SecurityScheme::ApiKeyQuery { name } = s {
                 Some(name.as_str())
             } else {
                 None
@@ -12812,6 +12836,273 @@ async fn test_execute_method_dry_run() {
     .await;
 
     assert!(result.is_ok());
+}
+
+/// Runs a captured dry run of a `GET things` endpoint whose spec declares the
+/// given security schemes / requirements, and returns the `auth` block.
+#[cfg(test)]
+async fn dry_run_auth_block(
+    security_schemes: HashMap<String, crate::openapi::discovery::SecurityScheme>,
+    security: Option<Vec<HashMap<String, Vec<String>>>>,
+    params_json: Option<&str>,
+    provider: &DynAuthProvider,
+) -> Value {
+    dry_run_preview(security_schemes, security, params_json, provider).await["auth"].clone()
+}
+
+/// Same endpoint as [`dry_run_auth_block`] (which accepts an `Authorization`
+/// header and an `api_key` query parameter), returning the whole preview.
+#[cfg(test)]
+async fn dry_run_preview(
+    security_schemes: HashMap<String, crate::openapi::discovery::SecurityScheme>,
+    security: Option<Vec<HashMap<String, Vec<String>>>>,
+    params_json: Option<&str>,
+    provider: &DynAuthProvider,
+) -> Value {
+    let doc = RestDescription {
+        root_url: "https://api.example.com/".to_string(),
+        service_path: "v1/".to_string(),
+        security_schemes,
+        ..Default::default()
+    };
+    let mut parameters = HashMap::new();
+    parameters.insert(
+        "Authorization".to_string(),
+        crate::openapi::discovery::MethodParameter {
+            location: Some("header".to_string()),
+            ..Default::default()
+        },
+    );
+    parameters.insert(
+        "api_key".to_string(),
+        crate::openapi::discovery::MethodParameter {
+            location: Some("query".to_string()),
+            ..Default::default()
+        },
+    );
+    let method = RestMethod {
+        http_method: "GET".to_string(),
+        id: Some("things.list".to_string()),
+        path: "things".to_string(),
+        parameters,
+        security_requirements: security,
+        ..Default::default()
+    };
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let out = execute_method(
+        &doc,
+        &method,
+        params_json,
+        None,
+        provider,
+        None,
+        None,
+        None,
+        None,
+        true,
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true,
+        None,
+        &http_config,
+        false,
+        false,
+        false,
+        false,
+        &[],
+        &[],
+    )
+    .await
+    .expect("dry run should succeed even without credentials")
+    .expect("capture_output should return the dry-run info");
+    assert_eq!(out["dry_run"], json!(true));
+    assert_eq!(out["url"], json!("https://api.example.com/v1/things"));
+    out
+}
+
+#[cfg(test)]
+fn bearer_scheme() -> HashMap<String, crate::openapi::discovery::SecurityScheme> {
+    let mut schemes = HashMap::new();
+    schemes.insert(
+        "BearerAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::HttpBearer,
+    );
+    schemes
+}
+
+#[cfg(test)]
+fn require(scheme: &str) -> Option<Vec<HashMap<String, Vec<String>>>> {
+    Some(vec![requirement(scheme)])
+}
+
+#[cfg(test)]
+fn requirement(scheme: &str) -> HashMap<String, Vec<String>> {
+    HashMap::from([(scheme.to_string(), Vec::new())])
+}
+
+#[cfg(test)]
+fn routing_bearer_schemes(configured: &[&str], unconfigured: &[&str]) -> DynAuthProvider {
+    let mut schemes: HashMap<String, DynAuthProvider> = HashMap::new();
+    for name in configured {
+        schemes.insert(
+            name.to_string(),
+            crate::auth::test_helpers::bearer(name, &format!("{name}-secret")),
+        );
+    }
+    for name in unconfigured {
+        schemes.insert(
+            name.to_string(),
+            std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+                *name,
+                crate::auth::AuthCredentialSource::from_env(format!("{name}_NOT_SET")),
+            )),
+        );
+    }
+    std::sync::Arc::new(crate::auth::RoutingAuthProvider::new(schemes))
+}
+
+#[tokio::test]
+async fn test_dry_run_optional_auth_without_credentials_is_not_required() {
+    // `security: [{BearerAuth: []}, {}]` — auth is optional. With no token the
+    // routing provider picks the anonymous alternative and attaches nothing,
+    // so the preview must not claim credentials were resolved.
+    let provider = routing_bearer_schemes(&[], &["BearerAuth"]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("BearerAuth"), HashMap::new()]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+    assert_eq!(auth["schemes"], json!(["BearerAuth", ""]), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_optional_auth_with_credentials_is_resolved() {
+    let provider = routing_bearer_schemes(&["BearerAuth"], &[]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("BearerAuth"), HashMap::new()]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("BearerAuth"), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_anonymous_alternative_listed_first_wins() {
+    // Spec order decides, exactly as `RoutingAuthProvider::apply` does: with
+    // `{}` first, the request goes out unauthenticated even if a token exists.
+    let provider = routing_bearer_schemes(&["BearerAuth"], &[]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![HashMap::new(), requirement("BearerAuth")]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_names_the_requirement_that_was_satisfied() {
+    // Two schemes hold credentials but the endpoint only accepts one of them.
+    let provider = routing_bearer_schemes(&["BearerAuth", "OtherAuth"], &[]);
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        Some(vec![requirement("MissingAuth"), requirement("OtherAuth")]),
+        None,
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["satisfied_by"], json!("OtherAuth"), "{auth}");
+    assert_eq!(auth["schemes"], json!(["MissingAuth", "OtherAuth"]), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_redacts_api_key_query_params() {
+    let mut security_schemes = HashMap::new();
+    security_schemes.insert(
+        "ApiKeyAuth".to_string(),
+        crate::openapi::discovery::SecurityScheme::ApiKeyQuery {
+            name: "api_key".to_string(),
+        },
+    );
+    let out = dry_run_preview(
+        security_schemes,
+        require("ApiKeyAuth"),
+        Some(r#"{"api_key":"sk-query-secret"}"#),
+        &crate::auth::no_auth_provider(),
+    )
+    .await;
+    assert_eq!(out["query_params"], json!([["api_key", "[REDACTED]"]]), "{out}");
+    assert_eq!(out["auth"]["credentials"], json!("supplied"), "{out}");
+    assert!(
+        !out.to_string().contains("sk-query-secret"),
+        "query credentials must never appear in dry-run output: {out}"
+    );
+}
+
+#[tokio::test]
+async fn test_dry_run_reports_resolved_credentials_without_leaking_them() {
+    let provider = crate::auth::test_helpers::bearer("BearerAuth", "tok-secret");
+    let auth = dry_run_auth_block(bearer_scheme(), require("BearerAuth"), None, &provider).await;
+    assert_eq!(auth["credentials"], json!("resolved"), "{auth}");
+    assert_eq!(auth["schemes"], json!(["BearerAuth"]), "{auth}");
+    assert!(auth["configured_sources"].is_array(), "{auth}");
+    assert!(
+        !auth.to_string().contains("tok-secret"),
+        "credential values must never appear in dry-run output: {auth}"
+    );
+}
+
+#[tokio::test]
+async fn test_dry_run_reports_missing_credentials_with_sources_to_set() {
+    let provider: DynAuthProvider = std::sync::Arc::new(crate::auth::BearerAuthProvider::new(
+        "BearerAuth",
+        crate::auth::AuthCredentialSource::from_env("EXAMPLE_TOKEN_THAT_IS_NOT_SET"),
+    ));
+    let auth = dry_run_auth_block(bearer_scheme(), require("BearerAuth"), None, &provider).await;
+    assert_eq!(auth["credentials"], json!("missing"), "{auth}");
+    assert_eq!(
+        auth["expected_sources"],
+        json!(["EXAMPLE_TOKEN_THAT_IS_NOT_SET environment variable"]),
+        "{auth}"
+    );
+}
+
+#[tokio::test]
+async fn test_dry_run_reports_caller_supplied_credentials() {
+    let provider = crate::auth::no_auth_provider();
+    let auth = dry_run_auth_block(
+        bearer_scheme(),
+        require("BearerAuth"),
+        Some(r#"{"Authorization":"Bearer from-the-flag"}"#),
+        &provider,
+    )
+    .await;
+    assert_eq!(auth["credentials"], json!("supplied"), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_reports_anonymous_endpoint_as_not_required() {
+    let provider = crate::auth::test_helpers::bearer("BearerAuth", "tok-secret");
+    let auth = dry_run_auth_block(bearer_scheme(), Some(Vec::new()), None, &provider).await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+    assert_eq!(auth["schemes"], json!([]), "{auth}");
+    assert!(auth.get("configured_sources").is_none(), "{auth}");
+}
+
+#[tokio::test]
+async fn test_dry_run_without_configured_auth_is_not_required() {
+    let provider = crate::auth::no_auth_provider();
+    let auth = dry_run_auth_block(HashMap::new(), None, None, &provider).await;
+    assert_eq!(auth["credentials"], json!("not_required"), "{auth}");
+    assert_eq!(auth["schemes"], Value::Null, "{auth}");
 }
 
 #[tokio::test]

@@ -36,6 +36,7 @@
 pub mod builder;
 pub mod compose;
 pub mod credential;
+pub(crate) mod dry_run;
 pub mod error;
 pub mod keyring_store;
 pub mod login;
