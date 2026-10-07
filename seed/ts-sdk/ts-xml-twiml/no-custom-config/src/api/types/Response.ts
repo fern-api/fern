@@ -10,7 +10,7 @@ export class Response implements core.xml.XmlSerializable {
     children?: Response.Children.Item[];
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Ordered content of the element: text segments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    /** Ordered content of the element: text segments, comments and child elements (typed children and children not declared in the API definition) in the order they appear. */
     content: core.xml.XmlContent[];
 
     constructor(fields: Response.Fields = {}) {
@@ -94,6 +94,8 @@ export namespace Response {
     export class Builder implements core.xml.XmlBuilder<Response> {
         private readonly fields: Partial<Response.Fields>;
         private content: core.xml.XmlContent[];
+        /** Comments added with `commentBefore`/`commentAfter`, rendered around this element. */
+        readonly siblingComments: core.xml.XmlSiblingComments = new core.xml.XmlSiblingComments();
         private readonly elements: {
             children?: (Response.Children.Item | core.xml.XmlBuilder<Response.Children.Item>)[];
         };
@@ -186,6 +188,24 @@ export namespace Response {
             return this;
         }
 
+        /** Appends an XML comment (`<!--text-->`) inside this element, after any content added so far. */
+        comment(text: string): this {
+            this.content.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately before this element: as a sibling in the parent it is added to, or before the root element. */
+        commentBefore(text: string): this {
+            this.siblingComments.before.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately after this element: as a sibling in the parent it is added to, or after the root element. */
+        commentAfter(text: string): this {
+            this.siblingComments.after.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
         build(): Response {
             const built = core.xml.xmlBuildContent(this.content);
             return new Response({
@@ -196,7 +216,7 @@ export namespace Response {
         }
 
         toXml(xmlDeclaration: boolean = true): string {
-            return this.build().toXml(xmlDeclaration);
+            return this.siblingComments.wrap(this.build().toXml(xmlDeclaration));
         }
 
         toString(): string {

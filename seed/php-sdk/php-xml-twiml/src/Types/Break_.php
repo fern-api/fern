@@ -4,8 +4,8 @@ namespace Seed\Types;
 
 use Seed\Core\Xml\XmlSerializableType;
 use Seed\Core\Json\JsonProperty;
-use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
+use Seed\Core\Xml\XmlElement;
 use InvalidArgumentException;
 
 /**
@@ -27,7 +27,10 @@ class Break_ extends XmlSerializableType
 
     /**
      * @param array{
-     *   strength?: ?value-of<BreakStrength>,
+     *   strength?: (
+     *    value-of<BreakStrength>
+     *   |BreakStrength
+     * )|null,
      *   time?: ?string,
      * } $values
      *   - `strength`: Set a pause based on strength
@@ -36,7 +39,9 @@ class Break_ extends XmlSerializableType
     public function __construct(
         array $values = [],
     ) {
-        $this->strength = $values['strength'] ?? null;
+        /** @var ?value-of<BreakStrength> $strength */
+        $strength = XmlUtils::enumValue($values['strength'] ?? null);
+        $this->strength = $strength;
         $this->time = $values['time'] ?? null;
     }
 

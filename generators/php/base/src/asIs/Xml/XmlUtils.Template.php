@@ -31,16 +31,17 @@ final class XmlUtils
     {
         $document = new DOMDocument('1.0', 'UTF-8');
         self::toDom($document, $document, $element);
-        if ($xmlDeclaration) {
-            $xml = $document->saveXML();
-        } else {
-            $root = $document->documentElement;
-            $xml = $root === null ? false : $document->saveXML($root);
+        // The root element and any sibling comments around it are written one by one, so libxml
+        // does not insert line breaks between top-level nodes.
+        $xml = $xmlDeclaration ? '<?xml version="1.0" encoding="UTF-8"?>' . "\n" : '';
+        foreach ($document->childNodes as $node) {
+            $saved = $document->saveXML($node);
+            if ($saved === false) {
+                throw new InvalidArgumentException("Could not serialize <{$element->name}> to XML");
+            }
+            $xml .= $saved;
         }
-        if ($xml === false) {
-            throw new InvalidArgumentException("Could not serialize <{$element->name}> to XML");
-        }
-        return rtrim($xml, "\n");
+        return $xml;
     }
 
     /**
@@ -65,6 +66,7 @@ final class XmlUtils
         $node = $namespace !== null
             ? $document->createElementNS($namespace, $qualifiedName)
             : $document->createElement($qualifiedName);
+        self::appendSiblingComments($document, $parent, $element, XmlComment::PLACEMENT_BEFORE);
         $parent->appendChild($node);
 
         foreach ($element->namespaceDeclarations as $prefix => $uri) {
@@ -89,11 +91,32 @@ final class XmlUtils
         foreach ($element->children as $child) {
             if ($child instanceof XmlText) {
                 $node->appendChild($document->createTextNode($child->text));
+            } elseif ($child instanceof XmlComment) {
+                if ($child->placement === XmlComment::PLACEMENT_INSIDE) {
+                    $node->appendChild($document->createComment($child->xmlText()));
+                }
             } else {
                 self::toDom($document, $node, $child->toXmlElement());
             }
         }
+        self::appendSiblingComments($document, $parent, $element, XmlComment::PLACEMENT_AFTER);
         return $node;
+    }
+
+    /**
+     * Writes the comments of $element with the given sibling placement (before/after) into $parent.
+     */
+    private static function appendSiblingComments(
+        DOMDocument $document,
+        DOMDocument|DOMElement $parent,
+        XmlElement $element,
+        string $placement,
+    ): void {
+        foreach ($element->children as $child) {
+            if ($child instanceof XmlComment && $child->placement === $placement) {
+                $parent->appendChild($document->createComment($child->xmlText()));
+            }
+        }
     }
 
     private static function setDomAttribute(DOMElement $node, string $name, string $value): void
@@ -127,7 +150,7 @@ final class XmlUtils
      * instead of producing a second wrapper.
      *
      * @param array<string, string> $attributes
-     * @param list<XmlNode|XmlText> $children
+     * @param list<XmlNode|XmlText|XmlComment> $children
      * @param list<string> $wrapperNames
      */
     public static function addAdditional(XmlElement $element, array $attributes, array $children, array $wrapperNames = []): void
@@ -167,7 +190,7 @@ final class XmlUtils
      * lists render as one wrapper element, placed where the first wrapper of that name or the first
      * item of that list appears in $content. Elements in $content that are neither typed, additional nor text are not written.
      *
-     * @param list<XmlNode|XmlText> $content
+     * @param list<XmlNode|XmlText|XmlComment> $content
      * @param list<XmlNode> $typed Typed child elements, in property order.
      * @param array<string, list<XmlNode>> $wrapped Items of each wrapped list, keyed by wrapper name.
      * @param list<XmlNode> $additional
@@ -204,7 +227,7 @@ final class XmlUtils
             $wrappers[$name] = $wrapper;
         };
         foreach ($content as $node) {
-            if ($node instanceof XmlText) {
+            if ($node instanceof XmlText || $node instanceof XmlComment) {
                 $element->addChild($node);
                 continue;
             }
@@ -249,7 +272,7 @@ final class XmlUtils
      *   children parsed from elements with those names, in document order.
      * @param list<XmlNode> $additional
      * @param list<string> $wrapperNames
-     * @return list<XmlNode|XmlText>
+     * @return list<XmlNode|XmlText|XmlComment>
      */
     public static function content(XmlElement $element, array $typed, array $additional, array $wrapperNames = []): array
     {
@@ -266,7 +289,7 @@ final class XmlUtils
         }
         $result = [];
         foreach ($element->children as $child) {
-            if ($child instanceof XmlText) {
+            if ($child instanceof XmlText || $child instanceof XmlComment) {
                 $result[] = $child;
                 continue;
             }
@@ -352,18 +375,31 @@ final class XmlUtils
     }
 
     /**
-     * Normalizes a list-valued attribute or text given either as an array or as a single
-     * separator-delimited string (e.g. `'speech dtmf'`).
+     * Normalizes an enum-valued attribute or text given either as the enum case or as its value.
+     */
+    public static function enumValue(BackedEnum|string|null $value): ?string
+    {
+        return $value instanceof BackedEnum ? (string) $value->value : $value;
+    }
+
+    /**
+     * Normalizes a list-valued attribute or text given either as an array (of values or enum cases)
+     * or as a single separator-delimited string (e.g. `'speech dtmf'`).
      *
      * @template T
-     * @param array<T>|string|null $value
+     * @param array<T|BackedEnum>|string|null $value
      * @param non-empty-string $separator
      * @return ?array<T>
      */
     public static function toList(array|string|null $value, string $separator): ?array
     {
-        if ($value === null || is_array($value)) {
-            return $value;
+        if ($value === null) {
+            return null;
+        }
+        if (is_array($value)) {
+            /** @var array<T> $items */
+            $items = array_map(fn ($item) => $item instanceof BackedEnum ? $item->value : $item, $value);
+            return $items;
         }
         /** @var array<T> $items */
         $items = self::parseList($value, $separator, fn (string $item): string => $item);
@@ -505,10 +541,13 @@ final class XmlUtils
             } elseif ($child instanceof DOMElement) {
                 $hasElement = true;
                 $element->addChild(self::fromDom($child));
+            } elseif ($child instanceof \DOMComment) {
+                $hasElement = true;
+                $element->addChild(new XmlComment($child->data));
             }
         }
-        // Text before the first child element is the element's text (dropped when whitespace-only);
-        // text between and after child elements is kept as XmlText segments in document order.
+        // Text before the first child element or comment is the element's text (dropped when
+        // whitespace-only); text between and after them is kept as XmlText segments in document order.
         $element->text = trim($text) === '' ? null : $text;
         return $element;
     }
@@ -681,7 +720,7 @@ final class XmlUtils
         }
         $result = [];
         foreach ($parent->children as $child) {
-            if ($child instanceof XmlText) {
+            if ($child instanceof XmlText || $child instanceof XmlComment) {
                 continue;
             }
             $element = $child->toXmlElement();
@@ -703,7 +742,7 @@ final class XmlUtils
     public static function parseChild(XmlElement $parent, array $parsers): mixed
     {
         foreach ($parent->children as $child) {
-            if ($child instanceof XmlText) {
+            if ($child instanceof XmlText || $child instanceof XmlComment) {
                 continue;
             }
             $element = $child->toXmlElement();
@@ -726,7 +765,7 @@ final class XmlUtils
     public static function requireChild(XmlElement $parent, array $parsers): mixed
     {
         foreach ($parent->children as $child) {
-            if ($child instanceof XmlText) {
+            if ($child instanceof XmlText || $child instanceof XmlComment) {
                 continue;
             }
             $element = $child->toXmlElement();
@@ -901,7 +940,7 @@ final class XmlUtils
     {
         $result = [];
         foreach ($element->children as $child) {
-            if ($child instanceof XmlText) {
+            if ($child instanceof XmlText || $child instanceof XmlComment) {
                 continue;
             }
             $childElement = $child->toXmlElement();
@@ -922,7 +961,7 @@ final class XmlUtils
             );
             $rest->namespaceDeclarations = $childElement->namespaceDeclarations;
             foreach ($childElement->children as $item) {
-                if ($item instanceof XmlText || !in_array($item->toXmlElement()->name, $knownItems, true)) {
+                if ($item instanceof XmlText || $item instanceof XmlComment || !in_array($item->toXmlElement()->name, $knownItems, true)) {
                     $rest->addChild($item);
                 }
             }

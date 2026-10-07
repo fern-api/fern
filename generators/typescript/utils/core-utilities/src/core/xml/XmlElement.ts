@@ -1,5 +1,6 @@
-import { type XmlNode, parseXml } from "./parse";
+import { type XmlNode, isXmlCommentNode, parseXml } from "./parse";
 import { type XmlContent, type XmlSerializable, serializeXmlElement } from "./serialize";
+import { XmlComment } from "./XmlComment";
 
 export declare namespace XmlElement {
     interface Fields {
@@ -9,7 +10,7 @@ export declare namespace XmlElement {
         text?: string;
         /** Child elements; shorthand for appending them to `content` after `text`. */
         children?: XmlElement[];
-        /** Ordered text segments and child elements. Takes precedence over `text` and `children`. */
+        /** Ordered text segments, comments and child elements. Takes precedence over `text` and `children`. */
         content?: XmlContent[];
     }
 }
@@ -18,7 +19,7 @@ export declare namespace XmlElement {
 export class XmlElement implements XmlSerializable {
     public name: string;
     public attributes: Record<string, string>;
-    /** Ordered text segments and child elements. */
+    /** Ordered text segments, comments and child elements. */
     public content: XmlContent[];
 
     constructor({ name, attributes = {}, text, children = [], content }: XmlElement.Fields) {
@@ -43,7 +44,13 @@ export class XmlElement implements XmlSerializable {
         return new XmlElement({
             name: node.name,
             attributes: { ...node.attributes },
-            content: node.content.map((item) => (typeof item === "string" ? item : XmlElement.fromXml(item))),
+            content: node.content.map((item) =>
+                typeof item === "string"
+                    ? item
+                    : isXmlCommentNode(item)
+                      ? new XmlComment(item.comment)
+                      : XmlElement.fromXml(item),
+            ),
         });
     }
 

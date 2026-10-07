@@ -223,6 +223,8 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 for property in inline_properties:
                     writer.write(f", self.{naming.attribute_name(property)}")
                 writer.write_line("),")
+                writer.write_line(f"comments_before=self.{_COMMENTS_BEFORE},")
+                writer.write_line(f"comments_after=self.{_COMMENTS_AFTER},")
                 writer.write_line("xml_declaration=xml_declaration,")
             writer.write_line(")")
 
@@ -238,6 +240,12 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             ),
             default_factory=AST.Expression("list"),
         )
+        for field_name in (_COMMENTS_BEFORE, _COMMENTS_AFTER):
+            pydantic_model.add_private_instance_field_unsafe(
+                name=field_name,
+                type_hint=AST.TypeHint.list(AST.TypeHint(type=self._xml_comment_class())),
+                default_factory=AST.Expression("list"),
+            )
 
         pydantic_model.add_method_unsafe(
             AST.FunctionDeclaration(
@@ -272,6 +280,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         self._add_from_xml(pydantic_model, xml=xml, properties=properties)
         self._add_add_child_method(pydantic_model)
         self._add_add_text_method(pydantic_model)
+        self._add_comment_methods(pydantic_model)
         self._add_xml_builder_methods(pydantic_model, properties=properties, naming=naming)
 
     def _inline_child_properties(self, properties: Sequence[ObjectProperty]) -> List[ObjectProperty]:
@@ -466,6 +475,53 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                     "so text and child elements can be interleaved."
                 ),
             )
+        )
+
+    def _add_comment_methods(self, pydantic_model: FernAwarePydanticModel) -> None:
+        comment_methods = [
+            (
+                "comment",
+                _CONTENT,
+                "Appends an XML comment (`<!--text-->`) inside this element, after the content added so far, "
+                "and returns this element.",
+            ),
+            (
+                "comment_before",
+                _COMMENTS_BEFORE,
+                "Adds an XML comment rendered immediately before this element (as a sibling in its parent, or "
+                "before the root element) and returns this element.",
+            ),
+            (
+                "comment_after",
+                _COMMENTS_AFTER,
+                "Adds an XML comment rendered immediately after this element (as a sibling in its parent, or "
+                "after the root element) and returns this element.",
+            ),
+        ]
+        for method_name, target, docstring in comment_methods:
+
+            def write_body(writer: AST.NodeWriter, target: str = target) -> None:
+                writer.write(f"self.{target}.append(")
+                writer.write_reference(self._xml_comment_class())
+                writer.write_line("(text))")
+                writer.write_line("return self")
+
+            pydantic_model.add_method_unsafe(
+                AST.FunctionDeclaration(
+                    name=method_name,
+                    signature=AST.FunctionSignature(
+                        parameters=[AST.FunctionParameter(name="text", type_hint=AST.TypeHint.str_())],
+                        return_type=AST.TypeHint(type=pydantic_model.to_reference()),
+                    ),
+                    body=AST.CodeWriter(write_body),
+                    docstring=AST.CodeWriter(docstring),
+                )
+            )
+
+    def _xml_comment_class(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=self._context.core_utilities.get_xml_utility("XmlComment").import_,
         )
 
     def _add_add_child_method(self, pydantic_model: FernAwarePydanticModel) -> None:
@@ -766,6 +822,8 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 
 _EXTRA_ATTRIBUTES = "extra_attributes"
 _CONTENT = "_content"
+_COMMENTS_BEFORE = "_comments_before"
+_COMMENTS_AFTER = "_comments_after"
 
 
 def _inline_argument(inline: bool) -> str:
@@ -813,7 +871,16 @@ def _docstring_with_parameters(
 
 
 # Builder method names that would shadow generated or pydantic model API.
-_RESERVED_METHOD_NAMES = {"to_xml", "from_xml", "append", "add_child"} | BASE_MODEL_PROPERTIES
+_RESERVED_METHOD_NAMES = {
+    "to_xml",
+    "from_xml",
+    "append",
+    "add_child",
+    "add_text",
+    "comment",
+    "comment_before",
+    "comment_after",
+} | BASE_MODEL_PROPERTIES
 
 
 @dataclasses.dataclass(frozen=True)
@@ -863,6 +930,16 @@ def _xml_name(property: ObjectProperty) -> str:
 
 def _field_name(property: ObjectProperty) -> str:
     return sanitize_field_name(resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name)
+
+
+def xml_field_name(property: ObjectProperty) -> str:
+    """The pydantic field name an xml-encoded property is declared under (shared with the generated XML tests)."""
+    return _field_name(property)
+
+
+def xml_list_item_type(type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
+    """Returns the item type of a (possibly optional/nullable) list, or None if not a list."""
+    return _unwrap_list_item_type(type_reference)
 
 
 def _snake_name(name: str) -> str:

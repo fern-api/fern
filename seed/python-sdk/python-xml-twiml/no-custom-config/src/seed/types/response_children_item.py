@@ -5,6 +5,7 @@ import typing
 from .dial import Dial
 from .hangup import Hangup
 from .pause import Pause
+from .redirect import Redirect
 from .say import Say
 
-ResponseChildrenItem = typing.Union[Say, Dial, Pause, Hangup]
+ResponseChildrenItem = typing.Union[Say, Dial, Pause, Hangup, Redirect]

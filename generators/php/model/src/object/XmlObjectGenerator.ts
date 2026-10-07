@@ -44,6 +44,9 @@ const RESERVED_METHOD_NAMES = [
     "getAdditionalChildren",
     "setAdditionalChildren",
     "addText",
+    "comment",
+    "commentBefore",
+    "commentAfter",
     "getContent",
     "setContent",
     "recordContent"
@@ -75,39 +78,63 @@ export class XmlObjectGenerator {
     }
 
     /**
-     * Constructor overrides for list-valued attributes/text with string-like items: the `$values` key also
-     * accepts a single separator-delimited string (the legacy `['input' => 'speech dtmf']` style), which
-     * `XmlUtils::toList` splits before assignment.
+     * Constructor overrides that widen what the `$values` key for an attribute/text property accepts
+     * beyond the field's own type, normalizing on assignment:
+     * - enum-typed values also accept the enum case (`['strength' => BreakStrength::Weak]`), unwrapped
+     *   to its backing value by `XmlUtils::enumValue`;
+     * - list-valued string/enum properties also accept a single separator-delimited string (the legacy
+     *   `['input' => 'speech dtmf']` style) and enum cases as items, normalized by `XmlUtils::toList`.
      */
     public getFieldConstructorOverrides(
         objectProperty: FernIr.ObjectProperty
     ): Pick<php.Field.Args, "constructorType" | "constructorValueWrapper"> | undefined {
         const fieldName = this.context.getPropertyName(objectProperty.name);
         const property = this.properties.find((candidate) => candidate.fieldName === fieldName);
-        if (property == null || !this.acceptsDelimitedString(property)) {
+        if (property == null || property.kind === FernIr.XmlPropertyKind.Element) {
+            return undefined;
+        }
+        const value = property.value;
+        const isEnum = value.type === "enum";
+        const isString = value.type === "scalar" && value.kind === "string";
+        if (!isEnum && !isString) {
             return undefined;
         }
         const type = this.context.phpTypeMapper.convert({ reference: objectProperty.valueType });
+        const utils = this.context.getXmlUtilsClassReference();
+        if (property.isList) {
+            // accept the legacy separator-delimited string, and enum instances alongside their values
+            const itemType = isEnum
+                ? php.Type.union([php.Type.enumString(value.enum), php.Type.reference(value.enum)])
+                : php.Type.string();
+            return {
+                constructorType: this.widen(type, [php.Type.array(itemType), php.Type.string()]),
+                constructorValueWrapper: (rawValue) =>
+                    php.codeblock((writer) => {
+                        writer.writeNode(utils);
+                        writer.write("::toList(");
+                        writer.writeNode(rawValue);
+                        writer.write(`, ${this.phpString(property.listSeparator)})`);
+                    })
+            };
+        }
+        if (!isEnum) {
+            return undefined;
+        }
+        // the field stays a `value-of<Enum>` string; an enum instance is unwrapped on construction
         return {
-            constructorType: this.widenListType(type),
+            constructorType: this.widen(type, [php.Type.enumString(value.enum), php.Type.reference(value.enum)]),
             constructorValueWrapper: (rawValue) =>
                 php.codeblock((writer) => {
-                    writer.writeNode(this.context.getXmlUtilsClassReference());
-                    writer.write(`::toList(${rawValue}, ${this.phpString(property.listSeparator)})`);
+                    writer.writeNode(utils);
+                    writer.write("::enumValue(");
+                    writer.writeNode(rawValue);
+                    writer.write(")");
                 })
         };
     }
 
-    private acceptsDelimitedString(property: XmlProperty): boolean {
-        return (
-            property.isList &&
-            property.kind !== FernIr.XmlPropertyKind.Element &&
-            (property.value.type === "enum" || (property.value.type === "scalar" && property.value.kind === "string"))
-        );
-    }
-
-    private widenListType(type: php.Type): php.Type {
-        const union = php.Type.union([type.isOptional() ? type.underlyingType() : type, php.Type.string()]);
+    private widen(type: php.Type, members: php.Type[]): php.Type {
+        const union = php.Type.union(members);
         return type.isOptional() ? php.Type.optional(union) : union;
     }
 
@@ -858,7 +885,8 @@ export class XmlObjectGenerator {
         if (textProperty != null) {
             const textType = php.Type.union([
                 php.Type.reference(childClass),
-                ...(textIsOptional ? [php.Type.optional(php.Type.string())] : [php.Type.string()])
+                childGenerator?.getFieldConstructorOverrides(textProperty)?.constructorType ??
+                    (textIsOptional ? php.Type.optional(php.Type.string()) : php.Type.string())
             ]);
             parameters.push(
                 php.parameter({

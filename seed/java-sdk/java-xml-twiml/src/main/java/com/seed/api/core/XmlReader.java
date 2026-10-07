@@ -123,7 +123,7 @@ public final class XmlReader {
         NodeList nodes = element.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
+            if (node.getNodeType() == Node.ELEMENT_NODE || node.getNodeType() == Node.COMMENT_NODE) {
                 break;
             }
             if (node.getNodeType() == Node.TEXT_NODE || node.getNodeType() == Node.CDATA_SECTION_NODE) {
@@ -137,7 +137,7 @@ public final class XmlReader {
     }
 
     /**
-     * Reads the element's ordered content: text segments and child elements in document order. Child elements are
+     * Reads the element's ordered content: text segments, comments and child elements in document order. Child elements are
      * converted with {@code typedChild}; when it returns {@code null} the child is preserved as a generic
      * {@link XmlElement}. Children named in {@code skipNames} (scalar and wrapped-list properties, read separately)
      * are omitted, as is blank text and, when {@code skipLeadingText} is set, the text before the first child.
@@ -166,6 +166,9 @@ public final class XmlReader {
                     continue;
                 }
                 content.add(XmlNode.text(node.getNodeValue()));
+            } else if (node.getNodeType() == Node.COMMENT_NODE) {
+                seenElement = true;
+                content.add(XmlNode.comment(node.getNodeValue()));
             }
         }
         return content;

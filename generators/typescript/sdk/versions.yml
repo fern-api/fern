@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.104.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `addText` segments and child elements), while
+        `commentBefore(text)` / `commentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `fromXml` and round-trip through `toXml`; the new `core.xml.XmlComment`
+        node exposes the same for untyped `XmlElement` content.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
 - version: 3.103.0
   changelogEntry:
     - summary: |
