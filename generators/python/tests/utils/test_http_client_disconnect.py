@@ -14,7 +14,9 @@ from core_utilities.shared.request_options import RequestOptions
 
 
 @contextmanager
-def disconnect_server(mode: str) -> typing.Iterator[typing.Tuple[str, typing.List[str]]]:
+def disconnect_server(
+    mode: str, status: int = 200, closed: typing.Optional[threading.Event] = None
+) -> typing.Iterator[typing.Tuple[str, typing.List[str]]]:
     requests: typing.List[str] = []
 
     class Handler(BaseHTTPRequestHandler):
@@ -31,8 +33,7 @@ def disconnect_server(mode: str) -> typing.Iterator[typing.Tuple[str, typing.Lis
                 self.close_connection = True
                 return
             body = b'{"ok": true}'
-            status = int(mode) if mode in ("429", "503") and len(requests) == 1 else 200
-            self.send_response(status)
+            self.send_response(status if len(requests) == 1 else 200)
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             if mode == "partial_200" and len(requests) == 1:
@@ -46,6 +47,8 @@ def disconnect_server(mode: str) -> typing.Iterator[typing.Tuple[str, typing.Lis
             if mode == "idle_close":
                 self.connection.shutdown(socket.SHUT_RDWR)
                 self.close_connection = True
+                if closed is not None:
+                    closed.set()
 
         do_POST = handle_request
         do_PATCH = handle_request
@@ -98,22 +101,45 @@ def make_client(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("asynchronous", [False, True])
-@pytest.mark.parametrize("mode", ["idle_close", "429", "503", "partial_200"])
-async def test_safe_retries_and_explicit_replay(asynchronous: bool, mode: str) -> None:
-    with disconnect_server(mode) as (url, requests):
+@pytest.mark.parametrize("status", [429, 503])
+async def test_http_status_retry(asynchronous: bool, status: int) -> None:
+    with disconnect_server("response", status=status) as (url, requests):
         async with httpx.AsyncClient() as async_transport:
             with httpx.Client() as sync_transport:
                 client = make_client(url, asynchronous, sync_transport, async_transport)
-                options: RequestOptions = {"retry_remote_protocol_errors": mode == "partial_200"}
-                with patch("core_utilities.shared.http_client._retry_timeout", return_value=0), patch(
-                    "core_utilities.shared.http_client._retry_timeout_from_retries", return_value=0
-                ):
-                    response = await call(client, "POST", options)
+                with patch("core_utilities.shared.http_client._retry_timeout", return_value=0):
+                    response = await call(client, "POST")
                 assert response.json() == {"ok": True}
-                if mode == "idle_close":
-                    await asyncio.sleep(0.05)
-                    response = await call(client, "POST", {"max_retries": 0})
-                    assert response.json() == {"ok": True}
+                assert requests == ["POST", "POST"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("asynchronous", [False, True])
+async def test_explicit_replay_of_partial_response(asynchronous: bool) -> None:
+    with disconnect_server("partial_200") as (url, requests):
+        async with httpx.AsyncClient() as async_transport:
+            with httpx.Client() as sync_transport:
+                client = make_client(url, asynchronous, sync_transport, async_transport)
+                with patch("core_utilities.shared.http_client._retry_timeout_from_retries", return_value=0):
+                    response = await call(client, "POST", {"retry_remote_protocol_errors": True})
+                assert response.json() == {"ok": True}
+                assert requests == ["POST", "POST"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("asynchronous", [False, True])
+async def test_idle_connection_reconnects_without_retries(asynchronous: bool) -> None:
+    closed = threading.Event()
+    with disconnect_server("idle_close", closed=closed) as (url, requests):
+        async with httpx.AsyncClient() as async_transport:
+            with httpx.Client() as sync_transport:
+                client = make_client(url, asynchronous, sync_transport, async_transport)
+                response = await call(client, "POST", {"max_retries": 0})
+                assert response.json() == {"ok": True}
+                assert requests == ["POST"]
+                assert await asyncio.to_thread(closed.wait, 2)
+                response = await call(client, "POST", {"max_retries": 0})
+                assert response.json() == {"ok": True}
                 assert requests == ["POST", "POST"]
 
 
