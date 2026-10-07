@@ -53,7 +53,7 @@ describe("global headers in endpoint examples", () => {
         const response = await overlapGenerator.generate(buildRequest({}));
 
         expect(response.errors).toBeUndefined();
-        expect(response.snippet).toContain('await client.service.getWithHeader({\n        xAPIVersion: "01-01-2000",');
+        expect(response.snippet).toMatchSnapshot();
     });
 
     it("still reports a header that is neither global nor on the endpoint", async () => {
