@@ -84,7 +84,8 @@ export async function generateLibraryDocs({
             orgId: project.config.organization,
             tokenValue,
             context,
-            local
+            local,
+            docsConfig: docsWorkspace.config
         });
 
         if (successful > 0) {
