@@ -72,10 +72,11 @@ describe("getDynamicIrWorkerCount", () => {
 
     it("only starts workers that fit in memory next to the main thread", () => {
         // GitHub Actions ubuntu-latest: 2 vCPU / 7 GB (private repos), 4 vCPU / 16 GB (public repos)
-        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 2, memoryBytes: 7 * GIB })).toBe(1);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 2, memoryBytes: 7 * GIB })).toBe(0);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 2, memoryBytes: 9.5 * GIB })).toBe(1);
         expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 4, memoryBytes: 6 * GIB })).toBe(0);
         expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 4, memoryBytes: 15.6 * GIB })).toBe(3);
-        expect(getDynamicIrWorkerCount({ registrationConcurrency: 8, cores: 16, memoryBytes: 12 * GIB })).toBe(4);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 8, cores: 16, memoryBytes: 12 * GIB })).toBe(2);
     });
 });
 
