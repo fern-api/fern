@@ -126,6 +126,20 @@ Enable it in `generators.yml`:
       # credential; adds `--revoke` to `profiles remove`. Omit it and the
       # flag is never registered.
       revokeOperation: iam.keys.remove
+      # Optional. Names an operation that *mints* a profile's remote
+      # credential (an API key) and maps its response onto the credential;
+      # adds `--provision` to `profiles create`. `credential` keys are the
+      # halves the auth scheme stores (`username`/`password` for basic,
+      # `client_id`/`client_secret` for OAuth2 client credentials, `token`
+      # for a single-value scheme); `revokeParameters` records response
+      # fields the revoke operation needs, kept apart from request defaults.
+      provisionOperation:
+        operation: iam.keys.create
+        credential:
+          username: sid
+          password: secret
+        revokeParameters:
+          Sid: sid
 ```
 
 Off by default: enabling it adds a top-level subcommand group and a global
@@ -146,6 +160,11 @@ acme messages list -p prod    # one command against another tenant; the active p
 acme profiles list            # "which account am I about to hit?"
 acme profiles current         # …and why
 acme profiles remove au       # confirms; also deletes that profile's stored credential
+
+# with provisionOperation / revokeOperation configured: a key per profile,
+# minted with the credentials already in your shell and never shown to you
+acme profiles create ci --set AccountSid=AC11… --provision
+acme profiles remove ci --yes --revoke   # revokes that key before deleting the profile
 ```
 
 Agents and scripts should use the stateless form — `-p` per invocation mutates

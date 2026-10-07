@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
+import type { FernCliProfilesProvisionConfig } from "./customConfig.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
 export interface RawSpecsManifestEntry {
@@ -100,6 +101,8 @@ export async function copySpecs(args: {
     profilesCommandName?: string;
     /** Dotted command path for `profiles remove --revoke`. */
     profilesRevokeOperation?: string;
+    /** The `profiles create --provision` operation and its response mapping. */
+    profilesProvisionOperation?: FernCliProfilesProvisionConfig;
     /**
      * When set and at least one auth binding exists, emit
      * `.auth_strategy(AuthStrategy::<variant>)` on the OpenApiBinding chain so the
@@ -119,6 +122,7 @@ export async function copySpecs(args: {
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
+        profilesProvisionOperation,
         authStrategy
     } = args;
     const manifest = await readSpecsManifest(specsDir);
@@ -153,6 +157,7 @@ export async function copySpecs(args: {
             userAgentSuffixFlag,
             profilesCommandName,
             profilesRevokeOperation,
+            profilesProvisionOperation,
             authStrategy
         })
     );
@@ -248,6 +253,7 @@ function renderMainRs(args: {
     userAgentSuffixFlag?: string;
     profilesCommandName?: string;
     profilesRevokeOperation?: string;
+    profilesProvisionOperation?: FernCliProfilesProvisionConfig;
     authStrategy?: AuthStrategyVariant;
 }): string {
     const {
@@ -260,6 +266,7 @@ function renderMainRs(args: {
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
+        profilesProvisionOperation,
         authStrategy
     } = args;
 
@@ -274,7 +281,11 @@ function renderMainRs(args: {
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
     if (profilesCommandName != null) {
-        imports.push("use fern_cli_sdk::profiles::ProfilesConfig;");
+        imports.push(
+            profilesProvisionOperation != null
+                ? "use fern_cli_sdk::profiles::{ProfilesConfig, ProvisionOperation};"
+                : "use fern_cli_sdk::profiles::ProfilesConfig;"
+        );
     }
     const authTypeImports = new Set<string>();
     for (const binding of [...rootAuthBindings, ...bindingAuthBindings]) {
@@ -355,6 +366,9 @@ function renderMainRs(args: {
             }
             config += `.revoke_operation("${profilesRevokeOperation}")`;
         }
+        if (profilesProvisionOperation != null) {
+            config += `.provision_operation(${renderProvisionOperation(profilesProvisionOperation)})`;
+        }
         lines.push(`        .profiles(${config})`);
     }
 
@@ -412,4 +426,23 @@ function renderMainRs(args: {
     lines.push("}");
     lines.push("");
     return lines.join("\n");
+}
+
+function rustStringLiteral(value: string, label: string): string {
+    if (!SAFE_RUST_STRING_LITERAL.test(value)) {
+        throw new Error(`Unsafe ${label} "${value}": contains characters that cannot be interpolated into a Rust string literal.`);
+    }
+    return `"${value}"`;
+}
+
+/** `ProvisionOperation::new("iam.keys.create").credential_field("username", "sid")...` */
+function renderProvisionOperation(config: FernCliProfilesProvisionConfig): string {
+    let out = `ProvisionOperation::new(${rustStringLiteral(config.operation, "profiles.provisionOperation.operation")})`;
+    for (const [field, responseField] of Object.entries(config.credential)) {
+        out += `.credential_field(${rustStringLiteral(field, "profiles.provisionOperation.credential")}, ${rustStringLiteral(responseField, "profiles.provisionOperation.credential")})`;
+    }
+    for (const [parameter, responseField] of Object.entries(config.revokeParameters ?? {})) {
+        out += `.revoke_parameter(${rustStringLiteral(parameter, "profiles.provisionOperation.revokeParameters")}, ${rustStringLiteral(responseField, "profiles.provisionOperation.revokeParameters")})`;
+    }
+    return out;
 }
