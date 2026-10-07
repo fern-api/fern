@@ -52,12 +52,16 @@ pub(crate) fn dry_run_auth_info(
         return info;
     }
 
-    let Some(index) = provider.selected_requirement(effective) else {
+    let Some(index) = provider
+        .selected_requirement(effective)
+        .filter(|i| *i < declared_reqs.len() && *i < effective_reqs.len())
+    else {
         missing(&mut info, provider, true);
         return info;
     };
     let declared_req = &declared_reqs[index];
-    if effective_reqs[index].is_empty() {
+    let effective_req = &effective_reqs[index];
+    if effective_req.is_empty() {
         if declared_req.is_empty() {
             info["credentials"] = json!("not_required");
         } else {
@@ -66,12 +70,24 @@ pub(crate) fn dry_run_auth_info(
         }
         return info;
     }
-    resolved(
-        &mut info,
-        provider,
-        effective,
-        Some(requirement_label(declared_req)),
-    );
+    // A profile-preferred requirement is chosen on `has_stored_credentials`,
+    // which can hold while the value itself fails to resolve; `apply` then
+    // attaches nothing, so only claim `resolved` if the requirement is
+    // satisfiable right now.
+    let single = EndpointAuthMetadata {
+        security_requirements: Some(vec![effective_req.clone()]),
+        base_url_override: effective.base_url_override.clone(),
+    };
+    if provider.has_credentials_for(&single) {
+        resolved(
+            &mut info,
+            provider,
+            effective,
+            Some(requirement_label(declared_req)),
+        );
+    } else {
+        missing(&mut info, provider, true);
+    }
     info
 }
 

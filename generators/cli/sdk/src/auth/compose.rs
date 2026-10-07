@@ -483,7 +483,8 @@ impl AuthProvider for RoutingAuthProvider {
         };
         Self::sorted_scheme_names(&requirements[index])
             .into_iter()
-            .flat_map(|name| self.schemes[name].populated_credential_hints_for(endpoint))
+            .filter_map(|name| self.schemes.get(name))
+            .flat_map(|scheme| scheme.populated_credential_hints_for(endpoint))
             .collect()
     }
 
