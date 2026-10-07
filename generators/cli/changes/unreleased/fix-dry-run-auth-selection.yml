@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `--dry-run` `auth` block now mirrors the provider's requirement selection:
+    when a selected profile has stored credentials for a scheme, that requirement
+    is reported (as it is used on the wire) instead of the first alternative in
+    spec order, and `configured_sources` lists only the sources of the selected
+    requirement's schemes rather than every configured scheme.
+  type: fix
