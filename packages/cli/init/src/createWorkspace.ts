@@ -156,7 +156,7 @@ export async function materializeOpenAPI({
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
     context: TaskContext;
-    /** Name of the written copy. Defaults to `openapi.json` or `openapi.yml`, matching the source's format. */
+    /** Name of the written copy. Defaults to `openapi.json` or `openapi.yml`. An existing file of that name is replaced. */
     openAPIFileName?: string;
 }): Promise<string> {
     const bundled = await loadOpenAPI({
@@ -174,7 +174,7 @@ export async function materializeOpenAPI({
     return `./${openAPIFileName}`;
 }
 
-function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
+export function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
     return path.extname(openAPIFilePath).toLowerCase() === ".json" ? "openapi.json" : "openapi.yml";
 }
 

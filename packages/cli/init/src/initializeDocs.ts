@@ -17,7 +17,7 @@ import { mkdir, readdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
-import { materializeOpenAPI } from "./createWorkspace.js";
+import { getOpenAPIFileName, materializeOpenAPI } from "./createWorkspace.js";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
 
 const PAGES_DIRECTORY = "pages";
@@ -138,21 +138,31 @@ async function copySpecIntoFernDirectory({
     openApiPath: AbsoluteFilePath;
     taskContext: TaskContext;
 }): Promise<string> {
-    const extension = path.extname(openApiPath).toLowerCase() === ".json" ? "json" : "yml";
-    let openAPIFileName = `openapi.${extension}`;
-    for (
-        let attempt = 1;
-        await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(openAPIFileName)));
-        attempt++
-    ) {
-        openAPIFileName = `openapi-${attempt}.${extension}`;
-    }
     return await materializeOpenAPI({
         directoryOfWorkspace: absolutePathToFernDirectory,
         openAPIFilePath: openApiPath,
         context: taskContext,
-        openAPIFileName
+        openAPIFileName: await findFreeFileName({
+            directory: absolutePathToFernDirectory,
+            fileName: getOpenAPIFileName(openApiPath)
+        })
     });
+}
+
+/** Returns `fileName`, or the first of `name-1.ext`, `name-2.ext`, ... that does not exist in `directory` yet. */
+async function findFreeFileName({
+    directory,
+    fileName
+}: {
+    directory: AbsoluteFilePath;
+    fileName: string;
+}): Promise<string> {
+    const { name, ext } = path.parse(fileName);
+    let candidate = fileName;
+    for (let attempt = 1; await doesPathExist(join(directory, RelativeFilePath.of(candidate))); attempt++) {
+        candidate = `${name}-${attempt}${ext}`;
+    }
+    return candidate;
 }
 
 /**
