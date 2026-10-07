@@ -5,13 +5,15 @@ module Seed
     class ItemIterator
       include Enumerable
 
-      # The raw HTTP response from the most recent page response.
+      # The raw HTTP response from the most recent page fetched while reading items
+      # (or, if no items have been read yet, from the most recent page read via `pages`).
       # @return [Net::HTTPResponse, nil]
       def http_response
         @item_pages&.http_response || @page_iterator&.http_response
       end
 
       # Iterates over each item returned by the API, starting again from the first page on every call.
+      # This also resets any progress made with `next_element`.
       #
       # @param block [Proc] The block which each retrieved item is yielded to.
       # @return [NilClass, Enumerator] An Enumerator when no block is given.
