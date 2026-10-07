@@ -10,3 +10,7 @@
     fetched once per conversion instead of once per `$ref` (for example 114 fetches down to 2 on a
     large spec), and a failed fetch is retried by the next `$ref` instead of being remembered.
   type: fix
+- summary: |
+    The OpenAPI parser no longer rebuilds a throwaway parser context for every endpoint with a
+    request body. It reuses the one it already has, which cuts about 9% off parsing a large spec.
+  type: fix
