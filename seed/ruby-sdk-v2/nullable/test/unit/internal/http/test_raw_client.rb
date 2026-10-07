@@ -261,9 +261,9 @@ describe Seed::Internal::Http::RawClient do
         socket.close
       end
       with_server(handler) do |port, _connections|
-        client = Seed::Internal::Http::RawClient.new(base_url: "https://localhost:#{port}", max_retries: 0)
+        client = Seed::Internal::Http::RawClient.new(base_url: "https://127.0.0.1:#{port}", max_retries: 0)
         request = Seed::Internal::JSON::Request.new(
-          base_url: "https://localhost:#{port}",
+          base_url: "https://127.0.0.1:#{port}",
           method: "GET",
           path: "/test"
         )

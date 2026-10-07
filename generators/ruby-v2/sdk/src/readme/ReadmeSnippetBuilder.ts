@@ -193,7 +193,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             rescue ${this.rootPackageClientName}::Errors::TimeoutError
                 puts "API didn't respond before our timeout elapsed"
             rescue ${this.rootPackageClientName}::Errors::ConnectionError => e
-                puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.cause.class}"
+                puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
             rescue ${this.rootPackageClientName}::Errors::ServiceUnavailableError
                 puts "API returned status 503, is probably overloaded, try again later"
             rescue ${this.rootPackageClientName}::Errors::ServerError
