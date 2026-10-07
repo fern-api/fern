@@ -5,3 +5,8 @@
     `tag-description-pages: true`. Tag descriptions are now read straight from the specs' `tags`,
     which saves about a second per spec on large (4–5 MB) specs.
   type: fix
+- summary: |
+    OpenAPI specs with external `$ref`s to remote files convert faster. Each remote file is now
+    fetched once per conversion instead of once per `$ref` (for example 114 fetches down to 2 on a
+    large spec), and a failed fetch is retried by the next `$ref` instead of being remembered.
+  type: fix
