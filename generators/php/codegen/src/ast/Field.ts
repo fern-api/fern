@@ -29,8 +29,8 @@ export declare namespace Field {
         inherited?: boolean;
         /* The type documented for this field's key in a data class constructor's `$values` array; defaults to `type` */
         constructorType?: Type;
-        /* Wraps the raw constructor value (`$values['key'] ?? null`) before it is assigned to the field */
-        constructorValueWrapper?: (rawValue: string) => CodeBlock;
+        /* Wraps the raw constructor value (`$values['key'] ?? <default>`) before it is assigned to the field */
+        constructorValueWrapper?: (rawValue: CodeBlock) => CodeBlock;
     }
 }
 
@@ -45,7 +45,7 @@ export class Field extends AstNode {
     private attributes: Attribute[];
     public readonly inherited: boolean;
     public readonly constructorType: Type | undefined;
-    public readonly constructorValueWrapper: ((rawValue: string) => CodeBlock) | undefined;
+    public readonly constructorValueWrapper: ((rawValue: CodeBlock) => CodeBlock) | undefined;
 
     constructor({
         name,
