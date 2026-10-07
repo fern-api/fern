@@ -60,11 +60,18 @@ module <%= gem_namespace %>
             case value
             when Numeric, String, Time
               return value.to_i
+            when Symbol
+              # JSON object keys are parsed as symbols, so numeric map keys arrive as e.g. :"1"
+              parsed = Integer(value.to_s, 10, exception: false)
+              return parsed unless parsed.nil?
             end
           in ->(t) { t <= Float }
             case value
             when Numeric, Time, String
               return value.to_f
+            when Symbol
+              parsed = Float(value.to_s, exception: false)
+              return parsed unless parsed.nil?
             end
           in ->(t) { t <= Model }
             case value

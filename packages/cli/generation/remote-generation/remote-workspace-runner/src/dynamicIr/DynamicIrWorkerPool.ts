@@ -1,6 +1,7 @@
 import { availableParallelism, totalmem } from "node:os";
 import { getHeapStatistics } from "node:v8";
 import { isMainThread, parentPort, Worker, workerData } from "node:worker_threads";
+import { gunzipSync, gzipSync } from "node:zlib";
 import { createLogger, type LogLevel } from "@fern-api/logger";
 import { createMockTaskContext, TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -40,13 +41,25 @@ interface JobRequest {
 type LogEntry = [level: LogLevel, args: string[]];
 
 type JobResponse =
-    | { id: number; ok: true; results: Array<[language: string, json: string | undefined]>; logs: LogEntry[] }
+    | {
+          id: number;
+          ok: true;
+          results: Array<[language: string, gzippedJson: Uint8Array | undefined]>;
+          logs: LogEntry[];
+      }
     | { id: number; ok: false; error: string };
 
 export interface WorkerDynamicIrResults {
-    /** Dynamic IRs as JSON, which is what FDR receives (functions such as `_visit` are dropped). */
-    results: Array<[language: string, json: string | undefined]>;
+    /**
+     * Dynamic IRs as gzipped JSON, which is what FDR receives (functions such as `_visit` are
+     * dropped). Gzipped because they wait on the main thread until registration, and compress ~10x.
+     */
+    results: Array<[language: string, gzippedJson: Uint8Array | undefined]>;
     logs: LogEntry[];
+}
+
+export function parseDynamicIrResult(gzippedJson: Uint8Array): unknown {
+    return JSON.parse(gunzipSync(gzippedJson).toString("utf8"));
 }
 
 export function runDynamicIrWorkerThread(): void {
@@ -66,7 +79,7 @@ export function runDynamicIrWorkerThread(): void {
                 ok: true,
                 results: results.map(([language, dynamicIR]) => [
                     language,
-                    dynamicIR == null ? undefined : JSON.stringify(dynamicIR)
+                    dynamicIR == null ? undefined : gzipSync(JSON.stringify(dynamicIR), { level: 1 })
                 ]),
                 logs
             };
@@ -141,9 +154,13 @@ export function stripFunctions<T>(value: T, seen = new Map<object, unknown>()): 
 }
 
 const GIB = 1024 ** 3;
-// Measured on a 35-version docs fixture: the main thread peaks around 5 GB and each worker adds about 2 GB.
+const WORKER_MAX_OLD_GENERATION_SIZE_MB = 1536;
+// Measured on a 35-version docs fixture under a 7 GB memory limit: about 4.3 GB in-process, 5.9 GB with one
+// worker and 6.8 GB with two. The reserve keeps 7 GB machines in-process to leave headroom for the OS. A
+// worker's measured cost (~0.8-1.6 GB RSS) stays under its old-generation cap (WORKER_MAX_OLD_GENERATION_SIZE_MB);
+// revisit this estimate if the cap changes.
 const MAIN_THREAD_MEMORY_RESERVE_BYTES = 8 * GIB;
-const MEMORY_PER_WORKER_BYTES = 2 * GIB;
+const MEMORY_PER_WORKER_BYTES = 1.5 * GIB;
 
 /** Total memory available to this process, honoring container (cgroup) limits. */
 export function getAvailableMemoryBytes(): number {
@@ -153,8 +170,8 @@ export function getAvailableMemoryBytes(): number {
 
 /**
  * Number of dynamic IR workers: at most one per in-flight API registration, leaving one core for
- * the main thread, and only as many as fit in memory next to the main thread (so a 2-core / 7 GB
- * GitHub Actions runner stays in-process). 0 means generate in-process.
+ * the main thread, and only as many as fit in memory next to the main thread (none on a 2-core / 7 GB
+ * GitHub Actions runner, three on a 4-core / 16 GB one). 0 means generate in-process.
  */
 export function getDynamicIrWorkerCount({
     registrationConcurrency,
@@ -206,7 +223,13 @@ export class DynamicIrWorkerPool {
             return undefined;
         }
         context.logger.debug(`Generating dynamic snippet IRs on up to ${size} worker thread(s)`);
-        const maxOldGenerationSizeMb = Math.floor(getHeapStatistics().heap_size_limit / 1024 / 1024);
+        // A worker's live heap peaks around 1 GB on a 35-version Square fixture. Without a cap it inherits the
+        // main thread's limit (often raised far above physical RAM) and rarely collects; a job that runs out of
+        // heap is regenerated in-process, so the cap can't change output.
+        const maxOldGenerationSizeMb = Math.min(
+            WORKER_MAX_OLD_GENERATION_SIZE_MB,
+            Math.floor(getHeapStatistics().heap_size_limit / 1024 / 1024)
+        );
         return new DynamicIrWorkerPool(
             size,
             () =>

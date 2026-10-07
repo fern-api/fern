@@ -7,7 +7,7 @@ module Seed
 
       field :name, -> { String }, optional: true, nullable: false
 
-      field :price, -> { Integer }, optional: true, nullable: false
+      field :price, -> { Float }, optional: true, nullable: false
     end
   end
 end

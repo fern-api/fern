@@ -3,7 +3,7 @@
 module Seed
   module Types
     class RefundRequest < Internal::Types::Model
-      field :amount, -> { Integer }, optional: true, nullable: false
+      field :amount, -> { Float }, optional: true, nullable: false
     end
   end
 end

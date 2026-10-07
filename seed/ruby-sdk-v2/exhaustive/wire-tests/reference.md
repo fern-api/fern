@@ -2699,7 +2699,7 @@ client.endpoints.primitive.get_and_return_long(request: 1000000)
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Float</code></summary>
 <dl>
 <dd>
 
@@ -2727,7 +2727,7 @@ client.endpoints.primitive.get_and_return_double(request: 1.1)
 <dl>
 <dd>
 
-**request:** `Integer` 
+**request:** `Float` 
     
 </dd>
 </dl>
