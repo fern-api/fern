@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`global headers in endpoint examples > does not report global headers as endpoint parameters 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithAPIKey(
+			"<value>",
+		),
+		option.WithXAnotherHeader(
+			"acme",
+		),
+	)
+	request := &acme.HeaderAuthRequest{
+		XEndpointHeader: "acme",
+	}
+	client.Service.GetWithHeader(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;

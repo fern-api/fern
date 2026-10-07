@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`global headers in endpoint examples > does not report global headers as endpoint parameters 1`] = `
+"using Acme;
+using Acme.Service;
+
+var client = new AcmeClient(
+    apiKey: "<value>",
+    xAnotherHeader: "acme",
+    xAPIVersion: "01-01-2000"
+);
+
+await client.Service.GetWithHeaderAsync(
+    new HeaderAuthRequest {
+        XEndpointHeader = "acme"
+    }
+);
+"
+`;

@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`global headers in endpoint examples > does not report global headers as endpoint parameters 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.HeaderAuthRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .apiKey("<value>")
+    .xAnotherHeader("acme")
+    .xAPIVersion("01-01-2000")
+    .build();
+
+client.service().getWithHeader(
+    HeaderAuthRequest
+        .builder()
+        .xEndpointHeader("acme")
+        .build()
+);
+"
+`;

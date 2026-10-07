@@ -160,6 +160,29 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }
 
     /**
+     * Associates an endpoint's header values like `associateByWireValue`, but does not report
+     * values for global (client-level) headers as unrecognized, since those are set on the
+     * client rather than on the endpoint call. A header the endpoint declares itself is still
+     * associated with the endpoint, even if it is also a global header.
+     */
+    public associateEndpointHeaders({
+        headers,
+        values
+    }: {
+        headers: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+    }): TypeInstance[] {
+        const endpointHeaderWireValues = new Set(headers.map((header) => header.name.wireValue));
+        const globalHeaderWireValues = new Set((this._ir.headers ?? []).map((header) => header.name.wireValue));
+        const endpointValues = Object.fromEntries(
+            Object.entries(values).filter(
+                ([key]) => endpointHeaderWireValues.has(key) || !globalHeaderWireValues.has(key)
+            )
+        );
+        return this.associateByWireValue({ parameters: headers, values: endpointValues });
+    }
+
+    /**
      * Similar to `associateByWireValue` but it builds TypeInstance objects by iterating over schema parameters rather
      * than snippet values. Skips non-nullable parameters that are missing from the snippet object.
      */

@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`global headers in endpoint examples > does not report global headers as endpoint parameters 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Service\\Requests\\HeaderAuthRequest;
+
+$client = new AcmeClient(
+    xAnotherHeader: 'acme',
+    xAPIVersion: '01-01-2000',
+    apiKey: '<value>',
+);
+$client->service->getWithHeader(
+    new HeaderAuthRequest([
+        'xEndpointHeader' => 'acme',
+    ]),
+);
+"
+`;

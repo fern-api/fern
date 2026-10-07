@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets no longer report client-level (global) headers in an endpoint example as
+    "is not a recognized parameter for this endpoint". The header is still set on the client.
+  type: fix

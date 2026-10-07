@@ -717,8 +717,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
+        const headers = this.context.associateEndpointHeaders({
+            headers: request.headers ?? [],
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({
