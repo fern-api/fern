@@ -111,20 +111,42 @@ describe("initializeDocs", () => {
         expect(await existsInProject("fern")).toBe(false);
     });
 
-    it("replaces an existing fern/openapi.json, like fern init --openapi does", async () => {
-        await mkdir(path.join(projectDirectory, "fern"));
+    async function createFernDirectory(): Promise<string> {
+        const fernDirectory = path.join(projectDirectory, "fern");
+        await mkdir(fernDirectory, { recursive: true });
         await writeFile(
-            path.join(projectDirectory, "fern", "fern.config.json"),
+            path.join(fernDirectory, "fern.config.json"),
             JSON.stringify({ organization: "acme", version: "0.0.0" })
         );
-        await writeFile(path.join(projectDirectory, "fern", "openapi.json"), "{}");
+        return fernDirectory;
+    }
+
+    it("leaves an existing API's spec alone and writes the new spec under the next free name", async () => {
+        const fernDirectory = await createFernDirectory();
+        await writeFile(path.join(fernDirectory, "sdk-config.yml"), "sdkName: api\n");
+        await writeFile(path.join(fernDirectory, "openapi.json"), "{}");
 
         await initialize(await writeSpec());
 
-        const copiedSpec = JSON.parse(await readFile(path.join(projectDirectory, "fern", "openapi.json"), "utf8"));
-        expect(copiedSpec.paths["/pets"].get.operationId).toBe("listPets");
+        // sdk-config.yml still points at openapi.json, so that file must be exactly as it was.
+        expect(await readFile(path.join(fernDirectory, "openapi.json"), "utf8")).toBe("{}");
+        const newSpec = JSON.parse(await readFile(path.join(fernDirectory, "openapi-1.json"), "utf8"));
+        expect(newSpec.paths["/pets"].get.operationId).toBe("listPets");
         expect(await readDocsYml()).toMatchObject({
-            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.json" }] }]
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi-1.json" }] }]
+        });
+    });
+
+    it("keeps counting up when earlier copies are taken too", async () => {
+        const fernDirectory = await createFernDirectory();
+        await writeFile(path.join(fernDirectory, "openapi.json"), "{}");
+        await writeFile(path.join(fernDirectory, "openapi-1.json"), "{}");
+
+        await initialize(await writeSpec());
+
+        expect(await existsInProject("fern", "openapi-2.json")).toBe(true);
+        expect(await readDocsYml()).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi-2.json" }] }]
         });
     });
 

@@ -15,6 +15,7 @@ import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { mkdir, readdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
 import { materializeOpenAPI } from "./createWorkspace.js";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
@@ -59,13 +60,12 @@ export async function initializeDocs({
             return;
         } else {
             try {
-                // Same copy `fern init --openapi` makes, so both inits share one spec file.
                 const specPathInDocsYml =
                     openApiPath != null
-                        ? await materializeOpenAPI({
-                              directoryOfWorkspace: createDirectoryResponse.absolutePathToFernDirectory,
-                              openAPIFilePath: openApiPath,
-                              context: taskContext
+                        ? await copySpecIntoFernDirectory({
+                              absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
+                              openApiPath,
+                              taskContext
                           })
                         : undefined;
                 const hasApi =
@@ -122,6 +122,37 @@ async function resolveOpenApiPath({
         });
     }
     return openApiPath;
+}
+
+/**
+ * Writes the same bundled copy `fern init --openapi` makes, next to `docs.yml`. If `openapi.json|yml` is taken,
+ * it uses `openapi-1.json|yml` and so on, so an existing API's spec is never overwritten.
+ * Returns the copy's path relative to `docs.yml`.
+ */
+async function copySpecIntoFernDirectory({
+    absolutePathToFernDirectory,
+    openApiPath,
+    taskContext
+}: {
+    absolutePathToFernDirectory: AbsoluteFilePath;
+    openApiPath: AbsoluteFilePath;
+    taskContext: TaskContext;
+}): Promise<string> {
+    const extension = path.extname(openApiPath).toLowerCase() === ".json" ? "json" : "yml";
+    let openAPIFileName = `openapi.${extension}`;
+    for (
+        let attempt = 1;
+        await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(openAPIFileName)));
+        attempt++
+    ) {
+        openAPIFileName = `openapi-${attempt}.${extension}`;
+    }
+    return await materializeOpenAPI({
+        directoryOfWorkspace: absolutePathToFernDirectory,
+        openAPIFilePath: openApiPath,
+        context: taskContext,
+        openAPIFileName
+    });
 }
 
 /**

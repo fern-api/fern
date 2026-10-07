@@ -150,13 +150,15 @@ export async function createDefaultOpenAPIWorkspace({
 export async function materializeOpenAPI({
     directoryOfWorkspace,
     openAPIFilePath,
-    context
+    context,
+    openAPIFileName = getOpenAPIFileName(openAPIFilePath)
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
     context: TaskContext;
+    /** Name of the written copy. Defaults to `openapi.json` or `openapi.yml`, matching the source's format. */
+    openAPIFileName?: string;
 }): Promise<string> {
-    const openAPIFileName = getOpenAPIFileName(openAPIFilePath);
     const bundled = await loadOpenAPI({
         context,
         absolutePathToOpenAPI: openAPIFilePath,
@@ -165,7 +167,7 @@ export async function materializeOpenAPI({
     });
     delete (bundled as Record<string, unknown>)["x-fern-overrides-filepath"];
     const contents =
-        openAPIFileName === "openapi.json"
+        path.extname(openAPIFileName).toLowerCase() === ".json"
             ? `${JSON.stringify(bundled, null, 2)}\n`
             : yaml.dump(bundled, { lineWidth: -1 });
     await writeFile(join(directoryOfWorkspace, RelativeFilePath.of(openAPIFileName)), contents);

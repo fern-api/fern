@@ -255,7 +255,7 @@ describe("fern init", () => {
         expect(docsDefinition).toMatch(/"type":\s*"endpoint"/);
     }, 180_000);
 
-    it.concurrent("init --openapi then init --docs --openapi share one spec file in SDK Gen API mode", async ({
+    it.concurrent("init --docs --openapi leaves the SDK API of an earlier init --openapi untouched", async ({
         expect,
         signal
     }) => {
@@ -273,20 +273,35 @@ describe("fern init", () => {
             env: SDK_CONFIG_ENV,
             signal
         });
+        const specBefore = await readFile(join(fernDirectory, RelativeFilePath.of("openapi.yml")), "utf8");
         await runFernCli(["init", "--docs", "--organization", "fern", "--openapi", "petstore-openapi.yml"], {
             cwd: pathOfDirectory,
             env: SDK_CONFIG_ENV,
             signal
         });
 
-        const readYaml = async (fileName: string): Promise<unknown> =>
-            yaml.load(await readFile(join(fernDirectory, RelativeFilePath.of(fileName)), "utf8"));
-        expect(await readYaml("docs.yml")).toMatchObject({
-            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.yml" }] }]
-        });
-        expect(await readYaml("sdk-config.yml")).toMatchObject({
+        // The SDK API's spec and sdk-config.yml are untouched. The docs get their own copy of the spec.
+        const readInFern = async (relativePath: string): Promise<string> =>
+            await readFile(join(fernDirectory, RelativeFilePath.of(relativePath)), "utf8");
+        expect(await readInFern("openapi.yml")).toBe(specBefore);
+        expect(yaml.load(await readInFern("sdk-config.yml"))).toMatchObject({
             source: { specs: [{ path: "./openapi.yml" }] }
         });
+        expect(yaml.load(await readInFern("docs.yml"))).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi-1.yml" }] }]
+        });
+
+        await runFernCli(["check"], { cwd: pathOfDirectory, env: SDK_CONFIG_ENV, signal });
+        await runFernCli(["write-docs-definition", "docs-definition.json"], {
+            cwd: pathOfDirectory,
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+        const docsDefinition = await readFile(
+            join(pathOfDirectory, RelativeFilePath.of("docs-definition.json")),
+            "utf8"
+        );
+        expect(docsDefinition).toMatch(/"type":\s*"endpoint"/);
     }, 180_000);
 
     it.concurrent("check fails when docs reference an api that does not exist", async ({ expect, signal }) => {
