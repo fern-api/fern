@@ -846,7 +846,11 @@ impl CliApp {
         profile_error: Option<CliError>,
         out: &mut W,
     ) -> i32 {
-        let banner_mode = self.banner_mode();
+        let banner_mode = if self.banner.is_some() {
+            self.banner_mode()
+        } else {
+            BannerMode::Off
+        };
         let str_args: Vec<String> = args.iter()
             .filter_map(|a| a.to_str().map(String::from))
             .collect();

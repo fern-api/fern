@@ -114,6 +114,10 @@ fn hex_digit(byte: u8) -> Option<u8> {
 }
 
 fn color_at(stops: &[(u8, u8, u8)], column: usize, width: usize) -> (u8, u8, u8) {
+    if stops.is_empty() {
+        return (255, 255, 255);
+    }
+
     if stops.len() == 1 || width <= 1 {
         return stops[0];
     }
@@ -141,8 +145,13 @@ fn color_at(stops: &[(u8, u8, u8)], column: usize, width: usize) -> (u8, u8, u8)
 
 #[cfg(test)]
 mod tests {
-    use super::{banner_mode, Banner, BannerMode};
+    use super::{banner_mode, color_at, Banner, BannerMode};
     use std::ffi::OsStr;
+
+    #[test]
+    fn color_at_returns_white_for_empty_stops() {
+        assert_eq!(color_at(&[], 0, 1), (255, 255, 255));
+    }
 
     #[test]
     fn render_plain_text_and_trim_trailing_newlines() {
