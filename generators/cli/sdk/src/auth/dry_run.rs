@@ -13,8 +13,10 @@ use crate::auth::{AuthProvider, EndpointAuthMetadata};
 /// header/query parameters removed (same length, same order).
 ///
 /// The provider picks the requirement exactly as its `apply` would
-/// ([`AuthProvider::selected_requirement`]), so a selected profile's stored
-/// credentials win over an earlier spec-order alternative here too.
+/// ([`AuthProvider::selected_requirement`] on `declared`, which is what the
+/// executor hands to `apply`), so a selected profile's stored credentials win
+/// over an earlier spec-order alternative here too. When the provider would
+/// attach nothing, a requirement the caller fully supplied still counts.
 /// `credentials` is one of:
 /// - `"not_required"` — `security: []`, the selected requirement is an
 ///   anonymous alternative, or nothing is declared and the CLI has no
@@ -52,16 +54,31 @@ pub(crate) fn dry_run_auth_info(
         return info;
     }
 
-    let Some(index) = provider
-        .selected_requirement(effective)
-        .filter(|i| *i < declared_reqs.len() && *i < effective_reqs.len())
-    else {
-        missing(&mut info, provider, true);
+    let selected = provider
+        .selected_requirement(declared)
+        .filter(|i| *i < declared_reqs.len() && *i < effective_reqs.len());
+    let Some(index) = selected else {
+        // `apply` attaches nothing; the request still carries whatever the
+        // caller passed explicitly.
+        let caller_satisfied = declared_reqs
+            .iter()
+            .zip(effective_reqs)
+            .find(|(_, effective_req)| effective_req.is_empty())
+            .map(|(declared_req, _)| declared_req);
+        match caller_satisfied {
+            Some(declared_req) if declared_req.is_empty() => {
+                info["credentials"] = json!("not_required");
+            }
+            Some(declared_req) => {
+                info["credentials"] = json!("supplied");
+                info["satisfied_by"] = json!(requirement_label(declared_req));
+            }
+            None => missing(&mut info, provider, true),
+        }
         return info;
     };
     let declared_req = &declared_reqs[index];
-    let effective_req = &effective_reqs[index];
-    if effective_req.is_empty() {
+    if effective_reqs[index].is_empty() {
         if declared_req.is_empty() {
             info["credentials"] = json!("not_required");
         } else {
@@ -75,14 +92,14 @@ pub(crate) fn dry_run_auth_info(
     // attaches nothing, so only claim `resolved` if the requirement is
     // satisfiable right now.
     let single = EndpointAuthMetadata {
-        security_requirements: Some(vec![effective_req.clone()]),
-        base_url_override: effective.base_url_override.clone(),
+        security_requirements: Some(vec![declared_req.clone()]),
+        base_url_override: declared.base_url_override.clone(),
     };
     if provider.has_credentials_for(&single) {
         resolved(
             &mut info,
             provider,
-            effective,
+            declared,
             Some(requirement_label(declared_req)),
         );
     } else {
@@ -94,7 +111,7 @@ pub(crate) fn dry_run_auth_info(
 fn resolved(
     info: &mut Value,
     provider: &dyn AuthProvider,
-    effective: &EndpointAuthMetadata,
+    endpoint: &EndpointAuthMetadata,
     satisfied_by: Option<String>,
 ) {
     info["credentials"] = json!("resolved");
@@ -102,7 +119,7 @@ fn resolved(
         info["satisfied_by"] = json!(label);
     }
     info["configured_sources"] = json!(dedup_preserve_order(
-        provider.populated_credential_hints_for(effective)
+        provider.populated_credential_hints_for(endpoint)
     ));
 }
 
