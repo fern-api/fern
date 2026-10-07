@@ -5,10 +5,11 @@ import path from "path";
 import { detectRepository } from "./detect";
 import { isFernCliInstalled } from "./detect/package-manager";
 import { recommend } from "./recommend";
+import { showSplash } from "./splash";
 import { type Command, formatCommand, runCommand } from "./steps/commands";
-import { writeAgentHandoff } from "./steps/handoff";
+import { agentHandoffFiles, writeAgentHandoff } from "./steps/handoff";
 import type { ActionId, ActionPlan, ApiSpec, Detection, WizardFlags } from "./types";
-import { printBanner, printNextSteps, printPlan, printRecommendations } from "./ui";
+import { formatAction, printNextSteps, printPlan, printRecommendations } from "./ui";
 
 interface ActionAnswers {
     actionIds: ActionId[];
@@ -18,39 +19,147 @@ interface SpecAnswers {
     specPath: string;
 }
 
+const ORG_PLACEHOLDER = "<your-org>";
+
 export function planActions(detection: Detection, flags: WizardFlags): ActionPlan[] {
     const actions: ActionPlan[] = [];
     if (detection.fernCliVersion === null && !flags.skipInstall) {
-        actions.push({ id: "install-cli", label: installLabel(detection), selectedByDefault: true });
-    }
-    if (!detection.fernProject.exists) {
         actions.push({
-            id: "init-api",
-            label: `fern init --openapi <selected-spec>${orgLabel(flags.org)}`,
+            id: "install-cli",
+            title: "Install the Fern CLI",
+            description: detection.hasPackageJson
+                ? "Adds fern-api as a dev dependency so everyone on this repo uses the same Fern version."
+                : "Installs the `fern` command globally so you can run it from any directory.",
+            commands: [formatCommand(installCommand(detection))],
+            files: [],
             selectedByDefault: true
         });
-    } else {
+    }
+    if (detection.fernProject.exists) {
         console.log("Existing Fern project detected at fern/ — skipping init");
+    } else {
+        const initApi = planInitApi(detection, flags);
+        if (initApi !== undefined) {
+            actions.push(initApi);
+        }
     }
     if (!detection.fernProject.docsConfigExists) {
+        const mintJson = findMintJson(detection);
         actions.push({
             id: "init-docs",
-            label: formatCommand({ executable: "fern", args: docsInitArgs(detection, flags.org) }),
+            ...(mintJson === undefined
+                ? {
+                      title: "Set up a docs site",
+                      description: "Adds fern/docs.yml for a Fern docs site you can preview with `fern docs dev`."
+                  }
+                : {
+                      title: "Import your Mintlify docs",
+                      description: `Converts ${mintJson} into fern/docs.yml and copies your pages and images into fern/.`
+                  }),
+            commands: [displayFernCommand(detection, flags, docsInitArgs(detection, flags.org ?? ORG_PLACEHOLDER))],
+            files: [],
             selectedByDefault: true
         });
     }
     if (detection.agents.length > 0) {
-        actions.push({ id: "agent-mcp", label: "fern login && fern mcp install", selectedByDefault: true });
+        actions.push(agentMcpAction(detection, flags));
     }
-    actions.push({ id: "agent-handoff", label: "write coding-agent handoff files", selectedByDefault: true });
+    actions.push({
+        id: "agent-handoff",
+        title: "Teach your coding agent about Fern",
+        description: "Writes Fern setup instructions your agent picks up automatically. Existing files are left alone.",
+        commands: [],
+        files: agentHandoffFiles(detection),
+        selectedByDefault: true
+    });
     if (detection.apiSpecs.length > 0) {
         actions.push({
             id: "cli-interest",
-            label: "Interested in a generated CLI for your API?",
+            title: "Learn about the CLI generator (early access)",
+            description: "Prints links to the CLI generator docs and a demo booking page. Changes nothing.",
+            commands: [],
+            files: [],
             selectedByDefault: false
         });
     }
     return actions;
+}
+
+function agentMcpAction(detection: Detection, flags: WizardFlags): ActionPlan {
+    return {
+        id: "agent-mcp",
+        title: "Connect your coding agents to Fern",
+        description:
+            "Signs you in to Fern, then adds the Fern MCP server to the Claude Code, Cursor, or Codex config in your home directory (for example ~/.cursor/mcp.json).",
+        commands: [
+            displayFernCommand(detection, flags, ["login"]),
+            displayFernCommand(detection, flags, ["mcp", "install"])
+        ],
+        files: [],
+        selectedByDefault: true
+    };
+}
+
+function planInitApi(detection: Detection, flags: WizardFlags): ActionPlan | undefined {
+    const openApiSpecs = getOpenApiSpecs(detection.apiSpecs);
+    const org = flags.org ?? ORG_PLACEHOLDER;
+    if (openApiSpecs.length > 0) {
+        const spec = openApiSpecs.length === 1 || flags.yes ? pickDefaultSpec(openApiSpecs) : undefined;
+        return {
+            id: "init-api",
+            title: "Create a Fern project from your API spec",
+            description: `Creates fern/ with fern.config.json and generators.yml pointing at ${spec?.path ?? "the spec you pick next"}.`,
+            commands: [
+                displayFernCommand(detection, flags, [
+                    "init",
+                    "--openapi",
+                    spec?.path ?? "<selected-spec>",
+                    "--org",
+                    org
+                ])
+            ],
+            files: [],
+            selectedByDefault: true
+        };
+    }
+    const nonOpenApiSpec = detection.apiSpecs[0];
+    if (nonOpenApiSpec !== undefined) {
+        console.log(
+            `Found ${nonOpenApiSpec.format} at ${nonOpenApiSpec.path} — skipping API init; see https://buildwithfern.com/learn/api-definitions/overview/what-is-an-api-definition to configure it`
+        );
+        return undefined;
+    }
+    const framework = detection.frameworks.find((candidate) => candidate.canGenerateOpenApi) ?? detection.frameworks[0];
+    if (framework !== undefined) {
+        console.log(`Found ${framework.name} but no OpenAPI spec — skipping API init until you export one`);
+        return undefined;
+    }
+    return {
+        id: "init-api",
+        title: "Create a starter Fern project",
+        description: "No API spec was found, so Fern creates fern/ with a sample OpenAPI spec you can replace.",
+        commands: [displayFernCommand(detection, flags, ["init", "--org", org])],
+        files: [],
+        selectedByDefault: true
+    };
+}
+
+/**
+ * The command as it will run: plain `fern` when the CLI is (or is about to be) on PATH, otherwise
+ * through the repository's package runner.
+ */
+function displayFernCommand(detection: Detection, flags: WizardFlags, args: string[]): string {
+    const fernOnPath = detection.fernCliVersion !== null || (!detection.hasPackageJson && !flags.skipInstall);
+    return formatCommand(fernOnPath ? { executable: "fern", args } : fernRunner(detection, args));
+}
+
+function findMintJson(detection: Detection): string | undefined {
+    return detection.docsTools.find((tool) => tool.name === "mintlify" && path.basename(tool.path) === "mint.json")
+        ?.path;
+}
+
+function getOpenApiSpecs(specs: ApiSpec[]): ApiSpec[] {
+    return specs.filter((spec) => spec.format === "openapi");
 }
 
 export async function runWizard(flags: WizardFlags): Promise<number> {
@@ -64,14 +173,13 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         return 1;
     }
 
-    printBanner(dir);
-    const detection = await detectRepository(dir, !flags.dryRun);
+    const detection = await showSplash(dir, detectRepository(dir));
     const recommendations = recommend(detection);
     printRecommendations(recommendations);
     const actions = planActions(detection, flags);
     const selected = flags.yes
         ? actions.filter((action) => action.selectedByDefault)
-        : await chooseActions(actions, detection);
+        : await chooseActions(actions, detection, flags);
     const validationError = validateFlags(selected, flags);
     if (validationError !== undefined) {
         console.error(validationError);
@@ -80,7 +188,8 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     const effectiveFlags =
         selected.some((action) => action.id === "init-api" || action.id === "init-docs") &&
         flags.org === undefined &&
-        !flags.yes
+        !flags.yes &&
+        !flags.dryRun
             ? { ...flags, org: await promptForOrganization() }
             : flags;
 
@@ -133,14 +242,20 @@ async function promptForOrganization(): Promise<string> {
     return answer.organization.trim();
 }
 
-async function chooseActions(actions: ActionPlan[], detection: Detection): Promise<ActionPlan[]> {
+async function chooseActions(actions: ActionPlan[], detection: Detection, flags: WizardFlags): Promise<ActionPlan[]> {
     const answer = await inquirer.prompt<ActionAnswers>([
         {
             type: "checkbox",
             name: "actionIds",
-            message: "Choose setup steps",
+            message: "Choose what to set up",
+            // Each choice spans several lines; show them all instead of paginating mid-choice.
+            pageSize: 40,
+            loop: false,
             choices: actions.map((action) => ({
-                name: action.label,
+                // Continuation lines line up with the title after inquirer's "❯◉ " prefix; the trailing
+                // newline leaves a blank line between steps.
+                name: `${formatAction(action, "   ")}\n`,
+                short: action.title,
                 value: action.id,
                 checked: action.selectedByDefault
             }))
@@ -153,15 +268,13 @@ async function chooseActions(actions: ActionPlan[], detection: Detection): Promi
         {
             type: "confirm",
             name: "installMcp",
-            message: "Would you like to install Fern MCP for a coding agent?",
+            message:
+                "Connect a coding agent (Claude Code, Cursor, or Codex) to Fern? This runs `fern login` and `fern mcp install`.",
             default: false
         }
     ]);
     return optIn.installMcp
-        ? [
-              ...actions.filter((action) => answer.actionIds.includes(action.id)),
-              { id: "agent-mcp", label: "Install Fern MCP", selectedByDefault: false }
-          ]
+        ? [...actions.filter((action) => answer.actionIds.includes(action.id)), agentMcpAction(detection, flags)]
         : actions.filter((action) => answer.actionIds.includes(action.id));
 }
 
@@ -174,25 +287,20 @@ async function executeAction(
     if (id === "install-cli") {
         await runCommand(installCommand(detection), dir);
         if (!detection.hasPackageJson) {
-            detection.fernCliVersion = await isFernCliInstalled();
+            detection.fernCliVersion = await isFernCliInstalled(dir);
         }
         return;
     }
     if (id === "init-api") {
-        const spec = await chooseSpec(detection.apiSpecs, flags.yes);
-        if (spec === undefined) {
-            if (detection.frameworks.length === 0) {
-                await runFernCommand(["init", ...orgArgs(flags.org)], dir, detection);
-            } else {
-                console.log("No API specification selected; export OpenAPI from your framework first.");
-            }
-        } else if (spec.format === "openapi") {
-            await runFernCommand(["init", "--openapi", spec.path, ...orgArgs(flags.org)], dir, detection);
-        } else {
-            console.log(
-                `${spec.format} detected at ${spec.path}; follow https://buildwithfern.com/learn/api-definitions/openapi/overview to configure it.`
-            );
-        }
+        // planActions only offers init-api when there is an OpenAPI spec or nothing to import at all.
+        const spec = await chooseSpec(getOpenApiSpecs(detection.apiSpecs), flags.yes);
+        await runFernCommand(
+            spec === undefined
+                ? ["init", ...orgArgs(flags.org)]
+                : ["init", "--openapi", spec.path, ...orgArgs(flags.org)],
+            dir,
+            detection
+        );
         return;
     }
     if (id === "init-docs") {
@@ -216,7 +324,7 @@ async function executeAction(
 }
 
 async function chooseSpec(specs: ApiSpec[], yes: boolean): Promise<ApiSpec | undefined> {
-    if (specs.length === 0 || yes) {
+    if (specs.length <= 1 || yes) {
         return pickDefaultSpec(specs);
     }
     const answer = await inquirer.prompt<SpecAnswers>([
@@ -235,8 +343,9 @@ export function pickDefaultSpec(specs: ApiSpec[]): ApiSpec | undefined {
 }
 
 export function docsInitArgs(detection: Detection, org: string | undefined): string[] {
-    const mintlify = detection.docsTools.find((tool) => tool.name === "mintlify");
-    return ["init", ...(mintlify === undefined ? ["--docs"] : ["--mintlify", mintlify.path]), ...orgArgs(org)];
+    // `fern init --mintlify` only imports the legacy mint.json format, not Mintlify's newer docs.json.
+    const mintJson = findMintJson(detection);
+    return ["init", ...(mintJson === undefined ? ["--docs"] : ["--mintlify", mintJson]), ...orgArgs(org)];
 }
 
 async function runFernCommand(args: string[], dir: string, detection: Detection): Promise<void> {
@@ -257,11 +366,10 @@ export function installCommand(detection: Detection): Command {
     if (packageManager === "bun") {
         return { executable: "bun", args: ["add", "--dev", "fern-api"] };
     }
-    return { executable: "pnpm", args: ["add", "-D", "fern-api"] };
-}
-
-function installLabel(detection: Detection): string {
-    return `Install Fern CLI (${formatCommand(installCommand(detection))})`;
+    return {
+        executable: "pnpm",
+        args: detection.pnpmWorkspaceRoot ? ["add", "-D", "-w", "fern-api"] : ["add", "-D", "fern-api"]
+    };
 }
 
 export function fernRunner(detection: Detection, args: string[] = []): Command {
@@ -282,10 +390,6 @@ export function fernRunner(detection: Detection, args: string[] = []): Command {
 
 function orgArgs(org: string | undefined): string[] {
     return org === undefined ? [] : ["--org", org];
-}
-
-function orgLabel(org: string | undefined): string {
-    return ` --org ${org ?? "<org>"}`;
 }
 
 async function isDirectory(dir: string): Promise<boolean> {

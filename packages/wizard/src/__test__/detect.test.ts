@@ -34,11 +34,21 @@ describe("repository detection", () => {
         await rm(dir, { recursive: true, force: true });
     });
 
+    it("detects OpenAPI with an unquoted numeric version", async () => {
+        const dir = await fixture();
+        await writeFile(path.join(dir, "openapi.yaml"), "openapi: 3.1\ninfo:\n  title: Pets\n");
+        await expect(detectApiSpecs(dir, await walkFiles(dir))).resolves.toEqual([
+            { path: "openapi.yaml", format: "openapi", title: "Pets", version: "3.1" }
+        ]);
+        await rm(dir, { recursive: true, force: true });
+    });
+
     it("ignores non-spec YAML and node_modules", async () => {
         const dir = await fixture();
         await mkdir(path.join(dir, "node_modules"), { recursive: true });
         await writeFile(path.join(dir, "config.yml"), "name: example\n");
-        await writeFile(path.join(dir, "node_modules", "hidden.yml"), "openapi: 3.0.0\n");
+        await writeFile(path.join(dir, "docs.json"), '{"openapi":3,"comment":"not a spec"}');
+        await writeFile(path.join(dir, "node_modules", "hidden.yml"), "openapi: 3.0.0\ninfo:\n  title: Hidden\n");
         await expect(detectApiSpecs(dir, await walkFiles(dir))).resolves.toEqual([]);
         await rm(dir, { recursive: true, force: true });
     });
@@ -50,6 +60,18 @@ describe("repository detection", () => {
         await expect(detectFrameworks(dir, await walkFiles(dir))).resolves.toEqual([
             { name: "express", language: "typescript", canGenerateOpenApi: false },
             { name: "fastapi", language: "python", canGenerateOpenApi: true }
+        ]);
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("only detects Rails and Grape from gem declarations", async () => {
+        const dir = await fixture();
+        await writeFile(path.join(dir, "Gemfile"), 'gem "sinatra"\ngem "jsonapi-rails"\ngem "grape-swagger"\n');
+        await expect(detectFrameworks(dir, await walkFiles(dir))).resolves.toEqual([]);
+        await writeFile(path.join(dir, "Gemfile"), "gem 'rails', '~> 7.1'\n  gem \"grape\"\n");
+        await expect(detectFrameworks(dir, await walkFiles(dir))).resolves.toEqual([
+            { name: "grape", language: "ruby", canGenerateOpenApi: false },
+            { name: "rails", language: "ruby", canGenerateOpenApi: false }
         ]);
         await rm(dir, { recursive: true, force: true });
     });

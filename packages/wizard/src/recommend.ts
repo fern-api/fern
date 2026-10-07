@@ -13,7 +13,7 @@ const LINKS: Record<RecommendationId, string> = {
 
 export function recommend(detection: Detection): Recommendation[] {
     const recommendations: Recommendation[] = [];
-    const spec = detection.apiSpecs[0];
+    const spec = detection.apiSpecs.find((candidate) => candidate.format === "openapi");
     if (spec !== undefined) {
         const evidence = `${spec.path} (${formatLabel(spec.format)}${spec.version === undefined ? "" : ` ${spec.version}`})`;
         recommendations.push(

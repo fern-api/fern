@@ -2,28 +2,12 @@
 import chalk from "chalk";
 import type { ActionPlan, Recommendation } from "./types";
 
-const FERN_BANNER = [
-    "███████╗███████╗██████╗ ███╗   ██╗",
-    "██╔════╝██╔════╝██╔══██╗████╗  ██║",
-    "█████╗  █████╗  ██████╔╝██╔██╗ ██║",
-    "██╔══╝  ██╔══╝  ██╔══██╗██║╚██╗██║",
-    "██║     ███████╗██║  ██║██║ ╚████║",
-    "╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝"
-]
-    .map((line) => `  ${chalk.green(line)}`)
-    .join("\n");
-
 export const Icons = {
     error: chalk.red("\u2717"),
     warning: chalk.yellow("\u26a0"),
     success: chalk.green("\u2713"),
     info: chalk.cyan("\u25c6")
 } as const;
-
-export function printBanner(dir: string): void {
-    console.log(FERN_BANNER);
-    console.log(`\nLet's set up Fern in ${dir}\n`);
-}
 
 export function printRecommendations(recommendations: Recommendation[]): void {
     console.log(chalk.bold("\nWhat Fern can do for this repo\n"));
@@ -37,11 +21,36 @@ export function printRecommendations(recommendations: Recommendation[]): void {
     }
 }
 
+/** A step's title, what it does, and the exact commands or files involved, one per line. */
+export function formatAction(action: ActionPlan, indent: string): string {
+    // Leave room for inquirer's "❯◉ " prefix; some pseudo-terminals report 0 columns.
+    const width = Math.max(40, (process.stdout.columns || 100) - indent.length - 4);
+    return [
+        chalk.bold(action.title),
+        ...wrap(action.description, width).map((line) => `${indent}${line}`),
+        ...action.commands.map((command) => `${indent}${chalk.dim(`$ ${command}`)}`),
+        ...action.files.map((file) => `${indent}${chalk.dim(`writes ${file}`)}`)
+    ].join("\n");
+}
+
+function wrap(text: string, width: number): string[] {
+    const lines: string[] = [];
+    let current = "";
+    for (const word of text.split(" ")) {
+        if (current.length > 0 && current.length + 1 + word.length > width) {
+            lines.push(current);
+            current = word;
+        } else {
+            current = current.length === 0 ? word : `${current} ${word}`;
+        }
+    }
+    return current.length > 0 ? [...lines, current] : lines;
+}
+
 export function printPlan(actions: ActionPlan[]): void {
-    console.log(chalk.bold("\nPlan\n"));
+    console.log(chalk.bold("\nDry run — nothing was changed. Without --dry-run, the wizard would:\n"));
     for (const action of actions) {
-        const prefix = action.id === "agent-handoff" ? "would write:" : "would run:";
-        console.log(`  ${Icons.info} ${prefix} ${action.label}`);
+        console.log(`  ${Icons.info} ${formatAction(action, "    ")}\n`);
     }
 }
 

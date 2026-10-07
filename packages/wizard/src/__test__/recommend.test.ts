@@ -12,6 +12,7 @@ function detection(overrides: Partial<Detection>): Detection {
         agents: [],
         packageManager: "npm",
         hasPackageJson: false,
+        pnpmWorkspaceRoot: false,
         fernCliVersion: null,
         ...overrides
     };
@@ -36,6 +37,32 @@ describe("recommendations", () => {
         expect(ids).toContain("spec-from-framework");
         expect(ids).not.toContain("sdks");
         expect(ids).not.toContain("cli");
+    });
+
+    it("cites the OpenAPI spec when other formats sort first", () => {
+        const recommendations = recommend(
+            detection({
+                apiSpecs: [
+                    { path: "proto/user.proto", format: "protobuf" },
+                    { path: "specs/openapi.yaml", format: "openapi", version: "3.1.0" }
+                ]
+            })
+        );
+        expect(recommendations.find((recommendation) => recommendation.id === "sdks")?.why).toBe(
+            "Found specs/openapi.yaml (OpenAPI 3.1.0)"
+        );
+    });
+
+    it("does not recommend SDKs or the CLI generator from non-OpenAPI specs alone", () => {
+        const recommendations = recommend(
+            detection({ apiSpecs: [{ path: "asyncapi.yaml", format: "asyncapi", version: "2.6.0" }] })
+        );
+        const ids = recommendations.map((recommendation) => recommendation.id);
+        expect(ids).not.toContain("sdks");
+        expect(ids).not.toContain("cli");
+        expect(recommendations.find((recommendation) => recommendation.id === "docs")?.why).toBe(
+            "Found AsyncAPI definition at asyncapi.yaml"
+        );
     });
 
     it("recommends Mintlify migration and agent MCP", () => {

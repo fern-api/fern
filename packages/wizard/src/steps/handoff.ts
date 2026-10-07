@@ -14,9 +14,22 @@ Run \`fern check\` before committing.
 For reference, consult https://buildwithfern.com/learn/llms.txt. Append \`.md\` to any \`buildwithfern.com/learn\` page URL when you need Markdown.
 `;
 
+/** Files {@link writeAgentHandoff} writes or appends to, relative to the repository. */
+export function agentHandoffFiles(detection: Detection): string[] {
+    const files: string[] = [];
+    if (detection.agents.includes("claude-code")) {
+        files.push(".claude/skills/fern/SKILL.md");
+    }
+    if (detection.agents.includes("cursor")) {
+        files.push(".cursor/rules/fern.mdc");
+    }
+    return files.length > 0 ? files : ["AGENTS.md"];
+}
+
 export async function writeAgentHandoff(dir: string, detection: Detection): Promise<void> {
     if (detection.agents.includes("claude-code")) {
         await writeIfMissing(
+            dir,
             path.join(dir, ".claude", "skills", "fern", "SKILL.md"),
             `---
 name: fern
@@ -28,6 +41,7 @@ ${HANDOFF_BODY}`
     }
     if (detection.agents.includes("cursor")) {
         await writeIfMissing(
+            dir,
             path.join(dir, ".cursor", "rules", "fern.mdc"),
             `---
 description: Fern docs and SDK setup
@@ -48,19 +62,19 @@ ${HANDOFF_BODY}`
                 console.log("Appended Fern handoff to AGENTS.md");
             }
         } else {
-            await writeIfMissing(agentsPath, `## Fern\n\n${HANDOFF_BODY}`);
+            await writeIfMissing(dir, agentsPath, `## Fern\n\n${HANDOFF_BODY}`);
         }
     }
 }
 
-async function writeIfMissing(filePath: string, contents: string): Promise<void> {
+async function writeIfMissing(dir: string, filePath: string, contents: string): Promise<void> {
     if (await exists(filePath)) {
-        console.log(`${path.relative(process.cwd(), filePath)} already exists, skipping`);
+        console.log(`${path.relative(dir, filePath)} already exists, skipping`);
         return;
     }
     await mkdir(path.dirname(filePath), { recursive: true });
     await writeFile(filePath, contents);
-    console.log(`Wrote ${path.relative(process.cwd(), filePath)}`);
+    console.log(`Wrote ${path.relative(dir, filePath)}`);
 }
 
 async function exists(filePath: string): Promise<boolean> {

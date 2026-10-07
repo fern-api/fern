@@ -37,6 +37,7 @@ export interface Detection {
     agents: Agent[];
     packageManager: PackageManager;
     hasPackageJson: boolean;
+    pnpmWorkspaceRoot: boolean;
     fernCliVersion: string | null;
 }
 
@@ -60,7 +61,13 @@ export type ActionId = "install-cli" | "init-api" | "init-docs" | "agent-mcp" | 
 
 export interface ActionPlan {
     id: ActionId;
-    label: string;
+    title: string;
+    /** Plain-language explanation of what the step does. */
+    description: string;
+    /** Exact commands the step runs. */
+    commands: string[];
+    /** Files the step writes directly, relative to the repository. */
+    files: string[];
     selectedByDefault: boolean;
 }
 

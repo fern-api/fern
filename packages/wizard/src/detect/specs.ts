@@ -76,12 +76,15 @@ async function readPrefix(filePath: string): Promise<string> {
 type SpecDetails = Pick<ApiSpec, "format" | "title" | "version">;
 
 function identifySpec(value: unknown): SpecDetails | undefined {
-    if (!isRecord(value)) {
+    // Every OpenAPI, Swagger, and AsyncAPI document requires an `info` object; checking for it filters out
+    // unrelated JSON/YAML files that merely have an `openapi` key.
+    if (!isRecord(value) || !isRecord(value.info)) {
         return undefined;
     }
-    const title = isRecord(value.info) && typeof value.info.title === "string" ? value.info.title : undefined;
-    if (typeof value.openapi === "string") {
-        return { format: "openapi", title, version: value.openapi };
+    const title = typeof value.info.title === "string" ? value.info.title : undefined;
+    // An unquoted `openapi: 3.1` parses as a YAML number.
+    if (typeof value.openapi === "string" || typeof value.openapi === "number") {
+        return { format: "openapi", title, version: String(value.openapi) };
     }
     if (typeof value.swagger === "string" || typeof value.swagger === "number") {
         return { format: "openapi", title, version: "2.0" };

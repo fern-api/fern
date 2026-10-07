@@ -64,7 +64,7 @@ export async function detectFrameworks(dir: string, files: string[]): Promise<Fr
             }
         } else if (name === "Gemfile") {
             for (const framework of ["rails", "grape"]) {
-                if (contents.includes(framework)) {
+                if (new RegExp(`^\\s*gem\\s+["']${framework}["']`, "m").test(contents)) {
                     add(found, framework);
                 }
             }
