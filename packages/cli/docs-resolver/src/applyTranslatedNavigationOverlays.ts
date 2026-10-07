@@ -416,7 +416,41 @@ function collectFlatNavigationOverlays(overlay: docsYml.TranslationNavigationOve
     return nonTabItems;
 }
 
+/**
+ * `sidebarGroup` nodes are synthetic wrappers that DocsDefinitionResolver inserts around
+ * runs of pages, links and collapsible sections; they have no counterpart in docs.yml.
+ * Their children are matched as if they were direct siblings so positional overlays stay
+ * aligned with the source navigation.
+ */
 function applySidebarChildOverlays(
+    children: unknown[],
+    navOverlays: docsYml.NavigationItemOverlay[],
+    overlay: docsYml.TranslationNavigationOverlay
+): unknown[] {
+    const flatChildren = children.flatMap((child) => getSidebarGroupChildren(child) ?? [child]);
+    const flatResults = applySiblingOverlays(flatChildren, navOverlays, overlay);
+    let cursor = 0;
+    return children.map((child) => {
+        const groupChildren = getSidebarGroupChildren(child);
+        if (groupChildren == null) {
+            return flatResults[cursor++];
+        }
+        const groupResults = flatResults.slice(cursor, cursor + groupChildren.length);
+        cursor += groupChildren.length;
+        return { ...(child as Record<string, unknown>), children: groupResults };
+    });
+}
+
+function getSidebarGroupChildren(node: unknown): unknown[] | undefined {
+    if (node == null || typeof node !== "object" || Array.isArray(node)) {
+        return undefined;
+    }
+    const obj = node as Record<string, unknown>;
+    const children = obj["children"];
+    return obj["type"] === "sidebarGroup" && Array.isArray(children) ? children : undefined;
+}
+
+function applySiblingOverlays(
     children: unknown[],
     navOverlays: docsYml.NavigationItemOverlay[],
     overlay: docsYml.TranslationNavigationOverlay
