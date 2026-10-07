@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.147.5
+  changelogEntry:
+    - summary: |
+        Fix translated navigation labels getting out of order after a top-level page, link, or
+        `collapsed` section. The CLI wraps those items in an internal sidebar group, and the
+        translation overlay now matches the group's items as siblings of the items around it, so
+        labels like API reference sections and endpoint titles no longer stay in English or pick up
+        another item's translation.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
 - version: 5.147.4
   changelogEntry:
     - summary: |
