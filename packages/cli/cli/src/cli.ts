@@ -475,7 +475,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                        taskContext: context
+                        taskContext: context,
+                        openApi: argv.openapi
                     });
                 });
             } else if (argv.mintlify != null) {

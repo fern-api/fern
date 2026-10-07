@@ -9,13 +9,15 @@ import {
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
 import { extractErrorMessage, titleCase } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { AbsoluteFilePath, cwd, doesPathExist, isURL, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { mkdir, readdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
+import { getOpenAPIFileName, materializeOpenAPI } from "./createWorkspace.js";
+import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
 
 const PAGES_DIRECTORY = "pages";
 const WELCOME_PAGE_FILENAME = "welcome.mdx";
@@ -23,12 +25,18 @@ const WELCOME_PAGE_FILENAME = "welcome.mdx";
 export async function initializeDocs({
     organization,
     taskContext,
-    versionOfCli
+    versionOfCli,
+    openApi
 }: {
     organization: string | undefined;
     taskContext: TaskContext;
     versionOfCli: string;
+    /** Path or URL of an OpenAPI spec to render as the API reference. It is declared in `docs.yml`. */
+    openApi?: string;
 }): Promise<void> {
+    // Resolve first so a bad spec fails before anything is created.
+    const openApiPath = openApi != null ? await resolveOpenApiPath({ openApi, taskContext }) : undefined;
+
     const createDirectoryResponse = await createFernDirectoryAndWorkspace({
         organization,
         versionOfCli,
@@ -43,21 +51,40 @@ export async function initializeDocs({
 
         if (await doesPathExist(docsYmlPath)) {
             taskContext.logger.info(chalk.yellow(`Docs configuration already exists at: ${docsYmlPath}`));
+            if (openApiPath != null) {
+                taskContext.logger.warn(
+                    "The OpenAPI spec was not added because docs.yml already exists. Add it under an `api` entry's `specs` in docs.yml."
+                );
+            }
             return;
         } else {
             try {
-                const hasApi = await hasLoadableApiWorkspace({
-                    absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
-                    taskContext,
-                    versionOfCli
-                });
+                const specPathInDocsYml =
+                    openApiPath != null
+                        ? await copyOpenApiIntoFernDirectory({
+                            openApiPath,
+                            absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
+                            taskContext
+                        })
+                        : undefined;
+                const hasApi =
+                    specPathInDocsYml != null ||
+                    (await hasLoadableApiWorkspace({
+                        absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
+                        taskContext,
+                        versionOfCli
+                    }));
                 if (!hasApi) {
                     await writeWelcomePage({
                         absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
                         organization: createDirectoryResponse.organization
                     });
                 }
-                const docsConfig = getDocsConfig({ organization: createDirectoryResponse.organization, hasApi });
+                const docsConfig = getDocsConfig({
+                    organization: createDirectoryResponse.organization,
+                    hasApi,
+                    specPathInDocsYml
+                });
                 await writeFile(docsYmlPath, yaml.dump(docsConfig));
                 taskContext.logger.info(chalk.green("Created docs configuration"));
                 return;
@@ -69,6 +96,59 @@ export async function initializeDocs({
             }
         }
     }
+}
+
+/** A local path is checked for existence. A URL is downloaded, because `docs.yml` can only reference files. */
+async function resolveOpenApiPath({
+    openApi,
+    taskContext
+}: {
+    openApi: string;
+    taskContext: TaskContext;
+}): Promise<AbsoluteFilePath> {
+    if (isURL(openApi)) {
+        const result = await loadOpenAPIFromUrl({ url: openApi, logger: taskContext.logger });
+        if (result.status === LoadOpenAPIStatus.Failure) {
+            return taskContext.failAndThrow(result.errorMessage, undefined, { code: CliError.Code.NetworkError });
+        }
+        return AbsoluteFilePath.of(result.filePath);
+    }
+
+    const openApiPath = AbsoluteFilePath.of(resolve(cwd(), openApi));
+    if (!(await doesPathExist(openApiPath))) {
+        return taskContext.failAndThrow(`${openApiPath} does not exist`, undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
+    return openApiPath;
+}
+
+/**
+ * Bundles the spec into the fern directory, as `fern init --openapi` does, and returns its path
+ * relative to `docs.yml`. Never overwrites an existing spec there.
+ */
+async function copyOpenApiIntoFernDirectory({
+    openApiPath,
+    absolutePathToFernDirectory,
+    taskContext
+}: {
+    openApiPath: AbsoluteFilePath;
+    absolutePathToFernDirectory: AbsoluteFilePath;
+    taskContext: TaskContext;
+}): Promise<string> {
+    const destination = join(absolutePathToFernDirectory, RelativeFilePath.of(getOpenAPIFileName(openApiPath)));
+    if (await doesPathExist(destination)) {
+        return taskContext.failAndThrow(
+            `${destination} already exists. Remove or rename it, then run this command again.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return materializeOpenAPI({
+        directoryOfWorkspace: absolutePathToFernDirectory,
+        openAPIFilePath: openApiPath,
+        context: taskContext
+    });
 }
 
 /**
@@ -158,20 +238,29 @@ This site was generated by \`fern init --docs\`.
 
 - Edit this page at \`fern/pages/welcome.mdx\`.
 - Add more pages and sections to the \`navigation\` in \`fern/docs.yml\`.
-- Add an API reference by running \`fern init --openapi <path-or-url>\` and adding \`- api: API Reference\` to the navigation.
+- Add an API reference by adding an \`api\` entry with \`specs\` to the \`navigation\` in \`fern/docs.yml\`, or start over with \`fern init --docs --openapi <path-or-url>\`.
 - Preview locally with \`fern docs dev\`, then publish with \`fern generate --docs\`.
 `;
 }
 
 function getDocsConfig({
     organization,
-    hasApi
+    hasApi,
+    specPathInDocsYml
 }: {
     organization: string;
     hasApi: boolean;
+    /** Spec path relative to `docs.yml`. When set, the API reference is built from it. */
+    specPathInDocsYml: string | undefined;
 }): docsYml.RawSchemas.DocsConfiguration {
     const navigation: docsYml.RawSchemas.NavigationItem[] = hasApi
-        ? [{ api: "API Reference", paginated: true }]
+        ? [
+            {
+                api: "API Reference",
+                paginated: true,
+                ...(specPathInDocsYml != null ? { specs: [{ type: "openapi", path: specPathInDocsYml }] } : {})
+            }
+        ]
         : [{ page: "Welcome", path: `${PAGES_DIRECTORY}/${WELCOME_PAGE_FILENAME}` }];
     return {
         instances: [

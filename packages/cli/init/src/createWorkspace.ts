@@ -147,7 +147,7 @@ export async function createDefaultOpenAPIWorkspace({
     });
 }
 
-async function materializeOpenAPI({
+export async function materializeOpenAPI({
     directoryOfWorkspace,
     openAPIFilePath,
     context
@@ -172,7 +172,7 @@ async function materializeOpenAPI({
     return `./${openAPIFileName}`;
 }
 
-function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
+export function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
     return path.extname(openAPIFilePath).toLowerCase() === ".json" ? "openapi.json" : "openapi.yml";
 }
 
