@@ -261,28 +261,54 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(sdkConfigGenerators()).toEqual([{ name: "fernapi/fern-ruby-sdk", version: "2.1.0" }]);
     });
 
+    it("generates a non-files delivery target with --local into a local directory", async () => {
+        await writeSdkConfig([{ language: "typescript", output: { delivery: "zip" } }]);
+
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: undefined,
+            targetNames: ["typescript"],
+            useLocalDocker: true
+        });
+
+        const call = vi.mocked(generateWorkspace).mock.calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
+        expect(call?.workspace.generatorsConfiguration?.groups[0]?.generators[0]?.absolutePathToLocalOutput).toBe(
+            path.join(temporaryDirectory, "generated", "typescript")
+        );
+    });
+
     it.each([
         {
             name: "a pre-cutover generatorVersion",
-            target: { language: "typescript", generatorVersion: "3.99.0", output: { delivery: "files" } },
+            targets: [{ language: "typescript", generatorVersion: "3.99.0", output: { delivery: "files" } }],
             message:
                 "SDK Config target 'typescript' pins generatorVersion 3.99.0, but SDK Config support starts at 4.0.0. Use 4.0.0 or later."
         },
         {
             name: "a language with no local generator",
-            target: { language: "kotlin", output: { delivery: "files" } },
+            targets: [{ language: "kotlin", output: { delivery: "files" } }],
             message:
                 "SDK Config target 'kotlin' cannot run with --local because no local generator exists for it. Remove --local to generate it remotely."
+        },
+        {
+            name: "repeated-language targets",
+            targets: [
+                { language: "typescript", sdkName: "public", output: { delivery: "files" } },
+                { language: "typescript", sdkName: "internal", output: { delivery: "files" } }
+            ],
+            message:
+                "--local runs one SDK Config target per language, but more than one 'typescript' target is selected. Select a single target, or remove --local."
         }
-    ])("rejects $name with --local", async ({ target, message }) => {
-        await writeSdkConfig([target]);
+    ])("rejects $name with --local", async ({ targets, message }) => {
+        await writeSdkConfig(targets);
 
         await expect(
             runGenerate({
                 project,
                 cliContext,
                 groupNames: undefined,
-                targetNames: [target.language],
+                targetNames: [targets[0]?.language ?? ""],
                 useLocalDocker: true
             })
         ).rejects.toBeDefined();
@@ -306,6 +332,28 @@ describe("generateAPIWorkspaces coexistence", () => {
         ).rejects.toBeDefined();
         expect(vi.mocked(cliContext.failAndThrow)).toHaveBeenCalledWith(
             "--local reads sdk-config.yml from the directory of --sdk-config, so it cannot use internal-sdk-config.yml. Rename the file to sdk-config.yml, or remove --local.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+        expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
+    });
+
+    it("rejects an explicit sdk-config.yaml with --local when the local runner would read sdk-config.yml", async () => {
+        const yamlPath = path.join(temporaryDirectory, "sdk-config.yaml");
+        await writeFile(yamlPath, "schemaVersion: sdk-config/v1\n");
+
+        await expect(
+            runGenerate({
+                project,
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                sdkConfigPath: yamlPath,
+                useLocalDocker: true
+            })
+        ).rejects.toBeDefined();
+        expect(vi.mocked(cliContext.failAndThrow)).toHaveBeenCalledWith(
+            "--local reads sdk-config.yml from the directory of --sdk-config, so it cannot use sdk-config.yaml. Rename the file to sdk-config.yml, or remove --local.",
             undefined,
             { code: CliError.Code.ConfigError }
         );

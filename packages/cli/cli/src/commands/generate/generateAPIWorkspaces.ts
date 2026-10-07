@@ -33,7 +33,8 @@ export const GenerationMode = {
 
 export type GenerationMode = Values<typeof GenerationMode>;
 
-const LOCAL_SDK_CONFIG_FILENAMES: ReadonlySet<string> = new Set([SDK_CONFIG_FILENAME, "sdk-config.yaml"]);
+/** The files the local runner reads SDK Config from, in its lookup order. */
+const LOCAL_RUNNER_SDK_CONFIG_FILENAMES: readonly string[] = [SDK_CONFIG_FILENAME, "sdk-config.yaml"];
 
 interface WorkspaceGeneration {
     kind: "legacy" | "sdk-config";
@@ -378,14 +379,18 @@ async function prepareSdkConfigGenerations({
             { code: CliError.Code.ConfigError }
         );
     }
-    // ponytail: the local runner rereads sdk-config.yml from the config's directory, so an
-    // alternate file name cannot reach it. Thread the explicit path through the runner to lift this.
-    if (useLocalDocker && sdkConfigPath != null && !LOCAL_SDK_CONFIG_FILENAMES.has(path.basename(sdkConfigPath))) {
-        return cliContext.failAndThrow(
-            `--local reads ${SDK_CONFIG_FILENAME} from the directory of --sdk-config, so it cannot use ${path.basename(sdkConfigPath)}. Rename the file to ${SDK_CONFIG_FILENAME}, or remove --local.`,
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
+    // ponytail: the local runner rereads sdk-config.yml (else .yaml) from the config's directory, so
+    // any other selected file cannot reach it. Thread the explicit path through the runner to lift this.
+    if (useLocalDocker && sdkConfigPath != null) {
+        const selectedPath = path.resolve(cwd(), sdkConfigPath);
+        const localRunnerPath = await findLocalRunnerSdkConfig(path.dirname(selectedPath));
+        if (selectedPath !== localRunnerPath) {
+            return cliContext.failAndThrow(
+                `--local reads ${path.basename(localRunnerPath ?? SDK_CONFIG_FILENAME)} from the directory of --sdk-config, so it cannot use ${path.basename(selectedPath)}. Rename the file to ${SDK_CONFIG_FILENAME}, or remove --local.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
     }
 
     const prepared: PreparedSdkConfigGeneration[] = [];
@@ -461,6 +466,16 @@ async function prepareSdkConfigGenerations({
         await Promise.all(prepared.map(({ cleanup }) => cleanup()));
         return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
     }
+}
+
+async function findLocalRunnerSdkConfig(directory: string): Promise<string | undefined> {
+    for (const filename of LOCAL_RUNNER_SDK_CONFIG_FILENAMES) {
+        const candidate = path.join(directory, filename);
+        if (await doesPathExist(AbsoluteFilePath.of(candidate), "file")) {
+            return candidate;
+        }
+    }
+    return undefined;
 }
 
 function resolveSourceRoot(

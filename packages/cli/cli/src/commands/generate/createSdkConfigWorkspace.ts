@@ -54,6 +54,16 @@ export async function createSdkConfigWorkspace({
             specs.push(await createSpec({ spec, sdkConfig, sourceDirectory, context, temporaryDirectories }));
         }
         const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(sdkConfig.targets);
+        // ponytail: the local runner picks a target by language, so a repeated language would run the
+        // first target's settings twice. Thread the target index into resolveSdkConfigIr to lift this.
+        const duplicateIndex = duplicateTargetLanguageIndexes.findIndex((index) => index != null);
+        if (local && duplicateIndex !== -1) {
+            return context.failAndThrow(
+                `--local runs one SDK Config target per language, but more than one '${sdkConfig.targets[duplicateIndex]?.language}' target is selected. Select a single target, or remove --local.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
         const group: generatorsYml.GeneratorGroup = {
             groupName: SDK_CONFIG_GROUP,
             audiences:
@@ -70,6 +80,7 @@ export async function createSdkConfigWorkspace({
                     language: target.language,
                     output: target.output ?? sdkConfig.output,
                     configDirectory,
+                    local,
                     sdkConfigTargetIndex: targetIndex,
                     duplicateTargetLanguageIndex: duplicateTargetLanguageIndexes[targetIndex]
                 });
@@ -147,6 +158,7 @@ function createGeneratorInvocation({
     language,
     output,
     configDirectory,
+    local,
     sdkConfigTargetIndex,
     duplicateTargetLanguageIndex
 }: {
@@ -155,9 +167,11 @@ function createGeneratorInvocation({
     language: string;
     output: SdkConfigV1["output"];
     configDirectory: string;
+    local: boolean;
     sdkConfigTargetIndex: number;
     duplicateTargetLanguageIndex: number | undefined;
 }): generatorsYml.GeneratorInvocation {
+    const filesPath = output?.delivery === "files" ? output.path : undefined;
     return {
         name,
         sdkConfigTargetIndex,
@@ -168,13 +182,14 @@ function createGeneratorInvocation({
         containerImage: undefined,
         irVersionOverride: undefined,
         // SDK Config permits files delivery without a path. Keep those outputs separated by
-        // language under a stable directory next to sdk-config.yml.
+        // language under a stable directory next to sdk-config.yml. A local run always generates into
+        // a directory, whatever delivery the target asks for; the adapter warns about the substitution.
         absolutePathToLocalOutput:
-            output?.delivery === "files"
+            output?.delivery === "files" || local
                 ? AbsoluteFilePath.of(
                       path.resolve(
                           configDirectory,
-                          output.path ??
+                          filesPath ??
                               `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}${duplicateTargetLanguageIndex == null ? "" : `-${duplicateTargetLanguageIndex}`}`
                       )
                   )
