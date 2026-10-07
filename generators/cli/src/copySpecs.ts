@@ -1,7 +1,7 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { FernCliProfilesProvisionConfig } from "./customConfig.js";
+import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
 export interface RawSpecsManifestEntry {
@@ -430,7 +430,9 @@ function renderMainRs(args: {
 
 function rustStringLiteral(value: string, label: string): string {
     if (!SAFE_RUST_STRING_LITERAL.test(value)) {
-        throw new Error(`Unsafe ${label} "${value}": contains characters that cannot be interpolated into a Rust string literal.`);
+        throw new Error(
+            `Unsafe ${label} "${value}": contains characters that cannot be interpolated into a Rust string literal.`
+        );
     }
     return `"${value}"`;
 }
