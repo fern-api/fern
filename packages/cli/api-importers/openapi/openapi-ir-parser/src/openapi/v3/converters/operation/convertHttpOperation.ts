@@ -209,7 +209,8 @@ export function convertHttpOperation({
                                 taskContext: context.taskContext,
                                 options: context.options,
                                 source: context.source,
-                                namespace: context.namespace
+                                namespace: context.namespace,
+                                refOccurrences: context.refOccurrences
                             }),
                             requestBreadcrumbs,
                             source,
@@ -268,7 +269,8 @@ export function convertHttpOperation({
                     taskContext: context.taskContext,
                     options: context.options,
                     source: context.source,
-                    namespace: context.namespace
+                    namespace: context.namespace,
+                    refOccurrences: context.refOccurrences
                 }),
                 requestBreadcrumbs,
                 source,

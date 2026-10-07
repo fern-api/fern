@@ -8,7 +8,11 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { DocsDefinitionResolver, type RegisterApiFn } from "../DocsDefinitionResolver.js";
+import {
+    DocsDefinitionResolver,
+    type OnApiRegistrationQueuedFn,
+    type RegisterApiFn
+} from "../DocsDefinitionResolver.js";
 
 describe("DocsDefinitionResolver direct API specs", () => {
     const temporaryDirectories: string[] = [];
@@ -62,6 +66,7 @@ describe("DocsDefinitionResolver direct API specs", () => {
             throw new Error("Expected docs workspace");
         }
         const registerApi = vi.fn<RegisterApiFn>(async () => "payments-api-definition");
+        const onApiRegistrationQueued = vi.fn<OnApiRegistrationQueuedFn>();
         const resolver = new DocsDefinitionResolver({
             domain: "docs.example.com",
             docsWorkspace,
@@ -69,13 +74,24 @@ describe("DocsDefinitionResolver direct API specs", () => {
             apiWorkspaces: [],
             taskContext: context,
             uploadFiles: async () => [],
-            registerApi
+            registerApi,
+            onApiRegistrationQueued
         });
 
         await resolver.resolve();
 
         expect(registerApi).toHaveBeenCalledOnce();
         expect(registerApi.mock.calls[0]?.[0]).toMatchObject({ apiName: "payments" });
+        // Queued during navigation with the same inputs the deferred registration later receives.
+        expect(onApiRegistrationQueued).toHaveBeenCalledOnce();
+        const queued = onApiRegistrationQueued.mock.calls[0]?.[0];
+        const registered = registerApi.mock.calls[0]?.[0];
+        expect(queued?.apiName).toBe(registered?.apiName);
+        expect(queued?.workspace).toBe(registered?.workspace);
+        expect(queued?.snippetsConfig).toBe(registered?.snippetsConfig);
+        expect(onApiRegistrationQueued.mock.invocationCallOrder[0]).toBeLessThan(
+            registerApi.mock.invocationCallOrder[0] ?? 0
+        );
     });
 
     it("registers an API referenced by several sections once per spec file", async () => {

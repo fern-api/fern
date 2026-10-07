@@ -16,13 +16,15 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         taskContext,
         options,
         source,
-        namespace
+        namespace,
+        refOccurrences
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
+        refOccurrences?: Record<string, number>;
     }) {
         super({
             document,
@@ -30,7 +32,8 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
             authHeaders: new Set(),
             options,
             source,
-            namespace
+            namespace,
+            refOccurrences
         });
     }
 

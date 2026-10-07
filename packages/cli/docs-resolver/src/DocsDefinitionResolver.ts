@@ -125,6 +125,13 @@ export type RegisterApiFn = (opts: {
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
 
+/** Called as each API's IR is built during navigation, before its deferred registration. */
+export type OnApiRegistrationQueuedFn = (opts: {
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    apiName?: string;
+    workspace?: FernWorkspace;
+}) => void;
+
 /**
  * A translated API definition for a single locale, produced from an OpenAPI
  * spec under `translations/<locale>/apis/<apiName>/`. The `ir` is structurally
@@ -153,7 +160,7 @@ type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AIChatConfig | undef
 const DEFAULT_API_REGISTRATION_CONCURRENCY = 4;
 
 /** Max APIs registered with FDR at once; override with `FERN_DOCS_API_REGISTRATION_CONCURRENCY` (1 = serial). */
-function getApiRegistrationConcurrency(): number {
+export function getApiRegistrationConcurrency(): number {
     const value = process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY?.trim();
     return value != null && /^[1-9]\d*$/.test(value) ? Number(value) : DEFAULT_API_REGISTRATION_CONCURRENCY;
 }
@@ -179,6 +186,8 @@ export interface DocsDefinitionResolverArgs {
     editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
+    /** Lets the caller start per-API registration prep while the rest of the navigation is built. */
+    onApiRegistrationQueued?: OnApiRegistrationQueuedFn;
     targetAudiences?: string[];
     /**
      * Which `x-twilio.docsVisibility` tiers of OpenAPI specs to include in API references.
@@ -216,6 +225,7 @@ export class DocsDefinitionResolver {
     private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
+    private onApiRegistrationQueued: OnApiRegistrationQueuedFn | undefined;
     private targetAudiences?: string[];
     private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
@@ -241,6 +251,7 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
+        onApiRegistrationQueued,
         targetAudiences,
         docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
@@ -256,6 +267,7 @@ export class DocsDefinitionResolver {
         this.editThisPage = editThisPage;
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
+        this.onApiRegistrationQueued = onApiRegistrationQueued;
         this.targetAudiences = targetAudiences;
         this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
@@ -2269,6 +2281,7 @@ export class DocsDefinitionResolver {
             apiReferenceNode,
             translatedIrsByLocale
         });
+        this.onApiRegistrationQueued?.({ snippetsConfig, apiName: apiNameForRegistration, workspace });
 
         return apiReferenceNode;
     }
