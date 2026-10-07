@@ -173,7 +173,7 @@ describe("generate() — full pipeline integration", () => {
         for (const filePath of mdxFiles) {
             const content = readFileSync(filePath, "utf-8");
             expect(content).toMatch(/^---\n/);
-            expect(content).not.toMatch(/^slug:/m);
+            expect(content).toMatch(/slug:/);
             expect(content).toMatch(/title:/);
             expect(content).toMatch(/\n---\n/);
         }

@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Generated Python library docs now publish under the tab and section they are placed in.
-    `fern docs md generate` no longer writes a `slug` into generated page frontmatter, and pages under a
-    `library:` navigation entry are nested under that entry's URL by module path
-    (e.g. `/api-reference/sdk-reference/validators/regex` instead of `/my-lib/my_lib/validators/regex`).
-    Regenerate library docs to pick up the change; existing library page URLs change.
-  type: fix

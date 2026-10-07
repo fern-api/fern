@@ -64,15 +64,6 @@ interface LibraryNavNode {
     children?: LibraryNavNode[];
 }
 
-/**
- * URL segment for a library nav node. The node's `slug` is its path within the output directory
- * (e.g. `my-lib/my_lib/utils`), not a URL from the docs root, so only its last segment is appended
- * to the parent's URL; recursion through sections keeps the module tree.
- */
-function getLibraryNavNodeUrlSegment(node: LibraryNavNode): string {
-    return node.slug.split("/").pop() ?? node.slug;
-}
-
 interface DocsTranslationsConfig {
     defaultLocale: string;
     translations: string[] | undefined;
@@ -2603,7 +2594,10 @@ export class DocsDefinitionResolver {
                     continue;
                 }
 
-                const slug = parentSlug.apply({ urlSlug: getLibraryNavNodeUrlSegment(node) });
+                const slug = parentSlug.apply({
+                    fullSlug: node.slug.split("/"),
+                    urlSlug: kebabCase(node.title)
+                });
 
                 children.push({
                     id: this.#idgen.get(pageId),
@@ -2622,7 +2616,10 @@ export class DocsDefinitionResolver {
                     availability: undefined
                 });
             } else if (node.type === "section") {
-                const sectionSlug = parentSlug.apply({ urlSlug: getLibraryNavNodeUrlSegment(node) });
+                const sectionSlug = parentSlug.apply({
+                    fullSlug: node.slug.split("/"),
+                    urlSlug: kebabCase(node.title)
+                });
                 const sectionId = this.#idgen.get(`library-section/${node.slug}`);
 
                 const overviewPageId =

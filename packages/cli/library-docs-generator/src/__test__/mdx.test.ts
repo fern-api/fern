@@ -5,7 +5,8 @@ import {
     escapeMdxPreservingCodeBlocks,
     escapeTableCell,
     formatTypeAnnotation,
-    generateAnchorId
+    generateAnchorId,
+    withSlugPrefix
 } from "../utils/mdx";
 
 describe("escapeMdx", () => {
@@ -171,12 +172,14 @@ describe("formatTypeAnnotation", () => {
 });
 
 describe("createFrontmatter", () => {
-    it("creates frontmatter without a title", () => {
-        expect(createFrontmatter()).toBe("---\nlayout: overview\n---");
+    it("creates frontmatter with slug only", () => {
+        const result = createFrontmatter("api-reference");
+        expect(result).toBe("---\nlayout: overview\nslug: api-reference\n---");
     });
 
-    it("creates frontmatter with a title and no slug", () => {
-        expect(createFrontmatter("API Reference")).toBe("---\nlayout: overview\ntitle: API Reference\n---");
+    it("creates frontmatter with slug and title", () => {
+        const result = createFrontmatter("api-reference", "API Reference");
+        expect(result).toBe("---\nlayout: overview\nslug: api-reference\ntitle: API Reference\n---");
     });
 });
 
@@ -213,5 +216,18 @@ describe("escapeTableCell", () => {
 
     it("escapes pipes, newlines, and JSX chars together", () => {
         expect(escapeTableCell("<a> | b\n{c}")).toBe("&lt;a&gt; \\| b &#123;c&#125;");
+    });
+});
+
+describe("withSlugPrefix", () => {
+    it("returns the slug unchanged when no prefix is given", () => {
+        expect(withSlugPrefix("lib/pkg", undefined)).toBe("lib/pkg");
+        expect(withSlugPrefix("lib/pkg", "")).toBe("lib/pkg");
+        expect(withSlugPrefix("lib/pkg", "/")).toBe("lib/pkg");
+    });
+
+    it("prepends the prefix, ignoring leading and trailing slashes", () => {
+        expect(withSlugPrefix("lib/pkg", "api-reference")).toBe("api-reference/lib/pkg");
+        expect(withSlugPrefix("lib/pkg", "/reference/python/")).toBe("reference/python/lib/pkg");
     });
 });

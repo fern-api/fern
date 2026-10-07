@@ -17,7 +17,7 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { createFrontmatter, escapeTableCell, generateAnchorId } from "../utils/mdx.js";
+import { createFrontmatter, escapeTableCell, generateAnchorId, withSlugPrefix } from "../utils/mdx.js";
 import { moduleHasPage, moduleIsPackage } from "../utils/modulePages.js";
 import {
     extractLinksFromTypes,
@@ -47,7 +47,9 @@ function renderSubmodulesSection(
     const modules = linkable.filter((sub) => !moduleIsPackage(sub));
 
     const renderItem = (sub: FdrAPI.libraryDocs.PythonModuleIr): string => {
-        const link = ctx.linkToModuleFile?.(sub.path) ?? `/${ctx.baseSlug}/${modulePath}/${sub.name}`;
+        const link =
+            ctx.linkToModuleFile?.(sub.path) ??
+            `/${withSlugPrefix(`${ctx.baseSlug}/${modulePath}/${sub.name}`, ctx.slugPrefix)}`;
         return `- **[\`${sub.path}\`](${link})**`;
     };
 
@@ -118,10 +120,10 @@ export function renderModulePage(
     const lines: string[] = [];
 
     const modulePath = parentPath ? `${parentPath}/${module.name}` : module.name;
+    const slug = withSlugPrefix(`${ctx.baseSlug}/${modulePath}`, ctx.slugPrefix);
 
-    // No frontmatter slug: a slug there would be absolute from the docs root and skip the
-    // tab/section the page is mounted under, so the URL comes from the navigation instead.
-    lines.push(createFrontmatter(module.path), "");
+    // Frontmatter (includes title, so no separate H1 needed)
+    lines.push(createFrontmatter(slug, module.path), "");
 
     // Module docstring
     if (module.docstring) {

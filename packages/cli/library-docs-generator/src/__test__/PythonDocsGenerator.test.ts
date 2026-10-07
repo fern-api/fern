@@ -210,7 +210,7 @@ describe("generate()", () => {
         for (const filePath of mdxFiles) {
             const content = readFileSync(filePath, "utf-8");
             expect(content).toMatch(/^---\n/);
-            expect(content).not.toMatch(/\nslug:/);
+            expect(content).toMatch(/\nslug:/);
             expect(content).toMatch(/\ntitle:/);
         }
     });
@@ -564,5 +564,33 @@ describe("generate()", () => {
         // Sibling files should NOT exist
         expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(false);
         expect(existsSync(join(tmpDir, "ref/pkg/adapters.mdx"))).toBe(false);
+    });
+
+    it("slugPrefix prefixes frontmatter slugs without changing file paths, page IDs, or navigation", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "utils",
+                        path: "pkg.utils",
+                        functions: [makeFunction({ name: "g", path: "pkg.utils.g" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg", slugPrefix: "api-reference" });
+        const unprefixed = generate({ ir, outputDir: join(tmpDir, "unprefixed"), slug: "ref", title: "Pkg" });
+
+        expect(result.rootPageId).toBe("ref/pkg/index.mdx");
+        expect(result.navigation).toEqual(unprefixed.navigation);
+        const rootPage = readFileSync(join(tmpDir, "ref/pkg/index.mdx"), "utf-8");
+        expect(rootPage).toContain("slug: api-reference/ref/pkg\n");
+        expect(rootPage).toContain("](./utils.mdx)");
+        const leafPage = readFileSync(join(tmpDir, "ref/pkg/utils.mdx"), "utf-8");
+        expect(leafPage).toContain("slug: api-reference/ref/pkg/utils\n");
     });
 });
