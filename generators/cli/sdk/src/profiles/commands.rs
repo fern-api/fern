@@ -744,7 +744,12 @@ async fn handle_create(
     //
     // An explicit `--credential` still wins: sharing a slot deliberately is a
     // supported thing to ask for.
-    let provision = matches.try_get_one::<bool>("provision").ok().flatten() == Some(&true);
+    let provision = matches
+        .try_get_one::<bool>("provision")
+        .ok()
+        .flatten()
+        .copied()
+        .unwrap_or(false);
     if (matches.get_flag("with-token") || matches.get_flag("from-env") || provision)
         && matches.get_one::<String>("credential").is_none()
     {
@@ -799,13 +804,37 @@ async fn handle_create(
             )),
         );
     }
-    if provision {
+    let minted = if provision {
         let minted = provision_remote_credential(matches, ctx, &resolved).await?;
+        entry.credential_parameters = minted.credential_parameters.clone();
+        Some(minted)
+    } else {
+        None
+    };
+
+    store.upsert(&entry);
+    if matches.get_flag("use") {
+        store.set_active(&name);
+    }
+    store.save()?;
+
+    // The profile (with the key's identity) is on disk before the secret goes
+    // into the keyring: if this write fails the key is still reachable
+    // through `profiles remove --revoke` rather than orphaned.
+    if let Some(minted) = minted {
         let scheme = minted.scheme;
         let account =
             super::keyring_account_for(&scheme, resolved.credential.as_deref().unwrap_or(&name));
-        active_store().set(ctx.cli_name, &account, &minted.stored)?;
-        entry.credential_parameters = minted.credential_parameters;
+        active_store().set(ctx.cli_name, &account, &minted.stored).map_err(|e| {
+            CliError::Validation(format!(
+                "provisioned a credential{} but could not store it: {e}.                  Run `profiles remove {name} --revoke` to revoke it.",
+                minted
+                    .identity
+                    .as_deref()
+                    .map(|id| format!(" ({id})"))
+                    .unwrap_or_default(),
+            ))
+        })?;
         let _ = writeln!(
             stderr,
             "{}",
@@ -820,12 +849,6 @@ async fn handle_create(
             )),
         );
     }
-
-    store.upsert(&entry);
-    if matches.get_flag("use") {
-        store.set_active(&name);
-    }
-    store.save()?;
 
     let verb = if existing_was_updated(matches) {
         "Updated"
@@ -2074,13 +2097,12 @@ async fn provision_remote_credential(
     };
 
     let mut credential_parameters = BTreeMap::new();
+    let mut identity = None;
     for (parameter, response_field) in &op.revoke_parameters {
-        credential_parameters.insert(parameter.clone(), read(response_field)?);
+        let value = read(response_field)?;
+        identity.get_or_insert_with(|| value.clone());
+        credential_parameters.insert(parameter.clone(), value);
     }
-    let identity = op
-        .revoke_parameters
-        .first()
-        .and_then(|(parameter, _)| credential_parameters.get(parameter).cloned());
     Ok(MintedCredential {
         scheme,
         stored,

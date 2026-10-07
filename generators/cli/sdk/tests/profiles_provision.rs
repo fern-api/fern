@@ -306,3 +306,63 @@ async fn a_response_missing_a_mapped_field_stores_nothing() {
     .await
     .unwrap();
 }
+
+#[tokio::test]
+#[serial]
+async fn a_failed_provisioning_request_stores_nothing() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(401).set_body_json(serde_json::json!({
+            "code": 20003,
+            "message": "Authentication Error - invalid username"
+        })))
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let (code, output) = run(
+                true,
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--set",
+                    "AccountSid=ACparent",
+                    "--provision",
+                ],
+            );
+            assert_ne!(code, 0, "{output}");
+            assert!(
+                output.contains("20003") || output.contains("401"),
+                "the server error should surface: {output}"
+            );
+            let (_, listed) = run(true, &["pv", "profiles", "list", "--format", "json"]);
+            assert!(
+                !listed.contains("prod"),
+                "a profile whose key was never minted must not be written: {listed}"
+            );
+        });
+    })
+    .await
+    .unwrap();
+}
+
+#[test]
+#[serial]
+fn provision_conflicts_with_the_other_credential_sources() {
+    for other in ["--with-token", "--from-env"] {
+        let (code, output) = run(
+            true,
+            &["pv", "profiles", "create", "prod", "--provision", other],
+        );
+        assert_ne!(code, 0, "{other}: {output}");
+        assert!(
+            output.contains("cannot be used with"),
+            "{other} should be rejected by clap: {output}"
+        );
+    }
+}
