@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --docs` no longer fails the whole publish when the dynamic snippets IR for one
+    SDK language can't be built (for example, an example that doesn't match its schema). The CLI
+    now warns, skips snippets for that language, and publishes the rest of the docs.
+  type: fix
