@@ -1174,3 +1174,9 @@ def test_discriminated_union_unknown_or_missing_discriminant_keeps_data() -> Non
 
 def test_undiscriminated_union_no_match_keeps_data() -> None:
     assert construct_type(type_=Union[int, Shape_Square], object_={"foo": "bar"}) == {"foo": "bar"}  # type: ignore
+
+
+def test_undiscriminated_union_later_member_still_matches() -> None:
+    result = construct_type(type_=Union[int, Shape_Square], object_={"type": "square", "length": 2.0})  # type: ignore
+    assert isinstance(result, Shape_Square)
+    assert result.length == 2.0
