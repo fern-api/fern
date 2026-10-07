@@ -259,18 +259,24 @@ pub async fn execute_method(
         parse_and_validate_inputs(doc, method, params_json, body_json, base_url_override)?;
 
     if dry_run {
-        let dry_run_info = json!({
+        let mut dry_run_info = json!({
             "dry_run": true,
             "url": input.full_url,
             "method": "POST",
             "body": input.body,
         });
+        let unspecified = EndpointAuthMetadata::unspecified();
+        dry_run_info["auth"] = crate::auth::dry_run::dry_run_auth_info(
+            auth_provider.as_ref(),
+            &unspecified,
+            &unspecified,
+        );
         if capture_output {
             return Ok(Some(dry_run_info));
         }
         let mut out = std::io::stdout().lock();
         pipeline
-            .emit(&mut out, &dry_run_info, false, true)
+            .emit_record(&mut out, &dry_run_info)
             .context("Failed to write output")?;
         return Ok(None);
     }
@@ -967,6 +973,61 @@ mod tests {
         assert_eq!(value["dry_run"], json!(true));
         assert_eq!(value["url"], json!("https://example.com/graphql"));
         assert_eq!(value["method"], json!("POST"));
+    }
+
+    #[tokio::test]
+    async fn test_execute_method_dry_run_reports_credential_status() {
+        let (doc, method) = minimal_ping_doc_and_method();
+        let pagination = PaginationConfig::default();
+        let pipeline = crate::formatter::OutputPipeline::default();
+        let http_config = crate::http::HttpConfig::new("test").unwrap();
+        let retry_policy = crate::http::RetryPolicy::default();
+
+        let value = execute_method(
+            &doc,
+            &method,
+            None,
+            None,
+            &crate::auth::test_helpers::bearer("BearerAuth", "tok-secret-gql"),
+            true,
+            &pagination,
+            &pipeline,
+            true,
+            None,
+            &http_config,
+            &retry_policy,
+            false,
+            false,
+        )
+        .await
+        .expect("dry-run should succeed")
+        .expect("dry-run with capture_output should return Some");
+        assert_eq!(value["auth"]["credentials"], json!("resolved"), "{value}");
+        assert!(
+            !value.to_string().contains("tok-secret-gql"),
+            "credential values must never appear in dry-run output: {value}"
+        );
+
+        let value = execute_method(
+            &doc,
+            &method,
+            None,
+            None,
+            &crate::auth::no_auth_provider(),
+            true,
+            &pagination,
+            &pipeline,
+            true,
+            None,
+            &http_config,
+            &retry_policy,
+            false,
+            false,
+        )
+        .await
+        .expect("dry-run should succeed")
+        .expect("dry-run with capture_output should return Some");
+        assert_eq!(value["auth"]["credentials"], json!("not_required"), "{value}");
     }
 
     // -----------------------------------------------------------------------
