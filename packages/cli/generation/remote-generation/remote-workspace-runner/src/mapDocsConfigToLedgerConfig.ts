@@ -221,15 +221,15 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
     // llmsTxt / llmsFullTxt are intentionally dropped — the ledger contract
     // serves these well-known files by convention via file artifact lookup
     // (see LedgerConfigSchema doc comment in docs-ledger/contract.ts).
-    // `robotsTxtOnInstanceUrl` (docs.yml `experimental.robots-txt-on-instance-url`) is
-    // not in the published fdr-sdk types yet, so it is read and forwarded untyped.
-    const { robotsTxtOnInstanceUrl } = agents as { robotsTxtOnInstanceUrl?: boolean };
-    return {
+    const mapped: NonNullable<LedgerConfig["agents"]> = {
         pageDirective: agents.pageDirective,
         pageDescriptionSource: agents.pageDescriptionSource,
-        siteDescription: agents.siteDescription,
-        ...(robotsTxtOnInstanceUrl != null && { robotsTxtOnInstanceUrl })
-    } as LedgerConfig["agents"];
+        siteDescription: agents.siteDescription
+    };
+    // TODO: drop this untyped read once the published fdr-sdk types include
+    // `agents.robotsTxtOnInstanceUrl` (docs.yml `experimental.robots-txt-on-instance-url`).
+    const { robotsTxtOnInstanceUrl } = agents as { robotsTxtOnInstanceUrl?: boolean };
+    return robotsTxtOnInstanceUrl != null ? Object.assign(mapped, { robotsTxtOnInstanceUrl }) : mapped;
 }
 
 function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig["integrations"] {
