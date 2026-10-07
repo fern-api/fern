@@ -14,7 +14,7 @@ import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "./init.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
-const SDK_CONFIG_ENV = { FERN_USE_SDK_GEN_API: "true" };
+const SDK_CONFIG_ENV = { FERN_USE_SDK_CONFIG: "true" };
 
 describe("fern init", () => {
     it.concurrent("no existing fern directory", async ({ expect, signal }) => {
@@ -22,6 +22,14 @@ describe("fern init", () => {
         expect(
             await getDirectoryContentsForSnapshot(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
         ).toMatchSnapshot();
+    }, 180_000);
+
+    it.concurrent("does not use the SDK Gen API flag for SDK Config initialization", async ({ expect, signal }) => {
+        const pathOfDirectory = await init({ env: { FERN_USE_SDK_GEN_API: "true" }, signal });
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("generators.yml")))).toBe(true);
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("sdk-config.yml")))).toBe(false);
     }, 180_000);
 
     it.concurrent("no existing fern directory with fern definition", async ({ expect, signal }) => {
@@ -247,7 +255,10 @@ describe("fern init", () => {
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory, { skipBinaryContents: true })).toMatchSnapshot();
     }, 180_000);
 
-    it.concurrent("initializes an SDK Config API when SDK generation is enabled", async ({ expect, signal }) => {
+    it.concurrent("initializes an SDK Config API when SDK Config initialization is enabled", async ({
+        expect,
+        signal
+    }) => {
         const pathOfDirectory = await init({ env: SDK_CONFIG_ENV, signal });
         const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
 
@@ -302,7 +313,7 @@ describe("fern init", () => {
 
         await init({
             directory: pathOfDirectory,
-            env: { FERN_USE_SDK_GEN_API: "false" },
+            env: { FERN_USE_SDK_CONFIG: "false" },
             signal
         });
         await runFernCli(["check"], {
