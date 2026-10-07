@@ -111,18 +111,21 @@ describe("initializeDocs", () => {
         expect(await existsInProject("fern")).toBe(false);
     });
 
-    it("does not overwrite an existing fern/openapi.json", async () => {
+    it("replaces an existing fern/openapi.json, like fern init --openapi does", async () => {
         await mkdir(path.join(projectDirectory, "fern"));
         await writeFile(
             path.join(projectDirectory, "fern", "fern.config.json"),
             JSON.stringify({ organization: "acme", version: "0.0.0" })
         );
-        await writeFile(path.join(projectDirectory, "fern", "openapi.json"), "existing");
+        await writeFile(path.join(projectDirectory, "fern", "openapi.json"), "{}");
 
-        await expect(initialize(await writeSpec())).rejects.toBeDefined();
+        await initialize(await writeSpec());
 
-        expect(await readFile(path.join(projectDirectory, "fern", "openapi.json"), "utf8")).toBe("existing");
-        expect(await existsInProject("fern", "docs.yml")).toBe(false);
+        const copiedSpec = JSON.parse(await readFile(path.join(projectDirectory, "fern", "openapi.json"), "utf8"));
+        expect(copiedSpec.paths["/pets"].get.operationId).toBe("listPets");
+        expect(await readDocsYml()).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.json" }] }]
+        });
     });
 
     it("keeps the welcome page and no api entry when no spec is given", async () => {

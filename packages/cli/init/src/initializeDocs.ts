@@ -16,7 +16,7 @@ import chalk from "chalk";
 import { mkdir, readdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
-import { getOpenAPIFileName, materializeOpenAPI } from "./createWorkspace.js";
+import { materializeOpenAPI } from "./createWorkspace.js";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
 
 const PAGES_DIRECTORY = "pages";
@@ -59,13 +59,14 @@ export async function initializeDocs({
             return;
         } else {
             try {
+                // Same copy `fern init --openapi` makes, so both inits share one spec file.
                 const specPathInDocsYml =
                     openApiPath != null
-                        ? await copyOpenApiIntoFernDirectory({
-                            openApiPath,
-                            absolutePathToFernDirectory: createDirectoryResponse.absolutePathToFernDirectory,
-                            taskContext
-                        })
+                        ? await materializeOpenAPI({
+                              directoryOfWorkspace: createDirectoryResponse.absolutePathToFernDirectory,
+                              openAPIFilePath: openApiPath,
+                              context: taskContext
+                          })
                         : undefined;
                 const hasApi =
                     specPathInDocsYml != null ||
@@ -121,34 +122,6 @@ async function resolveOpenApiPath({
         });
     }
     return openApiPath;
-}
-
-/**
- * Bundles the spec into the fern directory, as `fern init --openapi` does, and returns its path
- * relative to `docs.yml`. Never overwrites an existing spec there.
- */
-async function copyOpenApiIntoFernDirectory({
-    openApiPath,
-    absolutePathToFernDirectory,
-    taskContext
-}: {
-    openApiPath: AbsoluteFilePath;
-    absolutePathToFernDirectory: AbsoluteFilePath;
-    taskContext: TaskContext;
-}): Promise<string> {
-    const destination = join(absolutePathToFernDirectory, RelativeFilePath.of(getOpenAPIFileName(openApiPath)));
-    if (await doesPathExist(destination)) {
-        return taskContext.failAndThrow(
-            `${destination} already exists. Remove or rename it, then run this command again.`,
-            undefined,
-            { code: CliError.Code.ConfigError }
-        );
-    }
-    return materializeOpenAPI({
-        directoryOfWorkspace: absolutePathToFernDirectory,
-        openAPIFilePath: openApiPath,
-        context: taskContext
-    });
 }
 
 /**
@@ -255,12 +228,12 @@ function getDocsConfig({
 }): docsYml.RawSchemas.DocsConfiguration {
     const navigation: docsYml.RawSchemas.NavigationItem[] = hasApi
         ? [
-            {
-                api: "API Reference",
-                paginated: true,
-                ...(specPathInDocsYml != null ? { specs: [{ type: "openapi", path: specPathInDocsYml }] } : {})
-            }
-        ]
+              {
+                  api: "API Reference",
+                  paginated: true,
+                  ...(specPathInDocsYml != null ? { specs: [{ type: "openapi", path: specPathInDocsYml }] } : {})
+              }
+          ]
         : [{ page: "Welcome", path: `${PAGES_DIRECTORY}/${WELCOME_PAGE_FILENAME}` }];
     return {
         instances: [

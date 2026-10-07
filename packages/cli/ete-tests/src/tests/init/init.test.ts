@@ -255,6 +255,40 @@ describe("fern init", () => {
         expect(docsDefinition).toMatch(/"type":\s*"endpoint"/);
     }, 180_000);
 
+    it.concurrent("init --openapi then init --docs --openapi share one spec file in SDK Gen API mode", async ({
+        expect,
+        signal
+    }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+        await copyFile(
+            join(FIXTURES_DIR, RelativeFilePath.of("openapi"), RelativeFilePath.of("petstore-openapi.yml")),
+            join(pathOfDirectory, RelativeFilePath.of("petstore-openapi.yml"))
+        );
+
+        await init({
+            additionalArgs: [{ name: "--openapi", value: "petstore-openapi.yml" }],
+            directory: pathOfDirectory,
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+        await runFernCli(["init", "--docs", "--organization", "fern", "--openapi", "petstore-openapi.yml"], {
+            cwd: pathOfDirectory,
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+
+        const readYaml = async (fileName: string): Promise<unknown> =>
+            yaml.load(await readFile(join(fernDirectory, RelativeFilePath.of(fileName)), "utf8"));
+        expect(await readYaml("docs.yml")).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.yml" }] }]
+        });
+        expect(await readYaml("sdk-config.yml")).toMatchObject({
+            source: { specs: [{ path: "./openapi.yml" }] }
+        });
+    }, 180_000);
+
     it.concurrent("check fails when docs reference an api that does not exist", async ({ expect, signal }) => {
         const tmpDir = await tmp.dir();
         const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);

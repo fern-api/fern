@@ -172,7 +172,7 @@ export async function materializeOpenAPI({
     return `./${openAPIFileName}`;
 }
 
-export function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
+function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
     return path.extname(openAPIFilePath).toLowerCase() === ".json" ? "openapi.json" : "openapi.yml";
 }
 
