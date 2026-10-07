@@ -71,7 +71,11 @@ export function runDynamicIrWorkerThread(): void {
                 logs
             };
         } catch (error) {
-            response = { id: request.id, ok: false, error: error instanceof Error ? error.message : String(error) };
+            response = {
+                id: request.id,
+                ok: false,
+                error: error instanceof Error ? (error.stack ?? error.message) : String(error)
+            };
         }
         port.postMessage(response);
     });
@@ -115,9 +119,8 @@ export function stripFunctions<T>(value: T, seen = new Map<object, unknown>()): 
     if (value == null || typeof value !== "object") {
         return value;
     }
-    const existing = seen.get(value);
-    if (existing != null) {
-        return existing as T;
+    if (seen.has(value)) {
+        return seen.get(value) as T;
     }
     if (Array.isArray(value)) {
         const copy: unknown[] = [];
@@ -265,7 +268,11 @@ export class DynamicIrWorkerPool {
         const worker = this.createWorker();
         this.workerCount++;
         worker.unref();
+        let disposed = false;
         worker.on("message", (response: JobResponse) => {
+            if (disposed) {
+                return;
+            }
             const job = this.running.get(worker);
             this.running.delete(worker);
             this.idle.push(worker);
@@ -279,9 +286,11 @@ export class DynamicIrWorkerPool {
             this.dispatch();
         });
         const onFailure = (error: Error) => {
-            if (!this.removeWorker(worker)) {
+            if (disposed) {
                 return;
             }
+            disposed = true;
+            this.removeWorker(worker);
             this.running.get(worker)?.reject(error);
             this.running.delete(worker);
             if (!this.terminated) {
@@ -293,15 +302,12 @@ export class DynamicIrWorkerPool {
         return worker;
     }
 
-    /** Forgets a crashed worker so the next job spawns a replacement; false if already removed. */
-    private removeWorker(worker: Worker): boolean {
+    /** Forgets a crashed worker so the next job spawns a replacement. */
+    private removeWorker(worker: Worker): void {
         const idleIndex = this.idle.indexOf(worker);
         if (idleIndex !== -1) {
             this.idle.splice(idleIndex, 1);
-        } else if (!this.running.has(worker)) {
-            return false;
         }
         this.workerCount--;
-        return true;
     }
 }
