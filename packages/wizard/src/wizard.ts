@@ -17,9 +17,8 @@ import { scaffoldDocsSite } from "./docs-site/scaffold";
 import { recommend } from "./recommend";
 import { showSplash } from "./splash";
 import { type Command, formatCommand, runCommand } from "./steps/commands";
-import { ensureDocsSkillInSharedDirectory } from "./steps/docs-skill";
 import { agentHandoffFiles, writeAgentHandoff } from "./steps/handoff";
-import type { ActionId, ActionPlan, ActionPlanResult, ApiSpec, Detection, WizardFlags } from "./types";
+import type { ActionId, ActionPlan, ActionPlanResult, Agent, ApiSpec, Detection, WizardFlags } from "./types";
 import { formatAction, printNextSteps, printPlan, printRecommendations } from "./ui";
 
 interface ActionAnswers {
@@ -29,6 +28,16 @@ interface ActionAnswers {
 interface SpecAnswers {
     specPath: string;
 }
+
+type DocsSkillTarget = Exclude<Agent, "vscode"> | "github-copilot";
+
+const DOCS_SKILL_PATHS: Record<DocsSkillTarget, string> = {
+    "claude-code": ".claude/skills/fern-docs/",
+    cursor: ".agents/skills/fern-docs/",
+    codex: ".agents/skills/fern-docs/",
+    "github-copilot": ".agents/skills/fern-docs/",
+    windsurf: ".windsurf/skills/fern-docs/"
+};
 
 const ORG_PLACEHOLDER = "<your-org>";
 
@@ -114,8 +123,12 @@ export function shouldOfferDocsSkill(
     return !skillAlreadyInstalled && (docsInitializationOffered || docsSiteAlreadyExists);
 }
 
-function docsSkillTargets(detection: Detection): string[] {
-    const targets =
+export function shouldSelectDocsSkill(selected: ActionPlan[], detection: Detection): boolean {
+    return detection.fernProject.docsConfigExists === true || selected.some((action) => action.id === "init-docs");
+}
+
+function docsSkillTargets(detection: Detection): DocsSkillTarget[] {
+    const targets: DocsSkillTarget[] =
         detection.agents.length === 0
             ? ["claude-code", "cursor", "codex"]
             : detection.agents.map((agent) => {
@@ -139,11 +152,7 @@ function docsSkillAction(detection: Detection): ActionPlan {
         description:
             "Installs the fern-docs skill from fern-api/skills so your coding agent follows Fern's conventions for docs.yml, navigation, components, changelogs, redirects, and access control. Commit the files so your team gets it too.",
         commands: [command],
-        files: [
-            ".agents/skills/fern-docs/",
-            "skills-lock.json",
-            ...(targets.includes("claude-code") ? [".claude/skills/fern-docs"] : [])
-        ],
+        files: [...new Set(targets.map((target) => DOCS_SKILL_PATHS[target])), "skills-lock.json"],
         selectedByDefault: true
     };
 }
@@ -247,6 +256,10 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     let selected = flags.yes
         ? actions.filter((action) => action.selectedByDefault)
         : await chooseActions(actions, detection, flags);
+    const shouldSelectSkill = shouldSelectDocsSkill(selected, detection);
+    if (!shouldSelectSkill) {
+        selected = selected.filter((action) => action.id !== "docs-skills");
+    }
     const validationError = validateFlags(selected, flags);
     if (validationError !== undefined) {
         console.error(validationError);
@@ -278,7 +291,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         );
     }
 
-    if (!flags.yes) {
+    if (!flags.yes && shouldSelectSkill) {
         const skillAction = actions.find((action) => action.id === "docs-skills");
         if (skillAction !== undefined) {
             const answer = await inquirer.prompt<{ addDocsSkill: boolean }>([
@@ -461,7 +474,6 @@ async function executeAction(
     }
     if (id === "docs-skills") {
         await runCommand(docsSkillCommand(detection), dir);
-        await ensureDocsSkillInSharedDirectory(dir, docsSkillTargets(detection));
         return;
     }
     let firstError: unknown;

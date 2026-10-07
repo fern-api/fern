@@ -8,6 +8,7 @@ import {
     pickDefaultSpec,
     planActions,
     shouldOfferDocsSkill,
+    shouldSelectDocsSkill,
     validateFlags
 } from "../wizard";
 
@@ -73,24 +74,52 @@ describe("action planning", () => {
         ).not.toContain("docs-skills");
     });
 
-    it("uses the default and detected agent targets for the docs-writing skill", () => {
+    it("reports skills installer output paths for each docs-writing skill target", () => {
         const defaultSkill = planActions(baseDetection, flags).actions.find((action) => action.id === "docs-skills");
         expect(defaultSkill?.commands).toEqual([
             "npx -y skills@1.6.0 add fern-api/skills --skill fern-docs -a claude-code cursor codex -y"
         ]);
         expect(defaultSkill?.files).toEqual([
+            ".claude/skills/fern-docs/",
             ".agents/skills/fern-docs/",
-            "skills-lock.json",
-            ".claude/skills/fern-docs"
+            "skills-lock.json"
         ]);
 
-        const detectedSkill = planActions({ ...baseDetection, agents: ["vscode", "claude-code"] }, flags).actions.find(
-            (action) => action.id === "docs-skills"
-        );
-        expect(detectedSkill?.commands).toEqual([
-            "npx -y skills@1.6.0 add fern-api/skills --skill fern-docs -a github-copilot claude-code -y"
-        ]);
-        expect(detectedSkill?.files).toContain(".claude/skills/fern-docs");
+        const targets: Array<{
+            agent: Detection["agents"][number];
+            commandTarget: string;
+            files: string[];
+        }> = [
+            { agent: "claude-code", commandTarget: "claude-code", files: [".claude/skills/fern-docs/"] },
+            { agent: "cursor", commandTarget: "cursor", files: [".agents/skills/fern-docs/"] },
+            { agent: "codex", commandTarget: "codex", files: [".agents/skills/fern-docs/"] },
+            { agent: "vscode", commandTarget: "github-copilot", files: [".agents/skills/fern-docs/"] },
+            { agent: "windsurf", commandTarget: "windsurf", files: [".windsurf/skills/fern-docs/"] }
+        ];
+        for (const target of targets) {
+            const skill = planActions({ ...baseDetection, agents: [target.agent] }, flags).actions.find(
+                (action) => action.id === "docs-skills"
+            );
+            expect(skill?.commands).toEqual([
+                `npx -y skills@1.6.0 add fern-api/skills --skill fern-docs -a ${target.commandTarget} -y`
+            ]);
+            expect(skill?.files).toEqual([...target.files, "skills-lock.json"]);
+        }
+    });
+
+    it("selects the docs-writing skill only when docs setup is selected or already exists", () => {
+        const actions = planActions(baseDetection, flags).actions;
+        const skill = actions.filter((action) => action.id === "docs-skills");
+        const initDocs = actions.filter((action) => action.id === "init-docs");
+
+        expect(shouldSelectDocsSkill(skill, baseDetection)).toBe(false);
+        expect(shouldSelectDocsSkill([...skill, ...initDocs], baseDetection)).toBe(true);
+        expect(
+            shouldSelectDocsSkill(skill, {
+                ...baseDetection,
+                fernProject: { exists: true, docsConfigExists: true }
+            })
+        ).toBe(true);
     });
 
     it("does not print notes while planning actions", () => {
