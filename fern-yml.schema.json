@@ -1758,6 +1758,17 @@
             "basepath-aware": {
               "type": "boolean"
             },
+            "robots-txt-on-instance-url": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt."
+            },
             "external-sitemaps": {
               "type": "array",
               "items": {
