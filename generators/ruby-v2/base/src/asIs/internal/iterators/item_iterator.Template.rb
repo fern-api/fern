@@ -5,28 +5,28 @@ module <%= gem_namespace %>
     class ItemIterator
       include Enumerable
 
-      # The raw HTTP response from the most recent page fetched while reading items
-      # (or, if no items have been read yet, from the most recent page read via `pages`).
+      # The raw HTTP response from the most recent page request made by this pager or its `pages`.
       # @return [Net::HTTPResponse, nil]
-      def http_response
-        @item_pages&.http_response || @page_iterator&.http_response
-      end
+      attr_reader :http_response
 
       # Iterates over each item returned by the API, starting again from the first page on every call.
-      # This also resets any progress made with `next_element`.
+      # Each loop is independent of other loops and of `next_element`.
       #
       # @param block [Proc] The block which each retrieved item is yielded to.
       # @return [NilClass, Enumerator] An Enumerator when no block is given.
-      def each(&block)
+      def each(&)
         return enum_for(:each) unless block_given?
 
-        rewind
-        while (item = next_element)
-          block.call(item)
+        # Each loop reads through its own copy of the page stream, so repeated or nested loops never
+        # share a position with each other or with `next_element`.
+        pass = @item_pages.dup.tap(&:rewind)
+        while (page = pass.next_page)
+          (page.send(@item_field) || []).each(&)
         end
+        nil
       end
 
-      # Resets item-by-item iteration (`next_element` / `next?`) to the first page.
+      # Resets manual item-by-item iteration (`next_element` / `next?`) to the first page.
       #
       # @return [NilClass]
       def rewind
@@ -59,6 +59,15 @@ module <%= gem_namespace %>
       end
 
       private
+
+      # Wraps the page-fetching block so that `http_response` reflects the most recent request.
+      def track_http_responses(get_page)
+        proc do |*args|
+          result = get_page.call(*args)
+          @http_response = result[1] if result.is_a?(Array)
+          result
+        end
+      end
 
       def cached_page_items
         return [] unless @page

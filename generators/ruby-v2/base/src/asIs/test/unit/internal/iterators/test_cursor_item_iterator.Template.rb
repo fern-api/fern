@@ -255,4 +255,49 @@ class CursorItemIteratorTest < Minitest::Test
     assert failed
     assert_equal NUMBERS, items
   end
+
+  def test_nested_loops_do_not_share_a_position
+    iterator = make_iterator(initial_cursor: 0)
+    seen = []
+    iterator.each do |card|
+      seen.push(card)
+      iterator.first(2)
+    end
+
+    assert_equal NUMBERS, seen
+  end
+
+  def test_loops_do_not_move_manual_iteration
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_equal 1, iterator.next_element
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 2, iterator.next_element
+    assert_equal (1..10).to_a, iterator.pages.next_page.cards
+    assert_equal 3, iterator.next_element
+  end
+
+  def test_http_response_is_from_the_most_recent_request
+    iterator = <%= gem_namespace %>::Internal::CursorItemIterator.new(initial_cursor: 0, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+      next_cursor = cursor + 10
+      page = PageResponse.new(cards: NUMBERS[cursor...next_cursor], next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil)
+      [page, "response #{cursor}"]
+    end
+
+    assert_nil iterator.http_response
+    iterator.next_element
+
+    assert_equal "response 0", iterator.http_response
+    iterator.pages.next_page
+    iterator.pages.next_page
+
+    assert_equal "response 10", iterator.http_response
+    assert_equal "response 10", iterator.pages.http_response
+    iterator.first(15)
+
+    assert_equal "response 10", iterator.http_response
+    iterator.to_a
+
+    assert_equal "response 60", iterator.http_response
+  end
 end

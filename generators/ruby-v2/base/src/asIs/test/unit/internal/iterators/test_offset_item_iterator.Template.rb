@@ -178,4 +178,26 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_instance_of Enumerator, iterator.pages.each
     assert_equal 7, iterator.pages.each.to_a.length
   end
+
+  def test_nested_loops_do_not_share_a_position
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+    all_items = (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a
+    seen = []
+    iterator.each do |item|
+      seen.push(item)
+      iterator.first(2)
+    end
+
+    assert_equal all_items, seen
+  end
+
+  def test_loops_do_not_move_manual_iteration
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+
+    assert_equal 1, iterator.next_element
+    assert_equal (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a, iterator.to_a
+    assert_equal 2, iterator.next_element
+    assert_equal (1..10).to_a, iterator.pages.next_page.items
+    assert_equal 3, iterator.next_element
+  end
 end
