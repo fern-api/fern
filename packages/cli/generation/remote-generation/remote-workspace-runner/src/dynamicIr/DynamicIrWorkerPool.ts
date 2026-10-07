@@ -256,6 +256,8 @@ export class DynamicIrWorkerPool {
             try {
                 worker.postMessage(job.request);
                 this.running.set(worker, job);
+                // Keep the process alive while a job is in flight; idle workers stay unref'd.
+                worker.ref();
             } catch (error) {
                 // e.g. a DataCloneError for a workspace that isn't plain data; the worker is still usable.
                 this.idle.push(worker);
@@ -275,6 +277,7 @@ export class DynamicIrWorkerPool {
             }
             const job = this.running.get(worker);
             this.running.delete(worker);
+            worker.unref();
             this.idle.push(worker);
             if (job != null) {
                 if (response.ok) {
