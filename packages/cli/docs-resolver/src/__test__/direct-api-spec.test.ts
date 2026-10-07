@@ -94,6 +94,81 @@ describe("DocsDefinitionResolver direct API specs", () => {
         );
     });
 
+    it("creates tag description pages from the spec's tag descriptions", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-tags-"));
+        temporaryDirectories.push(directory);
+        const fernDirectory = path.join(directory, "fern");
+        await mkdir(path.join(directory, "specs"));
+        await mkdir(fernDirectory);
+        await writeFile(
+            path.join(directory, "specs", "openapi.yml"),
+            [
+                "openapi: 3.0.0",
+                "info:",
+                "  title: Garden",
+                "  version: 1.0.0",
+                "tags:",
+                "  - name: Plant Care",
+                "    description: Watering and pruning",
+                "  - name: seeds",
+                "paths:",
+                "  /plants:",
+                "    get:",
+                "      operationId: listPlants",
+                "      tags: [Plant Care]",
+                "      responses:",
+                "        '200':",
+                "          description: Success",
+                "  /seeds:",
+                "    get:",
+                "      operationId: listSeeds",
+                "      tags: [seeds]",
+                "      responses:",
+                "        '200':",
+                "          description: Success",
+                ""
+            ].join("\n")
+        );
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            [
+                "instances: []",
+                "navigation:",
+                "  - api: API reference",
+                "    api-name: garden",
+                "    tag-description-pages: true",
+                "    specs:",
+                "      - type: openapi",
+                "        path: ../specs/openapi.yml",
+                ""
+            ].join("\n")
+        );
+        const context = createMockTaskContext();
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: AbsoluteFilePath.of(fernDirectory),
+            context
+        });
+        if (docsWorkspace == null) {
+            throw new Error("Expected docs workspace");
+        }
+        const resolver = new DocsDefinitionResolver({
+            domain: "docs.example.com",
+            docsWorkspace,
+            ossWorkspaces: [],
+            apiWorkspaces: [],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi: async () => "garden-definition"
+        });
+
+        const definition = await resolver.resolve();
+
+        const tagPages = Object.entries(definition.pages).filter(([pageId]) => pageId.startsWith("tag-"));
+        expect(tagPages.map(([pageId, page]) => [pageId, page?.markdown])).toEqual([
+            ["tag-plantCare.md", "# Plant Care\n\nWatering and pruning\n"]
+        ]);
+    });
+
     it("registers an API referenced by several sections once per spec file", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-direct-docs-api-"));
         temporaryDirectories.push(directory);

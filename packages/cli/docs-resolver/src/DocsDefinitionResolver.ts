@@ -2116,25 +2116,17 @@ export class DocsDefinitionResolver {
                     openapiWorkspace ??
                     directApiWorkspace ??
                     this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
-                const openApiIr = await workspaceForTags.getOpenAPIIr({
-                    context: this.taskContext,
-                    loadAiExamples: true
-                });
-                if (openApiIr.tags.tagsById) {
-                    // Tag keys must be normalized to camelCase because subpackage names are derived
-                    // from OpenAPI tags using camelCase conversion. The lookup in
-                    // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
-                    // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
-                    // tags are converted to camelCase when generating file/subpackage names.
-                    openApiTags = Object.fromEntries(
-                        Object.entries(openApiIr.tags.tagsById)
-                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
-                            .map(([tagId, tag]) => [
-                                camelCase(tagId),
-                                { id: String(tag.id), description: tag.description }
-                            ])
-                    );
-                }
+                const tagsById = await workspaceForTags.getOpenAPITags({ context: this.taskContext });
+                // Tag keys must be normalized to camelCase because subpackage names are derived
+                // from OpenAPI tags using camelCase conversion. The lookup in
+                // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
+                // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
+                // tags are converted to camelCase when generating file/subpackage names.
+                openApiTags = Object.fromEntries(
+                    Object.entries(tagsById)
+                        .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                        .map(([tagId, tag]) => [camelCase(tagId), { id: String(tag.id), description: tag.description }])
+                );
             } catch (error) {
                 this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
             }
