@@ -11,17 +11,26 @@ interface ReadTiming {
 }
 
 /**
- * Times markdown file reads without throttling them. Reads issued concurrently
- * queue behind Node's libuv threadpool, so an individual read's wall time mostly
- * reflects how many other reads were in flight rather than disk speed. Instead of
- * flagging every read over a fixed threshold, this records all timings and only
- * reports reads that are slow relative to the median of the batch.
+ * Reads the markdown files that one docs-config traversal visits, at most once per file.
+ * Versioned docs often point every version at the same pages, and the page rules only
+ * depend on a file's content and path, so a file that was already visited is skipped.
+ *
+ * Also times the reads. Reads issued concurrently queue behind Node's libuv threadpool,
+ * so an individual read's wall time mostly reflects how many other reads were in flight
+ * rather than disk speed. Instead of flagging every read over a fixed threshold, this
+ * records all timings and only reports reads that are slow relative to the median.
  */
-export class FileReadTimer {
+export class MarkdownFileReader {
+    private readonly visitedPaths = new Set<string>();
     private readonly timings: ReadTiming[] = [];
     private readonly startedAt = performance.now();
 
-    public async read(path: string): Promise<string> {
+    /** Returns the file's content, or undefined if this reader already read the file. */
+    public async readFirstVisit(path: string): Promise<string | undefined> {
+        if (this.visitedPaths.has(path)) {
+            return undefined;
+        }
+        this.visitedPaths.add(path);
         const start = performance.now();
         const content = await readFile(path, "utf8");
         this.timings.push({ path, durationMs: performance.now() - start, bytes: Buffer.byteLength(content, "utf8") });

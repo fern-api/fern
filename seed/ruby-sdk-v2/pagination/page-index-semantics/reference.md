@@ -360,7 +360,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**page:** `Integer` — Defaults to first page
+**page:** `Float` — Defaults to first page
     
 </dd>
 </dl>
@@ -368,7 +368,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**per_page:** `Integer` — Defaults to per page
+**per_page:** `Float` — Defaults to per page
     
 </dd>
 </dl>
@@ -1166,7 +1166,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**page:** `Integer` — Defaults to first page
+**page:** `Float` — Defaults to first page
     
 </dd>
 </dl>
@@ -1174,7 +1174,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**per_page:** `Integer` — Defaults to per page
+**per_page:** `Float` — Defaults to per page
     
 </dd>
 </dl>
