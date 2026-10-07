@@ -133,6 +133,8 @@ Enable it in `generators.yml`:
       # `client_id`/`client_secret` for OAuth2 client credentials, `token`
       # for a single-value scheme); `revokeParameters` records response
       # fields the revoke operation needs, kept apart from request defaults.
+      # They are stored in plaintext profile metadata (shown by `profiles
+      # show`), so map identifiers here, never secrets.
       provisionOperation:
         operation: iam.keys.create
         credential:

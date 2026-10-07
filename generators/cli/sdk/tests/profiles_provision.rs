@@ -366,3 +366,48 @@ fn provision_conflicts_with_the_other_credential_sources() {
         );
     }
 }
+
+#[tokio::test]
+#[serial]
+async fn reprovisioning_an_existing_profile_is_refused_until_the_old_key_is_revoked() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKold",
+            "secret": "oldsecret"
+        })))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let args = [
+                "pv",
+                "profiles",
+                "create",
+                "prod",
+                "--set",
+                "AccountSid=ACparent",
+                "--provision",
+            ];
+            let (code, output) = run(true, &args);
+            assert_eq!(code, 0, "{output}");
+
+            let mut forced = args.to_vec();
+            forced.push("--force");
+            let (code, output) = run(true, &forced);
+            assert_ne!(code, 0, "{output}");
+            assert!(
+                output.contains("--revoke"),
+                "should point at `profiles remove --revoke`: {output}"
+            );
+            let (_, shown) = run(true, &["pv", "profiles", "show", "prod", "--format", "json"]);
+            assert!(shown.contains("SKold"), "old key id must be kept: {shown}");
+        });
+    })
+    .await
+    .unwrap();
+}

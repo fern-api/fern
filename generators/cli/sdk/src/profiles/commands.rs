@@ -640,10 +640,25 @@ async fn handle_create(
         })?;
     validate_profile_name(&name)?;
 
+    let provision = matches
+        .try_get_one::<bool>("provision")
+        .ok()
+        .flatten()
+        .copied()
+        .unwrap_or(false);
     let existing = store.entry(&name);
     if existing.is_some() && !matches.get_flag("force") {
         return Err(CliError::Validation(format!(
             "profile `{name}` already exists. Pass --force to overwrite it."
+        )));
+    }
+    if provision
+        && existing
+            .as_ref()
+            .is_some_and(|entry| !entry.credential_parameters.is_empty())
+    {
+        return Err(CliError::Validation(format!(
+            "profile `{name}` already owns a provisioned credential. Run `profiles remove {name} --revoke` first so the old key is revoked instead of orphaned."
         )));
     }
 
@@ -744,12 +759,6 @@ async fn handle_create(
     //
     // An explicit `--credential` still wins: sharing a slot deliberately is a
     // supported thing to ask for.
-    let provision = matches
-        .try_get_one::<bool>("provision")
-        .ok()
-        .flatten()
-        .copied()
-        .unwrap_or(false);
     if (matches.get_flag("with-token") || matches.get_flag("from-env") || provision)
         && matches.get_one::<String>("credential").is_none()
     {
