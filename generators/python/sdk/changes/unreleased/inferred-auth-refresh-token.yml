@@ -4,3 +4,10 @@
     a client constructor parameter. Users pass only the refresh token (and any other non-literal
     token endpoint parameters).
   type: feat
+- summary: |
+    Inferred auth now works next to other auth schemes (`auth: any` and endpoint-security) when it has
+    credentials of its own, e.g. a `type: refresh-token` scheme next to OAuth client credentials.
+    The client takes the inferred credentials as optional constructor parameters (shared ones such as
+    `client_id` are added once) and uses the inferred token provider when they are passed, so
+    `Client(refresh_token=...)` and `Client(client_id=..., client_secret=...)` both work.
+  type: feat

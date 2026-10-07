@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=../../../../../fern.schema.json
+types:
+  TokenResponse:
+    properties:
+      access_token: string
+      expires_in: integer
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      docs: One token endpoint that dispatches on grant_type (client_credentials or refresh_token).
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            grant_type: string
+            client_id: optional<string>
+            client_secret: optional<string>
+            refresh_token: optional<string>
+            scope: optional<string>
+      response: TokenResponse
+      examples:
+        - request:
+            grant_type: "refresh_token"
+            refresh_token: "my-refresh-token"
+          response:
+            body:
+              access_token: "my-access-token"
+              expires_in: 3600
+              refresh_token: "my-refresh-token"
