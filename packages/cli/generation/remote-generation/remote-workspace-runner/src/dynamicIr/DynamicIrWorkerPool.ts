@@ -156,7 +156,8 @@ export function stripFunctions<T>(value: T, seen = new Map<object, unknown>()): 
 const GIB = 1024 ** 3;
 const WORKER_MAX_OLD_GENERATION_SIZE_MB = 1536;
 // Measured on a 35-version docs fixture under a 7 GB memory limit: about 4.3 GB in-process, 5.9 GB with one
-// worker and 6.8 GB with two.
+// worker and 6.8 GB with two. A worker's measured cost (~0.8-1.6 GB RSS) stays under its old-generation cap
+// (WORKER_MAX_OLD_GENERATION_SIZE_MB); revisit this estimate if the cap changes.
 const MAIN_THREAD_MEMORY_RESERVE_BYTES = 5 * GIB;
 const MEMORY_PER_WORKER_BYTES = 1.5 * GIB;
 
