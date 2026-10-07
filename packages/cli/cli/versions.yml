@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.148.2
+  changelogEntry:
+    - summary: |
+        Decouple SDK Config initialization from SDK Gen API generation routing so each can be rolled out independently.
+      type: fix
+    - summary: |
+        `fern docs md generate` now prefixes generated Python library page slugs with the slug of the
+        navigation tab the pages are listed under in `docs.yml`. Generated pages previously skipped the tab
+        (e.g. `/prismo/prismo/floorplan_editor_signals` instead of
+        `/api-reference/prismo/prismo/floorplan_editor_signals`). File paths and page IDs are unchanged.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
 - version: 5.148.1
   changelogEntry:
     - summary: |
