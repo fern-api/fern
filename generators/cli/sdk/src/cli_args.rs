@@ -226,7 +226,7 @@ fn wrap_flag_list(flags: &[String], width: usize) -> String {
         } else {
             flag.clone()
         };
-        if current.len() + 1 + token.len() > width && !current.trim().is_empty() {
+        if current.chars().count() + 1 + token.chars().count() > width && !current.trim().is_empty() {
             lines.push(current);
             current = String::from(" ");
         }

@@ -174,7 +174,7 @@ function collectResources(
 
             // Merge path-level + operation-level params (operation wins on conflict).
             const params = mergeParameters(pathParams, resolveParamRefs(operation.parameters ?? [], componentParams));
-            const paramEntries = params
+            const paramEntries: ParameterEntry[] = params
                 .filter((p) => p["x-fern-ignore"] !== true && p.in !== "cookie")
                 .map((p) => ({
                     name: `--${reserveFlagName(sanitizeFlagName(p["x-fern-parameter-name"] ?? p.name))}`,

@@ -1260,7 +1260,7 @@ impl CliApp {
                 }
                 return Ok(PipelineOutcome::HelpShown);
             }
-            let request = crate::man::parse_man_request(&str_args);
+            let request = crate::man::parse_man_request(&cli, &str_args);
             crate::man::run_man_request(cli, &self.name, &request, out)?;
             return Ok(PipelineOutcome::HelpShown);
         }

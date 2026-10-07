@@ -540,7 +540,13 @@ describe("emitReference", () => {
         const specPath = await writeSpec("openapi0.json", spec);
         await writeManifest([{ type: "openapi", specPath }]);
 
-        const reference = await emitAndRead({ outputDir, binaryName: "pets", authBindings: [], specsDir });
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "pets",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
 
         expect(reference).toContain("`pets pets list`");
         expect(reference).not.toContain("preflight");
@@ -562,7 +568,13 @@ describe("emitReference", () => {
             { type: "openapi", specPath: bulkPath, namespace: "messaging/sub" }
         ]);
 
-        const reference = await emitAndRead({ outputDir, binaryName: "acme", authBindings: [], specsDir });
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
 
         expect(reference).toContain("`acme email list`");
         expect(reference).not.toContain("acme email email");
@@ -614,7 +626,13 @@ describe("emitReference", () => {
         const specPath = await writeSpec("openapi0.json", spec);
         await writeManifest([{ type: "openapi", specPath }]);
 
-        const reference = await emitAndRead({ outputDir, binaryName: "msgs", authBindings: [], specsDir });
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "msgs",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
 
         expect(reference).toContain("| `--to` | `string` | Yes | Recipient. |");
         expect(reference).toContain("| `--messaging-service-s-i-d` | `string` | No |");
@@ -653,7 +671,13 @@ describe("emitReference", () => {
         const specPath = await writeSpec("openapi0.json", spec);
         await writeManifest([{ type: "openapi", specPath }]);
 
-        const reference = await emitAndRead({ outputDir, binaryName: "msgs", authBindings: [], specsDir });
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "msgs",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
 
         expect(reference).toContain("`--date-sent-before`");
         expect(reference).toContain("`--page-size`");
@@ -685,7 +709,13 @@ describe("emitReference", () => {
         const specPath = await writeSpec("openapi0.json", spec);
         await writeManifest([{ type: "openapi", specPath }]);
 
-        const reference = await emitAndRead({ outputDir, binaryName: "docs", authBindings: [], specsDir });
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "docs",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
 
         expect(reference).toContain("**Rate limits**");
         expect(reference).not.toMatch(/^## Rate limits/m);
