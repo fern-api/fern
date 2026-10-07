@@ -8,6 +8,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { isUrlEncodedRequestBody, unwrapTypeReference } from "../utils/requestBody.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
@@ -37,6 +38,28 @@ interface SchemeAuthHeader {
  * - `absent`: header must NOT be present (proves the SDK did not send a scheme the
  *   endpoint does not declare).
  */
+/** A number found in a JSON document, addressed by its RFC 6901 JSON Pointer. */
+interface JsonNumber {
+    pointer: string;
+    value: number;
+}
+
+function collectJsonNumbers(value: unknown, pointer = "", out: JsonNumber[] = []): JsonNumber[] {
+    if (typeof value === "number") {
+        // Integers beyond 2^53 lose precision in JS, so their literal can't be asserted exactly.
+        if (Number.isFinite(value) && (!Number.isInteger(value) || Number.isSafeInteger(value))) {
+            out.push({ pointer, value });
+        }
+    } else if (Array.isArray(value)) {
+        value.forEach((item, index) => collectJsonNumbers(item, `${pointer}/${index}`, out));
+    } else if (value != null && typeof value === "object") {
+        for (const [key, item] of Object.entries(value)) {
+            collectJsonNumbers(item, `${pointer}/${key.replaceAll("~", "~0").replaceAll("/", "~1")}`, out);
+        }
+    }
+    return out;
+}
+
 type AuthHeaderMatcher =
     | { headerName: string; kind: "exact"; value: string }
     | { headerName: string; kind: "present" }
@@ -412,6 +435,12 @@ export class WireTestGenerator {
             // Check if endpoint uses lazy pagination (cursor or offset)
             // These return iterators that don't make HTTP requests until iterated
             const isLazyPagination = endpoint.pagination?.type === "cursor" || endpoint.pagination?.type === "offset";
+            // Custom pagination returns a pager whose `current` is the response model; other
+            // pagination kinds return iterators, so their response numbers are not checked.
+            const isCustomPagination = endpoint.pagination?.type === "custom";
+            const responseNumbers =
+                endpoint.pagination == null || isCustomPagination ? this.getExpectedResponseNumbers(endpoint) : [];
+            const requestBodyNumbers = this.getExpectedRequestBodyNumbers(endpoint);
 
             if (isLazyPagination) {
                 // For lazy paginated endpoints, we need to trigger the first HTTP request
@@ -433,12 +462,10 @@ export class WireTestGenerator {
                 }
                 lines.push(`    result.pages.next_page`);
             } else {
-                const snippetLines = snippetCode.split("\n");
-                for (const line of snippetLines) {
-                    if (line.trim()) {
-                        lines.push(`    ${line}`);
-                    }
-                }
+                const snippetLines = snippetCode.split("\n").filter((line) => line.trim());
+                snippetLines.forEach((line, i) => {
+                    lines.push(i === 0 && responseNumbers.length > 0 ? `    result = ${line}` : `    ${line}`);
+                });
             }
             lines.push("");
 
@@ -450,6 +477,37 @@ export class WireTestGenerator {
             lines.push(`      query_params: ${queryParamsCode},`);
             lines.push(`      expected: 1`);
             lines.push(`    )`);
+
+            if (requestBodyNumbers.length > 0) {
+                lines.push("");
+                lines.push(`    verify_request_body_numbers(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(...this.renderExpectedNumbers(requestBodyNumbers));
+                lines.push(`    )`);
+            }
+
+            if (responseNumbers.length > 0) {
+                lines.push("");
+                lines.push(`    verify_response_numbers(`);
+                lines.push(`      actual: ${isCustomPagination ? "result.current" : "result"},`);
+                lines.push(...this.renderExpectedNumbers(responseNumbers));
+                lines.push(`    )`);
+            }
+
+            const expectedRequestBody = this.getExpectedRawRequestBody(endpoint);
+            if (expectedRequestBody != null) {
+                lines.push(``);
+                lines.push(`    verify_request_body(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(
+                    `      expected_body: JSON.parse(${toRubyStringLiteral(JSON.stringify(expectedRequestBody))})`
+                );
+                lines.push(`    )`);
+            }
 
             if (this.context.isEndpointSecurity()) {
                 // Per-endpoint security: the SDK routes only the auth scheme(s) this endpoint
@@ -481,6 +539,151 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Numbers in the JSON request body of the example the snippet was generated from. The test
+     * asserts they reach the wire unchanged (e.g. a `double` amount of 1.1 is not sent as 1).
+     * Only object bodies are checked here; other body types are compared exactly by
+     * `verify_request_body` (see `getExpectedRawRequestBody`).
+     */
+    private getExpectedRequestBodyNumbers(endpoint: FernIr.HttpEndpoint): JsonNumber[] {
+        if (!this.isObjectRequestBody(endpoint.requestBody)) {
+            return [];
+        }
+        const requestBody = this.getDynamicEndpointExample(endpoint)?.requestBody;
+        if (requestBody == null || typeof requestBody !== "object" || Array.isArray(requestBody)) {
+            return [];
+        }
+        return collectJsonNumbers(requestBody);
+    }
+
+    private isObjectRequestBody(requestBody: FernIr.HttpRequestBody | undefined): boolean {
+        if (requestBody == null || isUrlEncodedRequestBody(requestBody)) {
+            return false;
+        }
+        if (requestBody.type === "inlinedRequestBody") {
+            return true;
+        }
+        if (requestBody.type !== "reference" || requestBody.requestBodyType.type !== "named") {
+            return false;
+        }
+        return this.context.ir.types[requestBody.requestBodyType.typeId]?.shape.type === "object";
+    }
+
+    /**
+     * Numbers in the mocked JSON response. The test asserts they decode unchanged into the
+     * SDK's return value (e.g. a `double` balance of 100.57 does not come back as 100).
+     */
+    private getExpectedResponseNumbers(endpoint: FernIr.HttpEndpoint): JsonNumber[] {
+        if (endpoint.response?.body?.type !== "json") {
+            return [];
+        }
+        const responseBody = this.getWireMockMapping(endpoint)?.response.body;
+        if (responseBody == null || responseBody.trim() === "") {
+            return [];
+        }
+        try {
+            return collectJsonNumbers(JSON.parse(responseBody));
+        } catch {
+            return [];
+        }
+    }
+
+    private renderExpectedNumbers(numbers: JsonNumber[]): string[] {
+        return [
+            `      expected: {`,
+            ...numbers.map(
+                ({ pointer, value }, i) =>
+                    `        ${JSON.stringify(pointer)} => ${String(value)}${i < numbers.length - 1 ? "," : ""}`
+            ),
+            `      }`
+        ];
+    }
+
+    private getWireMockMapping(endpoint: FernIr.HttpEndpoint): WireMockMapping | undefined {
+        return this.wireMockConfigContent[
+            this.wiremockMappingKey({
+                requestMethod: endpoint.method,
+                requestUrlPathTemplate: this.getPathTemplate(endpoint)
+            })
+        ];
+    }
+
+    private getPathTemplate(endpoint: FernIr.HttpEndpoint): string {
+        const path =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
+        return path.startsWith("/") ? path : `/${path}`;
+    }
+
+    /**
+     * Returns the example body for endpoints whose referenced body is passed as a single argument (a
+     * primitive, enum, optional/nullable object, or a list/set/map of those) and serializes back to
+     * the example JSON exactly, so the captured request body must equal it. Top-level object bodies
+     * and types with formatted values (dates, base64, big integers) or unknowns/unions are skipped.
+     */
+    private getExpectedRawRequestBody(endpoint: FernIr.HttpEndpoint): unknown {
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type !== "reference" || isUrlEncodedRequestBody(requestBody)) {
+            return undefined;
+        }
+        const bodyType = requestBody.requestBodyType;
+        const resolved = this.unwrapTypeReference(bodyType);
+        const isTopLevelObject =
+            bodyType.type === "named" &&
+            resolved.type === "named" &&
+            this.context.getTypeDeclarationOrThrow(resolved.typeId).shape.type === "object";
+        if (isTopLevelObject || !this.serializesToExampleJson(bodyType, new Set())) {
+            return undefined;
+        }
+        return this.getDynamicEndpointExample(endpoint)?.requestBody ?? undefined;
+    }
+
+    private serializesToExampleJson(typeReference: FernIr.TypeReference, visiting: Set<FernIr.TypeId>): boolean {
+        const resolved = this.unwrapTypeReference(typeReference);
+        switch (resolved.type) {
+            case "primitive":
+                return EXAMPLE_STABLE_PRIMITIVES.has(resolved.primitive.v1);
+            case "named": {
+                if (visiting.has(resolved.typeId)) {
+                    return false;
+                }
+                const shape = this.context.getTypeDeclarationOrThrow(resolved.typeId).shape;
+                if (shape.type === "enum") {
+                    return true;
+                }
+                if (shape.type !== "object") {
+                    return false;
+                }
+                const next = new Set(visiting).add(resolved.typeId);
+                return [...shape.properties, ...(shape.extendedProperties ?? [])].every((property) =>
+                    this.serializesToExampleJson(property.valueType, next)
+                );
+            }
+            case "container": {
+                const container = resolved.container;
+                switch (container.type) {
+                    case "list":
+                        return this.serializesToExampleJson(container.list, visiting);
+                    case "set":
+                        return this.serializesToExampleJson(container.set, visiting);
+                    case "map":
+                        return (
+                            this.serializesToExampleJson(container.keyType, visiting) &&
+                            this.serializesToExampleJson(container.valueType, visiting)
+                        );
+                    default:
+                        return false;
+                }
+            }
+            default:
+                return false;
+        }
+    }
+
+    private unwrapTypeReference(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        return unwrapTypeReference(typeReference, (typeId) => this.context.getTypeDeclarationOrThrow(typeId));
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
@@ -851,4 +1054,17 @@ export class WireTestGenerator {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join("");
     }
+}
+
+const EXAMPLE_STABLE_PRIMITIVES = new Set<string>(["STRING", "INTEGER", "LONG", "UINT", "UINT_64", "BOOLEAN", "UUID"]);
+
+/**
+ * Ruby string literal that satisfies RuboCop's `Style/StringLiterals: double_quotes`: single quotes (no
+ * interpolation, only `\\` and `'` escaped) when the value contains a double quote, double quotes otherwise.
+ */
+export function toRubyStringLiteral(value: string): string {
+    if (value.includes('"')) {
+        return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+    }
+    return `"${value.replace(/\\/g, "\\\\").replace(/#(?=[{$@])/g, "\\#")}"`;
 }

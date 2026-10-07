@@ -1,4 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types can now carry XML comments. `comment($text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `addText` segments and child elements), while
+        `commentBefore($text)` / `commentAfter($text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `fromXml` and round-trip through `toXml`; `XmlElement::addComment` and
+        the new `XmlComment` class expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.29.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.28.3
+  changelogEntry:
+    - summary: |
+        XML (TwiML) constructors and fluent child methods accept enum cases for enum-typed attributes and
+        text, e.g. `new Break_(['strength' => BreakStrength::Weak])` or `['record' => [DialRecordItem::RecordFromAnswer]]`,
+        in addition to the raw string values. Previously passing the enum instance threw
+        `TypeError: Cannot assign BreakStrength to property Break_::$strength of type ?string`.
+      type: fix
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        an array, matching the legacy call style: `new Gather(['input' => 'speech dtmf'])` and
+        `$response->gather(['input' => 'speech dtmf'])` no longer throw a `TypeError`.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.28.2
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        an array, matching the legacy call style: `new Gather(['input' => 'speech dtmf'])` and
+        `$response->gather(['input' => 'speech dtmf'])` no longer throw a `TypeError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.28.1
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `fromXml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of throwing, and it round-trips through
+        `toXml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 2.28.0
   changelogEntry:
     - summary: |

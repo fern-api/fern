@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.39.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) models can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `add_text` segments and child elements), while
+        `comment_before(text)` / `comment_after(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `from_xml` and round-trip through `to_xml`; `XmlElement.add_comment`
+        and the new `XmlComment` node expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.38.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.37.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep their legacy names when they collide with the element's text
+        field: `dial.number("+15551234567")` and `message.body("b")` now work instead of raising
+        `TypeError: 'NoneType' object is not callable`. The text is still passed as the same constructor
+        keyword (`Dial(number="+1555")`) but is stored under a trailing underscore (`dial.number_`) so the
+        builder method stays callable; `add_number`/`add_body` are no longer generated.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 5.37.1
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        a list, matching the legacy call style: `response.gather(input="speech dtmf")` no longer
+        raises a validation error and serializes as `input="speech dtmf"`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 5.37.0
   changelogEntry:
     - summary: |

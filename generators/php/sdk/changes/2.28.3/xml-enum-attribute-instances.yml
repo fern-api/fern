@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) constructors and fluent child methods accept enum cases for enum-typed attributes and
+    text, e.g. `new Break_(['strength' => BreakStrength::Weak])` or `['record' => [DialRecordItem::RecordFromAnswer]]`,
+    in addition to the raw string values. Previously passing the enum instance threw
+    `TypeError: Cannot assign BreakStrength to property Break_::$strength of type ?string`.
+  type: fix

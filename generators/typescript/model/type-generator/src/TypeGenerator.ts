@@ -229,6 +229,7 @@ export class TypeGenerator<Context extends BaseContext = BaseContext> {
             getReferenceToSelf,
             xml,
             useBigInt: this.useBigInt,
+            enableForwardCompatibleEnums: this.enableForwardCompatibleEnums,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
             retainOriginalCasing: this.retainOriginalCasing,

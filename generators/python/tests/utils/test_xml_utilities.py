@@ -11,6 +11,7 @@ from core_utilities.shared.xml_utilities import (
     XML_DECLARATION,
     XmlAttribute,
     XmlChild,
+    XmlComment,
     XmlContent,
     XmlElement,
     XmlNode,
@@ -27,6 +28,7 @@ from core_utilities.shared.xml_utilities import (
     xml_content_item,
     xml_content_items,
     xml_extra_attributes,
+    xml_leading_text,
     xml_text,
     xml_unknown_children,
 )
@@ -395,3 +397,50 @@ def test_whitespace_between_children_is_kept_but_pretty_print_indentation_is_not
     assert serialize_xml_element(name="Say", content=content) == "<Say><break /> <break /></Say>"
     node = parse_xml("<Say>\n  <break/>\n  <break/>\n</Say>", "Say")
     assert all(not isinstance(item, str) for item in xml_content(node))
+
+
+def test_comments_are_kept_in_content_and_round_trip() -> None:
+    node = parse_xml("<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>")
+    content = xml_content(node, {"Say": Say})
+    assert content == [XmlComment(" a comment "), Say("hi"), XmlComment("b"), "tail"]
+    assert (
+        serialize_xml_element(name="Response", content=content)
+        == "<Response><!-- a comment --><Say>hi</Say><!--b-->tail</Response>"
+    )
+    element = XmlElement.from_xml("<Custom><!--c-->x</Custom>")
+    assert element.content == [XmlComment("c"), "x"]
+    assert element.text == "x"
+    assert element.to_xml() == "<Custom><!--c-->x</Custom>"
+    assert XmlElement(name="Custom").add_comment("c").add_text("x") == element
+
+
+def test_comment_ends_leading_text() -> None:
+    node = parse_xml("<Say>Hi<!--c--> there</Say>")
+    assert xml_leading_text(node) == "Hi"
+    assert xml_content(node, skip_leading_text=True) == [XmlComment("c"), " there"]
+
+
+def test_sibling_comments_surround_the_element_after_the_declaration() -> None:
+    assert (
+        serialize_xml_element(
+            name="Response",
+            comments_before=[XmlComment("b")],
+            comments_after=[XmlComment("a")],
+            xml_declaration=True,
+        )
+        == f"{XML_DECLARATION}<!--b--><Response /><!--a-->"
+    )
+    assert serialize_xml_element(name="Say", text="x", comments_after=[XmlComment("a")]) == "<Say>x</Say><!--a-->"
+
+
+def test_comments_keep_their_position_in_ordered_content() -> None:
+    comment = XmlComment("c")
+    a = Say("a")
+    assert order_xml_content([comment, a, "text"], [a]) == [comment, a, "text"]
+    assert order_xml_content([comment]) == [comment]
+
+
+def test_comment_text_cannot_close_the_comment_early() -> None:
+    assert XmlComment("a -- b --> <Hangup/> -").to_xml() == "<!--a - - b - -> <Hangup/> - -->"
+    node = parse_xml(f"<Response>{XmlComment('x -->').to_xml()}</Response>", "Response")
+    assert xml_content(node) == [XmlComment("x - ->")]

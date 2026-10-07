@@ -36,6 +36,70 @@ module <%= gem_namespace %>
         end
       end
 
+      # An XML comment (`<!--text-->`) inside an element's content, kept alongside child elements and
+      # {Text} segments so comments stay in document order. `placement` says whether the comment is
+      # rendered inside the element at its position (`:inside`), or as a sibling immediately before
+      # (`:before`) or after (`:after`) the element whose content holds it.
+      class Comment
+        # @return [String]
+        attr_accessor :value
+        # @return [Symbol] :inside, :before or :after
+        attr_reader :placement
+
+        # @param value [String]
+        # @param placement [Symbol]
+        def initialize(value, placement = :inside)
+          @value = value.to_s
+          @placement = placement
+        end
+
+        # @param value [String]
+        # @return [Comment] a comment rendered immediately before the element whose content holds it
+        def self.before(value)
+          new(value, :before)
+        end
+
+        # @param value [String]
+        # @return [Comment] a comment rendered immediately after the element whose content holds it
+        def self.after(value)
+          new(value, :after)
+        end
+
+        # @return [Boolean]
+        def inside?
+          placement == :inside
+        end
+
+        # @return [String]
+        def to_s
+          "<!--#{xml_text}-->"
+        end
+
+        # The text as written inside the comment. XML forbids `--` within a comment and a trailing `-`,
+        # and either would otherwise end the comment early and turn the rest into markup, so both are spaced out.
+        # @return [String]
+        def xml_text
+          safe = value.gsub(/-(?=-)/, "- ")
+          safe.end_with?("-") ? "#{safe} " : safe
+        end
+
+        # @return [Boolean]
+        def ==(other)
+          other.is_a?(Comment) && value == other.value && placement == other.placement
+        end
+        alias eql? ==
+
+        # @return [Integer]
+        def hash
+          [Comment, value, placement].hash
+        end
+
+        # @return [String]
+        def inspect
+          "#<#{self.class.name} #{value.inspect} #{placement}>"
+        end
+      end
+
       # A generic XML element tree. Used to carry unknown child elements through a
       # round trip and as the intermediate form typed models serialize to and parse from.
       class Element
@@ -49,7 +113,7 @@ module <%= gem_namespace %>
         attr_reader :attributes
         # @return [String, nil] text content written before the children
         attr_accessor :text
-        # @return [Array<Element, Serializable, Text>] child elements and text segments, in document order
+        # @return [Array<Element, Serializable, Text, Comment>] child elements, text segments and comments, in document order
         attr_reader :children
         # @return [Hash<String, String>] namespace declarations keyed by prefix ("" for the default namespace)
         attr_reader :namespace_declarations
@@ -83,10 +147,10 @@ module <%= gem_namespace %>
           @attributes[name.to_s]
         end
 
-        # Appends a child element (an {Element} or any model responding to `to_xml_element`) or a
-        # {Text} segment after the children added so far.
+        # Appends a child element (an {Element} or any model responding to `to_xml_element`), a
+        # {Text} segment or a {Comment} after the children added so far.
         #
-        # @param child [Element, Serializable, Text]
+        # @param child [Element, Serializable, Text, Comment]
         # @return [self]
         def add_child(child)
           @children << child
@@ -102,15 +166,24 @@ module <%= gem_namespace %>
           self
         end
 
-        # @return [Array<Element>] the child elements (text segments excluded), in document order
+        # Appends an XML comment (`<!--text-->`) after the children added so far.
+        #
+        # @param text [String]
+        # @return [self]
+        def add_comment(text)
+          @children << Comment.new(text)
+          self
+        end
+
+        # @return [Array<Element>] the child elements (text segments and comments excluded), in document order
         def child_elements
-          @children.grep_v(Text).map(&:to_xml_element)
+          @children.reject { |child| Utils.non_element?(child) }.map(&:to_xml_element)
         end
 
         # @param name [String]
         # @return [Element, nil] the first child element with the given local name
         def child(name)
-          @children.lazy.grep_v(Text).map(&:to_xml_element).find { |element| element.name == name }
+          @children.lazy.reject { |child| Utils.non_element?(child) }.map(&:to_xml_element).find { |element| element.name == name }
         end
 
         # @param name [String]
@@ -153,7 +226,7 @@ module <%= gem_namespace %>
 
         # @api private
         def comparable_children
-          children.map { |child| child.is_a?(Text) ? child : child.to_xml_element }
+          children.map { |child| Utils.non_element?(child) ? child : child.to_xml_element }
         end
 
         # @return [String]

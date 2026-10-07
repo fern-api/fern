@@ -1,6 +1,5 @@
 import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
-import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
@@ -10,6 +9,7 @@ import {
     applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
     findIncompatibleTranslatedApiIds,
+    getApiRegistrationConcurrency,
     getTranslatedAnnouncement,
     markUntranslatedNavNodesNoindex,
     type RegisterApiFn,
@@ -42,7 +42,9 @@ type DynamicIRUpload = APIV1Write.DynamicIRUpload;
 type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
+import { logViolations } from "@fern-api/api-workspace-validator";
 import { stitchGlobalTheme } from "@fern-api/docs-resolver";
+import { validateMissingRedirects } from "@fern-api/docs-validator";
 import {
     AbsoluteFilePath,
     convertToFernHostRelativeFilePath,
@@ -51,10 +53,9 @@ import {
     relative,
     resolve
 } from "@fern-api/fs-utils";
-import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
+import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
@@ -66,6 +67,8 @@ import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
+import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
+import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
@@ -210,7 +213,6 @@ export async function publishDocs({
     editThisPage,
     disableTemplates = false,
     skipUpload = false,
-    withAiExamples = true,
     excludeApis = false,
     targetAudiences,
     docsVisibility,
@@ -234,7 +236,6 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
-    withAiExamples?: boolean;
     excludeApis?: boolean;
     targetAudiences?: string[];
     /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
@@ -326,6 +327,7 @@ export async function publishDocs({
     process.on("SIGINT", onSignal);
     process.on("SIGTERM", onSignal);
 
+    let dynamicIrWorkerPool: DynamicIrWorkerPool | undefined;
     try {
         const effectiveWorkspace = await stitchGlobalTheme({
             docsWorkspace,
@@ -390,6 +392,97 @@ export async function publishDocs({
             }
         };
 
+        dynamicIrWorkerPool = disableDynamicSnippets
+            ? undefined
+            : DynamicIrWorkerPool.create({ registrationConcurrency: getApiRegistrationConcurrency(), context });
+
+        /** Fetches existing SDK dynamic IRs and generates the rest; the returned loader builds the record. */
+        const prepareDynamicIRs = async ({
+            workspace,
+            snippetsConfig
+        }: {
+            workspace: FernWorkspace | undefined;
+            snippetsConfig: SnippetsConfig;
+        }): Promise<() => Record<string, DynamicIr> | undefined> => {
+            let existingDynamicIRs: Record<string, DynamicIr> | undefined;
+            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
+            const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                fdr,
+                workspace,
+                apiWorkspaces,
+                organization,
+                context,
+                snippetsConfig
+            });
+
+            if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                existingDynamicIRs = existingSdkDynamicIrs;
+                languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                context.logger.debug(
+                    `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                );
+            }
+
+            const loadGeneratedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                workspace,
+                apiWorkspaces,
+                organization,
+                context,
+                snippetsConfig,
+                skipLanguages: languagesWithExistingSdkDynamicIr,
+                pool: dynamicIrWorkerPool
+            });
+
+            return () => {
+                const generatedDynamicIRs = loadGeneratedDynamicIRs?.();
+                return generatedDynamicIRs != null
+                    ? { ...existingDynamicIRs, ...generatedDynamicIRs }
+                    : existingDynamicIRs;
+            };
+        };
+
+        // With worker threads, each API's dynamic IRs start generating as soon as the resolver
+        // builds its IR, overlapping the rest of the navigation build. Registration takes them.
+        const earlyDynamicIRs = new WeakMap<FernWorkspace, Map<string, ReturnType<typeof prepareDynamicIRs>>>();
+        const startedDynamicIRs: Array<ReturnType<typeof prepareDynamicIRs>> = [];
+        const startDynamicIRs = ({
+            workspace,
+            snippetsConfig
+        }: {
+            workspace: FernWorkspace | undefined;
+            snippetsConfig: SnippetsConfig;
+        }): void => {
+            if (workspace == null || Object.keys(snippetsConfig).length === 0) {
+                return;
+            }
+            let byConfig = earlyDynamicIRs.get(workspace);
+            if (byConfig == null) {
+                byConfig = new Map();
+                earlyDynamicIRs.set(workspace, byConfig);
+            }
+            const key = JSON.stringify(snippetsConfig);
+            if (!byConfig.has(key)) {
+                const prepared = prepareDynamicIRs({ workspace, snippetsConfig });
+                // Surfaced when the registration awaits it.
+                prepared.catch(() => undefined);
+                byConfig.set(key, prepared);
+                startedDynamicIRs.push(prepared);
+            }
+        };
+        const takeDynamicIRs = (args: {
+            workspace: FernWorkspace | undefined;
+            snippetsConfig: SnippetsConfig;
+        }): ReturnType<typeof prepareDynamicIRs> => {
+            const byConfig = args.workspace != null ? earlyDynamicIRs.get(args.workspace) : undefined;
+            const key = JSON.stringify(args.snippetsConfig);
+            const prepared = byConfig?.get(key);
+            if (prepared != null) {
+                byConfig?.delete(key);
+                return prepared;
+            }
+            return prepareDynamicIRs(args);
+        };
+
         /**
          * Registers an API definition with FDR (with AI example enhancement and dynamic
          * snippet generation) and returns the resulting apiDefinitionId. Used for the base
@@ -407,7 +500,7 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            let apiDefinition = convertIrToFdrApi({
+            const apiDefinition = convertIrToFdrApi({
                 ir,
                 snippetsConfig,
                 playgroundConfig,
@@ -417,72 +510,13 @@ export async function publishDocs({
                 apiNameOverride: apiName
             });
 
-            const isSelfHosted = token.value === "dummy";
-            const aiEnhancerConfig = getAIEnhancerConfig(
-                withAiExamples && !isSelfHosted,
-                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
-            );
-            if (aiEnhancerConfig) {
-                const sources = workspace?.getSources();
-                const openApiSources = sources
-                    ?.filter((source) => source.type === "openapi")
-                    .map((source) => ({
-                        absoluteFilePath: source.absoluteFilePath,
-                        absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
-                    }));
-
-                if (openApiSources == null || openApiSources.length === 0) {
-                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
-                } else {
-                    apiDefinition = await enhanceExamplesWithAI(
-                        apiDefinition,
-                        aiEnhancerConfig,
-                        context,
-                        token,
-                        organization,
-                        openApiSources
-                    );
-                }
-            }
-
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
             if (Object.keys(snippetsConfig).length === 0) {
                 context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
             } else if (!disableDynamicSnippets) {
-                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
-                    fdr,
-                    workspace,
-                    apiWorkspaces,
-                    organization,
-                    context,
-                    snippetsConfig
-                });
-
-                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
-                    dynamicIRsByLanguage = existingSdkDynamicIrs;
-                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
-                    context.logger.debug(
-                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
-                    );
-                }
-
-                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
-                    workspace,
-                    apiWorkspaces,
-                    organization,
-                    context,
-                    snippetsConfig,
-                    skipLanguages: languagesWithExistingSdkDynamicIr
-                });
-
-                if (generatedDynamicIRs) {
-                    dynamicIRsByLanguage = {
-                        ...dynamicIRsByLanguage,
-                        ...generatedDynamicIRs
-                    };
-                }
+                const loadDynamicIRs = await takeDynamicIRs({ workspace, snippetsConfig });
+                dynamicIRsByLanguage = loadDynamicIRs();
             }
 
             const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
@@ -816,6 +850,17 @@ export async function publishDocs({
                 }
             },
             registerApi: registerApiToFdr,
+            onApiRegistrationQueued:
+                dynamicIrWorkerPool != null
+                    ? ({ workspace, snippetsConfig }) => startDynamicIRs({ workspace, snippetsConfig })
+                    : undefined,
+            // Every API's IR is built by now, and pending registrations hold their own copies. Drop the
+            // IRs cached for validation so they don't stay on the heap through registration.
+            onNavigationTreeBuilt: () => {
+                for (const ossWorkspace of ossWorkspaces) {
+                    ossWorkspace.disableResultCaching();
+                }
+            },
             buildTranslatedApiDefinitions,
             targetAudiences,
             docsVisibility
@@ -823,7 +868,12 @@ export async function publishDocs({
 
         context.logger.info("Resolving docs definition...");
         const resolveStart = performance.now();
-        let docsDefinition = await resolver.resolve();
+        let docsDefinition = await resolver.resolve().catch(async (error: unknown) => {
+            // Stop and settle any dynamic IRs started during navigation before surfacing the failure.
+            await dynamicIrWorkerPool?.terminate();
+            await Promise.allSettled(startedDynamicIRs);
+            throw error;
+        });
         const resolveTime = performance.now() - resolveStart;
 
         if (docsWorkspace.config.settings?.substituteEnvVars) {
@@ -847,6 +897,27 @@ export async function publishDocs({
         context.logger.debug(
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
+
+        const missingRedirects = await validateMissingRedirects({
+            workspace: docsWorkspace,
+            docsDefinition,
+            instanceUrl: domain,
+            token: token.value,
+            logger: context.logger
+        });
+        logViolations({
+            context,
+            violations: missingRedirects,
+            logWarnings: true,
+            logSummary: false,
+            logBreadcrumbs: false
+        });
+        if (missingRedirects.some((violation) => violation.severity === "error")) {
+            doUnlock();
+            return context.failAndThrow("Failed to publish docs.", "Some removed pages have no redirect.", {
+                code: CliError.Code.ValidationError
+            });
+        }
 
         if (docsRegistrationId == null && deployMode !== "ledger") {
             doUnlock();
@@ -988,6 +1059,8 @@ export async function publishDocs({
                 }
             }
         }
+
+        await dynamicIrWorkerPool?.terminate();
 
         // Register translated page content for each configured locale via the V2 endpoint.
         // In ledger mode, translations are handled by publishDocsViaLedger (above),
@@ -1286,6 +1359,7 @@ export async function publishDocs({
         deployLocked = false;
         process.removeListener("SIGINT", onSignal);
         process.removeListener("SIGTERM", onSignal);
+        await dynamicIrWorkerPool?.terminate();
     }
 }
 
@@ -1992,7 +2066,8 @@ async function generateLanguageSpecificDynamicIRs({
     organization,
     context,
     snippetsConfig,
-    skipLanguages = new Set()
+    skipLanguages = new Set(),
+    pool
 }: {
     workspace: FernWorkspace | undefined;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -2000,8 +2075,9 @@ async function generateLanguageSpecificDynamicIRs({
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
     skipLanguages?: Set<string>;
-}): Promise<Record<string, DynamicIr> | undefined> {
-    let languageSpecificIRs: Record<string, DynamicIr> = {};
+    pool?: DynamicIrWorkerPool;
+}): Promise<(() => Record<string, DynamicIr>) | undefined> {
+    const generatorJobs: DynamicIrGeneratorJob[] = [];
 
     if (!workspace) {
         return undefined;
@@ -2067,55 +2143,28 @@ async function generateLanguageSpecificDynamicIRs({
             continue;
         }
 
-        // generate a dynamic IR for configuration that matches the requested api snippet
-        const irForDynamicSnippets = generateIntermediateRepresentation({
-            workspace,
-            generationLanguage: generatorInvocation.language,
-            keywords: undefined,
+        generatorJobs.push({
+            language: generatorInvocation.language,
             smartCasing: generatorInvocation.smartCasing,
             smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-            exampleGeneration: {
-                disabled: true,
-                skipAutogenerationIfManualExamplesExist: true,
-                skipErrorAutogenerationIfManualErrorExamplesExist: true
-            },
-            audiences: {
-                type: "all"
-            },
-            readme: undefined,
-            packageName: packageName,
-            version: undefined,
-            context,
-            sourceResolver: new SourceResolverImpl(context, workspace),
+            packageName,
             dynamicGeneratorConfig
         });
+    }
 
-        const dynamicIR = convertIrToDynamicSnippetsIr({
-            ir: irForDynamicSnippets,
-            disableExamples: true,
-            smartCasing: generatorInvocation.smartCasing,
-            smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
-            generationLanguage: generatorInvocation.language,
-            generatorConfig: dynamicGeneratorConfig
-        });
-
-        // include metadata along with the dynamic IR
-        if (dynamicIR) {
-            languageSpecificIRs[generatorInvocation.language] = {
-                dynamicIR
-            };
+    const languagesWithDynamicIr = new Set<string>();
+    const dynamicIRLoaders: Array<[language: string, load: () => unknown]> = [];
+    for (const [language, load] of await generateDynamicIRs({ workspace, generatorJobs, context, pool })) {
+        if (load != null) {
+            dynamicIRLoaders.push([language, load]);
+            languagesWithDynamicIr.add(language);
         } else {
-            context.logger.debug(`Failed to create dynamic IR for ${generatorInvocation.language}`);
+            context.logger.debug(`Failed to create dynamic IR for ${language}`);
         }
     }
 
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
-        if (
-            language &&
-            packageName &&
-            !Object.keys(languageSpecificIRs).includes(language) &&
-            !skipLanguages.has(language)
-        ) {
+        if (language && packageName && !languagesWithDynamicIr.has(language) && !skipLanguages.has(language)) {
             context.logger.warn();
             context.logger.warn(
                 `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
@@ -2127,11 +2176,59 @@ async function generateLanguageSpecificDynamicIRs({
         }
     }
 
-    if (Object.keys(languageSpecificIRs).length > 0) {
-        return languageSpecificIRs;
+    if (languagesWithDynamicIr.size > 0) {
+        return () => {
+            const languageSpecificIRs: Record<string, DynamicIr> = {};
+            for (const [language, load] of dynamicIRLoaders) {
+                // include metadata along with the dynamic IR
+                languageSpecificIRs[language] = { dynamicIR: load() };
+            }
+            return languageSpecificIRs;
+        };
     }
 
     return undefined;
+}
+
+/**
+ * Generates each job's dynamic IR on a worker thread when a pool is available, falling back to
+ * generating in-process (which reproduces any error and its logs) if the worker fails.
+ */
+async function generateDynamicIRs({
+    workspace,
+    generatorJobs,
+    context,
+    pool
+}: {
+    workspace: FernWorkspace;
+    generatorJobs: DynamicIrGeneratorJob[];
+    context: TaskContext;
+    pool: DynamicIrWorkerPool | undefined;
+}): Promise<Array<[language: string, load: (() => unknown) | undefined]>> {
+    if (generatorJobs.length === 0) {
+        return [];
+    }
+    if (pool != null) {
+        try {
+            const { results, logs } = await pool.run(workspace, generatorJobs);
+            for (const [level, args] of logs) {
+                context.logger.log(level, ...args);
+            }
+            return results.map(([language, gzippedJson]) => [
+                language,
+                gzippedJson == null ? undefined : () => parseDynamicIrResult(gzippedJson)
+            ]);
+        } catch (error) {
+            if (pool.isTerminated) {
+                throw error;
+            }
+            context.logger.debug(`Dynamic IR worker failed (${String(error)}); generating in-process`);
+        }
+    }
+    return computeDynamicIRs({ workspace, generators: generatorJobs, context }).map(([language, dynamicIR]) => [
+        language,
+        dynamicIR == null ? undefined : () => dynamicIR
+    ]);
 }
 
 async function uploadDynamicIRs({
@@ -2191,20 +2288,6 @@ async function updateAiChatFromDocsDefinition({
     context.logger.warn(
         chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.")
     );
-}
-
-function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {
-    if (!withAiExamples) {
-        return undefined;
-    }
-
-    return {
-        enabled: true,
-        model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
-        maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
-        styleInstructions
-    };
 }
 
 /**

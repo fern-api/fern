@@ -31,12 +31,19 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/primitive/string",
+      expected_body: JSON.parse('"string"')
+    )
   end
 
   def test_endpoints_primitive_get_and_return_int_with_wiremock
     test_id = "endpoints.primitive.get_and_return_int.0"
 
-    @client.endpoints.primitive.get_and_return_int(
+    result = @client.endpoints.primitive.get_and_return_int(
       request: 1,
       request_options: {
         additional_headers: {
@@ -52,12 +59,26 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "" => 1
+      }
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/primitive/integer",
+      expected_body: JSON.parse("1")
+    )
   end
 
   def test_endpoints_primitive_get_and_return_long_with_wiremock
     test_id = "endpoints.primitive.get_and_return_long.0"
 
-    @client.endpoints.primitive.get_and_return_long(
+    result = @client.endpoints.primitive.get_and_return_long(
       request: 1000000,
       request_options: {
         additional_headers: {
@@ -73,12 +94,26 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "" => 1000000
+      }
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/primitive/long",
+      expected_body: JSON.parse("1000000")
+    )
   end
 
   def test_endpoints_primitive_get_and_return_double_with_wiremock
     test_id = "endpoints.primitive.get_and_return_double.0"
 
-    @client.endpoints.primitive.get_and_return_double(
+    result = @client.endpoints.primitive.get_and_return_double(
       request: 1.1,
       request_options: {
         additional_headers: {
@@ -93,6 +128,13 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/double",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "" => 1.1
+      }
     )
   end
 
@@ -114,6 +156,13 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/boolean",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/primitive/boolean",
+      expected_body: JSON.parse("true")
     )
   end
 
@@ -177,6 +226,13 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/uuid",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/primitive/uuid",
+      expected_body: JSON.parse('"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"')
     )
   end
 

@@ -140,7 +140,7 @@ module Seed
               nodes = if value.nil?
                         []
                       elsif property.list
-                        value
+                        Utils.list_items(value)
                       else
                         [value]
                       end
@@ -229,27 +229,52 @@ module Seed
           @additional_children ||= []
         end
 
-        # The element's content in order: typed child models, additional children and {Text}
-        # segments. Child builders, {#add_child} and {#add_text} append to it; `from_xml` fills it in
+        # The element's content in order: typed child models, additional children, {Text}
+        # segments and {Comment}s. Child builders, {#add_child}, {#add_text} and {#comment} append to it; `from_xml` fills it in
         # document order. Typed children assigned directly to a property but missing here are written
         # after it.
         #
-        # @return [Array<Element, Serializable, Text>]
+        # @return [Array<Element, Serializable, Text, Comment>]
         def content
           @content ||= []
         end
 
-        # @param content [Array<Element, Serializable, Text>]
-        # @return [Array<Element, Serializable, Text>]
+        # @param content [Array<Element, Serializable, Text, Comment>]
+        # @return [Array<Element, Serializable, Text, Comment>]
         def content=(content)
           @content = content.to_a.dup
         end
 
-        # Appends an arbitrary child element; use this for elements the model does not know about.
+        # Builds the element from field values. A block receives the new instance so children can be
+        # added inline: `Response.new { |r| r.say("hi") }`.
         #
-        # @param child [Element, Serializable]
+        # @param values [Hash]
+        # @yieldparam element [self]
+        def initialize(values = {})
+          super
+          yield self if block_given?
+        end
+
+        # Appends an arbitrary child element; use this for elements the model does not know about.
+        # Accepts an {Element} or model, or an element name with optional text and attributes
+        # (`add_child("Custom", "v", a: "1")`); snake_case attribute keys are written in lowerCamelCase.
+        #
+        # @param child [Element, Serializable, String, Symbol]
+        # @param value [Object, nil] text content, when `child` is an element name
+        # @param attributes [Hash] attributes, when `child` is an element name
         # @return [Element, Serializable] the child
-        def add_child(child)
+        def add_child(child, value = nil, **attributes)
+          if child.is_a?(String) || child.is_a?(Symbol)
+            child = Element.new(child.to_s, text: value.nil? ? nil : Utils.to_xml_string(value))
+            attributes.each do |name, attribute|
+              next if attribute.nil?
+
+              child.set_attribute(name.to_s.gsub(/_([a-z\d])/) { Regexp.last_match(1).upcase },
+                                  Utils.to_xml_string(attribute))
+            end
+          elsif !value.nil? || !attributes.empty?
+            raise ArgumentError, "text and attributes can only be given together with an element name"
+          end
           additional_children << child
           content << child
           child
@@ -262,6 +287,35 @@ module Seed
         # @return [self]
         def add_text(text)
           content << Text.new(text)
+          self
+        end
+
+        # Appends an XML comment (`<!--text-->`) inside this element after the children added so far.
+        #
+        # @param text [String]
+        # @return [self]
+        def comment(text)
+          content << Comment.new(text)
+          self
+        end
+
+        # Adds an XML comment rendered immediately before this element (as a sibling in its parent,
+        # or before the root element).
+        #
+        # @param text [String]
+        # @return [self]
+        def comment_before(text)
+          content << Comment.before(text)
+          self
+        end
+
+        # Adds an XML comment rendered immediately after this element (as a sibling in its parent,
+        # or after the root element).
+        #
+        # @param text [String]
+        # @return [self]
+        def comment_after(text)
+          content << Comment.after(text)
           self
         end
 
@@ -323,7 +377,7 @@ module Seed
           return if value.nil?
 
           target = property.wrapped ? (wrapped[property.xml_name] ||= []) : typed
-          values = property.list ? value : [value]
+          values = property.list ? Utils.list_items(value) : [value]
           values.each do |item|
             next if item.nil?
 

@@ -11,7 +11,7 @@ from ..object_generator import (
 )
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
-from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, sanitize_field_name
+from fern_python.pydantic_codegen.pydantic_model import BASE_MODEL_PROPERTIES, PydanticModel, sanitize_field_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
@@ -96,6 +96,10 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             extends = []
             properties = all_properties
 
+        naming = (
+            self._compute_xml_naming(all_properties, declared_properties=properties) if self._xml is not None else None
+        )
+
         with FernAwarePydanticModel(
             class_name=self._class_name,
             type_name=self._name,
@@ -110,17 +114,58 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             for property in properties:
                 resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                 pydantic_model.add_field(
-                    name=resolved_prop_name.snake_case.safe_name,
+                    name=(
+                        naming.text_attribute
+                        if naming is not None and naming.text_attribute is not None and _is_xml_text(property)
+                        else resolved_prop_name.snake_case.safe_name
+                    ),
                     pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
                     type_reference=property.value_type,
                     json_field_name=get_wire_value(property.name),
                     description=property.docs,
                 )
-            if self._xml is not None:
-                self._add_xml_methods(pydantic_model, xml=self._xml, properties=all_properties)
+            if self._xml is not None and naming is not None:
+                self._add_xml_methods(pydantic_model, xml=self._xml, properties=all_properties, naming=naming)
+
+    def _compute_xml_naming(
+        self, properties: List[ObjectProperty], *, declared_properties: List[ObjectProperty]
+    ) -> "_XmlNaming":
+        """Fixes the fluent child builder names and the text field's attribute name together.
+
+        Builders are named after the child tag (`dial.number(...)`); when that is also the text field's
+        name the builder wins and the text is stored under a trailing underscore (`dial.number_`), as in
+        the legacy SDKs. The constructor keyword stays `number=`. A text field inherited from a parent
+        class cannot be renamed here, so the builder yields instead (`add_number`).
+        """
+        text_property = next((p for p in properties if _is_xml_text(p)), None)
+        renamable_text = text_property is not None and text_property in declared_properties
+        taken: Set[str] = {
+            _field_name(p) for p in properties if not (renamable_text and p is text_property)
+        } | _RESERVED_METHOD_NAMES
+        builder_names: Dict[str, Dict[ir_types.TypeId, str]] = {}
+        for property in properties:
+            if not _is_xml_element(property):
+                continue
+            item_type = _unwrap_list_item_type(property.value_type)
+            if item_type is None:
+                continue
+            names = self._builder_method_names(item_type, taken)
+            taken |= set(names.values())
+            builder_names[_field_name(property)] = names
+        text_attribute: Optional[str] = None
+        if renamable_text and text_property is not None and _field_name(text_property) in taken:
+            text_attribute = f"{_field_name(text_property)}_"
+            while text_attribute in taken:
+                text_attribute = f"{text_attribute}_"
+        return _XmlNaming(text_attribute=text_attribute, builder_names=builder_names)
 
     def _add_xml_methods(
-        self, pydantic_model: FernAwarePydanticModel, *, xml: ir_types.XmlEncoding, properties: List[ObjectProperty]
+        self,
+        pydantic_model: FernAwarePydanticModel,
+        *,
+        xml: ir_types.XmlEncoding,
+        properties: List[ObjectProperty],
+        naming: "_XmlNaming",
     ) -> None:
         core_utilities = self._context.core_utilities
 
@@ -140,7 +185,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                         if not _is_xml_attribute(property):
                             continue
                         writer.write_reference(core_utilities.get_xml_utility("XmlAttribute"))
-                        writer.write(f"(name={_quote(_xml_name(property))}, value=self.{_field_name(property)}")
+                        writer.write(
+                            f"(name={_quote(_xml_name(property))}, value=self.{naming.attribute_name(property)}"
+                        )
                         separator = property.xml.list_separator if property.xml is not None else None
                         if separator is not None:
                             writer.write(f", separator={_quote(separator)}")
@@ -151,7 +198,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 writer.write_line("],")
                 for property in properties:
                     if _is_xml_text(property):
-                        writer.write_line(f"text=self.{_field_name(property)},")
+                        writer.write_line(f"text=self.{naming.attribute_name(property)},")
                         separator = property.xml.list_separator if property.xml is not None else None
                         if separator is not None:
                             writer.write_line(f"text_separator={_quote(separator)},")
@@ -163,7 +210,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                         if not _is_xml_element(property) or property in inline_properties:
                             continue
                         writer.write_reference(core_utilities.get_xml_utility("XmlChild"))
-                        writer.write(f"(name={_quote(_xml_name(property))}, value=self.{_field_name(property)}")
+                        writer.write(
+                            f"(name={_quote(_xml_name(property))}, value=self.{naming.attribute_name(property)}"
+                        )
                         if property.xml is not None and property.xml.wrapped:
                             writer.write(", wrapped=True")
                         writer.write_line("),")
@@ -172,8 +221,10 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 writer.write_reference(core_utilities.get_xml_utility("order_xml_content"))
                 writer.write(f"(self.{_CONTENT}")
                 for property in inline_properties:
-                    writer.write(f", self.{_field_name(property)}")
+                    writer.write(f", self.{naming.attribute_name(property)}")
                 writer.write_line("),")
+                writer.write_line(f"comments_before=self.{_COMMENTS_BEFORE},")
+                writer.write_line(f"comments_after=self.{_COMMENTS_AFTER},")
                 writer.write_line("xml_declaration=xml_declaration,")
             writer.write_line(")")
 
@@ -189,6 +240,12 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             ),
             default_factory=AST.Expression("list"),
         )
+        for field_name in (_COMMENTS_BEFORE, _COMMENTS_AFTER):
+            pydantic_model.add_private_instance_field_unsafe(
+                name=field_name,
+                type_hint=AST.TypeHint.list(AST.TypeHint(type=self._xml_comment_class())),
+                default_factory=AST.Expression("list"),
+            )
 
         pydantic_model.add_method_unsafe(
             AST.FunctionDeclaration(
@@ -218,11 +275,13 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
                 body=AST.CodeWriter(str_body),
             )
         )
-        self._add_xml_init(pydantic_model, properties=properties)
+        self._add_xml_init(pydantic_model, properties=properties, naming=naming)
+        self._add_xml_list_coercion(pydantic_model, properties=properties)
         self._add_from_xml(pydantic_model, xml=xml, properties=properties)
         self._add_add_child_method(pydantic_model)
         self._add_add_text_method(pydantic_model)
-        self._add_xml_builder_methods(pydantic_model, properties=properties)
+        self._add_comment_methods(pydantic_model)
+        self._add_xml_builder_methods(pydantic_model, properties=properties, naming=naming)
 
     def _inline_child_properties(self, properties: Sequence[ObjectProperty]) -> List[ObjectProperty]:
         """Child element properties holding xml-encoded models that render inline (not wrapped) and so
@@ -418,6 +477,53 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             )
         )
 
+    def _add_comment_methods(self, pydantic_model: FernAwarePydanticModel) -> None:
+        comment_methods = [
+            (
+                "comment",
+                _CONTENT,
+                "Appends an XML comment (`<!--text-->`) inside this element, after the content added so far, "
+                "and returns this element.",
+            ),
+            (
+                "comment_before",
+                _COMMENTS_BEFORE,
+                "Adds an XML comment rendered immediately before this element (as a sibling in its parent, or "
+                "before the root element) and returns this element.",
+            ),
+            (
+                "comment_after",
+                _COMMENTS_AFTER,
+                "Adds an XML comment rendered immediately after this element (as a sibling in its parent, or "
+                "after the root element) and returns this element.",
+            ),
+        ]
+        for method_name, target, docstring in comment_methods:
+
+            def write_body(writer: AST.NodeWriter, target: str = target) -> None:
+                writer.write(f"self.{target}.append(")
+                writer.write_reference(self._xml_comment_class())
+                writer.write_line("(text))")
+                writer.write_line("return self")
+
+            pydantic_model.add_method_unsafe(
+                AST.FunctionDeclaration(
+                    name=method_name,
+                    signature=AST.FunctionSignature(
+                        parameters=[AST.FunctionParameter(name="text", type_hint=AST.TypeHint.str_())],
+                        return_type=AST.TypeHint(type=pydantic_model.to_reference()),
+                    ),
+                    body=AST.CodeWriter(write_body),
+                    docstring=AST.CodeWriter(docstring),
+                )
+            )
+
+    def _xml_comment_class(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=self._context.core_utilities.get_xml_utility("XmlComment").import_,
+        )
+
     def _add_add_child_method(self, pydantic_model: FernAwarePydanticModel) -> None:
         def write_body(writer: AST.NodeWriter) -> None:
             writer.write_line(f"self.{_CONTENT}.append(child)")
@@ -440,7 +546,9 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             )
         )
 
-    def _add_xml_init(self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]) -> None:
+    def _add_xml_init(
+        self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty], naming: "_XmlNaming"
+    ) -> None:
         """Lets the text body be passed positionally (`Say("Hello", voice=...)`), accepts extra attributes and
         seeds the ordered content with the children passed to the constructor."""
         core_utilities = self._context.core_utilities
@@ -453,14 +561,14 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 
         def write_body(writer: AST.NodeWriter) -> None:
             # Fields go through a dict: the pydantic mypy plugin only knows this class's `__init__`, not the base's.
-            fields = ", ".join(f"{_field_name(p)}={_field_name(p)}" for p in all_properties)
+            fields = ", ".join(f"{naming.attribute_name(p)}={_field_name(p)}" for p in all_properties)
             writer.write_line(f"super().__init__(**dict({fields}), **{_EXTRA_ATTRIBUTES})")
             if inline_properties:
                 writer.write(f"self.{_CONTENT}.extend(")
                 writer.write_reference(core_utilities.get_xml_utility("order_xml_content"))
                 writer.write("([]")
                 for property in inline_properties:
-                    writer.write(f", self.{_field_name(property)}")
+                    writer.write(f", self.{naming.attribute_name(property)}")
                 writer.write_line("))")
 
         pydantic_model.add_method_unsafe(
@@ -481,6 +589,29 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             )
         )
 
+    def _add_xml_list_coercion(
+        self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]
+    ) -> None:
+        """Lets list-valued attributes and text be passed as one delimited string (`input="speech dtmf"`)."""
+        separators: Dict[str, str] = {}
+        for p in properties:
+            if not (_is_xml_attribute(p) or _is_xml_text(p)) or _unwrap_list_item_type(p.value_type) is None:
+                continue
+            separator = p.xml.list_separator if p.xml is not None and p.xml.list_separator else " "
+            separators[_field_name(p)] = separator
+            separators[get_wire_value(p.name)] = separator
+        if not separators:
+            return
+        core_utilities = self._context.core_utilities
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            entries = ", ".join(f"{_quote(name)}: {_quote(separator)}" for name, separator in separators.items())
+            writer.write("return ")
+            writer.write_reference(core_utilities.get_xml_utility("coerce_xml_list_fields"))
+            writer.write_line(f"({PydanticModel.VALIDATOR_VALUES_PARAMETER_NAME}, {{{entries}}})")
+
+        pydantic_model.add_root_validator(validator_name="_coerce_xml_lists", body=AST.CodeWriter(write_body), pre=True)
+
     def _parameter(
         self, pydantic_model: FernAwarePydanticModel, property: ObjectProperty
     ) -> AST.NamedFunctionParameter:
@@ -497,7 +628,7 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         )
 
     def _add_xml_builder_methods(
-        self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty]
+        self, pydantic_model: FernAwarePydanticModel, *, properties: List[ObjectProperty], naming: "_XmlNaming"
     ) -> None:
         """Emits fluent `append(child)` / `<tag>(...)` methods for list-valued child element properties."""
         list_properties: List[Tuple[ObjectProperty, ir_types.TypeReference]] = []
@@ -510,15 +641,13 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         if len(list_properties) == 0:
             return
 
-        reserved_names: Set[str] = {_field_name(property) for property in properties} | _RESERVED_METHOD_NAMES
         for property, item_type in list_properties:
             field_name = _field_name(property)
             # Wrapped lists render inside their wrapper element, so they are not part of the ordered content.
             inline = not (property.xml is not None and property.xml.wrapped)
             if len(list_properties) == 1:
                 self._add_append_method(pydantic_model, field_name=field_name, item_type=item_type, inline=inline)
-            for child_type_id, method_name in self._builder_method_names(item_type, reserved_names).items():
-                reserved_names.add(method_name)
+            for child_type_id, method_name in naming.builder_names[field_name].items():
                 self._add_child_builder_method(
                     pydantic_model,
                     method_name=method_name,
@@ -693,6 +822,8 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
 
 _EXTRA_ATTRIBUTES = "extra_attributes"
 _CONTENT = "_content"
+_COMMENTS_BEFORE = "_comments_before"
+_COMMENTS_AFTER = "_comments_after"
 
 
 def _inline_argument(inline: bool) -> str:
@@ -740,7 +871,31 @@ def _docstring_with_parameters(
 
 
 # Builder method names that would shadow generated or pydantic model API.
-_RESERVED_METHOD_NAMES = {"to_xml", "from_xml", "append", "add_child"} | BASE_MODEL_PROPERTIES
+_RESERVED_METHOD_NAMES = {
+    "to_xml",
+    "from_xml",
+    "append",
+    "add_child",
+    "add_text",
+    "comment",
+    "comment_before",
+    "comment_after",
+} | BASE_MODEL_PROPERTIES
+
+
+@dataclasses.dataclass(frozen=True)
+class _XmlNaming:
+    """Method and attribute names of an XML model, fixed up front so every emitter agrees on them."""
+
+    # Attribute holding the text field when it must differ from the constructor keyword; None otherwise.
+    text_attribute: Optional[str]
+    # Fluent builder method name per child type, keyed by the list property's field name.
+    builder_names: Dict[str, Dict[ir_types.TypeId, str]]
+
+    def attribute_name(self, property: ObjectProperty) -> str:
+        if self.text_attribute is not None and _is_xml_text(property):
+            return self.text_attribute
+        return _field_name(property)
 
 
 def _set_literal(names: Sequence[str]) -> str:
@@ -775,6 +930,16 @@ def _xml_name(property: ObjectProperty) -> str:
 
 def _field_name(property: ObjectProperty) -> str:
     return sanitize_field_name(resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name)
+
+
+def xml_field_name(property: ObjectProperty) -> str:
+    """The pydantic field name an xml-encoded property is declared under (shared with the generated XML tests)."""
+    return _field_name(property)
+
+
+def xml_list_item_type(type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
+    """Returns the item type of a (possibly optional/nullable) list, or None if not a list."""
+    return _unwrap_list_item_type(type_reference)
 
 
 def _snake_name(name: str) -> str:

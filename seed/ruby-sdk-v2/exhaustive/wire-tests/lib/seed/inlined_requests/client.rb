@@ -99,7 +99,7 @@ module Seed
           method: "POST",
           path: "/req-bodies/array-body-with-headers",
           headers: headers,
-          body: params,
+          body: params[:body],
           request_options: request_options
         )
         begin

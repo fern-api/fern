@@ -5,15 +5,19 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+import typing_extensions
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, universal_root_validator
+from ..core.serialization import FieldMetadata
 from ..core.xml_utilities import (
     XmlAttribute,
     XmlChild,
+    XmlComment,
     XmlContent,
     XmlElement,
     XmlNode,
     append_xml_child,
     build_xml_model,
+    coerce_xml_list_fields,
     extra_xml_attributes,
     order_xml_content,
     parse_xml,
@@ -27,10 +31,14 @@ from .number import Number
 
 
 class Dial(UniversalBaseModel):
-    number: typing.Optional[str] = None
+    number_: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="number"), pydantic.Field(alias="number")
+    ] = None
     status_callback_event: typing.Optional[typing.List[str]] = None
     numbers: typing.Optional[typing.List[Number]] = None
     _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+    _comments_before: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
+    _comments_after: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
@@ -44,11 +52,13 @@ class Dial(UniversalBaseModel):
                 XmlAttribute(name="statusCallbackEvent", value=self.status_callback_event, separator=" "),
                 *extra_xml_attributes(self),
             ],
-            text=self.number,
+            text=self.number_,
             children=[
                 XmlChild(name="Numbers", value=self.numbers, wrapped=True),
             ],
             content=order_xml_content(self._content),
+            comments_before=self._comments_before,
+            comments_after=self._comments_after,
             xml_declaration=xml_declaration,
         )
 
@@ -76,8 +86,12 @@ class Dial(UniversalBaseModel):
             Additional XML attributes not declared in the API definition.
         """
         super().__init__(
-            **dict(number=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
+            **dict(number_=number, status_callback_event=status_callback_event, numbers=numbers), **extra_attributes
         )
+
+    @universal_root_validator(pre=True)
+    def _coerce_xml_lists(cls, values: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+        return coerce_xml_list_fields(values, {"status_callback_event": " "})
 
     @classmethod
     def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Dial:
@@ -115,6 +129,27 @@ class Dial(UniversalBaseModel):
         self._content.append(text)
         return self
 
+    def comment(self, text: str) -> Dial:
+        """
+        Appends an XML comment (`<!--text-->`) inside this element, after the content added so far, and returns this element.
+        """
+        self._content.append(XmlComment(text))
+        return self
+
+    def comment_before(self, text: str) -> Dial:
+        """
+        Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this element.
+        """
+        self._comments_before.append(XmlComment(text))
+        return self
+
+    def comment_after(self, text: str) -> Dial:
+        """
+        Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this element.
+        """
+        self._comments_after.append(XmlComment(text))
+        return self
+
     def append(self, child: Number) -> Dial:
         """
         Appends a child element and returns this element for chaining.
@@ -122,7 +157,7 @@ class Dial(UniversalBaseModel):
         append_xml_child(self, "numbers", child, inline=False)
         return self
 
-    def add_number(
+    def number(
         self,
         phone_number: typing.Optional[str] = None,
         *,

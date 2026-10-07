@@ -153,46 +153,33 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const bodyParamsVar = this.hasPathParameters() ? BODY_BAG_NAME : "params";
         const omitContentTypeWithoutBody = this.respectsOptionalRequestBody();
 
-        if (
-            this.endpoint.requestBody.type === "reference" &&
-            this.endpoint.requestBody.requestBodyType.type === "named"
-        ) {
-            const resolvedTypeId = this.resolveNamedTypeId(this.endpoint.requestBody.requestBodyType.typeId);
-            const bodyTypeReference = this.context.getReferenceToTypeId(resolvedTypeId);
-            const typeDeclaration = this.context.getTypeDeclarationOrThrow(resolvedTypeId);
-            // Enums and aliases are modules, not classes, so they don't have a .new() method
-            const isModule = typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias";
-
-            if (this.hasPathParameters()) {
+        if (this.endpoint.requestBody.type === "reference") {
+            const requestBodyType = this.endpoint.requestBody.requestBodyType;
+            const modelTypeId = this.getModelBodyTypeId(requestBodyType);
+            if (modelTypeId == null) {
                 return {
-                    code: ruby.codeblock((writer) => {
-                        this.writePathParameterExclusion(writer);
-                    }),
                     requestBodyReference: ruby.codeblock((writer) => {
                         if (omitContentTypeWithoutBody) {
-                            this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                            this.writeOptionalValueGuard(writer, this.getBodyArgumentReference(this.wrapper.bodyKey));
                         }
-                        if (isModule) {
-                            writer.write(bodyParamsVar);
-                        } else {
-                            writer.writeNode(bodyTypeReference);
-                            writer.write(`.new(${bodyParamsVar}).to_h`);
-                        }
+                        writer.write(this.getBodyValueExpression(requestBodyType, this.wrapper.bodyKey));
                     }),
                     omitContentTypeWithoutBody
                 };
             }
+            const bodyTypeReference = this.context.getReferenceToTypeId(modelTypeId);
             return {
+                code: this.hasPathParameters()
+                    ? ruby.codeblock((writer) => {
+                          this.writePathParameterExclusion(writer);
+                      })
+                    : undefined,
                 requestBodyReference: ruby.codeblock((writer) => {
                     if (omitContentTypeWithoutBody) {
                         this.writeOptionalBodyGuard(writer, bodyParamsVar);
                     }
-                    if (isModule) {
-                        writer.write(bodyParamsVar);
-                    } else {
-                        writer.writeNode(bodyTypeReference);
-                        writer.write(`.new(${bodyParamsVar}).to_h`);
-                    }
+                    writer.writeNode(bodyTypeReference);
+                    writer.write(`.new(${bodyParamsVar}).to_h`);
                 }),
                 omitContentTypeWithoutBody
             };
