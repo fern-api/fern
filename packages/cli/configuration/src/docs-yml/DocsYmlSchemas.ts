@@ -331,6 +331,7 @@ export const LayoutConfig = z.object({
     "api-reference-layout": ApiReferenceLayout.optional(),
     "api-reference-expand-properties": z.boolean().optional(),
     "show-nav-availability-badges": z.boolean().optional(),
+    "hide-webhook-method-badges": z.boolean().optional(),
     breadcrumbs: BreadcrumbsConfig.optional()
 });
 

@@ -1053,6 +1053,13 @@ types:
           are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
           availability badge is unaffected by this setting.
 
+      hide-webhook-method-badges:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-webhook-method-badges` is set to true, webhook entries in the sidebar render without
+          an HTTP method badge (e.g. `POST`). Defaults to false. The webhook page itself is unaffected.
+
       breadcrumbs:
         type: optional<BreadcrumbsConfig>
         availability: in-development
