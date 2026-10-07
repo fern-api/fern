@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Decoding a response no longer decodes every object three times. `ExtractExtraProperties`, which each generated
+    `UnmarshalJSON` calls, used to read the object twice more into `map[string]any`: once into the interface it was
+    handed, with the result discarded, and once to find the extra properties. It now validates the object once without
+    allocating, then scans it in place. Each property name is compared as it appears in the input, the value of a
+    declared property is skipped without being read, and only the values of extra properties are decoded. Declared
+    keys are cached per type. The extra properties it returns are unchanged. Decoding a page of 50 nested objects
+    takes 77% less time, 91% less memory and 94% fewer allocations on Go 1.27, and 54% less time, 86% less memory
+    and 87% fewer allocations on Go 1.26.
+  type: fix

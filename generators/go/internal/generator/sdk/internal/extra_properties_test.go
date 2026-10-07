@@ -214,6 +214,111 @@ func TestExtractExtraProperties(t *testing.T) {
 		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
 	})
 
+	t.Run("every kind of value", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		extraProperties, err := ExtractExtraProperties(
+			[]byte(`{"name": "alice", "s": "x", "n": 1.5, "b": true, "z": null, "o": {"k": [1]}, "a": [{}]}`),
+			user{},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{
+			"s": "x",
+			"n": 1.5,
+			"b": true,
+			"z": nil,
+			"o": map[string]interface{}{"k": []interface{}{float64(1)}},
+			"a": []interface{}{map[string]interface{}{}},
+		}, extraProperties)
+	})
+
+	t.Run("omitempty key is declared", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name,omitempty"`
+		}
+		extraProperties, err := ExtractExtraProperties([]byte(`{"name": "alice"}`), user{})
+		require.NoError(t, err)
+		assert.Nil(t, extraProperties)
+	})
+
+	t.Run("untagged and skipped fields are not declared", func(t *testing.T) {
+		type user struct {
+			Name    string `json:"name"`
+			Skipped string `json:"-"`
+			Plain   string
+		}
+		extraProperties, err := ExtractExtraProperties(
+			[]byte(`{"name": "alice", "Skipped": "s", "Plain": "p", "-": 1}`),
+			user{},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{"Skipped": "s", "Plain": "p", "-": float64(1)}, extraProperties)
+	})
+
+	t.Run("duplicate keys", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		extraProperties, err := ExtractExtraProperties([]byte(`{"age": 1, "name": "alice", "age": 2}`), user{})
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{"age": float64(2)}, extraProperties)
+	})
+
+	t.Run("null", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		extraProperties, err := ExtractExtraProperties([]byte(`null`), user{})
+		require.NoError(t, err)
+		assert.Nil(t, extraProperties)
+	})
+
+	t.Run("not an object", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		_, err := ExtractExtraProperties([]byte(`["alice"]`), user{})
+		assert.Error(t, err)
+	})
+
+	t.Run("escaped names and whitespace", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		extraProperties, err := ExtractExtraProperties(
+			[]byte(" {\n\t\"n\\u0061me\" : \"alice\" ,\r\n \"a\\u0067e\" : 42 } "),
+			user{},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{"age": float64(42)}, extraProperties)
+	})
+
+	t.Run("brackets and quotes inside strings", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		extraProperties, err := ExtractExtraProperties(
+			[]byte(`{"name": "}{\"[", "tags": ["]", "{"], "nested": {"q": "\\\"}"}}`),
+			user{},
+		)
+		require.NoError(t, err)
+		assert.Equal(t, map[string]interface{}{
+			"tags":   []interface{}{"]", "{"},
+			"nested": map[string]interface{}{"q": `\"}`},
+		}, extraProperties)
+	})
+
+	t.Run("invalid JSON", func(t *testing.T) {
+		type user struct {
+			Name string `json:"name"`
+		}
+		for _, input := range []string{``, `{"name": "alice"} trailing`, `{"name": }`} {
+			_, err := ExtractExtraProperties([]byte(input), user{})
+			assert.Error(t, err, input)
+		}
+	})
+
 	t.Run("exclude", func(t *testing.T) {
 		type user struct {
 			Name string `json:"name"`
