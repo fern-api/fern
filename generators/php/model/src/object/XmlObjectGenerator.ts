@@ -44,6 +44,9 @@ const RESERVED_METHOD_NAMES = [
     "getAdditionalChildren",
     "setAdditionalChildren",
     "addText",
+    "comment",
+    "commentBefore",
+    "commentAfter",
     "getContent",
     "setContent",
     "recordContent"

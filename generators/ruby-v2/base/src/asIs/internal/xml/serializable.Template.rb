@@ -229,18 +229,18 @@ module <%= gem_namespace %>
           @additional_children ||= []
         end
 
-        # The element's content in order: typed child models, additional children and {Text}
-        # segments. Child builders, {#add_child} and {#add_text} append to it; `from_xml` fills it in
+        # The element's content in order: typed child models, additional children, {Text}
+        # segments and {Comment}s. Child builders, {#add_child}, {#add_text} and {#comment} append to it; `from_xml` fills it in
         # document order. Typed children assigned directly to a property but missing here are written
         # after it.
         #
-        # @return [Array<Element, Serializable, Text>]
+        # @return [Array<Element, Serializable, Text, Comment>]
         def content
           @content ||= []
         end
 
-        # @param content [Array<Element, Serializable, Text>]
-        # @return [Array<Element, Serializable, Text>]
+        # @param content [Array<Element, Serializable, Text, Comment>]
+        # @return [Array<Element, Serializable, Text, Comment>]
         def content=(content)
           @content = content.to_a.dup
         end
@@ -287,6 +287,35 @@ module <%= gem_namespace %>
         # @return [self]
         def add_text(text)
           content << Text.new(text)
+          self
+        end
+
+        # Appends an XML comment (`<!--text-->`) inside this element after the children added so far.
+        #
+        # @param text [String]
+        # @return [self]
+        def comment(text)
+          content << Comment.new(text)
+          self
+        end
+
+        # Adds an XML comment rendered immediately before this element (as a sibling in its parent,
+        # or before the root element).
+        #
+        # @param text [String]
+        # @return [self]
+        def comment_before(text)
+          content << Comment.before(text)
+          self
+        end
+
+        # Adds an XML comment rendered immediately after this element (as a sibling in its parent,
+        # or after the root element).
+        #
+        # @param text [String]
+        # @return [self]
+        def comment_after(text)
+          content << Comment.after(text)
           self
         end
 

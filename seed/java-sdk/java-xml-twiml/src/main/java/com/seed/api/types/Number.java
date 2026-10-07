@@ -208,6 +208,30 @@ public final class Number implements XmlSerializable {
             return this;
         }
 
+        /**
+         * Appends an xml comment ({@code <!--text-->}) inside this element, after any content added so far.
+         */
+        public Builder comment(String text) {
+            this.content.add(XmlNode.comment(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately before this element (as a sibling in its parent, or before the root element).
+         */
+        public Builder commentBefore(String text) {
+            this.content.add(XmlNode.commentBefore(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately after this element (as a sibling in its parent, or after the root element).
+         */
+        public Builder commentAfter(String text) {
+            this.content.add(XmlNode.commentAfter(text));
+            return this;
+        }
+
         public Builder additionalChildren(List<XmlElement> additionalChildren) {
             for (XmlElement child : additionalChildren) {
                 this.content.add(XmlNode.element(child));

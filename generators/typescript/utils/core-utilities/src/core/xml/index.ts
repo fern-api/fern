@@ -1,5 +1,14 @@
-export { type XmlBuilder, type XmlBuiltContent, isXmlBuilder, xmlBuild, xmlBuildAll, xmlBuildContent, xmlInitialContent } from "./builder";
-export { type XmlNode, XmlParseError, localName, parseXml } from "./parse";
+export {
+    type XmlBuilder,
+    type XmlBuiltContent,
+    XmlSiblingComments,
+    isXmlBuilder,
+    xmlBuild,
+    xmlBuildAll,
+    xmlBuildContent,
+    xmlInitialContent,
+} from "./builder";
+export { type XmlCommentNode, type XmlNode, type XmlNodeContent, XmlParseError, isXmlCommentNode, localName, parseXml } from "./parse";
 export {
     type XmlContentOptions,
     type XmlNodeParser,
@@ -40,5 +49,6 @@ export {
     isXmlSerializable,
     serializeXmlElement,
 } from "./serialize";
+export { XmlComment, isXmlComment } from "./XmlComment";
 export { XmlElement } from "./XmlElement";
 export { orderXmlContent, replaceXmlContent } from "./content";
