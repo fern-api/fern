@@ -30,6 +30,8 @@ import okhttp3.ResponseBody;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.parallel.ResourceLock;
+import org.junit.jupiter.api.parallel.Resources;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -37,6 +39,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  * Compiles the emitted logging classes and checks that header redaction and log-level parsing do not depend on the JVM
  * default locale (in Turkish/Azerbaijani, "I".toLowerCase() is a dotless "ı").
  */
+@ResourceLock(Resources.LOCALE)
 class LoggingInterceptorLocaleTest {
 
     private static final String PACKAGE = "com.fern.test.logging";
