@@ -327,6 +327,7 @@ export async function publishDocs({
     process.on("SIGINT", onSignal);
     process.on("SIGTERM", onSignal);
 
+    let dynamicIrWorkerPool: DynamicIrWorkerPool | undefined;
     try {
         const effectiveWorkspace = await stitchGlobalTheme({
             docsWorkspace,
@@ -391,7 +392,7 @@ export async function publishDocs({
             }
         };
 
-        const dynamicIrWorkerPool = disableDynamicSnippets
+        dynamicIrWorkerPool = disableDynamicSnippets
             ? undefined
             : DynamicIrWorkerPool.create({ registrationConcurrency: getApiRegistrationConcurrency(), context });
 
@@ -1351,6 +1352,7 @@ export async function publishDocs({
         deployLocked = false;
         process.removeListener("SIGINT", onSignal);
         process.removeListener("SIGTERM", onSignal);
+        await dynamicIrWorkerPool?.terminate();
     }
 }
 
