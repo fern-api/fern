@@ -68,7 +68,7 @@ import { basename } from "path";
 import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
-import { DynamicIrWorkerPool } from "./dynamicIr/DynamicIrWorkerPool.js";
+import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
@@ -854,6 +854,13 @@ export async function publishDocs({
                 dynamicIrWorkerPool != null
                     ? ({ workspace, snippetsConfig }) => startDynamicIRs({ workspace, snippetsConfig })
                     : undefined,
+            // Every API's IR is built by now, and pending registrations hold their own copies. Drop the
+            // IRs cached for validation so they don't stay on the heap through registration.
+            onNavigationTreeBuilt: () => {
+                for (const ossWorkspace of ossWorkspaces) {
+                    ossWorkspace.disableResultCaching();
+                }
+            },
             buildTranslatedApiDefinitions,
             targetAudiences,
             docsVisibility
@@ -2207,7 +2214,10 @@ async function generateDynamicIRs({
             for (const [level, args] of logs) {
                 context.logger.log(level, ...args);
             }
-            return results.map(([language, json]) => [language, json == null ? undefined : () => JSON.parse(json)]);
+            return results.map(([language, gzippedJson]) => [
+                language,
+                gzippedJson == null ? undefined : () => parseDynamicIrResult(gzippedJson)
+            ]);
         } catch (error) {
             if (pool.isTerminated) {
                 throw error;

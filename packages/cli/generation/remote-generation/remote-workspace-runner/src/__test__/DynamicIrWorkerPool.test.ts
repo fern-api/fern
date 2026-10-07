@@ -4,11 +4,17 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { afterEach, describe, expect, it } from "vitest";
 
 import type { DynamicIrGeneratorJob } from "../dynamicIr/computeDynamicIRs.js";
-import { DynamicIrWorkerPool, getDynamicIrWorkerCount, stripFunctions } from "../dynamicIr/DynamicIrWorkerPool.js";
+import {
+    DynamicIrWorkerPool,
+    getDynamicIrWorkerCount,
+    parseDynamicIrResult,
+    stripFunctions
+} from "../dynamicIr/DynamicIrWorkerPool.js";
 
 // Stands in for the CLI bundle: answers each job by echoing its package names, or misbehaves on request.
 const FAKE_WORKER = `
 const { parentPort } = require("node:worker_threads");
+const { gzipSync } = require("node:zlib");
 parentPort.on("message", ({ id, generators, workspace }) => {
     const packageName = generators[0].packageName;
     if (packageName === "crash") {
@@ -23,7 +29,7 @@ parentPort.on("message", ({ id, generators, workspace }) => {
     parentPort.postMessage({
         id,
         ok: true,
-        results: generators.map((g) => [g.language, JSON.stringify({ packageName: g.packageName, api: workspace.args.workspaceName })]),
+        results: generators.map((g) => [g.language, gzipSync(JSON.stringify({ packageName: g.packageName, api: workspace.args.workspaceName }))]),
         logs: [["debug", ["generated " + packageName]]]
     });
 });
@@ -67,6 +73,8 @@ describe("getDynamicIrWorkerCount", () => {
     it("only starts workers that fit in memory next to the main thread", () => {
         // GitHub Actions ubuntu-latest: 2 vCPU / 7 GB (private repos), 4 vCPU / 16 GB (public repos)
         expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 2, memoryBytes: 7 * GIB })).toBe(0);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 2, memoryBytes: 9.5 * GIB })).toBe(1);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 4, memoryBytes: 6 * GIB })).toBe(0);
         expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 4, memoryBytes: 15.6 * GIB })).toBe(3);
         expect(getDynamicIrWorkerCount({ registrationConcurrency: 8, cores: 16, memoryBytes: 12 * GIB })).toBe(2);
     });
@@ -124,9 +132,12 @@ describe("DynamicIrWorkerPool", () => {
         );
         expect(workerPool.threadCount).toBe(2);
         outputs.forEach((output, index) => {
-            expect(output.results).toEqual([
-                ["typescript", JSON.stringify({ packageName: `pkg-${index}`, api: `api-${index}` })]
-            ]);
+            expect(
+                output.results.map(([language, gzippedJson]) => [
+                    language,
+                    gzippedJson && parseDynamicIrResult(gzippedJson)
+                ])
+            ).toEqual([["typescript", { packageName: `pkg-${index}`, api: `api-${index}` }]]);
             expect(output.logs).toEqual([["debug", [`generated pkg-${index}`]]]);
         });
     });
@@ -135,7 +146,7 @@ describe("DynamicIrWorkerPool", () => {
         const workerPool = createPool(1);
         await expect(workerPool.run(createWorkspace("a"), [job("fail")])).rejects.toThrow("generation failed");
         await expect(workerPool.run(createWorkspace("b"), [job("ok")])).resolves.toMatchObject({
-            results: [["typescript", expect.any(String)]]
+            results: [["typescript", expect.any(Uint8Array)]]
         });
     });
 
@@ -144,7 +155,7 @@ describe("DynamicIrWorkerPool", () => {
         const crashed = workerPool.run(createWorkspace("a"), [job("crash")]);
         const next = workerPool.run(createWorkspace("b"), [job("ok")]);
         await expect(crashed).rejects.toThrow("exited with code 3");
-        await expect(next).resolves.toMatchObject({ results: [["typescript", expect.any(String)]] });
+        await expect(next).resolves.toMatchObject({ results: [["typescript", expect.any(Uint8Array)]] });
         expect(workerPool.threadCount).toBe(1);
     });
 

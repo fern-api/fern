@@ -110,6 +110,23 @@ describe("OSSWorkspace.enableResultCaching", () => {
         expect(build).toHaveBeenCalledTimes(2);
     });
 
+    it("drops cached results and stops caching once disabled", async () => {
+        const workspace = createWorkspace();
+        workspace.enableResultCaching();
+        const buildIr = vi.spyOn(internals(workspace), "buildIntermediateRepresentation");
+        const buildWorkspace = vi.spyOn(internals(workspace), "buildFernWorkspace");
+
+        await workspace.getIntermediateRepresentation(IR_ARGS);
+        await workspace.toFernWorkspace({ context: createMockTaskContext() });
+        workspace.disableResultCaching();
+        await workspace.getIntermediateRepresentation(IR_ARGS);
+        await workspace.getIntermediateRepresentation(IR_ARGS);
+        await workspace.toFernWorkspace({ context: createMockTaskContext() });
+
+        expect(buildIr).toHaveBeenCalledTimes(3);
+        expect(buildWorkspace).toHaveBeenCalledTimes(2);
+    });
+
     it("builds the Fern workspace once per settings", async () => {
         const workspace = createWorkspace();
         workspace.enableResultCaching();

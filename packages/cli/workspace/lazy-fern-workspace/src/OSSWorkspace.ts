@@ -361,6 +361,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         this.fernWorkspaceCache ??= new Map();
     }
 
+    /** Drops the results cached by `enableResultCaching()` (so they can be garbage-collected) and stops caching. */
+    public disableResultCaching(): void {
+        this.intermediateRepresentationCache = undefined;
+        this.fernWorkspaceCache = undefined;
+    }
+
     public async getIntermediateRepresentation(
         args: {
             context: TaskContext;
