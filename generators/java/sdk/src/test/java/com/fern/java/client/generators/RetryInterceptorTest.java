@@ -333,6 +333,7 @@ class RetryInterceptorTest {
 
             Thread.sleep(1_500);
             assertThat(server.limitedRequests.get()).isEqualTo(1);
+            assertThat(callback.deliveries.get()).isEqualTo(1);
             shutdown(client);
         }
     }
@@ -405,9 +406,11 @@ class RetryInterceptorTest {
 
     private static final class CapturingCallback implements Callback {
         private final CompletableFuture<Object> result = new CompletableFuture<>();
+        private final AtomicInteger deliveries = new AtomicInteger();
 
         @Override
         public void onResponse(Call call, Response response) {
+            deliveries.incrementAndGet();
             try (Response closing = response) {
                 result.complete(new Response.Builder()
                         .request(closing.request())
@@ -420,6 +423,7 @@ class RetryInterceptorTest {
 
         @Override
         public void onFailure(Call call, IOException e) {
+            deliveries.incrementAndGet();
             result.complete(e);
         }
 

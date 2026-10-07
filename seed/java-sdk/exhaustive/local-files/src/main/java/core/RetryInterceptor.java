@@ -72,7 +72,7 @@ public class RetryInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         if (request.tag(AsyncAttempt.class) != null) {
-            // Retries of async calls are scheduled by AsyncRetryingCall, off OkHttp's dispatcher threads.
+            // Retries of calls created by newAsyncCall are scheduled off OkHttp's dispatcher threads.
             return chain.proceed(request);
         }
         int effectiveMaxRetries = resolveMaxRetries(request);
@@ -178,12 +178,14 @@ public class RetryInterceptor implements Interceptor {
         private final ExponentialBackoff backoff;
         private final Object lock = new Object();
 
+        // All fields below are guarded by lock.
         private Callback callback;
         private Call currentCall;
         private ScheduledFuture<?> pendingRetry;
         private Response previousResponse;
         private boolean executed;
-        private volatile boolean canceled;
+        private boolean canceled;
+        private boolean completed;
 
         AsyncRetryingCall(RetryInterceptor retryInterceptor, OkHttpClient client, Request request, int maxRetries) {
             this.client = client;
@@ -195,20 +197,32 @@ public class RetryInterceptor implements Interceptor {
 
         @Override
         public void enqueue(Callback callback) {
+            Call call;
+            boolean wasCanceled;
             synchronized (lock) {
                 if (executed) {
                     throw new IllegalStateException("Already Executed");
                 }
                 executed = true;
                 this.callback = callback;
+                call = client.newCall(request);
+                currentCall = call;
+                wasCanceled = canceled;
             }
-            startAttempt();
+            if (wasCanceled) {
+                failCanceled();
+                return;
+            }
+            call.enqueue(this);
         }
 
-        private void startAttempt() {
+        private void startRetry() {
             Call call;
             synchronized (lock) {
                 pendingRetry = null;
+                if (completed) {
+                    return;
+                }
                 if (canceled) {
                     call = null;
                 } else {
@@ -220,21 +234,26 @@ public class RetryInterceptor implements Interceptor {
                 failCanceled();
                 return;
             }
-            call.enqueue(this);
+            try {
+                call.enqueue(this);
+            } catch (RuntimeException e) {
+                // Runs on the retry scheduler, where an uncaught exception would leave the callback never invoked.
+                onFailure(call, new IOException("Failed to enqueue retry attempt", e));
+            }
         }
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
-            if (backoff != null && !canceled && shouldRetry(response.code())) {
+            if (backoff != null && shouldRetry(response.code())) {
                 Optional<Duration> delay = backoff.nextBackoff(response);
                 if (delay.isPresent()) {
                     Response buffered = bufferResponse(response);
                     synchronized (lock) {
-                        if (!canceled) {
+                        if (!canceled && !completed) {
                             closePreviousResponse();
                             previousResponse = buffered;
                             pendingRetry = RetryScheduler.INSTANCE.schedule(
-                                    this::startAttempt, delay.get().toMillis(), TimeUnit.MILLISECONDS);
+                                    this::startRetry, delay.get().toMillis(), TimeUnit.MILLISECONDS);
                             return;
                         }
                     }
@@ -243,20 +262,34 @@ public class RetryInterceptor implements Interceptor {
                     return;
                 }
             }
+            boolean deliver;
             synchronized (lock) {
-                closePreviousResponse();
+                deliver = !canceled && !completed;
+                if (deliver) {
+                    completed = true;
+                    closePreviousResponse();
+                }
+            }
+            if (!deliver) {
+                response.close();
+                failCanceled();
+                return;
             }
             callback.onResponse(call, response);
         }
 
         @Override
         public void onFailure(Call call, IOException e) {
-            Response previous = null;
+            Response previous;
             synchronized (lock) {
-                if (!canceled) {
-                    previous = previousResponse;
-                    previousResponse = null;
+                if (completed) {
+                    return;
                 }
+                completed = true;
+                // As in the synchronous retry loop, a cancelled attempt (cancel() or the call timeout firing)
+                // reports its own failure rather than the response received before it.
+                previous = canceled || call.isCanceled() ? null : previousResponse;
+                previousResponse = null;
                 closePreviousResponse();
             }
             if (previous == null) {
@@ -264,11 +297,15 @@ public class RetryInterceptor implements Interceptor {
                 return;
             }
             // A retry attempt failed with a transport error; the response already received from the API is more
-            // actionable, as in the synchronous retry loop.
+            // actionable, as in the synchronous retry loop. As with OkHttp, the callback owns the response once it is
+            // delivered, and is not called again if onResponse throws.
             try {
                 callback.onResponse(call, previous);
-            } catch (IOException callbackError) {
-                callback.onFailure(call, callbackError);
+            } catch (IOException | RuntimeException callbackError) {
+                previous.close();
+                if (callbackError instanceof RuntimeException) {
+                    throw (RuntimeException) callbackError;
+                }
             }
         }
 
@@ -294,10 +331,16 @@ public class RetryInterceptor implements Interceptor {
             }
         }
 
+        /** Completes the call with a cancellation failure, unless the callback has already been invoked. */
         private void failCanceled() {
             Call call;
             synchronized (lock) {
-                call = currentCall != null ? currentCall : client.newCall(request);
+                if (completed) {
+                    return;
+                }
+                completed = true;
+                closePreviousResponse();
+                call = currentCall;
             }
             callback.onFailure(call, new IOException("Canceled"));
         }
