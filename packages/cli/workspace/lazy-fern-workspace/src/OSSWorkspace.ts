@@ -345,6 +345,30 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }
 
     /**
+     * The OpenAPI tags declared across this workspace's specs, keyed by tag name; when two
+     * specs declare the same tag, the later spec wins. Equals `getOpenAPIIr().tags.tagsById`
+     * but skips parsing the specs, which is what makes that call slow on large specs.
+     */
+    public async getOpenAPITags({
+        context
+    }: {
+        context: TaskContext;
+    }): Promise<OpenApiIntermediateRepresentation["tags"]["tagsById"]> {
+        const specs = await this.getOpenAPISpecsCached({ context });
+        const documents = await this.loader.loadDocuments({ context, specs });
+        return Object.fromEntries(
+            documents.flatMap((document) =>
+                document.type === "openapi"
+                    ? (document.value.tags ?? []).map((tag) => [
+                          tag.name,
+                          { id: tag.name, description: tag.description }
+                      ])
+                    : []
+            )
+        );
+    }
+
+    /**
      * @internal
      * @owner dsinghvi
      */
