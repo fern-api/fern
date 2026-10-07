@@ -1,5 +1,6 @@
-import { localName, type XmlNode, XmlParseError } from "./parse.js";
+import { isXmlCommentNode, localName, type XmlNode, XmlParseError } from "./parse.js";
 import type { XmlContent, XmlSerializable } from "./serialize.js";
+import { XmlComment } from "./XmlComment.js";
 import { XmlElement } from "./XmlElement.js";
 
 const DEFAULT_LIST_SEPARATOR = " ";
@@ -138,8 +139,8 @@ export interface XmlContentOptions {
 }
 
 /**
- * Reads the element's text segments and child elements in document order. Known children are
- * parsed with `parse`; any other child is kept verbatim as an `XmlElement`.
+ * Reads the element's text segments, comments and child elements in document order. Known children
+ * are parsed with `parse`; any other child is kept verbatim as an `XmlElement`, comments as `XmlComment`.
  */
 export function xmlContent(
     node: XmlNode,
@@ -155,6 +156,10 @@ export function xmlContent(
             continue;
         }
         beforeFirstElement = false;
+        if (isXmlCommentNode(item)) {
+            content.push(new XmlComment(item.comment));
+            continue;
+        }
         const name = localName(item.name);
         if (skip.includes(name)) {
             continue;
