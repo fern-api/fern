@@ -1,0 +1,6 @@
+- summary: |
+    `fern generate --docs` spends less CPU on large multi-version API references. OpenAPI parsing
+    no longer rescans the whole spec for every operation's request body, type resolution no
+    longer rebuilds the map of definition files on every lookup while generating dynamic snippet
+    IRs, and external `$ref` resolution no longer re-shifts its work queue.
+  type: fix

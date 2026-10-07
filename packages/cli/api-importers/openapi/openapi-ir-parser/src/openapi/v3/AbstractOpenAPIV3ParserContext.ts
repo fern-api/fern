@@ -46,7 +46,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         authHeaders,
         options,
         source,
-        namespace
+        namespace,
+        refOccurrences
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
@@ -54,12 +55,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
+        /** Precomputed `getReferenceOccurrences(document)`, reused by contexts over the same document. */
+        refOccurrences?: Record<string, number>;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
-        this.refOccurrences = getReferenceOccurrences(document);
+        this.refOccurrences = refOccurrences ?? getReferenceOccurrences(document);
         this.options = options;
         this.source = source;
         this.filter = new OpenAPIFilter({ context: taskContext, options });

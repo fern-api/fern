@@ -1,5 +1,7 @@
-import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
+import { FernWorkspace, getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
+import { RelativeFilePath } from "@fern-api/path-utils";
 import {
+    DefinitionFileSchema,
     isRawAliasDefinition,
     parseGeneric,
     RawSchemas,
@@ -34,7 +36,16 @@ export interface RawTypeDeclarationInfo {
 }
 
 export class TypeResolverImpl implements TypeResolver {
+    private definitionFiles: ReturnType<typeof getAllDefinitionFiles> | undefined;
+
     constructor(private readonly workspace: FernWorkspace) {}
+
+    // getDefinitionFile() rebuilds the map of every definition file on each call, which made
+    // type resolution quadratic in the number of files for large specs.
+    private getDefinitionFile(relativeFilepath: RelativeFilePath): DefinitionFileSchema | undefined {
+        this.definitionFiles ??= getAllDefinitionFiles(this.workspace.definition);
+        return this.definitionFiles[relativeFilepath]?.contents;
+    }
 
     public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
         const resolvedType = this.resolveType({ type, file });
@@ -80,7 +91,7 @@ export class TypeResolverImpl implements TypeResolver {
         if (parsedReference == null) {
             return undefined;
         }
-        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        const definitionFile = this.getDefinitionFile(parsedReference.relativeFilepath);
         if (definitionFile == null) {
             return undefined;
         }
@@ -326,7 +337,7 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
-        const definitionFile = getDefinitionFile(this.workspace, fileOfResolvedDeclaration.relativeFilepath);
+        const definitionFile = this.getDefinitionFile(fileOfResolvedDeclaration.relativeFilepath);
         if (definitionFile == null) {
             return undefined;
         }
