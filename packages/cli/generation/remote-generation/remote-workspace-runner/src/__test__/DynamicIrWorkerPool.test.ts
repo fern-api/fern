@@ -52,14 +52,23 @@ function job(packageName: string): DynamicIrGeneratorJob {
 }
 
 describe("getDynamicIrWorkerCount", () => {
+    const GIB = 1024 ** 3;
+
     it("keeps FERN_DOCS_API_REGISTRATION_CONCURRENCY=1 in-process", () => {
-        expect(getDynamicIrWorkerCount({ registrationConcurrency: 1, cores: 16 })).toBe(0);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 1, cores: 16, memoryBytes: 64 * GIB })).toBe(0);
     });
 
     it("is bounded by registration concurrency and leaves a core for the main thread", () => {
-        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 16 })).toBe(4);
-        expect(getDynamicIrWorkerCount({ registrationConcurrency: 8, cores: 4 })).toBe(3);
-        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 1 })).toBe(0);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 16, memoryBytes: 64 * GIB })).toBe(4);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 8, cores: 4, memoryBytes: 64 * GIB })).toBe(3);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 1, memoryBytes: 64 * GIB })).toBe(0);
+    });
+
+    it("only starts workers that fit in memory next to the main thread", () => {
+        // GitHub Actions ubuntu-latest: 2 vCPU / 7 GB (private repos), 4 vCPU / 16 GB (public repos)
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 2, memoryBytes: 7 * GIB })).toBe(0);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 4, cores: 4, memoryBytes: 15.6 * GIB })).toBe(3);
+        expect(getDynamicIrWorkerCount({ registrationConcurrency: 8, cores: 16, memoryBytes: 12 * GIB })).toBe(2);
     });
 });
 

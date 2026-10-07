@@ -3,8 +3,9 @@
     no longer rescans the whole spec for every operation's request body, type resolution no
     longer rebuilds the map of definition files on every lookup while generating dynamic snippet
     IRs, and external `$ref` resolution no longer re-shifts its work queue. Dynamic snippet IRs
-    are now generated on worker threads (bounded by CPU cores and
-    `FERN_DOCS_API_REGISTRATION_CONCURRENCY`), starting as soon as each API's IR is built so they
+    are now generated on worker threads (bounded by CPU cores, available memory and
+    `FERN_DOCS_API_REGISTRATION_CONCURRENCY`; runners with less than about 10 GB of RAM, such as
+    the 2-core GitHub Actions runner, stay in-process), starting as soon as each API's IR is built so they
     overlap the navigation build. Set `FERN_DOCS_API_REGISTRATION_CONCURRENCY=1` to generate them
     serially in-process.
   type: fix

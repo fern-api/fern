@@ -1,4 +1,4 @@
-import { availableParallelism } from "node:os";
+import { availableParallelism, totalmem } from "node:os";
 import { getHeapStatistics } from "node:v8";
 import { isMainThread, parentPort, Worker, workerData } from "node:worker_threads";
 import { createLogger, type LogLevel } from "@fern-api/logger";
@@ -140,21 +140,36 @@ export function stripFunctions<T>(value: T, seen = new Map<object, unknown>()): 
     return copy as T;
 }
 
+const GIB = 1024 ** 3;
+// Measured on a 35-version docs fixture: the main thread peaks around 5 GB and each worker adds about 2 GB.
+const MAIN_THREAD_MEMORY_RESERVE_BYTES = 8 * GIB;
+const MEMORY_PER_WORKER_BYTES = 2 * GIB;
+
+/** Total memory available to this process, honoring container (cgroup) limits. */
+export function getAvailableMemoryBytes(): number {
+    const constrained = process.constrainedMemory?.() ?? 0;
+    return constrained > 0 ? Math.min(constrained, totalmem()) : totalmem();
+}
+
 /**
- * Number of dynamic IR workers: at most one per in-flight API registration, and leaving one core
- * for the main thread. 0 means generate in-process.
+ * Number of dynamic IR workers: at most one per in-flight API registration, leaving one core for
+ * the main thread, and only as many as fit in memory next to the main thread (so a 2-core / 7 GB
+ * GitHub Actions runner stays in-process). 0 means generate in-process.
  */
 export function getDynamicIrWorkerCount({
     registrationConcurrency,
-    cores = availableParallelism()
+    cores = availableParallelism(),
+    memoryBytes = getAvailableMemoryBytes()
 }: {
     registrationConcurrency: number;
     cores?: number;
+    memoryBytes?: number;
 }): number {
     if (registrationConcurrency <= 1) {
         return 0;
     }
-    return Math.max(0, Math.min(registrationConcurrency, cores - 1));
+    const fitInMemory = Math.floor((memoryBytes - MAIN_THREAD_MEMORY_RESERVE_BYTES) / MEMORY_PER_WORKER_BYTES);
+    return Math.max(0, Math.min(registrationConcurrency, cores - 1, fitInMemory));
 }
 
 interface QueuedJob {
