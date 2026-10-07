@@ -1,0 +1,14 @@
+layout:
+  searchbar-placement: sidebar
+  tabs-placement: sidebar
+colors:
+  card-background:
+    dark: "#1a1a1c"
+    light: "#FFFFFF"
+  border:
+    dark: "#242427"
+    light: "#EDEDF1"
+theme:
+  body: canvas
+  tabs: bubble
+  sidebar: minimal

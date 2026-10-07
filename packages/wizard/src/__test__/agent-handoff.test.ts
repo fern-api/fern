@@ -16,7 +16,8 @@ function detection(agents: Detection["agents"]): Detection {
         packageManager: "npm",
         hasPackageJson: false,
         pnpmWorkspaceRoot: false,
-        fernCliVersion: null
+        fernCliVersion: null,
+        docsSkillInstalled: false
     };
 }
 

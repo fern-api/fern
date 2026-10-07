@@ -4,11 +4,22 @@ import inquirer from "inquirer";
 import path from "path";
 import { detectRepository } from "./detect";
 import { isFernCliInstalled } from "./detect/package-manager";
+import {
+    BUTTON_SHAPES,
+    DOCS_FEATURES,
+    type DocsSiteChoices,
+    defaultDocsSiteChoices,
+    LAYOUTS,
+    TYPOGRAPHY_OPTIONS
+} from "./docs-site/options";
+import { promptDocsSiteChoices } from "./docs-site/prompt";
+import { scaffoldDocsSite } from "./docs-site/scaffold";
 import { recommend } from "./recommend";
 import { showSplash } from "./splash";
 import { type Command, formatCommand, runCommand } from "./steps/commands";
+import { ensureDocsSkillInSharedDirectory } from "./steps/docs-skill";
 import { agentHandoffFiles, writeAgentHandoff } from "./steps/handoff";
-import type { ActionId, ActionPlan, ApiSpec, Detection, WizardFlags } from "./types";
+import type { ActionId, ActionPlan, ActionPlanResult, ApiSpec, Detection, WizardFlags } from "./types";
 import { formatAction, printNextSteps, printPlan, printRecommendations } from "./ui";
 
 interface ActionAnswers {
@@ -21,8 +32,9 @@ interface SpecAnswers {
 
 const ORG_PLACEHOLDER = "<your-org>";
 
-export function planActions(detection: Detection, flags: WizardFlags): ActionPlan[] {
+export function planActions(detection: Detection, flags: WizardFlags): ActionPlanResult {
     const actions: ActionPlan[] = [];
+    const notes: string[] = [];
     if (detection.fernCliVersion === null && !flags.skipInstall) {
         actions.push({
             id: "install-cli",
@@ -36,9 +48,9 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
         });
     }
     if (detection.fernProject.exists) {
-        console.log("Existing Fern project detected at fern/ — skipping init");
+        notes.push("Existing Fern project detected at fern/ — skipping init");
     } else {
-        const initApi = planInitApi(detection, flags);
+        const initApi = planInitApi(detection, flags, notes);
         if (initApi !== undefined) {
             actions.push(initApi);
         }
@@ -49,17 +61,26 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
             id: "init-docs",
             ...(mintJson === undefined
                 ? {
-                      title: "Set up a docs site",
-                      description: "Adds fern/docs.yml for a Fern docs site you can preview with `fern docs dev`."
+                      title: "Create a docs site from a template",
+                      description:
+                          "Copies Fern's docs starter into fern/ with the layout, branding, and features you pick next (same options as the dashboard onboarding)."
                   }
                 : {
                       title: "Import your Mintlify docs",
                       description: `Converts ${mintJson} into fern/docs.yml and copies your pages and images into fern/.`
                   }),
-            commands: [displayFernCommand(detection, flags, docsInitArgs(detection, flags.org ?? ORG_PLACEHOLDER))],
-            files: [],
+            commands:
+                mintJson === undefined
+                    ? []
+                    : [displayFernCommand(detection, flags, docsInitArgs(mintJson, flags.org ?? ORG_PLACEHOLDER))],
+            files: mintJson === undefined ? ["fern/docs.yml", "fern/docs/", "fern/styles.css"] : [],
             selectedByDefault: true
         });
+    }
+    const docsInitializationOffered = !detection.fernProject.docsConfigExists;
+    const docsSiteAlreadyExists = detection.fernProject.docsConfigExists === true;
+    if (shouldOfferDocsSkill(docsInitializationOffered, docsSiteAlreadyExists, detection.docsSkillInstalled)) {
+        actions.push(docsSkillAction(detection));
     }
     if (detection.agents.length > 0) {
         actions.push(agentMcpAction(detection, flags));
@@ -75,14 +96,56 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
     if (detection.apiSpecs.length > 0) {
         actions.push({
             id: "cli-interest",
-            title: "Learn about the CLI generator (early access)",
-            description: "Prints links to the CLI generator docs and a demo booking page. Changes nothing.",
+            title: "Interested in a generated CLI for your API?",
+            description: "Prints the early-access quickstart and demo links. Changes nothing.",
             commands: [],
             files: [],
             selectedByDefault: false
         });
     }
-    return actions;
+    return { actions, notes };
+}
+
+export function shouldOfferDocsSkill(
+    docsInitializationOffered: boolean,
+    docsSiteAlreadyExists: boolean,
+    skillAlreadyInstalled: boolean
+): boolean {
+    return !skillAlreadyInstalled && (docsInitializationOffered || docsSiteAlreadyExists);
+}
+
+function docsSkillTargets(detection: Detection): string[] {
+    const targets =
+        detection.agents.length === 0
+            ? ["claude-code", "cursor", "codex"]
+            : detection.agents.map((agent) => {
+                  if (agent === "vscode") {
+                      return "github-copilot";
+                  }
+                  return agent;
+              });
+    return [...new Set(targets)];
+}
+
+function docsSkillAction(detection: Detection): ActionPlan {
+    const targets = docsSkillTargets(detection);
+    const command = formatCommand({
+        executable: "npx",
+        args: ["-y", "skills@1.6.0", "add", "fern-api/skills", "--skill", "fern-docs", "-a", ...targets, "-y"]
+    });
+    return {
+        id: "docs-skills",
+        title: "Add Fern's docs-writing skill to this repo",
+        description:
+            "Installs the fern-docs skill from fern-api/skills so your coding agent follows Fern's conventions for docs.yml, navigation, components, changelogs, redirects, and access control. Commit the files so your team gets it too.",
+        commands: [command],
+        files: [
+            ".agents/skills/fern-docs/",
+            "skills-lock.json",
+            ...(targets.includes("claude-code") ? [".claude/skills/fern-docs"] : [])
+        ],
+        selectedByDefault: true
+    };
 }
 
 function agentMcpAction(detection: Detection, flags: WizardFlags): ActionPlan {
@@ -100,7 +163,7 @@ function agentMcpAction(detection: Detection, flags: WizardFlags): ActionPlan {
     };
 }
 
-function planInitApi(detection: Detection, flags: WizardFlags): ActionPlan | undefined {
+function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]): ActionPlan | undefined {
     const openApiSpecs = getOpenApiSpecs(detection.apiSpecs);
     const org = flags.org ?? ORG_PLACEHOLDER;
     if (openApiSpecs.length > 0) {
@@ -124,14 +187,14 @@ function planInitApi(detection: Detection, flags: WizardFlags): ActionPlan | und
     }
     const nonOpenApiSpec = detection.apiSpecs[0];
     if (nonOpenApiSpec !== undefined) {
-        console.log(
+        notes.push(
             `Found ${nonOpenApiSpec.format} at ${nonOpenApiSpec.path} — skipping API init; see https://buildwithfern.com/learn/api-definitions/overview/what-is-an-api-definition to configure it`
         );
         return undefined;
     }
     const framework = detection.frameworks.find((candidate) => candidate.canGenerateOpenApi) ?? detection.frameworks[0];
     if (framework !== undefined) {
-        console.log(`Found ${framework.name} but no OpenAPI spec — skipping API init until you export one`);
+        notes.push(`Found ${framework.name} but no OpenAPI spec — skipping API init until you export one`);
         return undefined;
     }
     return {
@@ -176,8 +239,12 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     const detection = await showSplash(dir, detectRepository(dir));
     const recommendations = recommend(detection);
     printRecommendations(recommendations);
-    const actions = planActions(detection, flags);
-    const selected = flags.yes
+    const planned = planActions(detection, flags);
+    for (const note of planned.notes) {
+        console.log(note);
+    }
+    const actions = planned.actions;
+    let selected = flags.yes
         ? actions.filter((action) => action.selectedByDefault)
         : await chooseActions(actions, detection, flags);
     const validationError = validateFlags(selected, flags);
@@ -188,11 +255,47 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     const effectiveFlags =
         selected.some((action) => action.id === "init-api" || action.id === "init-docs") &&
         flags.org === undefined &&
-        !flags.yes &&
-        !flags.dryRun
+        !flags.yes
             ? { ...flags, org: await promptForOrganization() }
             : flags;
 
+    if (effectiveFlags.org !== flags.org) {
+        const refreshedActions = planActions(detection, effectiveFlags).actions;
+        selected = selected.map((action) => {
+            const refreshed = refreshedActions.find((candidate) => candidate.id === action.id);
+            return refreshed === undefined ? action : { ...refreshed, description: action.description };
+        });
+    }
+
+    let docsSiteChoices: DocsSiteChoices | undefined;
+    if (selected.some((action) => action.id === "init-docs") && findMintJson(detection) === undefined) {
+        const org = effectiveFlags.org ?? ORG_PLACEHOLDER;
+        const defaults = defaultDocsSiteChoices(org, effectiveFlags.template);
+        const choices = effectiveFlags.yes ? defaults : await promptDocsSiteChoices(defaults, dir);
+        docsSiteChoices = choices;
+        selected = selected.map((action) =>
+            action.id === "init-docs" ? { ...action, description: summarizeDocsSiteChoices(choices) } : action
+        );
+    }
+
+    if (!flags.yes) {
+        const skillAction = actions.find((action) => action.id === "docs-skills");
+        if (skillAction !== undefined) {
+            const answer = await inquirer.prompt<{ addDocsSkill: boolean }>([
+                {
+                    type: "confirm",
+                    name: "addDocsSkill",
+                    message: "Add Fern's standard docs-writing skill (fern-docs) to this repo for your coding agent?",
+                    default: true
+                }
+            ]);
+            if (answer.addDocsSkill) {
+                selected.push(skillAction);
+            }
+        }
+    }
+
+    selected = orderActions(selected);
     if (flags.dryRun) {
         printPlan(selected);
         return 0;
@@ -200,6 +303,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
 
     let failed = false;
     let cliInterest = false;
+    let scaffoldedDocsSite: DocsSiteChoices | undefined;
     for (const action of selected) {
         try {
             if (action.id === "cli-interest") {
@@ -211,15 +315,53 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
             } else if (action.id === "agent-handoff") {
                 await writeAgentHandoff(dir, detection);
             } else {
-                await executeAction(action.id, dir, detection, effectiveFlags);
+                await executeAction(action.id, dir, detection, effectiveFlags, docsSiteChoices);
+                if (action.id === "init-docs" && docsSiteChoices !== undefined) {
+                    scaffoldedDocsSite = docsSiteChoices;
+                }
             }
         } catch (error) {
             failed = true;
             console.error(`Step failed (${action.id}): ${error instanceof Error ? error.message : String(error)}`);
         }
     }
-    printNextSteps(cliInterest);
+    printNextSteps(cliInterest, scaffoldedDocsSite);
     return failed ? 1 : 0;
+}
+
+function summarizeDocsSiteChoices(choices: DocsSiteChoices): string {
+    const layout = LAYOUTS.find((option) => option.id === choices.layout);
+    const features = DOCS_FEATURES.filter((feature) => choices.features.includes(feature.id)).map(
+        (feature) => feature.label
+    );
+    const details = [
+        `${layout?.label ?? "Stacked"} layout`,
+        `${choices.subdomain}.docs.buildwithfern.com`,
+        features.length > 0 ? features.join(", ") : "No features",
+        ...(choices.typography === undefined
+            ? []
+            : [
+                  `${TYPOGRAPHY_OPTIONS.find((option) => option.id === choices.typography)?.label ?? "Custom"} typography`
+              ]),
+        ...(choices.buttonShape === undefined
+            ? []
+            : [`${BUTTON_SHAPES.find((option) => option.id === choices.buttonShape)?.label ?? "Custom"} buttons`]),
+        ...(choices.primaryColor === undefined ? [] : [choices.primaryColor])
+    ];
+    return details.join(" · ");
+}
+
+function orderActions(actions: ActionPlan[]): ActionPlan[] {
+    const order: ActionId[] = [
+        "install-cli",
+        "init-api",
+        "init-docs",
+        "docs-skills",
+        "agent-mcp",
+        "agent-handoff",
+        "cli-interest"
+    ];
+    return [...actions].sort((left, right) => order.indexOf(left.id) - order.indexOf(right.id));
 }
 
 export function validateFlags(selected: ActionPlan[], flags: WizardFlags): string | undefined {
@@ -243,6 +385,7 @@ async function promptForOrganization(): Promise<string> {
 }
 
 async function chooseActions(actions: ActionPlan[], detection: Detection, flags: WizardFlags): Promise<ActionPlan[]> {
+    const visibleActions = actions.filter((action) => action.id !== "docs-skills");
     const answer = await inquirer.prompt<ActionAnswers>([
         {
             type: "checkbox",
@@ -251,7 +394,7 @@ async function chooseActions(actions: ActionPlan[], detection: Detection, flags:
             // Each choice spans several lines; show them all instead of paginating mid-choice.
             pageSize: 40,
             loop: false,
-            choices: actions.map((action) => ({
+            choices: visibleActions.map((action) => ({
                 // Continuation lines line up with the title after inquirer's "❯◉ " prefix; the trailing
                 // newline leaves a blank line between steps.
                 name: `${formatAction(action, "   ")}\n`,
@@ -262,7 +405,7 @@ async function chooseActions(actions: ActionPlan[], detection: Detection, flags:
         }
     ]);
     if (answer.actionIds.includes("agent-mcp") || detection.agents.length > 0) {
-        return actions.filter((action) => answer.actionIds.includes(action.id));
+        return visibleActions.filter((action) => answer.actionIds.includes(action.id));
     }
     const optIn = await inquirer.prompt<{ installMcp: boolean }>([
         {
@@ -274,15 +417,16 @@ async function chooseActions(actions: ActionPlan[], detection: Detection, flags:
         }
     ]);
     return optIn.installMcp
-        ? [...actions.filter((action) => answer.actionIds.includes(action.id)), agentMcpAction(detection, flags)]
-        : actions.filter((action) => answer.actionIds.includes(action.id));
+        ? [...visibleActions.filter((action) => answer.actionIds.includes(action.id)), agentMcpAction(detection, flags)]
+        : visibleActions.filter((action) => answer.actionIds.includes(action.id));
 }
 
 async function executeAction(
     id: Exclude<ActionId, "agent-handoff" | "cli-interest">,
     dir: string,
     detection: Detection,
-    flags: WizardFlags
+    flags: WizardFlags,
+    docsSiteChoices?: DocsSiteChoices
 ): Promise<void> {
     if (id === "install-cli") {
         await runCommand(installCommand(detection), dir);
@@ -304,7 +448,20 @@ async function executeAction(
         return;
     }
     if (id === "init-docs") {
-        await runFernCommand(docsInitArgs(detection, flags.org), dir, detection);
+        const mintJson = findMintJson(detection);
+        if (mintJson === undefined) {
+            if (docsSiteChoices === undefined) {
+                throw new Error("Docs site choices are missing.");
+            }
+            await scaffoldDocsSite({ dir, org: flags.org ?? ORG_PLACEHOLDER, choices: docsSiteChoices });
+        } else {
+            await runFernCommand(docsInitArgs(mintJson, flags.org), dir, detection);
+        }
+        return;
+    }
+    if (id === "docs-skills") {
+        await runCommand(docsSkillCommand(detection), dir);
+        await ensureDocsSkillInSharedDirectory(dir, docsSkillTargets(detection));
         return;
     }
     let firstError: unknown;
@@ -323,6 +480,22 @@ async function executeAction(
     }
 }
 
+function docsSkillCommand(detection: Detection): Command {
+    return {
+        executable: "npx",
+        args: [
+            "-y",
+            "skills@1.6.0",
+            "add",
+            "fern-api/skills",
+            "--skill",
+            "fern-docs",
+            "-a",
+            ...docsSkillTargets(detection),
+            "-y"
+        ]
+    };
+}
 async function chooseSpec(specs: ApiSpec[], yes: boolean): Promise<ApiSpec | undefined> {
     if (specs.length <= 1 || yes) {
         return pickDefaultSpec(specs);
@@ -342,10 +515,8 @@ export function pickDefaultSpec(specs: ApiSpec[]): ApiSpec | undefined {
     return specs.find((spec) => spec.format === "openapi") ?? specs[0];
 }
 
-export function docsInitArgs(detection: Detection, org: string | undefined): string[] {
-    // `fern init --mintlify` only imports the legacy mint.json format, not Mintlify's newer docs.json.
-    const mintJson = findMintJson(detection);
-    return ["init", ...(mintJson === undefined ? ["--docs"] : ["--mintlify", mintJson]), ...orgArgs(org)];
+export function docsInitArgs(mintJson: string, org: string | undefined): string[] {
+    return ["init", "--mintlify", mintJson, ...orgArgs(org)];
 }
 
 async function runFernCommand(args: string[], dir: string, detection: Detection): Promise<void> {

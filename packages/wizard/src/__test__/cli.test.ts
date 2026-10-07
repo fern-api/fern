@@ -1,6 +1,15 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { defaultDocsSiteChoices, layoutFromFlag } from "../docs-site/options";
 import type { Detection, WizardFlags } from "../types";
-import { docsInitArgs, fernRunner, installCommand, pickDefaultSpec, planActions, validateFlags } from "../wizard";
+import {
+    docsInitArgs,
+    fernRunner,
+    installCommand,
+    pickDefaultSpec,
+    planActions,
+    shouldOfferDocsSkill,
+    validateFlags
+} from "../wizard";
 
 const flags: WizardFlags = {
     dir: "/tmp/project",
@@ -19,20 +28,80 @@ const baseDetection: Detection = {
     packageManager: "npm",
     hasPackageJson: true,
     pnpmWorkspaceRoot: false,
-    fernCliVersion: null
+    fernCliVersion: null,
+    docsSkillInstalled: false
 };
 
 describe("action planning", () => {
     it("plans dry-run actions without writing files", () => {
-        const actions = planActions(baseDetection, flags);
+        const actions = planActions(baseDetection, flags).actions;
         expect(actions.map((action) => action.id)).toEqual([
             "install-cli",
             "init-api",
             "init-docs",
+            "docs-skills",
             "agent-handoff",
             "cli-interest"
         ]);
         expect(actions.find((action) => action.id === "cli-interest")?.selectedByDefault).toBe(false);
+    });
+
+    it("plans a template docs site by default and keeps Mintlify imports on fern init", () => {
+        const template = planActions(baseDetection, flags).actions.find((action) => action.id === "init-docs");
+        expect(template?.title).toBe("Create a docs site from a template");
+        expect(template?.description).toBe(
+            "Copies Fern's docs starter into fern/ with the layout, branding, and features you pick next (same options as the dashboard onboarding)."
+        );
+        expect(template?.commands).toEqual([]);
+        expect(template?.files).toEqual(["fern/docs.yml", "fern/docs/", "fern/styles.css"]);
+
+        const mintlify = planActions(
+            { ...baseDetection, docsTools: [{ name: "mintlify", path: "mint.json" }] },
+            { ...flags, org: "acme" }
+        ).actions.find((action) => action.id === "init-docs");
+        expect(mintlify?.title).toBe("Import your Mintlify docs");
+        expect(mintlify?.commands).toEqual(["npx -y fern-api init --mintlify mint.json --org acme"]);
+    });
+
+    it("plans the docs-writing skill only when docs are involved and it is not installed", () => {
+        expect(shouldOfferDocsSkill(true, false, false)).toBe(true);
+        expect(shouldOfferDocsSkill(false, true, false)).toBe(true);
+        expect(shouldOfferDocsSkill(false, false, false)).toBe(false);
+        expect(shouldOfferDocsSkill(true, false, true)).toBe(false);
+        expect(
+            planActions({ ...baseDetection, docsSkillInstalled: true }, flags).actions.map((action) => action.id)
+        ).not.toContain("docs-skills");
+    });
+
+    it("uses the default and detected agent targets for the docs-writing skill", () => {
+        const defaultSkill = planActions(baseDetection, flags).actions.find((action) => action.id === "docs-skills");
+        expect(defaultSkill?.commands).toEqual([
+            "npx -y skills@1.6.0 add fern-api/skills --skill fern-docs -a claude-code cursor codex -y"
+        ]);
+        expect(defaultSkill?.files).toEqual([
+            ".agents/skills/fern-docs/",
+            "skills-lock.json",
+            ".claude/skills/fern-docs"
+        ]);
+
+        const detectedSkill = planActions({ ...baseDetection, agents: ["vscode", "claude-code"] }, flags).actions.find(
+            (action) => action.id === "docs-skills"
+        );
+        expect(detectedSkill?.commands).toEqual([
+            "npx -y skills@1.6.0 add fern-api/skills --skill fern-docs -a github-copilot claude-code -y"
+        ]);
+        expect(detectedSkill?.files).toContain(".claude/skills/fern-docs");
+    });
+
+    it("does not print notes while planning actions", () => {
+        const log = vi.spyOn(console, "log").mockImplementation(() => undefined);
+        const result = planActions(
+            { ...baseDetection, fernProject: { exists: true }, apiSpecs: [{ path: "event.yml", format: "asyncapi" }] },
+            flags
+        );
+        expect(result.notes).toEqual(["Existing Fern project detected at fern/ — skipping init"]);
+        expect(log).not.toHaveBeenCalled();
+        log.mockRestore();
     });
 
     it("plans API init with the detected OpenAPI spec", () => {
@@ -46,7 +115,7 @@ describe("action planning", () => {
                 ]
             },
             { ...flags, org: "acme" }
-        );
+        ).actions;
         const initApi = actions.find((action) => action.id === "init-api");
         expect(initApi?.title).toBe("Create a Fern project from your API spec");
         expect(initApi?.description).toContain("openapi.yaml");
@@ -57,19 +126,22 @@ describe("action planning", () => {
         const actions = planActions(
             { ...baseDetection, fernCliVersion: "1.0.0", apiSpecs: [] },
             { ...flags, org: "acme" }
-        );
+        ).actions;
         expect(actions.find((action) => action.id === "init-api")?.commands).toEqual(["fern init --org acme"]);
     });
 
     it("shows commands through the package runner until the CLI is on PATH", () => {
-        const actions = planActions({ ...baseDetection, packageManager: "pnpm" }, flags);
+        const actions = planActions({ ...baseDetection, packageManager: "pnpm" }, flags).actions;
         expect(actions.find((action) => action.id === "install-cli")?.commands).toEqual(["pnpm add -D fern-api"]);
         expect(actions.find((action) => action.id === "init-api")?.commands).toEqual([
             "pnpm exec fern init --openapi openapi.yaml --org <your-org>"
         ]);
-        const global = planActions({ ...baseDetection, hasPackageJson: false }, flags);
-        expect(global.find((action) => action.id === "init-docs")?.commands).toEqual([
-            "fern init --docs --org <your-org>"
+        const global = planActions({ ...baseDetection, hasPackageJson: false }, flags).actions;
+        expect(global.find((action) => action.id === "init-docs")?.commands).toEqual([]);
+        expect(global.find((action) => action.id === "init-docs")?.files).toEqual([
+            "fern/docs.yml",
+            "fern/docs/",
+            "fern/styles.css"
         ]);
     });
 
@@ -77,7 +149,7 @@ describe("action planning", () => {
         const actions = planActions(
             { ...baseDetection, fernCliVersion: "1.0.0", agents: ["cursor", "claude-code"] },
             flags
-        );
+        ).actions;
         expect(actions.find((action) => action.id === "agent-mcp")?.commands).toEqual([
             "fern login",
             "fern mcp install"
@@ -86,9 +158,9 @@ describe("action planning", () => {
             ".claude/skills/fern/SKILL.md",
             ".cursor/rules/fern.mdc"
         ]);
-        expect(planActions(baseDetection, flags).find((action) => action.id === "agent-handoff")?.files).toEqual([
-            "AGENTS.md"
-        ]);
+        expect(
+            planActions(baseDetection, flags).actions.find((action) => action.id === "agent-handoff")?.files
+        ).toEqual(["AGENTS.md"]);
     });
 
     it("skips API init when only a framework or a non-OpenAPI spec is found", () => {
@@ -99,13 +171,13 @@ describe("action planning", () => {
                 frameworks: [{ name: "fastapi", language: "python", canGenerateOpenApi: true }]
             },
             flags
-        );
+        ).actions;
         expect(fastapi.map((action) => action.id)).not.toContain("init-api");
 
         const asyncapi = planActions(
             { ...baseDetection, apiSpecs: [{ path: "asyncapi.yaml", format: "asyncapi" }] },
             flags
-        );
+        ).actions;
         expect(asyncapi.map((action) => action.id)).not.toContain("init-api");
     });
 
@@ -122,11 +194,11 @@ describe("action planning", () => {
 
     it("rejects --yes initialization without an organization", () => {
         const realRunFlags = { ...flags, dryRun: false };
-        expect(validateFlags(planActions(baseDetection, realRunFlags), realRunFlags)).toBe(
+        expect(validateFlags(planActions(baseDetection, realRunFlags).actions, realRunFlags)).toBe(
             "--yes requires --org <name> when initializing a Fern project"
         );
         expect(
-            validateFlags(planActions(baseDetection, { ...flags, dryRun: true }), { ...flags, dryRun: true })
+            validateFlags(planActions(baseDetection, { ...flags, dryRun: true }).actions, { ...flags, dryRun: true })
         ).toBeUndefined();
     });
 
@@ -159,12 +231,23 @@ describe("action planning", () => {
     });
 
     it("uses Mintlify initialization instead of combining docs flags", () => {
-        expect(
-            docsInitArgs({ ...baseDetection, docsTools: [{ name: "mintlify", path: "mint.json" }] }, "acme")
-        ).toEqual(["init", "--mintlify", "mint.json", "--org", "acme"]);
-        expect(docsInitArgs(baseDetection, "acme")).toEqual(["init", "--docs", "--org", "acme"]);
-        expect(
-            docsInitArgs({ ...baseDetection, docsTools: [{ name: "mintlify", path: "docs/docs.json" }] }, "acme")
-        ).toEqual(["init", "--docs", "--org", "acme"]);
+        expect(docsInitArgs("mint.json", "acme")).toEqual(["init", "--mintlify", "mint.json", "--org", "acme"]);
+        expect(docsInitArgs("mint.json", undefined)).toEqual(["init", "--mintlify", "mint.json"]);
+    });
+
+    it("maps --template choices to layout ids", () => {
+        expect(layoutFromFlag("stacked")).toBe("layout-1");
+        expect(layoutFromFlag("side-by-side")).toBe("layout-2");
+        expect(layoutFromFlag("minimal")).toBe("layout-3");
+        expect(layoutFromFlag(undefined)).toBeUndefined();
+    });
+
+    it("uses dashboard defaults for docs site choices", () => {
+        expect(defaultDocsSiteChoices("acme_team-api", "layout-3")).toEqual({
+            siteTitle: "Acme Team Api",
+            subdomain: "acme_team-api",
+            layout: "layout-3",
+            features: ["api-reference", "ask-fern", "changelog"]
+        });
     });
 });

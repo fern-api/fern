@@ -14,18 +14,26 @@ function detection(overrides: Partial<Detection>): Detection {
         hasPackageJson: false,
         pnpmWorkspaceRoot: false,
         fernCliVersion: null,
+        docsSkillInstalled: false,
         ...overrides
     };
 }
 
 describe("recommendations", () => {
     it("recommends SDKs, docs, docs MCP, and CLI for a spec", () => {
-        const ids = recommend(
+        const recommendations = recommend(
             detection({
                 apiSpecs: [{ path: "openapi.yaml", format: "openapi", version: "3.1.0" }]
             })
-        ).map((recommendation) => recommendation.id);
+        );
+        const ids = recommendations.map((recommendation) => recommendation.id);
         expect(ids).toEqual(expect.arrayContaining(["sdks", "docs", "docs-mcp", "cli"]));
+        expect(recommendations.find((recommendation) => recommendation.id === "cli")).toEqual({
+            id: "cli",
+            title: "CLI generator",
+            why: "Generate a command-line tool for your API from openapi.yaml",
+            link: "https://buildwithfern.com/learn/cli-generator/get-started/quickstart"
+        });
     });
 
     it("recommends framework spec generation without SDKs when no spec exists", () => {

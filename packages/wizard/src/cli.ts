@@ -2,6 +2,7 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI reports failures to stderr.
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import { LAYOUTS, layoutFromFlag } from "./docs-site/options";
 import type { WizardFlags } from "./types";
 import { runWizard } from "./wizard";
 
@@ -19,6 +20,11 @@ void yargs(hideBin(process.argv))
     })
     .option("skip-install", { type: "boolean", default: false, describe: "Skip Fern CLI installation" })
     .option("org", { type: "string", describe: "Fern organization" })
+    .option("template", {
+        type: "string",
+        choices: LAYOUTS.map((layout) => layout.flag),
+        describe: "Docs starter layout"
+    })
     .version(VERSION)
     .help()
     .strict()
@@ -29,7 +35,8 @@ void yargs(hideBin(process.argv))
             yes: argv.yes,
             dryRun: argv.dryRun,
             skipInstall: argv.skipInstall,
-            org: argv.org
+            org: argv.org,
+            template: layoutFromFlag(argv.template)
         };
         const exitCode = await runWizard(flags);
         if (exitCode !== 0) {

@@ -1,3 +1,5 @@
+import type { LayoutId } from "./docs-site/options";
+
 export type ApiSpecFormat = "openapi" | "asyncapi" | "protobuf";
 
 export interface ApiSpec {
@@ -39,6 +41,7 @@ export interface Detection {
     hasPackageJson: boolean;
     pnpmWorkspaceRoot: boolean;
     fernCliVersion: string | null;
+    docsSkillInstalled: boolean;
 }
 
 export type RecommendationId =
@@ -57,7 +60,14 @@ export interface Recommendation {
     link: string;
 }
 
-export type ActionId = "install-cli" | "init-api" | "init-docs" | "agent-mcp" | "agent-handoff" | "cli-interest";
+export type ActionId =
+    | "install-cli"
+    | "init-api"
+    | "init-docs"
+    | "docs-skills"
+    | "agent-mcp"
+    | "agent-handoff"
+    | "cli-interest";
 
 export interface ActionPlan {
     id: ActionId;
@@ -71,10 +81,16 @@ export interface ActionPlan {
     selectedByDefault: boolean;
 }
 
+export interface ActionPlanResult {
+    actions: ActionPlan[];
+    notes: string[];
+}
+
 export interface WizardFlags {
     dir: string;
     yes: boolean;
     dryRun: boolean;
     skipInstall: boolean;
     org?: string;
+    template?: LayoutId;
 }

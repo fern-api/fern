@@ -1,0 +1,81 @@
+---
+title: API reference
+subtitle: Interactive documentation generated from your API specification
+slug: api-reference
+---
+
+Fern automatically generates interactive API reference documentation from your API specification. This starter template includes a sample Plant Store API to demonstrate the feature.
+
+## Supported specifications
+
+Fern supports multiple API specification formats:
+
+| Format | Description | Documentation |
+|--------|-------------|---------------|
+| **OpenAPI** | The most widely used REST API specification format (versions 2.0, 3.0, and 3.1) | [OpenAPI docs](https://buildwithfern.com/learn/api-definitions/openapi/overview) |
+| **AsyncAPI** | For event-driven and message-based APIs | [AsyncAPI docs](https://buildwithfern.com/learn/api-definitions/asyncapi) |
+| **gRPC** | Protocol buffer definitions for gRPC services | [gRPC docs](https://buildwithfern.com/learn/api-definitions/protobuf) |
+
+## How it works
+
+Place your API specification file in the `fern/` directory and reference it in your `docs.yml` navigation:
+
+```yaml title="docs.yml"
+navigation:
+  - section: Documentation
+    contents:
+      - page: Overview
+        path: docs/pages/overview.mdx
+  - api: API Reference
+```
+
+Fern parses your specification and generates:
+
+- Endpoint documentation with request/response schemas
+- Interactive API Explorer for testing endpoints
+- Code snippets in multiple languages
+- Type definitions and examples
+
+## API Explorer
+
+The API Explorer lets users test API endpoints directly in the documentation. Users can fill in parameters, send requests, and see responses without leaving the page.
+
+<Note>
+For advanced API Explorer features like auto-populating API keys, see the [API Explorer documentation](https://buildwithfern.com/learn/docs/api-references/api-explorer/overview).
+</Note>
+
+## Customizing the API reference
+
+Control how your API reference appears using the `api` configuration in `docs.yml`:
+
+```yaml title="docs.yml"
+navigation:
+  - api: API Reference
+    api-name: plantstore
+    paginated: true
+```
+
+You can also add custom content to API reference pages, organize endpoints into groups, customize section names, and control which endpoints are visible.
+
+<Note>
+For detailed customization options, see the [API reference documentation](https://buildwithfern.com/learn/docs/api-references/generate-api-ref).
+</Note>
+
+## SDK code snippets
+
+If you generate SDKs with Fern, code snippets automatically appear in your API reference showing how to call each endpoint using your SDK:
+
+```yaml title="generators.yml"
+groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 4.3.1
+        output:
+          location: pypi
+          package-name: plantstore
+```
+
+<Note>
+For more information on SDK generation, see the [SDK documentation](https://buildwithfern.com/learn/sdks/overview/introduction).
+</Note>

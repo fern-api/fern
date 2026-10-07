@@ -2,6 +2,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { describe, expect, it } from "vitest";
+import { detectRepository } from "../detect";
 import { detectAgents } from "../detect/agents";
 import { detectDocsTools } from "../detect/docs";
 import { detectFrameworks } from "../detect/frameworks";
@@ -96,6 +97,17 @@ describe("repository detection", () => {
         await mkdir(path.join(dir, "fern"), { recursive: true });
         await writeFile(path.join(dir, "fern", "fern.config.json"), "{}");
         await expect(detectFernProject(dir)).resolves.toEqual({ exists: true, path: "fern/", docsConfigExists: false });
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("detects an installed Fern docs-writing skill", async () => {
+        const dir = await fixture();
+        const skillPath = path.join(dir, ".agents", "skills", "fern-docs", "SKILL.md");
+        await mkdir(path.dirname(skillPath), { recursive: true });
+        await writeFile(skillPath, "# Fern docs skill\n");
+
+        await expect(detectRepository(dir)).resolves.toMatchObject({ docsSkillInstalled: true });
+
         await rm(dir, { recursive: true, force: true });
     });
 

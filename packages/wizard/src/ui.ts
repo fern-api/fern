@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI output is intentionally written to stdout.
 import chalk from "chalk";
+import type { DocsSiteChoices } from "./docs-site/options";
 import type { ActionPlan, Recommendation } from "./types";
 
 export const Icons = {
@@ -54,10 +55,17 @@ export function printPlan(actions: ActionPlan[]): void {
     }
 }
 
-export function printNextSteps(cliInterest: boolean): void {
+export function printNextSteps(cliInterest: boolean, docsSiteChoices?: DocsSiteChoices): void {
     console.log(chalk.bold("\nNext steps\n"));
     console.log(`  ${Icons.success} fern check`);
-    console.log(`  ${Icons.success} fern generate (or fern docs dev)`);
+    if (docsSiteChoices === undefined) {
+        console.log(`  ${Icons.success} fern generate (or fern docs dev)`);
+    } else {
+        console.log(`  ${Icons.success} fern docs dev`);
+        console.log(`  ${Icons.success} fern generate --docs`);
+        console.log(`  ${Icons.info} Publish to https://${docsSiteChoices.subdomain}.docs.buildwithfern.com`);
+        console.log(`  ${Icons.info} Set up password protection in the Dashboard after publishing.`);
+    }
     console.log(`  ${Icons.info} Dashboard: https://dashboard.buildwithfern.com`);
     if (cliInterest) {
         console.log(

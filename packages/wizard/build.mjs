@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { mkdir, rm, writeFile } from "fs/promises";
+import { cp, mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
@@ -58,6 +58,8 @@ async function main() {
             2
         )
     );
+
+    await cp(path.join(__dirname, "templates"), path.join(outDirAbs, "templates"), { recursive: true });
 
     await execAsync("npm pkg fix", { cwd: outDirAbs });
 }

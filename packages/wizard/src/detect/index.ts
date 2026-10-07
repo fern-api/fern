@@ -1,3 +1,5 @@
+import { access } from "fs/promises";
+import path from "path";
 import type { Detection } from "../types";
 import { detectAgents } from "./agents";
 import { detectDocsTools } from "./docs";
@@ -18,7 +20,8 @@ export async function detectRepository(dir: string): Promise<Detection> {
         packageManager,
         hasPackageJsonResult,
         pnpmWorkspaceRoot,
-        fernCliVersion
+        fernCliVersion,
+        docsSkillInstalled
     ] = await Promise.all([
         detectFernProject(dir),
         detectApiSpecs(dir, files),
@@ -28,7 +31,8 @@ export async function detectRepository(dir: string): Promise<Detection> {
         detectPackageManager(dir),
         hasPackageJson(dir),
         isPnpmWorkspaceRoot(dir),
-        isFernCliInstalled(dir)
+        isFernCliInstalled(dir),
+        hasDocsSkill(dir, files)
     ]);
     return {
         dir,
@@ -40,6 +44,26 @@ export async function detectRepository(dir: string): Promise<Detection> {
         packageManager,
         hasPackageJson: hasPackageJsonResult,
         pnpmWorkspaceRoot,
-        fernCliVersion
+        fernCliVersion,
+        docsSkillInstalled
     };
+}
+
+async function hasDocsSkill(dir: string, files: string[]): Promise<boolean> {
+    const skillFiles = [
+        path.join(".agents", "skills", "fern-docs", "SKILL.md"),
+        path.join(".claude", "skills", "fern-docs", "SKILL.md")
+    ];
+    for (const skillFile of skillFiles) {
+        if (files.includes(skillFile)) {
+            return true;
+        }
+        try {
+            await access(path.join(dir, skillFile));
+            return true;
+        } catch {
+            // The corresponding skill file is not installed.
+        }
+    }
+    return false;
 }
