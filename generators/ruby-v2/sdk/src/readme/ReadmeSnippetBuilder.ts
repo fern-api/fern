@@ -306,30 +306,56 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
-        if (endpoint.endpoint.pagination?.type === "custom") {
+        const pagination = endpoint.endpoint.pagination;
+        if (pagination?.type === "custom") {
             return this.renderCustomPaginationSnippet(endpoint);
         }
-        return this.writeCode(dedent`require "${this.rootPackageName}"
+        const methodCall = this.getMethodCall(endpoint);
+        const itemsField =
+            pagination?.type === "cursor" || pagination?.type === "offset"
+                ? this.case.snakeSafe(pagination.results.property.name)
+                : "items";
+        const fetchFirstPageOnCall = this.context.customConfig.fetchFirstPageOnCall === true;
+        const iterationComment = fetchFirstPageOnCall
+            ? dedent`
+                # The method sends the request for the first page and returns an iterator over the items of every page.
+                # An API error for the first page is raised by the call; later pages are requested while you iterate.`
+            : dedent`
+                # The method returns an iterator over the items of every page. No request is sent until you start
+                # iterating, so API errors are raised by the loop.`;
+        const loadFirstPageExample = fetchFirstPageOnCall
+            ? ""
+            : dedent`
 
-            # Loop over the items using the provided iterator.
-                page = ${this.rootPackageClientName}.${this.getMethodCall(endpoint)}(
-                ...
-            )
-            page.each do |item|
-                puts "Got item: #{item}"
-            end
-
-            # Alternatively, iterate page-by-page.
-            current_page = page
-            while current_page
-                current_page.results.each do |item|
-                    puts "Got item: #{item}"
-                end
-                current_page = current_page.next_page
-                break if current_page.nil?
-            end
-
-        `);
+                # Call \`load_first_page\` to send the first request now, so an API error for it is raised here.
+                items = ${methodCall}(
+                    ...
+                ).load_first_page
+            `;
+        return this.writeCode(
+            [
+                `require "${this.rootPackageName}"`,
+                "",
+                iterationComment,
+                `items = ${methodCall}(`,
+                "    ...",
+                ")",
+                "items.each do |item|",
+                '    puts "Got item: #{item}"',
+                "end",
+                loadFirstPageExample,
+                "",
+                `# Call \`pages\` to get each page's full response, including fields besides \`${itemsField}\`.`,
+                `${methodCall}(`,
+                "    ...",
+                ").pages.each do |page|",
+                `    puts "Got page: #{page.${itemsField}}"`,
+                "end",
+                ""
+            ]
+                .filter((line, index, lines) => !(line === "" && lines[index - 1] === "" && index > 0))
+                .join("\n")
+        );
     }
 
     private renderCustomPaginationSnippet(endpoint: EndpointWithFilepath): string {
@@ -400,8 +426,29 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
-        return endpointIds.map(this.lookupEndpointById.bind(this));
+        const configuredEndpointIds = this.getConfiguredEndpointIdsForFeature(featureId);
+        if (configuredEndpointIds != null) {
+            return configuredEndpointIds.map(this.lookupEndpointById.bind(this));
+        }
+        if (featureId === FernGeneratorCli.StructuredFeatureId.Pagination) {
+            const paginatedEndpoint = this.getEndpointWithPagination();
+            if (paginatedEndpoint != null) {
+                return [paginatedEndpoint];
+            }
+        }
+        return [this.lookupEndpointById(this.defaultEndpointId)];
+    }
+
+    private getEndpointWithPagination(): EndpointWithFilepath | undefined {
+        const isPaginated = (endpoint: EndpointWithFilepath) => {
+            const pagination = endpoint.endpoint.pagination;
+            return pagination != null && pagination.type !== "uri" && pagination.type !== "path";
+        };
+        const defaultEndpoint = this.endpointsById[this.defaultEndpointId];
+        if (defaultEndpoint != null && isPaginated(defaultEndpoint)) {
+            return defaultEndpoint;
+        }
+        return Object.values(this.endpointsById).find(isPaginated);
     }
 
     private getConfiguredEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {

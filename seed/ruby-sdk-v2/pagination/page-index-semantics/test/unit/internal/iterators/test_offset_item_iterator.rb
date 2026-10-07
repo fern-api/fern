@@ -132,6 +132,32 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_equal 2, @times_called
   end
 
+  def test_load_first_page_requests_the_first_page_once
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+
+    assert_same iterator, iterator.load_first_page
+    assert_equal 1, @times_called
+
+    iterator.load_first_page
+
+    assert_equal 1, @times_called
+    assert_equal (1..65).to_a, iterator.to_a
+
+    pages = make_iterator(LAZY_TEST_ITERATOR_CONFIG).load_first_page.pages
+
+    assert_equal 1, @times_called
+    assert_equal (1..10).to_a, pages.next_page.items
+    assert_equal 1, @times_called
+  end
+
+  def test_load_first_page_raises_api_errors_at_the_call
+    iterator = Seed::Internal::OffsetItemIterator.new(initial_page: nil, item_field: :items, has_next_field: nil, step: false) do |_page|
+      raise ArgumentError, "first page failed"
+    end
+
+    assert_raises(ArgumentError) { iterator.load_first_page }
+  end
+
   def test_pages_iterator_iterates_lazily
     iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG).pages
 

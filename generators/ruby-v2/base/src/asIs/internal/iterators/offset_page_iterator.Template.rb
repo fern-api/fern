@@ -31,6 +31,17 @@ module <%= gem_namespace %>
         @has_next_page = nil
 
         @http_response = nil
+        @first_page_requested = false
+      end
+
+      # Sends the request for the first page now instead of on the first iteration, so an API error for that page
+      # is raised here. The page is kept for the iteration, so it is not requested twice. Does nothing if the first
+      # page was already requested.
+      #
+      # @return [self]
+      def load_first_page
+        next? unless @first_page_requested
+        self
       end
 
       # Iterates over each page returned by the API.
@@ -90,6 +101,7 @@ module <%= gem_namespace %>
 
       def fetch_page(page_number)
         result = @get_next_page.call(page_number)
+        @first_page_requested = true
         if result.is_a?(Array)
           fetched_page, raw_response = result
           @http_response = raw_response
