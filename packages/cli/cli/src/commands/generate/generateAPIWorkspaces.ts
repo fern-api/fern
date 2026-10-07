@@ -33,6 +33,8 @@ export const GenerationMode = {
 
 export type GenerationMode = Values<typeof GenerationMode>;
 
+const LOCAL_SDK_CONFIG_FILENAMES: ReadonlySet<string> = new Set([SDK_CONFIG_FILENAME, "sdk-config.yaml"]);
+
 interface WorkspaceGeneration {
     kind: "legacy" | "sdk-config";
     workspace: AbstractAPIWorkspace<unknown>;
@@ -326,7 +328,7 @@ async function prepareSdkConfigGenerations({
     const shouldUseSdkConfig =
         sdkConfigPath != null ||
         targetNames != null ||
-        (!useLocalDocker && groupNames == null && generatorName == null && generatorIndex == null);
+        (groupNames == null && generatorName == null && generatorIndex == null);
     if (!shouldUseSdkConfig) {
         return [];
     }
@@ -376,9 +378,11 @@ async function prepareSdkConfigGenerations({
             { code: CliError.Code.ConfigError }
         );
     }
-    if (candidates.length > 0 && useLocalDocker) {
+    // ponytail: the local runner rereads sdk-config.yml from the config's directory, so an
+    // alternate file name cannot reach it. Thread the explicit path through the runner to lift this.
+    if (useLocalDocker && sdkConfigPath != null && !LOCAL_SDK_CONFIG_FILENAMES.has(path.basename(sdkConfigPath))) {
         return cliContext.failAndThrow(
-            "SDK Config v1 generation is only supported with remote sdk-gen-api generation",
+            `--local reads ${SDK_CONFIG_FILENAME} from the directory of --sdk-config, so it cannot use ${path.basename(sdkConfigPath)}. Rename the file to ${SDK_CONFIG_FILENAME}, or remove --local.`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -428,6 +432,7 @@ async function prepareSdkConfigGenerations({
                     sourceRoot: resolveSourceRoot(candidate.owner, loaded.absolutePath),
                     cliVersion: cliContext.environment.packageVersion,
                     workspaceName: candidate.owner?.workspaceName,
+                    local: useLocalDocker,
                     context
                 })
             );

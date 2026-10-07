@@ -805,7 +805,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Run legacy generator groups locally using Docker (SDK Config targets require remote generation)"
+                        "Run the generator(s) locally using Docker. SDK Config targets run on the on-prem generator."
                 })
                 .option("keepDocker", {
                     boolean: true,

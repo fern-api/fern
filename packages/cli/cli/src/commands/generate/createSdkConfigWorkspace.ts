@@ -5,6 +5,7 @@ import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-w
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundleRemoteOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { getOnPremAdapterForLanguage, isOnPremAdapter } from "@fern-api/local-workspace-runner";
 import { resolveSdkConfigGeneratorVersion } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -27,6 +28,7 @@ export async function createSdkConfigWorkspace({
     sourceRoot,
     cliVersion,
     workspaceName,
+    local = false,
     context
 }: {
     sdkConfig: SdkConfigV1;
@@ -34,6 +36,8 @@ export async function createSdkConfigWorkspace({
     sourceRoot?: string;
     cliVersion: string;
     workspaceName?: string;
+    /** Run targets with local Docker, on the on-prem adapter, instead of through sdk-gen-api. */
+    local?: boolean;
     context: TaskContext;
 }): Promise<CreatedSdkConfigWorkspace> {
     const configDirectory = path.dirname(absolutePathToConfig);
@@ -57,17 +61,12 @@ export async function createSdkConfigWorkspace({
                     ? { type: "all" }
                     : { type: "select", audiences: sdkConfig.api.audiences },
             generators: sdkConfig.targets.map((target, targetIndex) => {
-                const name = getSdkConfigGeneratorName(target.language);
-                if (name == null) {
-                    return context.failAndThrow(
-                        `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
-                        undefined,
-                        { code: CliError.Code.ConfigError }
-                    );
-                }
+                const { name, version } = local
+                    ? resolveLocalGenerator(target, context)
+                    : resolveRemoteGenerator(target, context);
                 return createGeneratorInvocation({
                     name,
-                    version: resolveSdkConfigGeneratorVersion(target.generatorVersion),
+                    version,
                     language: target.language,
                     output: target.output ?? sdkConfig.output,
                     configDirectory,
@@ -104,6 +103,42 @@ export async function createSdkConfigWorkspace({
         await cleanup();
         throw error;
     }
+}
+
+type SdkConfigTarget = SdkConfigV1["targets"][number];
+
+function resolveRemoteGenerator(target: SdkConfigTarget, context: TaskContext): { name: string; version: string } {
+    const name = getSdkConfigGeneratorName(target.language);
+    if (name == null) {
+        return context.failAndThrow(
+            `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return { name, version: resolveSdkConfigGeneratorVersion(target.generatorVersion) };
+}
+
+function resolveLocalGenerator(target: SdkConfigTarget, context: TaskContext): { name: string; version: string } {
+    const adapter = getOnPremAdapterForLanguage(target.language);
+    if (adapter == null) {
+        return context.failAndThrow(
+            `SDK Config target '${target.language}' cannot run with --local because no local generator exists for it. Remove --local to generate it remotely.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    // ponytail: an unpinned target runs the adapter's cutover release locally, where the remote route
+    // resolves the newest one. Resolve the newest published tag here if that gap starts to matter.
+    const version = target.generatorVersion ?? adapter.cutover;
+    if (!isOnPremAdapter(adapter.name, version)) {
+        return context.failAndThrow(
+            `SDK Config target '${target.language}' pins generatorVersion ${version}, but SDK Config support starts at ${adapter.cutover}. Use ${adapter.cutover} or later.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return { name: adapter.name, version };
 }
 
 function createGeneratorInvocation({

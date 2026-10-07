@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --local` now generates SDK Config targets after `fern sdk migrate`, instead of
+    failing with "SDK Config v1 generation is only supported with remote sdk-gen-api generation"
+    (`--target`) or silently generating nothing (no selectors). Each target runs on the on-prem
+    generator for its language, at its `generatorVersion` or, when unpinned, the SDK Config cutover
+    release. Targets with no on-prem generator, a pre-cutover `generatorVersion`, or an
+    `--sdk-config` file not named `sdk-config.yml` are rejected with an explanation.
+  type: fix
