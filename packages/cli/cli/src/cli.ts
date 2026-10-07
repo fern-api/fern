@@ -2408,6 +2408,11 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description: "Run the legacy development server"
                 })
+                .option("astro", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the experimental Astro docs preview server instead of Next.js"
+                })
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
@@ -2466,6 +2471,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
+                astro: argv.astro,
                 backendPort,
                 forceDownload: argv.forceDownload,
                 includePrivate: argv.private
