@@ -295,15 +295,15 @@ export class XmlTestGenerator {
     /** Element names of non-namespaced child types that live in the ordered content (not wrapped). */
     private contentChildDeclarations(): FernIr.TypeDeclaration[] {
         const declarations: FernIr.TypeDeclaration[] = [];
-        const names: string[] = [];
+        const seen = new Set<string>();
         for (const property of this.properties) {
             if (property.kind !== "ELEMENT" || (property.xml.wrapped && property.isList)) {
                 continue;
             }
             for (const child of this.xmlObjectDeclarations(property.itemType)) {
                 const xml = child.encoding?.xml;
-                if (xml != null && xml.namespace == null && !names.includes(xml.name)) {
-                    names.push(xml.name);
+                if (xml != null && xml.namespace == null && !seen.has(xml.name)) {
+                    seen.add(xml.name);
                     declarations.push(child);
                 }
             }

@@ -2,7 +2,7 @@
 generated `from_xml`/`to_xml` round trip."""
 
 from dataclasses import dataclass
-from typing import List, Optional, Sequence, Tuple
+from typing import List, Optional, Sequence, Set, Tuple
 
 from .context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import Project
@@ -348,14 +348,14 @@ class _XmlModelTest:
     def _content_child_declarations(self) -> List[ir_types.TypeDeclaration]:
         """Non-namespaced child types that live in the ordered content (not wrapped), one per element name."""
         declarations: List[ir_types.TypeDeclaration] = []
-        names: List[str] = []
+        seen: Set[str] = set()
         for property in self._properties:
             if _kind(property) != "element" or (property.xml.wrapped and property.is_list):
                 continue
             for child in self._generator.xml_object_declarations(property.item_type):
                 xml = child.encoding.xml if child.encoding is not None else None
-                if xml is not None and xml.namespace is None and xml.name not in names:
-                    names.append(xml.name)
+                if xml is not None and xml.namespace is None and xml.name not in seen:
+                    seen.add(xml.name)
                     declarations.append(child)
         return declarations
 
