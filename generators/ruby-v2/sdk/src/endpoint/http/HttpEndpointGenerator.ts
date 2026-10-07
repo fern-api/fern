@@ -48,9 +48,8 @@ export class HttpEndpointGenerator {
     }): ruby.Method {
         const rawClient = new RawClient(this.context);
 
-        const returnType =
-            getItemIteratorReturnType({ context: this.context, endpoint }) ??
-            getEndpointReturnType({ context: this.context, endpoint });
+        const itemIteratorReturnType = getItemIteratorReturnType({ context: this.context, endpoint });
+        const returnType = itemIteratorReturnType ?? getEndpointReturnType({ context: this.context, endpoint });
 
         const request = getEndpointRequest({
             context: this.context,
@@ -343,10 +342,7 @@ export class HttpEndpointGenerator {
             }
         }
 
-        if (
-            this.context.customConfig.fetchFirstPageOnCall === true &&
-            getItemIteratorReturnType({ context: this.context, endpoint }) != null
-        ) {
+        if (this.context.customConfig.fetchFirstPageOnCall === true && itemIteratorReturnType != null) {
             requestStatements = requestStatements.map((statement) =>
                 ruby.codeblock((writer) => {
                     statement.write(writer);

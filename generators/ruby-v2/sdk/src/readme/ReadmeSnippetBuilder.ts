@@ -323,39 +323,32 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             : dedent`
                 # The method returns an iterator over the items of every page. No request is sent until you start
                 # iterating, so API errors are raised by the loop.`;
-        const loadFirstPageExample = fetchFirstPageOnCall
-            ? ""
-            : dedent`
-
+        const sections = [
+            `require "${this.rootPackageName}"`,
+            `${iterationComment}\n` +
+                dedent`
+                items = ${methodCall}(
+                    ...
+                )
+                items.each do |item|
+                    puts "Got item: #{item}"
+                end`
+        ];
+        if (!fetchFirstPageOnCall) {
+            sections.push(dedent`
                 # Call \`load_first_page\` to send the first request now, so an API error for it is raised here.
                 items = ${methodCall}(
                     ...
-                ).load_first_page
-            `;
-        return this.writeCode(
-            [
-                `require "${this.rootPackageName}"`,
-                "",
-                iterationComment,
-                `items = ${methodCall}(`,
-                "    ...",
-                ")",
-                "items.each do |item|",
-                '    puts "Got item: #{item}"',
-                "end",
-                loadFirstPageExample,
-                "",
-                `# Call \`pages\` to get each page's full response, including fields besides \`${itemsField}\`.`,
-                `${methodCall}(`,
-                "    ...",
-                ").pages.each do |page|",
-                `    puts "Got page: #{page.${itemsField}}"`,
-                "end",
-                ""
-            ]
-                .filter((line, index, lines) => !(line === "" && lines[index - 1] === "" && index > 0))
-                .join("\n")
-        );
+                ).load_first_page`);
+        }
+        sections.push(dedent`
+            # Call \`pages\` to get each page's full response, including fields besides \`${itemsField}\`.
+            ${methodCall}(
+                ...
+            ).pages.each do |page|
+                puts "Got page: #{page.${itemsField}}"
+            end`);
+        return this.writeCode(sections.join("\n\n") + "\n");
     }
 
     private renderCustomPaginationSnippet(endpoint: EndpointWithFilepath): string {

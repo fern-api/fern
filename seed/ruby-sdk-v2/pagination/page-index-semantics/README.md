@@ -74,6 +74,7 @@ items = client.complex.search(
 items.each do |item|
     puts "Got item: #{item}"
 end
+
 # Call `load_first_page` to send the first request now, so an API error for it is raised here.
 items = client.complex.search(
     ...

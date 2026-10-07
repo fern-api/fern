@@ -150,6 +150,19 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_equal 1, @times_called
   end
 
+  def test_load_first_page_does_not_request_an_empty_first_page_twice
+    times_called = 0
+    iterator = Seed::Internal::OffsetItemIterator.new(initial_page: 1, item_field: :items, has_next_field: nil, step: false) do |_page|
+      times_called += 1
+      OffsetPageResponse.new(items: [])
+    end
+
+    iterator.load_first_page
+
+    assert_equal [], iterator.to_a
+    assert_equal 1, times_called
+  end
+
   def test_load_first_page_raises_api_errors_at_the_call
     iterator = Seed::Internal::OffsetItemIterator.new(initial_page: nil, item_field: :items, has_next_field: nil, step: false) do |_page|
       raise ArgumentError, "first page failed"

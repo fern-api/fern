@@ -40,7 +40,11 @@ module <%= gem_namespace %>
       #
       # @return [self]
       def load_first_page
-        next? unless @first_page_requested
+        return self if @first_page_requested
+
+        # `next?` fetches the first page and keeps it in @next_page for the iteration. An empty first page ends the
+        # iteration here, so it is not requested again.
+        @page_number = nil unless next?
         self
       end
 
