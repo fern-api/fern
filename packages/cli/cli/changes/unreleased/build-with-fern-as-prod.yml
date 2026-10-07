@@ -1,0 +1,5 @@
+- summary: |
+    Add `settings.build-with-fern-as-prod` to docs.yml. When enabled, the site's
+    `*.docs.buildwithfern.com` URL gets the same robots.txt and `noindex` behavior
+    as a custom domain, so search engines can index it. Preview URLs stay noindexed.
+  type: feat

@@ -46,6 +46,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "show-headers-in-examples",
         core.serialization.boolean().optional(),
     ),
+    buildWithFernAsProd: core.serialization.property(
+        "build-with-fern-as-prod",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -67,5 +71,6 @@ export declare namespace DocsSettingsConfig {
         "websocket-oneof-display"?: WebSocketOneofDisplay.Raw | null;
         embedding?: EmbeddingConfig.Raw | null;
         "show-headers-in-examples"?: boolean | null;
+        "build-with-fern-as-prod"?: boolean | null;
     }
 }

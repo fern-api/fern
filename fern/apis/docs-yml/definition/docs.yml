@@ -1176,6 +1176,14 @@ types:
           showing the response status line and response headers alongside the body.
 
           @default: false
+      build-with-fern-as-prod:
+        type: optional<boolean>
+        docs: |
+          If set to true, the site's `*.docs.buildwithfern.com` URL is treated like a custom domain
+          for search indexing: robots.txt allows crawling and pages are not marked `noindex`.
+          Use this when the Fern-hosted URL is the site's production URL. Preview URLs stay noindexed.
+
+          @default: false
 
   SearchSettingsConfig:
     properties:

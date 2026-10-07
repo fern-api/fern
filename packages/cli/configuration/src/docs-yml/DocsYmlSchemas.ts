@@ -356,6 +356,7 @@ export const DocsSettingsConfig = z.object({
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
     "websocket-oneof-display": z.enum(["flat", "grouped"]).optional(),
+    "build-with-fern-as-prod": z.boolean().optional(),
     embedding: EmbeddingConfig.optional()
 });
 
