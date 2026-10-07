@@ -23,6 +23,7 @@ buildCli({
         DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle2.s3.amazonaws.com/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://prod-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle3.s3.amazonaws.com/",
+        APP_DOCS_ASTRO_PREVIEW_BUCKET: "https://prod-local-preview-astro-bundle.s3.amazonaws.com/",
         CLI_NAME: "fern-pre-prod",
         CLI_PACKAGE_NAME: "@fern-api/fern-api-pre-prod",
         FERN_NO_VERSION_REDIRECTION: "true"

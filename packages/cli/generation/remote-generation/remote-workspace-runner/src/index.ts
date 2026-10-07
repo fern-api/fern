@@ -35,6 +35,7 @@ export type {
 } from "./fernSdkGenApiSourceArchive.js";
 export { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 export { getGeneratorConfig, getGithubPublishConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
+export { measureImageSizes } from "./measureImageSizes.js";
 export { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 export {
     formatSdkConfigMappingDiagnostic,
@@ -42,6 +43,9 @@ export {
     prepareFernSdkGenApiSdkConfigPayload,
     type SdkConfigMappingResult
 } from "./prepareFernSdkGenApiSdkConfigPayload.js";
+export { sanitizeRelativePathForS3 } from "./publishDocs.js";
+export type { BuiltTranslation } from "./publishDocsLedger.js";
+export { buildAllTranslationInputs, buildLedgerInput } from "./publishDocsLedger.js";
 export type { PublishTarget } from "./publishTarget.js";
 export { extractPublishTarget } from "./publishTarget.js";
 export type {
