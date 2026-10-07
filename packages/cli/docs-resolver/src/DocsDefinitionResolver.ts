@@ -188,6 +188,8 @@ export interface DocsDefinitionResolverArgs {
     registerApi?: RegisterApiFn;
     /** Lets the caller start per-API registration prep while the rest of the navigation is built. */
     onApiRegistrationQueued?: OnApiRegistrationQueuedFn;
+    /** Called once the navigation tree (and with it every API's IR) has been built. */
+    onNavigationTreeBuilt?: () => void;
     targetAudiences?: string[];
     /**
      * Which `x-twilio.docsVisibility` tiers of OpenAPI specs to include in API references.
@@ -226,6 +228,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private onApiRegistrationQueued: OnApiRegistrationQueuedFn | undefined;
+    private onNavigationTreeBuilt: (() => void) | undefined;
     private targetAudiences?: string[];
     private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
@@ -252,6 +255,7 @@ export class DocsDefinitionResolver {
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
         onApiRegistrationQueued,
+        onNavigationTreeBuilt,
         targetAudiences,
         docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
@@ -268,6 +272,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.onApiRegistrationQueued = onApiRegistrationQueued;
+        this.onNavigationTreeBuilt = onNavigationTreeBuilt;
         this.targetAudiences = targetAudiences;
         this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
@@ -690,6 +695,7 @@ export class DocsDefinitionResolver {
         const root = await this.toRootNode();
         const rootTime = performance.now() - rootStart;
         this.taskContext.logger.debug(`Built navigation tree in ${rootTime.toFixed(0)}ms`);
+        this.onNavigationTreeBuilt?.();
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 

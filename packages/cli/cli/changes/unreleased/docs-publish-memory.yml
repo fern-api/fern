@@ -1,0 +1,7 @@
+- summary: |
+    `fern generate --docs` uses less memory on large multi-version API references, so the 2-core /
+    7 GB GitHub Actions runner now generates dynamic snippet IRs on a worker thread instead of
+    in-process. Worker threads return their dynamic IRs gzipped, the IRs cached for validation are
+    released once the docs navigation is built, and each worker's heap is capped at 1.5 GB (a job
+    that runs out of memory is regenerated in-process).
+  type: fix
