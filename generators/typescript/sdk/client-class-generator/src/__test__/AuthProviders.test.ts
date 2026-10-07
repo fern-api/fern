@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
     caseConverter,
@@ -189,7 +190,7 @@ describe("AuthProviderInstance", () => {
         const scheme = createHeaderAuthScheme();
 
         it("instantiate() produces new HeaderAuthProvider call", () => {
-            const instance = new HeaderAuthProviderInstance(scheme);
+            const instance = new HeaderAuthProviderInstance(createMinimalIR(), scheme);
             const context = createMockInstanceContext();
             const params = [ts.factory.createIdentifier("options")];
             const result = instance.instantiate({ context, params });
@@ -197,7 +198,7 @@ describe("AuthProviderInstance", () => {
         });
 
         it("getSnippetProperties() returns header name property", () => {
-            const instance = new HeaderAuthProviderInstance(scheme);
+            const instance = new HeaderAuthProviderInstance(createMinimalIR(), scheme);
             const context = createMockInstanceContext();
             const props = instance.getSnippetProperties(context);
             expect(props).toHaveLength(1);
@@ -206,7 +207,7 @@ describe("AuthProviderInstance", () => {
 
         it("getSnippetProperties() uses custom header name", () => {
             const customScheme = createHeaderAuthScheme({ name: "authToken", wireValue: "X-Auth-Token" });
-            const instance = new HeaderAuthProviderInstance(customScheme);
+            const instance = new HeaderAuthProviderInstance(createMinimalIR(), customScheme);
             const context = createMockInstanceContext();
             const props = instance.getSnippetProperties(context);
             expect(printProperties(props)).toMatchSnapshot();
@@ -298,7 +299,7 @@ describe("AuthProviderInstance", () => {
         it("getSnippetProperties() combines properties from all routed providers", () => {
             const providers = new Map<string, BearerAuthProviderInstance | HeaderAuthProviderInstance>();
             providers.set("bearer", new BearerAuthProviderInstance(createBearerAuthScheme()));
-            providers.set("header", new HeaderAuthProviderInstance(createHeaderAuthScheme()));
+            providers.set("header", new HeaderAuthProviderInstance(createMinimalIR(), createHeaderAuthScheme()));
             const instance = new RoutingAuthProviderInstance(providers);
             const context = createMockInstanceContext();
             const props = instance.getSnippetProperties(context);
@@ -1089,4 +1090,38 @@ describe.each([true, false])("environment variable fallbacks (guardProcessEnvAcc
         expect(countOccurrences(normalized, clientId)).toBe(1);
         expect(countOccurrences(normalized, clientSecret)).toBe(1);
     });
+});
+
+it("emits separate header providers with matching class, namespace and credential constants", () => {
+    const schemes = ["SecretHeader", "PublicHeader"].map((key) =>
+        FernIr.AuthScheme.header(createHeaderAuthScheme({ key, name: "apiKey", wireValue: `X-${key}` }))
+    );
+    const ir = createMinimalIR({ authSchemes: schemes });
+    const project = new Project({ useInMemoryFileSystem: true });
+    for (const authScheme of schemes) {
+        const generator = new HeaderAuthProviderGenerator({
+            ir,
+            authScheme,
+            neverThrowErrors: false,
+            isAuthMandatory: false,
+            shouldUseWrapper: true
+        });
+        const name = generator.getFilePath().file?.nameOnDisk;
+        if (name == null) {
+            throw new Error("Missing provider file");
+        }
+        generator.writeToFile(createMockGeneratorContext(project, name));
+    }
+    expect(project.getSourceFiles()).toHaveLength(2);
+    for (const [fileName, className, schemeKey] of [
+        ["HeaderAuthProvider.ts", "HeaderAuthProvider", "SecretHeader"],
+        ["HeaderAuthProvider2.ts", "HeaderAuthProvider2", "PublicHeader"]
+    ] as const) {
+        const source = project.getSourceFileOrThrow(fileName).getFullText();
+        expect(source).toContain(`export class ${className}`);
+        expect(source).toContain(`export namespace ${className}`);
+        expect(source).toContain(`AUTH_SCHEME = "${schemeKey}"`);
+        expect(source).toContain(`HEADER_NAME = "X-${schemeKey}"`);
+        expect(source).toContain(`return new ${className}(options)`);
+    }
 });

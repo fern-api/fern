@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { isEndpointSecurityAuthSchemes, RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
@@ -8,7 +8,10 @@ const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 
 export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
-    if (context.authOverrides != null) {
+    const auth = context.authOverrides?.auth;
+    const endpointSecurity = auth != null && isEndpointSecurityAuthSchemes(auth);
+
+    if (context.authOverrides != null && !endpointSecurity) {
         for (const [name, declaration] of Object.entries(context.authOverrides["auth-schemes"] ?? {})) {
             context.builder.addAuthScheme({
                 name,
@@ -24,6 +27,9 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
     let setAuth = false;
 
     for (const [id, securityScheme] of Object.entries(context.ir.securitySchemes)) {
+        if (endpointSecurity && context.authOverrides?.["auth-schemes"]?.[id] != null) {
+            continue;
+        }
         if (securityScheme.type === "basic") {
             const basicAuthScheme: RawSchemas.BasicAuthSchemeSchema = {
                 scheme: "basic"
@@ -135,7 +141,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 setAuth = true;
             }
         } else if (securityScheme.type === "header") {
-            if (!setAuth) {
+            if (!setAuth || endpointSecurity) {
                 const schema: RawSchemas.AuthSchemeDeclarationSchema = {
                     header: securityScheme.headerName,
                     name: securityScheme.headerVariableName ?? "apiKey",
@@ -185,5 +191,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 });
             }
         }
+    }
+    if (endpointSecurity) {
+        for (const [name, schema] of Object.entries(context.authOverrides?.["auth-schemes"] ?? {})) {
+            context.builder.addAuthScheme({ name, schema });
+        }
+        context.builder.setAuth({ "endpoint-security": {} });
     }
 }

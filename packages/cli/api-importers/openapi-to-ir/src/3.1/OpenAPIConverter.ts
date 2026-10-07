@@ -203,7 +203,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const openApiSchemes = this.convertOpenApiSecuritySchemes();
         if (this.context.authOverrides) {
             const descriptions = new Map(openApiSchemes.map((scheme) => [scheme.key, scheme.docs]));
-            this.convertAuthOverrides(descriptions, this.context.authOverrides);
+            this.convertAuthOverrides(descriptions, this.context.authOverrides, openApiSchemes);
             return;
         }
 
@@ -218,7 +218,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private convertAuthOverrides(
         descriptions: Map<FernIr.AuthSchemeKey, string | undefined>,
-        authOverrides: NonNullable<typeof this.context.authOverrides>
+        authOverrides: NonNullable<typeof this.context.authOverrides>,
+        openApiSchemes: AuthScheme[]
     ): void {
         const enriched = {
             ...authOverrides,
@@ -237,7 +238,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         });
         this.addAuthToIR({
             requirement: auth.requirement,
-            schemes: auth.schemes,
+            schemes:
+                authOverrides.auth != null && isEndpointSecurityAuthSchemes(authOverrides.auth)
+                    ? Array.from(
+                          new Map([...openApiSchemes, ...auth.schemes].map((scheme) => [scheme.key, scheme])).values()
+                      )
+                    : auth.schemes,
             docs: auth.docs
         });
     }
