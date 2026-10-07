@@ -10,14 +10,14 @@ public class NumberXmlTest
     public void FromXml_ToXml_RoundTrips()
     {
         var xml = "<Number sendDigits=\"sendDigits\">text</Number>";
-        var parsed = Number.FromXml(xml);
+        var parsed = global::SeedApi.Number.FromXml(xml);
         Assert.That(parsed.PhoneNumber, Is.EqualTo("text"), "PhoneNumber");
         Assert.That(parsed.SendDigits, Is.EqualTo("sendDigits"), "SendDigits");
         var serialized = parsed.ToXml(false);
         Assert.That(serialized, Does.Contain(">text<"));
         Assert.That(serialized, Does.Contain("sendDigits=\"sendDigits\""));
         Assert.That(
-            Number.FromXml(serialized).ToXml(false),
+            global::SeedApi.Number.FromXml(serialized).ToXml(false),
             Is.EqualTo(serialized),
             "re-serializing the parsed document is stable"
         );
@@ -28,7 +28,7 @@ public class NumberXmlTest
     [NUnit.Framework.Test]
     public void FromXml_PreservesUnknownAttributesAndChildren()
     {
-        var parsed = Number.FromXml(
+        var parsed = global::SeedApi.Number.FromXml(
             "<Number data-unknown=\"1\"><Unknown a=\"1\">v</Unknown></Number>"
         );
         Assert.That(parsed.AdditionalAttributes["data-unknown"], Is.EqualTo("1"));
@@ -37,29 +37,41 @@ public class NumberXmlTest
         var serialized = parsed.ToXml(false);
         Assert.That(serialized, Does.Contain("data-unknown=\"1\""));
         Assert.That(serialized, Does.Contain("<Unknown a=\"1\">v</Unknown>"));
-        Assert.That(Number.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));
+        Assert.That(
+            global::SeedApi.Number.FromXml(serialized).ToXml(false),
+            Is.EqualTo(serialized)
+        );
     }
 
     [NUnit.Framework.Test]
     public void ToXml_EscapesSpecialCharacters()
     {
-        var model = new Number { PhoneNumber = "a & b < c > d \"q\" 'r'" };
+        var model = new global::SeedApi.Number { PhoneNumber = "a & b < c > d \"q\" 'r'" };
         var serialized = model.ToXml(false);
         Assert.That(serialized, Does.Not.Contain("a & b"));
         Assert.That(serialized, Does.Not.Contain("< c"));
-        Assert.That(Number.FromXml(serialized).PhoneNumber, Is.EqualTo("a & b < c > d \"q\" 'r'"));
+        Assert.That(
+            global::SeedApi.Number.FromXml(serialized).PhoneNumber,
+            Is.EqualTo("a & b < c > d \"q\" 'r'")
+        );
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsWrongRootElement()
     {
-        Assert.That(() => Number.FromXml("<NotTheNumber />"), Throws.ArgumentException);
+        Assert.That(
+            () => global::SeedApi.Number.FromXml("<NotTheNumber />"),
+            Throws.ArgumentException
+        );
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsMalformedXml()
     {
-        Assert.That(() => Number.FromXml("<Number><unclosed>"), Throws.ArgumentException);
+        Assert.That(
+            () => global::SeedApi.Number.FromXml("<Number><unclosed>"),
+            Throws.ArgumentException
+        );
     }
 
     [NUnit.Framework.Test]
@@ -67,7 +79,7 @@ public class NumberXmlTest
     {
         Assert.That(
             () =>
-                Number.FromXml(
+                global::SeedApi.Number.FromXml(
                     "<!DOCTYPE Number [<!ENTITY xxe \"injected\">]><Number>&xxe;</Number>"
                 ),
             Throws.ArgumentException

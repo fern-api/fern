@@ -30,6 +30,7 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
     private readonly testClass: ast.TestClass;
     private readonly xmlGenerator: XmlObjectGenerator;
     private readonly xml: FernIr.XmlEncoding;
+    private readonly qualifiedClassName: string;
 
     constructor(
         context: ModelGeneratorContext,
@@ -40,6 +41,7 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
         super(context);
         this.xml = xml;
         this.classBeingTested = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration);
+        this.qualifiedClassName = qualifiedName(this.classBeingTested);
         this.testClass = this.csharp.testClass({
             name: `${this.classBeingTested.name}XmlTest`,
             origin: this.model.explicit(this.typeDeclaration, "XmlTest"),
@@ -110,7 +112,9 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine(`var xml = ${this.literal(document)};`);
-                writer.writeLine(`var parsed = ${this.classBeingTested.name}.FromXml(xml);`);
+                writer.write(`var parsed = `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml(xml);`);
                 for (const { property, sample } of sampled) {
                     writer.writeLine(
                         `Assert.That(parsed.${property.field.name}, Is.EqualTo(${sample.csharp}), "${property.field.name}");`
@@ -126,8 +130,10 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
                         writer.writeLine(`Assert.That(serialized, Does.Contain(${this.literal(`>${sample.xml}<`)}));`);
                     }
                 }
+                writer.write(`Assert.That(`);
+                writer.write(this.qualifiedClassName);
                 writer.writeLine(
-                    `Assert.That(${this.classBeingTested.name}.FromXml(serialized).ToXml(false), Is.EqualTo(serialized), "re-serializing the parsed document is stable");`
+                    `.FromXml(serialized).ToXml(false), Is.EqualTo(serialized), "re-serializing the parsed document is stable");`
                 );
                 writer.writeLine(`Assert.That(parsed.ToXml(), Does.StartWith("<?xml version=\\"1.0\\""));`);
                 writer.writeLine("Assert.That(parsed.ToString(), Is.EqualTo(parsed.ToXml()));");
@@ -141,16 +147,18 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             name: "FromXml_PreservesUnknownAttributesAndChildren",
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`var parsed = ${this.classBeingTested.name}.FromXml(${this.literal(document)});`);
+                writer.write(`var parsed = `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml(${this.literal(document)});`);
                 writer.writeLine(`Assert.That(parsed.AdditionalAttributes["data-unknown"], Is.EqualTo("1"));`);
                 writer.writeLine("Assert.That(parsed.AdditionalChildren, Has.Count.EqualTo(1));");
                 writer.writeLine(`Assert.That(parsed.AdditionalChildren[0].Name, Is.EqualTo("Unknown"));`);
                 writer.writeLine("var serialized = parsed.ToXml(false);");
                 writer.writeLine(`Assert.That(serialized, Does.Contain("data-unknown=\\"1\\""));`);
                 writer.writeLine(`Assert.That(serialized, Does.Contain("<Unknown a=\\"1\\">v</Unknown>"));`);
-                writer.writeLine(
-                    `Assert.That(${this.classBeingTested.name}.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));`
-                );
+                writer.write(`Assert.That(`);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));`);
             })
         });
     }
@@ -175,12 +183,16 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
                         ({ property: required, sample }) => `${required.field.name} = ${sample.csharp}`
                     )
                 ];
-                writer.writeLine(`var model = new ${this.classBeingTested.name} { ${initializers.join(", ")} };`);
+                writer.write(`var model = new `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(` { ${initializers.join(", ")} };`);
                 writer.writeLine("var serialized = model.ToXml(false);");
                 writer.writeLine(`Assert.That(serialized, Does.Not.Contain("a & b"));`);
                 writer.writeLine(`Assert.That(serialized, Does.Not.Contain("< c"));`);
+                writer.write(`Assert.That(`);
+                writer.write(this.qualifiedClassName);
                 writer.writeLine(
-                    `Assert.That(${this.classBeingTested.name}.FromXml(serialized).${property.field.name}, Is.EqualTo(${this.literal(SPECIAL_CHARACTERS)}));`
+                    `.FromXml(serialized).${property.field.name}, Is.EqualTo(${this.literal(SPECIAL_CHARACTERS)}));`
                 );
             })
         });
@@ -198,7 +210,9 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             name: "FromXml_KeepsUnknownEnumValues",
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`var parsed = ${this.classBeingTested.name}.FromXml(${this.literal(document)});`);
+                writer.write(`var parsed = `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml(${this.literal(document)});`);
                 writer.writeLine(
                     `Assert.That(parsed.ToXml(false), Does.Contain(${this.literal(`${property.wireName}="${UNKNOWN_ENUM_VALUE}"`)}));`
                 );
@@ -207,16 +221,15 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
     }
 
     private addChildOrderTest(): void {
-        const childNames = this.getContentChildNames();
+        const [first, second] = this.getContentChildDeclarations();
         const textProperty = this.getProperties().find(
             (candidate) => candidate.kind === "TEXT" && this.primitiveKind(candidate.itemType) === "STRING"
         );
-        const [first, second] = childNames;
         let body: string | undefined;
         if (first != null && second != null) {
-            body = `<${first} /><${second} /><${first} />`;
+            body = `${this.sampleElement(first)}${this.sampleElement(second)}${this.sampleElement(first)}`;
         } else if (first != null && textProperty != null) {
-            body = `a<${first} />b`;
+            body = `a${this.sampleElement(first)}b`;
         }
         if (body == null) {
             return;
@@ -226,7 +239,9 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             name: "FromXml_PreservesChildOrder",
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`var parsed = ${this.classBeingTested.name}.FromXml(${this.literal(document)});`);
+                writer.write(`var parsed = `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml(${this.literal(document)});`);
                 writer.writeLine(`Assert.That(parsed.ToXml(false), Does.Contain(${this.literal(body)}));`);
             })
         });
@@ -237,17 +252,19 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             name: "FromXml_RejectsWrongRootElement",
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(
-                    `Assert.That(() => ${this.classBeingTested.name}.FromXml("<NotThe${this.rootName()} />"), Throws.ArgumentException);`
-                );
+                writer.write(`Assert.That(() => `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml("<NotThe${this.rootName()} />"), Throws.ArgumentException);`);
             })
         });
         this.testClass.addTestMethod({
             name: "FromXml_RejectsMalformedXml",
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
+                writer.write("Assert.That(() => ");
+                writer.write(this.qualifiedClassName);
                 writer.writeLine(
-                    `Assert.That(() => ${this.classBeingTested.name}.FromXml(${this.literal(`${this.rootStartTag("")}<unclosed>`)}), Throws.ArgumentException);`
+                    `.FromXml(${this.literal(`${this.rootStartTag("")}<unclosed>`)}), Throws.ArgumentException);`
                 );
             })
         });
@@ -256,9 +273,9 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             name: "FromXml_RejectsDoctype",
             isAsync: false,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(
-                    `Assert.That(() => ${this.classBeingTested.name}.FromXml(${this.literal(doctype)}), Throws.ArgumentException);`
-                );
+                writer.write(`Assert.That(() => `);
+                writer.write(this.qualifiedClassName);
+                writer.writeLine(`.FromXml(${this.literal(doctype)}), Throws.ArgumentException);`);
             })
         });
     }
@@ -344,18 +361,20 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
         return `<${name}${namespaceDeclaration}${attributes}>${text}</${name}>`;
     }
 
-    /** Element names of non-namespaced, non-wrapped child types that live in the ordered content. */
-    private getContentChildNames(): string[] {
+    /** Non-namespaced, non-wrapped child types that live in the ordered content, one per element name. */
+    private getContentChildDeclarations(): TypeDeclaration[] {
+        const declarations: TypeDeclaration[] = [];
         const names: string[] = [];
         for (const property of this.xmlGenerator.getContentProperties()) {
             for (const child of property.childTypes) {
                 const xml = child.encoding?.xml;
                 if (xml != null && xml.namespace == null && !names.includes(xml.name)) {
                     names.push(xml.name);
+                    declarations.push(child);
                 }
             }
         }
-        return names;
+        return declarations;
     }
 
     private rootName(): string {
@@ -429,7 +448,7 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
                 }
                 const wire = getWireValue(value.name);
                 const enumClass = this.context.csharpTypeMapper.convertToClassReference(declaration);
-                return { xml: wire, csharp: `new ${enumClass.name}(${this.literal(wire)})` };
+                return { xml: wire, csharp: `new ${qualifiedName(enumClass)}(${this.literal(wire)})` };
             }
             return undefined;
         }
@@ -480,4 +499,9 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
     private literal(value: string): string {
         return `"${escapeForCSharpString(value)}"`;
     }
+}
+
+/** `global::`-qualified so the generated test compiles when the type shares a name with a BCL type (`Uri`, `Queue`, `Stream`). */
+function qualifiedName(reference: ast.ClassReference): string {
+    return `global::${reference.namespace}.${reference.name}`;
 }

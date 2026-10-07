@@ -158,15 +158,15 @@ export class XmlTestGenerator {
     }
 
     private childOrderTest(): string | undefined {
-        const names = this.contentChildNames();
+        const [first, second] = this.contentChildDeclarations();
         const hasText = this.properties.some(
             (property) => property.kind === "TEXT" && primitiveKind(property.itemType) === "string"
         );
         let body: string | undefined;
-        if (names.length >= 2) {
-            body = `<${names[0]}/><${names[1]}/><${names[0]}/>`;
-        } else if (names.length === 1 && hasText) {
-            body = `a<${names[0]}/>b`;
+        if (first != null && second != null) {
+            body = `${this.sampleElement(first)}${this.sampleElement(second)}${this.sampleElement(first)}`;
+        } else if (first != null && hasText) {
+            body = `a${this.sampleElement(first)}b`;
         }
         if (body == null) {
             return undefined;
@@ -293,7 +293,8 @@ export class XmlTestGenerator {
     }
 
     /** Element names of non-namespaced child types that live in the ordered content (not wrapped). */
-    private contentChildNames(): string[] {
+    private contentChildDeclarations(): FernIr.TypeDeclaration[] {
+        const declarations: FernIr.TypeDeclaration[] = [];
         const names: string[] = [];
         for (const property of this.properties) {
             if (property.kind !== "ELEMENT" || (property.xml.wrapped && property.isList)) {
@@ -303,10 +304,11 @@ export class XmlTestGenerator {
                 const xml = child.encoding?.xml;
                 if (xml != null && xml.namespace == null && !names.includes(xml.name)) {
                     names.push(xml.name);
+                    declarations.push(child);
                 }
             }
         }
-        return names;
+        return declarations;
     }
 
     /** The xml-encoded object types reachable from a child element's type (directly or via an undiscriminated union). */
