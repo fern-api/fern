@@ -1,0 +1,4 @@
+api:
+  specs:
+    - graphql: ./definition/schema.graphql
+    - openapi: ./openapi.yml

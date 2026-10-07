@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern docs dev` emitting "Missing redirects check skipped: failed to resolve local docs navigation
+    (Failed to generate intermediate representation)" for API sections backed only by GraphQL specs. GraphQL-only
+    workspaces now produce an empty IR (GraphQL operations are registered separately) instead of throwing.
+    OpenAPI documents that fail to parse are now logged at warn level so the underlying cause is visible.
+  type: fix
