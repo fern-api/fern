@@ -390,13 +390,40 @@ function bodyFieldParameters(
     if (content == null) {
         return [];
     }
-    const media =
-        content["application/json"] ?? content["application/x-www-form-urlencoded"] ?? content["multipart/form-data"];
-    const schema = resolveSchemaRef(media?.schema, componentSchemas);
-    if (schema == null) {
+    const json = resolveSchemaRef(content["application/json"]?.schema, componentSchemas);
+    if (json != null) {
+        return flattenBodySchema(json, componentSchemas, 0, "");
+    }
+    const multipart = multipartFieldParameters(
+        resolveSchemaRef(content["multipart/form-data"]?.schema, componentSchemas)
+    );
+    if (multipart.length > 0) {
+        return multipart;
+    }
+    const form = resolveSchemaRef(content["application/x-www-form-urlencoded"]?.schema, componentSchemas);
+    return form == null ? [] : flattenBodySchema(form, componentSchemas, 0, "");
+}
+
+/**
+ * Multipart parts, ported from the runtime's `extract_multipart_fields`: one
+ * flag per top-level property (no nesting or `allOf` merging), and a field
+ * whose flag collides with a built-in is skipped rather than renamed.
+ */
+function multipartFieldParameters(schema: OpenApiSchema | undefined): ParameterEntry[] {
+    if (schema?.type !== "object") {
         return [];
     }
-    return flattenBodySchema(schema, componentSchemas, 0, "");
+    const required = new Set(schema.required ?? []);
+    return Object.entries(schema.properties ?? {})
+        .filter(([name]) => !RESERVED_FLAG_NAMES.has(toKebabFlag(name)))
+        .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+        .map(([name, prop]) => ({
+            name: `--${toKebabFlag(name)}`,
+            location: "body" as const,
+            type: prop.format === "binary" ? "file" : schemaToTypeString(prop),
+            required: required.has(name),
+            description: prop.description
+        }));
 }
 
 function resolveSchemaRef(
@@ -421,16 +448,18 @@ function isObjectLike(schema: OpenApiSchema): boolean {
 
 function mergedProperties(
     schema: OpenApiSchema,
-    componentSchemas: Record<string, OpenApiSchema>
+    componentSchemas: Record<string, OpenApiSchema>,
+    visiting: Set<OpenApiSchema> = new Set()
 ): { properties: Record<string, OpenApiSchema>; required: Set<string> } {
     const properties: Record<string, OpenApiSchema> = {};
     const required = new Set<string>();
+    visiting.add(schema);
     for (const branch of schema.allOf ?? []) {
         const resolved = resolveSchemaRef(branch, componentSchemas);
-        if (resolved == null) {
+        if (resolved == null || visiting.has(resolved)) {
             continue;
         }
-        const nested = mergedProperties(resolved, componentSchemas);
+        const nested = mergedProperties(resolved, componentSchemas, visiting);
         Object.assign(properties, nested.properties);
         nested.required.forEach((name) => required.add(name));
     }

@@ -53,11 +53,14 @@ pub struct ManRequest {
 /// interception), so it uses `cmd` only to know which flags consume the next
 /// token: a global flag's value (`--profile man`, `--format json`) is neither
 /// the `man` subcommand nor a page path segment.
-pub fn parse_man_request(cmd: &Command, args: &[String]) -> ManRequest {
+pub fn parse_man_request(
+    cmd: &Command,
+    args: &[String],
+) -> Result<ManRequest, crate::error::CliError> {
     let mut cmd = cmd.clone();
     cmd.build();
     let Some(man) = cmd.find_subcommand("man") else {
-        return ManRequest::default();
+        return Ok(ManRequest::default());
     };
     let mut request = ManRequest::default();
     let mut tokens = args.iter().skip(1);
@@ -65,9 +68,9 @@ pub fn parse_man_request(cmd: &Command, args: &[String]) -> ManRequest {
     while let Some(token) = tokens.next() {
         let scope = if in_man { man } else { &cmd };
         if in_man && token == "--output-dir" {
-            request.output_dir = tokens.next().cloned();
+            request.output_dir = Some(output_dir_value(tokens.next().map(String::as_str))?);
         } else if let Some(dir) = token.strip_prefix("--output-dir=").filter(|_| in_man) {
-            request.output_dir = Some(dir.to_string());
+            request.output_dir = Some(output_dir_value(Some(dir))?);
         } else if token.starts_with('-') {
             if flag_takes_separate_value(scope, token) {
                 tokens.next();
@@ -78,7 +81,16 @@ pub fn parse_man_request(cmd: &Command, args: &[String]) -> ManRequest {
             request.command_path.push(token.clone());
         }
     }
-    request
+    Ok(request)
+}
+
+fn output_dir_value(value: Option<&str>) -> Result<String, crate::error::CliError> {
+    match value {
+        Some(dir) if !dir.is_empty() && !dir.starts_with('-') => Ok(dir.to_string()),
+        _ => Err(crate::error::CliError::Validation(
+            "`--output-dir` needs a directory, e.g. `man --output-dir ./man`".to_string(),
+        )),
+    }
 }
 
 /// True when `token` is a flag of `cmd` written without an inline value
@@ -281,26 +293,42 @@ mod tests {
             .subcommand(Command::new("items").subcommand(Command::new("list")))
     }
 
+    fn parse(cli: &Command, argv: &[String]) -> ManRequest {
+        parse_man_request(cli, argv).expect("man args parse")
+    }
+
+    #[test]
+    fn parse_man_request_rejects_a_missing_output_dir() {
+        let cli = man_test_cli();
+        for argv in [
+            &["box", "man", "--output-dir"][..],
+            &["box", "man", "--output-dir="][..],
+            &["box", "man", "--output-dir", "--debug"][..],
+        ] {
+            assert!(parse_man_request(&cli, &args(argv)).is_err(), "{argv:?}");
+        }
+    }
+
     #[test]
     fn parse_man_request_reads_the_command_path_and_output_dir() {
         let cli = man_test_cli();
-        assert_eq!(parse_man_request(&cli, &args(&["box", "man"])), ManRequest::default());
+        assert_eq!(parse(&cli, &args(&["box", "man"])), ManRequest::default());
         assert_eq!(
-            parse_man_request(&cli, &args(&["box", "--debug", "man", "items", "list"])),
+            parse(&cli, &args(&["box", "--debug", "man", "items", "list"])),
             ManRequest {
                 command_path: vec!["items".into(), "list".into()],
                 output_dir: None,
             }
         );
         assert_eq!(
-            parse_man_request(&cli, &args(&["box", "man", "--output-dir", "out", "items"])),
+            parse(&cli, &args(&["box", "man", "--output-dir", "out", "items"])),
             ManRequest {
                 command_path: vec!["items".into()],
                 output_dir: Some("out".into()),
             }
         );
         assert_eq!(
-            parse_man_request(&cli, &args(&["box", "man", "--output-dir=out"])).output_dir,
+            parse(&cli, &args(&["box", "man", "--output-dir=out"])).output_dir,
             Some("out".into())
         );
     }
@@ -309,15 +337,15 @@ mod tests {
     fn parse_man_request_skips_flag_values() {
         let cli = man_test_cli();
         assert_eq!(
-            parse_man_request(&cli, &args(&["box", "--profile", "man", "man", "items"])).command_path,
+            parse(&cli, &args(&["box", "--profile", "man", "man", "items"])).command_path,
             vec!["items".to_string()]
         );
         assert_eq!(
-            parse_man_request(&cli, &args(&["box", "man", "--profile", "prod", "items"])).command_path,
+            parse(&cli, &args(&["box", "man", "--profile", "prod", "items"])).command_path,
             vec!["items".to_string()]
         );
         assert_eq!(
-            parse_man_request(&cli, &args(&["box", "man", "--profile=prod", "items"])).command_path,
+            parse(&cli, &args(&["box", "man", "--profile=prod", "items"])).command_path,
             vec!["items".to_string()]
         );
     }

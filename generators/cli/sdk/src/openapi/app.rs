@@ -1434,6 +1434,7 @@ impl CliApp {
         }
 
         let mut merged: Option<RestDescription> = None;
+        let mut fallback_groups: Vec<(String, SdkGroupInfo)> = Vec::new();
 
         for entry in &self.specs {
             // 1. Apply overlays (RFC 7396 style) first.
@@ -1462,21 +1463,21 @@ impl CliApp {
 
             // A namespaced spec's top-level command describes the whole
             // spec, so its `info.description` is the group's description
-            // unless `x-fern-groups` already provides one.
-            let mut spec_doc = spec_doc;
+            // unless any spec's `x-fern-groups` provides one (applied after
+            // the merge, so a later spec's explicit metadata still wins).
             if let Some(namespace) = entry.prefix_path.last() {
                 if let Some(description) = spec_doc
                     .description
                     .clone()
                     .filter(|d| !d.trim().is_empty())
                 {
-                    spec_doc
-                        .groups
-                        .entry(namespace.clone())
-                        .or_insert_with(|| SdkGroupInfo {
+                    fallback_groups.push((
+                        namespace.clone(),
+                        SdkGroupInfo {
                             summary: None,
                             description: Some(description),
-                        });
+                        },
+                    ));
                 }
             }
 
@@ -1517,6 +1518,9 @@ impl CliApp {
         }
 
         let mut doc = merged.expect("at least one spec was processed");
+        for (namespace, info) in fallback_groups {
+            doc.groups.entry(namespace).or_insert(info);
+        }
         if let Some(ref t) = self.title_override {
             doc.title = Some(t.clone());
         }

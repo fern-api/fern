@@ -645,6 +645,96 @@ describe("emitReference", () => {
         expect(reference).toContain("| `--json` | `JSON` | No |");
     });
 
+    it("lists only top-level multipart parts, skipping built-in collisions", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Media", version: "1.0.0" },
+            paths: {
+                "/media": {
+                    post: {
+                        operationId: "media_upload",
+                        tags: ["Media"],
+                        requestBody: {
+                            content: {
+                                "multipart/form-data": {
+                                    schema: {
+                                        type: "object",
+                                        required: ["file"],
+                                        properties: {
+                                            file: { type: "string", format: "binary" },
+                                            meta: { type: "object", properties: { label: { type: "string" } } },
+                                            format: { type: "string" }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "media",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("| `--file` | `file` | Yes |");
+        expect(reference).toContain("| `--meta` |");
+        expect(reference).not.toContain("`--meta.label`");
+        expect(reference).not.toContain("`--format-param`");
+    });
+
+    it("stops at cyclic allOf inheritance", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Loop", version: "1.0.0" },
+            components: {
+                schemas: {
+                    A: {
+                        allOf: [{ $ref: "#/components/schemas/B" }],
+                        properties: { alpha: { type: "string" } }
+                    },
+                    B: {
+                        allOf: [{ $ref: "#/components/schemas/A" }],
+                        properties: { beta: { type: "string" } }
+                    }
+                }
+            },
+            paths: {
+                "/things": {
+                    post: {
+                        operationId: "things_create",
+                        tags: ["Things"],
+                        requestBody: {
+                            content: { "application/json": { schema: { $ref: "#/components/schemas/A" } } }
+                        },
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "loop",
+            apiDisplayName: undefined,
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("| `--alpha` |");
+        expect(reference).toContain("| `--beta` |");
+    });
+
     it("uses x-fern-parameter-name and the runtime's sanitizing for parameter flags", async () => {
         const spec = {
             openapi: "3.0.0",
