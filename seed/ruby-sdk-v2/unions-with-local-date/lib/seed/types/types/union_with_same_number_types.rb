@@ -12,7 +12,7 @@ module Seed
 
         member -> { Integer }, key: "NEGATIVE_INT"
 
-        member -> { Integer }, key: "ANY_NUMBER"
+        member -> { Float }, key: "ANY_NUMBER"
       end
     end
   end
