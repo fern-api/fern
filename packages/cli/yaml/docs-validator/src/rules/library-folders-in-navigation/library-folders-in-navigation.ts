@@ -39,7 +39,10 @@ export const LibraryFoldersInNavigationRule: Rule = {
             file: ({ config }) =>
                 checkNavigation({ navigation: config.navigation, configDir: docsDir, outputs, docsDir }),
             versionFile: ({ path, content }) => checkNestedFile(path, content),
-            productFile: ({ path, content }) => checkNestedFile(path, content)
+            productFile: ({ path, content, product }) =>
+                product.versions != null && product.versions.length > 0
+                    ? Promise.resolve([])
+                    : checkNestedFile(path, content)
         };
 
         function checkNestedFile(path: string, content: unknown): Promise<RuleViolation[]> {
