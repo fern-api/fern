@@ -482,6 +482,58 @@ describe("validateCustomConfig — profiles", () => {
         );
     });
 
+    it("accepts a provisionOperation with a credential mapping", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "iam.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        revokeParameters: { Sid: "sid" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "iam.keys.create",
+            credential: { username: "sid", password: "secret" },
+            revokeParameters: { Sid: "sid" }
+        });
+    });
+
+    it("rejects a provisionOperation without a credential mapping", () => {
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create" } } })
+        ).toThrow(/provisionOperation.credential/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create", credential: {} } }
+            })
+        ).toThrow(/at least one credential field/);
+    });
+
+    it("rejects a provisionOperation whose operation is not a dotted command path", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { operation: "keyscreate", credential: { token: "secret" } }
+                }
+            })
+        ).toThrow(/provisionOperation.operation/);
+    });
+
+    it("rejects provisionOperation field names that cannot be interpolated", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { operation: "iam.keys.create", credential: { username: 'sid"' } }
+                }
+            })
+        ).toThrow(/provisionOperation.credential/);
+    });
+
     it("keeps `profiles` itself selectable — it is the default", () => {
         expect(
             validateCustomConfig({ profiles: { enabled: true, commandName: "profiles" } }).profiles?.commandName

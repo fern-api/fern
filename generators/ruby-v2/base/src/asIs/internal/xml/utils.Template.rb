@@ -271,14 +271,17 @@ module <%= gem_namespace %>
           #   the typed children parsed from elements with those names, in document order
           # @param additional [Array<Element, Serializable>]
           # @param wrapper_names [Array<String>]
+          # @param include_text [Boolean] whether the element's text (character data before its first
+          #   child) is part of the content; false for types with a text property, which holds it instead
           # @return [Array<Element, Serializable, Text, Comment>]
-          def content(element, typed, additional, wrapper_names = [])
+          def content(element, typed, additional, wrapper_names = [], include_text: false)
             by_name = {}
             typed.each_with_index { |(names, _nodes), index| names.each { |name| by_name[name] = index } }
             positions = Array.new(typed.length, 0)
             additional_ids = {}.compare_by_identity
             additional.each { |node| additional_ids[node] = true }
-            element.children.filter_map do |child|
+            leading = include_text && !element.text.nil? ? [Text.new(element.text)] : []
+            leading + element.children.filter_map do |child|
               next child if non_element?(child)
 
               name = child.to_xml_element.name
