@@ -90,6 +90,12 @@ pub struct ProfileEntry {
     pub parameters: BTreeMap<String, String>,
     /// Default values for `servers[].variables` entries.
     pub server_variables: BTreeMap<String, String>,
+    /// Identity of the remote credential `profiles create --provision`
+    /// minted (e.g. the key SID), keyed by the parameter name the revoke
+    /// operation takes. Read only by `profiles remove --revoke`; never a
+    /// request default, so a key named `Sid` cannot leak into every
+    /// command that has a `Sid` parameter.
+    pub credential_parameters: BTreeMap<String, String>,
     /// Transport settings that the `<NAME>_TIMEOUT_SECS` / `_PROXY` /
     /// `_CA_BUNDLE` / `_INSECURE` / user-agent-suffix env vars otherwise
     /// supply. Env still wins; these fill in when it is unset.
@@ -212,6 +218,7 @@ impl ProfileStore {
             format: str_field(table, "format"),
             parameters: map_field(table, "parameters"),
             server_variables: map_field(table, "server_variables"),
+            credential_parameters: map_field(table, "credential_parameters"),
             transport: TransportSettings {
                 timeout_secs: u64_field(table, "timeout_secs"),
                 proxy: str_field(table, "proxy"),
@@ -278,6 +285,7 @@ impl ProfileStore {
         set_str(table, "format", entry.format.as_deref());
         set_map(table, "parameters", &entry.parameters);
         set_map(table, "server_variables", &entry.server_variables);
+        set_map(table, "credential_parameters", &entry.credential_parameters);
         set_u64(table, "timeout_secs", entry.transport.timeout_secs);
         set_str(table, "proxy", entry.transport.proxy.as_deref());
         set_str(table, "ca_bundle", entry.transport.ca_bundle.as_deref());
@@ -559,6 +567,10 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
     resolved.format = chain
         .first()
         .and_then(|entry| entry.format.clone());
+    resolved.credential_parameters = chain
+        .first()
+        .map(|entry| entry.credential_parameters.clone())
+        .unwrap_or_default();
 
     // A profile with no explicit `credential` anywhere in its chain keys its
     // keyring slot by the name of the chain's *root* — not its own.
@@ -596,6 +608,9 @@ pub struct ResolvedProfile {
     pub format: Option<String>,
     pub parameters: BTreeMap<String, String>,
     pub server_variables: BTreeMap<String, String>,
+    /// **Not** inherited: the key `--provision` minted belongs to the profile
+    /// that minted it, and only that profile's `--revoke` may delete it.
+    pub credential_parameters: BTreeMap<String, String>,
     /// Inherited like `retries`: transport describes the network the
     /// profile talks to, which a subaccount shares with its parent.
     pub transport: TransportSettings,
@@ -822,6 +837,7 @@ AccountSid = "AC99"
                 ("edge".to_string(), "sydney".to_string()),
             ]
             .into(),
+            credential_parameters: [("Sid".to_string(), "SK11".to_string())].into(),
             transport: TransportSettings {
                 timeout_secs: Some(30),
                 proxy: Some("http://proxy.internal:3128".to_string()),

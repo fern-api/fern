@@ -18,6 +18,7 @@ const makeRequest_js_1 = require("./makeRequest.js");
 const redactUrl_js_1 = require("./redactUrl.js");
 const requestWithRetries_js_1 = require("./requestWithRetries.js");
 const Supplier_js_1 = require("./Supplier.js");
+const signals_js_1 = require("./signals.js");
 /**
  * Makes a passthrough HTTP request using the SDK's configuration (auth, retry, logging, etc.)
  * while mimicking the standard `fetch` API.
@@ -122,10 +123,20 @@ function makePassthroughRequest(input, init, clientOptions, requestOptions) {
                 hasBody: body != null,
             });
         }
-        const response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
-            return (0, makeRequest_js_1.makeRequest)(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.credentials) === "include", undefined, // duplex
-            false);
-        }), maxRetries);
+        let response;
+        try {
+            response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
+                return (0, makeRequest_js_1.makeRequest)(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.credentials) === "include", undefined, // duplex
+                false);
+            }), maxRetries);
+        }
+        catch (error) {
+            // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.
+            if (error === signals_js_1.TIMEOUT) {
+                throw createTimeoutError();
+            }
+            throw error;
+        }
         if (logger.isDebug()) {
             logger.debug("Passthrough HTTP request completed", {
                 method,
@@ -135,6 +146,11 @@ function makePassthroughRequest(input, init, clientOptions, requestOptions) {
         }
         return response;
     });
+}
+function createTimeoutError() {
+    const error = new Error("The request timed out.");
+    error.name = "TimeoutError";
+    return error;
 }
 /**
  * Returns true when the resolved request URL points at the same origin as the

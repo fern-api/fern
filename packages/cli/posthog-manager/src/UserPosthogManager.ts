@@ -20,7 +20,8 @@ export class UserPosthogManager implements PosthogManager {
     private token: FernUserToken | undefined;
 
     constructor({ token, posthogApiKey }: { token: FernUserToken | undefined; posthogApiKey: string }) {
-        this.posthog = new PostHog(posthogApiKey);
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog = new PostHog(posthogApiKey, { isServer: false });
         this.userId = token == null ? undefined : getUserIdFromToken(token);
         this.token = token;
     }

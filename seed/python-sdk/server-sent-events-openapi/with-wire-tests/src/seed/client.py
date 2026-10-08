@@ -14,6 +14,7 @@ from .types.stream_data_context_response import StreamDataContextResponse
 from .types.stream_data_context_with_envelope_schema_response import StreamDataContextWithEnvelopeSchemaResponse
 from .types.stream_no_context_response import StreamNoContextResponse
 from .types.stream_protocol_collision_response import StreamProtocolCollisionResponse
+from .types.stream_protocol_mixed_schema_response import StreamProtocolMixedSchemaResponse
 from .types.stream_protocol_no_collision_response import StreamProtocolNoCollisionResponse
 from .types.stream_protocol_with_flat_schema_response import StreamProtocolWithFlatSchemaResponse
 from .types.stream_x_fern_streaming_union_request import StreamXFernStreamingUnionRequest
@@ -266,6 +267,38 @@ class SeedApi:
             yield chunk
         """
         with self._raw_client.stream_protocol_with_flat_schema(query=query, request_options=request_options) as r:
+            yield from r.data
+
+    def stream_protocol_mixed_schema(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[StreamProtocolMixedSchemaResponse]:
+        """
+        context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamProtocolMixedSchemaResponse]
+            SSE stream with protocol context and mixed variant schemas
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_protocol_mixed_schema()
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_protocol_mixed_schema(query=query, request_options=request_options) as r:
             yield from r.data
 
     def stream_data_context_with_envelope_schema(
@@ -1059,6 +1092,47 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         async with self._raw_client.stream_protocol_with_flat_schema(query=query, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_protocol_mixed_schema(
+        self, *, query: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[StreamProtocolMixedSchemaResponse]:
+        """
+        context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+
+        Parameters
+        ----------
+        query : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamProtocolMixedSchemaResponse]
+            SSE stream with protocol context and mixed variant schemas
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = client.stream_protocol_mixed_schema()
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_protocol_mixed_schema(query=query, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 

@@ -451,10 +451,64 @@ function getInferredTokenEndpoint({
             tokenEndpoint,
             getTokenEndpointConfig,
             propertyResolver
-        })
+        }),
+        grantType:
+            rawScheme.type === "refresh-token"
+                ? getRefreshTokenGrantType({
+                      tokenEndpoint,
+                      endpoint: getTokenEndpointConfig.endpoint,
+                      propertyResolver
+                  })
+                : undefined
     };
 
     return result;
+}
+
+const GRANT_TYPE_REQUEST_PROPERTY = "grant_type";
+const REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+
+function getRefreshTokenGrantType({
+    tokenEndpoint,
+    endpoint,
+    propertyResolver
+}: {
+    tokenEndpoint: ResolvedEndpoint;
+    endpoint: string;
+    propertyResolver: PropertyResolver;
+}): FernIr.InferredAuthGrantType {
+    let requestProperty: FernIr.RequestProperty | undefined;
+    try {
+        requestProperty = propertyResolver.resolveRequestProperty({
+            file: tokenEndpoint.file,
+            endpoint: tokenEndpoint.endpointId,
+            propertyComponents: [GRANT_TYPE_REQUEST_PROPERTY]
+        });
+    } catch {
+        requestProperty = undefined;
+    }
+    if (requestProperty == null) {
+        throw new CliError({
+            message: `Inferred auth with type 'refresh-token' requires the get-token endpoint '${endpoint}' to have a '${GRANT_TYPE_REQUEST_PROPERTY}' request property`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    const valueType = requestProperty.property.valueType;
+    if (
+        valueType.type === "container" &&
+        valueType.container.type === "literal" &&
+        (valueType.container.literal.type !== "string" ||
+            valueType.container.literal.string !== REFRESH_TOKEN_GRANT_TYPE)
+    ) {
+        throw new CliError({
+            message: `Inferred auth with type 'refresh-token' requires '${GRANT_TYPE_REQUEST_PROPERTY}' on the get-token endpoint '${endpoint}' to accept '${REFRESH_TOKEN_GRANT_TYPE}'`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return {
+        requestProperty,
+        value: REFRESH_TOKEN_GRANT_TYPE
+    };
 }
 
 const commonAuthTokenProperties = [

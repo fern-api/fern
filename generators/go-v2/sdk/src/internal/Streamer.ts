@@ -1,4 +1,4 @@
-import { getWireValue } from "@fern-api/base-generator";
+import { getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -191,8 +191,17 @@ export class Streamer {
         if (eventDiscriminator != null) {
             arguments_.push({
                 name: "EventDiscriminator",
-                value: eventDiscriminator
+                value: go.TypeInstantiation.string(eventDiscriminator.field)
             });
+            if (eventDiscriminator.envelopeEvents.length > 0) {
+                arguments_.push({
+                    name: "EnvelopeEvents",
+                    value: go.TypeInstantiation.slice({
+                        valueType: go.Type.string(),
+                        values: eventDiscriminator.envelopeEvents.map((event) => go.TypeInstantiation.string(event))
+                    })
+                });
+            }
         }
         if (args.request != null) {
             arguments_.push({
@@ -297,7 +306,9 @@ export class Streamer {
         });
     }
 
-    private getEventDiscriminator(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
+    private getEventDiscriminator(
+        streamingResponse: FernIr.StreamingResponse
+    ): { field: string; envelopeEvents: string[] } | undefined {
         if (streamingResponse.type !== "sse") {
             return undefined;
         }
@@ -316,7 +327,22 @@ export class Streamer {
         ) {
             return undefined;
         }
-        return go.TypeInstantiation.string(getWireValue(union.discriminant));
+        return {
+            field: getWireValue(union.discriminant),
+            envelopeEvents: getSseEnvelopeEventNames({
+                union,
+                getObjectPropertyWireValues: (variant) => {
+                    const variantDeclaration = this.context.getTypeDeclarationOrThrow(variant.typeId);
+                    if (variantDeclaration.shape.type !== "object") {
+                        return undefined;
+                    }
+                    return [
+                        ...(variantDeclaration.shape.extendedProperties ?? []),
+                        ...variantDeclaration.shape.properties
+                    ].map((property) => getWireValue(property.name));
+                }
+            })
+        };
     }
 }
 

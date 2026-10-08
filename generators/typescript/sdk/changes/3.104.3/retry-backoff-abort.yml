@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Cancelling a request with `abortSignal` while the SDK is waiting to retry (for example after a
+    `429` with `Retry-After`) now stops the wait right away and does not send another request. Before,
+    the call stayed pending until the backoff finished. The backoff timer and abort listener are always
+    cleaned up.
+  type: fix

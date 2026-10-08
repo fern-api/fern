@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.StreamRequest{}
-    client.StreamDataContextWithEnvelopeSchema(
+    client.StreamProtocolMixedSchema(
         context.TODO(),
         request,
     )

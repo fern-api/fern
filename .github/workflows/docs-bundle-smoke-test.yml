@@ -218,7 +218,7 @@ jobs:
         env:
           FERN_NO_VERSION_REDIRECTION: "true"
           FERN_BIN: fern-dev
-          FERN_DOCS_DEV_ARGS: "--astro"
+          FERN_DOCS_DEV_ARGS: "--astro --log-level debug"
           SMOKE_RENDERER: astro
         with:
           timeout_minutes: 15
