@@ -251,6 +251,22 @@ describe("generateCpp()", () => {
         expect(readdirSync(join(tmpDir, "generated"))).toEqual(["c"]);
     });
 
+    it("drops leading underscores from namespace directories", () => {
+        const ir = makeIr(
+            makeNamespace({
+                name: "__detail",
+                path: "__detail",
+                classes: [makeClass({ name: "Impl", path: "__detail::Impl" })]
+            })
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths.some((f) => f.startsWith("detail/"))).toBe(true);
+        expect(relativePaths.some((f) => f.split("/").some((seg) => seg.startsWith("_")))).toBe(false);
+    });
+
     it("replaces the previous output tree so pages for removed entities do not linger", () => {
         const outputDir = join(tmpDir, "generated", "c");
         const irBefore = makeIr(

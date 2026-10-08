@@ -22,7 +22,8 @@ function writeGenerated(categories: string[]): void {
 
 async function run(
     navigation: DocsConfigurationWithResolvedRedirects["navigation"],
-    versionNavigation?: unknown
+    versionNavigation?: unknown,
+    productNavigation?: unknown
 ): Promise<RuleViolation[]> {
     const config: DocsConfigurationWithResolvedRedirects = {
         instances: [],
@@ -46,6 +47,15 @@ async function run(
                 path: "versions/v1.yml",
                 content: { navigation: versionNavigation },
                 version: { displayName: "v1", path: "versions/v1.yml" }
+            }))
+        );
+    }
+    if (productNavigation !== undefined && visitor.productFile != null) {
+        violations.push(
+            ...(await visitor.productFile({
+                path: "products/a.yml",
+                content: { navigation: productNavigation },
+                product: { displayName: "A", path: "products/a.yml" }
             }))
         );
     }
@@ -93,6 +103,10 @@ describe("library-folders-in-navigation", () => {
 
     it("stays quiet when a navigation does not reference the library at all", async () => {
         expect(await run([{ page: "Home", path: "./home.mdx" }])).toEqual([]);
+    });
+
+    it("checks product-file navigation relative to the product file", async () => {
+        expect(await run(undefined, undefined, [{ folder: `../${GENERATED}/functions` }])).toHaveLength(2);
     });
 
     it("resolves version-file navigation relative to the version file", async () => {

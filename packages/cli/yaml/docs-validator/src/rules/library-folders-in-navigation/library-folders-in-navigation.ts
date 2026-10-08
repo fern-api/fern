@@ -38,14 +38,18 @@ export const LibraryFoldersInNavigationRule: Rule = {
         return {
             file: ({ config }) =>
                 checkNavigation({ navigation: config.navigation, configDir: docsDir, outputs, docsDir }),
-            versionFile: ({ path, content }) =>
-                checkNavigation({
-                    navigation: isRecord(content) ? content.navigation : undefined,
-                    configDir: dirname(resolve(docsDir, path)),
-                    outputs,
-                    docsDir
-                })
+            versionFile: ({ path, content }) => checkNestedFile(path, content),
+            productFile: ({ path, content }) => checkNestedFile(path, content)
         };
+
+        function checkNestedFile(path: string, content: unknown): Promise<RuleViolation[]> {
+            return checkNavigation({
+                navigation: isRecord(content) ? content.navigation : undefined,
+                configDir: dirname(resolve(docsDir, path)),
+                outputs,
+                docsDir
+            });
+        }
     }
 };
 

@@ -85,7 +85,7 @@ function sanitizeForFilename(name: string): string {
         }
     }
     const sanitized = name.replace(/[^a-zA-Z0-9_-]/g, "_");
-    return sanitized.replace(/^_+/, "") || "underscore";
+    return sanitized.replace(/^_+/, "") || (sanitized.length > 0 ? "underscore" : "");
 }
 
 /** Intermediate collected compound before page-key assignment. */
@@ -461,9 +461,9 @@ function namespacePathToFilesystem(nsParts: string[]): string {
     if (first === undefined) {
         return "";
     }
-    const segments: string[] = [first];
+    const segments: string[] = [sanitizeForFilename(first)];
     for (const part of rest) {
-        segments.push("namespaces", part);
+        segments.push("namespaces", sanitizeForFilename(part));
     }
     return segments.join("/");
 }
