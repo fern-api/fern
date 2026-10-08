@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.148.3
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init --docs --openapi <path-or-url>`
+        now copies the OpenAPI spec into the fern directory and declares it under the `- api: API Reference`
+        entry's `specs` in `docs.yml`, so the docs build a full API reference without a `generators.yml` or
+        `sdk-config.yml`. Previously `--openapi` was silently ignored when combined with `--docs`, and the
+        welcome page pointed to `fern init --openapi`, which does not produce an API the docs can read in this
+        mode. If `fern/openapi.json|yml` already exists, the copy is written as `openapi-1.json|yml` (and so on),
+        so an existing API's spec is never overwritten. If `docs.yml` already exists, the command now warns that
+        the spec was not added. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.2
+  changelogEntry:
+    - summary: |
+        Decouple SDK Config initialization from SDK Gen API generation routing so each can be rolled out independently.
+      type: fix
+    - summary: |
+        `fern docs md generate` now prefixes generated Python library page slugs with the slug of the
+        navigation tab the pages are listed under in `docs.yml`. Generated pages previously skipped the tab
+        (e.g. `/prismo/prismo/floorplan_editor_signals` instead of
+        `/api-reference/prismo/prismo/floorplan_editor_signals`). File paths and page IDs are unchanged.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.148.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` no longer re-parses every OpenAPI spec of an API reference that sets
+        `tag-description-pages: true`. Tag descriptions are now read straight from the specs' `tags`,
+        which saves about 0.4s per spec on a large (4.8 MB) spec.
+      type: fix
+    - summary: |
+        OpenAPI specs with external `$ref`s to remote files convert faster. Each remote file is now
+        fetched once per conversion instead of once per `$ref` (for example 114 fetches down to 2 on a
+        large spec), and a failed fetch is retried by the next `$ref` instead of being remembered.
+      type: fix
+    - summary: |
+        The OpenAPI parser no longer rebuilds a throwaway parser context for every endpoint with a
+        request body. It reuses the one it already has, which cuts about 9% off parsing a large spec.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
 - version: 5.148.0
   changelogEntry:
     - summary: |
