@@ -418,16 +418,23 @@ impl Binding for OpenApiBinding {
         op_path: &'a [String],
         params: &'a serde_json::Value,
         root_matches: &'a clap::ArgMatches,
+        profile: Option<&'a crate::profiles::ResolvedProfile>,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async move {
             let prepared = self.ensure_prepared()?;
             let mut doc_owned;
             let doc = if self.inner.needs_server_var_resolution(&prepared.doc) {
                 doc_owned = prepared.doc.clone();
-                self.inner.apply_server_vars(&mut doc_owned, root_matches);
+                self.inner
+                    .apply_server_vars_for(&mut doc_owned, root_matches, profile);
                 &doc_owned
             } else {
                 &prepared.doc
+            };
+            // Same rung order as a selected profile: flag > profile > env.
+            let base_url = match profile.and_then(|p| p.base_url.clone()) {
+                Some(url) if root_matches.get_one::<String>("base-url").is_none() => Some(url),
+                _ => crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
             };
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
@@ -469,7 +476,7 @@ impl Binding for OpenApiBinding {
                 &executor::PaginationConfig::default(),
                 &pipeline,
                 true,
-                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?.as_deref(),
+                base_url.as_deref(),
                 &prepared.http_config,
                 false,
                 false,

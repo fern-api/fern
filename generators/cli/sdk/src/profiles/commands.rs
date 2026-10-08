@@ -2065,7 +2065,9 @@ async fn provision_remote_credential(
     let op_path = op.op_path();
     let mut response = None;
     for binding in ctx.bindings {
-        if let Some(value) = binding.invoke_operation(&op_path, &params, ctx.root_matches).await? {
+        if let Some(value) = binding
+            .invoke_operation(&op_path, &params, ctx.root_matches, Some(resolved))
+            .await? {
             response = Some(value);
             break;
         }
@@ -2170,7 +2172,10 @@ async fn revoke_remote_credential(
     for binding in ctx.bindings {
         // `Ok(None)` means "not my path" — keep looking, exactly as the
         // `--schema` walk does.
-        if binding.invoke_operation(op_path, &params, ctx.root_matches).await?.is_some() {
+        if binding
+            .invoke_operation(op_path, &params, ctx.root_matches, Some(&resolved))
+            .await?
+            .is_some() {
             return Ok(());
         }
     }

@@ -509,11 +509,13 @@ components:
 
 fn templated_app() -> CliApp {
     CliApp::new("pv")
-        .profiles(ProfilesConfig::new().provision_operation(
-            ProvisionOperation::new("keys.create")
-                .credential_field("username", "sid")
-                .credential_field("password", "secret"),
-        ))
+        .profiles(
+            ProfilesConfig::new().provision_operation(
+                ProvisionOperation::new("keys.create")
+                    .credential_field("username", "sid")
+                    .credential_field("password", "secret"),
+            ),
+        )
         .auth(
             BasicAuth::new("basic")
                 .username_env("PV_USERNAME")
@@ -558,6 +560,94 @@ async fn provision_honors_base_url_flag_and_resolves_server_variables() {
             let output = String::from_utf8_lossy(&out);
             assert_eq!(code, 0, "{output}");
             assert!(!output.contains("{region}"), "{output}");
+        });
+    })
+    .await
+    .unwrap();
+    drop(server);
+}
+
+/// The `profiles` group runs unprofiled, so the profile being created or
+/// removed is never the *selected* one — its own `--server-var` values and
+/// base URL still have to reach the provision and revoke requests.
+#[tokio::test]
+#[serial]
+async fn provision_and_revoke_use_the_profiles_own_server_variables() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Keys"))
+        .and(header("authorization", PARENT_BASIC))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cret"
+        })))
+        .expect(1)
+        .mount(&server)
+        .await;
+    Mock::given(method("DELETE"))
+        .and(path("/Keys/SKnew"))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(1)
+        .mount(&server)
+        .await;
+    // `http://{host}` with `--server-var host=<mock authority>`.
+    let host = server.uri().trim_start_matches("http://").to_string();
+    let spec = TEMPLATED_SPEC
+        .replace("https://api.{region}.example.com", "http://{host}")
+        .replace("region: { default: \"us1\" }", "host: { default: \"unused.invalid\" }")
+        .replace(
+            "      responses:\n        \"201\": { description: ok }\n",
+            "      responses:\n        \"201\": { description: ok }\n  /Keys/{Sid}:\n    delete:\n      operationId: keys_remove\n      x-fern-sdk-group-name: [keys]\n      x-fern-sdk-method-name: remove\n      parameters:\n        - { name: Sid, in: path, required: true, schema: { type: string } }\n      responses:\n        \"204\": { description: ok }\n",
+        );
+    let app = move || {
+        CliApp::new("pv")
+            .profiles(
+                ProfilesConfig::new()
+                    .revoke_operation("keys.remove")
+                    .provision_operation(
+                        ProvisionOperation::new("keys.create")
+                            .credential_field("username", "sid")
+                            .credential_field("password", "secret")
+                            .revoke_parameter("Sid", "sid"),
+                    ),
+            )
+            .auth(
+                BasicAuth::new("basic")
+                    .username_env("PV_USERNAME")
+                    .password_env("PV_PASSWORD"),
+            )
+            .binding(OpenApiBinding::new().spec(&spec))
+    };
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env("https://unused.invalid", || {
+            // No env base URL either: the only route to the mock is the
+            // profile's own server variable.
+            std::env::remove_var("PV_BASE_URL");
+            let server_var = format!("host={host}");
+            let mut out: Vec<u8> = Vec::new();
+            let code = app().try_run_from_with_output(
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "eu",
+                    "--server-var",
+                    &server_var,
+                    "--provision",
+                ],
+                &mut out,
+            );
+            let output = String::from_utf8_lossy(&out);
+            assert_eq!(code, 0, "{output}");
+
+            let mut out: Vec<u8> = Vec::new();
+            let code = app().try_run_from_with_output(
+                &["pv", "profiles", "remove", "eu", "--yes", "--revoke"],
+                &mut out,
+            );
+            let output = String::from_utf8_lossy(&out);
+            assert_eq!(code, 0, "{output}");
         });
     })
     .await
