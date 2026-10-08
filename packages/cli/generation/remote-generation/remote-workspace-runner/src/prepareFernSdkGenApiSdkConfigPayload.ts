@@ -2,7 +2,6 @@ import type { FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { Audiences, generatorsYml } from "@fern-api/configuration";
 import {
     type FernConfigMappingDiagnostic,
-    parseSdkConfigV1,
     type SdkConfigV1Document,
     type SdkConfigV1SourceConfig
 } from "@postman/sdk-config/sdk-config/v1";
@@ -27,6 +26,7 @@ export type MapFernGroupToSdkConfig = (args: {
     fernWorkspace: Pick<FernWorkspace, "definition">;
     group: generatorsYml.GeneratorGroup;
     source: SdkConfigV1SourceConfig;
+    replay?: generatorsYml.ReplayConfigSchema;
 }) => SdkConfigMappingResult;
 
 export function formatSdkConfigMappingDiagnostic(diagnostic: FernConfigMappingDiagnostic): string {
@@ -45,17 +45,20 @@ export function prepareFernSdkGenApiSdkConfigPayload({
     workspace,
     generatorInvocation,
     audiences,
+    replay,
     sourceArchive,
     mapFernGroupToSdkConfig
 }: {
     workspace: Pick<FernWorkspace, "definition">;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     audiences: Audiences;
+    replay?: generatorsYml.ReplayConfigSchema;
     sourceArchive: FernSdkGenApiSourceArchive;
     mapFernGroupToSdkConfig: MapFernGroupToSdkConfig;
 }): FernSdkGenApiSdkConfigPayload {
     const mapped = mapFernGroupToSdkConfig({
         fernWorkspace: workspace,
+        replay,
         group: {
             groupName: "sdk-gen-api",
             audiences,
@@ -64,14 +67,11 @@ export function prepareFernSdkGenApiSdkConfigPayload({
         },
         source: sdkConfigSourceFromArchive(sourceArchive)
     });
-    // The mapper returns the document as written, without the defaults the schema applies on
-    // parse (`api`, `client`, `package`, `docs`, `generation` default to `{}` since sdk-config
-    // 0.3.1). Consumers pinned to an earlier sdk-config (sdk-gen-core) require those keys, so
-    // serialize the parsed document: every default is explicit and it validates on both.
-    const sdkConfig = parseSdkConfigV1(mapped.sdkConfig);
+    // The injected mapper validates this as an SdkConfigV1Document. Serialize that sparse document
+    // directly because parsing it again would materialize schema defaults before transport.
     return {
         payloadKind: "sdk-config-v1",
-        body: Buffer.from(JSON.stringify(sdkConfig), "utf8"),
+        body: Buffer.from(JSON.stringify(mapped.sdkConfig), "utf8"),
         diagnostics: mapped.diagnostics
     };
 }

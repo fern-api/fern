@@ -67,19 +67,49 @@ export class RealtimeNoAuthSocket {
         this.eventHandlers[event] = callback;
     }
 
+    /**
+     * @param event - The event to detach from.
+     * @param callback - The callback previously registered with `on`. No-op if it is not the callback currently registered for this event.
+     * Usage:
+     * ```typescript
+     * const handler = () => console.log('The websocket is open');
+     * this.on('open', handler);
+     * this.off('open', handler);
+     * ```
+     */
+    public off<T extends keyof RealtimeNoAuthSocket.EventHandlers>(
+        event: T,
+        callback: RealtimeNoAuthSocket.EventHandlers[T],
+    ): void {
+        if (this.eventHandlers[event] === callback) {
+            delete this.eventHandlers[event];
+        }
+    }
+
     public sendSend(message: SeedWebsocketBearerAuth.NoAuthSendEvent): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
     }
 
-    /** Connect to the websocket and register event handlers. */
+    /** Connect to the websocket and register event handlers. Safe to call multiple times: each handler is only registered if it is not already attached. */
     public connect(): RealtimeNoAuthSocket {
         this.socket.reconnect();
 
-        this.socket.addEventListener("open", this.handleOpen);
-        this.socket.addEventListener("message", this.handleMessage);
-        this.socket.addEventListener("close", this.handleClose);
-        this.socket.addEventListener("error", this.handleError);
+        if (!this.socket.hasEventListener("open", this.handleOpen)) {
+            this.socket.addEventListener("open", this.handleOpen);
+        }
+
+        if (!this.socket.hasEventListener("message", this.handleMessage)) {
+            this.socket.addEventListener("message", this.handleMessage);
+        }
+
+        if (!this.socket.hasEventListener("close", this.handleClose)) {
+            this.socket.addEventListener("close", this.handleClose);
+        }
+
+        if (!this.socket.hasEventListener("error", this.handleError)) {
+            this.socket.addEventListener("error", this.handleError);
+        }
 
         return this;
     }
@@ -96,21 +126,10 @@ export class RealtimeNoAuthSocket {
         this.socket.removeEventListener("error", this.handleError);
     }
 
-    /** Returns a promise that resolves when the websocket is open. */
+    /** Returns a promise that resolves when the websocket is open, and rejects if it errors or closes before opening. */
     public async waitForOpen(): Promise<core.ReconnectingWebSocket> {
-        if (this.socket.readyState === core.ReconnectingWebSocket.ReadyState.OPEN) {
-            return this.socket;
-        }
-
-        return new Promise((resolve, reject) => {
-            this.socket.addEventListener("open", () => {
-                resolve(this.socket);
-            });
-
-            this.socket.addEventListener("error", (event: unknown) => {
-                reject(event);
-            });
-        });
+        await this.socket.waitForOpen();
+        return this.socket;
     }
 
     /** Asserts that the websocket is open. */

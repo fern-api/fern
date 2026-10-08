@@ -5,6 +5,7 @@ package com.seed.oauthPkce.resources.oauth;
 
 import com.seed.oauthPkce.core.ClientOptions;
 import com.seed.oauthPkce.core.RequestOptions;
+import com.seed.oauthPkce.core.SeedOauthPkceHttpResponse;
 import com.seed.oauthPkce.resources.oauth.requests.AuthorizeRequest;
 import com.seed.oauthPkce.types.AuthorizeResponse;
 import java.util.concurrent.CompletableFuture;
@@ -32,7 +33,14 @@ public class AsyncOauthClient {
      * that must still be sent on the wire when provided.
      */
     public CompletableFuture<AuthorizeResponse> authorize(AuthorizeRequest request) {
-        return this.rawClient.authorize(request).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthPkceHttpResponse<AuthorizeResponse>> rawFuture = this.rawClient.authorize(request);
+        CompletableFuture<AuthorizeResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -41,6 +49,14 @@ public class AsyncOauthClient {
      * that must still be sent on the wire when provided.
      */
     public CompletableFuture<AuthorizeResponse> authorize(AuthorizeRequest request, RequestOptions requestOptions) {
-        return this.rawClient.authorize(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthPkceHttpResponse<AuthorizeResponse>> rawFuture =
+                this.rawClient.authorize(request, requestOptions);
+        CompletableFuture<AuthorizeResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

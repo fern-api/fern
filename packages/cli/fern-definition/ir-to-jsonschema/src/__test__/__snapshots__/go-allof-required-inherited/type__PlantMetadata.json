@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "created_at": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nickname": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "legacy_tag": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "Parent with a readOnly property and property-level metadata. Inlined into\n`PlantCreate` (request body) and `PlantDetails` (response type) because the\nchild requires `nickname`; the metadata must survive and `created_at` must\nstay out of the write request body.",
+  "definitions": {}
+}

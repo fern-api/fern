@@ -1,4 +1,195 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.50.0
+  changelogEntry:
+    - summary: |
+        `--dry-run` now renders the full request preview on a terminal. The default
+        `table` format treated the preview's `headers` array as a paginated list and
+        printed only the header rows, dropping the URL, method, query params and body.
+        Dry-run previews (REST and GraphQL) are now emitted as a key/value record;
+        other formats (`json`, `yaml`, ...) are unchanged.
+      type: fix
+    - summary: |
+        `--dry-run` output includes an `auth` block reporting the endpoint's security
+        schemes and whether credentials would be attached: `resolved` (naming the
+        requirement that was satisfied and the configured sources), `missing` (with
+        the sources to set), `supplied` (passed explicitly as a request parameter)
+        or `not_required`. Credential values are never printed; `apiKey`-in-query
+        values are redacted in the preview like header credentials already were.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 0.49.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.0 updates.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 0.48.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.52.0 updates.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 0.47.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.51.0 updates.
+      type: feat
+    - summary: |
+        `profiles set <name> …` no longer creates a missing profile silently. In a
+        terminal it asks first. When an existing profile has a similar name it asks
+        "Did you mean `<closest>`? [y/N]" (yes writes to that profile), then
+        "Create profile `<name>`? [y/N]"; otherwise only "Create it? [y/N]".
+        Answering no changes nothing. When stdin or stderr is not a terminal
+        (scripts, CI, agents), `set` on a missing profile now fails with a hint
+        instead of creating it; pass `--yes` to create it without asking.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.46.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.50.0 updates.
+      type: feat
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 0.45.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.49.1 updates.
+      type: chore
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.45.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.49.0 updates.
+      type: feat
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.44.2
+  changelogEntry:
+    - summary: |
+        `profiles list`, `profiles show`, and `profiles current` now report an OAuth2
+        client id stored in the keyring — what `profiles set <name> <CLIENT_ID_VAR>=…`
+        and `auth login --with-token` write — instead of only the plaintext
+        `oauth_client_id` from `profiles create --oauth-client-id`. The keyring id
+        takes precedence, matching the order requests resolve it in.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.44.1
+  changelogEntry:
+    - summary: |
+        A command whose operation requires authentication (its own `security:` or
+        the spec-level default) now fails locally with "Authentication credentials
+        are missing, so the request was not sent. Set ..." when no configured
+        credential source (flag, env var, or selected profile) satisfies any of its
+        security requirements, instead of sending an unauthenticated request and
+        surfacing the server's 401. Applies with and without `--debug`. Operations
+        with `security: []`, optional auth (`- {}`), no declared security, or an
+        auth header or `apiKey` query parameter passed explicitly as a parameter
+        still go out as before.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 0.44.0
+  changelogEntry:
+    - summary: |
+        The root `--help` "Environment variables" footer is now derived from the
+        spec instead of a static string: it lists `<PREFIX>_PROFILE`,
+        `<PREFIX>_OUTPUT`, `<PREFIX>_RETRIES`, and one `<PREFIX>_<VAR>` entry per
+        `servers[].variables` (e.g. `TWILIO_CLI_REGION`), alongside the existing
+        runtime-only knobs. Which of these `profiles set` can persist is
+        documented by that command, not the footer.
+      type: fix
+    - summary: |
+        A selected profile now takes precedence over environment variables for every
+        value it stores — credentials, `<PREFIX>_BASE_URL`, `<PREFIX>_OUTPUT`,
+        `<PREFIX>_RETRIES`, server variables such as `<PREFIX>_REGION`, spec
+        parameter defaults, and the transport settings — however the profile was
+        selected (`-p/--profile`, `<PREFIX>_PROFILE`, or `profiles use`). Env vars
+        fill in only what the profile leaves unset; explicit flags still win, and
+        invocations with no profile selected are unchanged. Previously only `-p`
+        outranked env, so an active profile's stored values were silently ignored
+        whenever the same variable was exported. `profiles current` now reports
+        exported credential vars as `credential_env_fallback` instead of
+        `credential_overridden_by_env` / `credential_partially_shadowed_by_env`.
+        `profiles set`, `profiles create --from-env`, `profiles use`, and a
+        profile-scoped `auth login` no longer warn that an exported credential
+        will shadow the stored one, since it no longer does.
+      type: feat
+    - summary: |
+        Profiles can now store the transport settings that were previously
+        env/flag-only: `profiles set <name> <PREFIX>_TIMEOUT_SECS=…`,
+        `<PREFIX>_PROXY=…`, `<PREFIX>_CA_BUNDLE=…`, `<PREFIX>_INSECURE=…`, and
+        `<PREFIX>_USER_AGENT_SUFFIX=…` persist to `profiles.toml` (inherited
+        through `parent`, shown by `profiles show`/`current`). For these five the
+        profile's stored value wins over the shell-exported global whenever a
+        profile is in play — `-p`, `<PREFIX>_PROFILE`, or `profiles use` alike
+        (flag > profile > env var > default); the env var only fills in what the
+        profile leaves unset.
+      type: feat
+    - summary: |
+        `profiles show` and `profiles current` now print the full stored account
+        identifier (e.g. the complete Twilio Account SID) instead of the truncated
+        form used in the `profiles list` table, and include the profile's
+        `oauth_client_id` when one is set. `profiles list` folds the OAuth client
+        id into the `ACCOUNT` column (shown when the profile stores no basic-auth
+        account) instead of a separate `OAUTH_CLIENT_ID` column.
+      type: fix
+    - summary: |
+        `profiles show` and `profiles current` human output now lists fields in a
+        fixed order (`profile`, `active`/`selected_by`, `account`/`oauth_client_id`,
+        then settings) instead of alphabetically, so the identifier sits in the
+        same place for basic-auth and OAuth profiles.
+      type: fix
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 0.43.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.48.0 updates.
+      type: feat
+  createdAt: "2026-09-28"
+  irVersion: 67
+- version: 0.42.3
+  changelogEntry:
+    - summary: |
+        The file-based token cache fallback now creates its credential file with
+        owner-only permissions (0600) at open time instead of tightening them
+        after the write, closing the window in which the token was briefly
+        world-readable under a permissive umask.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 0.42.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.47.11 updates.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 0.42.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.47.10 updates.
+      type: chore
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
 - version: 0.42.0
   changelogEntry:
     - summary: |

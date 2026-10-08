@@ -1,4 +1,161 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types can now carry XML comments. `Comment(text)` adds `<!--text-->` inside the element at its
+        position in the ordered content (interleaved with `AddText` segments and child elements), while
+        `CommentBefore(text)` / `CommentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `FromXml` and round-trip through `ToXml`; `XmlElement.AddComment` and
+        the new `XmlComment` runtime type expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.91.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.90.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) record types implement value equality: `Equals`/`GetHashCode` (and `==`) compare the
+        rendered XML, so `VoiceResponse.FromXml(xml).Equals(VoiceResponse.FromXml(parsed.ToXml()))` and
+        `new Say { Message = "x" }.Equals(new Say { Message = "x" })` are true. Previously the record
+        default compared the collection members by reference and was always false.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.90.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `user-agent-only` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `include-platform-headers`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omit-fern-headers` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+    - summary: |
+        Fix the generated `XmlElementTests` test project failing to compile because its `FakeNode` test
+        double did not implement `IXmlNode.ToXml(bool)`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.89.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.88.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child elements and raw `XmlElement` children in a
+        single ordered `Content` list, so `ToXml()` emits them in the order they were added
+        (`Response.Say(a).AddChild(custom).Say(b)` yields `<Say>a</Say><Custom /><Say>b</Say>`) and
+        `FromXml()` preserves document order, including the position of unknown elements and repeated
+        wrapper elements. Adds `AddText(string)` to XML types and `XmlElement` for mixed content such as
+        `<Say>Hi <break strength="weak" /> world</Say>`. Typed child properties and `AdditionalChildren`
+        remain available; `AdditionalChildren` is now derived from `Content`.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.87.0
+  changelogEntry:
+    - summary: |
+        Support SDK variables (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). Path
+        parameters bound to a variable via `x-fern-sdk-variable` are removed from endpoint
+        signatures and request types and are configured once on the client through the generated
+        `ClientOptions.<Variable>` property. String variables that declare an `env` fall back to that
+        environment variable, and a variable that is still unset fails with a clear
+        `ArgumentException` before the request is sent.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.86.3
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now return their XML representation from
+        `ToString()` instead of JSON, and `ToXml()` prepends the
+        `<?xml version="1.0" encoding="utf-8"?>` declaration by default.
+        Pass `ToXml(xmlDeclaration: false)` to omit it.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 2.86.2
+  changelogEntry:
+    - summary: |
+        Fix `RequestOptions.AdditionalBodyProperties` throwing `InvalidOperationException` on endpoints
+        without a request body (e.g. GET requests). When the request body is null, the additional
+        properties are now sent as the JSON request body.
+      type: fix
+    - summary: |
+        `RequestOptions.AdditionalBodyProperties` is now applied to form-urlencoded requests. The additional
+        properties are merged into the form body (the additional property wins on a key collision) before
+        encoding. Multipart requests remain unsupported.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 2.86.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 2.86.0
+  changelogEntry:
+    - summary: |
+        Fluent child methods on XML-encoded (TwiML) types (e.g. `response.Say(...)`, `say.Break(...)`)
+        now carry `<param>` documentation for every argument, taken from the child type's property
+        descriptions, and include the child type's own description in the method summary.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 2.85.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 2.84.3
+  changelogEntry:
+    - summary: |
+        `RawClient` now applies the configured `Timeout` to each retry attempt individually instead of
+        sharing a single budget across all attempts and backoff delays. Note that `Timeout` therefore no
+        longer bounds the total duration of a call that is retried; the worst case is roughly
+        `Timeout * (MaxRetries + 1)` plus backoff. If a retry attempt fails after an earlier attempt
+        already received an API response (e.g. a 429), that response is returned instead of a generic
+        cancellation error.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 2.84.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
 - version: 2.84.1
   changelogEntry:
     - summary: |

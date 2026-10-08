@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -25,9 +25,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
+/**
+ * <p>&lt;Say&gt; TwiML Verb</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Say.Builder.class)
 public final class Say implements XmlSerializable {
@@ -41,7 +43,7 @@ public final class Say implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
     private Say(
             Optional<String> message,
@@ -49,30 +51,42 @@ public final class Say implements XmlSerializable {
             Optional<Integer> loop,
             Optional<List<Break>> children,
             Map<String, Object> additionalProperties,
-            List<XmlElement> additionalChildren) {
+            List<XmlNode> content) {
         this.message = message;
         this.voice = voice;
         this.loop = loop;
         this.children = children;
         this.additionalProperties = additionalProperties;
-        this.additionalChildren = additionalChildren;
+        this.content = content;
     }
 
+    /**
+     * @return Message to say
+     */
     @JsonProperty("message")
     public Optional<String> getMessage() {
         return message;
     }
 
+    /**
+     * @return Voice to use
+     */
     @JsonProperty("voice")
     public Optional<String> getVoice() {
         return voice;
     }
 
+    /**
+     * @return Times to loop message
+     */
     @JsonProperty("loop")
     public Optional<Integer> getLoop() {
         return loop;
     }
 
+    /**
+     * @return Nested TwiML elements, rendered in order.
+     */
     @JsonProperty("children")
     public Optional<List<Break>> getChildren() {
         return children;
@@ -89,9 +103,20 @@ public final class Say implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     private boolean equalTo(Say other) {
@@ -106,18 +131,18 @@ public final class Say implements XmlSerializable {
         return Objects.hash(this.message, this.voice, this.loop, this.children);
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
 
     @Override
+    public String toString() {
+        return toXml();
+    }
+
+    @Override
     public String toXml() {
-        return toXml(false);
+        return toXml(true);
     }
 
     @Override
@@ -126,9 +151,8 @@ public final class Say implements XmlSerializable {
         writer.text(this.message);
         writer.attribute("voice", this.voice);
         writer.attribute("loop", this.loop);
-        writer.children("children", this.children);
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content, this.children));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -141,15 +165,21 @@ public final class Say implements XmlSerializable {
 
     public static Say fromXml(Element element) {
         XmlReader.expect(element, "Say");
+        List<XmlNode> content = XmlReader.content(element, true, Arrays.asList(), e -> {
+            switch (XmlReader.localName(e)) {
+                case "break":
+                    return Break.fromXml(e);
+                default:
+                    return null;
+            }
+        });
         return new Say(
-                XmlReader.text(element),
+                XmlReader.leadingText(element),
                 XmlReader.attribute(element, "voice"),
                 XmlReader.attribute(element, "loop").map(v -> XmlReader.convert(v, Integer.class)),
-                XmlReader.optionalList(XmlReader.children(element, "break").stream()
-                        .map(Break::fromXml)
-                        .collect(Collectors.toList())),
+                XmlReader.optionalList(XmlNode.elements(content, Break.class)),
                 XmlReader.extraAttributes(element, Arrays.asList("voice", "loop")),
-                XmlReader.unknownChildren(element, Arrays.asList("break")));
+                content);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -166,7 +196,7 @@ public final class Say implements XmlSerializable {
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
@@ -175,55 +205,80 @@ public final class Say implements XmlSerializable {
             voice(other.getVoice());
             loop(other.getLoop());
             children(other.getChildren());
+            content(other.getContent());
             return this;
         }
 
+        /**
+         * <p>Message to say</p>
+         */
         @JsonSetter(value = "message", nulls = Nulls.SKIP)
         public Builder message(Optional<String> message) {
             this.message = message;
             return this;
         }
 
+        /**
+         * <p>Message to say</p>
+         */
         public Builder message(String message) {
             this.message = Optional.ofNullable(message);
             return this;
         }
 
+        /**
+         * <p>Voice to use</p>
+         */
         @JsonSetter(value = "voice", nulls = Nulls.SKIP)
         public Builder voice(Optional<String> voice) {
             this.voice = voice;
             return this;
         }
 
+        /**
+         * <p>Voice to use</p>
+         */
         public Builder voice(String voice) {
             this.voice = Optional.ofNullable(voice);
             return this;
         }
 
+        /**
+         * <p>Times to loop message</p>
+         */
         @JsonSetter(value = "loop", nulls = Nulls.SKIP)
         public Builder loop(Optional<Integer> loop) {
             this.loop = loop;
             return this;
         }
 
+        /**
+         * <p>Times to loop message</p>
+         */
         public Builder loop(Integer loop) {
             this.loop = Optional.ofNullable(loop);
             return this;
         }
 
+        /**
+         * <p>Nested TwiML elements, rendered in order.</p>
+         */
         @JsonSetter(value = "children", nulls = Nulls.SKIP)
         public Builder children(Optional<List<Break>> children) {
             this.children = children;
             return this;
         }
 
+        /**
+         * <p>Nested TwiML elements, rendered in order.</p>
+         */
         public Builder children(List<Break> children) {
             this.children = Optional.ofNullable(children);
             return this;
         }
 
         public Say build() {
-            return new Say(message, voice, loop, children, additionalProperties, additionalChildren);
+            return new Say(message, voice, loop, children, additionalProperties, content);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -237,25 +292,72 @@ public final class Say implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
-            return this;
-        }
-
-        public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            this.content.add(XmlNode.element(child));
             return this;
         }
 
         /**
-         * Appends a <break> child element.
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
+            return this;
+        }
+
+        /**
+         * Appends an xml comment ({@code <!--text-->}) inside this element, after any content added so far.
+         */
+        public Builder comment(String text) {
+            this.content.add(XmlNode.comment(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately before this element (as a sibling in its parent, or before the root element).
+         */
+        public Builder commentBefore(String text) {
+            this.content.add(XmlNode.commentBefore(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately after this element (as a sibling in its parent, or after the root element).
+         */
+        public Builder commentAfter(String text) {
+            this.content.add(XmlNode.commentAfter(text));
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
+            return this;
+        }
+
+        /**
+         * Appends a &lt;break&gt; child element after any content added so far.
+         * <p>Adding a Pause in &lt;Say&gt;</p>
+         * @param _break the &lt;break&gt; element to append
+         * @return this builder
          */
         public Builder break_(Break _break) {
+            Break item = _break;
             List<Break> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
-            updated.add(_break);
+            updated.add(item);
             this.children = Optional.of(updated);
+            this.content.add(XmlNode.element(item));
             return this;
         }
 
@@ -270,7 +372,6 @@ public final class Say implements XmlSerializable {
             Say parsed = Say.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }

@@ -55,9 +55,11 @@ The CLI package is Fern's **command-line interface and orchestration layer** tha
 
 ### Generation Commands
 ```bash
-fern generate                    # Generate SDKs/docs from API definition
-fern generate --group <name>    # Generate specific group
-fern generate --local          # Run generators locally in Docker
+fern generate                                # Generate legacy defaults and default SDK Config targets
+fern generate --group <name>                 # Generate a legacy generator group
+fern generate --target <language>            # Generate an SDK Config target
+fern generate --group <name> --target <lang> # Generate legacy and SDK Config selections together
+fern generate --local                        # Run legacy generators locally in Docker
 fern generate-ir              # Generate IR without running generators
 ```
 

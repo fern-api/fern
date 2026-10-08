@@ -8,7 +8,10 @@ import {
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
     getPackageNameFromGeneratorConfig,
-    getUserAgentTemplateFromGeneratorConfig
+    getPublishedVersion,
+    getUserAgentTemplateFromGeneratorConfig,
+    getWebhookSignatureFromGeneratorConfig,
+    resolveSnippetPackageName
 } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -33,12 +36,16 @@ import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
 import { createAndStartJob } from "./createAndStartJob.js";
+import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
+    type FernSdkGenApiGithubOptions,
     FernSdkGenApiPreparationBatch,
+    formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
+    getFernSdkGenApiOrigin,
     isEligibleForFernSdkGenApi,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
@@ -55,7 +62,12 @@ import {
 } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
 import { SourceUploader } from "./SourceUploader.js";
-import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
+import {
+    type GenerationConfigRoute,
+    GeneratorConfigCompatibilityError,
+    validateGeneratorConfigCompatibility
+} from "./sdk-gen-client/index.js";
+import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -178,6 +190,9 @@ export async function runRemoteGenerationForGenerator({
         (generatorInvocation.outputMode.type === "downloadFiles"
             ? getPackageNameFromGeneratorConfig(generatorInvocation)
             : undefined);
+    // Resolved separately from `packageName` (which drives version resolution) so that
+    // github-output-only SDKs still key their dynamic IR upload by package name.
+    const snippetPackageName = resolveSnippetPackageName(generatorInvocation);
 
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
     const resolvedWhitelabel =
@@ -205,11 +220,19 @@ export async function runRemoteGenerationForGenerator({
 
     const sdkConfigTarget =
         sdkGenApiRoute?.payloadKind === "sdk-config-v1"
-            ? sdkConfigV1?.targets.find((target) => target.language === sdkGenApiRoute.language)
+            ? resolveSdkConfigTarget(sdkConfigV1, sdkGenApiTargetIdSeed)
             : undefined;
     const configuredSdkVersion = sdkConfigTarget?.sdkVersion ?? sdkConfigV1?.sdkVersion;
     const resolvedVersion =
         version ?? configuredSdkVersion ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+    // Snippet-upload-only version candidate for generators whose package name is known
+    // only from generator config (no publish target). Never sent to Fiddle or embedded in
+    // the IR; it is used after generation only if the registry/GitHub confirms it was released.
+    const snippetVersionCandidate =
+        resolvedVersion == null && snippetPackageName != null && snippetPackageName !== packageName
+            ? await computeSemanticVersion({ packageName: snippetPackageName, generatorInvocation })
+            : undefined;
 
     // Fail fast if the target version already exists on the package registry.
     // Only check when the user explicitly provided a version (not auto-computed).
@@ -254,6 +277,7 @@ export async function runRemoteGenerationForGenerator({
         packageName,
         userAgentTemplate,
         idempotencyKeyGeneration,
+        webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, interactiveTaskContext),
         organization,
         version: effectiveIrVersion,
         context: interactiveTaskContext,
@@ -282,18 +306,6 @@ export async function runRemoteGenerationForGenerator({
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
-        if (replay?.enabled === true) {
-            return interactiveTaskContext.failAndThrow("sdk-gen-api does not yet support replay", undefined, {
-                code: CliError.Code.ConfigError
-            });
-        }
-        if (generateFullProject === true) {
-            return interactiveTaskContext.failAndThrow(
-                "sdk-gen-api does not yet support full-project generation",
-                undefined,
-                { code: CliError.Code.ConfigError }
-            );
-        }
         const candidate = {
             generatorInvocation,
             sdkVersion: resolvedVersion,
@@ -333,16 +345,13 @@ export async function runRemoteGenerationForGenerator({
                     apiVersion: sdkConfigV1.apiVersion,
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
-                    payload: {
-                        payloadKind: "sdk-config-v1",
-                        body: sdkConfigV1.body,
-                        package: sdkConfigTarget.package
-                    },
+                    payload: createSdkConfigTargetPayload(sdkConfigTarget),
                     // Preview must never retain a publishing destination from SDK Config.
-                    requestedOutput: resolveSdkConfigRequestedOutput(
-                        sdkConfigTarget.requestedOutput,
-                        absolutePathToPreview != null
-                    ),
+                    requestedOutput: resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview),
+                    ...(!isPreview && sdkConfigTarget.publishCredential != null
+                        ? { publishCredential: sdkConfigTarget.publishCredential }
+                        : {}),
+                    githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
                     absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
                     absolutePathToPreview,
                     context: interactiveTaskContext,
@@ -374,6 +383,7 @@ export async function runRemoteGenerationForGenerator({
                     workspace,
                     generatorInvocation: candidate.generatorInvocation,
                     audiences,
+                    replay,
                     sourceArchive: sdkGenApiSourceArchive,
                     mapFernGroupToSdkConfig
                 });
@@ -415,6 +425,7 @@ export async function runRemoteGenerationForGenerator({
                     targetIdSeed: sdkGenApiTargetIdSeed,
                     sourceSpecIndexes: sdkGenApiSourceArchive.specIndexes,
                     audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                    githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
                     skipFernignore
                 };
             } else {
@@ -524,7 +535,7 @@ export async function runRemoteGenerationForGenerator({
             return undefined;
         }
 
-        if (packageName == null) {
+        if (snippetPackageName == null) {
             interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode", undefined, {
                 code: CliError.Code.ConfigError
             });
@@ -537,7 +548,7 @@ export async function runRemoteGenerationForGenerator({
                 organization,
                 version,
                 language: generatorInvocation.language,
-                packageName,
+                packageName: snippetPackageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
@@ -582,6 +593,54 @@ export async function runRemoteGenerationForGenerator({
         if (sdkGenApiCandidate == null) {
             throw new Error("sdk-gen-api target passed preflight without an eligible candidate");
         }
+        let resolvedRuntimeGeneratorVersion: string | undefined;
+        // Runtime bundles need an exact version before IR migration, even though generators.yml remains unpinned.
+        if (
+            sdkGenApiRoute.payloadKind === "fern-runtime-bundle" &&
+            sdkGenApiRoute.requestedVersion == null &&
+            sdkGenApiRoute.versionSource === "fern-latest"
+        ) {
+            resolvedRuntimeGeneratorVersion = await resolveLatestRuntimeGeneratorVersion({
+                generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                organization,
+                token
+            });
+        }
+        const runtimeGeneratorVersion = sdkGenApiRoute.requestedVersion ?? resolvedRuntimeGeneratorVersion;
+        if (sdkGenApiRoute.payloadKind === "fern-runtime-bundle" && runtimeGeneratorVersion != null) {
+            try {
+                validateGeneratorConfigCompatibility({
+                    generatorId: sdkGenApiRoute.generatorId,
+                    language: sdkGenApiRoute.language,
+                    requestedVersion: runtimeGeneratorVersion,
+                    configKind: sdkGenApiRoute.configKind
+                });
+            } catch (error) {
+                if (!(error instanceof GeneratorConfigCompatibilityError)) {
+                    throw error;
+                }
+                interactiveTaskContext.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+        }
+        const runtimeGeneratorInvocation =
+            resolvedRuntimeGeneratorVersion == null
+                ? sdkGenApiCandidate.generatorInvocation
+                : { ...sdkGenApiCandidate.generatorInvocation, version: resolvedRuntimeGeneratorVersion };
+        const runtimeIntermediateRepresentation =
+            resolvedRuntimeGeneratorVersion == null
+                ? enrichedIntermediateRepresentation
+                : {
+                      ...enrichedIntermediateRepresentation,
+                      generationMetadata:
+                          enrichedIntermediateRepresentation.generationMetadata == null
+                              ? undefined
+                              : {
+                                    ...enrichedIntermediateRepresentation.generationMetadata,
+                                    generatorVersion: resolvedRuntimeGeneratorVersion
+                                }
+                  };
         const parameters: FernSdkGenApiBuildParameters =
             sdkGenApiRoute.payloadKind === "sdk-config-v1"
                 ? (sdkConfigBuildParameters ??
@@ -595,6 +654,7 @@ export async function runRemoteGenerationForGenerator({
                       organization,
                       cliVersion: workspace.cliVersion,
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                      resolvedGeneratorVersion: resolvedRuntimeGeneratorVersion,
                       sdkGenApiRoute,
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
@@ -605,9 +665,9 @@ export async function runRemoteGenerationForGenerator({
                           body: await prepareFernSdkGenApiRuntimeBundle({
                               apiName: getOriginalName(ir.apiName),
                               organization,
-                              generatorInvocation: sdkGenApiCandidate.generatorInvocation,
+                              generatorInvocation: runtimeGeneratorInvocation,
                               sdkVersion: sdkGenApiCandidate.sdkVersion,
-                              intermediateRepresentation: enrichedIntermediateRepresentation,
+                              intermediateRepresentation: runtimeIntermediateRepresentation,
                               irVersionOverride,
                               generateOauthClients,
                               generatePaginatedClients,
@@ -619,6 +679,7 @@ export async function runRemoteGenerationForGenerator({
                       targetIdSeed: sdkGenApiTargetIdSeed,
                       sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
                       audiences: audiences.type === "select" ? audiences.audiences : undefined,
+                      githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
                       skipFernignore
                   };
         result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
@@ -700,22 +761,46 @@ export async function runRemoteGenerationForGenerator({
     }
 
     // use the actual version from the generation result, fallback to pre-computed version
-    const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+    let actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+    let versionUnresolvedReason: string | undefined;
+    if (actualVersionForUpload == null && result != null && snippetPackageName != null) {
+        if (snippetVersionCandidate == null) {
+            versionUnresolvedReason = `no SDK version was resolved and none could be computed for package ${snippetPackageName}`;
+        } else {
+            const publishedVersion = await getPublishedVersion({
+                packageName: snippetPackageName,
+                generatorInvocation
+            });
+            if (publishedVersion === snippetVersionCandidate) {
+                actualVersionForUpload = publishedVersion;
+            } else {
+                versionUnresolvedReason =
+                    `computed candidate ${snippetVersionCandidate} for package ${snippetPackageName} but the registry/GitHub ` +
+                    `reports ${publishedVersion ?? "no release"}, so the generated SDK version is unconfirmed`;
+            }
+        }
+    }
 
-    if (
-        result != null &&
-        actualVersionForUpload != null &&
-        generatorInvocation.language != null &&
-        packageName != null &&
-        !isPreview
-    ) {
+    const uploadDecision = decideDynamicIrUpload({
+        hasResult: result != null,
+        version: actualVersionForUpload,
+        versionUnresolvedReason,
+        language: generatorInvocation.language,
+        packageName: snippetPackageName,
+        isPreview
+    });
+    if (!uploadDecision.upload) {
+        interactiveTaskContext.logger.debug(
+            `Skipping dynamic IR upload for ${generatorInvocation.name}: ${uploadDecision.reason}`
+        );
+    } else {
         try {
             await uploadDynamicIRForSdkGeneration({
                 fdr,
                 organization,
-                version: actualVersionForUpload,
-                language: generatorInvocation.language,
-                packageName,
+                version: uploadDecision.version,
+                language: uploadDecision.language,
+                packageName: uploadDecision.packageName,
                 ir,
                 smartCasing: generatorInvocation.smartCasing,
                 smartCasingDigitWordBoundary: generatorInvocation.smartCasingDigitWordBoundary,
@@ -732,6 +817,39 @@ export async function runRemoteGenerationForGenerator({
     return result;
 }
 
+async function resolveLatestRuntimeGeneratorVersion({
+    generatorInvocation,
+    organization,
+    token
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    organization: string;
+    token: FernToken;
+}): Promise<string> {
+    const origin = getFernSdkGenApiOrigin();
+    const language = generatorInvocation.language ?? getFernSdkGenApiLanguage(generatorInvocation.name);
+    if (origin == null) {
+        throw new Error("FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true");
+    }
+    if (language == null) {
+        throw new Error(`Cannot discover a generator version for unsupported generator ${generatorInvocation.name}`);
+    }
+    const result = await discoverLatestSdkGenApiGeneratorVersions({
+        origin,
+        organization,
+        token,
+        generatorId: generatorInvocation.name,
+        language
+    });
+    if (result.state === "UNAVAILABLE" || result.compatibleVersion == null) {
+        throw new Error(
+            `SDK Gen API cannot resolve a latest executable version for ${generatorInvocation.name}` +
+                (result.state === "UNAVAILABLE" ? ` (${result.reason})` : "")
+        );
+    }
+    return result.compatibleVersion;
+}
+
 export async function detectFdrAirGappedMode({
     requiresFdrRegistration,
     fdrOrigin,
@@ -742,6 +860,27 @@ export async function detectFdrAirGappedMode({
     logger: InteractiveTaskContext["logger"];
 }): Promise<boolean> {
     return requiresFdrRegistration ? await detectAirGappedMode(`${fdrOrigin}/health`, logger) : false;
+}
+
+function getFernSdkGenApiGithubOptions({
+    replay,
+    verify,
+    skipIfNoDiff,
+    noReplay
+}: {
+    replay: generatorsYml.ReplayConfigSchema | undefined;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
+    noReplay?: boolean;
+}): FernSdkGenApiGithubOptions | undefined {
+    const effectiveReplay =
+        noReplay === true ? { enabled: false } : replay != null ? { enabled: replay.enabled === true } : undefined;
+    const options: FernSdkGenApiGithubOptions = {
+        ...(effectiveReplay != null ? { replay: effectiveReplay } : {}),
+        ...(verify === true ? { verify: true } : {}),
+        ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {})
+    };
+    return Object.keys(options).length > 0 ? options : undefined;
 }
 
 export function getPublishConfig({
@@ -838,6 +977,46 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+export type DynamicIrUploadDecision =
+    | { upload: false; reason: string }
+    | { upload: true; version: string; language: generatorsYml.GenerationLanguage; packageName: string };
+
+export function decideDynamicIrUpload({
+    hasResult,
+    version,
+    versionUnresolvedReason,
+    language,
+    packageName,
+    isPreview
+}: {
+    hasResult: boolean;
+    version: string | undefined;
+    versionUnresolvedReason?: string;
+    language: generatorsYml.GenerationLanguage | undefined;
+    packageName: string | undefined;
+    isPreview: boolean;
+}): DynamicIrUploadDecision {
+    if (isPreview) {
+        return { upload: false, reason: "preview generation" };
+    }
+    if (!hasResult) {
+        return { upload: false, reason: "generation did not produce a result" };
+    }
+    if (language == null) {
+        return { upload: false, reason: "generator has no language" };
+    }
+    if (packageName == null) {
+        return {
+            upload: false,
+            reason: "no package name could be resolved from publish target or generator config"
+        };
+    }
+    if (version == null) {
+        return { upload: false, reason: versionUnresolvedReason ?? "no SDK version was resolved" };
+    }
+    return { upload: true, version, language, packageName };
+}
 
 async function uploadDynamicIRForSdkGeneration({
     fdr,

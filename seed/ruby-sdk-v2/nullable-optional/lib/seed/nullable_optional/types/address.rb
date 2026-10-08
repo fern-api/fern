@@ -13,7 +13,7 @@ module Seed
 
         field :zip_code, -> { String }, optional: false, nullable: false, api_name: "zipCode"
 
-        field :country, -> { String }, optional: true, nullable: false
+        field :country, -> { String }, optional: true, nullable: true
 
         field :building_id, -> { String }, optional: false, nullable: false, api_name: "buildingId"
 

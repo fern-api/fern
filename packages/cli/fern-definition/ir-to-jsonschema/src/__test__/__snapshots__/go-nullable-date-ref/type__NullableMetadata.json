@@ -1,0 +1,22 @@
+{
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      }
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "Arbitrary metadata, or null.",
+  "definitions": {}
+}

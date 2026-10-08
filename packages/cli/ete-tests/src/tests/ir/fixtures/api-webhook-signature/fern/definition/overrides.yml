@@ -1,0 +1,16 @@
+# Definition-file default wins over the API-wide scheme.
+webhook-signature:
+  type: hmac
+  header: x-file-signature
+  algorithm: sha512
+  encoding: base64
+
+types:
+  CallStatusPayload:
+    properties:
+      CallSid: string
+
+webhooks:
+  callStatus:
+    method: POST
+    payload: CallStatusPayload

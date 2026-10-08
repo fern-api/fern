@@ -1,4 +1,174 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.1
+  changelogEntry:
+    - summary: |
+        Parsing an XML (TwiML) element without a text property keeps the text before its first child in the
+        ordered content, so `Gather::fromXml('<Gather>Press a key, then <Say>one</Say></Gather>')` round-trips
+        instead of dropping `Press a key, then `. Types with a text property (e.g. `Say`) are unchanged: that
+        text is still the property's value.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 2.30.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types can now carry XML comments. `comment($text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `addText` segments and child elements), while
+        `commentBefore($text)` / `commentAfter($text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `fromXml` and round-trip through `toXml`; `XmlElement::addComment` and
+        the new `XmlComment` class expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.29.0
+  changelogEntry:
+    - summary: |
+        Generate a unit test file per XML-encoded (TwiML) type alongside the models, covering
+        fromXml/toXml round trips, escaping, unknown attributes/children, open enum passthrough,
+        child ordering, and rejection of malformed XML, wrong root elements and DOCTYPE declarations.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.28.3
+  changelogEntry:
+    - summary: |
+        XML (TwiML) constructors and fluent child methods accept enum cases for enum-typed attributes and
+        text, e.g. `new Break_(['strength' => BreakStrength::Weak])` or `['record' => [DialRecordItem::RecordFromAnswer]]`,
+        in addition to the raw string values. Previously passing the enum instance threw
+        `TypeError: Cannot assign BreakStrength to property Break_::$strength of type ?string`.
+      type: fix
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        an array, matching the legacy call style: `new Gather(['input' => 'speech dtmf'])` and
+        `$response->gather(['input' => 'speech dtmf'])` no longer throw a `TypeError`.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 2.28.2
+  changelogEntry:
+    - summary: |
+        List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+        an array, matching the legacy call style: `new Gather(['input' => 'speech dtmf'])` and
+        `$response->gather(['input' => 'speech dtmf'])` no longer throw a `TypeError`.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.28.1
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `fromXml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of throwing, and it round-trips through
+        `toXml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.28.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, and `X-Fern-SDK-Version` headers. Disabled by default,
+        so existing generated output is unchanged. `omitFernHeaders` still takes precedence and drops
+        the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.27.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.26.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed child elements and raw `XmlElement` children in a
+        single ordered content list, so `toXml()` emits them in the order they were added
+        (`$response->say(['message' => 'a']); $response->addChild(new XmlElement('Custom')); $response->say(['message' => 'b']);`
+        yields `<Say>a</Say><Custom/><Say>b</Say>`) and `fromXml()` preserves document order, including
+        the position of unknown elements. Adds `addText(string)` to XML types and `XmlElement` for mixed
+        content such as `<Say>Hi <break strength="weak"/> world</Say>`. Typed child properties and
+        additional children remain available and are reconciled into the content order on serialization.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.25.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.25.0
+  changelogEntry:
+    - summary: |
+        Add support for SDK variables (`x-fern-sdk-variables` / `variables` in `api.yml`). Each variable
+        becomes an optional, named constructor parameter on the root client (also settable through the
+        `options` array and per request). Path parameters bound to a variable are removed from endpoint
+        method signatures and request classes and resolved from the client instead. String variables
+        that declare an environment variable fall back to `getenv()` when no value is passed, and a
+        clear `InvalidArgumentException` is thrown when a bound variable is still unset at call time.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 2.24.2
+  changelogEntry:
+    - summary: |
+        Fix `JsonSerializableType::jsonDeserialize` throwing `Unexpected non-string type for date.`
+        when a `#[Date]`-annotated property receives an explicit JSON `null`. Nullable date and
+        date-time fields now deserialize `null` to `null`, matching how omitted keys and the
+        serializer already behave; non-string, non-null values are still rejected.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 2.24.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 2.24.0
+  changelogEntry:
+    - summary: |
+        Inline documentation on XML-encoded (TwiML) types: constructors list every documented
+        `$values` key with its description, fluent child methods carry the child type's
+        description and per-key docs for the `$attributes`/child array shape, and text
+        parameters include the text property's description.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 2.23.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 2.22.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
 - version: 2.22.1
   changelogEntry:
     - summary: |

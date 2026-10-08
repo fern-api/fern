@@ -3,7 +3,8 @@ import {
     getOpenAPISettings,
     groupGraphQLSpecsByNamespace,
     type OpenAPISpec,
-    type Spec
+    type Spec,
+    VisibilityFilter
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
@@ -35,12 +36,12 @@ import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { loadApis } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
-
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { createHash } from "crypto";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { existsSync } from "fs";
-import { readFile } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import matter from "gray-matter";
 import jsYaml from "js-yaml";
 import { camelCase, kebabCase } from "lodash-es";
@@ -92,6 +93,7 @@ import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { mapWithConcurrency } from "./utils/mapWithConcurrency.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
@@ -123,6 +125,13 @@ export type RegisterApiFn = (opts: {
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
 
+/** Called as each API's IR is built during navigation, before its deferred registration. */
+export type OnApiRegistrationQueuedFn = (opts: {
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    apiName?: string;
+    workspace?: FernWorkspace;
+}) => void;
+
 /**
  * A translated API definition for a single locale, produced from an OpenAPI
  * spec under `translations/<locale>/apis/<apiName>/`. The `ir` is structurally
@@ -148,6 +157,14 @@ export interface TranslatedApiSpec {
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AIChatConfig | undefined }) => AsyncOrSync<void>;
 
+const DEFAULT_API_REGISTRATION_CONCURRENCY = 4;
+
+/** Max APIs registered with FDR at once; override with `FERN_DOCS_API_REGISTRATION_CONCURRENCY` (1 = serial). */
+export function getApiRegistrationConcurrency(): number {
+    const value = process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY?.trim();
+    return value != null && /^[1-9]\d*$/.test(value) ? Number(value) : DEFAULT_API_REGISTRATION_CONCURRENCY;
+}
+
 const defaultUploadFiles: UploadFilesFn = (files) => {
     return files.map((file) => ({ ...file, fileId: String(file.relativeFilePath) }));
 };
@@ -169,7 +186,16 @@ export interface DocsDefinitionResolverArgs {
     editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
+    /** Lets the caller start per-API registration prep while the rest of the navigation is built. */
+    onApiRegistrationQueued?: OnApiRegistrationQueuedFn;
+    /** Called once the navigation tree (and with it every API's IR) has been built. */
+    onNavigationTreeBuilt?: () => void;
     targetAudiences?: string[];
+    /**
+     * Which `x-twilio.docsVisibility` tiers of OpenAPI specs to include in API references.
+     * Defaults to `public`; `--private` passes `private`.
+     */
+    docsVisibility?: VisibilityFilter;
     /**
      * When true, also builds per-locale translated API IRs from OpenAPI specs under
      * `translations/<locale>/apis/<apiName>/`, exposed via
@@ -201,7 +227,10 @@ export class DocsDefinitionResolver {
     private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
+    private onApiRegistrationQueued: OnApiRegistrationQueuedFn | undefined;
+    private onNavigationTreeBuilt: (() => void) | undefined;
     private targetAudiences?: string[];
+    private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
     private buildRefVersions: boolean;
     private cliVersion?: string;
@@ -225,7 +254,10 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
+        onApiRegistrationQueued,
+        onNavigationTreeBuilt,
         targetAudiences,
+        docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
         buildRefVersions = true,
         cliVersion,
@@ -239,7 +271,10 @@ export class DocsDefinitionResolver {
         this.editThisPage = editThisPage;
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
+        this.onApiRegistrationQueued = onApiRegistrationQueued;
+        this.onNavigationTreeBuilt = onNavigationTreeBuilt;
         this.targetAudiences = targetAudiences;
+        this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
         this.buildRefVersions = buildRefVersions;
         this.cliVersion = cliVersion;
@@ -500,7 +535,8 @@ export class DocsDefinitionResolver {
                                 detectGlobalHeaders: false,
                                 preserveSchemaIds: true,
                                 objectQueryParameters: true,
-                                respectReadonlySchemas: true
+                                respectReadonlySchemas: true,
+                                docsVisibility: this.docsVisibility
                             }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
@@ -609,14 +645,10 @@ export class DocsDefinitionResolver {
         const imageParseStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
-                const { filepaths, markdown: newMarkdown } = parseImagePaths(
-                    markdown,
-                    {
-                        absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                        absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-                    },
-                    this.taskContext
-                );
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                });
 
                 // store the updated markdown in pages
                 this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
@@ -663,6 +695,7 @@ export class DocsDefinitionResolver {
         const root = await this.toRootNode();
         const rootTime = performance.now() - rootStart;
         this.taskContext.logger.debug(`Built navigation tree in ${rootTime.toFixed(0)}ms`);
+        this.onNavigationTreeBuilt?.();
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 
@@ -682,20 +715,66 @@ export class DocsDefinitionResolver {
                 `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
             );
             const deferredStart = performance.now();
-            for (const pending of this.pendingApiRegistrations) {
+            const pendingRegistrations = this.pendingApiRegistrations;
+            // Versioned docs often reference the same API from every version; register each
+            // distinct definition once and reuse its ID.
+            const registrationKeys: string[] = [];
+            const uniqueRegistrations = new Map<string, (typeof pendingRegistrations)[number]>();
+            for (const pending of pendingRegistrations) {
                 // Resolve .mdx/.md file path links in all IR description (docs) fields
                 this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
 
-                // Register the API with resolved descriptions
-                const realApiDefinitionId = await this.registerApi({
-                    ir: pending.ir,
-                    snippetsConfig: pending.snippetsConfig,
-                    playgroundConfig: pending.playgroundConfig,
-                    apiName: pending.apiName,
-                    workspace: pending.workspace,
-                    graphqlOperations: pending.graphqlOperations,
-                    graphqlTypes: pending.graphqlTypes
-                });
+                const sourceFiles = pending.workspace
+                    ?.getSources()
+                    .map((source) => [source.absoluteFilePath, source.absoluteFilePathToOverrides]);
+                const registrationKey = createHash("sha256")
+                    .update(
+                        JSON.stringify({
+                            ir: pending.ir,
+                            snippetsConfig: pending.snippetsConfig,
+                            playgroundConfig: pending.playgroundConfig,
+                            apiName: pending.apiName,
+                            workspace: sourceFiles,
+                            graphqlOperations: pending.graphqlOperations,
+                            graphqlTypes: pending.graphqlTypes
+                        })
+                    )
+                    .digest("hex");
+                registrationKeys.push(registrationKey);
+                if (!uniqueRegistrations.has(registrationKey)) {
+                    uniqueRegistrations.set(registrationKey, pending);
+                }
+            }
+            // Registrations are independent, so a few run at once; FDR caps concurrent
+            // registrations per task and queues the rest.
+            const uniqueEntries = [...uniqueRegistrations.entries()];
+            const uniqueApiDefinitionIds = await mapWithConcurrency(
+                uniqueEntries,
+                getApiRegistrationConcurrency(),
+                async ([, pending]) =>
+                    await this.registerApi({
+                        ir: pending.ir,
+                        snippetsConfig: pending.snippetsConfig,
+                        playgroundConfig: pending.playgroundConfig,
+                        apiName: pending.apiName,
+                        workspace: pending.workspace,
+                        graphqlOperations: pending.graphqlOperations,
+                        graphqlTypes: pending.graphqlTypes
+                    })
+            );
+            const apiDefinitionIdsByRegistration = new Map(
+                uniqueEntries.map(([registrationKey], index) => [registrationKey, uniqueApiDefinitionIds[index]])
+            );
+            // Apply results in registration order so the nav tree and translated specs stay deterministic.
+            for (const [index, pending] of pendingRegistrations.entries()) {
+                const registrationKey = registrationKeys[index];
+                const realApiDefinitionId =
+                    registrationKey != null ? apiDefinitionIdsByRegistration.get(registrationKey) : undefined;
+                if (realApiDefinitionId == null) {
+                    throw new Error(
+                        `Registering API ${pending.apiName ?? pending.tempApiDefinitionId} returned no definition id`
+                    );
+                }
 
                 // Update all apiDefinitionId references in the navigation subtree
                 updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
@@ -1125,7 +1204,8 @@ export class DocsDefinitionResolver {
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
                           "product-switcher": this.parsedDocsConfig.theme
-                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"]
+                              .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"],
+                          "site-switcher": convertThemeSiteSwitcher(this.parsedDocsConfig.theme.siteSwitcher)
                       }
                     : undefined,
             // deprecated
@@ -1269,7 +1349,18 @@ export class DocsDefinitionResolver {
                 absoluteFilepath: spec.absolutePath,
                 absoluteFilepathToOverrides: spec.absoluteOverridePaths,
                 absoluteFilepathToOverlays: spec.absoluteOverlayPaths[0],
-                settings: getOpenAPISettings(),
+                settings: getOpenAPISettings({
+                    options: {
+                        typeDatesAsStrings: spec.settings?.typeDatesAsStrings,
+                        useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
+                        respectParameterContent: spec.settings?.respectParameterContent,
+                        respectOperationIdWordBoundaries: spec.settings?.respectOperationIdWordBoundaries,
+                        inferForwardCompatible: spec.settings?.inferForwardCompatible,
+                        preserveOneOfInAllOf: spec.settings?.preserveOneOfInAllOf,
+                        anyOfSiblingPropertiesAsObject: spec.settings?.anyOfSiblingPropertiesAsObject,
+                        errorResponses: toOpenApiErrorResponses(spec.settings?.errorResponses)
+                    }
+                }),
                 source: {
                     // AsyncAPI uses the OpenAPISpec container because OSSWorkspace converts
                     // both formats into the same IR. source.type selects the actual parser.
@@ -1313,6 +1404,7 @@ export class DocsDefinitionResolver {
         const { defaultLocale, translations } = translationsConfig;
         const fernFolder = this.docsWorkspace.absoluteFilePath;
         const result = new Map<string, IntermediateRepresentation>();
+        const useV3Parser = this.shouldUseOpenApiParserV3();
 
         for (const locale of translations) {
             if (locale === defaultLocale) {
@@ -1325,13 +1417,30 @@ export class DocsDefinitionResolver {
             }
 
             try {
-                const translatedIr = await translatedWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                let translatedIr: IntermediateRepresentation | undefined;
+                if (useV3Parser) {
+                    try {
+                        translatedIr = await translatedWorkspace.getIntermediateRepresentation(
+                            {
+                                context: this.taskContext,
+                                audiences: item.audiences,
+                                enableUniqueErrorsPerEndpoint: true,
+                                generateV1Examples: false,
+                                logWarnings: false
+                            },
+                            { docsVisibility: this.docsVisibility }
+                        );
+                    } catch (error) {
+                        this.taskContext.logger.warn(
+                            `v3 parser failed for translated API definition (locale "${locale}"): ${extractErrorMessage(
+                                error
+                            )}. Falling back to the v2 parser.`
+                        );
+                    }
+                }
+                if (translatedIr == null) {
+                    translatedIr = await this.buildIrWithFernWorkspace(translatedWorkspace, item.audiences);
+                }
                 result.set(locale, translatedIr);
                 this.taskContext.logger.debug(
                     `Built translated API definition for locale "${locale}" (api: ${
@@ -1350,6 +1459,60 @@ export class DocsDefinitionResolver {
         }
 
         return result.size > 0 ? result : undefined;
+    }
+
+    private shouldUseOpenApiParserV3(): boolean {
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        return openapiParserV3 == null || openapiParserV3;
+    }
+
+    private async toFernWorkspaceForDocs(apiWorkspace: AbstractAPIWorkspace<unknown>): Promise<FernWorkspace> {
+        return apiWorkspace.toFernWorkspace(
+            { context: this.taskContext },
+            {
+                enableUniqueErrorsPerEndpoint: true,
+                detectGlobalHeaders: false,
+                objectQueryParameters: true,
+                preserveSchemaIds: true,
+                docsVisibility: this.docsVisibility
+            }
+        );
+    }
+
+    private generateIrFromFernWorkspace(
+        workspace: FernWorkspace,
+        audiences: docsYml.DocsNavigationItem.ApiSection["audiences"]
+    ): IntermediateRepresentation {
+        return generateIntermediateRepresentation({
+            workspace,
+            audiences,
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false,
+            exampleGeneration: {
+                disabled: false,
+                skipAutogenerationIfManualExamplesExist: true,
+                skipErrorAutogenerationIfManualErrorExamplesExist: true
+            },
+            readme: undefined,
+            version: undefined,
+            packageName: undefined,
+            context: this.taskContext,
+            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+        });
+    }
+
+    /**
+     * The v2 ("Fern workspace") parser path: converts the API workspace to a Fern
+     * definition and generates the IR from it. Used when the v3 OpenAPI parser is
+     * disabled or fails.
+     */
+    private async buildIrWithFernWorkspace(
+        apiWorkspace: AbstractAPIWorkspace<unknown>,
+        audiences: docsYml.DocsNavigationItem.ApiSection["audiences"]
+    ): Promise<IntermediateRepresentation> {
+        const workspace = await this.toFernWorkspaceForDocs(apiWorkspace);
+        return this.generateIrFromFernWorkspace(workspace, audiences);
     }
 
     /**
@@ -1924,19 +2087,22 @@ export class DocsDefinitionResolver {
         let workspace: FernWorkspace | undefined = undefined;
         let openapiWorkspace: OSSWorkspace | undefined = undefined;
         let openapiError: unknown = undefined;
-        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
-        const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        const useV3Parser = this.shouldUseOpenApiParserV3();
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser && shouldAttemptOpenApiIr) {
             try {
                 openapiWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
-                ir = await openapiWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
+                ir = await openapiWorkspace.getIntermediateRepresentation(
+                    {
+                        context: this.taskContext,
+                        audiences: item.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false,
+                        cacheResult: true
+                    },
+                    { docsVisibility: this.docsVisibility }
+                );
             } catch (error) {
                 openapiError = error;
             }
@@ -1950,25 +2116,17 @@ export class DocsDefinitionResolver {
                     openapiWorkspace ??
                     directApiWorkspace ??
                     this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
-                const openApiIr = await workspaceForTags.getOpenAPIIr({
-                    context: this.taskContext,
-                    loadAiExamples: true
-                });
-                if (openApiIr.tags.tagsById) {
-                    // Tag keys must be normalized to camelCase because subpackage names are derived
-                    // from OpenAPI tags using camelCase conversion. The lookup in
-                    // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
-                    // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
-                    // tags are converted to camelCase when generating file/subpackage names.
-                    openApiTags = Object.fromEntries(
-                        Object.entries(openApiIr.tags.tagsById)
-                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
-                            .map(([tagId, tag]) => [
-                                camelCase(tagId),
-                                { id: String(tag.id), description: tag.description }
-                            ])
-                    );
-                }
+                const tagsById = await workspaceForTags.getOpenAPITags({ context: this.taskContext });
+                // Tag keys must be normalized to camelCase because subpackage names are derived
+                // from OpenAPI tags using camelCase conversion. The lookup in
+                // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
+                // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
+                // tags are converted to camelCase when generating file/subpackage names.
+                openApiTags = Object.fromEntries(
+                    Object.entries(tagsById)
+                        .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                        .map(([tagId, tag]) => [camelCase(tagId), { id: String(tag.id), description: tag.description }])
+                );
             } catch (error) {
                 this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
             }
@@ -1981,49 +2139,17 @@ export class DocsDefinitionResolver {
             if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
-            workspace = await (
+            workspace = await this.toFernWorkspaceForDocs(
                 directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
-            ).toFernWorkspace(
-                { context: this.taskContext },
-                {
-                    enableUniqueErrorsPerEndpoint: true,
-                    detectGlobalHeaders: false,
-                    objectQueryParameters: true,
-                    preserveSchemaIds: true
-                }
             );
-            ir = generateIntermediateRepresentation({
-                workspace,
-                audiences: item.audiences,
-                generationLanguage: undefined,
-                keywords: undefined,
-                smartCasing: false,
-                exampleGeneration: {
-                    disabled: false,
-                    skipAutogenerationIfManualExamplesExist: true,
-                    skipErrorAutogenerationIfManualErrorExamplesExist: true
-                },
-                readme: undefined,
-                version: undefined,
-                packageName: undefined,
-                context: this.taskContext,
-                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-            });
+            ir = this.generateIrFromFernWorkspace(workspace, item.audiences);
         } else {
             // When using the v3 parser (ir != null), we still need to load the workspace
             // for dynamic snippet generation and AI example enhancement, which require
             // access to the resolved API source file paths.
             try {
-                workspace = await (
+                workspace = await this.toFernWorkspaceForDocs(
                     directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
-                ).toFernWorkspace(
-                    { context: this.taskContext },
-                    {
-                        enableUniqueErrorsPerEndpoint: true,
-                        detectGlobalHeaders: false,
-                        objectQueryParameters: true,
-                        preserveSchemaIds: true
-                    }
                 );
             } catch (error) {
                 // If we can't load the workspace, log a warning but continue
@@ -2051,17 +2177,17 @@ export class DocsDefinitionResolver {
             );
         }
 
-        // Resolve the workspace for GraphQL extraction: prefer the already-resolved
-        // openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
-        let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
-        if (graphqlWorkspace == null) {
+        // Resolve the OSS workspace for GraphQL extraction and translated API builds: prefer the
+        // already-resolved openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
+        let resolvedOssWorkspace: OSSWorkspace | undefined = openapiWorkspace;
+        if (resolvedOssWorkspace == null) {
             try {
-                graphqlWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
+                resolvedOssWorkspace = directApiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
             } catch {
                 // expected for Fern Definition APIs (no OSS workspace)
             }
         }
-        const graphqlData = await this.extractGraphQLData(graphqlWorkspace, {
+        const graphqlData = await this.extractGraphQLData(resolvedOssWorkspace, {
             failOnError: directApiWorkspace != null
         });
 
@@ -2133,11 +2259,11 @@ export class DocsDefinitionResolver {
 
         const apiReferenceNode = node.get();
 
-        // Only the v3 (OpenAPI) parser path supports translated API IRs, since it needs
-        // an OSS workspace whose spec file paths can be remapped to the translated dir.
+        // Translated API IRs need an OSS workspace whose spec file paths can be remapped to the
+        // translated dir; they're built with the same parser (v3, or v2) as the base locale.
         let translatedIrsByLocale: Map<string, IntermediateRepresentation> | undefined;
-        if (this.buildTranslatedApiDefinitions && openapiWorkspace != null) {
-            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, openapiWorkspace);
+        if (this.buildTranslatedApiDefinitions && resolvedOssWorkspace != null) {
+            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, resolvedOssWorkspace);
         }
 
         // Store pending registration for deferred processing after markdownFilesToPathName is available
@@ -2153,6 +2279,7 @@ export class DocsDefinitionResolver {
             apiReferenceNode,
             translatedIrsByLocale
         });
+        this.onApiRegistrationQueued?.({ snippetsConfig, apiName: apiNameForRegistration, workspace });
 
         return apiReferenceNode;
     }
@@ -2383,7 +2510,9 @@ export class DocsDefinitionResolver {
         });
         const sectionId = this.#idgen.get(`library/${item.libraryName}`);
 
-        // Derive root page from nav nodes' common parent slug (same pattern as section overviews)
+        // Derive root page from nav nodes' common parent slug (same pattern as section overviews).
+        // A library whose only children are private modules has no nav nodes but still has a
+        // root page, so fall back to the single page written under the library's slug folder.
         let overviewPageId: FernNavigation.PageId | undefined;
         if (navNodes.length > 0) {
             const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
@@ -2392,6 +2521,10 @@ export class DocsDefinitionResolver {
                     (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
                     (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
             }
+        } else {
+            const rootPage = await this.findSoleLibraryRootPage(outputDir, item.libraryName);
+            overviewPageId =
+                rootPage != null ? await this.registerLibraryMdxPage(outputDir, rootPage, { quiet: true }) : undefined;
         }
 
         const children = await this.convertLibraryNavNodes(navNodes, outputDir, sectionSlug);
@@ -2452,6 +2585,33 @@ export class DocsDefinitionResolver {
             );
             return null;
         }
+    }
+
+    /**
+     * Locate the root page of a library whose `_navigation.yml` is empty. Generated output
+     * lives under `<outputDir>/<libraryName>/`; the root module is either `<root>.mdx` or
+     * `<root>/index.mdx`. Returns the relative path only when exactly one candidate exists.
+     */
+    private async findSoleLibraryRootPage(
+        outputDir: AbsoluteFilePath,
+        libraryName: string
+    ): Promise<string | undefined> {
+        const libraryDir = join(outputDir, RelativeFilePath.of(libraryName));
+        if (!existsSync(libraryDir)) {
+            return undefined;
+        }
+        const candidates: string[] = [];
+        for (const entry of await readdir(libraryDir, { withFileTypes: true })) {
+            if (entry.isFile() && entry.name.endsWith(".mdx")) {
+                candidates.push(`${libraryName}/${entry.name}`);
+            } else if (entry.isDirectory()) {
+                const indexPath = `${libraryName}/${entry.name}/index.mdx`;
+                if (existsSync(join(outputDir, RelativeFilePath.of(indexPath)))) {
+                    candidates.push(indexPath);
+                }
+            }
+        }
+        return candidates.length === 1 ? candidates[0] : undefined;
     }
 
     /**
@@ -3024,16 +3184,17 @@ export class DocsDefinitionResolver {
     private convertDocsSettings(): DocsV1Write.DocsConfig["settings"] {
         const settings = this.parsedDocsConfig.settings;
         const externalSitemaps = this.parsedDocsConfig.experimental?.externalSitemaps;
-        if (externalSitemaps == null || externalSitemaps.length === 0) {
-            return settings;
+        const search =
+            externalSitemaps == null || externalSitemaps.length === 0
+                ? settings?.search
+                : { ...settings?.search, externalSitemaps };
+        if (settings == null && search == null) {
+            return undefined;
         }
         return {
             ...settings,
-            search: {
-                ...settings?.search,
-                externalSitemaps
-            }
-        } as DocsV1Write.DocsConfig["settings"];
+            search: search as NonNullable<DocsV1Write.DocsConfig["settings"]>["search"]
+        };
     }
 
     private convertJavascriptConfiguration(): DocsV1Write.JsConfig | undefined {
@@ -3113,6 +3274,27 @@ export class DocsDefinitionResolver {
     }
 }
 
+function toOpenApiErrorResponses(
+    errorResponses: docsYml.RawSchemas.ApiSpecErrorResponses | undefined
+): NonNullable<ReturnType<typeof getOpenAPISettings>["errorResponses"]> | undefined {
+    if (errorResponses == null) {
+        return undefined;
+    }
+    return {
+        schema: errorResponses.schema,
+        ...(errorResponses.name == null ? {} : { name: errorResponses.name }),
+        ...(errorResponses.applyTo == null ? {} : { "apply-to": errorResponses.applyTo }),
+        ...(errorResponses.ensure == null
+            ? {}
+            : {
+                  ensure: errorResponses.ensure.map((entry) => ({
+                      "status-code": entry.statusCode,
+                      ...(entry.methods == null ? {} : { methods: entry.methods })
+                  }))
+              })
+    };
+}
+
 function createEditThisPageUrl(
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
     pageFilepath: string
@@ -3139,6 +3321,21 @@ export function convertThemeTabs(
         style: tabs.style,
         alignment: tabs.alignment?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["alignment"],
         placement: tabs.placement?.toUpperCase() as DocsV1Write.DocsTabsObjectConfig["placement"]
+    };
+}
+
+export function convertThemeSiteSwitcher(
+    siteSwitcher: docsYml.RawSchemas.SiteSwitcherThemeConfig | undefined
+): DocsV1Write.DocsThemeConfig["site-switcher"] | undefined {
+    if (siteSwitcher == null) {
+        return undefined;
+    }
+    return {
+        enabled: siteSwitcher.enabled,
+        order: siteSwitcher.order,
+        hide: siteSwitcher.hide,
+        labels: siteSwitcher.labels,
+        "show-products": siteSwitcher.showProducts
     };
 }
 

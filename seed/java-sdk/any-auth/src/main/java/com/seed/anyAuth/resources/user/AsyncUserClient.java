@@ -5,6 +5,7 @@ package com.seed.anyAuth.resources.user;
 
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.RequestOptions;
+import com.seed.anyAuth.core.SeedAnyAuthHttpResponse;
 import com.seed.anyAuth.resources.user.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,18 +28,46 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<List<User>> get() {
-        return this.rawClient.get().thenApply(response -> response.body());
+        CompletableFuture<SeedAnyAuthHttpResponse<List<User>>> rawFuture = this.rawClient.get();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> get(RequestOptions requestOptions) {
-        return this.rawClient.get(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedAnyAuthHttpResponse<List<User>>> rawFuture = this.rawClient.get(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getAdmins() {
-        return this.rawClient.getAdmins().thenApply(response -> response.body());
+        CompletableFuture<SeedAnyAuthHttpResponse<List<User>>> rawFuture = this.rawClient.getAdmins();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getAdmins(RequestOptions requestOptions) {
-        return this.rawClient.getAdmins(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedAnyAuthHttpResponse<List<User>>> rawFuture = this.rawClient.getAdmins(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

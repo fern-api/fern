@@ -11,6 +11,9 @@
     },
     {
       "$ref": "#/definitions/Hangup"
+    },
+    {
+      "$ref": "#/definitions/Redirect"
     }
   ],
   "definitions": {
@@ -23,7 +26,8 @@
         "medium",
         "strong",
         "x-strong"
-      ]
+      ],
+      "description": "Set a pause based on strength"
     },
     "Break": {
       "type": "object",
@@ -36,7 +40,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set a pause based on strength"
         },
         "time": {
           "oneOf": [
@@ -46,10 +51,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Set a pause to a specific length of time in seconds or milliseconds, available values: [number]s, [number]ms"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Adding a Pause in <Say>"
     },
     "Say": {
       "type": "object",
@@ -62,7 +69,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Message to say"
         },
         "voice": {
           "oneOf": [
@@ -72,7 +80,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Voice to use"
         },
         "loop": {
           "oneOf": [
@@ -82,7 +91,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Times to loop message"
         },
         "children": {
           "oneOf": [
@@ -95,10 +105,12 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Nested TwiML elements, rendered in order."
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "<Say> TwiML Verb"
     },
     "Number": {
       "type": "object",
@@ -188,6 +200,33 @@
     "Hangup": {
       "type": "object",
       "additionalProperties": false
+    },
+    "Redirect": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "kind": {
+          "oneOf": [
+            {
+              "const": "redirect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "method"
+      ],
+      "additionalProperties": false,
+      "description": "Text element with a required attribute."
     }
   }
 }

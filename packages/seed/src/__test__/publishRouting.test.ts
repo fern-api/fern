@@ -40,6 +40,11 @@ describe("getPublishType", () => {
         expect(getPublishType({ version: "1.0.0-beta.3", isDevRelease: true })).toBe("dev");
     });
 
+    it("routes pre-prod release to preprod regardless of version", () => {
+        expect(getPublishType({ version: "5.9.0", isDevRelease: undefined, isPreProdRelease: true })).toBe("preprod");
+        expect(getPublishType({ version: "5.9.0-rc.0", isDevRelease: false, isPreProdRelease: true })).toBe("preprod");
+    });
+
     it("returns ga for malformed versions that semver cannot parse", () => {
         expect(getPublishType({ version: "not-a-version", isDevRelease: undefined })).toBe("ga");
         expect(getPublishType({ version: "1.2", isDevRelease: undefined })).toBe("ga");

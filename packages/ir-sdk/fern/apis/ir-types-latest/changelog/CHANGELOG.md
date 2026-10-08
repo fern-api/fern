@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.29.0] - 2026-10-05
+
+- Add `VariableDeclaration.envVar` (optional `string`): the name of an environment variable the
+  generated SDK reads at client construction when the caller does not pass the SDK variable
+  explicitly. When set, the variable is optional in the client constructor. Populated from `env`
+  on a detailed `variables` declaration in `api.yml` and from `x-fern-env` on an
+  `x-fern-sdk-variables` entry in OpenAPI specs.
+
+## [v67.28.0] - 2026-09-24
+
+- Add `SdkConfig.webhookSignatureVerification` (optional `webhooks.WebhookSignatureVerification`):
+  an API-wide webhook signature scheme populated from `api.settings.webhook-signature` in
+  `generators.yml`. Lets generators emit the shared webhook verification helper without any
+  webhooks or `x-fern-*` extensions in the spec, and serves as the default scheme for modeled
+  webhooks that do not declare their own.
+
 ## [v67.27.0] - 2026-09-15
 
 - Add optional `wrapperProperty` to dynamic auth schemes so snippet generators can nest

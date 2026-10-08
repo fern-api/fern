@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -25,9 +25,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
+/**
+ * <p>Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Wide.Builder.class)
 public final class Wide implements XmlSerializable {
@@ -547,7 +549,7 @@ public final class Wide implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
     private Wide(Builder builder) {
         this.attr1 = builder.attr1;
@@ -808,7 +810,7 @@ public final class Wide implements XmlSerializable {
         this.attr256 = builder.attr256;
         this.children = builder.children;
         this.additionalProperties = builder.additionalProperties;
-        this.additionalChildren = builder.additionalChildren;
+        this.content = builder.content;
     }
 
     @JsonProperty("attr1")
@@ -2107,9 +2109,20 @@ public final class Wide implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     private boolean equalTo(Wide other) {
@@ -2634,13 +2647,13 @@ public final class Wide implements XmlSerializable {
                 this.children);
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
-    }
-
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public String toString() {
+        return toXml();
     }
 
     @Override
@@ -2907,9 +2920,8 @@ public final class Wide implements XmlSerializable {
         writer.attribute("attr254", this.attr254);
         writer.attribute("attr255", this.attr255);
         writer.attribute("attr256", this.attr256);
-        writer.children("children", this.children);
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content, this.children));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -2922,6 +2934,14 @@ public final class Wide implements XmlSerializable {
 
     public static Wide fromXml(Element element) {
         XmlReader.expect(element, "Wide");
+        List<XmlNode> content = XmlReader.content(element, false, Arrays.asList(), e -> {
+            switch (XmlReader.localName(e)) {
+                case "Pause":
+                    return Pause.fromXml(e);
+                default:
+                    return null;
+            }
+        });
         Builder builder = new Builder();
         builder.attr1 = XmlReader.attribute(element, "attr1");
         builder.attr2 = XmlReader.attribute(element, "attr2");
@@ -3179,9 +3199,7 @@ public final class Wide implements XmlSerializable {
         builder.attr254 = XmlReader.attribute(element, "attr254");
         builder.attr255 = XmlReader.attribute(element, "attr255");
         builder.attr256 = XmlReader.attribute(element, "attr256");
-        builder.children = XmlReader.optionalList(XmlReader.children(element, "Pause").stream()
-                .map(Pause::fromXml)
-                .collect(Collectors.toList()));
+        builder.children = XmlReader.optionalList(XmlNode.elements(content, Pause.class));
         builder.additionalProperties = XmlReader.extraAttributes(
                 element,
                 Arrays.asList(
@@ -3216,7 +3234,7 @@ public final class Wide implements XmlSerializable {
                         "attr237", "attr238", "attr239", "attr240", "attr241", "attr242", "attr243", "attr244",
                         "attr245", "attr246", "attr247", "attr248", "attr249", "attr250", "attr251", "attr252",
                         "attr253", "attr254", "attr255", "attr256"));
-        builder.additionalChildren = XmlReader.unknownChildren(element, Arrays.asList("Pause"));
+        builder.content = content;
         return new Wide(builder);
     }
 
@@ -3740,7 +3758,7 @@ public final class Wide implements XmlSerializable {
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
@@ -4002,6 +4020,7 @@ public final class Wide implements XmlSerializable {
             attr255(other.getAttr255());
             attr256(other.getAttr256());
             children(other.getChildren());
+            content(other.getContent());
             return this;
         }
 
@@ -6847,25 +6866,72 @@ public final class Wide implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
-            return this;
-        }
-
-        public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            this.content.add(XmlNode.element(child));
             return this;
         }
 
         /**
-         * Appends a <Pause> child element.
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
+            return this;
+        }
+
+        /**
+         * Appends an xml comment ({@code <!--text-->}) inside this element, after any content added so far.
+         */
+        public Builder comment(String text) {
+            this.content.add(XmlNode.comment(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately before this element (as a sibling in its parent, or before the root element).
+         */
+        public Builder commentBefore(String text) {
+            this.content.add(XmlNode.commentBefore(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately after this element (as a sibling in its parent, or after the root element).
+         */
+        public Builder commentAfter(String text) {
+            this.content.add(XmlNode.commentAfter(text));
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
+            return this;
+        }
+
+        /**
+         * Appends a &lt;Pause&gt; child element after any content added so far.
+         * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
+         * @param pause the &lt;Pause&gt; element to append
+         * @return this builder
          */
         public Builder pause(Pause pause) {
+            Pause item = pause;
             List<Pause> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
-            updated.add(pause);
+            updated.add(item);
             this.children = Optional.of(updated);
+            this.content.add(XmlNode.element(item));
             return this;
         }
 
@@ -6880,7 +6946,6 @@ public final class Wide implements XmlSerializable {
             Wide parsed = Wide.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }

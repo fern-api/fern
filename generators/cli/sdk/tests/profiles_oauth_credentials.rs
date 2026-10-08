@@ -181,25 +181,31 @@ fn two_profiles_hold_independent_client_credentials() {
 
 #[test]
 #[serial]
-fn env_vars_still_win_over_a_stored_credential() {
-    // Ambient precedence is unchanged: env above an active profile.
+fn a_selected_profiles_stored_credential_wins_over_env_vars() {
+    // The active profile's keyring entry outranks exported env vars, the
+    // same as it does under `-p`; `auth status` reports that order.
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--use"]);
         store("prod", "stored-id", "stored-secret");
         std::env::set_var("OA_CLIENT_ID", "env-id");
         std::env::set_var("OA_CLIENT_SECRET", "env-secret");
 
-        let active: Vec<String> = status(None)["sources"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .filter(|s| s["state"] == "active")
-            .map(|s| s["source"].as_str().unwrap().to_string())
-            .collect();
-        assert!(
-            active.iter().all(|s| s.contains("env var")),
-            "env should win for an ambient profile: {active:?}",
-        );
+        let winners = |profile: Option<&str>| -> Vec<String> {
+            status(profile)["sources"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|s| s["state"] == "active")
+                .map(|s| s["source"].as_str().unwrap().to_string())
+                .collect()
+        };
+        for (label, active) in [("active", winners(None)), ("-p", winners(Some("prod")))] {
+            assert_eq!(active.len(), 2, "{label}: {active:?}");
+            assert!(
+                active.iter().all(|s| s.contains("keyring")),
+                "{label}: the profile's stored credential should win: {active:?}",
+            );
+        }
     });
 }
 
@@ -233,5 +239,55 @@ fn an_unprofiled_credential_still_resolves() {
         std::env::set_var("OA_CLIENT_ID", "i");
         std::env::set_var("OA_CLIENT_SECRET", "s");
         assert!(logged_in(None));
+    });
+}
+
+fn json(args: &[&str]) -> serde_json::Value {
+    let (code, output) = run(args);
+    assert_eq!(code, 0, "{output}");
+    serde_json::from_str(&output).expect("json")
+}
+
+#[test]
+#[serial]
+fn a_keyring_client_id_is_shown_by_list_show_and_current() {
+    // `profiles set <name> OA_CLIENT_ID=…` writes the id to the keyring, not
+    // to `oauth_client_id` in profiles.toml, so every reporting surface has
+    // to read it from there the way it reads a basic-auth username.
+    with_clean_env(|| {
+        run(&["oa", "profiles", "create", "prod", "--use"]);
+        let (code, output) = run(&[
+            "oa", "profiles", "set", "prod", "OA_CLIENT_ID=keyring-id", "OA_CLIENT_SECRET=s",
+        ]);
+        assert_eq!(code, 0, "{output}");
+
+        let rows = json(&["oa", "profiles", "list", "--format", "json"]);
+        let prod = rows
+            .as_array()
+            .expect("array")
+            .iter()
+            .find(|r| r["profile"] == "prod")
+            .expect("prod");
+        assert_eq!(prod["account"], "keyring-id", "{prod:#?}");
+
+        let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
+
+        let current = json(&["oa", "profiles", "current", "--format", "json"]);
+        assert_eq!(current["oauth_client_id"], "keyring-id", "{current:#?}");
+    });
+}
+
+#[test]
+#[serial]
+fn the_keyring_client_id_outranks_the_plaintext_one_in_show() {
+    // Reported in the order the provider resolves them, so `show` names the
+    // id a request will actually send.
+    with_clean_env(|| {
+        run(&["oa", "profiles", "create", "prod", "--oauth-client-id", "plain-id", "--use"]);
+        store("prod", "keyring-id", "s");
+
+        let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
     });
 }

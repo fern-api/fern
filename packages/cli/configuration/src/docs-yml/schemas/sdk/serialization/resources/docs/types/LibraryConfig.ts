@@ -9,10 +9,15 @@ export const LibraryConfig: core.serialization.ObjectSchema<
     FernDocsConfig.LibraryConfig
 > = core.serialization.object({
     doxyfile: core.serialization.string().optional(),
+    includeUndocumentedMacros: core.serialization.property(
+        "include-undocumented-macros",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace LibraryConfig {
     export interface Raw {
         doxyfile?: string | null;
+        "include-undocumented-macros"?: boolean | null;
     }
 }

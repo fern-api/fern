@@ -27,6 +27,10 @@ export declare namespace Field {
         attributes?: Attribute[];
         /* Indicates that this field is inherited and should not be written to the class. */
         inherited?: boolean;
+        /* The type documented for this field's key in a data class constructor's `$values` array; defaults to `type` */
+        constructorType?: Type;
+        /* Wraps the raw constructor value (`$values['key'] ?? <default>`) before it is assigned to the field */
+        constructorValueWrapper?: (rawValue: CodeBlock) => CodeBlock;
     }
 }
 
@@ -36,12 +40,26 @@ export class Field extends AstNode {
     public readonly access: Access;
     private readonly_: boolean;
     public readonly initializer: CodeBlock | undefined;
-    private docs: string | undefined;
+    public readonly docs: string | undefined;
     private inlineDocs: string | undefined;
     private attributes: Attribute[];
     public readonly inherited: boolean;
+    public readonly constructorType: Type | undefined;
+    public readonly constructorValueWrapper: ((rawValue: CodeBlock) => CodeBlock) | undefined;
 
-    constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes, inherited }: Field.Args) {
+    constructor({
+        name,
+        type,
+        access,
+        readonly_,
+        initializer,
+        docs,
+        inlineDocs,
+        attributes,
+        inherited,
+        constructorType,
+        constructorValueWrapper
+    }: Field.Args) {
         super();
         this.name = convertToPhpVariableName(name);
         this.type = type;
@@ -52,6 +70,8 @@ export class Field extends AstNode {
         this.inlineDocs = inlineDocs;
         this.attributes = attributes ?? [];
         this.inherited = inherited ?? false;
+        this.constructorType = constructorType;
+        this.constructorValueWrapper = constructorValueWrapper;
     }
 
     public write(writer: Writer): void {

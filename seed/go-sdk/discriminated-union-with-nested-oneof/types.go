@@ -206,10 +206,12 @@ func (a *AstNodeLlm) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstNodeLlm) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetModel sets the Model field and marks it as non-optional;
@@ -292,10 +294,12 @@ func (a *AstNullNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstNullNode) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 func (a *AstNullNode) UnmarshalJSON(data []byte) error {
@@ -369,10 +373,12 @@ func (a *AstTextNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstTextNode) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -449,6 +455,38 @@ func (a *AstllmNode) GetAstllmNodeWithPrompt() *AstllmNodeWithPrompt {
 }
 
 func (a *AstllmNode) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"type", "model", "value_schema"}, []string{"type", "model", "value_schema"}) {
+		valueAstllmNodeWithSchema := new(AstllmNodeWithSchema)
+		if err := json.Unmarshal(data, &valueAstllmNodeWithSchema); err == nil {
+			a.typ = "AstllmNodeWithSchema"
+			a.AstllmNodeWithSchema = valueAstllmNodeWithSchema
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"type", "model", "prompt"}, []string{"type", "model", "prompt"}) {
+		valueAstllmNodeWithPrompt := new(AstllmNodeWithPrompt)
+		if err := json.Unmarshal(data, &valueAstllmNodeWithPrompt); err == nil {
+			a.typ = "AstllmNodeWithPrompt"
+			a.AstllmNodeWithPrompt = valueAstllmNodeWithPrompt
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "model", "value_schema"}) {
+		valueAstllmNodeWithSchema := new(AstllmNodeWithSchema)
+		if err := json.Unmarshal(data, &valueAstllmNodeWithSchema); err == nil {
+			a.typ = "AstllmNodeWithSchema"
+			a.AstllmNodeWithSchema = valueAstllmNodeWithSchema
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "model", "prompt"}) {
+		valueAstllmNodeWithPrompt := new(AstllmNodeWithPrompt)
+		if err := json.Unmarshal(data, &valueAstllmNodeWithPrompt); err == nil {
+			a.typ = "AstllmNodeWithPrompt"
+			a.AstllmNodeWithPrompt = valueAstllmNodeWithPrompt
+			return nil
+		}
+	}
 	valueAstllmNodeWithSchema := new(AstllmNodeWithSchema)
 	if err := json.Unmarshal(data, &valueAstllmNodeWithSchema); err == nil {
 		a.typ = "AstllmNodeWithSchema"
@@ -536,10 +574,12 @@ func (a *AstllmNodeWithPrompt) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstllmNodeWithPrompt) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -671,10 +711,12 @@ func (a *AstllmNodeWithSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AstllmNodeWithSchema) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;

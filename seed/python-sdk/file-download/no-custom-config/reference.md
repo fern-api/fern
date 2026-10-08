@@ -60,7 +60,14 @@ client.service.simple()
 <dd>
 
 ```python
+from seed import SeedFileDownload
+
+client = SeedFileDownload(
+    base_url="https://yourhost.com/path/to/api",
+)
+
 client.service.download_file()
+
 ```
 </dd>
 </dl>

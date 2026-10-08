@@ -23,6 +23,7 @@ function extractEmittedHelperSource(): string {
         ir: createMinimalIR(),
         omitFernHeaders: false,
         includePlatformHeaders: false,
+        userAgentOnly: false,
         allowUserAgentAppInfo: true,
         retainOriginalCasing: false,
         parameterNaming: "default",

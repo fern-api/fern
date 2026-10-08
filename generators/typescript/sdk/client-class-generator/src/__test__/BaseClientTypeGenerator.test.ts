@@ -14,8 +14,12 @@ function createIR(opts?: {
     authRequirement?: FernIr.AuthSchemesRequirement;
     headers?: FernIr.HttpHeader[];
     pathParameters?: FernIr.PathParameter[];
+    variables?: FernIr.VariableDeclaration[];
 }): FernIr.IntermediateRepresentation {
     const ir = createMinimalIR();
+    if (opts?.variables) {
+        ir.variables = opts.variables;
+    }
     if (opts?.authSchemes || opts?.authRequirement) {
         ir.auth = {
             docs: undefined,
@@ -41,6 +45,20 @@ function createRootPathParameter(opts: { name: string; clientDefault?: FernIr.Li
         clientDefault: opts.clientDefault,
         v2Examples: undefined,
         explode: undefined,
+        docs: undefined
+    };
+}
+
+function createVariable(opts: {
+    name: string;
+    envVar?: string;
+    type?: FernIr.TypeReference;
+}): FernIr.VariableDeclaration {
+    return {
+        id: opts.name,
+        name: casingsGenerator.generateName(opts.name),
+        type: opts.type ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+        envVar: opts.envVar,
         docs: undefined
     };
 }
@@ -210,10 +228,10 @@ function createMockContext(opts?: {
             }
         },
         type: {
-            resolveTypeReference: () => ({
-                type: "primitive",
-                primitive: { v1: "STRING", v2: undefined }
-            })
+            resolveTypeReference: (typeReference: FernIr.TypeReference) =>
+                typeReference.type === "primitive"
+                    ? { type: "primitive", primitive: typeReference.primitive }
+                    : { type: "primitive", primitive: { v1: "STRING", v2: undefined } }
         },
         versionContext: {
             getGeneratedVersion: () => {
@@ -235,6 +253,7 @@ function createGenerator(opts?: {
     ir?: FernIr.IntermediateRepresentation;
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
+    userAgentOnly?: boolean;
     allowUserAgentAppInfo?: boolean;
     guardProcessEnvAccess?: boolean;
 }): BaseClientTypeGenerator {
@@ -243,6 +262,7 @@ function createGenerator(opts?: {
         ir: opts?.ir ?? createIR(),
         omitFernHeaders: opts?.omitFernHeaders ?? false,
         includePlatformHeaders: opts?.includePlatformHeaders ?? false,
+        userAgentOnly: opts?.userAgentOnly ?? false,
         allowUserAgentAppInfo: opts?.allowUserAgentAppInfo ?? false,
         guardProcessEnvAccess: opts?.guardProcessEnvAccess,
         retainOriginalCasing: false,
@@ -311,6 +331,92 @@ describe("BaseClientTypeGenerator", () => {
             );
             expect(normalizeFunction).toBeDefined();
             expect(normalizeFunction).not.toContain("userId:");
+        });
+    });
+
+    describe("SDK variable environment variable fallback", () => {
+        function getNormalizeFunction(context: { _captured: { statements: string[] } }): string | undefined {
+            return context._captured.statements.find((s: string) =>
+                s.includes("export function normalizeClientOptions")
+            );
+        }
+
+        it("does not resolve variables that have no envVar", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("_rootVariable");
+            expect(normalizeFunction).not.toContain("process.env");
+        });
+
+        it("resolves the option, then the env var, and throws when neither is set", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).toContain(
+                'const _rootVariable = options?.rootVariable ?? process.env?.["ROOT_VARIABLE"];'
+            );
+            expect(normalizeFunction).toContain("if (_rootVariable == null) {");
+            expect(normalizeFunction).toContain(
+                'throw new Error("rootVariable is required. Pass it to the client or set the ROOT_VARIABLE environment variable.");'
+            );
+            expect(normalizeFunction).toContain("rootVariable: _rootVariable,");
+        });
+
+        it("ignores envVar on non-string variables", () => {
+            const ir = createIR({
+                variables: [
+                    createVariable({
+                        name: "rootVariable",
+                        envVar: "ROOT_VARIABLE",
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ]
+            });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toBeDefined();
+            expect(normalizeFunction).not.toContain("_rootVariable");
+            const normalizedType = context._captured.statements.find((s: string) =>
+                s.includes("export type NormalizedClientOptions<")
+            );
+            expect(normalizedType).not.toContain("rootVariable");
+        });
+
+        it("adds the resolved variable to NormalizedClientOptions", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizedType = context._captured.statements.find((s: string) =>
+                s.includes("export type NormalizedClientOptions<")
+            );
+            expect(normalizedType).toBeDefined();
+            expect(normalizedType).toContain("rootVariable: string;");
+        });
+
+        it("guards process access when guardProcessEnvAccess is enabled", () => {
+            const ir = createIR({ variables: [createVariable({ name: "rootVariable", envVar: "ROOT_VARIABLE" })] });
+            const gen = createGenerator({ ir, guardProcessEnvAccess: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunction = getNormalizeFunction(context);
+            expect(normalizeFunction).toContain(
+                '(typeof process !== "undefined" ? process.env?.["ROOT_VARIABLE"] : undefined)'
+            );
         });
     });
 
@@ -866,6 +972,77 @@ describe("BaseClientTypeGenerator", () => {
             expect(normalizeFunc).not.toContain("core.getUserAgent");
             expect(normalizeFunc).not.toContain("X-Fern-Platform");
             expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("emits only the User-Agent when userAgentOnly is true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.sdkName = "X-Fern-SDK-Name";
+            ir.sdkConfig.platformHeaders.sdkVersion = "X-Fern-SDK-Version";
+            const gen = createGenerator({ omitFernHeaders: false, userAgentOnly: true, ir });
+            const context = createMockContext({ npmPackage: { packageName: "@acme/sdk", version: "2.0.0" } });
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain('"User-Agent"');
+            expect(normalizeFunc).toContain('"@acme/sdk/2.0.0"');
+            expect(normalizeFunc).not.toContain("X-Fern-Language");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Name");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Version");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("keeps the structured User-Agent when userAgentOnly and includePlatformHeaders are true", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.sdkName = "X-Fern-SDK-Name";
+            ir.sdkConfig.platformHeaders.sdkVersion = "X-Fern-SDK-Version";
+            const gen = createGenerator({
+                omitFernHeaders: false,
+                includePlatformHeaders: true,
+                userAgentOnly: true,
+                ir
+            });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).toContain("core.getUserAgent");
+            expect(normalizeFunc).not.toContain("X-Fern-Language");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Name");
+            expect(normalizeFunc).not.toContain("X-Fern-SDK-Version");
+            expect(normalizeFunc).not.toContain("X-Fern-Runtime");
+        });
+
+        it("keeps the discrete headers when userAgentOnly is true but no User-Agent can be produced", () => {
+            const ir = createIR();
+            ir.sdkConfig.platformHeaders.language = "X-Fern-Language";
+            ir.sdkConfig.platformHeaders.userAgent = undefined;
+            const gen = createGenerator({ omitFernHeaders: false, userAgentOnly: true, ir });
+            const context = createMockContext({ npmPackage: null });
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("User-Agent");
+            expect(normalizeFunc).toContain("X-Fern-Language");
+            expect(normalizeFunc).toContain("X-Fern-Runtime");
+        });
+
+        it("omits the User-Agent too when omitFernHeaders and userAgentOnly are true", () => {
+            const gen = createGenerator({ omitFernHeaders: true, userAgentOnly: true });
+            const context = createMockContext();
+            gen.writeToFile(context);
+
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
+            expect(normalizeFunc).not.toContain("User-Agent");
         });
 
         it("omits fern headers when omitFernHeaders is true", () => {

@@ -1,6 +1,7 @@
 import { GeneratorError, GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
-import { php } from "@fern-api/php-codegen";
+import { getSdkVariableOptionNames, php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
@@ -8,12 +9,22 @@ import { EXCEPTIONS_DIRECTORY, REQUESTS_DIRECTORY, RESERVED_METHOD_NAMES, TYPES_
 import { RawClient } from "./core/RawClient.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { PsrHttpClient } from "./external/PsrHttpClient.js";
+import { getOAuthTokenRequestProperties } from "./oauth/oauthTokenRequestProperties.js";
 import { PhpGeneratorAgent } from "./PhpGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
+export interface SdkVariableOption {
+    variable: FernIr.VariableDeclaration;
+    /** The constructor parameter and `options` key exposed to the user (camelCase). */
+    optionName: string;
+    isString: boolean;
+}
+
 export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomConfigSchema> {
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public endpointGenerator: EndpointGenerator;
     public psrHttpClient: PsrHttpClient;
     public rawClient: RawClient;
@@ -343,7 +354,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getClientOptionsType(): php.Type {
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
-        const options = [
+        const options: { key: string; valueType: php.Type; optional: boolean }[] = [
             {
                 key: this.getHttpClientOptionName(),
                 valueType: php.Type.reference(this.psrHttpClient.getClientInterfaceClassReference()),
@@ -393,6 +404,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             });
         }
 
+        options.push(...this.getSdkVariableOptionTypeEntries());
+
         return php.Type.typeDict(options, {
             multiline: true
         });
@@ -404,7 +417,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getRequestOptionsType({ endpoint }: { endpoint: FernIr.HttpEndpoint }): php.Type {
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
-        const options = [
+        const options: { key: string; valueType: php.Type; optional: boolean }[] = [
             {
                 key: this.getMaxRetriesOptionName(),
                 valueType: php.Type.int(),
@@ -442,9 +455,153 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 optional: true
             });
         }
+        options.push(...this.getSdkVariableOptionTypeEntries());
         return php.Type.typeDict(options, {
             multiline: true
         });
+    }
+
+    private getSdkVariableOptionTypeEntries(): { key: string; valueType: php.Type; optional: boolean }[] {
+        return this.getSdkVariableOptions().map((option) => ({
+            key: option.optionName,
+            valueType: this.phpTypeMapper.convert({ reference: option.variable.type }),
+            optional: true
+        }));
+    }
+
+    /**
+     * SDK variables (`x-fern-sdk-variables`) exposed as optional constructor parameters on the root
+     * client and stored in the shared `options` array. Path parameters bound to a variable read
+     * `$options['<name>']` instead of a method argument.
+     */
+    public getSdkVariableOptions(): SdkVariableOption[] {
+        if (this.sdkVariableOptions == null) {
+            const optionNames = getSdkVariableOptionNames(
+                this.ir.variables.map((variable) => this.getParameterName(variable.name)),
+                this.getSdkVariableReservedOptionNames()
+            );
+            this.sdkVariableOptions = this.ir.variables.map((variable, index) => ({
+                variable,
+                optionName: optionNames[index] ?? this.getParameterName(variable.name),
+                isString: this.isStringTypeReference(variable.type)
+            }));
+        }
+        return this.sdkVariableOptions;
+    }
+
+    public getSdkVariableForPathParameter(pathParameter: FernIr.PathParameter): SdkVariableOption | undefined {
+        if (pathParameter.variable == null) {
+            return undefined;
+        }
+        if (this.sdkVariableOptionsById == null) {
+            this.sdkVariableOptionsById = new Map(
+                this.getSdkVariableOptions().map((option) => [option.variable.id, option])
+            );
+        }
+        return this.sdkVariableOptionsById.get(pathParameter.variable);
+    }
+
+    /** The SDK variables bound to this endpoint's path parameters, de-duplicated in path order. */
+    public getSdkVariablesForEndpoint(endpoint: FernIr.HttpEndpoint): SdkVariableOption[] {
+        const seen = new Set<string>();
+        const options: SdkVariableOption[] = [];
+        for (const pathParameter of endpoint.allPathParameters) {
+            const option = this.getSdkVariableForPathParameter(pathParameter);
+            if (option != null && !seen.has(option.variable.id)) {
+                seen.add(option.variable.id);
+                options.push(option);
+            }
+        }
+        return options;
+    }
+
+    /** `$options['<name>']` — the merged request options inside an endpoint method. */
+    public getSdkVariableOptionAccess(option: SdkVariableOption): string {
+        return `$${this.getRequestOptionsName()}['${option.optionName}']`;
+    }
+
+    /** Throws a clear `InvalidArgumentException` when a bound SDK variable was neither passed nor resolved from the env. */
+    public getSdkVariableRequiredGuard(option: SdkVariableOption): php.CodeBlock {
+        const envHint =
+            option.variable.envVar != null && option.isString
+                ? ` or set the ${option.variable.envVar} environment variable`
+                : "";
+        const message =
+            `The ${option.optionName} SDK variable is required. Pass ${option.optionName} to the ` +
+            `${this.getRootClientClassName()} constructor${envHint}.`;
+        return php.codeblock((writer) => {
+            writer.controlFlow("if", php.codeblock(`!isset(${this.getSdkVariableOptionAccess(option)})`));
+            writer.writeTextStatement(
+                `throw new \\InvalidArgumentException('${message.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}')`
+            );
+            writer.endControlFlow();
+        });
+    }
+
+    private getSdkVariableReservedOptionNames(): string[] {
+        const names: string[] = [];
+        for (const header of this.ir.headers) {
+            names.push(this.getParameterName(header.name));
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    names.push(this.getParameterName(scheme.token));
+                    break;
+                case "basic":
+                    names.push(this.getParameterName(scheme.username), this.getParameterName(scheme.password));
+                    break;
+                case "header":
+                    names.push(this.getParameterName(scheme.name));
+                    break;
+                case "oauth":
+                    names.push("clientId", "clientSecret");
+                    if (scheme.configuration.type === "clientCredentials") {
+                        names.push(
+                            ...getOAuthTokenRequestProperties(
+                                this,
+                                scheme.configuration.tokenEndpoint.requestProperties
+                            ).map((property) => property.parameterName)
+                        );
+                    }
+                    break;
+                case "inferred":
+                    names.push(...this.getInferredAuthParameterNames(scheme));
+                    break;
+                default:
+                    assertNever(scheme);
+            }
+        }
+        return names;
+    }
+
+    /** Mirrors the constructor parameters the root client derives from the inferred auth token endpoint. */
+    private getInferredAuthParameterNames(scheme: FernIr.InferredAuthScheme): string[] {
+        const endpoint = this.ir.services[scheme.tokenEndpoint.endpoint.serviceId]?.endpoints.find(
+            (candidate) => candidate.id === scheme.tokenEndpoint.endpoint.endpointId
+        );
+        if (endpoint == null || endpoint.sdkRequest?.shape.type !== "wrapper") {
+            return [];
+        }
+        const names: string[] = [];
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            for (const property of endpoint.requestBody.properties) {
+                if (this.maybeLiteral(property.valueType) == null) {
+                    names.push(this.getParameterName(property.name));
+                }
+            }
+        }
+        for (const header of endpoint.headers) {
+            if (this.maybeLiteral(header.valueType) == null) {
+                names.push(this.getParameterName(header.name));
+            }
+        }
+        return names;
+    }
+
+    private isStringTypeReference(typeReference: FernIr.TypeReference): boolean {
+        const dereferenced = this.dereferenceOptional(typeReference);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.String;
     }
 
     public getEnvironmentAccess(name: NameInput): php.CodeBlock {
@@ -600,7 +757,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             return false;
         }
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
-        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+        const hasUnboundPathParameters = endpoint.allPathParameters.some(
+            (pathParameter) => this.getSdkVariableForPathParameter(pathParameter) == null
+        );
+        return hasUnboundPathParameters && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
@@ -658,6 +818,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {

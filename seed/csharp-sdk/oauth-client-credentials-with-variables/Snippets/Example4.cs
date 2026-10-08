@@ -11,9 +11,7 @@ public partial class Examples
             }
         );
 
-        await client.Service.PostAsync(
-            "<endpointParam>"
-        );
+        await client.Service.PostAsync();
     }
 
 }

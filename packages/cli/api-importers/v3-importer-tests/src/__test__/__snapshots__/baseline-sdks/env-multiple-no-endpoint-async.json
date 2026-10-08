@@ -147,6 +147,7 @@
       "messages": [
         {
           "type": "testChannel_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {
@@ -207,6 +208,7 @@
       "messages": [
         {
           "type": "testChannel2_sendMessage",
+          "docs": "Message with marked data information.",
           "origin": "client",
           "body": {
             "bodyType": {

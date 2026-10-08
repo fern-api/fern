@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.noreqbody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
@@ -64,7 +65,8 @@ public class AsyncRawNoReqBodyClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
+      Call okhttpCall = client.newCall(okhttpRequest);
+      okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
@@ -90,6 +92,11 @@ public class AsyncRawNoReqBodyClient {
           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       });
+      future.whenComplete((result_, throwable_) -> {
+        if (future.isCancelled()) {
+          okhttpCall.cancel();
+        }
+      });
       return future;
     }
 
@@ -108,7 +115,7 @@ public class AsyncRawNoReqBodyClient {
         }
         Request okhttpRequest = new Request.Builder()
           .url(httpUrl.build())
-          .method("POST", RequestBody.create("", null))
+          .method("POST", BodyProperties.toRequestBody(requestOptions != null ? requestOptions.getBodyProperties() : null, RequestBody.create("", null)))
           .headers(Headers.of(clientOptions.headers(requestOptions)))
           .addHeader("Accept", "application/json")
           .build();
@@ -120,7 +127,8 @@ public class AsyncRawNoReqBodyClient {
           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
             try (ResponseBody responseBody = response.body()) {
@@ -144,6 +152,11 @@ public class AsyncRawNoReqBodyClient {
           @Override
           public void onFailure(@NotNull Call call, @NotNull IOException e) {
             future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+          }
+        });
+        future.whenComplete((result_, throwable_) -> {
+          if (future.isCancelled()) {
+            okhttpCall.cancel();
           }
         });
         return future;

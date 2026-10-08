@@ -30,3 +30,10 @@ func (u *UnprocessableEntityError) MarshalJSON() ([]byte, error) {
 func (u *UnprocessableEntityError) Unwrap() error {
 	return u.APIError
 }
+
+func (u *UnprocessableEntityError) GetBody() *PlainObject {
+	if u == nil {
+		return nil
+	}
+	return u.Body
+}

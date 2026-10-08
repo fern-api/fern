@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -26,6 +26,9 @@ import java.util.Objects;
 import java.util.Optional;
 import org.w3c.dom.Element;
 
+/**
+ * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
+ */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Pause.Builder.class)
 public final class Pause implements XmlSerializable {
@@ -33,13 +36,12 @@ public final class Pause implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
-    private Pause(
-            Optional<Integer> length, Map<String, Object> additionalProperties, List<XmlElement> additionalChildren) {
+    private Pause(Optional<Integer> length, Map<String, Object> additionalProperties, List<XmlNode> content) {
         this.length = length;
         this.additionalProperties = additionalProperties;
-        this.additionalChildren = additionalChildren;
+        this.content = content;
     }
 
     @JsonProperty("length")
@@ -58,9 +60,20 @@ public final class Pause implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     private boolean equalTo(Pause other) {
@@ -72,18 +85,18 @@ public final class Pause implements XmlSerializable {
         return Objects.hash(this.length);
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
-    }
-
     public static Builder builder() {
         return new Builder();
     }
 
     @Override
+    public String toString() {
+        return toXml();
+    }
+
+    @Override
     public String toXml() {
-        return toXml(false);
+        return toXml(true);
     }
 
     @Override
@@ -91,7 +104,7 @@ public final class Pause implements XmlSerializable {
         XmlWriter writer = new XmlWriter("Pause");
         writer.attribute("length", this.length);
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -104,10 +117,11 @@ public final class Pause implements XmlSerializable {
 
     public static Pause fromXml(Element element) {
         XmlReader.expect(element, "Pause");
+        List<XmlNode> content = XmlReader.content(element, false, Arrays.asList(), e -> null);
         return new Pause(
                 XmlReader.attribute(element, "length").map(v -> XmlReader.convert(v, Integer.class)),
                 XmlReader.extraAttributes(element, Arrays.asList("length")),
-                XmlReader.unknownChildren(element, Arrays.asList()));
+                content);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -118,12 +132,13 @@ public final class Pause implements XmlSerializable {
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
         public Builder from(Pause other) {
             length(other.getLength());
+            content(other.getContent());
             return this;
         }
 
@@ -139,7 +154,7 @@ public final class Pause implements XmlSerializable {
         }
 
         public Pause build() {
-            return new Pause(length, additionalProperties, additionalChildren);
+            return new Pause(length, additionalProperties, content);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -153,15 +168,57 @@ public final class Pause implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
+            this.content.add(XmlNode.element(child));
+            return this;
+        }
+
+        /**
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
+            return this;
+        }
+
+        /**
+         * Appends an xml comment ({@code <!--text-->}) inside this element, after any content added so far.
+         */
+        public Builder comment(String text) {
+            this.content.add(XmlNode.comment(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately before this element (as a sibling in its parent, or before the root element).
+         */
+        public Builder commentBefore(String text) {
+            this.content.add(XmlNode.commentBefore(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately after this element (as a sibling in its parent, or after the root element).
+         */
+        public Builder commentAfter(String text) {
+            this.content.add(XmlNode.commentAfter(text));
             return this;
         }
 
         public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
             return this;
         }
 
@@ -176,7 +233,6 @@ public final class Pause implements XmlSerializable {
             Pause parsed = Pause.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }

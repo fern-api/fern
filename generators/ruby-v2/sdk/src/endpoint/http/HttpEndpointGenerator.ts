@@ -22,6 +22,8 @@ export const HTTP_RESPONSE_VN = "response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
 export const ERROR_CLASS_VN = "error_class";
+export const ERROR_BODY_VN = "error_body";
+export const ERROR_TYPES_VN = "error_types";
 
 export class HttpEndpointGenerator {
     private context: SdkGeneratorContext;
@@ -58,7 +60,17 @@ export class HttpEndpointGenerator {
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         const queryParameterCodeBlock = request?.getQueryParameterCodeBlock(QUERY_PARAMETER_BAG_NAME);
         const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
-        const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const { pathParameterReferences, hasPathParametersFromParams } = this.getPathParameterReferences({
+            endpoint
+        });
+        const boundSdkVariables = this.context.getSdkVariablesForEndpoint(endpoint);
+        for (const option of boundSdkVariables) {
+            statements.push(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(this.context.getSdkVariableRequiredGuard(option));
+                })
+            );
+        }
 
         // params is referenced whenever the request emits a body/query/header code
         // block (each reference produced by these blocks uses `params` either in a
@@ -70,7 +82,7 @@ export class HttpEndpointGenerator {
             requestBodyCodeBlock != null ||
             queryParameterCodeBlock != null ||
             headerParameterCodeBlock != null ||
-            Object.keys(pathParameterReferences).length > 0;
+            hasPathParametersFromParams;
 
         if (paramsUsed) {
             statements.push(
@@ -88,7 +100,10 @@ export class HttpEndpointGenerator {
             );
         }
 
-        if (requestBodyCodeBlock?.code != null) {
+        // When the page property lives in the request body, the body has to be rebuilt from
+        // `params` on every page, so any body preparation moves into the pagination block.
+        const pagesThroughRequestBody = this.getBodyPageProperty(endpoint) != null;
+        if (requestBodyCodeBlock?.code != null && !pagesThroughRequestBody) {
             statements.push(requestBodyCodeBlock.code);
         }
 
@@ -246,17 +261,16 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
-                                    )
+                                    value: ruby.codeblock(this.getPagePropertyRead(endpoint.pagination.page))
                                 })
                             ],
                             block: [
                                 ["next_cursor"],
                                 [
-                                    ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_cursor`
-                                    ),
+                                    ruby.codeblock(this.getPagePropertyWrite(endpoint.pagination.page, "next_cursor")),
+                                    ...(pagesThroughRequestBody && requestBodyCodeBlock?.code != null
+                                        ? [requestBodyCodeBlock.code]
+                                        : []),
                                     ...requestStatements
                                 ]
                             ]
@@ -275,9 +289,7 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
-                                    value: ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"]`
-                                    )
+                                    value: ruby.codeblock(this.getPagePropertyRead(endpoint.pagination.page))
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
@@ -307,9 +319,10 @@ export class HttpEndpointGenerator {
                             block: [
                                 ["next_page"],
                                 [
-                                    ruby.codeblock(
-                                        `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(endpoint.pagination.page.property.name)}"] = next_page`
-                                    ),
+                                    ruby.codeblock(this.getPagePropertyWrite(endpoint.pagination.page, "next_page")),
+                                    ...(pagesThroughRequestBody && requestBodyCodeBlock?.code != null
+                                        ? [requestBodyCodeBlock.code]
+                                        : []),
                                     ...requestStatements
                                 ]
                             ]
@@ -350,6 +363,82 @@ export class HttpEndpointGenerator {
             codeExample,
             statements
         });
+    }
+
+    /**
+     * Returns the page property of a cursor or offset paginated endpoint when it is sent in the
+     * request body (e.g. `$request.cursor` or `$request.options.offset`), rather than as a
+     * query parameter.
+     */
+    private getBodyPageProperty(endpoint: FernIr.HttpEndpoint): FernIr.RequestProperty | undefined {
+        const pagination = endpoint.pagination;
+        if (pagination == null || (pagination.type !== "cursor" && pagination.type !== "offset")) {
+            return undefined;
+        }
+        return pagination.page.property.type === "body" ? pagination.page : undefined;
+    }
+
+    /**
+     * The Ruby expression reading the page property's initial value. Query parameters are read from
+     * the query bag by wire name; body properties are read from the normalized `params` hash, walking
+     * through any enclosing objects, which may be hashes or model instances.
+     */
+    private getPagePropertyRead(page: FernIr.RequestProperty): string {
+        if (page.property.type === "query") {
+            return `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(page.property.name)}"]`;
+        }
+        const leaf = this.case.snakeSafe(page.property.name);
+        const path = (page.propertyPath ?? []).map((item) => this.case.snakeSafe(item.name));
+        if (path.length === 0) {
+            return `${PARAMS_VN}[:${leaf}]`;
+        }
+        const [first, ...rest] = path;
+        let container = `${PARAMS_VN}[:${first}]`;
+        for (const name of rest) {
+            container = `${this.getNormalizeKeysReference()}(${container}.to_h)[:${name}]`;
+        }
+        return `${this.getNormalizeKeysReference()}(${container}.to_h)[:${leaf}]`;
+    }
+
+    /**
+     * The Ruby statement assigning the next page value to the page property. Body properties nested
+     * inside objects are written by rebuilding each enclosing object as a hash, so the caller's
+     * values are never mutated and an omitted parent object is created.
+     */
+    private getPagePropertyWrite(page: FernIr.RequestProperty, value: string): string {
+        if (page.property.type === "query") {
+            return `${QUERY_PARAMETER_BAG_NAME}["${getWireValue(page.property.name)}"] = ${value}`;
+        }
+        const leaf = this.case.snakeSafe(page.property.name);
+        const path = (page.propertyPath ?? []).map((item) => this.case.snakeSafe(item.name));
+        if (path.length === 0) {
+            return `${PARAMS_VN}[:${leaf}] = ${value}`;
+        }
+        const normalizeKeys = this.getNormalizeKeysReference();
+        const build = (hash: string, remaining: string[], depth: number): string => {
+            const [next, ...rest] = remaining;
+            if (next == null) {
+                return `${hash}.merge(${leaf}: ${value})`;
+            }
+            const variable = `level${depth}`;
+            return `${hash}.then { |${variable}| ${variable}.merge(${next}: ${build(
+                `${normalizeKeys}(${variable}[:${next}].to_h)`,
+                rest,
+                depth + 1
+            )}) }`;
+        };
+        const [first, ...rest] = path;
+        return `${PARAMS_VN}[:${first}] = ${build(`${normalizeKeys}(${PARAMS_VN}[:${first}].to_h)`, rest, 1)}`;
+    }
+
+    /** Whether the endpoint returns its successful response body as a raw string (text, bytes, or a file download). */
+    private returnsRawResponseBody(endpoint: FernIr.HttpEndpoint): boolean {
+        const type = endpoint.response?.body?.type;
+        return type === "text" || type === "bytes" || type === "fileDownload";
+    }
+
+    private getNormalizeKeysReference(): string {
+        return `${this.context.getRootModuleName()}::Internal::Types::Utils.normalize_keys`;
     }
 
     /**
@@ -455,8 +544,29 @@ export class HttpEndpointGenerator {
                 `${ERROR_CLASS_VN} = ${rootModuleName}::Errors::ResponseError.subclass_for_code(${CODE_VN})`
             );
 
+            const errorBodyTypes = this.getErrorBodyTypes(endpoint);
+            if (errorBodyTypes.length === 0) {
+                ruby.raise({
+                    errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                }).write(writer);
+                return;
+            }
+            writer.writeLine(`${ERROR_TYPES_VN} = {`);
+            writer.indent();
+            errorBodyTypes.forEach(({ matcher, typeId }, index) => {
+                writer.write(`${matcher} => `);
+                writer.writeNode(this.context.getReferenceToTypeId(typeId));
+                writer.writeLine(index < errorBodyTypes.length - 1 ? "," : "");
+            });
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine(
+                `${ERROR_BODY_VN} = ${rootModuleName}::Errors::ResponseError.load_error_body(${CODE_VN}, ${HTTP_RESPONSE_VN}.body, ${ERROR_TYPES_VN})`
+            );
             ruby.raise({
-                errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                errorClass: ruby.codeblock(
+                    `${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, body: ${ERROR_BODY_VN})`
+                )
             }).write(writer);
         });
 
@@ -497,6 +607,9 @@ export class HttpEndpointGenerator {
                     elseBody: errorBody
                 })
             );
+        } else if (this.returnsRawResponseBody(endpoint)) {
+            statements.push(ruby.codeblock(`return ${HTTP_RESPONSE_VN}.body if ${CODE_VN}.between?(200, 299)\n`));
+            statements.push(errorBody);
         } else {
             statements.push(ruby.codeblock(`return if ${CODE_VN}.between?(200, 299)\n`));
             statements.push(errorBody);
@@ -556,10 +669,21 @@ export class HttpEndpointGenerator {
         }
     }
 
-    private getPathParameterReferences({ endpoint }: { endpoint: FernIr.HttpEndpoint }): Record<string, string> {
+    private getPathParameterReferences({ endpoint }: { endpoint: FernIr.HttpEndpoint }): {
+        pathParameterReferences: Record<string, string>;
+        hasPathParametersFromParams: boolean;
+    } {
         const pathParameterReferences: Record<string, string> = {};
         const defaultExtractor = new DefaultValueExtractor(this.context);
+        let hasPathParametersFromParams = false;
         for (const pathParam of endpoint.allPathParameters) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                pathParameterReferences[getOriginalName(pathParam.name)] =
+                    this.context.getSdkVariableInstanceVariable(sdkVariable);
+                continue;
+            }
+            hasPathParametersFromParams = true;
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam
             });
@@ -571,7 +695,7 @@ export class HttpEndpointGenerator {
                 pathParameterReferences[getOriginalName(pathParam.name)] = `${PARAMS_VN}[:${parameterName}]`;
             }
         }
-        return pathParameterReferences;
+        return { pathParameterReferences, hasPathParametersFromParams };
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: FernIr.PathParameter }): string {
@@ -587,6 +711,11 @@ export class HttpEndpointGenerator {
         typeReference: FernIr.TypeReference;
         storeInVariable?: boolean;
     }): void {
+        const wrapInvalidJson = this.context.customConfig.wrapInvalidJsonResponses === true;
+        if (wrapInvalidJson) {
+            writer.writeLine("begin");
+            writer.indent();
+        }
         if (storeInVariable) {
             writer.write("parsed_response = ");
         }
@@ -598,6 +727,58 @@ export class HttpEndpointGenerator {
             })
         );
         writer.newLine();
+        if (!wrapInvalidJson) {
+            return;
+        }
+        writer.dedent();
+        writer.writeLine("rescue ::JSON::ParserError");
+        writer.indent();
+        writer.writeLine(
+            `raise ${this.context.getRootModuleName()}::Errors::ResponseError.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`
+        );
+        writer.dedent();
+        writer.writeLine("end");
+    }
+
+    /**
+     * Status matchers (`404`, `400..499`) paired with the named body type of each error the
+     * endpoint declares, exact statuses before wildcards so the most specific one wins.
+     */
+    private getErrorBodyTypes(endpoint: FernIr.HttpEndpoint): { matcher: string; typeId: FernIr.TypeId }[] {
+        const exact: { matcher: string; typeId: FernIr.TypeId }[] = [];
+        const wildcard: { matcher: string; typeId: FernIr.TypeId }[] = [];
+        const seen = new Set<string>();
+        for (const responseError of endpoint.errors) {
+            const declaration = this.context.ir.errors[responseError.error.errorId];
+            const typeId = declaration?.type != null ? this.getNamedTypeId(declaration.type) : undefined;
+            if (declaration == null || typeId == null) {
+                continue;
+            }
+            const matcher = declaration.isWildcardStatusCode
+                ? `(${declaration.statusCode}..${declaration.statusCode + 99})`
+                : `${declaration.statusCode}`;
+            if (seen.has(matcher)) {
+                continue;
+            }
+            seen.add(matcher);
+            (declaration.isWildcardStatusCode ? wildcard : exact).push({ matcher, typeId });
+        }
+        return [...exact, ...wildcard];
+    }
+
+    private getNamedTypeId(typeReference: FernIr.TypeReference): FernIr.TypeId | undefined {
+        if (typeReference.type === "named") {
+            return typeReference.typeId;
+        }
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "optional") {
+                return this.getNamedTypeId(typeReference.container.optional);
+            }
+            if (typeReference.container.type === "nullable") {
+                return this.getNamedTypeId(typeReference.container.nullable);
+            }
+        }
+        return undefined;
     }
 
     private generateEnhancedDocstring({
@@ -634,6 +815,9 @@ export class HttpEndpointGenerator {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
+            if (this.context.getSdkVariableForPathParameter(pathParam) != null) {
+                continue;
+            }
             const paramName = this.case.snakeSafe(pathParam.name);
             const typeString = this.typeReferenceToYardString(pathParam.valueType);
             optionTags.push(`@option params [${typeString}] :${paramName}`);

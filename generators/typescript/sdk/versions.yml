@@ -1,4 +1,205 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.104.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `addText` segments and child elements), while
+        `commentBefore(text)` / `commentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `fromXml` and round-trip through `toXml`; the new `core.xml.XmlComment`
+        node exposes the same for untyped `XmlElement` content.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 3.103.0
+  changelogEntry:
+    - summary: |
+        With `enableForwardCompatibleEnums: true`, enum-typed attributes and text on XML (TwiML) types are open on the
+        wire: `fromXml` keeps a value the enum does not declare (e.g. a voice added after the SDK was generated) instead
+        of throwing, and it round-trips through `toXml`. Without the flag the parse error now lists at most 10 of the
+        allowed values instead of all of them.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.102.1
+  changelogEntry:
+    - summary: |
+        Offset pagers no longer skip a page when a failed `getNextPage()` is retried. The pager now
+        advances its saved offset only after the next page loads successfully, so a retry re-requests
+        the same offset instead of moving past it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.102.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `userAgentOnly` config. When enabled, generated clients send the `User-Agent`
+        header (including the structured form from `includePlatformHeaders`) but omit the
+        `X-Fern-Language`, `X-Fern-SDK-Name`, `X-Fern-SDK-Version`, `X-Fern-Runtime`, and
+        `X-Fern-Runtime-Version` headers. Disabled by default, so existing generated output is
+        unchanged. `omitFernHeaders` still takes precedence and drops the `User-Agent` too.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.101.0
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` HMAC verifier now accepts a per-call algorithm override via an optional `algorithm` parameter on `verifySignature`,
+        one of `sha1`, `sha256`, `sha384` or `sha512`. When omitted, the algorithm configured in
+        `webhook-signature` is used, so existing callers are unchanged. This lets one endpoint verify both
+        legacy HMAC-SHA1 (auth-token) and HMAC-SHA256 (shared-key) signed webhooks.
+        The verifier also logs a warning distinguishing an early failure (missing signature header) from a
+        failed verification (signature mismatch); it still returns `false` and never throws.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.100.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types keep text segments, typed children and undeclared `XmlElement` children in a single
+        ordered `content` sequence, so `toXml()` preserves the exact insertion/document order across child
+        types (e.g. `<Say>a</Say><Custom/><Say>b</Say>`) and `fromXml()` reconstructs it. Builders gain
+        `addText(text)` to interleave text with child elements (`Say.builder({ message: "Hi " }).addBreak(...).addText(" world")`),
+        and `addChild(XmlElement)` now appends in place rather than after all typed children.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.99.1
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+        declaration by default when serialized to XML; pass the declaration flag as `false`
+        to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.99.0
+  changelogEntry:
+    - summary: |
+        SDK variables that declare an environment variable fallback (`env` in `api.yml` or `x-fern-env` on
+        `x-fern-sdk-variables`) are now optional client options. `normalizeClientOptions` resolves them from the
+        option first and then from the environment variable, and throws a clear error at client construction
+        when neither is set, instead of interpolating `undefined` into request paths.
+      type: feat
+  createdAt: "2026-10-06"
+  irVersion: 67
+- version: 3.98.5
+  changelogEntry:
+    - summary: |
+        Fix `waitForOpen()` on generated WebSocket clients hanging forever when the socket closes without opening.
+        It now rejects when the socket is already closed, when `close()` is called or the `abortSignal` fires
+        (including before the underlying WebSocket is created, or when the signal is already aborted), and when the
+        connection closes with no reconnect pending. `readyState` now reports `CLOSED` after an abort or `close()`
+        even if the underlying WebSocket was never created.
+      type: fix
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 3.98.4
+  changelogEntry:
+    - summary: |
+        Restore WebSocket retries after connection errors and timeouts, and allow manual reconnect after retry exhaustion.
+        Internal socket cleanup now emits close notifications without consulting `shouldReconnect`, which continues to
+        control server-initiated closes. Error retries and manual reconnects respect explicit `close()`, abort signals,
+        and retry limits.
+      type: fix
+  createdAt: "2026-10-02"
+  irVersion: 67
+- version: 3.98.3
+  changelogEntry:
+    - summary: |
+        Redact the API's own credential headers in debug request logs. The generated `SENSITIVE_HEADERS`
+        set in `core/fetcher/Fetcher.ts` now also includes every header an auth scheme writes to (custom
+        header auth names such as `PLAID-SECRET`, custom OAuth token headers, and inferred-auth headers),
+        plus global, service, and endpoint headers whose names identify them as credentials (e.g. `PLAID-CLIENT-ID`).
+        Previously only a static list of conventional names (`Authorization`, `X-API-Key`, ...) was redacted,
+        so custom-named auth headers, including request-level overrides, were logged in plaintext when debug
+        logging was enabled.
+      type: fix
+  createdAt: "2026-09-30"
+  irVersion: 67
+- version: 3.98.2
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+        full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+        PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+        notice to the SDK PR body and disables automerge.
+      type: chore
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 3.98.1
+  changelogEntry:
+    - summary: |
+        Fix invalid TypeScript in generated XML (TwiML) classes and builders when a property key is not a
+        valid identifier (e.g. `interpret-as` or `default`). The generator now emits bracket access
+        (`this["interpret-as"]`) and camelCased locals (`interpretAs`) instead of `this.interpret-as`.
+      type: fix
+  createdAt: "2026-09-29"
+  irVersion: 67
+- version: 3.98.0
+  changelogEntry:
+    - summary: |
+        XML-encoded (TwiML) types now carry inline documentation on their user-facing builder API: every
+        `Builder` setter gets the property description, and child methods (`say.addBreak(...)`, `response.say(...)`)
+        document the child element plus `@param`/`@returns`.
+      type: feat
+  createdAt: "2026-09-25"
+  irVersion: 67
+- version: 3.97.1
+  changelogEntry:
+    - summary: |
+        Fix generated WebSocket socket classes registering their `open`/`message`/`close`/`error`
+        forwarding listeners twice when `connect()` is called after construction (the standard
+        `new Socket(...).connect()` usage). `ReconnectingWebSocket` gains a `hasEventListener(type, listener)`
+        method and `connect()` only registers each forwarding listener if it is not already attached, so
+        every consumer `.on()` callback fires exactly once per event while `close()` followed by
+        `connect()` continues to work.
+      type: fix
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 3.97.0
+  changelogEntry:
+    - summary: |
+        Generate the shared `WebhooksHelper` from the API-wide `api.settings.webhook-signature`
+        setting in `generators.yml` (IR `sdkConfig.webhookSignatureVerification`). The helper is
+        emitted even when the API definition models no webhooks; webhook-specific signature
+        overrides still produce their own named helpers.
+      type: feat
+  createdAt: "2026-09-24"
+  irVersion: 67
+- version: 3.96.3
+  changelogEntry:
+    - summary: |
+        Wire tests for paginated endpoints whose page property is nested in the request body (e.g.
+        `$request.options.offset` or `$request.options.pagination.cursor`) no longer fail on `getNextPage()`.
+        The generated pager creates the parent object (`options`) when the example omits it, and the mock
+        server's `jsonBody` matcher treated that new parent as an unexpected field even though the nested leaf
+        was listed in `ignoredFields`, so the second request never matched the mock and failed with a
+        connection-refused error. The matcher now ignores a parent object that is absent from the expected body
+        when every leaf inside it is an ignored field.
+      type: fix
+  createdAt: "2026-09-23"
+  irVersion: 67
+- version: 3.96.2
+  changelogEntry:
+    - summary: |
+        The generated OAuth wire-test mock (`tests/wire/mockAuth.ts`) now expects the `grant_type` the generated
+        `OAuthAuthProvider` actually sends. When the token endpoint models `grant_type` as a plain (optional) string
+        and the example omits it, the provider sends `grant_type: "client_credentials"` but the mock previously only
+        matched the example body, so the token request never matched and every authenticated wire test failed with
+        a connection-refused error.
+      type: fix
+  createdAt: "2026-09-22"
+  irVersion: 67
+- version: 3.96.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+        produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+        entry; the PR description, version bump reason, or commit message body is used instead.
+      type: chore
+  createdAt: "2026-09-22"
+  irVersion: 67
 - version: 3.96.0
   changelogEntry:
     - summary: |

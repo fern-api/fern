@@ -14,10 +14,15 @@ module Seed
     # @param signature_header [String]
     # @param signature_key [String]
     # @param timestamp_header [String]
+    # @param algorithm [String, nil]
     #
     # @return [Boolean]
-    def self.verify_signature(request_body:, signature_header:, signature_key:, timestamp_header:)
-      return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?
+    def self.verify_signature(request_body:, signature_header:, signature_key:, timestamp_header:, algorithm: nil)
+      if signature_header.nil? || signature_header.empty?
+        warn("Webhook signature verification could not run: missing signature header")
+        return false
+      end
+      return false if request_body.nil? || signature_key.nil? || signature_key.empty?
 
       return false if timestamp_header.nil? || timestamp_header == ""
 
@@ -38,11 +43,13 @@ module Seed
       expected = Internal::WebhookSignature.compute_hmac_signature(
         payload: payload,
         secret: signature_key,
-        algorithm: "sha256",
+        algorithm: algorithm || "sha256",
         encoding: "hex"
       )
 
-      Internal::WebhookSignature.timing_safe_equal(signature, expected)
+      valid = Internal::WebhookSignature.timing_safe_equal(signature, expected)
+      warn("Webhook signature verification failed: signature mismatch") unless valid
+      valid
     end
   end
 end

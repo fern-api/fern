@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.object;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
 import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
@@ -40,111 +41,265 @@ public class AsyncObjectClient {
   }
 
   public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField() {
-    return this.rawClient.getAndReturnWithOptionalField().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnWithOptionalField();
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithOptionalField(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnWithOptionalField(requestOptions);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
       ObjectWithOptionalField request) {
-    return this.rawClient.getAndReturnWithOptionalField(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnWithOptionalField(request);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithOptionalField> getAndReturnWithOptionalField(
       ObjectWithOptionalField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithOptionalField(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnWithOptionalField(request, requestOptions);
+    CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
       ObjectWithRequiredField request) {
-    return this.rawClient.getAndReturnWithRequiredField(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> rawFuture = this.rawClient.getAndReturnWithRequiredField(request);
+    CompletableFuture<ObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithRequiredField> getAndReturnWithRequiredField(
       ObjectWithRequiredField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithRequiredField(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> rawFuture = this.rawClient.getAndReturnWithRequiredField(request, requestOptions);
+    CompletableFuture<ObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(
       ObjectWithMapOfMap request) {
-    return this.rawClient.getAndReturnWithMapOfMap(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMapOfMap>> rawFuture = this.rawClient.getAndReturnWithMapOfMap(request);
+    CompletableFuture<ObjectWithMapOfMap> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithMapOfMap> getAndReturnWithMapOfMap(ObjectWithMapOfMap request,
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithMapOfMap(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMapOfMap>> rawFuture = this.rawClient.getAndReturnWithMapOfMap(request, requestOptions);
+    CompletableFuture<ObjectWithMapOfMap> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField() {
-    return this.rawClient.getAndReturnNestedWithOptionalField().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnNestedWithOptionalField();
+    CompletableFuture<NestedObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
       RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnNestedWithOptionalField(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnNestedWithOptionalField(requestOptions);
+    CompletableFuture<NestedObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
       NestedObjectWithOptionalField request) {
-    return this.rawClient.getAndReturnNestedWithOptionalField(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnNestedWithOptionalField(request);
+    CompletableFuture<NestedObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
       NestedObjectWithOptionalField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnNestedWithOptionalField(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>> rawFuture = this.rawClient.getAndReturnNestedWithOptionalField(request, requestOptions);
+    CompletableFuture<NestedObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
       String string, NestedObjectWithRequiredField request) {
-    return this.rawClient.getAndReturnNestedWithRequiredField(string, request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> rawFuture = this.rawClient.getAndReturnNestedWithRequiredField(string, request);
+    CompletableFuture<NestedObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredField(
       String string, NestedObjectWithRequiredField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnNestedWithRequiredField(string, request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> rawFuture = this.rawClient.getAndReturnNestedWithRequiredField(string, request, requestOptions);
+    CompletableFuture<NestedObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
       List<NestedObjectWithRequiredField> request) {
-    return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> rawFuture = this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request);
+    CompletableFuture<NestedObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
       List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithRequiredField>> rawFuture = this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions);
+    CompletableFuture<NestedObjectWithRequiredField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
       ObjectWithUnknownField request) {
-    return this.rawClient.getAndReturnWithUnknownField(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithUnknownField>> rawFuture = this.rawClient.getAndReturnWithUnknownField(request);
+    CompletableFuture<ObjectWithUnknownField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
       ObjectWithUnknownField request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithUnknownField(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithUnknownField>> rawFuture = this.rawClient.getAndReturnWithUnknownField(request, requestOptions);
+    CompletableFuture<ObjectWithUnknownField> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
       ObjectWithDocumentedUnknownType request) {
-    return this.rawClient.getAndReturnWithDocumentedUnknownType(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDocumentedUnknownType>> rawFuture = this.rawClient.getAndReturnWithDocumentedUnknownType(request);
+    CompletableFuture<ObjectWithDocumentedUnknownType> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
       ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithDocumentedUnknownType(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDocumentedUnknownType>> rawFuture = this.rawClient.getAndReturnWithDocumentedUnknownType(request, requestOptions);
+    CompletableFuture<ObjectWithDocumentedUnknownType> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
       Map<String, Object> request) {
-    return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Map<String, Object>>> rawFuture = this.rawClient.getAndReturnMapOfDocumentedUnknownType(request);
+    CompletableFuture<Map<String, Object>> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Map<String, Object>> getAndReturnMapOfDocumentedUnknownType(
       Map<String, Object> request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnMapOfDocumentedUnknownType(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Map<String, Object>>> rawFuture = this.rawClient.getAndReturnMapOfDocumentedUnknownType(request, requestOptions);
+    CompletableFuture<Map<String, Object>> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
@@ -153,7 +308,14 @@ public class AsyncObjectClient {
    */
   public CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> getAndReturnWithMixedRequiredAndOptionalFields(
       ObjectWithMixedRequiredAndOptionalFields request) {
-    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMixedRequiredAndOptionalFields>> rawFuture = this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request);
+    CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
@@ -162,7 +324,14 @@ public class AsyncObjectClient {
    */
   public CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> getAndReturnWithMixedRequiredAndOptionalFields(
       ObjectWithMixedRequiredAndOptionalFields request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMixedRequiredAndOptionalFields>> rawFuture = this.rawClient.getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions);
+    CompletableFuture<ObjectWithMixedRequiredAndOptionalFields> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
@@ -173,7 +342,14 @@ public class AsyncObjectClient {
    */
   public CompletableFuture<ObjectWithRequiredNestedObject> getAndReturnWithRequiredNestedObject(
       ObjectWithRequiredNestedObject request) {
-    return this.rawClient.getAndReturnWithRequiredNestedObject(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredNestedObject>> rawFuture = this.rawClient.getAndReturnWithRequiredNestedObject(request);
+    CompletableFuture<ObjectWithRequiredNestedObject> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
@@ -184,7 +360,14 @@ public class AsyncObjectClient {
    */
   public CompletableFuture<ObjectWithRequiredNestedObject> getAndReturnWithRequiredNestedObject(
       ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithRequiredNestedObject(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredNestedObject>> rawFuture = this.rawClient.getAndReturnWithRequiredNestedObject(request, requestOptions);
+    CompletableFuture<ObjectWithRequiredNestedObject> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
@@ -194,7 +377,14 @@ public class AsyncObjectClient {
    */
   public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
       ObjectWithDatetimeLikeString request) {
-    return this.rawClient.getAndReturnWithDatetimeLikeString(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> rawFuture = this.rawClient.getAndReturnWithDatetimeLikeString(request);
+    CompletableFuture<ObjectWithDatetimeLikeString> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   /**
@@ -204,6 +394,13 @@ public class AsyncObjectClient {
    */
   public CompletableFuture<ObjectWithDatetimeLikeString> getAndReturnWithDatetimeLikeString(
       ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
-    return this.rawClient.getAndReturnWithDatetimeLikeString(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> rawFuture = this.rawClient.getAndReturnWithDatetimeLikeString(request, requestOptions);
+    CompletableFuture<ObjectWithDatetimeLikeString> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

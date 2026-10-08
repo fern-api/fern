@@ -3,10 +3,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { AbstractGoGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/go-base";
-
+import { getSdkVariableNames } from "@fern-api/go-dynamic-snippets";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getInferredAuthScheme, getOAuthClientCredentialsScheme } from "./authUtils.js";
+import { getInferredAuthScheme, getOAuthClientCredentialsScheme, isPlainStringType } from "./authUtils.js";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator.js";
 import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType.js";
 import { GoGeneratorAgent } from "./GoGeneratorAgent.js";
@@ -16,7 +16,19 @@ import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
+export interface SdkVariableOption {
+    variable: FernIr.VariableDeclaration;
+    /** Exported identifier used for the RequestOptions field and With<Name> helper. */
+    fieldName: string;
+    /** Unexported identifier used for local variables. */
+    localName: string;
+    /** Whether the variable is a plain string, which enables env var fallback and "" checks. */
+    isString: boolean;
+}
+
 export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomConfigSchema> {
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public readonly caller: Caller;
     public readonly streamer: Streamer;
     public readonly endpointGenerator: EndpointGenerator;
@@ -337,6 +349,26 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             name: "ErrorCodes",
             importPath: this.getInternalImportPath()
         });
+    }
+
+    /**
+     * Returns the Go expression used as the ErrorCodes map key for the given error:
+     * the literal status code for concrete errors, or the internal wildcard constant
+     * (matching any 4XX/5XX status without a concrete entry) for wildcard errors.
+     */
+    public getErrorCodesKey({
+        errorDeclaration,
+        writer
+    }: {
+        errorDeclaration: FernIr.ErrorDeclaration;
+        writer: go.Writer;
+    }): string {
+        if (errorDeclaration.isWildcardStatusCode !== true) {
+            return errorDeclaration.statusCode.toString();
+        }
+        const alias = writer.addImport(this.getInternalImportPath());
+        const constant = errorDeclaration.statusCode >= 500 ? "ServerErrorWildcard" : "ClientErrorWildcard";
+        return `${alias}.${constant}`;
     }
 
     public getCoreApiErrorTypeReference(): go.TypeReference {
@@ -779,7 +811,49 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             return false;
         }
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
-        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+        const hasPerCallPathParameters = endpoint.allPathParameters.some(
+            (pathParameter) => this.getSdkVariableForPathParameter(pathParameter) == null
+        );
+        return hasPerCallPathParameters && inlinePathParameters && wrapperShouldIncludePathParameters;
+    }
+
+    /**
+     * Returns the SDK variables declared on the API (bound to path parameters via
+     * x-fern-sdk-variable), each paired with the client option it is exposed under.
+     */
+    public getSdkVariableOptions(): SdkVariableOption[] {
+        if (this.sdkVariableOptions != null) {
+            return this.sdkVariableOptions;
+        }
+        this.sdkVariableOptions = this.ir.variables.map((variable) => {
+            const { fieldName, localName } = getSdkVariableNames({
+                pascal: this.caseConverter.pascalUnsafe(variable.name),
+                camel: this.caseConverter.camelSafe(variable.name)
+            });
+            return {
+                variable,
+                fieldName,
+                localName,
+                isString: isPlainStringType(variable.type)
+            };
+        });
+        this.sdkVariableOptionsById = new Map(
+            this.sdkVariableOptions.map((option) => [option.variable.id, option] as const)
+        );
+        return this.sdkVariableOptions;
+    }
+
+    /**
+     * Returns the SDK variable the path parameter is bound to, if any. Bound path
+     * parameters are removed from endpoint signatures and resolved from the client
+     * option instead.
+     */
+    public getSdkVariableForPathParameter(pathParameter: FernIr.PathParameter): SdkVariableOption | undefined {
+        if (pathParameter.variable == null) {
+            return undefined;
+        }
+        this.getSdkVariableOptions();
+        return this.sdkVariableOptionsById?.get(pathParameter.variable);
     }
 
     private fileUploadRequestHasProperties(fileUploadRequest: FernIr.FileUploadRequest): boolean {
@@ -953,6 +1027,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public hasHmacWebhookSignatureVerification(): boolean {
+        if (this.ir.sdkConfig.webhookSignatureVerification?.type === "hmac") {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 if (webhook.signatureVerification?.type === "hmac") {
@@ -964,6 +1041,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public hasWebhookBodyHashBinding(): boolean {
+        const apiWide = this.ir.sdkConfig.webhookSignatureVerification;
+        if (apiWide?.type === "hmac" && apiWide.bodyHashBinding != null) {
+            return true;
+        }
         for (const webhookGroup of Object.values(this.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
                 const verification = webhook.signatureVerification;

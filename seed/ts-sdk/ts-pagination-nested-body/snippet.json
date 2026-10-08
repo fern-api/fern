@@ -1,0 +1,53 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/nested-offset",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithNestedOffset"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationNestedBodyClient } from \"@fern/ts-pagination-nested-body\";\n\nconst client = new SeedTsPaginationNestedBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithNestedOffset({\n    filter: \"active\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithNestedOffset({\n    filter: \"active\"\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "ParentOmitted"
+        },
+        {
+            "id": {
+                "path": "/users/nested-offset-step",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithNestedOffsetAndStep"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationNestedBodyClient } from \"@fern/ts-pagination-nested-body\";\n\nconst client = new SeedTsPaginationNestedBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithNestedOffsetAndStep({\n    filter: \"active\",\n    options: {\n        offset: 0,\n        count: 2\n    }\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithNestedOffsetAndStep({\n    filter: \"active\",\n    options: {\n        offset: 0,\n        count: 2\n    }\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "ParentPresent"
+        },
+        {
+            "id": {
+                "path": "/users/nested-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithNestedCursor"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationNestedBodyClient } from \"@fern/ts-pagination-nested-body\";\n\nconst client = new SeedTsPaginationNestedBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithNestedCursor({\n    filter: \"active\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithNestedCursor({\n    filter: \"active\"\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "ParentOmitted"
+        },
+        {
+            "id": {
+                "path": "/users/deeply-nested-cursor",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithDeeplyNestedCursor"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPaginationNestedBodyClient } from \"@fern/ts-pagination-nested-body\";\n\nconst client = new SeedTsPaginationNestedBodyClient({ baseUrl: \"YOUR_BASE_URL\" });\nconst pageableResponse = await client.users.listWithDeeplyNestedCursor({\n    filter: \"active\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithDeeplyNestedCursor({\n    filter: \"active\"\n});\nwhile (page.hasNextPage()) {\n    page = await page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "ParentOmitted"
+        }
+    ],
+    "types": {}
+}

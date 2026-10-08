@@ -133,9 +133,9 @@ module Seed
           Seed::Internal::CursorItemIterator.new(
             cursor_field: :starting_after,
             item_field: :users,
-            initial_cursor: query_params["cursor"]
+            initial_cursor: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:cursor]
           ) do |next_cursor|
-            query_params["cursor"] = next_cursor
+            params[:pagination] = Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h).merge(cursor: next_cursor)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "POST",
@@ -225,8 +225,8 @@ module Seed
         # @option request_options [Hash{String => Object}] :additional_query_parameters
         # @option request_options [Hash{String => Object}] :additional_body_parameters
         # @option request_options [Integer] :timeout_in_seconds
-        # @option params [Integer, nil] :page
-        # @option params [Integer, nil] :per_page
+        # @option params [Float, nil] :page
+        # @option params [Float, nil] :per_page
         # @option params [Seed::InlineUsers::InlineUsers::Types::Order, nil] :order
         # @option params [String, nil] :starting_after
         #
@@ -292,12 +292,12 @@ module Seed
         def list_with_body_offset_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           Seed::Internal::OffsetItemIterator.new(
-            initial_page: query_params["page"],
+            initial_page: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:page],
             item_field: :users,
             has_next_field: nil,
             step: false
           ) do |next_page|
-            query_params["page"] = next_page
+            params[:pagination] = Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h).merge(page: next_page)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "POST",

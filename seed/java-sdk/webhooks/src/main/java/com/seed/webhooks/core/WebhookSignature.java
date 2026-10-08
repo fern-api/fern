@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -34,6 +35,34 @@ public final class WebhookSignature {
             return Base64.getEncoder().encodeToString(signature);
         } catch (GeneralSecurityException exception) {
             throw new IllegalStateException("Failed to compute webhook HMAC signature", exception);
+        }
+    }
+
+    /**
+     * Resolve the HMAC algorithm selected by a caller to its JCA {@link Mac} name. Accepts the short names
+     * {@code sha1}, {@code sha256}, {@code sha384} and {@code sha512} (case-insensitive) as well as JCA names such as
+     * {@code HmacSHA256}; {@code null} or blank selects {@code defaultMacAlgorithm}.
+     */
+    public static String toMacAlgorithm(String algorithm, String defaultMacAlgorithm) {
+        if (algorithm == null || algorithm.trim().isEmpty()) {
+            return defaultMacAlgorithm;
+        }
+        String normalized =
+                algorithm.trim().toLowerCase(Locale.ROOT).replace("-", "").replace("_", "");
+        if (normalized.startsWith("hmac")) {
+            normalized = normalized.substring("hmac".length());
+        }
+        switch (normalized) {
+            case "sha1":
+                return "HmacSHA1";
+            case "sha256":
+                return "HmacSHA256";
+            case "sha384":
+                return "HmacSHA384";
+            case "sha512":
+                return "HmacSHA512";
+            default:
+                throw new IllegalArgumentException("Unsupported HMAC algorithm: " + algorithm);
         }
     }
 

@@ -44,6 +44,11 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
+import {
+    isDynamicIrWorkerThread,
+    registerDynamicIrWorkerEntrypoint,
+    runDynamicIrWorkerThread
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -65,6 +70,7 @@ import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibrary
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { deleteDocsTheme } from "./commands/docs-theme/deleteDocsTheme.js";
+import { downloadDocsTheme } from "./commands/docs-theme/downloadDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
@@ -116,7 +122,8 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
-import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
+import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -137,7 +144,19 @@ if (
     process.exit(result.status ?? 1);
 }
 
-void runCli();
+// libuv sizes its threadpool (async fs, zlib, dns) lazily on first use, so
+// this takes effect as long as it runs before any async I/O. The default of 4
+// is a bottleneck for the highly concurrent file reads in docs validation.
+if (process.env.UV_THREADPOOL_SIZE == null) {
+    process.env.UV_THREADPOOL_SIZE = "8";
+}
+
+if (isDynamicIrWorkerThread()) {
+    runDynamicIrWorkerThread();
+} else {
+    registerDynamicIrWorkerEntrypoint(typeof __filename === "string" ? __filename : undefined);
+    void runCli();
+}
 
 async function runCli() {
     // Shell completion must be fast and side-effect-free. When the shell
@@ -334,8 +353,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         // Redirection is off (e.g. local dev builds), so we won't re-exec at the
         // org bounds — but still surface a warning if the running version is out
         // of range, otherwise enforcement would be silently invisible here.
+        // `upgrade` is skipped: it is about to move the project off this version.
         const orgId = await getOrganization(cliContext);
-        if (orgId != null) {
+        if (orgId != null && getInvokedCommandName(process.argv) !== "upgrade") {
             await warnIfVersionOutsideOrgBounds({
                 cliContext,
                 orgId,
@@ -455,7 +475,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                        taskContext: context
+                        taskContext: context,
+                        openApi: argv.openapi,
+                        useSdkConfig: isSdkConfigInitEnabled()
                     });
                 });
             } else if (argv.mintlify != null) {
@@ -468,24 +490,27 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
+                const useSdkConfig = isSdkConfigInitEnabled();
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
+                let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
-                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
+                        openApiUrl = argv.openapi;
+                        if (!useSdkConfig) {
+                            const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
 
-                        if (result.status === LoadOpenAPIStatus.Failure) {
-                            cliContext.failAndThrow(result.errorMessage, undefined, {
-                                code: CliError.Code.NetworkError
-                            });
+                            if (result.status === LoadOpenAPIStatus.Failure) {
+                                cliContext.failAndThrow(result.errorMessage, undefined, {
+                                    code: CliError.Code.NetworkError
+                                });
+                            }
+
+                            absoluteOpenApiPath = AbsoluteFilePath.of(result.filePath);
                         }
-
-                        const tmpFilepath = result.filePath;
-                        absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
                     } else {
                         absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
                     }
-                    const pathExists = await doesPathExist(absoluteOpenApiPath);
-                    if (!pathExists) {
+                    if (absoluteOpenApiPath != null && !(await doesPathExist(absoluteOpenApiPath))) {
                         cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`, undefined, {
                             code: CliError.Code.ConfigError
                         });
@@ -497,7 +522,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
                         openApiPath: absoluteOpenApiPath,
-                        useFernDefinition: argv["fern-definition"] === true
+                        openApiUrl,
+                        useFernDefinition: argv["fern-definition"] === true,
+                        useSdkConfig
                     });
                 });
             }
@@ -719,7 +746,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         ["generate"],
-        "Generate all generators in the specified group",
+        "Generate SDKs or docs from legacy generator groups and SDK Config targets",
         (yargs) =>
             yargs
                 .option("api", {
@@ -750,11 +777,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     array: true,
                     description:
-                        "The group to generate. Pass --group multiple times to generate for several groups at once."
+                        "A legacy group from generators.yml or generators.legacy.yml. Pass --group multiple times to generate several groups."
+                })
+                .option("target", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "A target language from sdk-config.yml or --sdk-config. Pass --target multiple times to generate several targets."
                 })
                 .option("generator", {
                     type: "string",
-                    description: "The name of a specific generator to run"
+                    description:
+                        "A specific generator within selected legacy groups. With --sdk-config and no --target, filters the explicit SDK Config for backward compatibility."
                 })
                 .option("mode", {
                     choices: Object.values(GenerationMode),
@@ -772,7 +806,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("local", {
                     boolean: true,
                     default: false,
-                    description: "Run the generator(s) locally, using Docker"
+                    description:
+                        "Run the generator(s) locally using Docker. SDK Config targets run on the on-prem generator."
                 })
                 .option("keepDocker", {
                     boolean: true,
@@ -812,7 +847,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("sdk-config", {
                     type: "string",
-                    description: "Path to an SDK Config v1 YAML or JSON document"
+                    description:
+                        "Path to the SDK Config v1 YAML or JSON file to use instead of sdk-config.yml discovered for the selected API"
                 })
                 .option("disable-dynamic-snippets", {
                     boolean: true,
@@ -897,14 +933,34 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     choices: ["host", "docker"] as const,
                     default: "host" as const,
                     description:
-                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed."
+                        "Where --package runs the packaging toolchain: 'host' uses toolchains installed on this machine; 'docker' runs each toolchain inside an official Docker image (node, python, gradle, dotnet/sdk, ruby, composer, rust) with the output directory mounted, so no local toolchains are needed. Docker mode forwards HTTP(S)_PROXY/NO_PROXY and, for Java, gives Gradle a persistent cache under ~/.fern/gradle-docker-home plus the host's gradle.properties and init.d (from GRADLE_USER_HOME or ~/.gradle)."
                 })
                 .option("package-only", {
                     boolean: true,
                     default: false,
                     description:
                         "Like --package, but only the fern-dist/ artifact is kept in the output directory — the generated SDK source is removed after the package is built."
-                }),
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` (SDKs) or `x-twilio.docsVisibility: private` (--docs) in the output. By default only `public` elements are generated; `hidden` elements are always excluded."
+                })
+                .example(
+                    "$0 generate --api my-api",
+                    "Generate the legacy default group and every target in the API's default sdk-config.yml"
+                )
+                .example("$0 generate --api my-api --group python-sdk", "Generate one legacy group")
+                .example("$0 generate --api my-api --target typescript", "Generate one SDK Config target")
+                .example(
+                    "$0 generate --api my-api --group python-sdk --target typescript",
+                    "Generate legacy and SDK Config selections together"
+                )
+                .example(
+                    "$0 generate --api my-api --sdk-config ./internal-sdk-config.yml --target typescript",
+                    "Generate a target from an alternate SDK Config file"
+                ),
         async (argv) => {
             if (argv.api != null && argv.api.length > 0 && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
@@ -1013,6 +1069,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv.target != null && argv.target.length > 0 && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --target flag can only be used for API generation, not docs generation.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
@@ -1021,11 +1084,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false,
-                        skipApiWorkspaces: argv.sdkConfig != null
+                        skipApiWorkspaces: argv.sdkConfig != null && argv.group == null
                     }),
                     cliContext,
                     version: argv.version,
                     groupNames: argv.group,
+                    targetNames: argv.target,
                     generatorName,
                     generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
@@ -1050,7 +1114,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     generateTests: argv["generate-tests"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
-                    packOnly: argv.packageOnly
+                    packOnly: argv.packageOnly,
+                    includePrivate: argv.private
                 });
             }
             if (argv.docs != null) {
@@ -1081,7 +1146,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    includePrivate: argv.private
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1089,11 +1155,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false,
-                    skipApiWorkspaces: argv.sdkConfig != null
+                    skipApiWorkspaces: argv.sdkConfig != null && argv.group == null
                 }),
                 cliContext,
                 version: argv.version,
                 groupNames: argv.group,
+                targetNames: argv.target,
                 generatorName,
                 generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
@@ -1118,7 +1185,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 generateTests: argv["generate-tests"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
-                packOnly: argv.packageOnly
+                packOnly: argv.packageOnly,
+                includePrivate: argv.private
             });
         }
     );
@@ -1473,7 +1541,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 });
 
-                if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                if (
+                    argv.api != null &&
+                    !project.apiWorkspaces.some((workspace) => workspace.workspaceName === argv.api) &&
+                    !project.sdkConfigWorkspaces?.some((workspace) => workspace.workspaceName === argv.api)
+                ) {
                     cliContext.instrumentPostHogEvent({
                         command: "fern check",
                         properties: {
@@ -1998,6 +2070,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
         addDocsThemeDeleteCommand(yargs, cliContext);
+        addDocsThemeDownloadCommand(yargs, cliContext);
         addDocsThemeExportCommand(yargs, cliContext);
         addDocsThemeListCommand(yargs, cliContext);
         addDocsThemeUploadCommand(yargs, cliContext);
@@ -2027,6 +2100,39 @@ function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs theme delete" });
             await deleteDocsTheme({ cliContext, name: argv.name, force: argv.force });
+        }
+    );
+}
+
+function addDocsThemeDownloadCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "download",
+        "Download a theme from Fern's cloud into a local theme directory (theme.yml + assets)",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: 'Theme name (default: "default")',
+                    default: "default"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("output", {
+                    alias: "o",
+                    type: "string",
+                    description: "Directory to write the theme into (default: ./fern/theme)"
+                })
+                .example("$0 docs theme download --name dark", "Download the theme named 'dark' to ./fern/theme")
+                .example(
+                    "$0 docs theme download --name dark --output ./themes/dark",
+                    "Download to a custom directory, e.g. to vendor into a self-hosted image"
+                ),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme download" });
+            await downloadDocsTheme({ cliContext, name: argv.name, org: argv.org, output: argv.output });
         }
     );
 }
@@ -2241,7 +2347,8 @@ function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: Cl
                 })
                 .option("id", {
                     type: "string",
-                    description: "The preview ID to delete. Resolves the URL from the organization in fern.config.json."
+                    description:
+                        "The preview ID to delete. Resolves the URL from the organization in fern.config.json and the instance basepaths in docs.yml."
                 })
                 .check((argv) => {
                     const sources = [argv.target, argv.url, argv.id].filter(Boolean);
@@ -2303,6 +2410,11 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description: "Run the legacy development server"
                 })
+                .option("astro", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the experimental Astro docs preview server instead of Next.js"
+                })
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
@@ -2311,6 +2423,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     boolean: true,
                     default: false,
                     description: "Force re-download of the docs preview bundle by deleting the cached bundle"
+                })
+                .option("private", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2355,8 +2473,10 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
+                astro: argv.astro,
                 backendPort,
-                forceDownload: argv.forceDownload
+                forceDownload: argv.forceDownload,
+                includePrivate: argv.private
             });
         }
     );
@@ -2703,6 +2823,12 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "number",
                     description: "Indentation width in spaces (default: 2)",
                     default: 2
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: [] as string[],
+                    description: "Only export endpoints, webhooks, and types for the provided audiences"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2719,7 +2845,8 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath),
-                indent: argv.indent
+                indent: argv.indent,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
             });
         }
     );
@@ -2805,13 +2932,20 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "migrate",
-        "Create an SDK Config v1 file from one or more resolved Fern SDK groups",
+        "Migrate legacy Fern SDK generator groups to SDK Config v1",
         (yargs) =>
             yargs
                 .option("group", {
                     type: "string",
                     array: true,
-                    description: "An SDK group to migrate; repeat to consolidate compatible groups"
+                    description:
+                        "SDK group to migrate; repeat --group for groups that resolve to the same API and use distinct target languages"
+                })
+                .option("language", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "SDK language to migrate from the selected groups; repeat --language to migrate multiple languages, or omit to migrate every compatible language"
                 })
                 .option("api", {
                     type: "string",
@@ -2822,12 +2956,12 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     alias: "o",
                     nargs: 1,
                     description:
-                        'Path to write SDK Config v1 YAML; defaults to sdk-config.yml beside generators.yml, or use "-" for stdout'
+                        "SDK Config v1 path to create or merge; defaults to sdk-config.yml beside the legacy generators configuration"
                 })
-                .option("force", {
+                .option("dry-run", {
                     type: "boolean",
                     default: false,
-                    description: "Replace an existing output file"
+                    description: "Validate and display the proposed file operations without changing files"
                 })
                 .option("strict", {
                     type: "boolean",
@@ -2845,8 +2979,9 @@ function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 cliContext,
                 args: {
                     api: argv.api,
-                    force: argv.force,
+                    dryRun: argv.dryRun,
                     group: argv.group,
+                    language: argv.language,
                     output: argv.output,
                     strict: argv.strict
                 }

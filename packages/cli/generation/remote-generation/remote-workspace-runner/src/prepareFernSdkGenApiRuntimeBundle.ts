@@ -11,6 +11,7 @@ import { migrateIntermediateRepresentationForInvocation } from "./migrateInterme
 
 const gzipAsync = promisify(gzip);
 const RUNTIME_IR_PATH = AbsoluteFilePath.of("/tmp/fern-runtime/ir.json");
+const RUNTIME_SNIPPET_PATH = AbsoluteFilePath.of("/tmp/fern-runtime/snippet.json");
 const RUNTIME_OUTPUT_PATH = AbsoluteFilePath.of("/fern/output");
 
 export async function prepareFernSdkGenApiRuntimeBundle({
@@ -42,13 +43,14 @@ export async function prepareFernSdkGenApiRuntimeBundle({
         context,
         irVersionOverride
     });
+    const runtimeSnippetPath = generatorInvocation.readme != null ? RUNTIME_SNIPPET_PATH : undefined;
     const config = getGeneratorConfig({
         workspaceName: apiName,
         organization,
         outputVersion: sdkVersion,
         customConfig: stripCliConfigKeys(generatorInvocation.config),
         generatorInvocation,
-        absolutePathToSnippet: undefined,
+        absolutePathToSnippet: runtimeSnippetPath,
         absolutePathToSnippetTemplates: undefined,
         absolutePathToFernConfig: undefined,
         writeUnitTests,
@@ -57,7 +59,7 @@ export async function prepareFernSdkGenApiRuntimeBundle({
         publishToRegistry: false,
         omitPublishCredentials: true,
         paths: {
-            snippetPath: undefined,
+            snippetPath: runtimeSnippetPath,
             snippetTemplatePath: undefined,
             irPath: RUNTIME_IR_PATH,
             outputDirectory: RUNTIME_OUTPUT_PATH

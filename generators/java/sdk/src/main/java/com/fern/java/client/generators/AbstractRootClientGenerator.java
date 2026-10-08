@@ -251,8 +251,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         // Make the root client AutoCloseable so callers can release the OkHttpClient the SDK created for them
-        // (dispatcher executor + connection pool). Delegates to ClientOptions.close(), which only tears anything
-        // down when the client owns the OkHttpClient — a client supplied via Builder.httpClient(...) is left running,
+        // (dispatcher executor + connection pool). Delegates to ClientOptions.close(), which first disconnects any
+        // WebSocket clients still connected through these options (so they stop reconnecting), then only tears the
+        // HTTP client down when the client owns it — a client supplied via Builder.httpClient(...) is left running,
         // since the caller owns its lifecycle.
         result.getClientImpl()
                 .addSuperinterface(AutoCloseable.class)
@@ -260,8 +261,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addAnnotation(Override.class)
                         .addModifiers(Modifier.PUBLIC)
                         .addJavadoc(
-                                "Releases resources owned by this client. See {@code ClientOptions.close()} for what is\n"
-                                        + "and is not released.\n")
+                                "Releases resources owned by this client: any WebSocket clients still connected through\n"
+                                        + "it are disconnected first, then the SDK-owned HTTP client is shut down. See\n"
+                                        + "{@code ClientOptions.close()} for what is and is not released.\n")
                         .addStatement("this.clientOptions.close()")
                         .build());
 
@@ -821,13 +823,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             String variableName = NameUtils.toName(variableDeclaration.getName())
                     .getCamelCase()
                     .getSafeName();
-            clientBuilder.addField(FieldSpec.builder(
+            FieldSpec.Builder variableField = FieldSpec.builder(
                             generatorContext
                                     .getPoetTypeNameMapper()
                                     .convertToTypeName(true, variableDeclaration.getType()),
                             variableName)
-                    .addModifiers(Modifier.PRIVATE)
-                    .build());
+                    .addModifiers(Modifier.PRIVATE);
+            variableDeclaration
+                    .getEnvVar()
+                    .ifPresent(envVar -> variableField.initializer("$T.getenv($S)", System.class, envVar));
+            clientBuilder.addField(variableField.build());
         });
 
         generatorContext.getIr().getVariables().stream()
@@ -1142,6 +1147,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .getSafeName();
                 MethodSpec variableMethod =
                         generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                if (variableDeclaration.getEnvVar().isPresent()) {
+                    setVariablesMethodBuilder
+                            .beginControlFlow("if (this.$L == null)", variableName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    variableName + " is required. Pass it to the builder or set the "
+                                            + variableDeclaration.getEnvVar().get() + " environment variable.")
+                            .endControlFlow()
+                            .addStatement("builder.$N(this.$L)", variableMethod, variableName);
+                    return;
+                }
                 setVariablesMethodBuilder
                         .beginControlFlow("if (this.$L != null)", variableName)
                         .addStatement("builder.$N(this.$L)", variableMethod, variableName)
@@ -1575,8 +1592,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .map(env -> "Please provide " + fieldName + " via ." + fieldName + "() or set " + env.get()
                                 + " environment variable")
                         .orElse("Please provide " + fieldName + " via ." + fieldName + "()");
-                authProviderInfos.add(
-                        new AuthProviderInfo("Bearer", "BearerAuthProvider", fieldName, null, envVarHint, false));
+                authProviderInfos.add(new AuthProviderInfo(
+                        bearer.getKey().get(), "BearerAuthProvider", fieldName, null, envVarHint, false));
             } else if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow("if (this.$L != null)", fieldName)
@@ -1680,7 +1697,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             + basic.getPasswordEnvVar().get().get() + " environment variables";
                 }
                 authProviderInfos.add(new AuthProviderInfo(
-                        "Basic",
+                        basic.getKey().get(),
                         "BasicAuthProvider",
                         usernameFieldName,
                         passwordFieldName,
@@ -1725,7 +1742,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+            return oauth.getConfiguration()
+                    .visit(new OAuthSchemeHandler(oauth.getKey().get()));
         }
 
         @Override
@@ -1938,6 +1956,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
 
+            private final String schemeKey;
+
+            public OAuthSchemeHandler(String schemeKey) {
+                this.schemeKey = schemeKey;
+            }
+
             @Override
             public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
                 EndpointReference tokenEndpointReference =
@@ -2083,7 +2107,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .append(" environment variables");
                         }
                         AuthProviderInfo oauthInfo = new AuthProviderInfo(
-                                "OAuth",
+                                schemeKey,
                                 "OAuthAuthProvider",
                                 "clientId",
                                 "clientSecret",

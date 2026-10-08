@@ -158,6 +158,10 @@ fixtures:
       customConfig:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -370,6 +374,12 @@ fixtures:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+  go-nullable-date-ref:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: legacy-nullable-alias-pointers
+      customConfig:
+        legacyNullableAliasPointers: true
   go-nullable-wire-tests:
     - outputFolder: .
       customConfig:

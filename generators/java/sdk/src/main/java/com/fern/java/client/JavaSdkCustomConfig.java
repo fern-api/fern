@@ -159,6 +159,18 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, the generated client sends only the {@code User-Agent} platform header (in whatever form the other
+     * configs produce, e.g. the structured value from {@link #includePlatformHeaders()}) and omits the
+     * {@code X-Fern-Language}, {@code X-Fern-SDK-Name}, and {@code X-Fern-SDK-Version} headers. Opt-in and disabled by
+     * default so existing generated output is unchanged. Still subject to {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("userAgentOnly")
+    default Boolean userAgentOnly() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {

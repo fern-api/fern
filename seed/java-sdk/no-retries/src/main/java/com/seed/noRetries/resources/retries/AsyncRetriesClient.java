@@ -5,6 +5,7 @@ package com.seed.noRetries.resources.retries;
 
 import com.seed.noRetries.core.ClientOptions;
 import com.seed.noRetries.core.RequestOptions;
+import com.seed.noRetries.core.SeedNoRetriesHttpResponse;
 import com.seed.noRetries.resources.retries.types.User;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,10 +28,24 @@ public class AsyncRetriesClient {
     }
 
     public CompletableFuture<List<User>> getUsers() {
-        return this.rawClient.getUsers().thenApply(response -> response.body());
+        CompletableFuture<SeedNoRetriesHttpResponse<List<User>>> rawFuture = this.rawClient.getUsers();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<User>> getUsers(RequestOptions requestOptions) {
-        return this.rawClient.getUsers(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedNoRetriesHttpResponse<List<User>>> rawFuture = this.rawClient.getUsers(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

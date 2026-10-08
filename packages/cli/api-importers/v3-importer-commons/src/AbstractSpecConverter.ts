@@ -16,6 +16,7 @@ import { AbstractConverter } from "./AbstractConverter.js";
 import { AbstractConverterContext } from "./AbstractConverterContext.js";
 import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
 import { FernIgnoreExtension } from "./extensions/index.js";
+import { resolveAliasResolvedTypes } from "./utils/resolveAliasResolvedTypes.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -85,6 +86,7 @@ export abstract class AbstractSpecConverter<
                 hasStreamingEndpoints: false,
                 isAuthMandatory: true,
                 idempotencyKeyGeneration: undefined,
+                webhookSignatureVerification: undefined,
                 platformHeaders: {
                     language: "",
                     sdkName: "",
@@ -171,6 +173,8 @@ export abstract class AbstractSpecConverter<
             onWarning: (message) => this.context.logger.warn(message)
         });
 
+        resolveAliasResolvedTypes(this.ir.types);
+
         let ir: IntermediateRepresentation = {
             ...this.ir,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
@@ -222,8 +226,9 @@ export abstract class AbstractSpecConverter<
     protected async resolveAllExternalRefs({ spec }: { spec: unknown }): Promise<unknown> {
         const queue = [spec];
 
-        while (queue.length > 0) {
-            const current = queue.shift();
+        // Index cursor instead of queue.shift(), which is O(n) per call on large specs.
+        for (let index = 0; index < queue.length; index++) {
+            const current = queue[index];
             if (current == null) {
                 continue;
             }
@@ -458,13 +463,15 @@ export abstract class AbstractSpecConverter<
         if (environmentConfig == null) {
             return;
         }
-        for (const environment of environmentConfig.environments.environments) {
-            const envAudiences = audiences?.[environment.id];
-            if (envAudiences != null) {
-                this.irGraph.markEnvironmentForAudiences(environment, envAudiences);
-            } else {
-                this.irGraph.markEnvironmentForAudiences(environment, [], true);
-            }
+        const environments = environmentConfig.environments.environments;
+        const noEnvironmentDeclaresAudiences =
+            audiences == null || environments.every((environment) => environment.audiences == null);
+        for (const environment of environments) {
+            this.irGraph.markEnvironmentForAudiences(
+                environment,
+                audiences?.[environment.id] ?? [],
+                noEnvironmentDeclaresAudiences
+            );
         }
     }
 

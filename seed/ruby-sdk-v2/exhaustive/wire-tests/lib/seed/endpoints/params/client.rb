@@ -279,14 +279,11 @@ module Seed
         # @return [String]
         def modify_with_path(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          path_param_names = %i[param]
-          body_params = params.except(*path_param_names)
-
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
             path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
-            body: body_params,
+            body: params[:request],
             request_options: request_options
           )
           begin
@@ -323,14 +320,11 @@ module Seed
         # @return [String]
         def modify_with_inline_path(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
-          path_param_names = %i[param]
-          body_params = params.except(*path_param_names)
-
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
             path: "/params/path/#{URI.encode_uri_component(params[:param].to_s)}",
-            body: body_params,
+            body: params[:body],
             request_options: request_options
           )
           begin
@@ -542,7 +536,11 @@ module Seed
             (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(response.body, code: code)
+            error_types = {
+              400 => Seed::GeneralErrors::Types::BadObjectRequestInfo
+            }
+            error_body = Seed::Errors::ResponseError.load_error_body(code, response.body, error_types)
+            raise error_class.new(response.body, code: code, body: error_body)
           end
         end
       end

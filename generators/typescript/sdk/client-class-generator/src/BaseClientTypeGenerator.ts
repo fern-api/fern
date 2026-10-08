@@ -7,7 +7,14 @@ import { ts } from "ts-morph";
 import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
+import { hasEnvVarFallback } from "./sdkVariables.js";
 import { getServerVariableOptions, urlTemplateToTemplateLiteral } from "./serverVariables.js";
+
+interface SdkVariableEnvFallbacks {
+    section: string;
+    returnFields: string;
+    normalizedTypeFields: string;
+}
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
@@ -15,6 +22,7 @@ export declare namespace BaseClientTypeGenerator {
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        userAgentOnly: boolean;
         allowUserAgentAppInfo: boolean;
         guardProcessEnvAccess?: boolean;
         retainOriginalCasing: boolean;
@@ -114,6 +122,7 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
     private readonly includePlatformHeaders: boolean;
+    private readonly userAgentOnly: boolean;
     private readonly allowUserAgentAppInfo: boolean;
     private readonly guardProcessEnvAccess: boolean;
     private readonly retainOriginalCasing: boolean;
@@ -125,6 +134,7 @@ export class BaseClientTypeGenerator {
         ir,
         omitFernHeaders,
         includePlatformHeaders,
+        userAgentOnly,
         allowUserAgentAppInfo,
         guardProcessEnvAccess,
         retainOriginalCasing,
@@ -135,6 +145,7 @@ export class BaseClientTypeGenerator {
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
         this.includePlatformHeaders = includePlatformHeaders;
+        this.userAgentOnly = userAgentOnly;
         this.allowUserAgentAppInfo = allowUserAgentAppInfo;
         this.guardProcessEnvAccess = guardProcessEnvAccess ?? false;
         this.retainOriginalCasing = retainOriginalCasing;
@@ -293,25 +304,6 @@ export type BaseClientOptions = {
         };
 
         if (!this.omitFernHeaders) {
-            // X-Fern-Language header
-            fernHeaderEntries.push([
-                this.ir.sdkConfig.platformHeaders.language,
-                ts.factory.createStringLiteral("JavaScript")
-            ]);
-
-            if (context.npmPackage != null) {
-                fernHeaderEntries.push(
-                    [
-                        this.ir.sdkConfig.platformHeaders.sdkName,
-                        ts.factory.createStringLiteral(context.npmPackage.packageName)
-                    ],
-                    [
-                        this.ir.sdkConfig.platformHeaders.sdkVersion,
-                        ts.factory.createStringLiteral(context.npmPackage.version)
-                    ]
-                );
-            }
-
             // When includePlatformHeaders is enabled we emit a single structured
             // User-Agent (`{sdkName}/{version} ({os}; {arch}) {runtime}/{version}`)
             // that consolidates the platform + runtime information. This supersedes
@@ -327,6 +319,29 @@ export type BaseClientOptions = {
                       ? { name: context.npmPackage.packageName, version: context.npmPackage.version }
                       : undefined;
             const useRichUserAgent = this.includePlatformHeaders && coordinate != null && coordinate.version.length > 0;
+            const emitsUserAgent = useRichUserAgent || irUserAgent != null || context.npmPackage != null;
+            // userAgentOnly only drops the discrete headers when a User-Agent is actually
+            // emitted, so the SDK is never left without any identification header.
+            const dropDiscreteHeaders = this.userAgentOnly && emitsUserAgent;
+
+            if (!dropDiscreteHeaders) {
+                fernHeaderEntries.push([
+                    this.ir.sdkConfig.platformHeaders.language,
+                    ts.factory.createStringLiteral("JavaScript")
+                ]);
+                if (context.npmPackage != null) {
+                    fernHeaderEntries.push(
+                        [
+                            this.ir.sdkConfig.platformHeaders.sdkName,
+                            ts.factory.createStringLiteral(context.npmPackage.packageName)
+                        ],
+                        [
+                            this.ir.sdkConfig.platformHeaders.sdkVersion,
+                            ts.factory.createStringLiteral(context.npmPackage.version)
+                        ]
+                    );
+                }
+            }
 
             if (useRichUserAgent && coordinate != null) {
                 fernHeaderEntries.push([
@@ -338,10 +353,10 @@ export type BaseClientOptions = {
                         )
                     )
                 ]);
-            } else if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
+            } else if (irUserAgent != null) {
                 fernHeaderEntries.push([
-                    this.ir.sdkConfig.platformHeaders.userAgent.header,
-                    withAppInfo(ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value))
+                    irUserAgent.header,
+                    withAppInfo(ts.factory.createStringLiteral(irUserAgent.value))
                 ]);
             } else if (context.npmPackage != null) {
                 fernHeaderEntries.push([
@@ -354,7 +369,7 @@ export type BaseClientOptions = {
                 ]);
             }
 
-            if (!useRichUserAgent) {
+            if (!useRichUserAgent && !dropDiscreteHeaders) {
                 fernHeaderEntries.push(
                     ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
                     ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
@@ -394,6 +409,7 @@ export type BaseClientOptions = {
         }
 
         const rootPathParamDefaults = this.getRootPathParameterDefaults();
+        const sdkVariableFallbacks = this.getSdkVariableEnvFallbacks(context);
         const serverVariableInterpolation = this.getServerVariableInterpolation(context);
         const emitBaseUrlSection =
             this.ir.environments?.baseUrlEnvVar != null && !serverVariableInterpolation.declaresBaseUrl;
@@ -405,8 +421,8 @@ export type BaseClientOptions = {
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptions<T> {${headersSection}${serverVariableInterpolation.section}${baseUrlSection}    return {
-        ...options,${rootPathParamDefaults}${baseUrlReturnFields}${serverVariableInterpolation.returnFields}
+): NormalizedClientOptions<T> {${headersSection}${sdkVariableFallbacks.section}${serverVariableInterpolation.section}${baseUrlSection}    return {
+        ...options,${rootPathParamDefaults}${sdkVariableFallbacks.returnFields}${baseUrlReturnFields}${serverVariableInterpolation.returnFields}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
@@ -579,6 +595,52 @@ ${entries.join("\n")}
         return "\n" + lines.join("\n");
     }
 
+    private sdkVariableEnvFallbacks: SdkVariableEnvFallbacks | undefined;
+
+    /**
+     * String SDK variables that declare an `envVar` are optional client options. Resolves each one
+     * (explicit option first, then the environment variable) inside `normalizeClientOptions`
+     * and fails fast when neither is set, so generated paths never interpolate `undefined`.
+     */
+    private getSdkVariableEnvFallbacks(context: FileContext): SdkVariableEnvFallbacks {
+        if (this.sdkVariableEnvFallbacks != null) {
+            return this.sdkVariableEnvFallbacks;
+        }
+        const sections: string[] = [];
+        const returnFields: string[] = [];
+        const normalizedTypeFields: string[] = [];
+        for (const variable of this.ir.variables) {
+            if (!hasEnvVarFallback(variable, context.type)) {
+                continue;
+            }
+            const propertyName = this.caseConverter.camelUnsafe(variable.name);
+            const propertyKey = getPropertyKey(propertyName);
+            const optionAccess = propertyKey === propertyName ? `.${propertyName}` : `[${propertyKey}]`;
+            const localName = `_${propertyName}`;
+            const envValue = emitEnvVarValue({
+                envConstant: JSON.stringify(variable.envVar),
+                guarded: this.guardProcessEnvAccess
+            });
+            const errorMessage = JSON.stringify(
+                `${propertyName} is required. Pass it to the client or set the ${variable.envVar} environment variable.`
+            );
+            sections.push(`    const ${localName} = ${OPTIONS_PARAMETER_NAME}?${optionAccess} ?? ${envValue};
+    if (${localName} == null) {
+        throw new Error(${errorMessage});
+    }
+
+`);
+            returnFields.push(`\n        ${propertyKey}: ${localName},`);
+            normalizedTypeFields.push(`\n    ${propertyKey}: string;`);
+        }
+        this.sdkVariableEnvFallbacks = {
+            section: sections.join(""),
+            returnFields: returnFields.join(""),
+            normalizedTypeFields: normalizedTypeFields.join("")
+        };
+        return this.sdkVariableEnvFallbacks;
+    }
+
     private shouldGenerateAuthCode(): boolean {
         return this.ir.auth.schemes.length > 0;
     }
@@ -590,9 +652,11 @@ ${entries.join("\n")}
             ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
             : "";
 
+        const sdkVariableFields = this.getSdkVariableEnvFallbacks(context).normalizedTypeFields;
+
         let typesCode = `
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
-    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
+    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}${sdkVariableFields}
 }`;
 
         if (shouldGenerateAuthCode) {

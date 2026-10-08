@@ -11,7 +11,7 @@ const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
 interface WebhookVerificationEntry {
     config: FernIr.HmacSignatureVerification;
-    webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
+    webhookNames: FernIr.WebhookName[];
 }
 
 export class WebhooksHelperGenerator {
@@ -32,6 +32,9 @@ export class WebhooksHelperGenerator {
 
         for (const entry of overrideEntries) {
             const [firstWebhookName] = entry.webhookNames;
+            if (firstWebhookName == null) {
+                continue;
+            }
             const className = `${this.context.getClassName(firstWebhookName)}WebhooksHelper`;
             this.addHelperFiles(files, className, entry.config);
         }
@@ -51,6 +54,15 @@ export class WebhooksHelperGenerator {
         overrideEntries: WebhookVerificationEntry[];
     } {
         const grouped = new Map<string, WebhookVerificationEntry>();
+
+        // The API-wide scheme (generators.yml `api.settings.webhook-signature`) always backs the
+        // default WebhooksHelper, even when the definition models no webhooks.
+        const apiWideConfig = this.context.ir.sdkConfig.webhookSignatureVerification;
+        let apiWideEntry: WebhookVerificationEntry | undefined;
+        if (apiWideConfig?.type === "hmac") {
+            apiWideEntry = { config: apiWideConfig, webhookNames: [] };
+            grouped.set(this.computeVerificationKey(apiWideConfig), apiWideEntry);
+        }
 
         for (const webhookGroup of Object.values(this.context.ir.webhookGroups)) {
             for (const webhook of webhookGroup) {
@@ -73,13 +85,16 @@ export class WebhooksHelperGenerator {
             return { defaultEntry: undefined, overrideEntries: [] };
         }
 
-        // The most frequent config becomes the default WebhooksHelper (ties broken by insertion order).
-        let defaultEntry: WebhookVerificationEntry | undefined;
-        let maxCount = 0;
-        for (const entry of grouped.values()) {
-            if (entry.webhookNames.length > maxCount) {
-                maxCount = entry.webhookNames.length;
-                defaultEntry = entry;
+        // Without an API-wide scheme, the most frequent config becomes the default WebhooksHelper
+        // (ties broken by insertion order).
+        let defaultEntry: WebhookVerificationEntry | undefined = apiWideEntry;
+        if (defaultEntry == null) {
+            let maxCount = 0;
+            for (const entry of grouped.values()) {
+                if (entry.webhookNames.length > maxCount) {
+                    maxCount = entry.webhookNames.length;
+                    defaultEntry = entry;
+                }
             }
         }
 
@@ -168,6 +183,11 @@ export class WebhooksHelperGenerator {
     }
 }
 
+interface GoParameter {
+    name: string;
+    type: string;
+}
+
 class HmacHelperWriter {
     private readonly context: SdkGeneratorContext;
     private readonly className: string;
@@ -204,32 +224,58 @@ class HmacHelperWriter {
             writer.writeLine(`type ${this.className} struct{}`);
             writer.newLine();
 
-            writer.writeLine("// VerifySignature verifies an HMAC webhook signature.");
-            writer.writeLine(`func (${this.className}) VerifySignature(`);
+            const defaultAlgorithm = this.mapAlgorithm(this.config.algorithm);
+            writer.writeLine(
+                `// VerifySignature verifies an HMAC webhook signature using the configured "${defaultAlgorithm}" algorithm.`
+            );
+            writer.writeLine(`func (h ${this.className}) VerifySignature(`);
             for (const parameter of this.buildParameters()) {
-                writer.writeLine(`\t${parameter},`);
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
             }
+            writer.writeLine(") (bool, error) {");
+            writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t\t${parameter.name},`);
+            }
+            writer.writeLine(`\t\t"${defaultAlgorithm}",`);
+            writer.writeLine("\t)");
+            writer.writeLine("}");
+            writer.newLine();
+
+            writer.writeLine(
+                "// VerifySignatureWithAlgorithm verifies an HMAC webhook signature using the given HMAC algorithm"
+            );
+            writer.writeLine('// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.');
+            writer.writeLine(`func (${this.className}) VerifySignatureWithAlgorithm(`);
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
+            }
+            writer.writeLine("\talgorithm string,");
             writer.writeLine(") (bool, error) {");
             this.writeBody(writer, coreAlias, errorsAlias);
             writer.writeLine("}");
         });
     }
 
-    private buildParameters(): string[] {
+    private buildParameters(): GoParameter[] {
         // When bodySort is set, the request body accepts either a raw string or a
         // map[string][]string-shaped multimap, so it is widened to interface{}.
         const bodyType = this.hasBodySort ? "interface{}" : "string";
-        const parameters: string[] = [`requestBody ${bodyType}`, "signatureHeader string", "signatureKey string"];
+        const parameters: GoParameter[] = [
+            { name: "requestBody", type: bodyType },
+            { name: "signatureHeader", type: "string" },
+            { name: "signatureKey", type: "string" }
+        ];
         for (const component of this.components) {
             if (component === "NOTIFICATION_URL") {
-                parameters.push("notificationUrl string");
+                parameters.push({ name: "notificationUrl", type: "string" });
             } else if (component === "MESSAGE_ID") {
-                parameters.push("messageId string");
+                parameters.push({ name: "messageId", type: "string" });
             }
         }
         // The timestamp header is needed either for timestamp validation or as a payload component.
         if (this.hasTimestamp || this.components.includes("TIMESTAMP")) {
-            parameters.push("timestampHeader string");
+            parameters.push({ name: "timestampHeader", type: "string" });
         }
         return parameters;
     }
@@ -275,10 +321,9 @@ class HmacHelperWriter {
         }
 
         writer.newLine();
-        const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
         writer.writeLine(
-            `\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+            `\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, algorithm, "${encoding}")`
         );
         writer.writeLine("\tif err != nil {");
         writer.writeLine("\t\treturn false, err");
@@ -341,7 +386,6 @@ class HmacHelperWriter {
         normalization: FernIr.WebhookNotificationUrlNormalization
     ): void {
         const binding = this.config.bodyHashBinding;
-        const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
 
         writer.newLine();
@@ -392,7 +436,7 @@ class HmacHelperWriter {
             writer.writeLine(`\t\tpayload := ${formPayloadExpr}`);
         }
         writer.writeLine(
-            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, algorithm, "${encoding}")`
         );
         writer.writeLine("\t\tif err != nil {");
         writer.writeLine("\t\t\treturn false, err");

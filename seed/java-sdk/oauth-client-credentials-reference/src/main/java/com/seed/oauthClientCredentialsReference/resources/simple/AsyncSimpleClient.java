@@ -5,6 +5,7 @@ package com.seed.oauthClientCredentialsReference.resources.simple;
 
 import com.seed.oauthClientCredentialsReference.core.ClientOptions;
 import com.seed.oauthClientCredentialsReference.core.RequestOptions;
+import com.seed.oauthClientCredentialsReference.core.SeedOauthClientCredentialsReferenceHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSimpleClient {
@@ -25,10 +26,26 @@ public class AsyncSimpleClient {
     }
 
     public CompletableFuture<Void> getSomething() {
-        return this.rawClient.getSomething().thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsReferenceHttpResponse<Void>> rawFuture =
+                this.rawClient.getSomething();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> getSomething(RequestOptions requestOptions) {
-        return this.rawClient.getSomething(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedOauthClientCredentialsReferenceHttpResponse<Void>> rawFuture =
+                this.rawClient.getSomething(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

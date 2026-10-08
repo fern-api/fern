@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Parsing an XML (TwiML) element without a text property keeps the text before its first child in the
+    ordered content, so `Gather.from_xml('<Gather>Press a key, then <Say>one</Say></Gather>')` round-trips
+    instead of dropping `Press a key, then `. Types with a text property (e.g. `Say`) are unchanged: that
+    text is still the property's value.
+  type: fix

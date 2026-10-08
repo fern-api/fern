@@ -38,10 +38,12 @@ func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameCursor) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -131,10 +133,12 @@ func (u *UsernamePage) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernamePage) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetAfter sets the After field and marks it as non-optional;

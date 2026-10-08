@@ -77,7 +77,7 @@ export async function loadCompatibleMigrationGroups({
     const mismatch = loaded.find((candidate) => migrationInputFingerprint(candidate) !== baselineFingerprint);
     if (mismatch != null) {
         throw new CliError({
-            message: `SDK targets '${targetName(baseline)}' and '${targetName(mismatch)}' resolve to different API schemas. Migrate them into separate SDK Config files.`,
+            message: `SDK targets '${targetName(baseline)}' and '${targetName(mismatch)}' resolve to different API sources, schemas, import settings, or audiences. Migrate them into separate SDK Config files.`,
             code: CliError.Code.ConfigError
         });
     }

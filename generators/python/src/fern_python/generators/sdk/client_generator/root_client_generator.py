@@ -121,6 +121,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "_max_retries",
     }
 
+    def _is_oauth_client_credentials(self) -> bool:
+        return (
+            self._oauth_scheme is not None
+            and self._oauth_scheme.configuration.get_as_union().type == "clientCredentials"
+        )
+
+    def _accepts_async_token(self, *, client_wrapper_generator: ClientWrapperGenerator) -> bool:
+        if self._is_oauth_client_credentials():
+            return True
+        return self._oauth_scheme is None and client_wrapper_generator._get_bearer_auth_scheme() is not None
+
     def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
         """
         Returns the kwarg name for the bearer token parameter on the generated ClientWrapper.
@@ -386,6 +397,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         overload_2_param_names: list[str] = [
             RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
             RootClientGenerator.TOKEN_PARAMETER_NAME,
+            ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
             self._timeout_constructor_parameter_name,
             self._max_retries_constructor_parameter_name,
             RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
@@ -673,39 +685,45 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if param.environment_variable is not None and not param.type_hint.is_optional:
                 add_validation = True
                 parm_type_hint = AST.TypeHint.optional(parm_type_hint)
+            uses_explicit_basic_auth_fallback = (
+                self._prefer_explicit_auth_enabled()
+                and param.is_basic
+                and param.environment_variable is not None
+                and parm_type_hint.is_optional
+            )
+            # Environment variables are read when the client is constructed, not when the
+            # module is imported, so the signature default is None.
+            reads_environment_variable = (
+                param.environment_variable is not None and not uses_explicit_basic_auth_fallback
+            )
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
                     initializer=(
                         AST.Expression("None")
-                        if (
-                            self._prefer_explicit_auth_enabled()
-                            and param.is_basic
-                            and param.environment_variable is not None
-                            and parm_type_hint.is_optional
-                        )
+                        if uses_explicit_basic_auth_fallback or reads_environment_variable
                         else self._get_root_client_param_initializer(param)
                     ),
                     docs=param.docs,
                     validation_check=(
                         AST.Expression(
                             AST.CodeWriter(
-                                self._get_parameter_validation_writer(
-                                    param_name=param.constructor_parameter_name,
-                                    environment_variable=param.environment_variable,
+                                self._get_environment_variable_fallback_writer(
+                                    param=param,
+                                    add_validation=add_validation,
                                 )
                             )
                         )
-                        if add_validation and param.environment_variable is not None
+                        if reads_environment_variable
                         else None
                     ),
                 )
             )
 
-        # For async clients with bearer auth (non-OAuth), expose an async_token parameter
-        # so users can supply an async token provider that won't block the event loop.
-        if is_async and self._oauth_scheme is None and client_wrapper_generator._get_bearer_auth_scheme() is not None:
+        # For async clients with bearer auth or an OAuth client-credentials token override, expose an
+        # async_token parameter so users can supply an async token provider that won't block the event loop.
+        if is_async and self._accepts_async_token(client_wrapper_generator=client_wrapper_generator):
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
@@ -985,6 +1003,24 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             return param.client_default
         return None
 
+    def _get_environment_variable_fallback_writer(
+        self, *, param: ConstructorParameter, add_validation: bool
+    ) -> CodeWriterFunction:
+        def _write_environment_variable_fallback(writer: AST.NodeWriter) -> None:
+            initializer = self._get_root_client_param_initializer(param)
+            if initializer is not None:
+                param_name = param.constructor_parameter_name
+                writer.write(f"{param_name} = {param_name} if {param_name} is not None else ")
+                writer.write_node(initializer)
+                writer.write_newline_if_last_line_not()
+            if add_validation and param.environment_variable is not None:
+                self._get_parameter_validation_writer(
+                    param_name=param.constructor_parameter_name,
+                    environment_variable=param.environment_variable,
+                )(writer)
+
+        return _write_environment_variable_fallback
+
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:
             writer.write_line(f"if {param_name} is None:")
@@ -1097,7 +1133,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         ]
         token_signature = AST.FunctionSignature(named_parameters=token_params)
 
-        return [oauth_signature, token_signature]
+        if not is_async:
+            return [oauth_signature, token_signature]
+
+        # Overload 3 (async only): async token callable (async_token required)
+        async_token_params = base_params + [
+            AST.NamedFunctionParameter(
+                name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                type_hint=AST.TypeHint.callable(
+                    parameters=[],
+                    return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()),
+                ),
+            ),
+        ]
+        async_token_signature = AST.FunctionSignature(named_parameters=async_token_params)
+
+        return [oauth_signature, token_signature, async_token_signature]
 
     def _get_non_oauth_constructor_parameters(self, *, is_async: bool) -> List[AST.NamedFunctionParameter]:
         """Get constructor parameters excluding OAuth-specific ones (client_id, client_secret, token, extra oauth params)."""
@@ -1106,6 +1157,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             "client_secret",
             self.TOKEN_PARAMETER_NAME,
             self.TOKEN_GETTER_PARAM_NAME,
+            ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
         }
         if self._oauth_scheme is not None:
             oauth_config = self._oauth_scheme.configuration.get_as_union()
@@ -1552,8 +1604,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         " and (_explicit_oauth_auth or not _explicit_basic_auth)"
                     )
 
-        # if token is not None:
-        writer.write_line(f"if {self.TOKEN_PARAMETER_NAME} is not None:")
+        # if token is not None (or, for async clients, async_token is not None):
+        token_selection_condition = f"{self.TOKEN_PARAMETER_NAME} is not None"
+        if is_async:
+            token_selection_condition += f" or {ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME} is not None"
+        writer.write_line(f"if {token_selection_condition}:")
         with writer.indent():
             # Direct token mode - use the provided callable for the client wrapper
             client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
@@ -1577,6 +1632,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
             )
+            if is_async:
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                        AST.Expression(ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME),
+                    )
+                )
             # Note: inferred auth is intentionally NOT wired in the token-only branch. The
             # inferred-auth token endpoint is driven by the OAuth client_id/client_secret
             # credentials, which are not available (and not narrowed to non-None) here, so an

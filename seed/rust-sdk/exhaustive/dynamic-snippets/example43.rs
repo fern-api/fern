@@ -11,6 +11,15 @@ async fn main() {
     client
         .endpoints
         .params
-        .get_with_boolean_path(true, None)
+        .create_with_body_and_query(
+            &CreateWithBodyAndQueryRequest {
+                fields: Some("_fields".to_string()),
+                body: ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            },
+            None,
+        )
         .await;
 }

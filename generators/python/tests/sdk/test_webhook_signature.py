@@ -1,7 +1,10 @@
 import base64
 import hashlib
 import hmac
+import logging
 import typing
+
+import pytest
 
 from core_utilities.shared.webhook_signature import (
     compute_hash,
@@ -393,6 +396,53 @@ def test_generated_full_twilio_form_path_multimap() -> None:
     )
 
 
+def test_generated_algorithm_override_defaults_to_configured_and_accepts_sha256() -> None:
+    """Shared-key webhooks may be signed with HMAC-SHA256; callers pick the algorithm per request."""
+    helper = _render_helper(
+        "AlgorithmOverrideHelper",
+        _hmac_config(
+            payloadFormat=_BODY_SORT_FORMAT,
+            bodyHashBinding=_BODY_HASH_BINDING,
+            notificationUrlNormalization=_URL_NORMALIZATION,
+        ),
+    )
+    url = _notification_url()
+    sha1_signature = _sign(url)
+    sha256_signature = base64.b64encode(
+        hmac.new(_SECRET.encode("utf-8"), url.encode("utf-8"), hashlib.sha256).digest()
+    ).decode("utf-8")
+
+    common = dict(request_body=_BODY, signature_key=_SECRET, notification_url=url)
+    assert helper.verify_signature(signature_header=sha1_signature, **common)
+    assert helper.verify_signature(signature_header=sha1_signature, algorithm="sha1", **common)
+    assert helper.verify_signature(signature_header=sha256_signature, algorithm="sha256", **common)
+    assert not helper.verify_signature(signature_header=sha256_signature, **common)
+    assert not helper.verify_signature(signature_header=sha1_signature, algorithm="sha256", **common)
+
+
+def test_generated_logs_missing_signature_vs_mismatch(caplog: pytest.LogCaptureFixture) -> None:
+    helper = _twilio_helper()
+    body_hash = hashlib.sha256(_BODY.encode("utf-8")).hexdigest()
+    url = f"https://example.com/sms?bodySHA256={body_hash}"
+    with caplog.at_level(logging.WARNING):
+        assert not helper.verify_signature(
+            request_body=_BODY, signature_header="", signature_key=_SECRET, notification_url=url
+        )
+        assert "could not run: missing signature header" in caplog.text
+        assert "signature mismatch" not in caplog.text
+        caplog.clear()
+        assert not helper.verify_signature(
+            request_body=_BODY, signature_header=_sign(url, secret="wrong"), signature_key=_SECRET, notification_url=url
+        )
+        assert "signature verification failed: signature mismatch" in caplog.text
+        assert "missing signature header" not in caplog.text
+        caplog.clear()
+        assert helper.verify_signature(
+            request_body=_BODY, signature_header=_sign(url), signature_key=_SECRET, notification_url=url
+        )
+        assert caplog.text == ""
+
+
 def test_generated_full_twilio_wrong_secret() -> None:
     helper = _twilio_helper()
     body_hash = hashlib.sha256(_BODY.encode("utf-8")).hexdigest()
@@ -534,7 +584,11 @@ def test_multiple_distinct_configs_produce_distinct_files() -> None:
             self.name = name
             self.signature_verification = ir_types.WebhookSignatureVerification.factory.hmac(config)
 
+    class _FakeSdkConfig:
+        webhook_signature_verification = None
+
     class _FakeIr:
+        sdk_config = _FakeSdkConfig()
         webhook_groups = {
             "group": [
                 _FakeWebhook(_webhook_name("SmsSent"), config_a),
@@ -583,3 +637,51 @@ def test_multiple_distinct_configs_produce_distinct_files() -> None:
     ):
         matching = [path for path, body in written_files.items() if f"class {class_name}:" in body]
         assert matching == [f"webhooks/{expected_module}.py"], (class_name, matching)
+
+
+def test_api_wide_config_generates_default_helper_without_webhooks() -> None:
+    """
+    `api.settings.webhook-signature` (IR sdk_config.webhook_signature_verification) must produce the
+    shared WebhooksHelper even when the definition models zero webhooks.
+    """
+    import fern.ir.resources as ir_types
+
+    from fern_python.generators.sdk.webhooks_helper_generator import (
+        WEBHOOKS_HELPER_FILE_NAME,
+        WebhooksHelperGenerator,
+    )
+
+    class _FakeSdkConfig:
+        webhook_signature_verification = ir_types.WebhookSignatureVerification.factory.hmac(_hmac_config())
+
+    class _FakeIr:
+        sdk_config = _FakeSdkConfig()
+        webhook_groups: typing.Dict[str, typing.List[typing.Any]] = {}
+
+    class _FakeContext:
+        ir = _FakeIr()
+
+    written_files: typing.Dict[str, str] = {}
+    root_init_exports: typing.List[str] = []
+
+    class _FakeProject:
+        def get_source_file_filepath(self, filepath: typing.Any, include_src_root: bool) -> str:
+            parts = [d.module_name for d in filepath.directories] + [filepath.file.module_name + ".py"]
+            return "/".join(parts)
+
+        def add_file(self, filepath: str, contents: str) -> None:
+            written_files[filepath] = contents
+
+        def register_export_in_project(self, filepath_in_project: typing.Any, exports: typing.Set[str]) -> None:
+            pass
+
+        def add_init_exports(self, path: typing.Any, exports: typing.Any) -> None:
+            for export in exports:
+                root_init_exports.extend(export.imports)
+
+    generator = WebhooksHelperGenerator(context=_FakeContext(), project=_FakeProject())  # type: ignore[arg-type]
+    generator.generate()
+
+    assert list(written_files.keys()) == [f"webhooks/{WEBHOOKS_HELPER_FILE_NAME}.py"]
+    assert "class WebhooksHelper:" in written_files[f"webhooks/{WEBHOOKS_HELPER_FILE_NAME}.py"]
+    assert root_init_exports == ["WebhooksHelper"]

@@ -117,14 +117,15 @@ func (d *DeclaredErrorName) String() string {
 }
 
 var (
-	errorDeclarationFieldDocs              = big.NewInt(1 << 0)
-	errorDeclarationFieldName              = big.NewInt(1 << 1)
-	errorDeclarationFieldDisplayName       = big.NewInt(1 << 2)
-	errorDeclarationFieldDiscriminantValue = big.NewInt(1 << 3)
-	errorDeclarationFieldType              = big.NewInt(1 << 4)
-	errorDeclarationFieldStatusCode        = big.NewInt(1 << 5)
-	errorDeclarationFieldExamples          = big.NewInt(1 << 6)
-	errorDeclarationFieldV2Examples        = big.NewInt(1 << 7)
+	errorDeclarationFieldDocs                 = big.NewInt(1 << 0)
+	errorDeclarationFieldName                 = big.NewInt(1 << 1)
+	errorDeclarationFieldDisplayName          = big.NewInt(1 << 2)
+	errorDeclarationFieldDiscriminantValue    = big.NewInt(1 << 3)
+	errorDeclarationFieldType                 = big.NewInt(1 << 4)
+	errorDeclarationFieldStatusCode           = big.NewInt(1 << 5)
+	errorDeclarationFieldExamples             = big.NewInt(1 << 6)
+	errorDeclarationFieldV2Examples           = big.NewInt(1 << 7)
+	errorDeclarationFieldIsWildcardStatusCode = big.NewInt(1 << 8)
 )
 
 type ErrorDeclaration struct {
@@ -134,8 +135,11 @@ type ErrorDeclaration struct {
 	DiscriminantValue *common.NameAndWireValue `json:"discriminantValue" url:"discriminantValue"`
 	Type              *TypeReference           `json:"type,omitempty" url:"type,omitempty"`
 	StatusCode        int                      `json:"statusCode" url:"statusCode"`
-	Examples          []*ExampleError          `json:"examples" url:"examples"`
-	V2Examples        *V2SchemaExamples        `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
+	// True when this error was declared with a 4XX or 5XX wildcard status code;
+	// StatusCode then holds the first status code of the range (400 or 500).
+	IsWildcardStatusCode *bool             `json:"isWildcardStatusCode,omitempty" url:"isWildcardStatusCode,omitempty"`
+	Examples             []*ExampleError   `json:"examples" url:"examples"`
+	V2Examples           *V2SchemaExamples `json:"v2Examples,omitempty" url:"v2Examples,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -183,6 +187,13 @@ func (e *ErrorDeclaration) GetStatusCode() int {
 		return 0
 	}
 	return e.StatusCode
+}
+
+func (e *ErrorDeclaration) GetIsWildcardStatusCode() *bool {
+	if e == nil {
+		return nil
+	}
+	return e.IsWildcardStatusCode
 }
 
 func (e *ErrorDeclaration) GetExamples() []*ExampleError {
@@ -250,6 +261,13 @@ func (e *ErrorDeclaration) SetType(type_ *TypeReference) {
 func (e *ErrorDeclaration) SetStatusCode(statusCode int) {
 	e.StatusCode = statusCode
 	e.require(errorDeclarationFieldStatusCode)
+}
+
+// SetIsWildcardStatusCode sets the IsWildcardStatusCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ErrorDeclaration) SetIsWildcardStatusCode(isWildcardStatusCode *bool) {
+	e.IsWildcardStatusCode = isWildcardStatusCode
+	e.require(errorDeclarationFieldIsWildcardStatusCode)
 }
 
 // SetExamples sets the Examples field and marks it as non-optional;

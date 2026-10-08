@@ -79,6 +79,17 @@ const ANNOTATION_KEYWORDS = new Set([
 ]);
 
 /**
+ * The only constraint keywords a presence branch may state. Anything else (`not`,
+ * `if`/`then`, `dependentRequired`, `minProperties`, `patternProperties`, ...)
+ * would be lost when the enclosing `anyOf`/`oneOf` is dropped.
+ */
+const PRESENCE_BRANCH_KEYWORDS = new Set(["type", "properties", "required"]);
+
+function isExtensionKeyword(keyword: string): boolean {
+    return keyword.startsWith("x-");
+}
+
+/**
  * True when the branch subschema adds no constraint of its own relative to the
  * sibling's: every constraint keyword it states must appear on the sibling with an
  * equal value. Annotations are ignored, and keywords the sibling states but the
@@ -133,16 +144,19 @@ function deepEquals(a: unknown, b: unknown): boolean {
  * `siblingProperties`, and so constrains rather than varies the schema.
  */
 export function isPresenceConstraintBranch(branch: unknown, siblingProperties: Record<string, unknown>): boolean {
-    if (!isRecord(branch) || "$ref" in branch) {
+    if (!isRecord(branch)) {
         return false;
     }
-    if (
-        branch.allOf != null ||
-        branch.oneOf != null ||
-        branch.anyOf != null ||
-        branch.additionalProperties != null ||
-        !isObjectTypeOrAbsent(branch.type)
-    ) {
+    for (const keyword of Object.keys(branch)) {
+        if (
+            !PRESENCE_BRANCH_KEYWORDS.has(keyword) &&
+            !ANNOTATION_KEYWORDS.has(keyword) &&
+            !isExtensionKeyword(keyword)
+        ) {
+            return false;
+        }
+    }
+    if (!isObjectTypeOrAbsent(branch.type)) {
         return false;
     }
 
@@ -177,16 +191,73 @@ export function isPresenceConstraintBranch(branch: unknown, siblingProperties: R
  * union and allOf paths.
  */
 export function anyOfIsPresenceConstraint(schema: AnyOfConstraintSchemaLike): boolean {
-    const anyOf = schema.anyOf;
-    if (!Array.isArray(anyOf) || anyOf.length === 0) {
+    if (schema.oneOf != null) {
         return false;
     }
-    if (schema.oneOf != null || schema.allOf != null) {
+    return isPresenceConstraintOver(schema, schema.anyOf);
+}
+
+/**
+ * True when the schema's `oneOf` is a presence constraint over its own sibling
+ * `properties` rather than a set of variants:
+ *
+ *     type: object
+ *     properties: { domain: {...}, phone: {...} }
+ *     oneOf:
+ *       - { required: [domain] }
+ *       - { required: [phone] }
+ *
+ * This spells "exactly one of domain, phone" over the declared object. The
+ * branches carry no shape of their own, so converting them to a union yields
+ * variants that drop every sibling property.
+ */
+export function oneOfIsPresenceConstraint(schema: AnyOfConstraintSchemaLike): boolean {
+    if (schema.anyOf != null) {
+        return false;
+    }
+    return isPresenceConstraintOver(schema, schema.oneOf);
+}
+
+/**
+ * Property names the schema's `oneOf`/`anyOf` presence constraint requires
+ * unconditionally, i.e. those every branch marks as required. Since an instance
+ * must satisfy at least one branch, these must survive when the constraint itself
+ * is dropped. For a single-branch `oneOf: [{ required: [a] }]` this is `[a]`.
+ * Empty when the schema has no presence constraint.
+ */
+export function requiredByPresenceConstraint(schema: AnyOfConstraintSchemaLike): string[] {
+    if (oneOfIsPresenceConstraint(schema)) {
+        return requiredInEveryBranch(schema.oneOf);
+    }
+    if (anyOfIsPresenceConstraint(schema)) {
+        return requiredInEveryBranch(schema.anyOf);
+    }
+    return [];
+}
+
+function requiredInEveryBranch(branches: unknown): string[] {
+    if (!Array.isArray(branches) || branches.length === 0) {
+        return [];
+    }
+    const requiredPerBranch = branches.map((branch) =>
+        isRecord(branch) && Array.isArray(branch.required)
+            ? branch.required.filter((name): name is string => typeof name === "string")
+            : []
+    );
+    const [first, ...rest] = requiredPerBranch;
+    return (first ?? []).filter((name) => rest.every((required) => required.includes(name)));
+}
+
+function isPresenceConstraintOver(schema: AnyOfConstraintSchemaLike, branches: unknown): boolean {
+    if (!Array.isArray(branches) || branches.length === 0) {
+        return false;
+    }
+    if (schema.allOf != null) {
         return false;
     }
     if (!isRecord(schema.properties) || Object.keys(schema.properties).length === 0) {
         return false;
     }
     const siblingProperties = schema.properties;
-    return anyOf.every((branch) => isPresenceConstraintBranch(branch, siblingProperties));
+    return branches.every((branch) => isPresenceConstraintBranch(branch, siblingProperties));
 }

@@ -214,7 +214,7 @@ describe("runLibraryDocsGeneration", () => {
     });
 
     it("local mode: parses a 'path' input library without a token and generates (Python)", async () => {
-        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockPythonIr });
 
         await expect(
             runLibraryDocsGeneration({
@@ -238,6 +238,42 @@ describe("runLibraryDocsGeneration", () => {
         expect(String(call.sourcePath)).toBe("/tmp/docs/local-src");
         expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
+        );
+    });
+
+    it("prefixes generated slugs with the tab the pages are listed under in docs.yml", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockPythonIr });
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                    output: { path: "./docs" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true,
+            docsConfig: {
+                tabs: { api: { displayName: "API Reference" } },
+                navigation: [
+                    {
+                        tab: "api",
+                        layout: [
+                            {
+                                section: "Python API Reference",
+                                contents: [{ page: "my_sdk", path: "./docs/my-sdk/my_sdk/index.mdx" }]
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
+            expect.objectContaining({ slug: "my-sdk", slugPrefix: "api-reference" })
         );
     });
 
@@ -300,6 +336,124 @@ describe("runLibraryDocsGeneration", () => {
             expect.objectContaining({
                 branch: "release/2.0",
                 packagePath: "packages/sdk"
+            })
+        );
+    });
+
+    it("local mode: surfaces parser warnings (e.g. skipped Cython modules) in the CLI log", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({
+            ir: mockPythonIr,
+            warnings: ["Skipping Cython module bad.pyx: bad.pyx:2:15: Expected ')'"]
+        });
+        const logger = makeLogger();
+
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: {
+                    "my-sdk": {
+                        input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                        output: { path: "./docs" },
+                        lang: "python"
+                    }
+                },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                context: makeContext(logger),
+                local: true
+            })
+        ).resolves.toEqual({ successful: 1 });
+
+        expect(logger.warn).toHaveBeenCalledWith(
+            "Library 'my-sdk': Skipping Cython module bad.pyx: bad.pyx:2:15: Expected ')'"
+        );
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(expect.objectContaining({ ir: mockPythonIr }));
+    });
+
+    it("remote mode: surfaces parser warnings from the downloaded result", async () => {
+        const { mockFn } = makeMockFetch({
+            startResponse: { body: { jobId: "job-warn" } },
+            statusResponses: [{ body: makeStatus("COMPLETED") }],
+            irResponse: { ir: mockPythonIr, warnings: ["Skipping Cython module bad.pyx: syntax error"] }
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+        const logger = makeLogger();
+
+        const promise = runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: { git: "https://github.com/acme/sdk" },
+                    output: { path: "./docs" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context: makeContext(logger)
+        });
+        await vi.runAllTimersAsync();
+        await expect(promise).resolves.toEqual({ successful: 1 });
+
+        expect(logger.warn).toHaveBeenCalledWith("Library 'my-sdk': Skipping Cython module bad.pyx: syntax error");
+    });
+
+    it("remote mode: forwards include-undocumented-macros for cpp libraries", async () => {
+        const { mockFn, startCalls } = makeMockFetch({
+            startResponse: { body: { jobId: "job-macros" } },
+            statusResponses: [{ body: makeStatus("COMPLETED") }],
+            irResponse: { ir: mockCppIr }
+        });
+        globalThis.fetch = mockFn as unknown as typeof fetch;
+
+        const promise = runLibraryDocsGeneration({
+            libraries: { "c-api": { ...cppConfig(), config: { includeUndocumentedMacros: true } } },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            tokenValue: "tok",
+            context: makeContext()
+        });
+        await vi.advanceTimersByTimeAsync(3000);
+        await promise;
+
+        expect((startCalls[0] as { config: unknown }).config).toEqual(
+            expect.objectContaining({ includeUndocumentedMacros: true })
+        );
+    });
+
+    it("rejects include-undocumented-macros for non-cpp libraries", async () => {
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: { "my-sdk": { ...pythonConfig(), config: { includeUndocumentedMacros: true } } },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                tokenValue: "tok",
+                context: makeContext()
+            })
+        ).rejects.toThrow("'include-undocumented-macros' config is only valid for lang: cpp");
+    });
+
+    it("local mode: forwards include-undocumented-macros to the local parser", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockCppIr });
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "c-api": {
+                    input: { path: "./src" },
+                    output: { path: "./docs" },
+                    lang: "cpp",
+                    config: { includeUndocumentedMacros: true }
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true
+        });
+
+        expect(LocalParserRunner.runLocalParser).toHaveBeenCalledWith(
+            expect.objectContaining({
+                language: "CPP",
+                config: expect.objectContaining({ includeUndocumentedMacros: true })
             })
         );
     });

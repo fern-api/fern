@@ -35,6 +35,8 @@ type Config struct {
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
 	AllowUserAgentAppInfo          bool
+	UserAgentOnly                  bool
+	LegacyNullableAliasPointers    bool
 	Organization                   string
 	Version                        string
 	IRFilepath                     string
@@ -65,6 +67,9 @@ type userAgentConfig struct {
 	// allowUserAgentAppInfo emits the opt-in appInfo client option whose product
 	// token is appended to whatever User-Agent the SDK would otherwise send.
 	allowUserAgentAppInfo bool
+	// userAgentOnly emits only the User-Agent platform header, dropping the
+	// X-Fern-Language, X-Fern-SDK-Name, and X-Fern-SDK-Version headers.
+	userAgentOnly bool
 }
 
 // emitsAppInfo reports whether the opt-in User-Agent appInfo feature should emit
@@ -110,6 +115,8 @@ func NewConfig(
 	omitFernHeaders bool,
 	includePlatformHeaders bool,
 	allowUserAgentAppInfo bool,
+	userAgentOnly bool,
+	legacyNullableAliasPointers bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -148,6 +155,8 @@ func NewConfig(
 		OmitFernHeaders:                omitFernHeaders,
 		IncludePlatformHeaders:         includePlatformHeaders,
 		AllowUserAgentAppInfo:          allowUserAgentAppInfo,
+		UserAgentOnly:                  userAgentOnly,
+		LegacyNullableAliasPointers:    legacyNullableAliasPointers,
 		Version:                        version,
 		IRFilepath:                     irFilepath,
 		SnippetFilepath:                snippetFilepath,

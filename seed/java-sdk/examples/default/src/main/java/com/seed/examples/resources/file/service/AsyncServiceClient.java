@@ -5,6 +5,7 @@ package com.seed.examples.resources.file.service;
 
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.RequestOptions;
+import com.seed.examples.core.SeedExamplesHttpResponse;
 import com.seed.examples.resources.file.service.requests.GetFileRequest;
 import com.seed.examples.resources.types.types.File;
 import java.util.concurrent.CompletableFuture;
@@ -30,13 +31,28 @@ public class AsyncServiceClient {
      * This endpoint returns a file by its name.
      */
     public CompletableFuture<File> getFile(String filename, GetFileRequest request) {
-        return this.rawClient.getFile(filename, request).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<File>> rawFuture = this.rawClient.getFile(filename, request);
+        CompletableFuture<File> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * This endpoint returns a file by its name.
      */
     public CompletableFuture<File> getFile(String filename, GetFileRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getFile(filename, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExamplesHttpResponse<File>> rawFuture =
+                this.rawClient.getFile(filename, request, requestOptions);
+        CompletableFuture<File> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

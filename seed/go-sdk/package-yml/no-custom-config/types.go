@@ -47,10 +47,12 @@ func (e *EchoRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EchoRequest) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

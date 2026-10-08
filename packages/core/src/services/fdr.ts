@@ -1,6 +1,8 @@
 import { FdrClient } from "@fern-api/fdr-sdk";
 import { FernRegistryClient } from "@fern-fern/fdr-test-sdk";
 
+import { getCodingAgentHeaders } from "../codingAgent.js";
+
 export function createFdrService({
     environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
     token,
@@ -14,7 +16,7 @@ export function createFdrService({
     return new FdrClient({
         environment: overrideEnvironment ?? environment,
         token: typeof token === "function" ? token() : token,
-        headers
+        headers: { ...getCodingAgentHeaders(), ...headers }
     });
 }
 

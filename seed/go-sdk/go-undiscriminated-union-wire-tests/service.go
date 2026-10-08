@@ -37,6 +37,22 @@ func (d *DocumentItem) UnmarshalJSON(data []byte) error {
 		d.String = valueString
 		return nil
 	}
+	if internal.MatchesObjectKeys(data, []string{"text"}, []string{"text"}) {
+		valueDocumentObject := new(DocumentObject)
+		if err := json.Unmarshal(data, &valueDocumentObject); err == nil {
+			d.typ = "DocumentObject"
+			d.DocumentObject = valueDocumentObject
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"text"}) {
+		valueDocumentObject := new(DocumentObject)
+		if err := json.Unmarshal(data, &valueDocumentObject); err == nil {
+			d.typ = "DocumentObject"
+			d.DocumentObject = valueDocumentObject
+			return nil
+		}
+	}
 	valueDocumentObject := new(DocumentObject)
 	if err := json.Unmarshal(data, &valueDocumentObject); err == nil {
 		d.typ = "DocumentObject"
@@ -100,10 +116,12 @@ func (d *DocumentObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DocumentObject) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetText sets the Text field and marks it as non-optional;
@@ -193,10 +211,12 @@ func (r *RerankRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RerankRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetDocuments sets the Documents field and marks it as non-optional;
@@ -284,10 +304,12 @@ func (r *RerankResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RerankResponse) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetResults sets the Results field and marks it as non-optional;

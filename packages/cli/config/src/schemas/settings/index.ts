@@ -5,6 +5,11 @@ export { ExampleGenerationSchema } from "./ExampleGenerationSchema.js";
 export { FormParameterEncodingSchema } from "./FormParameterEncodingSchema.js";
 export { MessageNamingVersionSchema } from "./MessageNamingVersionSchema.js";
 export { MultiServerStrategySchema } from "./MultiServerStrategySchema.js";
+export {
+    OpenApiErrorResponsesEnsureSchema,
+    OpenApiErrorResponsesHttpMethodSchema,
+    OpenApiErrorResponsesSchema
+} from "./OpenApiErrorResponsesSchema.js";
 export { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema.js";
 export { OpenApiFilterSchema } from "./OpenApiFilterSchema.js";
 export { OpenApiSettingsSchema } from "./OpenApiSettingsSchema.js";

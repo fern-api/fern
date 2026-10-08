@@ -7,6 +7,9 @@ export const BaseRustCustomConfigSchema = z.object({
     // Package Configuration
     // =========================================================================
     crateName: z.string().optional(),
+    // Keep hyphens from crateName in the Cargo.toml package name (e.g. "my-sdk" instead of "my_sdk").
+    // Rust paths such as `use my_sdk::prelude::*` still use the underscored name.
+    preserveCrateNameHyphens: z.boolean().optional().default(false),
     crateVersion: z.string().optional(),
     clientClassName: z.string().optional(),
     environmentEnumName: z.string().optional(),

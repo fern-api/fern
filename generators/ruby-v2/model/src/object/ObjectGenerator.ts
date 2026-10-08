@@ -35,13 +35,14 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             ...(this.objectDeclaration.properties ?? [])
         ];
 
+        const xml = this.typeDeclaration.encoding?.xml;
         const statements = generateFields({
             typeDeclaration: this.typeDeclaration,
             properties,
-            context: this.context
+            context: this.context,
+            documentFields: xml != null
         });
 
-        const xml = this.typeDeclaration.encoding?.xml;
         if (xml != null) {
             statements.push(
                 ...new XmlObjectGenerator(

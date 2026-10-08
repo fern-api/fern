@@ -7,6 +7,7 @@ import { buildSdkConfigIrFromSdkConfig } from "../postman/buildSdkConfigIrFromSd
 import { loadSdkConfig } from "../postman/loadSdkConfig.js";
 import { collectOnPremSourceSpecs } from "../postman/onPremSourceSpecs.js";
 import { resolveSdkConfigIr } from "../postman/resolveSdkConfigIr.js";
+import { serializeSdkConfigIrForGenerator } from "../postman/serializeSdkConfigIrForGenerator.js";
 import type { RawSpecsManifest } from "../rawSpecs.js";
 
 /**
@@ -32,7 +33,7 @@ output:
 docs:
   includeApiReference: true
 generation:
-  includeWatermark: true
+  buildAllModels: true
 targets:
   - language: typescript
     package:
@@ -167,8 +168,104 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         if (built.success) {
             expect(built.sdkConfigIr.target.sdkVersion).toBe("2.3.0");
             expect(built.sdkConfigIr.client.timeoutMs).toBe(30_000);
-            expect(built.sdkConfigIr.generation.includeWatermark).toBe(true);
+            expect(built.sdkConfigIr.generation.buildAllModels).toBe(true);
             expect(built.sdkConfigIr.docs.includeApiReference).toBe(true);
+        }
+    });
+
+    it("omits defaulted optional fields from the generator wire payload", async () => {
+        const built = build(await loadFixture());
+        expect(built.success).toBe(true);
+        if (built.success) {
+            const wire = JSON.parse(Buffer.from(serializeSdkConfigIrForGenerator(built.sdkConfigIr)).toString("utf8"));
+            expect(wire.generation).not.toHaveProperty("generateFullProject");
+        }
+    });
+
+    it("preserves active optional fields in the generator wire payload", async () => {
+        const built = build(await loadFixture());
+        expect(built.success).toBe(true);
+        if (built.success) {
+            const wire = JSON.parse(Buffer.from(serializeSdkConfigIrForGenerator(built.sdkConfigIr)).toString("utf8"));
+            expect(wire.generation).toHaveProperty("buildAllModels", true);
+        }
+    });
+
+    it("carries the expanded import and Python generation settings into SDK Config IR", async () => {
+        const sdkConfig = await loadFixture(`
+schemaVersion: sdk-config/v1
+sdkName: Sample SDK
+source:
+  apiImportSettings:
+    respectReadonlySchemas: true
+    discriminatedUnionV2: true
+    undiscriminatedUnionsWithLiterals: true
+    inlineAllOfSchemas: true
+    resolveSchemaCollisions: true
+    asyncApiMessageNaming: v2
+  specs:
+    - id: sample-api
+      type: openapi
+      path: ./openapi.yml
+targets:
+  - language: python
+    output:
+      delivery: files
+    generation:
+      followRedirectsByDefault: true
+      defaultBytesStreamChunkSize: 1024
+      recursionLimit: 10000
+      extras:
+        audio:
+          - audio-runtime
+`);
+        const built = build(sdkConfig, { language: "python", generatorName: "fernapi/fern-python-sdk" });
+
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.apiImportSettings).toEqual({
+                respectReadonlySchemas: true,
+                discriminatedUnionV2: true,
+                undiscriminatedUnionsWithLiterals: true,
+                inlineAllOfSchemas: true,
+                resolveSchemaCollisions: true,
+                asyncApiMessageNaming: "v2"
+            });
+            expect(built.sdkConfigIr.generation.language?.python).toMatchObject({
+                followRedirectsByDefault: true,
+                defaultBytesStreamChunkSize: 1024,
+                recursionLimit: 10_000,
+                extras: { audio: ["audio-runtime"] }
+            });
+        }
+    });
+
+    it("carries every resolved source and its import settings into SDK Config IR in manifest order", async () => {
+        const built = build(await loadFixture(), {
+            rawSpecsManifest: {
+                specs: [
+                    { type: "openapi", specPath: "/fern/specs/movies.yml" },
+                    {
+                        type: "asyncapi",
+                        specPath: "/fern/specs/events.yml",
+                        namespace: "events",
+                        apiImportSettings: { titleAsSchemaName: true }
+                    }
+                ]
+            }
+        });
+
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.source.specs).toEqual([
+                { specUrl: "/fern/specs/movies.yml", specType: "openapi" },
+                {
+                    specUrl: "/fern/specs/events.yml",
+                    specType: "asyncapi",
+                    namespace: "events",
+                    apiImportSettings: { titleAsSchemaName: true }
+                }
+            ]);
         }
     });
 
@@ -252,22 +349,33 @@ describe("collectOnPremSourceSpecs", () => {
         });
     });
 
-    // The adapter reads source.specs[0] and ignores the rest, so generating would quietly produce an
-    // SDK covering one spec.
-    it("refuses a workspace with more than one spec rather than covering only the first", () => {
+    it("preserves every supported source in manifest order", () => {
         const collected = collectOnPremSourceSpecs(
             {
                 specs: [
                     { type: "openapi", specPath: "/fern/specs/movies.yml" },
-                    { type: "openapi", specPath: "/fern/specs/users.yml" }
+                    {
+                        type: "asyncapi",
+                        specPath: "/fern/specs/events.yml",
+                        namespace: "events",
+                        apiImportSettings: { titleAsSchemaName: true }
+                    }
                 ]
             },
             context
         );
-        expect(collected.success).toBe(false);
-        if (!collected.success) {
-            expect(collected.message).toContain("movies.yml, /fern/specs/users.yml");
-        }
+        expect(collected).toEqual({
+            success: true,
+            specs: [
+                { specUrl: "/fern/specs/movies.yml", specType: "openapi" },
+                {
+                    specUrl: "/fern/specs/events.yml",
+                    specType: "asyncapi",
+                    namespace: "events",
+                    apiImportSettings: { titleAsSchemaName: true }
+                }
+            ]
+        });
     });
 
     it.each([
@@ -302,7 +410,7 @@ describe("resolveSdkConfigIr", () => {
             if (!resolved.success) {
                 expect(resolved.message).toContain("fernapi/fern-typescript-sdk@4.0.0");
                 expect(resolved.message).toContain("fern sdk migrate");
-                expect(resolved.message).toContain("generators.archived.yml");
+                expect(resolved.message).toContain("generators.legacy.yml");
             }
         });
     });

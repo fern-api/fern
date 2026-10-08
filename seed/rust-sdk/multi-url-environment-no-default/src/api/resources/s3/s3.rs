@@ -44,9 +44,7 @@ impl S3Client {
         let base_url = self
             .http_client
             .config()
-            .environment
-            .as_ref()
-            .map_or(self.http_client.base_url(), |env| env.s3_url());
+            .service_url(|environment| environment.s3_url());
         self.http_client
             .execute_request_with_base_url(
                 base_url,

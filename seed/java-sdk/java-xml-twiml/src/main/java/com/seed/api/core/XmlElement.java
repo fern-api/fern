@@ -13,8 +13,6 @@ import java.util.Optional;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * An arbitrary xml element that is not described by the API definition. Used to attach custom child elements to a
@@ -25,13 +23,13 @@ public final class XmlElement implements XmlSerializable {
     private final String name;
     private final Map<String, String> attributes;
     private final Optional<String> text;
-    private final List<XmlElement> children;
+    private final List<XmlNode> content;
 
     private XmlElement(Builder builder) {
         this.name = builder.name;
         this.attributes = Collections.unmodifiableMap(new LinkedHashMap<>(builder.attributes));
         this.text = builder.text;
-        this.children = Collections.unmodifiableList(new ArrayList<>(builder.children));
+        this.content = Collections.unmodifiableList(new ArrayList<>(builder.content));
     }
 
     public String getName() {
@@ -46,8 +44,18 @@ public final class XmlElement implements XmlSerializable {
         return text;
     }
 
+    /**
+     * The child elements, in document order (text segments and comments in {@link #getContent()} are left out).
+     */
     public List<XmlElement> getChildren() {
-        return children;
+        return XmlNode.elements(content, XmlElement.class);
+    }
+
+    /**
+     * The ordered mixed content: text segments after the leading text, comments and child elements.
+     */
+    public List<XmlNode> getContent() {
+        return content;
     }
 
     @Override
@@ -60,7 +68,7 @@ public final class XmlElement implements XmlSerializable {
         XmlWriter writer = new XmlWriter(name);
         writer.attributes(attributes);
         writer.text(text);
-        writer.children(children);
+        writer.content(content);
         return writer.toXml(xmlDeclaration);
     }
 
@@ -75,14 +83,8 @@ public final class XmlElement implements XmlSerializable {
             Attr attr = (Attr) attributes.item(i);
             builder.attribute(attr.getName(), attr.getValue());
         }
-        XmlReader.text(element).ifPresent(builder::text);
-        NodeList nodes = element.getChildNodes();
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                builder.child(fromXml((Element) node));
-            }
-        }
+        XmlReader.leadingText(element).ifPresent(builder::text);
+        builder.content.addAll(XmlReader.content(element, true, Collections.emptySet(), child -> null));
         return builder.build();
     }
 
@@ -98,12 +100,12 @@ public final class XmlElement implements XmlSerializable {
         return name.equals(that.name)
                 && attributes.equals(that.attributes)
                 && text.equals(that.text)
-                && children.equals(that.children);
+                && content.equals(that.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, attributes, text, children);
+        return Objects.hash(name, attributes, text, content);
     }
 
     @Override
@@ -119,7 +121,7 @@ public final class XmlElement implements XmlSerializable {
         private final String name;
         private final Map<String, String> attributes = new LinkedHashMap<>();
         private Optional<String> text = Optional.empty();
-        private final List<XmlElement> children = new ArrayList<>();
+        private final List<XmlNode> content = new ArrayList<>();
 
         private Builder(String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
@@ -141,12 +143,28 @@ public final class XmlElement implements XmlSerializable {
         }
 
         public Builder child(XmlElement child) {
-            this.children.add(child);
+            this.content.add(XmlNode.element(child));
             return this;
         }
 
         public Builder children(List<XmlElement> values) {
-            this.children.addAll(values);
+            values.forEach(this::child);
+            return this;
+        }
+
+        /**
+         * Appends a text segment after the children added so far.
+         */
+        public Builder addText(String value) {
+            this.content.add(XmlNode.text(value));
+            return this;
+        }
+
+        /**
+         * Appends an XML comment ({@code <!--text-->}) after the children added so far.
+         */
+        public Builder comment(String value) {
+            this.content.add(XmlNode.comment(value));
             return this;
         }
 

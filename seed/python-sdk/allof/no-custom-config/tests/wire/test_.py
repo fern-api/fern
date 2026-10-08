@@ -52,6 +52,8 @@ def test__create_plant() -> None:
         species="species",
         family="family",
         genus="genus",
+        common_name="commonName",
+        watering_frequency="daily",
         sun_exposure="full",
     )
     verify_request_count(test_id, "POST", "/plants", None, 1)
@@ -63,5 +65,7 @@ def test__create_tree() -> None:
     client = get_client(test_id)
     client.create_tree(
         id="id",
+        tree_name="treeName",
+        tree_species="treeSpecies",
     )
     verify_request_count(test_id, "POST", "/trees", None, 1)
