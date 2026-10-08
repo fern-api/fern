@@ -9,10 +9,11 @@ import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { Headers } from "./Headers";
-import { makeRequest } from "./makeRequest";
+import { clearResponseTimeout, makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { redactUrl, SENSITIVE_QUERY_PARAMS } from "./redactUrl";
 import { requestWithRetries } from "./requestWithRetries";
+import { TIMEOUT } from "./signals";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -234,10 +235,18 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         logger.debug("Making HTTP request", metadata);
     }
 
+    // Bodies that are read in full here stay covered by the timeout; streamed bodies are read by the caller.
+    const keepTimeoutUntilBodyRead =
+        args.responseType !== "streaming" && args.responseType !== "sse" && args.responseType !== "binary-response";
+    const attemptResponses: Response[] = [];
     try {
         const response = await requestWithRetries(
-            async () =>
-                makeRequest(
+            async () => {
+                // A retry means the previous attempt is over; stop its timer now rather than at the end.
+                for (const previousResponse of attemptResponses) {
+                    clearResponseTimeout(previousResponse);
+                }
+                const attemptResponse = await makeRequest(
                     fetchFn,
                     url,
                     args.method,
@@ -248,7 +257,11 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.withCredentials,
                     args.duplex,
                     args.responseType === "streaming" || args.responseType === "sse",
-                ),
+                    keepTimeoutUntilBodyRead,
+                );
+                attemptResponses.push(attemptResponse);
+                return attemptResponse;
+            },
             args.maxRetries,
             args.authRefresh != null && isReplayableBody(requestBody)
                 ? createAuthHeadersRefresher(args.authRefresh, headers)
@@ -313,7 +326,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 },
                 rawResponse: abortRawResponse,
             };
-        } else if (error instanceof Error && error.name === "AbortError") {
+        } else if (error === TIMEOUT || (error instanceof Error && error.name === "AbortError")) {
             if (logger.isError()) {
                 const metadata = {
                     method: args.method,
@@ -367,6 +380,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             },
             rawResponse: unknownRawResponse,
         };
+    } finally {
+        for (const attemptResponse of attemptResponses) {
+            clearResponseTimeout(attemptResponse);
+        }
     }
 }
 
