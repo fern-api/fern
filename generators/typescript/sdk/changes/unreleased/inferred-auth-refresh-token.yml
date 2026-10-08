@@ -15,3 +15,9 @@
     `refresh_token`, the provider uses it for the next refresh and calls the optional `onRefreshTokenRotated`
     auth option with it so it can be persisted.
   type: feat
+- summary: |
+    Wire tests for inferred auth with `type: refresh-token` now mock the token request with the fixed
+    `grant_type` and only the parameters the provider sends. When that scheme is an alternative to another
+    scheme on the same token endpoint, the tests mock only the first scheme, so the two handlers no longer
+    shadow each other.
+  type: fix
