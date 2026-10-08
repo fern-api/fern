@@ -13,8 +13,14 @@ import fs from "fs-extra";
 import path from "path";
 
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
-import { createDefaultOpenAPIWorkspace, createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace.js";
+import {
+    createDefaultOpenAPIWorkspace,
+    createFernWorkspace,
+    createOpenAPIWorkspace,
+    getOpenAPIFileName
+} from "./createWorkspace.js";
 import { initializeDocs } from "./initializeDocs.js";
+import { repointRelocatedSpecs } from "./repointRelocatedSpecs.js";
 
 export async function initializeAPI({
     organization,
@@ -86,17 +92,31 @@ export async function initializeAPI({
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     }
 
-    // The docs cannot read an SDK Config API, so unless only the API was asked for, give them its spec too.
-    if (useSdkConfig && includeDocs) {
-        await initializeDocs({
-            organization,
-            versionOfCli,
-            taskContext: context,
-            useSdkConfig,
-            openApi:
-                openApiUrl ?? relocatedOpenApiPath ?? join(directoryOfWorkspace, RelativeFilePath.of("openapi.yml"))
-        });
+    // The docs cannot read an SDK Config API, so they are given its spec instead.
+    if (useSdkConfig) {
+        await repointRelocatedSpecs({ absolutePathToFernDirectory });
+        if (includeDocs) {
+            await initializeDocs({
+                organization,
+                versionOfCli,
+                taskContext: context,
+                useSdkConfig,
+                openApi: openApiUrl ?? getSpecPathOfNewApi({ directoryOfWorkspace, relocatedOpenApiPath })
+            });
+        }
     }
+}
+
+/** Where `createOpenAPIWorkspace` and `createDefaultOpenAPIWorkspace` wrote the spec of the new API. */
+function getSpecPathOfNewApi({
+    directoryOfWorkspace,
+    relocatedOpenApiPath
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    relocatedOpenApiPath: AbsoluteFilePath | undefined;
+}): AbsoluteFilePath {
+    const fileName = relocatedOpenApiPath != null ? getOpenAPIFileName(relocatedOpenApiPath) : "openapi.yml";
+    return join(directoryOfWorkspace, RelativeFilePath.of(fileName));
 }
 
 async function getDirectoryOfNewAPIWorkspace({

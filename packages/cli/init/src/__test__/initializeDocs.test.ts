@@ -150,6 +150,32 @@ describe("initializeDocs", () => {
         });
     });
 
+    it("references a spec that already lives in fern/ instead of copying it", async () => {
+        const fernDirectory = await createFernDirectory();
+        const specInFern = path.join(fernDirectory, "openapi.json");
+        await writeFile(specInFern, JSON.stringify(MINIMAL_OPENAPI));
+
+        await initialize(specInFern);
+
+        expect(await readDocsYml()).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.json" }] }]
+        });
+        expect(await existsInProject("fern", "openapi-1.json")).toBe(false);
+    });
+
+    it("does not list a spec twice when the docs already reference it", async () => {
+        const fernDirectory = await createFernDirectory();
+        const specInFern = path.join(fernDirectory, "openapi.json");
+        await writeFile(specInFern, JSON.stringify(MINIMAL_OPENAPI));
+        await initialize(specInFern);
+
+        await initialize(specInFern);
+
+        expect(await readDocsYml()).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.json" }] }]
+        });
+    });
+
     it("keeps the welcome page and no api entry when no spec is given", async () => {
         await initialize();
 

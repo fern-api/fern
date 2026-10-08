@@ -294,7 +294,7 @@ describe("fern init", () => {
         expect(docsYml).toMatchObject({
             navigation: [
                 { page: "Welcome", path: "pages/welcome.mdx" },
-                { api: "API Reference", specs: [{ type: "openapi", path: "./openapi-1.yml" }] }
+                { api: "API Reference", specs: [{ type: "openapi", path: "./openapi.yml" }] }
             ]
         });
         await expectApiReferenceInDocs({ pathOfDirectory, signal, expect });
@@ -337,7 +337,7 @@ describe("fern init", () => {
 
         const docsYml = yaml.load(await readFile(join(pathOfDirectory, RelativeFilePath.of("fern/docs.yml")), "utf8"));
         expect(docsYml).toMatchObject({
-            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi-1.yml" }] }]
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.yml" }] }]
         });
         await expectApiReferenceInDocs({ pathOfDirectory, signal, expect });
     }, 180_000);
@@ -414,7 +414,7 @@ describe("fern init", () => {
         // The second init moves the first API into apis/, so the docs must not point at its old location.
         const docsYml = await readFile(join(fernDirectory, RelativeFilePath.of("docs.yml")), "utf8");
         const specPaths = [...docsYml.matchAll(/^\s+path: (\.\/\S+)$/gm)].flatMap((match) => match[1] ?? []);
-        expect(specPaths).toHaveLength(2);
+        expect(specPaths).toEqual(["./apis/api/openapi.yml", "./apis/api1/openapi.yml"]);
         for (const specPath of specPaths) {
             expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of(specPath)))).toBe(true);
         }
@@ -473,14 +473,14 @@ describe("fern init", () => {
         expect(yaml.load(await readInFern("sdk-config.yml"))).toMatchObject({
             source: { specs: [{ path: "./openapi.yml" }] }
         });
-        // `init --openapi` already initialized the docs, so this adds a second spec to the same api entry.
+        // `init --openapi` already pointed the docs at the SDK API's spec, so this adds a copy as a second spec.
         expect(yaml.load(await readInFern("docs.yml"))).toMatchObject({
             navigation: [
                 {
                     api: "API Reference",
                     specs: [
-                        { type: "openapi", path: "./openapi-1.yml" },
-                        { type: "openapi", path: "./openapi-2.yml" }
+                        { type: "openapi", path: "./openapi.yml" },
+                        { type: "openapi", path: "./openapi-1.yml" }
                     ]
                 }
             ]
