@@ -190,27 +190,31 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         args.responseType !== "streaming" && args.responseType !== "sse" && args.responseType !== "binary-response";
     const attemptResponses: Response[] = [];
     try {
-        const response = await requestWithRetries(async () => {
-            // A retry means the previous attempt is over; stop its timer now rather than at the end.
-            for (const previousResponse of attemptResponses) {
-                clearResponseTimeout(previousResponse);
-            }
-            const attemptResponse = await makeRequest(
-                fetchFn,
-                url,
-                args.method,
-                headers,
-                requestBody,
-                args.timeoutMs,
-                args.abortSignal,
-                args.withCredentials,
-                args.duplex,
-                args.responseType === "streaming" || args.responseType === "sse",
-                keepTimeoutUntilBodyRead,
-            );
-            attemptResponses.push(attemptResponse);
-            return attemptResponse;
-        }, args.maxRetries, args.abortSignal);
+        const response = await requestWithRetries(
+            async () => {
+                // A retry means the previous attempt is over; stop its timer now rather than at the end.
+                for (const previousResponse of attemptResponses) {
+                    clearResponseTimeout(previousResponse);
+                }
+                const attemptResponse = await makeRequest(
+                    fetchFn,
+                    url,
+                    args.method,
+                    headers,
+                    requestBody,
+                    args.timeoutMs,
+                    args.abortSignal,
+                    args.withCredentials,
+                    args.duplex,
+                    args.responseType === "streaming" || args.responseType === "sse",
+                    keepTimeoutUntilBodyRead,
+                );
+                attemptResponses.push(attemptResponse);
+                return attemptResponse;
+            },
+            args.maxRetries,
+            args.abortSignal,
+        );
 
         if (response.status >= 200 && response.status < 400) {
             if (logger.isDebug()) {
