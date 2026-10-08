@@ -3162,7 +3162,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         }
                     }
                     this.configureAuthMethod
-                            .beginControlFlow("if (" + oauthCondition + ")")
+                            .beginControlFlow("if ($L)", oauthCondition)
                             .addComment("OAuth requires building an auth client for token fetching")
                             .addStatement(
                                     "$T.Builder oauthClientOptionsBuilder = $T.builder().environment(this.$L)",
@@ -3202,7 +3202,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             ? info.inferredConstructorArgs
                             : "this." + info.fieldName + ", this." + info.secondaryFieldName + ", inferredAuthClient";
                     this.configureAuthMethod
-                            .beginControlFlow("if (" + inferredCondition + ")")
+                            .beginControlFlow("if ($L)", inferredCondition)
                             .addComment("InferredAuth requires building an auth client for token fetching")
                             .addStatement(
                                     "$T.Builder inferredClientOptionsBuilder = $T.builder().environment(this.$L)",
@@ -3214,9 +3214,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     authClientClassName,
                                     authClientClassName)
                             .addStatement(
-                                    "$T inferredTokenSupplier = new $T(" + inferredConstructorArgs + ")",
+                                    "$T inferredTokenSupplier = new $T($L)",
                                     inferredAuthTokenSupplierClassName,
-                                    inferredAuthTokenSupplierClassName)
+                                    inferredAuthTokenSupplierClassName,
+                                    inferredConstructorArgs)
                             .addStatement(
                                     "routingBuilder.addAuthProvider($S, new $T(inferredTokenSupplier), $S)",
                                     info.schemeKey,

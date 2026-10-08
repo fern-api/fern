@@ -76,6 +76,8 @@ final class InferredAuthGrantTypes {
         if (isGrantTypeProperty(scheme, wireValue)) {
             return false;
         }
+        // Refresh grant (RFC 6749 §6): optional params outside this allowlist (e.g. authorization_code
+        // params on a shared token request) are intentionally excluded; required params are always kept.
         if (isRefreshTokenGrant(scheme) && isOptional) {
             return REFRESH_TOKEN_GRANT_PROPERTIES.contains(normalize(wireValue));
         }

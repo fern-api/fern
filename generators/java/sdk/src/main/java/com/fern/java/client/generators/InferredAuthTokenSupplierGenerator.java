@@ -63,6 +63,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String CACHED_HEADERS_FIELD_NAME = "cachedHeaders";
     private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
     private static final String ROTATED_REFRESH_TOKEN_FIELD_NAME = "rotatedRefreshToken";
+    private static final String CURRENT_REFRESH_TOKEN_VARIABLE_NAME = "currentRefreshToken";
     private static final String ON_REFRESH_TOKEN_ROTATED_FIELD_NAME = "onRefreshTokenRotated";
 
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
@@ -499,12 +500,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
             if (fixedGrantTypeProperty.isPresent() && prop == fixedGrantTypeProperty.get()) {
                 requestBuilderCode.add(".$L($S)", prop.builderMethodName(), fixedGrantTypeValue);
             } else if (rotatedRefreshTokenProperty.isPresent() && prop == rotatedRefreshTokenProperty.get()) {
-                requestBuilderCode.add(
-                        ".$L($L != null ? $L : $L)",
-                        prop.builderMethodName(),
-                        ROTATED_REFRESH_TOKEN_FIELD_NAME,
-                        ROTATED_REFRESH_TOKEN_FIELD_NAME,
-                        prop.fieldName());
+                requestBuilderCode.add(".$L($L)", prop.builderMethodName(), CURRENT_REFRESH_TOKEN_VARIABLE_NAME);
             } else {
                 requestBuilderCode.add(".$L($L)", prop.builderMethodName(), prop.fieldName());
             }
@@ -512,9 +508,17 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         requestBuilderCode.add(".build()");
 
-        return MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
+        MethodSpec.Builder fetchTokenMethod = MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
                 .addModifiers(Modifier.PRIVATE)
-                .returns(fetchTokenReturnType)
+                .returns(fetchTokenReturnType);
+        rotatedRefreshTokenProperty.ifPresent(prop -> fetchTokenMethod.addStatement(
+                "$T $L = $L != null ? $L : $L",
+                String.class,
+                CURRENT_REFRESH_TOKEN_VARIABLE_NAME,
+                ROTATED_REFRESH_TOKEN_FIELD_NAME,
+                ROTATED_REFRESH_TOKEN_FIELD_NAME,
+                prop.fieldName()));
+        return fetchTokenMethod
                 .addStatement(requestBuilderCode.build())
                 .addStatement(
                         "return $L.$L($L)",
