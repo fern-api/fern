@@ -163,7 +163,7 @@ jobs:
           for DIST in prod dev; do
             echo "Packing $DIST CLI artifact into tarball..."
             (cd "cli-dist/$DIST" && npm pack)
-            TARBALL=$(ls cli-dist/$DIST/*.tgz)
+            TARBALL=$(ls -t cli-dist/$DIST/*.tgz | head -n1)
             echo "Installing globally from $TARBALL (simulating npm install -g fern-api)..."
             npm install -g "$TARBALL"
           done
@@ -186,7 +186,7 @@ jobs:
         run: |
           cd docs-preview-smoke-test/playwright && npm install && npx playwright install chromium
 
-      - name: Run smoke tests: next (with server restart on crash)
+      - name: Run smoke tests (next, with server restart on crash)
         if: steps.node-check.outputs.available == 'true'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         env:
@@ -211,7 +211,7 @@ jobs:
           path: docs-preview-smoke-test/playwright/playwright-report/
           retention-days: 7
 
-      - name: Run smoke tests: astro (with server restart on crash)
+      - name: Run smoke tests (astro, with server restart on crash)
         if: steps.node-check.outputs.available == 'true'
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         env:

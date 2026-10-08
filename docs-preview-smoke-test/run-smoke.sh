@@ -2,6 +2,9 @@
 # Starts `fern docs dev` ($FERN_BIN $FERN_DOCS_DEV_ARGS), waits for it, runs the Playwright smoke suite.
 set -euo pipefail
 
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$REPO_ROOT"
+
 # Kill any leftover server from a previous attempt
 if [ -f /tmp/fern-server.pid ]; then
   OLD_PID=$(cat /tmp/fern-server.pid)
@@ -14,7 +17,13 @@ if [ -f /tmp/fern-server.pid ]; then
 fi
 # Wait for port 3000 to be released by the previous renderer's server
 for w in $(seq 1 30); do
-  curl -s -o /dev/null --max-time 2 http://localhost:3000/ 2>/dev/null || break
+  if ! curl -s -o /dev/null --max-time 2 http://localhost:3000/ 2>/dev/null; then
+    break
+  fi
+  if [ "$w" -eq 30 ]; then
+    echo "Port 3000 still in use after 30s; previous server did not exit"
+    exit 1
+  fi
   sleep 1
 done
 
@@ -25,7 +34,9 @@ rm -f "$LOG_FILE"
 cd docs-preview-smoke-test/fern
 "$FERN_BIN" docs dev $FERN_DOCS_DEV_ARGS > "$LOG_FILE" 2>&1 &
 FERN_PID=$!
-cd "$GITHUB_WORKSPACE"
+cd "$REPO_ROOT"
+# Always stop the server so the next renderer run (or the retry) gets a free port
+trap 'kill "$FERN_PID" 2>/dev/null || true; rm -f /tmp/fern-server.pid' EXIT
 
 # Wait for the server to be ready
 for i in $(seq 1 180); do
