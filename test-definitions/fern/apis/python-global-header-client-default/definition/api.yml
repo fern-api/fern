@@ -1,0 +1,18 @@
+name: python-global-header-client-default
+auth: Secret
+auth-schemes:
+  Secret:
+    header: X-Secret
+    name: secret
+    type: string
+    env: MY_SECRET
+headers:
+  X-Client-Id:
+    name: clientId
+    type: optional<string>
+    env: MY_CLIENT_ID
+  X-API-Version:
+    name: version
+    type: optional<string>
+    env: MY_API_VERSION
+    client-default: "2024-01-01"
