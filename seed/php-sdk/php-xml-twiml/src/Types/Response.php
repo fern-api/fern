@@ -85,7 +85,7 @@ class Response extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, []));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['Say', 'Dial', 'Pause', 'Hangup', 'Redirect']));
-        $result->setContent(XmlUtils::content($element, [[['Say', 'Dial', 'Pause', 'Hangup', 'Redirect'], $result->children ?? []]], $result->getAdditionalChildren()));
+        $result->setContent(XmlUtils::content($element, [[['Say', 'Dial', 'Pause', 'Hangup', 'Redirect'], $result->children ?? []]], $result->getAdditionalChildren(), [], true));
         return $result;
     }
 
