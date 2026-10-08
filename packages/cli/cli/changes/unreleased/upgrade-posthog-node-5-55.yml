@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Upgrade `posthog-node` from 5.35.1 to 5.55.0.
+    Upgrade `posthog-node` from 5.35.1 to 5.55.0. PostHog clients are created with `isServer: false` so
+    CLI events keep their existing shape and are not tagged `$is_server: true` by the newer SDK.
   type: chore
