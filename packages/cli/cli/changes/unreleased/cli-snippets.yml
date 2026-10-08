@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    API-reference endpoint pages can now show a CLI command tab alongside the SDK and cURL tabs. Set a
+    `cli-snippets` block on an API reference in `docs.yml` (a `catalog` path, plus an optional
+    `namespaces` map) and CLI command snippets are injected from the committed catalog at
+    docs-publish time. Defaults off; unknown languages still render gracefully.
+  type: feat
