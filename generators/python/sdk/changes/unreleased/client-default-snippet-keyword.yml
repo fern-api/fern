@@ -4,5 +4,5 @@
     Client examples now pass a header or root path parameter that has a `client-default` as a keyword argument
     (`client = Plaid(client_id="YOUR_CLIENT_ID", version="2020-09-14", secret="YOUR_SECRET")`). Before, the
     default was written as a bare positional value after keyword arguments (`client = Plaid(client_id="...",
-    "2020-09-14", ...)`), which is a Python `SyntaxError`, in every docstring, README and reference.md example.
+    "2020-09-14", ...)`), which is a Python `SyntaxError`, in client docstrings and `snippet.json`. README and reference.md already used keyword arguments.
   type: fix
