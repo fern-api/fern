@@ -74,13 +74,18 @@ export interface CppGenerateResult {
     pageCount: number;
 }
 
+/**
+ * Leading underscores are dropped because folder-based navigation skips files and
+ * directories whose names start with `_`; the URL slug is unchanged either way.
+ */
 function sanitizeForFilename(name: string): string {
     for (const [symbol, safeName] of OPERATOR_SYMBOL_MAP) {
         if (name === symbol) {
             return safeName;
         }
     }
-    return name.replace(/[^a-zA-Z0-9_-]/g, "_");
+    const sanitized = name.replace(/[^a-zA-Z0-9_-]/g, "_");
+    return sanitized.replace(/^_+/, "") || "underscore";
 }
 
 /** Intermediate collected compound before page-key assignment. */

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    C/C++ library docs: generated page and group filenames no longer start with `_`
+    (e.g. `__be16` is written to `typedefs/be16.mdx`), so `folder:` navigation includes them.
+    URLs are unchanged. `fern check` now warns when only some generated library folders
+    (e.g. `macros/`) are wired into navigation.
+  type: fix

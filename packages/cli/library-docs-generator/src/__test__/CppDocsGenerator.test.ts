@@ -529,12 +529,29 @@ describe("generateCpp()", () => {
 
         const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
         expect(relativePaths).toContain("macros/ALWAYS_INLINE.mdx");
-        expect(relativePaths).toContain("macros/__always_inline-2.mdx");
+        expect(relativePaths).toContain("macros/always_inline-2.mdx");
         expect(relativePaths).not.toContain("macros/__always_inline.mdx");
 
         const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
         expect(macroIndex).toContain("- [`ALWAYS_INLINE`](macros/alwaysinline)");
         expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
+    });
+
+    it("drops leading underscores from page and group filenames so folder navigation includes them", () => {
+        const be16 = makeMacro({ name: "__be16", path: "__be16" });
+        const ir = makeIr(makeNamespace({ macros: [be16] }), { packageName: "lib" }, [
+            makeGroup({ id: "group____internal", name: "__internal", title: "Internal", macros: [be16] })
+        ]);
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/be16.mdx");
+        expect(relativePaths.some((f) => f.startsWith("groups/internal/"))).toBe(true);
+        expect(relativePaths.some((f) => f.split("/").some((seg) => seg.startsWith("_")))).toBe(false);
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`__be16`](macros/be16)");
     });
 
     it("gives slug-equivalent group names distinct folders and URLs", () => {
