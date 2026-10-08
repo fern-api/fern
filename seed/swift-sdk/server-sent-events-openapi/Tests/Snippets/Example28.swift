@@ -5,8 +5,12 @@ enum Example28 {
     static func snippet() async throws {
         let client = ApiClient(baseURL: "https://api.fern.com")
 
-        _ = try await client.validateUnionRequest(request: UnionStreamRequestBase(
-            prompt: "prompt"
+        _ = try await client.streamXFernStreamingUnion(request: StreamXFernStreamingUnionRequest.message(
+            UnionStreamMessageVariant(
+                streamResponse: false,
+                prompt: "prompt",
+                message: "message"
+            )
         ))
     }
 }

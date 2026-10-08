@@ -128,7 +128,7 @@ function makePassthroughRequest(input, init, clientOptions, requestOptions) {
             response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
                 return (0, makeRequest_js_1.makeRequest)(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.credentials) === "include", undefined, // duplex
                 false);
-            }), maxRetries);
+            }), maxRetries, abortSignal);
         }
         catch (error) {
             // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.
