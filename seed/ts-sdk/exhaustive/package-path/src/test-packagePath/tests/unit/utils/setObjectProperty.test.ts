@@ -99,4 +99,14 @@ describe("setObjectProperty does not modify its input", () => {
         expect(result).toEqual({ id: "x", options: { offset: 2 } });
         expect(original).toEqual({ id: "x" });
     });
+
+    test("array along the path stays an array", () => {
+        const items = [{ name: "a" }];
+        const original = { items };
+        const result = setObjectProperty(original, "items.0", { name: "b" });
+        expect(Array.isArray(result.items)).toBe(true);
+        expect(result.items).toEqual([{ name: "b" }]);
+        expect(original.items).toBe(items);
+        expect(items).toEqual([{ name: "a" }]);
+    });
 });

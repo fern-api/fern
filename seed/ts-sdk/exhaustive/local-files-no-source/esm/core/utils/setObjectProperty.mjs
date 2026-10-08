@@ -27,7 +27,12 @@ export function setObjectProperty(object, path, value) {
             continue;
         }
         const next = current[key];
-        current[key] = next != null && typeof next === "object" ? Object.assign({}, next) : {};
+        if (Array.isArray(next)) {
+            current[key] = [...next];
+        }
+        else {
+            current[key] = next != null && typeof next === "object" ? Object.assign({}, next) : {};
+        }
         current = current[key];
     }
     const lastKey = keys[keys.length - 1];

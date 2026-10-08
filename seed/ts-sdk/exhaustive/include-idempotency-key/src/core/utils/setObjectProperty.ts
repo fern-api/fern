@@ -29,7 +29,11 @@ export function setObjectProperty<T extends object>(object: T, path: string, val
             continue;
         }
         const next = current[key];
-        current[key] = next != null && typeof next === "object" ? { ...next } : {};
+        if (Array.isArray(next)) {
+            current[key] = [...next];
+        } else {
+            current[key] = next != null && typeof next === "object" ? { ...next } : {};
+        }
         current = current[key] as Record<string, any>;
     }
 
