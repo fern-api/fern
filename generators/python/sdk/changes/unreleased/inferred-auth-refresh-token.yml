@@ -22,3 +22,8 @@
     token provider leaves unset optional token request parameters out of the get-token request instead of
     sending them as `null` (JSON) or empty values (form-encoded).
   type: feat
+- summary: |
+    Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+    `refresh_token`, the provider uses it for the next refresh, and the client calls the optional
+    `on_refresh_token_rotated` callback with it so it can be persisted.
+  type: feat

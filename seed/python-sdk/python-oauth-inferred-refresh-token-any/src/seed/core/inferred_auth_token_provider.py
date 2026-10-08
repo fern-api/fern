@@ -21,12 +21,14 @@ class InferredAuthTokenProvider:
         client_secret: typing.Optional[str] = None,
         refresh_token: typing.Optional[str] = None,
         scope: typing.Optional[str] = None,
+        on_refresh_token_rotated: typing.Optional[typing.Callable[[str], None]] = None,
         client_wrapper: SyncClientWrapper,
     ):
         self._client_id = client_id
         self._client_secret = client_secret
         self._refresh_token = refresh_token
         self._scope = scope
+        self._on_refresh_token_rotated = on_refresh_token_rotated
         self._cached_headers: typing.Optional[typing.Dict[str, str]] = None
         self._expires_at: dt.datetime = dt.datetime.now()
         self._auth_client = AuthClient(client_wrapper=client_wrapper)
@@ -51,6 +53,10 @@ class InferredAuthTokenProvider:
         headers: typing.Dict[str, str] = {}
         headers["Authorization"] = f"Bearer {token_response.access_token}"
         self._cached_headers = headers
+        if token_response.refresh_token is not None:
+            self._refresh_token = token_response.refresh_token
+            if self._on_refresh_token_rotated is not None:
+                self._on_refresh_token_rotated(token_response.refresh_token)
         self._expires_at = self._get_expires_at(
             expires_in_seconds=token_response.expires_in, buffer_in_minutes=self.BUFFER_IN_MINUTES
         )
@@ -70,12 +76,14 @@ class AsyncInferredAuthTokenProvider:
         client_secret: typing.Optional[str] = None,
         refresh_token: typing.Optional[str] = None,
         scope: typing.Optional[str] = None,
+        on_refresh_token_rotated: typing.Optional[typing.Callable[[str], None]] = None,
         client_wrapper: AsyncClientWrapper,
     ):
         self._client_id = client_id
         self._client_secret = client_secret
         self._refresh_token = refresh_token
         self._scope = scope
+        self._on_refresh_token_rotated = on_refresh_token_rotated
         self._cached_headers: typing.Optional[typing.Dict[str, str]] = None
         self._expires_at: dt.datetime = dt.datetime.now()
         self._auth_client = AsyncAuthClient(client_wrapper=client_wrapper)
@@ -100,6 +108,10 @@ class AsyncInferredAuthTokenProvider:
         headers: typing.Dict[str, str] = {}
         headers["Authorization"] = f"Bearer {token_response.access_token}"
         self._cached_headers = headers
+        if token_response.refresh_token is not None:
+            self._refresh_token = token_response.refresh_token
+            if self._on_refresh_token_rotated is not None:
+                self._on_refresh_token_rotated(token_response.refresh_token)
         self._expires_at = self._get_expires_at(
             expires_in_seconds=token_response.expires_in, buffer_in_minutes=self.BUFFER_IN_MINUTES
         )

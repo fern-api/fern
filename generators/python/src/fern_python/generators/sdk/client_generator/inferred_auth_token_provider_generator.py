@@ -17,6 +17,8 @@ _REFRESH_TOKEN_GRANT_TYPE = "refresh_token"
 # Request parameters of the OAuth 2.0 refresh token grant (RFC 6749 section 6), plus client authentication.
 _REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES = frozenset({"refresh_token", "scope", "client_id", "client_secret"})
 
+ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME = "on_refresh_token_rotated"
+
 
 @dataclass
 class CredentialProperty:
@@ -133,6 +135,16 @@ class InferredAuthTokenProviderGenerator:
                         initializer=AST.Expression("None") if prop.is_optional else None,
                     )
                 )
+
+        if self.rotates_refresh_token():
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                    private_member_name=f"_{ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME}",
+                    type_hint=get_rotated_refresh_token_callback_type_hint(),
+                    initializer=AST.Expression("None"),
+                )
+            )
 
         parameters.append(
             ConstructorParameter(
@@ -413,6 +425,10 @@ class InferredAuthTokenProviderGenerator:
 
             writer.write_line(f"self.{self._get_cached_headers_member_name()} = headers")
 
+            rotated_refresh_token_property = self._get_rotated_refresh_token_response_property()
+            if rotated_refresh_token_property is not None:
+                self._write_refresh_token_rotation(writer, rotated_refresh_token_property)
+
             if has_expiry:
                 expiry_property = token_endpoint.expiry_property
                 if expiry_property is not None:
@@ -488,6 +504,50 @@ class InferredAuthTokenProviderGenerator:
             ),
             kwargs=kwargs,
         )
+
+    def rotates_refresh_token(self) -> bool:
+        return self._get_rotated_refresh_token_response_property() is not None
+
+    def _get_rotated_refresh_token_response_property(self) -> Optional[ir_types.ObjectProperty]:
+        """With `type: refresh-token`, servers that rotate refresh tokens invalidate the presented token and
+        return a new `refresh_token` in the token response, which must be used for the next refresh."""
+        token_endpoint = self._inferred_auth_scheme.token_endpoint
+        grant_type = token_endpoint.grant_type
+        if grant_type is None or grant_type.value != _REFRESH_TOKEN_GRANT_TYPE:
+            return None
+        http_endpoint = self._get_endpoint_for_reference(token_endpoint.endpoint)
+        if not any(
+            prop.field_name == _REFRESH_TOKEN_GRANT_TYPE and not prop.is_literal and not prop.is_header
+            for prop in self._collect_credential_properties(http_endpoint)
+        ):
+            return None
+        if http_endpoint.response is None or http_endpoint.response.body is None:
+            return None
+        body = http_endpoint.response.body.get_as_union()
+        if body.type != "json":
+            return None
+        json_response = body.value.get_as_union()
+        if json_response.type != "response":
+            return None
+        type_id = self._get_type_id_from_type_reference(json_response.response_body_type)
+        if type_id is None:
+            return None
+        for prop in self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id):
+            if get_wire_value(prop.name) == _REFRESH_TOKEN_GRANT_TYPE:
+                return prop
+        return None
+
+    def _write_refresh_token_rotation(self, writer: AST.NodeWriter, response_property: ir_types.ObjectProperty) -> None:
+        accessor = (
+            f"token_response.{resolve_name(get_name_from_wire_value(response_property.name)).snake_case.safe_name}"
+        )
+        callback = f"self._{ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME}"
+        writer.write_line(f"if {accessor} is not None:")
+        with writer.indent():
+            writer.write_line(f"self._{_REFRESH_TOKEN_GRANT_TYPE} = {accessor}")
+            writer.write_line(f"if {callback} is not None:")
+            with writer.indent():
+                writer.write_line(f"{callback}({accessor})")
 
     def _omits_unset_params(self) -> bool:
         return self._context.custom_config.omit_unset_inferred_auth_params
@@ -739,3 +799,7 @@ class InferredAuthTokenProviderGenerator:
         endpoint_reference = token_endpoint.endpoint
         http_endpoint = self._get_endpoint_for_reference(endpoint_reference)
         return self._collect_credential_properties(http_endpoint)
+
+
+def get_rotated_refresh_token_callback_type_hint() -> AST.TypeHint:
+    return AST.TypeHint.optional(AST.TypeHint.callable([AST.TypeHint.str_()], AST.TypeHint.none()))

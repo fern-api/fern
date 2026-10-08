@@ -12,8 +12,10 @@ from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
 from .inferred_auth_token_provider_generator import (
+    ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
+    get_rotated_refresh_token_callback_type_hint,
 )
 from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
 from fern_python.codegen import AST, SourceFile
@@ -792,6 +794,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         exclude_from_wrapper_construction=True,
                     )
                 )
+            if self._inferred_auth_rotates_refresh_token(inferred_auth_scheme):
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                        type_hint=get_rotated_refresh_token_callback_type_hint(),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Called with the new refresh token whenever the token endpoint rotates it. "
+                            "The presented refresh token is invalidated, so persist the new one."
+                        ),
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
 
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
@@ -874,6 +889,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                         initializer=AST.Expression("None"),
                         docs="Credential used for inferred authentication.",
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
+            if self._inferred_auth_rotates_refresh_token(selectable_inferred_auth.scheme):
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                        type_hint=get_rotated_refresh_token_callback_type_hint(),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Called with the new refresh token whenever the token endpoint rotates it. "
+                            "The presented refresh token is invalidated, so persist the new one."
+                        ),
                         exclude_from_wrapper_construction=True,
                     )
                 )
@@ -1451,6 +1479,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 AST.Expression(cred.constructor_param_name),
                             )
                         )
+                    if self._inferred_auth_rotates_refresh_token(inferred_auth_scheme):
+                        inferred_auth_provider_kwargs.append(
+                            (
+                                ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                                AST.Expression(ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME),
+                            )
+                        )
                     inferred_auth_provider_kwargs.append(
                         (
                             "client_wrapper",
@@ -1554,6 +1589,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             context=self._context,
             inferred_auth_scheme=inferred_auth_scheme,
         ).get_credential_properties()
+
+    def _inferred_auth_rotates_refresh_token(self, inferred_auth_scheme: ir_types.InferredAuthScheme) -> bool:
+        return InferredAuthTokenProviderGenerator(
+            context=self._context,
+            inferred_auth_scheme=inferred_auth_scheme,
+        ).rotates_refresh_token()
 
     def _get_endpoint_security_inferred_auth_scheme(
         self,
@@ -1733,6 +1774,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if cred.is_literal:
                 continue
             inferred_auth_provider_kwargs.append((cred.field_name, AST.Expression(cred.constructor_param_name)))
+        if self._inferred_auth_rotates_refresh_token(inferred_auth_scheme):
+            inferred_auth_provider_kwargs.append(
+                (ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME, AST.Expression(ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME))
+            )
         inferred_auth_provider_kwargs.append(
             (
                 "client_wrapper",

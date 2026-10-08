@@ -32,6 +32,9 @@ class SeedPythonInferredAuthRefreshToken:
     scope : typing.Optional[str]
         Credential used for inferred authentication.
 
+    on_refresh_token_rotated : typing.Optional[typing.Callable[[str], None]]
+        Called with the new refresh token whenever the token endpoint rotates it. The presented refresh token is invalidated, so persist the new one.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -70,6 +73,7 @@ class SeedPythonInferredAuthRefreshToken:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         refresh_token: str,
         scope: typing.Optional[str] = None,
+        on_refresh_token_rotated: typing.Optional[typing.Callable[[str], None]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         stream_reconnection_enabled: typing.Optional[bool] = None,
@@ -83,6 +87,7 @@ class SeedPythonInferredAuthRefreshToken:
         inferred_auth_token_provider = InferredAuthTokenProvider(
             refresh_token=refresh_token,
             scope=scope,
+            on_refresh_token_rotated=on_refresh_token_rotated,
             client_wrapper=SyncClientWrapper(
                 base_url=base_url,
                 headers=headers,
@@ -169,6 +174,9 @@ class AsyncSeedPythonInferredAuthRefreshToken:
     scope : typing.Optional[str]
         Credential used for inferred authentication.
 
+    on_refresh_token_rotated : typing.Optional[typing.Callable[[str], None]]
+        Called with the new refresh token whenever the token endpoint rotates it. The presented refresh token is invalidated, so persist the new one.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -207,6 +215,7 @@ class AsyncSeedPythonInferredAuthRefreshToken:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         refresh_token: str,
         scope: typing.Optional[str] = None,
+        on_refresh_token_rotated: typing.Optional[typing.Callable[[str], None]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         stream_reconnection_enabled: typing.Optional[bool] = None,
@@ -220,6 +229,7 @@ class AsyncSeedPythonInferredAuthRefreshToken:
         inferred_auth_token_provider = AsyncInferredAuthTokenProvider(
             refresh_token=refresh_token,
             scope=scope,
+            on_refresh_token_rotated=on_refresh_token_rotated,
             client_wrapper=AsyncClientWrapper(
                 base_url=base_url,
                 headers=headers,
