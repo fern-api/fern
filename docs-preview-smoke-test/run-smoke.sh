@@ -31,6 +31,11 @@ if [ -f /tmp/fern-server.pid ]; then
   fi
   rm -f /tmp/fern-server.pid
 fi
+# A renderer orphaned by a crashed CLI is not reachable via the recorded PID; kill whatever still listens on 3000
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*) for p in $(netstat -ano 2>/dev/null | awk '/:3000 .*LISTENING/ {print $NF}' | sort -u); do taskkill //F //T //PID "$p" >/dev/null 2>&1 || true; done ;;
+  *) for p in $(lsof -ti tcp:3000 -sTCP:LISTEN 2>/dev/null); do kill_tree "$p"; done ;;
+esac
 # Wait for port 3000 to be released by the previous renderer's server
 for w in $(seq 1 30); do
   if ! curl -s -o /dev/null --max-time 2 http://localhost:3000/ 2>/dev/null; then
