@@ -938,6 +938,34 @@
       },
       "additionalProperties": false
     },
+    "docs.CliSnippetsConfiguration": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "type": "string",
+          "description": "Path (relative to docs.yml) to the committed CLI command catalog JSON."
+        },
+        "namespaces": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional map from this API's namespace name to the catalog namespace it corresponds to. Omit to match on method+path alone."
+        }
+      },
+      "required": [
+        "catalog"
+      ],
+      "additionalProperties": false,
+      "description": "Configuration for injecting CLI command snippets onto API reference endpoints."
+    },
     "docs.PlaygroundButtonSettings": {
       "type": "object",
       "properties": {
@@ -1711,6 +1739,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetsConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cli-snippets": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CliSnippetsConfiguration"
             },
             {
               "type": "null"

@@ -60,7 +60,6 @@ describe("CLI snippet injection (twilio-like fixture)", () => {
             cliVersion: "0.0.0",
             workspaceName: "twilio-like"
         });
-        expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);
         assert(workspace.workspace instanceof OSSWorkspace);
 
