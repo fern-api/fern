@@ -96,11 +96,11 @@ export function formatSizeKB(charLength: number): string {
 }
 
 /**
- * Matches the placeholder only as a whole version: an occurrence followed by more
- * version characters (e.g. `0.0.0-fern-placeholder.7` written by hand) is left alone.
+ * Matches the placeholder only as a whole version: an occurrence inside a longer version
+ * (e.g. `0.0.0-fern-placeholder.7` or `10.0.0-fern-placeholder`) is left alone.
  */
 function magicVersionRegExp(mappedMagicVersion: string): RegExp {
-    return new RegExp(`${escapeRegExp(mappedMagicVersion)}(?![0-9A-Za-z-]|\\.[0-9A-Za-z])`, "g");
+    return new RegExp(`(?<![0-9.])${escapeRegExp(mappedMagicVersion)}(?![0-9A-Za-z-]|\\.[0-9A-Za-z])`, "g");
 }
 
 interface FileSection {
@@ -1185,20 +1185,22 @@ export class AutoVersioningService {
      * must never be rewritten inside them (e.g. docs that mention `0.0.0-fern-placeholder`).
      */
     private async getFernignoredFiles(workingDirectory: string, files: string[]): Promise<Set<string>> {
+        const fernignorePath = join(workingDirectory, ".fernignore");
         let fernignoreContent: string;
         try {
-            fernignoreContent = await readFile(join(workingDirectory, ".fernignore"), "utf-8");
+            fernignoreContent = await readFile(fernignorePath, "utf-8");
         } catch {
             return new Set();
         }
         const relativePaths = new Map(
             files.map((filePath) => [relative(workingDirectory, filePath).split(sep).join("/"), filePath])
         );
-        return new Set(
-            expandFernignorePatterns(fernignoreContent, [...relativePaths.keys()]).map(
+        return new Set([
+            fernignorePath,
+            ...expandFernignorePatterns(fernignoreContent, [...relativePaths.keys()]).map(
                 (relativePath) => relativePaths.get(relativePath) ?? relativePath
             )
-        );
+        ]);
     }
 
     /**

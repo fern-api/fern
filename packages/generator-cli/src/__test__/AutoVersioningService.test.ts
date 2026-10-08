@@ -975,7 +975,8 @@ describe("AutoVersioningService", () => {
             await fs.writeFile(
                 testFile,
                 "## [0.0.0-fern-placeholder] - new\n## [0.0.0-fern-placeholder.7] - old\n" +
-                    "Pinned to 0.0.0-fern-placeholder-rc and 0.0.0-fern-placeholder2.\nCurrent: 0.0.0-fern-placeholder.\n"
+                    "Pinned to 0.0.0-fern-placeholder-rc, 0.0.0-fern-placeholder2 and 10.0.0-fern-placeholder.\n" +
+                    "Current: 0.0.0-fern-placeholder.\n"
             );
 
             await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
@@ -986,7 +987,8 @@ describe("AutoVersioningService", () => {
 
             expect(await fs.readFile(testFile, "utf-8")).toBe(
                 "## [1.0.0-dev.10] - new\n## [0.0.0-fern-placeholder.7] - old\n" +
-                    "Pinned to 0.0.0-fern-placeholder-rc and 0.0.0-fern-placeholder2.\nCurrent: 1.0.0-dev.10.\n"
+                    "Pinned to 0.0.0-fern-placeholder-rc, 0.0.0-fern-placeholder2 and 10.0.0-fern-placeholder.\n" +
+                    "Current: 1.0.0-dev.10.\n"
             );
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
@@ -998,10 +1000,9 @@ describe("AutoVersioningService", () => {
         try {
             await fs.mkdir(path.join(tempDir, "docs", "ADRs"), { recursive: true });
             await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
-            await fs.writeFile(
-                path.join(tempDir, ".fernignore"),
-                "# Specify files that shouldn't be modified by Fern\nAGENTS.md\ndocs\n.fern/replay.lock\n"
-            );
+            const fernignoreContent =
+                "# Keep 0.0.0-fern-placeholder in these files\nAGENTS.md\ndocs\n.fern/replay.lock\n";
+            await fs.writeFile(path.join(tempDir, ".fernignore"), fernignoreContent);
             const packageJson = path.join(tempDir, "package.json");
             await fs.writeFile(packageJson, '{"version": "0.0.0-fern-placeholder"}');
             const protectedFiles = [
@@ -1023,6 +1024,7 @@ describe("AutoVersioningService", () => {
             for (const file of protectedFiles) {
                 expect(await fs.readFile(file, "utf-8")).toBe("version: 0.0.0-fern-placeholder\n");
             }
+            expect(await fs.readFile(path.join(tempDir, ".fernignore"), "utf-8")).toBe(fernignoreContent);
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
