@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getWithApiVersion:
+      auth: true
+      docs: GET request with a version header
+      path: /apiKey
+      method: GET
+      response: string

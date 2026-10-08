@@ -14,7 +14,7 @@ import { EndpointSupplier } from "./EndpointSupplier.mjs";
 import { getErrorResponseBody } from "./getErrorResponseBody.mjs";
 import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
-import { getResponseBody } from "./getResponseBody.mjs";
+import { getResponseBody, isResponseBodyError } from "./getResponseBody.mjs";
 import { Headers } from "./Headers.mjs";
 import { clearResponseTimeout, makeRequest } from "./makeRequest.mjs";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
@@ -92,6 +92,11 @@ function getHeaders(args) {
         return newHeaders;
     });
 }
+function isJsonContentType(contentType) {
+    var _a, _b;
+    const mediaType = (_b = (_a = contentType === null || contentType === void 0 ? void 0 : contentType.split(";")[0]) === null || _a === void 0 ? void 0 : _a.trim().toLowerCase()) !== null && _b !== void 0 ? _b : "";
+    return mediaType === "application/json" || mediaType === "text/json" || mediaType.endsWith("+json");
+}
 export function fetcherImpl(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c;
@@ -131,7 +136,7 @@ export function fetcherImpl(args) {
                 const attemptResponse = yield makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse", keepTimeoutUntilBodyRead);
                 attemptResponses.push(attemptResponse);
                 return attemptResponse;
-            }), args.maxRetries);
+            }), args.maxRetries, args.abortSignal);
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
                     const metadata = {
@@ -143,6 +148,16 @@ export function fetcherImpl(args) {
                     logger.debug("HTTP request succeeded", metadata);
                 }
                 const body = yield getResponseBody(response, args.responseType);
+                // Only a body the server labelled as JSON is an error here; void endpoints may return plain text.
+                if (isResponseBodyError(body) &&
+                    body.error.reason === "non-json" &&
+                    isJsonContentType(response.headers.get("Content-Type"))) {
+                    return {
+                        ok: false,
+                        error: body.error,
+                        rawResponse: toRawResponse(response),
+                    };
+                }
                 return {
                     ok: true,
                     body: body,

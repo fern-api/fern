@@ -50,6 +50,7 @@ type StreamParams struct {
 	ErrorDecoder               ErrorDecoder
 	Format                     core.StreamFormat
 	EventDiscriminator         string
+	EnvelopeEvents             []string
 	MaxBufSize                 int
 }
 
@@ -176,7 +177,7 @@ func (s *Streamer[T]) streamOnce(
 		opts = append(opts, core.WithFormat(params.Format))
 	}
 	if params.EventDiscriminator != "" {
-		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator))
+		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator, params.EnvelopeEvents...))
 	}
 	if params.MaxBufSize > 0 {
 		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))

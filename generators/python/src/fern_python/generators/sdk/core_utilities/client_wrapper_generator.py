@@ -1361,7 +1361,7 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_root_path_parameter_member_name(root_path_parameter),
                     type_hint=path_param_type_hint,
                     initializer=(
-                        client_default_initializer
+                        self._get_keyword_snippet_initializer(constructor_parameter_name, client_default_initializer)
                         if client_default_initializer is not None
                         else AST.Expression(
                             f'{constructor_parameter_name}="YOUR_{resolve_name(root_path_parameter.name).screaming_snake_case.safe_name}"',
@@ -1397,7 +1397,7 @@ class ClientWrapperGenerator:
                     private_member_name=names.get_header_private_member_name(header),
                     type_hint=type_hint,
                     initializer=(
-                        client_default_initializer
+                        self._get_keyword_snippet_initializer(constructor_parameter_name, client_default_initializer)
                         if client_default_initializer is not None
                         else AST.Expression(
                             f'{constructor_parameter_name}="YOUR_{resolve_name(get_name_from_wire_value(header.name)).screaming_snake_case.safe_name}"',
@@ -1659,6 +1659,13 @@ class ClientWrapperGenerator:
             constructor_parameters=parameters,
             literal_headers=literal_headers,
         )
+
+    def _get_keyword_snippet_initializer(self, parameter_name: str, value: AST.Expression) -> AST.Expression:
+        def _write_keyword_argument(writer: AST.NodeWriter) -> None:
+            writer.write(f"{parameter_name}=")
+            writer.write_node(value)
+
+        return AST.Expression(AST.CodeWriter(_write_keyword_argument))
 
     def _get_client_default_initializer(
         self, client_default: typing.Optional[ir_types.Literal]

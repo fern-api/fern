@@ -49,7 +49,7 @@ class SeedApi:
     from seed import SeedApi
 
     client = SeedApi(
-        "2024-02-08",
+        api_version="2024-02-08",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -125,7 +125,7 @@ class SeedApi:
         from seed import SeedApi
 
         client = SeedApi(
-            "2024-02-08",
+            api_version="2024-02-08",
             base_url="https://yourhost.com/path/to/api",
         )
         client.test_get(
@@ -193,7 +193,7 @@ class AsyncSeedApi:
     from seed import AsyncSeedApi
 
     client = AsyncSeedApi(
-        "2024-02-08",
+        api_version="2024-02-08",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -269,7 +269,7 @@ class AsyncSeedApi:
         from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
-            "2024-02-08",
+            api_version="2024-02-08",
             base_url="https://yourhost.com/path/to/api",
         )
 
