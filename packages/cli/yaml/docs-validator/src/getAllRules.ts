@@ -3,6 +3,7 @@ import { AccentColorContrastRule } from "./rules/accent-color-contrast/index.js"
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/index.js";
 import { ApiSectionHasDefinitionRule } from "./rules/api-section-has-definition/index.js";
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
+import { LibraryFoldersInNavigationRule } from "./rules/library-folders-in-navigation/index.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NavigationConflicts } from "./rules/navigation-conflicts/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
@@ -47,6 +48,7 @@ const allRules = [
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect
     AccentColorContrastRule,
     ValidMarkdownLinks,
+    LibraryFoldersInNavigationRule, // Warn when only some generated library folders are wired into navigation
     ValidFileTypes,
     ValidDocsEndpoints,
     AllRolesMustBeDeclaredRule,
