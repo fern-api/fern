@@ -8,6 +8,7 @@ public class Example13 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.streamOasSpecNative(StreamRequest.builder().query("query").build());
+        client.streamDataContextWithEnvelopeSchema(
+                StreamRequest.builder().query("query").build());
     }
 }
