@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "source": { "runtimeVersion": "fixture", "generatedWith": "hand-authored fixture matching the runtime's naming rules" },
+  "commands": [
+    {
+      "command": ["twilio", "core", "messages", "create"],
+      "namespace": "core",
+      "operation": "core.messages.create",
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "inputs": [
+        { "wireName": "AccountSid", "location": "path", "flag": "--account-sid", "required": true },
+        { "wireName": "To", "location": "body", "flag": "--to", "required": true },
+        { "wireName": "From", "location": "body", "flag": "--from" },
+        { "wireName": "Body", "location": "body", "flag": "--body" }
+      ]
+    },
+    {
+      "command": ["twilio", "core", "messages", "list"],
+      "namespace": "core",
+      "operation": "core.messages.list",
+      "httpMethod": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "inputs": [
+        { "wireName": "AccountSid", "location": "path", "flag": "--account-sid", "required": true },
+        { "wireName": "PageSize", "location": "query", "flag": "--page-size" }
+      ]
+    }
+  ]
+}
