@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When a Maven output omits `url`, default to the Sonatype Central Portal OSSRH Staging API
+    (`https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/`) instead of
+    the retired OSSRH hosts (`oss.sonatype.org` / `s01.oss.sonatype.org`). This applies to signed and
+    unsigned `maven` outputs in generators.yml and to Maven publish targets in fern.yml.
+  type: fix

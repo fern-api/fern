@@ -3,7 +3,7 @@ import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { expect, vi } from "vitest";
 
-import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration.js";
+import { convertGeneratorsConfiguration, DEFAULT_MAVEN_REGISTRY_URL } from "../convertGeneratorsConfiguration.js";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", async () => {
@@ -234,6 +234,53 @@ describe("convertGeneratorsConfiguration", () => {
         const publishInfo = output.githubV2.publishInfo;
         expect.assert(publishInfo?.type === "maven");
         expect(publishInfo.registryUrl).toEqual("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/");
+    });
+
+    it.each([
+        ["signed", { signature: { keyId: "keyId", password: "password", secretKey: "secretKey" } }],
+        ["unsigned", {}]
+    ])("defaults the %s Maven URL to the Central Portal OSSRH Staging API", async (_name, signature) => {
+        const mavenOutput = {
+            location: "maven" as const,
+            coordinate: "com.test:sdk",
+            username: "username",
+            password: "password",
+            ...signature
+        };
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    github: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-java-sdk",
+                                version: "0.8.8-rc0",
+                                output: mavenOutput,
+                                github: { repository: "fern-api/github-app-test" }
+                            }
+                        ]
+                    },
+                    direct: {
+                        generators: [{ name: "fernapi/fern-java-sdk", version: "0.8.8-rc0", output: mavenOutput }]
+                    }
+                }
+            },
+            context: createMockTaskContext()
+        });
+
+        const githubOutput = converted.groups.find((group) => group.groupName === "github")?.generators[0]?.outputMode;
+        expect.assert(githubOutput?.type === "githubV2");
+        expect.assert(githubOutput.githubV2.publishInfo?.type === "maven");
+        expect(githubOutput.githubV2.publishInfo.registryUrl).toEqual(DEFAULT_MAVEN_REGISTRY_URL);
+
+        const directOutput = converted.groups.find((group) => group.groupName === "direct")?.generators[0]?.outputMode;
+        expect.assert(directOutput?.type === "publishV2");
+        expect.assert(directOutput.publishV2.type === "mavenOverride");
+        expect(directOutput.publishV2.mavenOverride?.registryUrl).toEqual(DEFAULT_MAVEN_REGISTRY_URL);
+        expect(DEFAULT_MAVEN_REGISTRY_URL).toBe(
+            "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+        );
     });
 
     it("License Metadata", async () => {

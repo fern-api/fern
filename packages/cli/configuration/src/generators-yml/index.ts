@@ -8,6 +8,10 @@ export {
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "../constants.js";
 export {
+    DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE,
+    isDirectRubyGemsPublishing
+} from "./directRubyGemsPublishing.js";
+export {
     type APIDefinition,
     type APIDefinitionLocation,
     type APIDefinitionSettings,

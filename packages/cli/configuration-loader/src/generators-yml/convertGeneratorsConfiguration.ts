@@ -1271,13 +1271,19 @@ function getLanguageFromGeneratorName(generatorName: string) {
     return undefined;
 }
 
-function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema) {
-    if (maven.url != null) {
-        return maven.url;
-    }
-    return maven.signature != null
-        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        : "https://s01.oss.sonatype.org/content/repositories/releases/";
+/**
+ * Default Maven upload URL when `url` is not configured. Sonatype retired OSSRH (oss.sonatype.org,
+ * s01.oss.sonatype.org) in June 2025; Maven Central publishing now goes through the Central Portal. This is the
+ * Portal's OSSRH Staging API compatibility endpoint, which accepts Maven-style uploads authenticated with a Central
+ * Portal user token. Uploads must then be handed to the Portal (`POST /manual/upload/defaultRepository/<namespace>`),
+ * which the sdk-gen-api publisher does automatically for this host. Releases to Maven Central also require signed
+ * artifacts, so the same default is used whether or not a signature is configured.
+ */
+export const DEFAULT_MAVEN_REGISTRY_URL =
+    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/";
+
+function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema): string {
+    return maven.url ?? DEFAULT_MAVEN_REGISTRY_URL;
 }
 
 function getGithubLicenseSchema(

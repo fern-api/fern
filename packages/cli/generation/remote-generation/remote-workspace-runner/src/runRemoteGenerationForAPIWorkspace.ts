@@ -228,8 +228,11 @@ export async function runRemoteGenerationForAPIWorkspace({
     });
     for (const result of routePreparation) {
         if (result.fallbackReason != null) {
-            context.logger.debug(
-                `${result.generatorInvocation.name} ${result.generatorInvocation.version} is falling back to Fiddle generation instead of sdk-gen-api: ${result.fallbackReason}`
+            // Fallback reasons are built from static diagnostics (no credential values), so they are
+            // safe to surface. Warn so users who opted into sdk-gen-api see that this target is not
+            // using it.
+            context.logger.warn(
+                `${result.generatorInvocation.name} ${result.generatorInvocation.version} will use legacy Fiddle generation instead of sdk-gen-api: ${result.fallbackReason}`
             );
         }
     }
@@ -453,6 +456,13 @@ export function prepareFernSdkGenApiRoutes({
                 },
                 { substituteAsEmpty: isPreview }
             );
+            // Previews download files instead of publishing, so only real publishes are rejected.
+            if (!isPreview && sdkConfigV1 == null && isDirectRubyGemsOutputMode(resolved.outputMode)) {
+                throw new CliError({
+                    message: `${resolved.name}: ${generatorsYml.DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE}`,
+                    code: CliError.Code.ConfigError
+                });
+            }
             const configuredLanguage = getFernSdkGenApiLanguage(resolved.name);
             const configuredTarget =
                 configuredLanguage == null ? undefined : sdkConfigV1?.targets[sdkConfigTargetIndex];
@@ -584,6 +594,15 @@ export function prepareFernSdkGenApiRoutes({
             };
         }
     });
+}
+
+/**
+ * generators.yml `output.location: rubygems` without a `github` block converts to a direct RubyGems publish
+ * (see `convertGeneratorsConfiguration`). Neither Fiddle (the Ruby generator's direct publish is not
+ * implemented) nor sdk-gen-api can publish it, so it is rejected before any remote work starts.
+ */
+function isDirectRubyGemsOutputMode(outputMode: FernFiddle.OutputMode): boolean {
+    return outputMode.type === "publishV2" && outputMode.publishV2.type === "rubyGemsOverride";
 }
 
 function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation, fallback: number): number {

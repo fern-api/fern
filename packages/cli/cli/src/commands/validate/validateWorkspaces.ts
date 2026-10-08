@@ -7,7 +7,7 @@ import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
-import { loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
+import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
@@ -217,6 +217,7 @@ async function prepareSdkConfigWorkspacesForValidation({
         for (const workspace of project.sdkConfigWorkspaces ?? []) {
             const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
             const loaded = await loadSdkConfigV1(absolutePathToConfig, true);
+            assertNoSdkConfigDirectRubyGemsPublishing(loaded);
             prepared.push(
                 await cliContext.runTask((context) =>
                     createSdkConfigWorkspace({
