@@ -5,8 +5,8 @@ import { getFetchFn } from "./getFetchFn";
 import { makeRequest } from "./makeRequest";
 import { redactUrl } from "./redactUrl";
 import { requestWithRetries } from "./requestWithRetries";
-import { TIMEOUT } from "./signals";
 import { Supplier } from "./Supplier";
+import { TIMEOUT } from "./signals";
 
 export declare namespace PassthroughRequest {
     /**
