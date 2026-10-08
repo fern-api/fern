@@ -169,6 +169,8 @@ types:
         value: authorization-code
       - name: DeviceCode
         value: device-code
+      - name: RefreshToken
+        value: refresh-token
 
   OAuthPkceSchema:
     docs: PKCE (RFC 7636) configuration for the authorization-code flow.
@@ -203,7 +205,18 @@ types:
       get-token:
         type: optional<OAuthGetTokenEndpointSchema>
         docs: The token endpoint for the client-credentials flow. Required for that flow.
-      refresh-token: optional<OAuthRefreshTokenEndpointSchema>
+      refresh-token:
+        type: optional<OAuthRefreshTokenEndpointSchema>
+        docs: >-
+          The endpoint that exchanges a refresh token for an access token. Optional for the
+          client-credentials flow and required for the refresh-token flow.
+      # --- refresh-token flow ---
+      refresh-token-env:
+        type: optional<string>
+        docs: >-
+          The environment variable holding the refresh token, for the refresh-token flow. The
+          refresh token is the only credential for that flow; the SDK exchanges it at the
+          `refresh-token` endpoint for an access token and caches it until it expires.
       # --- authorization-code (PKCE) and device-code (public client) flows ---
       client-id:
         type: optional<string>

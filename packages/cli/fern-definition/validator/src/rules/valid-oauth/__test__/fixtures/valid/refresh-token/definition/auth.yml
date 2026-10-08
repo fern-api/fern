@@ -1,0 +1,21 @@
+types:
+  TokenResponse:
+    properties:
+      access_token: string
+      expires_in: optional<integer>
+      refresh_token: optional<string>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    refreshToken:
+      path: /token
+      method: POST
+      request:
+        name: RefreshTokenRequest
+        body:
+          properties:
+            refresh_token: string
+            grant_type: literal<"refresh_token">
+      response: TokenResponse

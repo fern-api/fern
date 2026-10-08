@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.30.0] - 2026-10-06
+
+- Add `OAuthConfiguration.refreshToken` (`OAuthRefreshToken`): the OAuth 2.0 refresh token grant,
+  where a refresh token supplied by the SDK user is the only credential. Carries the
+  `refreshEndpoint` (an `OAuthRefreshEndpoint`) plus optional `refreshTokenEnvVar`, `tokenPrefix`
+  and `tokenHeader`. Populated from `type: refresh-token` OAuth schemes in `api.yml` and the
+  `generators.yml` `auth-schemes` override.
+
 ## [v67.29.0] - 2026-10-05
 
 - Add `VariableDeclaration.envVar` (optional `string`): the name of an environment variable the

@@ -109,6 +109,7 @@ types:
       clientCredentials: OAuthClientCredentials
       authorizationCode: OAuthAuthorizationCode
       deviceCode: OAuthDeviceCode
+      refreshToken: OAuthRefreshToken
 
   OAuthAuthorizationCode:
     docs: |
@@ -275,6 +276,26 @@ types:
       scopes: optional<list<string>>
       tokenEndpoint: OAuthTokenEndpoint
       refreshEndpoint: optional<OAuthRefreshEndpoint>
+
+  OAuthRefreshToken:
+    docs: |
+      The OAuth 2.0 refresh token grant (RFC 6749 §6) where a long-lived refresh token supplied by
+      the SDK user is the only credential (no client ID or secret). The SDK exchanges it at the
+      refresh endpoint for an access token, caches the access token until it expires, and uses the
+      new refresh token when the endpoint returns one (refresh token rotation).
+    properties:
+      refreshTokenEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the refresh token.
+      tokenPrefix:
+        type: optional<string>
+        docs: The prefix for the access token header value. Defaults to `Bearer`.
+      tokenHeader:
+        type: optional<string>
+        docs: The header to send the access token in. Defaults to `Authorization`.
+      refreshEndpoint:
+        type: OAuthRefreshEndpoint
+        docs: The endpoint that exchanges the refresh token for an access token.
 
   OAuthTokenEndpoint:
     properties:

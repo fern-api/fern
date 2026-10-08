@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+auth-schemes:
+  RefreshAuth:
+    scheme: oauth
+    type: refresh-token
+    refresh-token-env: ACME_REFRESH_TOKEN
+    refresh-token:
+      endpoint: POST /token
+      request-properties:
+        refresh-token: $request.refresh_token
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
+api:
+  auth: RefreshAuth
+  specs:
+    - openapi: openapi.yml
+groups: {}

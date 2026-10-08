@@ -1,0 +1,8 @@
+- summary: |
+    Add a `refresh-token` OAuth flow for APIs whose only credential is a long-lived refresh token
+    (no client ID or secret). Declare it with `scheme: oauth`, `type: refresh-token`, an optional
+    `refresh-token-env`, and the existing `refresh-token` endpoint block; it works in `api.yml` and
+    in `generators.yml` `auth-schemes` overrides for OpenAPI. The scheme is emitted as the new IR
+    `OAuthConfiguration.refreshToken` so SDKs can exchange the refresh token for an access token,
+    cache it until it expires, and pick up rotated refresh tokens.
+  type: feat

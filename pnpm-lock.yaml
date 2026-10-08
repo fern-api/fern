@@ -3991,6 +3991,9 @@ importers:
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../openapi/openapi-ir-parser
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
       '@fern-api/v3-importer-commons':
         specifier: workspace:*
         version: link:../v3-importer-commons

@@ -379,6 +379,36 @@ describe("valid-oauth", () => {
         expect(violations.length).toBeGreaterThan(0);
         expect(violations.some((violation) => violation.message.includes("environment-variable client ID"))).toBe(true);
     });
+
+    it("valid-refresh-token", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("valid"),
+                RelativeFilePath.of("refresh-token")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("invalid-refresh-token-missing-endpoint", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidOauthRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("invalid"),
+                RelativeFilePath.of("refresh-token-missing-endpoint")
+            )
+        });
+        expect(violations.map((violation) => violation.message)).toEqual([
+            "OAuth refresh-token flow uses the refresh token as its only credential and does not support `client-id-env`, `client-secret-env`.",
+            "OAuth refresh-token flow does not use `get-token`; configure the token exchange under `refresh-token` instead.",
+            "OAuth refresh-token flow requires a `refresh-token` endpoint."
+        ]);
+    });
 });
 
 // validateOAuthRuleViolations ensures all of the expected rule violations match,

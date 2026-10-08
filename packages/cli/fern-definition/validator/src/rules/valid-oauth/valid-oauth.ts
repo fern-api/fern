@@ -26,6 +26,10 @@ export const ValidOauthRule: Rule = {
                         return validatePublicClientFlow(oauth);
                     }
 
+                    if (oauth.type === "refresh-token") {
+                        return validateRefreshTokenFlow({ oauth, endpointResolver, typeResolver, apiFile });
+                    }
+
                     // client-credentials flow. It is machine-to-machine, so like device-code it has no
                     // browser callback to brand.
                     violations.push(...rejectCallbackRedirectUrls(oauth));
@@ -88,6 +92,87 @@ export const ValidOauthRule: Rule = {
         };
     }
 };
+
+const REFRESH_TOKEN_FLOW_UNSUPPORTED_FIELDS = [
+    "client-id",
+    "client-id-env",
+    "client-secret-env",
+    "scopes",
+    "authorization-url",
+    "device-authorization-url",
+    "token-url",
+    "refresh-url",
+    "redirect-uri",
+    "pkce",
+    "authorization-parameters",
+    "device-authorization-parameters",
+    "token-parameters",
+    "refresh-parameters"
+] as const satisfies readonly (keyof RawSchemas.OAuthSchemeSchema)[];
+
+/**
+ * Validates the refresh-token flow. The SDK user supplies a refresh token as the only credential and
+ * the SDK exchanges it at the `refresh-token` endpoint, so that endpoint is required and the
+ * client-credentials `get-token` endpoint is not used.
+ */
+function validateRefreshTokenFlow({
+    oauth,
+    endpointResolver,
+    typeResolver,
+    apiFile
+}: {
+    oauth: RawSchemas.OAuthSchemeSchema;
+    endpointResolver: EndpointResolverImpl;
+    typeResolver: TypeResolverImpl;
+    apiFile: ReturnType<typeof constructRootApiFileContext>;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [...rejectCallbackRedirectUrls(oauth)];
+    const unsupportedFields = REFRESH_TOKEN_FLOW_UNSUPPORTED_FIELDS.filter((field) => oauth[field] != null);
+    if (unsupportedFields.length > 0) {
+        violations.push({
+            severity: "fatal",
+            message: `OAuth refresh-token flow uses the refresh token as its only credential and does not support ${unsupportedFields
+                .map((field) => `\`${field}\``)
+                .join(", ")}.`
+        });
+    }
+    if (oauth["get-token"] != null) {
+        violations.push({
+            severity: "fatal",
+            message:
+                "OAuth refresh-token flow does not use `get-token`; configure the token exchange under `refresh-token` instead."
+        });
+    }
+    const refreshToken = oauth["refresh-token"];
+    if (refreshToken == null) {
+        violations.push({
+            severity: "fatal",
+            message: "OAuth refresh-token flow requires a `refresh-token` endpoint."
+        });
+        return violations;
+    }
+    const resolvedRefreshEndpoint = endpointResolver.resolveEndpoint({
+        endpoint: refreshToken.endpoint,
+        file: apiFile
+    });
+    if (resolvedRefreshEndpoint == null) {
+        violations.push({
+            severity: "fatal",
+            message: `Failed to resolve endpoint ${refreshToken.endpoint}`
+        });
+        return violations;
+    }
+    violations.push(
+        ...validateRefreshTokenEndpoint({
+            endpointId: resolvedRefreshEndpoint.endpointId,
+            endpoint: resolvedRefreshEndpoint.endpoint,
+            typeResolver,
+            file: resolvedRefreshEndpoint.file,
+            refreshEndpoint: refreshToken
+        })
+    );
+    return violations;
+}
 
 /**
  * Validates the public-client flows (authorization-code + device-code). Unlike client-credentials,

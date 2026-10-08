@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: OAuth Refresh Token API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /token:
+    post:
+      operationId: refreshToken
+      tags: [auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token, grant_type]
+              properties:
+                refresh_token:
+                  type: string
+                grant_type:
+                  type: string
+                  enum: [refresh_token]
+      responses:
+        "200":
+          description: Token response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  /get-something:
+    get:
+      operationId: getSomething
+      tags: [simple]
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      required: [access_token, expires_in]
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        refresh_token:
+          type: string
+  securitySchemes:
+    RefreshAuth:
+      type: http
+      scheme: bearer
+security:
+  - RefreshAuth: []

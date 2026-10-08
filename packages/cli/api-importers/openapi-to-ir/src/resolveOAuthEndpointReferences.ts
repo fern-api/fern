@@ -8,6 +8,7 @@ import {
     RequestPropertyValue
 } from "@fern-api/ir-sdk";
 import { getWireValue } from "@fern-api/ir-utils";
+import { CliError } from "@fern-api/task-context";
 
 const HTTP_METHOD_MAP: Record<string, HttpMethod | undefined> = {
     GET: HttpMethod.Get,
@@ -73,6 +74,9 @@ function resolveOAuthScheme({
     key: string;
     oauthScheme: RawSchemas.OAuthSchemeSchema;
 }): AuthScheme | undefined {
+    if (oauthScheme.type === "refresh-token") {
+        return resolveOAuthRefreshTokenScheme({ ir, key, oauthScheme });
+    }
     if (oauthScheme.type !== "client-credentials") {
         return undefined;
     }
@@ -158,6 +162,44 @@ function resolveOAuthScheme({
     });
 }
 
+function resolveOAuthRefreshTokenScheme({
+    ir,
+    key,
+    oauthScheme
+}: {
+    ir: IntermediateRepresentation;
+    key: string;
+    oauthScheme: RawSchemas.OAuthSchemeSchema;
+}): AuthScheme | undefined {
+    // Unlike client-credentials, falling back to the plain bearer scheme here would silently ask SDK
+    // users for an access token instead of a refresh token, so misconfigurations are errors.
+    const refreshTokenConfig = oauthScheme["refresh-token"];
+    if (refreshTokenConfig == null) {
+        throw new CliError({
+            message: `Auth scheme '${key}': OAuth refresh-token flow requires a \`refresh-token\` endpoint.`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    const refreshEndpoint = resolveRefreshEndpoint({ ir, refreshTokenConfig });
+    if (refreshEndpoint == null) {
+        throw new CliError({
+            message: `Auth scheme '${key}': failed to resolve the OAuth refresh-token endpoint '${refreshTokenConfig.endpoint}', or it is missing the configured \`refresh-token\` request property or \`access-token\` response property.`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return AuthScheme.oauth({
+        key,
+        docs: oauthScheme.docs,
+        playgroundDocs: oauthScheme["playground-docs"],
+        configuration: OAuthConfiguration.refreshToken({
+            refreshTokenEnvVar: oauthScheme["refresh-token-env"],
+            tokenPrefix: oauthScheme["token-prefix"],
+            tokenHeader: oauthScheme["token-header"],
+            refreshEndpoint
+        })
+    });
+}
+
 function resolveRefreshEndpoint({
     ir,
     refreshTokenConfig
@@ -174,11 +216,10 @@ function resolveRefreshEndpoint({
     const reqProps = refreshTokenConfig["request-properties"];
     const resProps = refreshTokenConfig["response-properties"];
 
-    const refreshTokenReqProp = findRequestBodyProperty({
-        ir,
-        endpoint,
-        wireValue: extractWireName(reqProps?.["refresh-token"], "refresh_token")
-    });
+    const refreshTokenWireValue = extractWireName(reqProps?.["refresh-token"], "refresh_token");
+    const refreshTokenReqProp =
+        findRequestBodyProperty({ ir, endpoint, wireValue: refreshTokenWireValue }) ??
+        findQueryParameterProperty({ endpoint, wireValue: refreshTokenWireValue });
     const accessTokenProp = findResponseProperty({
         ir,
         endpoint,
@@ -304,6 +345,23 @@ function findRequestBodyProperty({
     return {
         propertyPath: undefined,
         property: RequestPropertyValue.body({ ...prop })
+    };
+}
+
+function findQueryParameterProperty({
+    endpoint,
+    wireValue
+}: {
+    endpoint: FernIr.HttpEndpoint;
+    wireValue: string;
+}): FernIr.RequestProperty | undefined {
+    const queryParameter = endpoint.queryParameters.find((param) => getWireValue(param.name) === wireValue);
+    if (queryParameter == null) {
+        return undefined;
+    }
+    return {
+        propertyPath: undefined,
+        property: RequestPropertyValue.query(queryParameter)
     };
 }
 

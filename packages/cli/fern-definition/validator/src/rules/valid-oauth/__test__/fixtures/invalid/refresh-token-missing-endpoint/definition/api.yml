@@ -1,0 +1,13 @@
+name: invalid
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: refresh-token
+    client-id-env: ACME_CLIENT_ID
+    client-secret-env: ACME_CLIENT_SECRET
+    get-token:
+      endpoint: auth.refreshToken

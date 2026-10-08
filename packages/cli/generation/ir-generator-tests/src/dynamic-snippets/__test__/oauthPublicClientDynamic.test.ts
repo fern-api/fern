@@ -112,4 +112,72 @@ describe("dynamic snippets for public-client OAuth flows", () => {
             expect(endpoint.auth.customProperties).toBeUndefined();
         }
     });
+
+    it("presents the refresh-token flow as a bearer auth named refreshToken", () => {
+        const irWithOAuth = withOAuthScheme(
+            ir,
+            FernIr.auth.OAuthConfiguration.refreshToken({
+                refreshTokenEnvVar: undefined,
+                tokenPrefix: undefined,
+                tokenHeader: undefined,
+                refreshEndpoint: {
+                    endpointReference: {
+                        endpointId: "endpoint_auth.refreshToken",
+                        serviceId: "service_auth",
+                        subpackageId: undefined
+                    },
+                    requestProperties: {
+                        refreshToken: {
+                            propertyPath: undefined,
+                            property: FernIr.http.RequestPropertyValue.body({
+                                name: { wireValue: "refresh_token", name: "refresh_token" },
+                                valueType: FernIr.types.TypeReference.primitive({
+                                    v1: FernIr.types.PrimitiveTypeV1.String,
+                                    v2: undefined
+                                }),
+                                propertyAccess: undefined,
+                                defaultValue: undefined,
+                                v2Examples: undefined,
+                                docs: undefined,
+                                availability: undefined,
+                                xml: undefined
+                            })
+                        }
+                    },
+                    responseProperties: {
+                        accessToken: {
+                            propertyPath: undefined,
+                            property: {
+                                name: { wireValue: "access_token", name: "access_token" },
+                                valueType: FernIr.types.TypeReference.primitive({
+                                    v1: FernIr.types.PrimitiveTypeV1.String,
+                                    v2: undefined
+                                }),
+                                propertyAccess: undefined,
+                                defaultValue: undefined,
+                                v2Examples: undefined,
+                                docs: undefined,
+                                availability: undefined,
+                                xml: undefined
+                            }
+                        },
+                        expiresIn: undefined,
+                        refreshToken: undefined
+                    }
+                }
+            })
+        );
+
+        const dynamicIr = convertIrToDynamicSnippetsIr({
+            ir: irWithOAuth,
+            smartCasing: true,
+            disableExamples: true
+        });
+
+        const endpoint = Object.values(dynamicIr.endpoints)[0];
+        expect(endpoint?.auth?.type).toBe("bearer");
+        if (endpoint?.auth?.type === "bearer") {
+            expect(endpoint.auth.token.camelCase.unsafeName).toBe("refreshToken");
+        }
+    });
 });

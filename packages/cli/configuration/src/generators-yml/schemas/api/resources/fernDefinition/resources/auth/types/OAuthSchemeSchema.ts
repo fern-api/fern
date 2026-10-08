@@ -16,7 +16,10 @@ export interface OAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocs
     "client-secret-env"?: string;
     /** The token endpoint for the client-credentials flow. Required for that flow. */
     "get-token"?: GeneratorsYml.fernDefinition.OAuthGetTokenEndpointSchema;
+    /** The endpoint that exchanges a refresh token for an access token. Optional for the client-credentials flow and required for the refresh-token flow. */
     "refresh-token"?: GeneratorsYml.fernDefinition.OAuthRefreshTokenEndpointSchema;
+    /** The environment variable holding the refresh token, for the refresh-token flow. The refresh token is the only credential for that flow; the SDK exchanges it at the `refresh-token` endpoint for an access token and caches it until it expires. */
+    "refresh-token-env"?: string;
     /** The public client ID (literal). Public clients do not use a client secret. Required for the authorization-code and device-code flows (an environment-variable client ID via `client-id-env` is not yet supported for these flows). */
     "client-id"?: string;
     /** The authorization (consent) endpoint URL. Required for the authorization-code flow. */

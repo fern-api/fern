@@ -5,7 +5,8 @@ import * as FernIr from "../../../index.js";
 export type OAuthConfiguration =
     | FernIr.OAuthConfiguration.ClientCredentials
     | FernIr.OAuthConfiguration.AuthorizationCode
-    | FernIr.OAuthConfiguration.DeviceCode;
+    | FernIr.OAuthConfiguration.DeviceCode
+    | FernIr.OAuthConfiguration.RefreshToken;
 
 export namespace OAuthConfiguration {
     export interface ClientCredentials extends FernIr.OAuthClientCredentials, _Utils {
@@ -20,6 +21,10 @@ export namespace OAuthConfiguration {
         type: "deviceCode";
     }
 
+    export interface RefreshToken extends FernIr.OAuthRefreshToken, _Utils {
+        type: "refreshToken";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.OAuthConfiguration._Visitor<_Result>) => _Result;
     }
@@ -28,6 +33,7 @@ export namespace OAuthConfiguration {
         clientCredentials: (value: FernIr.OAuthClientCredentials) => _Result;
         authorizationCode: (value: FernIr.OAuthAuthorizationCode) => _Result;
         deviceCode: (value: FernIr.OAuthDeviceCode) => _Result;
+        refreshToken: (value: FernIr.OAuthRefreshToken) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -72,6 +78,19 @@ export const OAuthConfiguration = {
         };
     },
 
+    refreshToken: (value: FernIr.OAuthRefreshToken): FernIr.OAuthConfiguration.RefreshToken => {
+        return {
+            ...value,
+            type: "refreshToken",
+            _visit: function <_Result>(
+                this: FernIr.OAuthConfiguration.RefreshToken,
+                visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
+            ) {
+                return FernIr.OAuthConfiguration._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernIr.OAuthConfiguration,
         visitor: FernIr.OAuthConfiguration._Visitor<_Result>,
@@ -83,6 +102,8 @@ export const OAuthConfiguration = {
                 return visitor.authorizationCode(value);
             case "deviceCode":
                 return visitor.deviceCode(value);
+            case "refreshToken":
+                return visitor.refreshToken(value);
             default:
                 return visitor._other(value);
         }

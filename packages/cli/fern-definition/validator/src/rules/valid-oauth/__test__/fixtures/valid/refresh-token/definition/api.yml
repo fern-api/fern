@@ -1,0 +1,18 @@
+name: valid
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: refresh-token
+    refresh-token-env: ACME_REFRESH_TOKEN
+    refresh-token:
+      endpoint: auth.refreshToken
+      request-properties:
+        refresh-token: $request.refresh_token
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
