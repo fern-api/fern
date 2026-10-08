@@ -5,12 +5,23 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
+# Kill a process and all of its descendants (the CLI spawns the renderer as a child)
+kill_tree() {
+  local pid=$1
+  case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*) taskkill //F //T //PID "$pid" >/dev/null 2>&1 || true ;;
+    *)
+      for child in $(pgrep -P "$pid" 2>/dev/null); do kill_tree "$child"; done
+      kill "$pid" 2>/dev/null || true ;;
+  esac
+}
+
 # Kill any leftover server from a previous attempt
 if [ -f /tmp/fern-server.pid ]; then
   OLD_PID=$(cat /tmp/fern-server.pid)
   if kill -0 "$OLD_PID" 2>/dev/null; then
     echo "Killing leftover server (PID $OLD_PID) from previous attempt..."
-    kill "$OLD_PID" 2>/dev/null || true
+    kill_tree "$OLD_PID"
     sleep 2
   fi
   rm -f /tmp/fern-server.pid
@@ -36,7 +47,7 @@ cd docs-preview-smoke-test/fern
 FERN_PID=$!
 cd "$REPO_ROOT"
 # Always stop the server so the next renderer run (or the retry) gets a free port
-trap 'kill "$FERN_PID" 2>/dev/null || true; rm -f /tmp/fern-server.pid' EXIT
+trap 'kill_tree "$FERN_PID"; rm -f /tmp/fern-server.pid' EXIT
 
 # Wait for the server to be ready
 for i in $(seq 1 180); do
@@ -54,7 +65,7 @@ for i in $(seq 1 180); do
   if [ $i -eq 180 ]; then
     echo "Server start timed out after 180s"
     cat "$LOG_FILE"
-    kill $FERN_PID 2>/dev/null || true
+    kill_tree "$FERN_PID"
     exit 1
   fi
 
