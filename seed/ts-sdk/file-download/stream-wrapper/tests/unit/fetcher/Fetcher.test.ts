@@ -73,4 +73,73 @@ describe("Test fetcherImpl", () => {
             expect(result.body).toEqual({ data: "test" });
         }
     });
+
+    it("should return a non-json error instead of a body when a successful response has malformed JSON", async () => {
+        global.fetch = jest.fn().mockResolvedValue(
+            new Response('{"broken":', {
+                status: 200,
+                headers: { "Content-Type": "application/json", "X-Request-Id": "req-200" },
+            }),
+        );
+
+        const result = await fetcherImpl({ url: "https://example.com/items", method: "GET", maxRetries: 0 });
+
+        expect(result.ok).toBe(false);
+        if (!result.ok) {
+            expect(result.error).toEqual({ reason: "non-json", statusCode: 200, rawBody: '{"broken":' });
+            expect(result.rawResponse.status).toBe(200);
+            expect(result.rawResponse.headers.get("X-Request-Id")).toBe("req-200");
+        }
+    });
+
+    it("should keep the status and raw body when a JSON error response is malformed", async () => {
+        global.fetch = jest.fn().mockResolvedValue(
+            new Response("<html>Bad Gateway</html>", {
+                status: 502,
+                headers: { "Content-Type": "application/json", "X-Request-Id": "req-502" },
+            }),
+        );
+
+        const result = await fetcherImpl({ url: "https://example.com/items", method: "GET", maxRetries: 0 });
+
+        expect(result.ok).toBe(false);
+        if (!result.ok) {
+            expect(result.error).toEqual({ reason: "status-code", statusCode: 502, body: "<html>Bad Gateway</html>" });
+            expect(result.rawResponse.headers.get("X-Request-Id")).toBe("req-502");
+        }
+    });
+
+    it("should return the raw text for a malformed error body without a content type", async () => {
+        global.fetch = jest.fn().mockResolvedValue(new Response(new TextEncoder().encode('{"broken":'), { status: 500 }));
+
+        const result = await fetcherImpl({ url: "https://example.com/items", method: "GET", maxRetries: 0 });
+
+        expect(result.ok).toBe(false);
+        if (!result.ok) {
+            expect(result.error).toEqual({ reason: "status-code", statusCode: 500, body: '{"broken":' });
+        }
+    });
+
+    it("should still parse valid JSON error bodies and keep plain-text error bodies", async () => {
+        const fetchMock = jest.fn();
+        fetchMock
+            .mockResolvedValueOnce(
+                new Response(JSON.stringify({ error_code: "INVALID" }), {
+                    status: 400,
+                    headers: { "Content-Type": "application/json" },
+                }),
+            )
+            .mockResolvedValueOnce(new Response("Service Unavailable", { status: 503 }));
+        global.fetch = fetchMock;
+
+        const json = await fetcherImpl({ url: "https://example.com/items", method: "GET", maxRetries: 0 });
+        const text = await fetcherImpl({ url: "https://example.com/items", method: "GET", maxRetries: 0 });
+
+        expect(json.ok || json.error).toEqual({
+            reason: "status-code",
+            statusCode: 400,
+            body: { error_code: "INVALID" },
+        });
+        expect(text.ok || text.error).toEqual({ reason: "status-code", statusCode: 503, body: "Service Unavailable" });
+    });
 });

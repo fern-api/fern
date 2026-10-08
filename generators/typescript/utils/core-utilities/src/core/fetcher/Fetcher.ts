@@ -7,7 +7,7 @@ import { EndpointSupplier } from "./EndpointSupplier";
 import { getErrorResponseBody } from "./getErrorResponseBody";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
-import { getResponseBody } from "./getResponseBody";
+import { getResponseBody, isResponseBodyError } from "./getResponseBody";
 import { Headers } from "./Headers";
 import { makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
@@ -207,6 +207,13 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 logger.debug("HTTP request succeeded", metadata);
             }
             const body = await getResponseBody(response, args.responseType);
+            if (isResponseBodyError(body)) {
+                return {
+                    ok: false,
+                    error: body.error,
+                    rawResponse: toRawResponse(response),
+                };
+            }
             return {
                 ok: true,
                 body: body as R,
