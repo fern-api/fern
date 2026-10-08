@@ -1,4 +1,4 @@
-import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
+import { getResponseBody, isResponseBodyError } from "../../../src/core/fetcher/getResponseBody";
 
 import { RUNTIME } from "../../../src/core/runtime";
 
@@ -122,4 +122,16 @@ describe("Test getResponseBody", () => {
         expect(descriptor?.enumerable).toBe(false);
     });
 
+
+    it("should mark malformed JSON as a response body error", async () => {
+        const result = await getResponseBody(new Response("invalid json"));
+        expect(isResponseBodyError(result)).toBe(true);
+    });
+
+    it("should not treat a JSON body shaped like a failure record as a response body error", async () => {
+        const lookalike = { ok: false, error: { reason: "non-json", statusCode: 200, rawBody: "x" } };
+        const result = await getResponseBody(new Response(JSON.stringify(lookalike)));
+        expect(result).toEqual(lookalike);
+        expect(isResponseBodyError(result)).toBe(false);
+    });
 });
