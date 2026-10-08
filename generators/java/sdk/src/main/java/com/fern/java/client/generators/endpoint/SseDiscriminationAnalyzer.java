@@ -55,9 +55,8 @@ public final class SseDiscriminationAnalyzer {
         }
 
         /**
-         * For protocol-level unions that mix envelope-shaped ({data, id?, retry?}) and payload-shaped variants,
-         * the event names of the envelope-shaped variants. Empty when every variant can be parsed from the
-         * SSE envelope.
+         * For protocol-level unions that mix envelope-shaped ({data, id?, retry?}) and payload-shaped variants, the
+         * event names of the envelope-shaped variants. Empty when every variant can be parsed from the SSE envelope.
          */
         public Optional<List<String>> getEnvelopeEvents() {
             return Optional.ofNullable(envelopeEvents);
@@ -126,51 +125,58 @@ public final class SseDiscriminationAnalyzer {
     }
 
     /** Resolves a TypeReference to its UnionTypeDeclaration, following aliases if necessary. */
-    private static final java.util.Set<String> SSE_ENVELOPE_FIELDS = new HashSet<>(Arrays.asList("data", "id", "retry"));
+    private static final java.util.Set<String> SSE_ENVELOPE_FIELDS =
+            new HashSet<>(Arrays.asList("data", "id", "retry"));
 
     /**
-     * Returns the event names of envelope-shaped variants ({data, id?, retry?}) if the union also has
-     * payload-shaped variants, or null if every variant can be parsed from the SSE envelope.
+     * Returns the event names of envelope-shaped variants ({data, id?, retry?}) if the union also has payload-shaped
+     * variants, or null if every variant can be parsed from the SSE envelope.
      */
     private static List<String> getEnvelopeEventsIfMixed(
             UnionTypeDeclaration union, String discriminatorProperty, Map<TypeId, TypeDeclaration> typeDeclarations) {
         List<String> envelopeEvents = new ArrayList<>();
         boolean hasPayloadVariant = false;
         for (SingleUnionType variant : union.getTypes()) {
-            List<String> propertyNames = variant.getShape().visit(new SingleUnionTypeProperties.Visitor<List<String>>() {
-                @Override
-                public List<String> visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
-                    TypeDeclaration declaration = typeDeclarations.get(declaredTypeName.getTypeId());
-                    if (declaration == null || !declaration.getShape().isObject()) {
-                        return null;
-                    }
-                    ObjectTypeDeclaration object = declaration.getShape().getObject().get();
-                    List<ObjectProperty> properties = new ArrayList<>();
-                    object.getExtendedProperties().ifPresent(properties::addAll);
-                    properties.addAll(object.getProperties());
-                    List<String> names = new ArrayList<>();
-                    for (ObjectProperty property : properties) {
-                        names.add(NameUtils.getWireValue(property.getName()));
-                    }
-                    return names;
-                }
+            List<String> propertyNames = variant.getShape()
+                    .visit(new SingleUnionTypeProperties.Visitor<List<String>>() {
+                        @Override
+                        public List<String> visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
+                            TypeDeclaration declaration = typeDeclarations.get(declaredTypeName.getTypeId());
+                            if (declaration == null || !declaration.getShape().isObject()) {
+                                return null;
+                            }
+                            ObjectTypeDeclaration object =
+                                    declaration.getShape().getObject().get();
+                            List<ObjectProperty> properties = new ArrayList<>();
+                            object.getExtendedProperties().ifPresent(properties::addAll);
+                            properties.addAll(object.getProperties());
+                            List<String> names = new ArrayList<>();
+                            for (ObjectProperty property : properties) {
+                                names.add(NameUtils.getWireValue(property.getName()));
+                            }
+                            return names;
+                        }
 
-                @Override
-                public List<String> visitSingleProperty(SingleUnionTypeProperty singleProperty) {
-                    return Collections.singletonList(NameUtils.getWireValue(singleProperty.getName()));
-                }
+                        @Override
+                        public List<String> visitSingleProperty(SingleUnionTypeProperty singleProperty) {
+                            return Collections.singletonList(NameUtils.getWireValue(singleProperty.getName()));
+                        }
 
-                @Override
-                public List<String> visitNoProperties() {
-                    return Collections.emptyList();
-                }
+                        @Override
+                        public List<String> visitNoProperties() {
+                            return Collections.emptyList();
+                        }
 
-                @Override
-                public List<String> _visitUnknown(Object unknownType) {
-                    return Collections.emptyList();
-                }
-            });
-            List<String> names = new ArrayList<>(propertyNames == null ? Collections.emptyList() : propertyNames);
+                        @Override
+                        public List<String> _visitUnknown(Object unknownType) {
+                            return Collections.emptyList();
+                        }
+                    });
+            if (propertyNames == null) {
+                hasPayloadVariant = true;
+                continue;
+            }
+            List<String> names = new ArrayList<>(propertyNames);
             names.remove(discriminatorProperty);
             if (names.contains("data") && SSE_ENVELOPE_FIELDS.containsAll(names)) {
                 envelopeEvents.add(NameUtils.getWireValue(variant.getDiscriminantValue()));
