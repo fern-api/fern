@@ -22,6 +22,9 @@ service:
             client_id: optional<string>
             client_secret: optional<string>
             refresh_token: optional<string>
+            code: optional<string>
+            code_verifier: optional<string>
+            redirect_uri: optional<string>
             scope: optional<string>
       response: TokenResponse
       examples:

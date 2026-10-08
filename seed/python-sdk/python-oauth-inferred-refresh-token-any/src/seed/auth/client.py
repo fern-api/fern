@@ -33,6 +33,9 @@ class AuthClient:
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         refresh_token: typing.Optional[str] = OMIT,
+        code: typing.Optional[str] = OMIT,
+        code_verifier: typing.Optional[str] = OMIT,
+        redirect_uri: typing.Optional[str] = OMIT,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
@@ -48,6 +51,12 @@ class AuthClient:
         client_secret : typing.Optional[str]
 
         refresh_token : typing.Optional[str]
+
+        code : typing.Optional[str]
+
+        code_verifier : typing.Optional[str]
+
+        redirect_uri : typing.Optional[str]
 
         scope : typing.Optional[str]
 
@@ -77,6 +86,9 @@ class AuthClient:
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
+            code=code,
+            code_verifier=code_verifier,
+            redirect_uri=redirect_uri,
             scope=scope,
             request_options=request_options,
         )
@@ -105,6 +117,9 @@ class AsyncAuthClient:
         client_id: typing.Optional[str] = OMIT,
         client_secret: typing.Optional[str] = OMIT,
         refresh_token: typing.Optional[str] = OMIT,
+        code: typing.Optional[str] = OMIT,
+        code_verifier: typing.Optional[str] = OMIT,
+        redirect_uri: typing.Optional[str] = OMIT,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
@@ -120,6 +135,12 @@ class AsyncAuthClient:
         client_secret : typing.Optional[str]
 
         refresh_token : typing.Optional[str]
+
+        code : typing.Optional[str]
+
+        code_verifier : typing.Optional[str]
+
+        redirect_uri : typing.Optional[str]
 
         scope : typing.Optional[str]
 
@@ -157,6 +178,9 @@ class AsyncAuthClient:
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
+            code=code,
+            code_verifier=code_verifier,
+            redirect_uri=redirect_uri,
             scope=scope,
             request_options=request_options,
         )

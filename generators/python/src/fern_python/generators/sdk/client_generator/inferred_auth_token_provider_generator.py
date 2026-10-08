@@ -12,6 +12,11 @@ import fern.ir.resources as ir_types
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
 
 
+_REFRESH_TOKEN_GRANT_TYPE = "refresh_token"
+# Request parameters of the OAuth 2.0 refresh token grant (RFC 6749 section 6), plus client authentication.
+_REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES = frozenset({"refresh_token", "scope", "client_id", "client_secret"})
+
+
 @dataclass
 class CredentialProperty:
     field_name: str
@@ -546,7 +551,8 @@ class InferredAuthTokenProviderGenerator:
             request_body = http_endpoint.request_body.get_as_union()
             if request_body.type == "inlinedRequestBody":
                 for prop in request_body.properties:
-                    properties.append(self._get_body_credential_property(prop.name, prop.value_type))
+                    if self._is_used_by_grant_type(prop.name, prop.value_type):
+                        properties.append(self._get_body_credential_property(prop.name, prop.value_type))
             elif request_body.type == "reference":
                 type_id = self._get_type_id_from_type_reference(request_body.request_body_type)
                 if type_id is not None:
@@ -554,7 +560,10 @@ class InferredAuthTokenProviderGenerator:
                         self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id)
                     )
                     for object_prop in object_properties:
-                        properties.append(self._get_body_credential_property(object_prop.name, object_prop.value_type))
+                        if self._is_used_by_grant_type(object_prop.name, object_prop.value_type):
+                            properties.append(
+                                self._get_body_credential_property(object_prop.name, object_prop.value_type)
+                            )
 
         return properties
 
@@ -573,6 +582,21 @@ class InferredAuthTokenProviderGenerator:
             is_optional=self._is_optional_type(value_type),
             fixed_value=fixed_value,
         )
+
+    def _is_used_by_grant_type(
+        self, name: ir_types.NameAndWireValueOrString, value_type: ir_types.TypeReference
+    ) -> bool:
+        """Token endpoints shared by several grants list fields of every grant. With a fixed refresh_token
+        grant, optional fields that belong to other grants (e.g. `code`, `redirect_uri`) are neither exposed
+        nor sent."""
+        grant_type = self._inferred_auth_scheme.token_endpoint.grant_type
+        if grant_type is None or grant_type.value != _REFRESH_TOKEN_GRANT_TYPE:
+            return True
+        if not self._is_optional_type(value_type) or self._is_literal_type(value_type):
+            return True
+        if self._get_fixed_grant_type_value(name) is not None:
+            return True
+        return get_wire_value(name) in _REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES
 
     def _get_fixed_grant_type_value(self, name: ir_types.NameAndWireValueOrString) -> Optional[str]:
         grant_type = self._inferred_auth_scheme.token_endpoint.grant_type

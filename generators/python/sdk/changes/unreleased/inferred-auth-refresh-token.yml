@@ -11,3 +11,9 @@
     `client_id` are added once) and uses the inferred token provider when they are passed, so
     `Client(refresh_token=...)` and `Client(client_id=..., client_secret=...)` both work.
   type: feat
+- summary: |
+    With `type: refresh-token`, inferred auth only exposes and sends the token endpoint parameters used by
+    the OAuth refresh token grant (`refresh_token`, `scope`, `client_id`, `client_secret`) plus any
+    required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
+    `code_verifier` and `redirect_uri`, are no longer client constructor parameters.
+  type: feat
