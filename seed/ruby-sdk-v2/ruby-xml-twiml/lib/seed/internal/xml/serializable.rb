@@ -146,7 +146,9 @@ module Seed
                       end
               [property.object_types.map(&:xml_name), nodes]
             end
-            model.content = Utils.content(element, typed, model.additional_children, wrappers.keys)
+            has_text = xml_properties.any? { |property| property.kind == :text }
+            model.content = Utils.content(element, typed, model.additional_children, wrappers.keys,
+                                          include_text: !has_text)
             model
           end
 

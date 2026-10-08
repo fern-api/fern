@@ -188,16 +188,15 @@ def append_xml_child(parent: object, field_name: str, child: XmlSerializable, *,
             content.append(child)
 
 
-@runtime_checkable
-class XmlContentHolder(Protocol):
-    """An xml-encoded model keeping its text segments and child elements in document order."""
-
-    _content: List[XmlContent]
-
-
 def xml_model_content(model: object) -> Optional[List[XmlContent]]:
-    """The ordered content list of an xml-encoded model, if it has one."""
-    return model._content if isinstance(model, XmlContentHolder) else None
+    """The ordered content list of an xml-encoded model, if it has one.
+
+    The list is a pydantic private attribute, so it is looked up on the instance rather than through a
+    `runtime_checkable` Protocol: since Python 3.12 those use `inspect.getattr_static`, which does not see
+    attributes served by `__getattr__`.
+    """
+    content = getattr(model, "_content", None)
+    return content if isinstance(content, list) else None
 
 
 def order_xml_content(content: Sequence[XmlContent], *typed_children: object) -> List[XmlContent]:
