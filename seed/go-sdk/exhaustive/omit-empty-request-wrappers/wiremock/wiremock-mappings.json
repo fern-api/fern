@@ -32,6 +32,40 @@
       }
     },
     {
+      "id": "b3c7b202-7fd9-41f7-a760-c46dbf49ecf3",
+      "name": "getAndReturnListOfPrimitives - default - TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/list-of-primitives",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  \"string\",\n  \"string\"\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b3c7b202-7fd9-41f7-a760-c46dbf49ecf3",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
       "name": "getAndReturnListOfObjects - default",
       "request": {
@@ -53,6 +87,40 @@
       "uuid": "ac1d4c4f-a8a7-4c27-ae64-7fc977cfa122",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "c264f923-831b-408f-ad0b-a8c40876e961",
+      "name": "getAndReturnListOfObjects - default - TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/list-of-objects",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"string\": \"string\"\n  },\n  {\n    \"string\": \"string\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c264f923-831b-408f-ad0b-a8c40876e961",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -94,6 +162,40 @@
       }
     },
     {
+      "id": "52e74914-52b3-4e91-abe9-a01e169f06dd",
+      "name": "getAndReturnSetOfPrimitives - default - TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/set-of-primitives",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  \"string\"\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "52e74914-52b3-4e91-abe9-a01e169f06dd",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
       "name": "getAndReturnSetOfObjects - default",
       "request": {
@@ -115,6 +217,40 @@
       "uuid": "e1d5f52b-7a51-464f-ac8f-83c0345a3a35",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "e29736a5-f4c4-4b2b-b978-5d5177251871",
+      "name": "getAndReturnSetOfObjects - default - TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/set-of-objects",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"string\": \"string\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e29736a5-f4c4-4b2b-b978-5d5177251871",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -156,6 +292,40 @@
       }
     },
     {
+      "id": "93419c03-306c-4d75-8d5d-064ffc9d0d80",
+      "name": "getAndReturnMapPrimToPrim - default - TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/map-prim-to-prim",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "93419c03-306c-4d75-8d5d-064ffc9d0d80",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
       "name": "getAndReturnMapOfPrimToObject - default",
       "request": {
@@ -177,6 +347,40 @@
       "uuid": "b01ac2b9-3470-48aa-badc-57d331bb5a49",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b5f66ca2-d940-42eb-8793-45a49e496b44",
+      "name": "getAndReturnMapOfPrimToObject - default - TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/map-prim-to-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": {\n    \"string\": \"string\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b5f66ca2-d940-42eb-8793-45a49e496b44",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -218,6 +422,105 @@
       }
     },
     {
+      "id": "54346448-9a5d-4bcf-a14d-49ba6a31629c",
+      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default - TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/map-prim-to-union",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "54346448-9a5d-4bcf-a14d-49ba6a31629c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7d75fe3d-8ea8-48fa-bbd1-5f14125c8510",
+      "name": "getAndReturnMapOfIntegerToObject - default",
+      "request": {
+        "urlPathTemplate": "/container/map-integer-to-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"1\": {\n    \"string\": \"string\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7d75fe3d-8ea8-48fa-bbd1-5f14125c8510",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "221358ee-c5aa-48e4-9809-858ea078ed23",
+      "name": "getAndReturnMapOfIntegerToObject - default - TestEndpointsContainerGetAndReturnMapOfIntegerToObjectWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/map-integer-to-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnMapOfIntegerToObjectWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"1\": {\n    \"string\": \"string\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "221358ee-c5aa-48e4-9809-858ea078ed23",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e5271904-de0a-425f-940d-d6f6bde34755",
       "name": "getAndReturnOptional - default",
       "request": {
@@ -239,6 +542,40 @@
       "uuid": "e5271904-de0a-425f-940d-d6f6bde34755",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "9c338214-2571-459d-96b0-3c3a9ae4963d",
+      "name": "getAndReturnOptional - default - TestEndpointsContainerGetAndReturnOptionalWithWireMock",
+      "request": {
+        "urlPathTemplate": "/container/opt-objects",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContainerGetAndReturnOptionalWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9c338214-2571-459d-96b0-3c3a9ae4963d",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -280,6 +617,40 @@
       }
     },
     {
+      "id": "e706d688-2bc4-4e27-a5a7-ccea9a9d69da",
+      "name": "postJsonPatchContentType - default - TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/foo/bar",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e706d688-2bc4-4e27-a5a7-ccea9a9d69da",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "4a107cf5-6284-48f8-9ddb-99d944ba989b",
       "name": "postJsonPatchContentWithCharsetType - default",
       "request": {
@@ -311,6 +682,40 @@
       }
     },
     {
+      "id": "dcb4a731-2929-4bdb-b900-4c61fe13b612",
+      "name": "postJsonPatchContentWithCharsetType - default - TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/foo/baz",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dcb4a731-2929-4bdb-b900-4c61fe13b612",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "60fd3c8a-3983-41b9-8178-f42997388900",
       "name": "getAndReturnEnum - default",
       "request": {
@@ -332,6 +737,40 @@
       "uuid": "60fd3c8a-3983-41b9-8178-f42997388900",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "110ce1bc-3ae7-47da-9fac-2a60b7eb6bd7",
+      "name": "getAndReturnEnum - default - TestEndpointsEnumGetAndReturnEnumWithWireMock",
+      "request": {
+        "urlPathTemplate": "/enum",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsEnumGetAndReturnEnumWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"SUNNY\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "110ce1bc-3ae7-47da-9fac-2a60b7eb6bd7",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -378,6 +817,45 @@
       }
     },
     {
+      "id": "34d1143a-3460-4785-8ed2-f42b164c60ad",
+      "name": "testGet - default - TestEndpointsHTTPMethodsTestGetWithWireMock",
+      "request": {
+        "urlPathTemplate": "/http-methods/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsHTTPMethodsTestGetWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "34d1143a-3460-4785-8ed2-f42b164c60ad",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
       "name": "testPost - default",
       "request": {
@@ -399,6 +877,40 @@
       "uuid": "2552873f-9f1d-4557-a6c7-6c6b7a55b566",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2371d216-ffae-4ea7-8862-cc2e6a598433",
+      "name": "testPost - default - TestEndpointsHTTPMethodsTestPostWithWireMock",
+      "request": {
+        "urlPathTemplate": "/http-methods",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsHTTPMethodsTestPostWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2371d216-ffae-4ea7-8862-cc2e6a598433",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -445,6 +957,45 @@
       }
     },
     {
+      "id": "b16642cf-280c-45bb-8a85-811682e46813",
+      "name": "testPut - default - TestEndpointsHTTPMethodsTestPutWithWireMock",
+      "request": {
+        "urlPathTemplate": "/http-methods/{id}",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsHTTPMethodsTestPutWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b16642cf-280c-45bb-8a85-811682e46813",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
       "name": "testPatch - default",
       "request": {
@@ -471,6 +1022,45 @@
       "uuid": "c9def317-32a0-4bc0-b9b6-5efae8ca44a6",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "3b732acc-dede-4bd7-bb63-83b3860bf31c",
+      "name": "testPatch - default - TestEndpointsHTTPMethodsTestPatchWithWireMock",
+      "request": {
+        "urlPathTemplate": "/http-methods/{id}",
+        "method": "PATCH",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsHTTPMethodsTestPatchWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "3b732acc-dede-4bd7-bb63-83b3860bf31c",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -517,6 +1107,45 @@
       }
     },
     {
+      "id": "e4aba250-8c27-4331-bb70-d1b9929e1408",
+      "name": "testDelete - default - TestEndpointsHTTPMethodsTestDeleteWithWireMock",
+      "request": {
+        "urlPathTemplate": "/http-methods/{id}",
+        "method": "DELETE",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsHTTPMethodsTestDeleteWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e4aba250-8c27-4331-bb70-d1b9929e1408",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
       "name": "getAndReturnWithOptionalField - default",
       "request": {
@@ -538,6 +1167,40 @@
       "uuid": "41cdef0e-040f-4d08-8426-87b19e60f7d7",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1497ece2-0b8c-40a3-a5ff-718fb4cb612a",
+      "name": "getAndReturnWithOptionalField - default - TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-optional-field",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1497ece2-0b8c-40a3-a5ff-718fb4cb612a",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -579,6 +1242,40 @@
       }
     },
     {
+      "id": "13eb07cd-876c-4254-81ba-687c4f7d1de8",
+      "name": "getAndReturnWithRequiredField - default - TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-required-field",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithRequiredFieldWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "13eb07cd-876c-4254-81ba-687c4f7d1de8",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "0c904dbb-ce54-48a2-8364-13a4989be7f2",
       "name": "getAndReturnWithMapOfMap - default",
       "request": {
@@ -610,6 +1307,40 @@
       }
     },
     {
+      "id": "cf4599ca-635a-41b7-b810-f565dc457856",
+      "name": "getAndReturnWithMapOfMap - default - TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-map-of-map",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithMapOfMapWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"map\": {\n    \"map\": {\n      \"map\": \"map\"\n    }\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cf4599ca-635a-41b7-b810-f565dc457856",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
       "name": "getAndReturnNestedWithOptionalField - default",
       "request": {
@@ -631,6 +1362,40 @@
       "uuid": "67e969fc-ff81-4a67-9858-66a29ffc9b72",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "08d9bc41-0d47-41ba-914b-08041b21e6e3",
+      "name": "getAndReturnNestedWithOptionalField - default - TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-nested-with-optional-field",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "08d9bc41-0d47-41ba-914b-08041b21e6e3",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -677,6 +1442,45 @@
       }
     },
     {
+      "id": "6d320b78-a7a1-4964-aee9-ee51e92a8591",
+      "name": "getAndReturnNestedWithRequiredField - default - TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-nested-with-required-field/{string}",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "string": {
+            "equalTo": "string"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6d320b78-a7a1-4964-aee9-ee51e92a8591",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
       "name": "getAndReturnNestedWithRequiredFieldAsList - default",
       "request": {
@@ -698,6 +1502,40 @@
       "uuid": "6d9ed308-5724-4bbc-a4f7-28dc264d188f",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "40a88b48-4438-4b73-b3e4-b3dc53febea5",
+      "name": "getAndReturnNestedWithRequiredFieldAsList - default - TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-nested-with-required-field-list",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"NestedObject\": {\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n      \"list\",\n      \"list\"\n    ],\n    \"set\": [\n      \"set\"\n    ],\n    \"map\": {\n      \"1\": \"map\"\n    },\n    \"bigint\": \"1000000\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "40a88b48-4438-4b73-b3e4-b3dc53febea5",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -739,6 +1577,40 @@
       }
     },
     {
+      "id": "9731592d-1964-4d32-bde2-4953832fadba",
+      "name": "getAndReturnWithUnknownField - BackslashExample - TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-unknown-field",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"unknown\": {\n    \"$ref\": \"https://example.com/schema\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9731592d-1964-4d32-bde2-4953832fadba",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
       "name": "getAndReturnWithDocumentedUnknownType - default",
       "request": {
@@ -760,6 +1632,40 @@
       "uuid": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b1829d82-6e4a-48e8-8103-1cb135a1f4fb",
+      "name": "getAndReturnWithDocumentedUnknownType - default - TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithDocumentedUnknownTypeWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"documentedUnknownType\": {\n    \"key\": \"value\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b1829d82-6e4a-48e8-8103-1cb135a1f4fb",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -801,6 +1707,40 @@
       }
     },
     {
+      "id": "8288275d-a6bf-45ba-aa6e-3cc39624f82d",
+      "name": "getAndReturnMapOfDocumentedUnknownType - default - TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-map-of-documented-unknown-type",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnMapOfDocumentedUnknownTypeWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": {\n    \"key\": \"value\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8288275d-a6bf-45ba-aa6e-3cc39624f82d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
       "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields",
       "request": {
@@ -822,6 +1762,40 @@
       "uuid": "d1d11f31-5ad4-4275-8b59-064ee4a550fb",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "555348a1-619a-4fc3-b11f-cf1f305d4f72",
+      "name": "getAndReturnWithMixedRequiredAndOptionalFields - PartialRequiredFields - TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-mixed-required-and-optional-fields",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFieldsWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredInteger\": 0,\n  \"optionalString\": \"world\",\n  \"requiredLong\": 0\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "555348a1-619a-4fc3-b11f-cf1f305d4f72",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -863,6 +1837,40 @@
       }
     },
     {
+      "id": "fb1c7707-e890-423f-b730-fe5307a1952f",
+      "name": "getAndReturnWithRequiredNestedObject - NestedObjectMissing - TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-required-nested-object",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"requiredString\": \"hello\",\n  \"requiredObject\": {\n    \"string\": \"nested\",\n    \"NestedObject\": {}\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fb1c7707-e890-423f-b730-fe5307a1952f",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
       "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
       "request": {
@@ -884,6 +1892,40 @@
       "uuid": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecd93b84-a452-465a-9515-be0b8041b670",
+      "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample - TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-datetime-like-string",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"datetimeLikeString\": \"2023-08-31T14:15:22Z\",\n  \"actualDatetime\": \"2023-08-31T14:15:22Z\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ecd93b84-a452-465a-9515-be0b8041b670",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -934,6 +1976,49 @@
       "postServeActions": []
     },
     {
+      "id": "78b21875-d996-4b61-a8e8-c7e43fead565",
+      "name": "listItems - default - TestEndpointsPaginationListItemsWithWireMock",
+      "request": {
+        "urlPathTemplate": "/pagination",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPaginationListItemsWithWireMock"
+          }
+        },
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "limit": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "78b21875-d996-4b61-a8e8-c7e43fead565",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
       "name": "getWithPath - default",
       "request": {
@@ -970,6 +2055,45 @@
       }
     },
     {
+      "id": "2d62f5c0-a4ca-4abe-ace7-a92abb74d66b",
+      "name": "getWithPath - default - TestEndpointsParamsGetWithPathWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithPathWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2d62f5c0-a4ca-4abe-ace7-a92abb74d66b",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
       "name": "getWithInlinePath - default",
       "request": {
@@ -996,6 +2120,45 @@
       "uuid": "711fc64f-4af9-4084-8c29-1e7a9e58be70",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "e8849d6e-71eb-4c1b-90bc-8b914a6c92d2",
+      "name": "getWithInlinePath - default - TestEndpointsParamsGetWithInlinePathWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithInlinePathWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e8849d6e-71eb-4c1b-90bc-8b914a6c92d2",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1046,6 +2209,49 @@
       "postServeActions": []
     },
     {
+      "id": "b9b7cf68-599e-4056-bea8-40f1956b8d4f",
+      "name": "getWithQuery - default - TestEndpointsParamsGetWithQueryWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithQueryWithWireMock"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b9b7cf68-599e-4056-bea8-40f1956b8d4f",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "4125d349-732b-4ff7-948d-1eeb977ed13b",
       "name": "getWithAllowMultipleQuery - default",
       "request": {
@@ -1075,6 +2281,49 @@
       "uuid": "4125d349-732b-4ff7-948d-1eeb977ed13b",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "dac87545-a24b-4911-973e-72defc3b4fc5",
+      "name": "getWithAllowMultipleQuery - default - TestEndpointsParamsGetWithAllowMultipleQueryWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithAllowMultipleQueryWithWireMock"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "dac87545-a24b-4911-973e-72defc3b4fc5",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1127,6 +2376,50 @@
       }
     },
     {
+      "id": "cac5bf1a-4969-4f5d-ab15-491778ff3cf8",
+      "name": "getWithPathAndQuery - default - TestEndpointsParamsGetWithPathAndQueryWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path-query/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithPathAndQueryWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cac5bf1a-4969-4f5d-ab15-491778ff3cf8",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
       "name": "getWithInlinePathAndQuery - default",
       "request": {
@@ -1158,6 +2451,50 @@
       "uuid": "c4f5012a-fb3f-45ac-b695-beedc3353ad8",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "572db1c7-f3a8-4380-bec5-29a0cb9ea6f6",
+      "name": "getWithInlinePathAndQuery - default - TestEndpointsParamsGetWithInlinePathAndQueryWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path-query/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithInlinePathAndQueryWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "572db1c7-f3a8-4380-bec5-29a0cb9ea6f6",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1204,6 +2541,45 @@
       }
     },
     {
+      "id": "9c05509a-5072-4f1d-b445-85248c95b045",
+      "name": "modifyWithPath - default - TestEndpointsParamsModifyWithPathWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsModifyWithPathWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9c05509a-5072-4f1d-b445-85248c95b045",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
       "name": "modifyWithInlinePath - default",
       "request": {
@@ -1230,6 +2606,45 @@
       "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "59586976-5186-4238-a4fd-4648a21a7158",
+      "name": "modifyWithInlinePath - default - TestEndpointsParamsModifyWithInlinePathWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsModifyWithInlinePathWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "59586976-5186-4238-a4fd-4648a21a7158",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1276,6 +2691,45 @@
       }
     },
     {
+      "id": "798b3458-b00e-4424-a105-dee11da9cfc9",
+      "name": "createWithBodyAndQuery - default - TestEndpointsParamsCreateWithBodyAndQueryWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/body-and-query",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsCreateWithBodyAndQueryWithWireMock"
+          }
+        },
+        "queryParameters": {
+          "_fields": {
+            "equalTo": "_fields"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "798b3458-b00e-4424-a105-dee11da9cfc9",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "25a5031e-ad21-4379-8965-4732818bb823",
       "name": "getWithBooleanPath - default",
       "request": {
@@ -1302,6 +2756,45 @@
       "uuid": "25a5031e-ad21-4379-8965-4732818bb823",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "597f0c97-0c1d-45f3-9929-f67bed2fbf7a",
+      "name": "getWithBooleanPath - default - TestEndpointsParamsGetWithBooleanPathWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path-bool/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithBooleanPathWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "true"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "597f0c97-0c1d-45f3-9929-f67bed2fbf7a",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1348,6 +2841,84 @@
       }
     },
     {
+      "id": "27c2142d-7dbd-44ba-8bf7-d691b462dd78",
+      "name": "getWithPathAndErrors - default - TestEndpointsParamsGetWithPathAndErrorsWithWireMock",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithPathAndErrorsWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "27c2142d-7dbd-44ba-8bf7-d691b462dd78",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "586903f1-3649-4d3c-8027-edbf22e27e2a",
+      "name": "getWithPathAndErrors - default - TestEndpointsParamsGetWithPathAndErrorsWithWireMock_ThrowsBadRequestBody",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsParamsGetWithPathAndErrorsWithWireMock_ThrowsBadRequestBody"
+          }
+        },
+        "pathParameters": {
+          "param": {
+            "equalTo": "param"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"message\": \"message\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "586903f1-3649-4d3c-8027-edbf22e27e2a",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
       "name": "getAndReturnString - default",
       "request": {
@@ -1369,6 +2940,40 @@
       "uuid": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "cd936257-4a6d-42ca-99ff-d25af4ef3569",
+      "name": "getAndReturnString - default - TestEndpointsPrimitiveGetAndReturnStringWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/string",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnStringWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cd936257-4a6d-42ca-99ff-d25af4ef3569",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1410,6 +3015,40 @@
       }
     },
     {
+      "id": "f337f55d-3dc6-4bb1-8c6a-d04c3c848fa8",
+      "name": "getAndReturnInt - default - TestEndpointsPrimitiveGetAndReturnIntWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/integer",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnIntWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "1",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f337f55d-3dc6-4bb1-8c6a-d04c3c848fa8",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
       "name": "getAndReturnLong - default",
       "request": {
@@ -1431,6 +3070,40 @@
       "uuid": "5fadbebd-86c0-41f9-8be5-864e39eb5924",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "928159e9-1276-45cb-9992-839bef3d4d7d",
+      "name": "getAndReturnLong - default - TestEndpointsPrimitiveGetAndReturnLongWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/long",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnLongWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "1000000",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "928159e9-1276-45cb-9992-839bef3d4d7d",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1472,6 +3145,40 @@
       }
     },
     {
+      "id": "30de9cd9-5841-4ae3-bad4-24bc106b14a6",
+      "name": "getAndReturnDouble - default - TestEndpointsPrimitiveGetAndReturnDoubleWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/double",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnDoubleWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "1.1",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "30de9cd9-5841-4ae3-bad4-24bc106b14a6",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "442e632f-890a-4105-9448-f7015127e3b4",
       "name": "getAndReturnBool - default",
       "request": {
@@ -1503,6 +3210,40 @@
       }
     },
     {
+      "id": "6143a173-8472-4dbf-bac2-36b69a838164",
+      "name": "getAndReturnBool - default - TestEndpointsPrimitiveGetAndReturnBoolWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/boolean",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnBoolWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6143a173-8472-4dbf-bac2-36b69a838164",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
       "name": "getAndReturnDatetime - default",
       "request": {
@@ -1524,6 +3265,40 @@
       "uuid": "ad76fa81-1e63-43fd-9a99-1d5e4339d98c",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "addf7730-fcef-4e82-ac0a-1df85ccff2f0",
+      "name": "getAndReturnDatetime - default - TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/datetime",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"2024-01-15T09:30:00Z\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "addf7730-fcef-4e82-ac0a-1df85ccff2f0",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1596,6 +3371,40 @@
       }
     },
     {
+      "id": "84f4cfde-8e83-4ceb-ba71-992457c63334",
+      "name": "getAndReturnUUID - default - TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/uuid",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "84f4cfde-8e83-4ceb-ba71-992457c63334",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "04baa20d-d318-40e6-9784-c40158c16acd",
       "name": "getAndReturnBase64 - default",
       "request": {
@@ -1617,6 +3426,40 @@
       "uuid": "04baa20d-d318-40e6-9784-c40158c16acd",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "df389458-8ef6-49fd-bf54-379619d0162c",
+      "name": "getAndReturnBase64 - default - TestEndpointsPrimitiveGetAndReturnBase64WithWireMock",
+      "request": {
+        "urlPathTemplate": "/primitive/base64",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPrimitiveGetAndReturnBase64WithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"SGVsbG8gd29ybGQh\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "df389458-8ef6-49fd-bf54-379619d0162c",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1663,6 +3506,45 @@
       }
     },
     {
+      "id": "19ba07b6-2018-47f7-958a-f33539cc3d87",
+      "name": "Put - default - TestEndpointsPutAddWithWireMock",
+      "request": {
+        "urlPathTemplate": "/{id}",
+        "method": "PUT",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsPutAddWithWireMock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"errors\": [\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    },\n    {\n      \"category\": \"API_ERROR\",\n      \"code\": \"INTERNAL_SERVER_ERROR\",\n      \"detail\": \"detail\",\n      \"field\": \"field\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "19ba07b6-2018-47f7-958a-f33539cc3d87",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "d29330f9-49ff-49c4-9081-7c83dbad315b",
       "name": "getAndReturnUnion - default",
       "request": {
@@ -1694,6 +3576,40 @@
       }
     },
     {
+      "id": "44f1526b-4ac2-4377-98e6-57e5f21e713c",
+      "name": "getAndReturnUnion - default - TestEndpointsUnionGetAndReturnUnionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/union",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsUnionGetAndReturnUnionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"animal\": \"dog\",\n  \"name\": \"name\",\n  \"likesToWoof\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "44f1526b-4ac2-4377-98e6-57e5f21e713c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "343f71f3-36ce-4684-b762-d60a086b43a4",
       "name": "withMixedCase - default",
       "request": {
@@ -1715,6 +3631,41 @@
       "uuid": "343f71f3-36ce-4684-b762-d60a086b43a4",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "9cd21d79-2aa9-478d-895d-dd17d62435dd",
+      "name": "withMixedCase - default - TestEndpointsURLsWithMixedCaseWithWireMock",
+      "request": {
+        "urlPathTemplate": "/urls/MixedCase",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsURLsWithMixedCaseWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9cd21d79-2aa9-478d-895d-dd17d62435dd",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1758,6 +3709,41 @@
       "postServeActions": []
     },
     {
+      "id": "0aa5d970-783e-4c6c-9d0c-4eb620a2c041",
+      "name": "noEndingSlash - default - TestEndpointsURLsNoEndingSlashWithWireMock",
+      "request": {
+        "urlPathTemplate": "/urls/no-ending-slash",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsURLsNoEndingSlashWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0aa5d970-783e-4c6c-9d0c-4eb620a2c041",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "f7b95029-2f25-4f70-8b4c-0855712747d8",
       "name": "withEndingSlash - default",
       "request": {
@@ -1779,6 +3765,41 @@
       "uuid": "f7b95029-2f25-4f70-8b4c-0855712747d8",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "d49624c4-7ce0-4a99-beb4-3b3fd59c8c4c",
+      "name": "withEndingSlash - default - TestEndpointsURLsWithEndingSlashWithWireMock",
+      "request": {
+        "urlPathTemplate": "/urls/with-ending-slash/",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsURLsWithEndingSlashWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "d49624c4-7ce0-4a99-beb4-3b3fd59c8c4c",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1822,6 +3843,41 @@
       "postServeActions": []
     },
     {
+      "id": "69a9fbcb-8f78-4070-8f1a-88a33f6ef3bf",
+      "name": "withUnderscores - default - TestEndpointsURLsWithUnderscoresWithWireMock",
+      "request": {
+        "urlPathTemplate": "/urls/with_underscores",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestEndpointsURLsWithUnderscoresWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "69a9fbcb-8f78-4070-8f1a-88a33f6ef3bf",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
       "name": "postWithObjectBodyandResponse - default",
       "request": {
@@ -1838,6 +3894,68 @@
       "uuid": "4a6d0aaa-05f2-47bb-9f40-6e3743b9d2bf",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "adb7c811-9da1-45e4-850e-1b110807a65c",
+      "name": "postWithObjectBodyandResponse - default - TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock",
+      "request": {
+        "urlPathTemplate": "/req-bodies/object",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "adb7c811-9da1-45e4-850e-1b110807a65c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8671e8df-ab2f-4120-ac7a-9a1c085c0590",
+      "name": "postWithObjectBodyandResponse - default - TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock_ThrowsBadRequestBody",
+      "request": {
+        "urlPathTemplate": "/req-bodies/object",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock_ThrowsBadRequestBody"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"message\": \"message\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8671e8df-ab2f-4120-ac7a-9a1c085c0590",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1874,6 +3992,37 @@
       }
     },
     {
+      "id": "4272dcf5-f73b-4a50-9988-3d079f614880",
+      "name": "postWithArrayBodyAndHeaders - default - TestInlinedRequestsPostWithArrayBodyAndHeadersWithWireMock",
+      "request": {
+        "urlPathTemplate": "/req-bodies/array-body-with-headers",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestInlinedRequestsPostWithArrayBodyAndHeadersWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4272dcf5-f73b-4a50-9988-3d079f614880",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
       "name": "postWithNoAuth - default",
       "request": {
@@ -1890,6 +4039,68 @@
       "uuid": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "876ebfc8-337b-40a4-bacb-671a310f8f5d",
+      "name": "postWithNoAuth - default - TestNoAuthPostWithNoAuthWithWireMock",
+      "request": {
+        "urlPathTemplate": "/no-auth",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestNoAuthPostWithNoAuthWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "876ebfc8-337b-40a4-bacb-671a310f8f5d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "16bcceb7-22a0-4cd6-ab4f-3fd75f124b31",
+      "name": "postWithNoAuth - default - TestNoAuthPostWithNoAuthWithWireMock_ThrowsBadRequestBody",
+      "request": {
+        "urlPathTemplate": "/no-auth",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestNoAuthPostWithNoAuthWithWireMock_ThrowsBadRequestBody"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"message\": \"message\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "16bcceb7-22a0-4cd6-ab4f-3fd75f124b31",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1932,6 +4143,41 @@
       "postServeActions": []
     },
     {
+      "id": "a0dde639-3164-4cb3-a26d-d2ba78795d6c",
+      "name": "getWithNoRequestBody - default - TestNoReqBodyGetWithNoRequestBodyWithWireMock",
+      "request": {
+        "urlPathTemplate": "/no-req-body",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestNoReqBodyGetWithNoRequestBodyWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"string\",\n  \"integer\": 1,\n  \"long\": 1000000,\n  \"double\": 1.1,\n  \"bool\": true,\n  \"datetime\": \"2024-01-15T09:30:00Z\",\n  \"date\": \"2023-01-15\",\n  \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n  \"base64\": \"SGVsbG8gd29ybGQh\",\n  \"list\": [\n    \"list\",\n    \"list\"\n  ],\n  \"set\": [\n    \"set\"\n  ],\n  \"map\": {\n    \"1\": \"map\"\n  },\n  \"bigint\": \"1000000\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a0dde639-3164-4cb3-a26d-d2ba78795d6c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
       "name": "postWithNoRequestBody - default",
       "request": {
@@ -1953,6 +4199,40 @@
       "uuid": "7dd9f944-1b35-42e9-a5ed-e48214ac8e91",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "0ce503eb-f135-436d-8808-0fb4b59e8ce0",
+      "name": "postWithNoRequestBody - default - TestNoReqBodyPostWithNoRequestBodyWithWireMock",
+      "request": {
+        "urlPathTemplate": "/no-req-body",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestNoReqBodyPostWithNoRequestBodyWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0ce503eb-f135-436d-8808-0fb4b59e8ce0",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -1992,9 +4272,43 @@
           }
         }
       }
+    },
+    {
+      "id": "c3b9b930-e476-408a-bc1e-0f801805f629",
+      "name": "getWithCustomHeader - default - TestReqWithHeadersGetWithCustomHeaderWithWireMock",
+      "request": {
+        "urlPathTemplate": "/test-headers/custom-header",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "TestReqWithHeadersGetWithCustomHeaderWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c3b9b930-e476-408a-bc1e-0f801805f629",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 61
+    "total": 126
   }
 }

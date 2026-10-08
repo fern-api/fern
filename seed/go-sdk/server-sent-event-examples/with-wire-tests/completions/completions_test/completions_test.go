@@ -86,6 +86,7 @@ func TestCompletionsStreamWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &sse.StreamCompletionRequest{
 		Query: "foo",
@@ -102,6 +103,39 @@ func TestCompletionsStreamWithWireMock(
 	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
 }
 
+func TestCompletionsStreamWithWireMock_ThrowsBadRequestError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &sse.StreamCompletionRequest{
+		Query: "",
+	}
+	_, invocationErr := client.Completions.Stream(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamWithWireMock_ThrowsBadRequestError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *sse.BadRequestError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestError")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "\"bad request\"", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock_ThrowsBadRequestError", "POST", "/stream", nil, 1)
+}
+
 func TestCompletionsStreamEventsWithWireMock(
 	t *testing.T,
 ) {
@@ -111,6 +145,7 @@ func TestCompletionsStreamEventsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &sse.StreamEventsRequest{
 		Query: "query",
@@ -127,6 +162,39 @@ func TestCompletionsStreamEventsWithWireMock(
 	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
 }
 
+func TestCompletionsStreamEventsWithWireMock_ThrowsBadRequestError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &sse.StreamEventsRequest{
+		Query: "",
+	}
+	_, invocationErr := client.Completions.StreamEvents(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsWithWireMock_ThrowsBadRequestError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *sse.BadRequestError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestError")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "\"bad request\"", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock_ThrowsBadRequestError", "POST", "/stream-events", nil, 1)
+}
+
 func TestCompletionsStreamEventsDiscriminantInDataWithWireMock(
 	t *testing.T,
 ) {
@@ -136,6 +204,7 @@ func TestCompletionsStreamEventsDiscriminantInDataWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &sse.StreamEventsDiscriminantInDataRequest{
 		Query: "query",
@@ -152,6 +221,39 @@ func TestCompletionsStreamEventsDiscriminantInDataWithWireMock(
 	VerifyRequestCount(t, "TestCompletionsStreamEventsDiscriminantInDataWithWireMock", "POST", "/stream-events-discriminant-in-data", nil, 1)
 }
 
+func TestCompletionsStreamEventsDiscriminantInDataWithWireMock_ThrowsBadRequestError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &sse.StreamEventsDiscriminantInDataRequest{
+		Query: "query",
+	}
+	_, invocationErr := client.Completions.StreamEventsDiscriminantInData(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsDiscriminantInDataWithWireMock_ThrowsBadRequestError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *sse.BadRequestError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestError")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "\"string\"", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestCompletionsStreamEventsDiscriminantInDataWithWireMock_ThrowsBadRequestError", "POST", "/stream-events-discriminant-in-data", nil, 1)
+}
+
 func TestCompletionsStreamEventsContextProtocolWithWireMock(
 	t *testing.T,
 ) {
@@ -161,6 +263,7 @@ func TestCompletionsStreamEventsContextProtocolWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &sse.StreamEventsContextProtocolRequest{
 		Query: "query",
@@ -175,4 +278,37 @@ func TestCompletionsStreamEventsContextProtocolWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
+}
+
+func TestCompletionsStreamEventsContextProtocolWithWireMock_ThrowsBadRequestError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &sse.StreamEventsContextProtocolRequest{
+		Query: "",
+	}
+	_, invocationErr := client.Completions.StreamEventsContextProtocol(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsContextProtocolWithWireMock_ThrowsBadRequestError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *sse.BadRequestError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestError")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "\"bad request\"", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock_ThrowsBadRequestError", "POST", "/stream-events-context-protocol", nil, 1)
 }

@@ -86,6 +86,7 @@ func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := []string{
@@ -113,6 +114,7 @@ func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := []*types.ObjectWithRequiredField{
@@ -144,6 +146,7 @@ func TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := []string{
@@ -170,6 +173,7 @@ func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := []*types.ObjectWithRequiredField{
@@ -198,6 +202,7 @@ func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := map[string]string{
@@ -224,6 +229,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := map[string]*types.ObjectWithRequiredField{
@@ -252,6 +258,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMo
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := map[string]*types.MixedType{
@@ -280,6 +287,7 @@ func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{

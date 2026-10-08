@@ -383,6 +383,10 @@ fixtures:
   go-xml-twiml:
     - outputFolder: .
       customConfig: null
+  errors:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:

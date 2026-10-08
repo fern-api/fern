@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "d9995da3-e121-4c2c-88e9-ac3a1977db8d",
+      "name": "Protocol context with no field collision and mixed data types - default - TestStreamProtocolNoCollisionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-no-collision",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamProtocolNoCollisionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "d9995da3-e121-4c2c-88e9-ac3a1977db8d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "972ef058-2c94-4225-bf17-d8cce7541d60",
       "name": "Protocol context with event field collision and mixed data types - default",
       "request": {
@@ -43,6 +74,37 @@
       "uuid": "972ef058-2c94-4225-bf17-d8cce7541d60",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2e373957-e1d2-4988-b035-07c67cf5c3d4",
+      "name": "Protocol context with event field collision and mixed data types - default - TestStreamProtocolCollisionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-collision",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamProtocolCollisionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "2e373957-e1d2-4988-b035-07c67cf5c3d4",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -79,6 +141,37 @@
       }
     },
     {
+      "id": "3dc8b025-61ce-4185-8ecc-0c77db40ba0a",
+      "name": "Explicit data context with discriminant flattened via allOf - default - TestStreamDataContextWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/data-context",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamDataContextWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "3dc8b025-61ce-4185-8ecc-0c77db40ba0a",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "7570b0a9-0faf-420d-9c7b-791097b27bf6",
       "name": "No context extension, defaults to data context - default",
       "request": {
@@ -95,6 +188,37 @@
       "uuid": "7570b0a9-0faf-420d-9c7b-791097b27bf6",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b19e075c-ba27-4be0-a564-579f154f009d",
+      "name": "No context extension, defaults to data context - default - TestStreamNoContextWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/no-context",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamNoContextWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "b19e075c-ba27-4be0-a564-579f154f009d",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -131,6 +255,37 @@
       }
     },
     {
+      "id": "94e6c035-c5a8-490d-aece-cab7bea37840",
+      "name": "Protocol context with flat allOf schema pattern - default - TestStreamProtocolWithFlatSchemaWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/protocol-with-flat-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamProtocolWithFlatSchemaWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"timestamp\":\"2024-01-15T09:30:00Z\",\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "94e6c035-c5a8-490d-aece-cab7bea37840",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "2e3bb790-6935-4285-9c09-cd82ca3cd15f",
       "name": "Data context with envelope+data schema pattern - default",
       "request": {
@@ -147,6 +302,37 @@
       "uuid": "2e3bb790-6935-4285-9c09-cd82ca3cd15f",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "cd22933a-31e6-47ac-bed1-934bf535f49f",
+      "name": "Data context with envelope+data schema pattern - default - TestStreamDataContextWithEnvelopeSchemaWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/data-context-with-envelope-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamDataContextWithEnvelopeSchemaWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"event\":\"heartbeat\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "cd22933a-31e6-47ac-bed1-934bf535f49f",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -183,6 +369,37 @@
       }
     },
     {
+      "id": "e5ae13bd-a2ee-4f76-abe4-d8c1e4b3713e",
+      "name": "OAS 3.2 spec-native SSE pattern with inline variants and contentSchema - default - TestStreamOasSpecNativeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/oas-spec-native",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamOasSpecNativeWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"data\":\"data\",\"event\":\"event\",\"id\":\"id\",\"retry\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "e5ae13bd-a2ee-4f76-abe4-d8c1e4b3713e",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "a92674bc-618d-43b5-a4b8-ee4724d69afd",
       "name": "x-fern-streaming with stream-condition and $ref request body - default",
       "request": {
@@ -199,6 +416,37 @@
       "uuid": "a92674bc-618d-43b5-a4b8-ee4724d69afd",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1f3d7b74-2dbf-4839-a08a-3cea5c0a8c4c",
+      "name": "x-fern-streaming with stream-condition and $ref request body - default - TestStreamXFernStreamingConditionStreamWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingConditionStreamWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1f3d7b74-2dbf-4839-a08a-3cea5c0a8c4c",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -235,6 +483,37 @@
       }
     },
     {
+      "id": "46189cd6-3a09-43bc-96a9-b98de8d27824",
+      "name": "x-fern-streaming with stream-condition and $ref request body - default - TestStreamXFernStreamingConditionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingConditionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "46189cd6-3a09-43bc-96a9-b98de8d27824",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "56fc9590-ba61-4747-bd46-f04be1269f11",
       "name": "x-fern-streaming with shared request schema - default",
       "request": {
@@ -251,6 +530,37 @@
       "uuid": "56fc9590-ba61-4747-bd46-f04be1269f11",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "8c8a3b85-eb67-4c09-bc0b-2571362734a9",
+      "name": "x-fern-streaming with shared request schema - default - TestStreamXFernStreamingSharedSchemaStreamWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-shared-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingSharedSchemaStreamWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8c8a3b85-eb67-4c09-bc0b-2571362734a9",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -287,6 +597,37 @@
       }
     },
     {
+      "id": "6199c529-de86-493c-a9ee-fd33c782bd1a",
+      "name": "x-fern-streaming with shared request schema - default - TestStreamXFernStreamingSharedSchemaWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-shared-schema",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingSharedSchemaWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6199c529-de86-493c-a9ee-fd33c782bd1a",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "99e09f9c-44a7-40c2-9b71-c7b58c309670",
       "name": "Non-streaming endpoint sharing request schema with endpoint 10 - default",
       "request": {
@@ -303,6 +644,37 @@
       "uuid": "99e09f9c-44a7-40c2-9b71-c7b58c309670",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "ef4e3add-6931-4742-b220-90209db3d439",
+      "name": "Non-streaming endpoint sharing request schema with endpoint 10 - default - TestValidateCompletionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/validate-completion",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestValidateCompletionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ef4e3add-6931-4742-b220-90209db3d439",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -339,6 +711,37 @@
       }
     },
     {
+      "id": "b6c81da6-be58-4b69-949d-b2f5dc193a8e",
+      "name": "x-fern-streaming with discriminated union request body - default - TestStreamXFernStreamingUnionStreamWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-union",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingUnionStreamWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b6c81da6-be58-4b69-949d-b2f5dc193a8e",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "8831acea-84dc-48da-9aca-477729d64cec",
       "name": "x-fern-streaming with discriminated union request body - default",
       "request": {
@@ -355,6 +758,37 @@
       "uuid": "8831acea-84dc-48da-9aca-477729d64cec",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "47ca0a27-6d5c-4fd7-a28f-39e5198796d8",
+      "name": "x-fern-streaming with discriminated union request body - default - TestStreamXFernStreamingUnionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-union",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingUnionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "47ca0a27-6d5c-4fd7-a28f-39e5198796d8",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -391,6 +825,37 @@
       }
     },
     {
+      "id": "b3345146-95fb-487d-aaa2-db24a4d43f48",
+      "name": "Non-streaming endpoint referencing the union base schema - default - TestValidateUnionRequestWithWireMock",
+      "request": {
+        "urlPathTemplate": "/validate-union-request",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestValidateUnionRequestWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"valid\": true\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b3345146-95fb-487d-aaa2-db24a4d43f48",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "1983a87e-800d-48d1-9596-4ddca4dc6b65",
       "name": "x-fern-streaming with nullable stream condition field - default",
       "request": {
@@ -407,6 +872,37 @@
       "uuid": "1983a87e-800d-48d1-9596-4ddca4dc6b65",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "0a7a8856-447e-41f2-891c-ccb0825f235a",
+      "name": "x-fern-streaming with nullable stream condition field - default - TestStreamXFernStreamingNullableConditionStreamWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-nullable-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingNullableConditionStreamWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0a7a8856-447e-41f2-891c-ccb0825f235a",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -443,6 +939,37 @@
       }
     },
     {
+      "id": "2d595527-77dd-4242-bedf-fefd809d4819",
+      "name": "x-fern-streaming with nullable stream condition field - default - TestStreamXFernStreamingNullableConditionWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-nullable-condition",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingNullableConditionWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"answer\": \"answer\",\n  \"finishReason\": \"complete\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2d595527-77dd-4242-bedf-fefd809d4819",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "6c0b88de-5271-4c14-b4e1-865445d0f99f",
       "name": "x-fern-streaming with SSE format but no stream-condition - default",
       "request": {
@@ -467,9 +994,40 @@
           }
         }
       }
+    },
+    {
+      "id": "4bf71f3f-704a-41db-9ca0-4d6d9054cd3e",
+      "name": "x-fern-streaming with SSE format but no stream-condition - default - TestStreamXFernStreamingSseOnlyWithWireMock",
+      "request": {
+        "urlPathTemplate": "/stream/x-fern-streaming-sse-only",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestStreamXFernStreamingSseOnlyWithWireMock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: \"string\"\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "4bf71f3f-704a-41db-9ca0-4d6d9054cd3e",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 18
+    "total": 36
   }
 }

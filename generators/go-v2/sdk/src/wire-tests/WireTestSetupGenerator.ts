@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireMock, WireMockOptions } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -11,10 +11,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
+    private readonly options: WireMockOptions;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation, options: WireMockOptions = {}) {
         this.context = context;
         this.ir = ir;
+        this.options = options;
     }
 
     /**
@@ -25,16 +27,16 @@ export class WireTestSetupGenerator {
         this.generateDockerComposeFile();
     }
 
-    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation, options: WireMockOptions = {}) {
         // ir-sdk versions may differ between go-sdk and mock-utils. The newer IR only adds
         // optional fields and OAuth configuration variants that WireMock ignores, but the added
         // union variants stop the two IntermediateRepresentations from overlapping structurally,
         // so the assertion has to go through `unknown`.
-        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
+        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0], options);
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir, this.options);
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),

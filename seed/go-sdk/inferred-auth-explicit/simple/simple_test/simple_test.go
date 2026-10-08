@@ -85,6 +85,7 @@ func TestSimpleGetSomethingWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	invocationErr := client.Simple.GetSomething(
 		context.TODO(),

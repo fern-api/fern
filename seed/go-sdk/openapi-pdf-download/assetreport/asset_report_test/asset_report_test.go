@@ -5,9 +5,7 @@ package asset_report_test
 import (
 	bytes "bytes"
 	context "context"
-	base64 "encoding/base64"
 	json "encoding/json"
-	io "io"
 	http "net/http"
 	os "os"
 	testing "testing"
@@ -88,11 +86,12 @@ func TestAssetReportGetPdfWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.AssetReportPdfGetRequest{
 		AssetReportToken: "asset_report_token",
 	}
-	response, invocationErr := client.AssetReport.WithRawResponse.GetPdf(
+	_, invocationErr := client.AssetReport.GetPdf(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
@@ -100,14 +99,48 @@ func TestAssetReportGetPdfWithWireMock(
 		),
 	)
 
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	require.Equal(t, "application/octet-stream", response.Header.Get("Content-Type"), "Response content type should match the served fixture")
-	actualBytes, readErr := io.ReadAll(response.Body)
-	require.NoError(t, readErr, "Response body should be readable to completion")
-	expectedBytes, decodeErr := base64.StdEncoding.DecodeString("JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA2MTIgNzkyXSA+PgplbmRvYmoKeHJlZgowIDQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAwNjQgMDAwMDAgbiAKMDAwMDAwMDEyMSAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDQgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjE5MgolJUVPRgo=")
-	require.NoError(t, decodeErr, "Fixture bytes should decode")
-	require.Equal(t, expectedBytes, actualBytes, "Response body should match the served fixture bytes")
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.BadRequestError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestError")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"error_type\":\"error_type\",\"error_code\":\"error_code\",\"error_message\":\"error_message\"}", string(actualErrorBody), "Error body should match the error example")
+
 	VerifyRequestCount(t, "TestAssetReportGetPdfWithWireMock", "POST", "/asset_report/pdf/get", nil, 1)
+}
+
+func TestAssetReportGetPdfWithWireMock_ThrowsInternalServerError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &fern.AssetReportPdfGetRequest{
+		AssetReportToken: "asset_report_token",
+	}
+	_, invocationErr := client.AssetReport.GetPdf(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestAssetReportGetPdfWithWireMock_ThrowsInternalServerError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.InternalServerError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with InternalServerError")
+	require.Equal(t, 500, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"error_type\":\"error_type\",\"error_code\":\"error_code\",\"error_message\":\"error_message\"}", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestAssetReportGetPdfWithWireMock_ThrowsInternalServerError", "POST", "/asset_report/pdf/get", nil, 1)
 }
 
 func TestAssetReportGetWithWireMock(
@@ -119,6 +152,7 @@ func TestAssetReportGetWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.AssetReportPdfGetRequest{
 		AssetReportToken: "asset_report_token",
@@ -133,4 +167,37 @@ func TestAssetReportGetWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestAssetReportGetWithWireMock", "POST", "/asset_report/get", nil, 1)
+}
+
+func TestAssetReportGetWithWireMock_ThrowsBadRequestError(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
+	)
+	request := &fern.AssetReportPdfGetRequest{
+		AssetReportToken: "asset_report_token",
+	}
+	_, invocationErr := client.AssetReport.Get(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestAssetReportGetWithWireMock_ThrowsBadRequestError"}},
+		),
+	)
+
+	require.Error(t, invocationErr, "Client method call should fail")
+	var apiError *fern.BadRequestError
+	require.ErrorAs(t, invocationErr, &apiError, "Client method call should fail with BadRequestError")
+	require.Equal(t, 400, apiError.StatusCode, "Error status code should match the error example")
+	actualErrorBody, marshalErr := json.Marshal(apiError)
+	require.NoError(t, marshalErr)
+	require.JSONEq(t, "{\"error_type\":\"error_type\",\"error_code\":\"error_code\",\"error_message\":\"error_message\"}", string(actualErrorBody), "Error body should match the error example")
+
+	VerifyRequestCount(t, "TestAssetReportGetWithWireMock_ThrowsBadRequestError", "POST", "/asset_report/get", nil, 1)
 }

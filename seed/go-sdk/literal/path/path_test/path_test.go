@@ -85,6 +85,7 @@ func TestPathSendWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	_, invocationErr := client.Path.Send(
 		context.TODO(),

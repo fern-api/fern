@@ -86,6 +86,7 @@ func TestAuthGetTokenWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.GetTokenRequest{
 		ClientID:     "client_id",

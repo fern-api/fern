@@ -86,6 +86,7 @@ func TestServiceRerankWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 	)
 	request := &fern.RerankRequest{
 		Documents: []*fern.DocumentItem{

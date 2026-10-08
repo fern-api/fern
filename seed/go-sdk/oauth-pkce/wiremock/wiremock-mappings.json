@@ -49,9 +49,64 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "86fd9bdd-8367-47b2-894d-a368c9f44099",
+      "name": "authorize - default - TestOauthAuthorizeWithWireMock",
+      "request": {
+        "urlPathTemplate": "/oauth/authorize",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "TestOauthAuthorizeWithWireMock"
+          }
+        },
+        "queryParameters": {
+          "response_type": {
+            "equalTo": "code"
+          },
+          "client_id": {
+            "equalTo": "client_abc123"
+          },
+          "redirect_uri": {
+            "equalTo": "https://example.com/callback"
+          },
+          "code_challenge": {
+            "equalTo": "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
+          },
+          "code_challenge_method": {
+            "equalTo": "S256"
+          },
+          "scope": {
+            "equalTo": "read write"
+          },
+          "state": {
+            "equalTo": "xyz"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"code\": \"auth_code_xyz\",\n  \"state\": \"xyz\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "86fd9bdd-8367-47b2-894d-a368c9f44099",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

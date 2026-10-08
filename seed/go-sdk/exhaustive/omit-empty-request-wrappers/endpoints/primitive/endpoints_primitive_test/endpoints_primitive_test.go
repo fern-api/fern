@@ -87,6 +87,7 @@ func TestEndpointsPrimitiveGetAndReturnStringWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := "string"
@@ -111,6 +112,7 @@ func TestEndpointsPrimitiveGetAndReturnIntWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := 1
@@ -135,6 +137,7 @@ func TestEndpointsPrimitiveGetAndReturnLongWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := int64(1000000)
@@ -159,6 +162,7 @@ func TestEndpointsPrimitiveGetAndReturnDoubleWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := 1.1
@@ -183,6 +187,7 @@ func TestEndpointsPrimitiveGetAndReturnBoolWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := true
@@ -207,6 +212,7 @@ func TestEndpointsPrimitiveGetAndReturnDatetimeWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := fern.MustParseDateTime(
@@ -233,6 +239,7 @@ func TestEndpointsPrimitiveGetAndReturnUUIDWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := uuid.MustParse(
@@ -259,6 +266,7 @@ func TestEndpointsPrimitiveGetAndReturnBase64WithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithoutRetries(),
 		option.WithToken("test-token"),
 	)
 	request := []byte("SGVsbG8gd29ybGQh")
