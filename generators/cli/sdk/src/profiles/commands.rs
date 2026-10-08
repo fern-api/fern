@@ -565,13 +565,13 @@ pub struct ProfilesContext<'a> {
     pub bindings: &'a [Box<dyn crate::binding::Binding>],
     /// Command path of the revoke operation, when one is configured.
     pub revoke_op_path: Option<Vec<String>>,
-    /// The configured group name. Carried rather than assumed, so a CLI that
-    /// renamed the group (`commandName: tenants`) does not get hints telling
     /// The revoke operation's parameter that takes the stored
     /// `credential_id`, when the generator named one.
     pub revoke_credential_id_parameter: Option<&'a str>,
     /// How `create --provision` mints a credential, when configured.
     pub provision: Option<&'a crate::profiles::ProvisionOperation>,
+    /// The configured group name. Carried rather than assumed, so a CLI that
+    /// renamed the group (`commandName: tenants`) does not get hints telling
     /// it to run `<bin> profiles use …`, which would not resolve.
     pub command_name: &'a str,
     pub auth_bindings: &'a [(String, SchemeBinding)],
@@ -659,13 +659,6 @@ async fn handle_create(
         )));
     }
 
-    if let Some(parent) = matches.get_one::<String>("parent") {
-        if parent == &name {
-            return Err(CliError::Validation(format!(
-                "profile `{name}` cannot be its own parent"
-            )));
-        }
-        if store.entry(parent).is_none() {
     if provision {
         if let Some(previous) = existing.as_ref().and_then(|e| e.credential_id.as_deref()) {
             let _ = writeln!(
@@ -680,6 +673,13 @@ async fn handle_create(
         }
     }
 
+    if let Some(parent) = matches.get_one::<String>("parent") {
+        if parent == &name {
+            return Err(CliError::Validation(format!(
+                "profile `{name}` cannot be its own parent"
+            )));
+        }
+        if store.entry(parent).is_none() {
             return Err(store::unknown_profile(store, parent));
         }
     }
@@ -802,13 +802,13 @@ async fn handle_create(
         let _ = writeln!(
             stderr,
             "{}",
-            login::green(&format!(
-                "✓ Provisioned a credential for profile `{name}`{}",
+            format!(
+                "Minted a credential for profile `{name}`{}; storing it…",
                 match &minted.credential_id {
                     Some(id) => format!(" (id {id})"),
                     None => String::new(),
                 },
-            )),
+            ),
         );
         entry.credential_id = minted.credential_id.clone();
         active_store()
@@ -1233,12 +1233,12 @@ fn handle_list<W: Write>(
             if let Some(account) = account {
                 row.insert("account".into(), account.into());
             }
-            if let Some(credential) = &resolved.credential {
-                // The *slot* only when it is not this profile's own. Emitting
-                // it unconditionally printed `prod -> prod` on every row: true,
             if let Some(id) = &resolved.credential_id {
                 row.insert("credential_id".into(), id.clone().into());
             }
+            if let Some(credential) = &resolved.credential {
+                // The *slot* only when it is not this profile's own. Emitting
+                // it unconditionally printed `prod -> prod` on every row: true,
                 // redundant, and it crowded out the columns that carry
                 // information.
                 if credential != &entry.name {
