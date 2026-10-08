@@ -21,6 +21,9 @@ service:
             refresh_token: string
             grant_type: string
             scope: optional<string>
+            code: optional<string>
+            code_verifier: optional<string>
+            redirect_uri: optional<string>
       response: TokenResponse
       examples:
         - request:

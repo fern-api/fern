@@ -631,7 +631,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }): GeneratedRequestWrapper.Property[] {
         const grantTypeKey = context.authProvider.getInferredAuthGrantType(this.authScheme)?.requestKey;
         return this.getAllRequestProperties({ context, requestWrapper }).filter(
-            (p) => getPropertyKey(p.name) !== grantTypeKey
+            (p) =>
+                getPropertyKey(p.name) !== grantTypeKey &&
+                context.authProvider.isUsedByInferredAuthGrantType(this.authScheme, p)
         );
     }
 

@@ -5,6 +5,14 @@ import { ts } from "ts-morph";
 import { FileContext } from "../file-context/FileContext.js";
 import { getClientCredentialsOrThrow } from "./getClientCredentials.js";
 
+const REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+// Request parameters of the OAuth 2.0 refresh token grant (RFC 6749 section 6), plus client authentication.
+const REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES = new Set(["refreshtoken", "scope", "clientid", "clientsecret"]);
+
+function normalizePropertyName(name: string): string {
+    return name.replace(/["'_-]/g, "").toLowerCase();
+}
+
 export class AuthProviderContext {
     private readonly context: FileContext;
 
@@ -117,6 +125,7 @@ export class AuthProviderContext {
             const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
             return requestProperties
                 .filter((property) => getPropertyKey(property.name) !== grantTypeKey)
+                .filter((property) => this.isUsedByInferredAuthGrantType(authScheme, property))
                 .map((property) => ({
                     name: property.safeName,
                     wireKey: property.name,
@@ -130,8 +139,28 @@ export class AuthProviderContext {
         // extract properties directly from the request body type.
         const grantTypeKey = this.getInferredAuthGrantType(authScheme)?.requestKey;
         return this.getPropertiesFromRequestBody(endpoint).filter(
-            (property) => getPropertyKey(property.wireKey) !== grantTypeKey
+            (property) =>
+                getPropertyKey(property.wireKey) !== grantTypeKey &&
+                this.isUsedByInferredAuthGrantType(authScheme, {
+                    name: property.wireKey,
+                    isOptional: property.isOptional
+                })
         );
+    }
+
+    /**
+     * Token endpoints shared by several grants list fields of every grant. With a fixed `refresh_token`
+     * grant, optional fields that belong to other grants (e.g. `code`, `redirect_uri`) are neither
+     * exposed as auth options nor sent.
+     */
+    public isUsedByInferredAuthGrantType(
+        authScheme: FernIr.InferredAuthScheme,
+        property: { name: string; isOptional: boolean }
+    ): boolean {
+        if (authScheme.tokenEndpoint.grantType?.value !== REFRESH_TOKEN_GRANT_TYPE || !property.isOptional) {
+            return true;
+        }
+        return REFRESH_TOKEN_GRANT_REQUEST_PROPERTIES.has(normalizePropertyName(property.name));
     }
 
     /**
