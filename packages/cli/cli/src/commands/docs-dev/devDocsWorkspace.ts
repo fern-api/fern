@@ -49,13 +49,17 @@ export async function previewDocsWorkspace({
     }
 
     const validateProject = async (project: Project, context: TaskContext): Promise<void> => {
+        if (skipValidation) {
+            context.logger.warn("Skipping docs validation (--skip-validation)");
+            return;
+        }
         const docsWorkspace = project.docsWorkspaces;
         if (docsWorkspace == null) {
             return;
         }
         const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
-        const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
+        const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser, skipApi });
         await validateDocsWorkspaceWithoutExiting({
             workspace: docsWorkspace,
             context,
