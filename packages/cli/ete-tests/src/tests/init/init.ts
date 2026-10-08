@@ -7,7 +7,7 @@ interface InitOptions {
     directory?: AbsoluteFilePath;
     env?: Record<string, string | undefined>;
     additionalArgs?: {
-        name: "--openapi" | "--mintlify" | "--log-level" | "--fern-definition";
+        name: "--api" | "--openapi" | "--mintlify" | "--log-level" | "--fern-definition";
         value?: string;
     }[];
     signal?: AbortSignal;

@@ -524,7 +524,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         openApiPath: absoluteOpenApiPath,
                         openApiUrl,
                         useFernDefinition: argv["fern-definition"] === true,
-                        useSdkConfig
+                        useSdkConfig,
+                        includeDocs: argv.api == null
                     });
                 });
             }

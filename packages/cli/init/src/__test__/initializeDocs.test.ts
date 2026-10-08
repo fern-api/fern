@@ -157,21 +157,25 @@ describe("initializeDocs", () => {
         expect(await existsInProject("fern", "pages", "welcome.mdx")).toBe(true);
     });
 
-    it("warns and leaves docs.yml alone when docs.yml already exists", async () => {
+    it("adds the spec to an existing docs.yml, appending to its api entry when it has one", async () => {
         await initialize();
-        const docsYmlBefore = await readFile(path.join(projectDirectory, "fern", "docs.yml"), "utf8");
-        const warnings: string[] = [];
-        const logger = createLogger((level, ...args) => {
-            if (level === LogLevel.Warn) {
-                warnings.push(args.join(" "));
-            }
+
+        await initialize(await writeSpec());
+        await initialize(await writeSpec());
+
+        expect(await readDocsYml()).toMatchObject({
+            navigation: [
+                { page: "Welcome", path: "pages/welcome.mdx" },
+                {
+                    api: "API Reference",
+                    paginated: true,
+                    specs: [
+                        { type: "openapi", path: "./openapi.json" },
+                        { type: "openapi", path: "./openapi-1.json" }
+                    ]
+                }
+            ]
         });
-
-        await initialize(await writeSpec(), createMockTaskContext({ logger }));
-
-        expect(await readFile(path.join(projectDirectory, "fern", "docs.yml"), "utf8")).toBe(docsYmlBefore);
-        expect(await existsInProject("fern", "openapi.json")).toBe(false);
-        expect(warnings.join("\n")).toContain("The OpenAPI spec was not added");
     });
 
     it("ignores --openapi when SDK Config init is off", async () => {
@@ -201,12 +205,22 @@ describe("initializeDocs", () => {
         expect(warnings).toEqual([]);
     });
 
-    it("does not validate or download the spec when docs.yml already exists", async () => {
+    it("warns and changes nothing when the navigation of an existing docs.yml uses tabs", async () => {
         await initialize();
+        const docsYmlPath = path.join(projectDirectory, "fern", "docs.yml");
+        const docsYmlWithTabs = "navigation:\n  - tab: docs\n    layout:\n      - page: Welcome\n        path: w.mdx\n";
+        await writeFile(docsYmlPath, docsYmlWithTabs);
+        const warnings: string[] = [];
+        const logger = createLogger((level, ...args) => {
+            if (level === LogLevel.Warn) {
+                warnings.push(args.join(" "));
+            }
+        });
 
-        await initialize("https://example.com/openapi.json");
-        await initialize("./missing.json");
+        await initialize(await writeSpec(), createMockTaskContext({ logger }));
 
-        expect(loadOpenAPIFromUrl).not.toHaveBeenCalled();
+        expect(await readFile(docsYmlPath, "utf8")).toBe(docsYmlWithTabs);
+        expect(await existsInProject("fern", "openapi.json")).toBe(false);
+        expect(warnings.join("\n")).toContain("The OpenAPI spec was not added");
     });
 });

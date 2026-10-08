@@ -14,6 +14,7 @@ import path from "path";
 
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
 import { createDefaultOpenAPIWorkspace, createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace.js";
+import { initializeDocs } from "./initializeDocs.js";
 
 export async function initializeAPI({
     organization,
@@ -22,6 +23,7 @@ export async function initializeAPI({
     openApiUrl,
     useFernDefinition,
     useSdkConfig,
+    includeDocs,
     context
 }: {
     organization: string | undefined;
@@ -30,6 +32,8 @@ export async function initializeAPI({
     openApiUrl?: string;
     useFernDefinition: boolean;
     useSdkConfig: boolean;
+    /** Whether to also initialize the docs. Only applies with `useSdkConfig`. */
+    includeDocs: boolean;
     context: TaskContext;
 }): Promise<void> {
     if (useSdkConfig && useFernDefinition) {
@@ -80,6 +84,18 @@ export async function initializeAPI({
         });
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
+    }
+
+    // The docs cannot read an SDK Config API, so unless only the API was asked for, give them its spec too.
+    if (useSdkConfig && includeDocs) {
+        await initializeDocs({
+            organization,
+            versionOfCli,
+            taskContext: context,
+            useSdkConfig,
+            openApi:
+                openApiUrl ?? relocatedOpenApiPath ?? join(directoryOfWorkspace, RelativeFilePath.of("openapi.yml"))
+        });
     }
 }
 

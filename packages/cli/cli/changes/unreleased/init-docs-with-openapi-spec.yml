@@ -1,0 +1,9 @@
+- summary: |
+    When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init` now also initializes the docs with the
+    API's spec, because the docs cannot read an `sdk-config.yml` API. `fern init` and `fern init --openapi <path-or-url>`
+    initialize both the API and the docs, `fern init --api` only the API, and `fern init --docs --openapi <path-or-url>`
+    only the docs. In a project that already has a `docs.yml`, the spec is added to its first `api` entry, or to a new
+    one, instead of only printing a warning. The docs get their own copy of the spec, named `openapi-1.json|yml` (and so
+    on) when `openapi.json|yml` is taken, so an existing API's spec is never overwritten. If `docs.yml` splits its
+    navigation into tabs, it is left unchanged and the command warns. Without the flag, behavior is unchanged.
+  type: fix
