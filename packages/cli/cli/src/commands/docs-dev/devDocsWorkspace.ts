@@ -17,7 +17,9 @@ export async function previewDocsWorkspace({
     astro,
     backendPort,
     forceDownload,
-    includePrivate = false
+    includePrivate = false,
+    skipApi = false,
+    skipValidation = false
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -30,6 +32,10 @@ export async function previewDocsWorkspace({
     forceDownload?: boolean;
     /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
     includePrivate?: boolean;
+    /** Skip building API reference sections (much faster; API reference pages are empty). */
+    skipApi?: boolean;
+    /** Skip validating the docs (faster startup; docs errors are not reported). */
+    skipValidation?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -122,7 +128,8 @@ export async function previewDocsWorkspace({
             bundlePath,
             backendPort,
             forceDownload,
-            includePrivate
+            includePrivate,
+            skipApi
         });
     });
 

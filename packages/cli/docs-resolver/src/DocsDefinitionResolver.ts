@@ -210,6 +210,12 @@ export interface DocsDefinitionResolverArgs {
      */
     buildRefVersions?: boolean;
     /**
+     * When true, `api:` sections are replaced with empty placeholder nodes and no API
+     * definitions are parsed or registered. Used by `fern docs dev --skip-api`, where API
+     * reference pages are unavailable. Defaults to false so publishing is never affected.
+     */
+    skipApiReferences?: boolean;
+    /**
      * CLI version used to load API workspaces for git-ref-backed versions. Required for
      * `api:` sections in ref-backed versions; the publish/preview paths pass it through.
      */
@@ -233,6 +239,7 @@ export class DocsDefinitionResolver {
     private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
     private buildRefVersions: boolean;
+    private skipApiReferences: boolean;
     private cliVersion?: string;
     private cliName: string;
     /**
@@ -260,6 +267,7 @@ export class DocsDefinitionResolver {
         docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
         buildRefVersions = true,
+        skipApiReferences = false,
         cliVersion,
         cliName = "fern"
     }: DocsDefinitionResolverArgs) {
@@ -277,6 +285,7 @@ export class DocsDefinitionResolver {
         this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
         this.buildRefVersions = buildRefVersions;
+        this.skipApiReferences = skipApiReferences;
         this.cliVersion = cliVersion;
         this.cliName = cliName;
     }
@@ -2071,6 +2080,10 @@ export class DocsDefinitionResolver {
         parentAvailability?: docsYml.RawSchemas.Availability;
         contentSource?: docsYml.VersionContentSource;
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
+        if (this.skipApiReferences) {
+            return this.toPlaceholderApiSectionNode({ item, parentSlug, hideChildren });
+        }
+
         // For git-ref-backed versions the api section's definition is loaded from the ref's
         // materialized fern folder; otherwise from the current working-tree workspaces.
         const { apiWorkspaces, ossWorkspaces } = await this.resolveApiWorkspaces(contentSource);
@@ -2282,6 +2295,54 @@ export class DocsDefinitionResolver {
         this.onApiRegistrationQueued?.({ snippetsConfig, apiName: apiNameForRegistration, workspace });
 
         return apiReferenceNode;
+    }
+
+    /**
+     * Builds an empty API reference node without parsing the API definition. Used by
+     * `fern docs dev --skip-api` so large API specs don't slow down the preview.
+     */
+    private toPlaceholderApiSectionNode({
+        item,
+        parentSlug,
+        hideChildren
+    }: {
+        item: docsYml.DocsNavigationItem.ApiSection;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        hideChildren?: boolean;
+    }): FernNavigation.V1.ApiReferenceNode {
+        this.taskContext.logger.warn(`Skipping API reference "${item.title}" (--skip-api)`);
+
+        const apiDefinitionId = FernNavigation.V1.ApiDefinitionId(`__skipped_api_${this.pendingApiCounter++}__`);
+        const slug = parentSlug.apply({
+            skipUrlSlug: item.skipUrlSlug,
+            urlSlug: item.slug ?? kebabCase(item.title)
+        });
+
+        return {
+            id: this.#idgen.get(apiDefinitionId),
+            type: "apiReference",
+            title: item.title,
+            apiDefinitionId,
+            slug: slug.get(),
+            children: [],
+            hidden: hideChildren || item.hidden,
+            icon: this.resolveIconFileId(item.icon),
+            viewers: item.viewers,
+            orphaned: item.orphaned,
+            featureFlags: item.featureFlags,
+            paginated: undefined,
+            showErrors: undefined,
+            hideTitle: undefined,
+            changelog: undefined,
+            playground: undefined,
+            postmanCollectionUrl: undefined,
+            authed: undefined,
+            collapsed: undefined,
+            overviewPageId: undefined,
+            noindex: undefined,
+            availability: undefined,
+            pointsTo: undefined
+        };
     }
 
     private async toChangelogNode(

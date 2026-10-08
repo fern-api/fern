@@ -186,7 +186,8 @@ export async function getPreviewDocsDefinition({
     previousDocsDefinition,
     editedAbsoluteFilepaths,
     previousPreviewResult,
-    includePrivate = false
+    includePrivate = false,
+    skipApi = false
 }: {
     domain: string;
     project: Project;
@@ -195,6 +196,8 @@ export async function getPreviewDocsDefinition({
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
     /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
     includePrivate?: boolean;
+    /** Skip building API reference sections (much faster; API reference pages are empty). */
+    skipApi?: boolean;
     /**
      * Previous preview result (for incremental updates).
      * This is used to preserve translation data during incremental page updates.
@@ -400,6 +403,7 @@ export async function getPreviewDocsDefinition({
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
         targetAudiences: undefined,
         docsVisibility: includePrivate ? "private" : "public",
+        skipApiReferences: skipApi,
         buildTranslatedApiDefinitions: true,
         // `fern docs dev` previews the working-tree version only; git-ref-backed
         // versions are materialized on the publish path.

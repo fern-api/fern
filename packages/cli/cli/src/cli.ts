@@ -2429,6 +2429,18 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
+                })
+                .option("skip-api", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip building API reference sections for a much faster preview. API reference pages will be empty."
+                })
+                .option("skip-validation", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip validating the docs while previewing, so the preview is ready sooner on large sites. Docs errors will not be reported."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2476,7 +2488,9 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 astro: argv.astro,
                 backendPort,
                 forceDownload: argv.forceDownload,
-                includePrivate: argv.private
+                includePrivate: argv.private,
+                skipApi: argv.skipApi,
+                skipValidation: argv.skipValidation
             });
         }
     );

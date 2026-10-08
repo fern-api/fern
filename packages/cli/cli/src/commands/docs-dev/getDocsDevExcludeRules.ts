@@ -1,15 +1,21 @@
 // The v3 dev path validates without loading API workspaces, so these rules would flag every `api:` section.
 const RULES_REQUIRING_API_WORKSPACES = ["api-section-has-definition"];
 
+// These rules resolve the whole docs site a second time (API references included), which defeats `--skip-api`.
+const RULES_THAT_REBUILD_API_REFERENCES = ["missing-redirects"];
+
 export function getDocsDevExcludeRules({
     brokenLinks,
-    apiWorkspacesLoaded
+    apiWorkspacesLoaded,
+    skipApi = false
 }: {
     brokenLinks: boolean;
     apiWorkspacesLoaded: boolean;
+    skipApi?: boolean;
 }): string[] {
     return [
         ...(brokenLinks ? [] : ["valid-markdown-links"]),
-        ...(apiWorkspacesLoaded ? [] : RULES_REQUIRING_API_WORKSPACES)
+        ...(apiWorkspacesLoaded ? [] : RULES_REQUIRING_API_WORKSPACES),
+        ...(skipApi ? RULES_THAT_REBUILD_API_REFERENCES : [])
     ];
 }

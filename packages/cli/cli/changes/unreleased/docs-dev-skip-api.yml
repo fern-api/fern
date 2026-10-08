@@ -1,0 +1,6 @@
+- summary: |
+    Add `--skip-api` to `fern docs dev`. API reference sections become empty placeholders and are not parsed, so large sites preview in seconds. API reference pages are unavailable in this mode.
+  type: feat
+- summary: |
+    Add `--skip-validation` to `fern docs dev`. Skips docs validation, which on large sites competes with the docs build and delays the preview. Docs errors are not reported in this mode.
+  type: feat

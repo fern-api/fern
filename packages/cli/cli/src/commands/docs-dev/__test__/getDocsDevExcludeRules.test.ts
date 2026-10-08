@@ -59,6 +59,16 @@ describe("getDocsDevExcludeRules", () => {
         ]);
     });
 
+    it("excludes missing-redirects when API references are skipped", () => {
+        expect(getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: true, skipApi: true })).toEqual([
+            "missing-redirects"
+        ]);
+    });
+
+    it("keeps missing-redirects when API references are not skipped", () => {
+        expect(getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: true, skipApi: false })).toEqual([]);
+    });
+
     it("does not report named API sections as unresolved during docs dev validation", async () => {
         const messages = await getUnresolvedApiSectionMessages(
             getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: false })
