@@ -583,7 +583,8 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
-            alwaysSendAuth: config.alwaysSendAuth
+            alwaysSendAuth: config.alwaysSendAuth,
+            guardProcessEnvAccess: config.guardProcessEnvAccess
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
