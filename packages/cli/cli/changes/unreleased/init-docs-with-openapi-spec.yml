@@ -6,6 +6,6 @@
     that moves the API into `apis/` updates the path in `docs.yml`. In a project that already has a `docs.yml`, the
     spec is added to its first `api` entry, or to a new one, instead of only printing a warning. A spec that does not
     live in the fern directory, such as a URL, is copied there as `openapi-1.json|yml` (and so on when the name is
-    taken), so an existing API's spec is never overwritten. If `docs.yml` splits its navigation into tabs, it is left
+    taken), so an existing API's spec is never overwritten. A spec that `docs.yml` already reads from the fern directory is not overwritten by a later `fern init`, which gives it a free name instead. If `docs.yml` splits its navigation into tabs, it is left
     unchanged and the command warns. Without the flag, behavior is unchanged.
   type: fix

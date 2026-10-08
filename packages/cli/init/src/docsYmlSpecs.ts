@@ -3,6 +3,9 @@ import path from "path";
 
 type YamlObject = Record<string, unknown>;
 
+/** The keys under which a navigation item holds more navigation items: sections, tabs and their variants. */
+const NESTED_NAVIGATION_KEYS = ["contents", "layout", "variants"];
+
 /** A `docs.yml` whose `navigation` is a flat list, the only layout a new `api` entry fits into. */
 export type DocsConfigWithFlatNavigation = YamlObject & { navigation: unknown[] };
 
@@ -14,7 +17,18 @@ export function hasFlatNavigation(docsConfig: unknown): docsConfig is DocsConfig
     );
 }
 
-/** Declares the spec on the first `api` entry of `navigation`, or on a new `api` entry at its end. */
+/** The paths of the specs declared by the `api` entries of `docsConfig`, as written. */
+export function getSpecPaths(docsConfig: unknown): string[] {
+    if (!isPlainObject(docsConfig) || !Array.isArray(docsConfig.navigation)) {
+        return [];
+    }
+    return findApiReferences(docsConfig.navigation).flatMap(getSpecPathsOf);
+}
+
+/**
+ * Declares the spec on the first `api` entry of `navigation`, wherever it is nested in sections, or on a new `api`
+ * entry at the end of `navigation` when there is none.
+ */
 export function addSpec({
     docsConfig,
     specPath
@@ -22,13 +36,15 @@ export function addSpec({
     docsConfig: DocsConfigWithFlatNavigation;
     specPath: string;
 }): DocsConfigWithFlatNavigation {
-    const apiReference = docsConfig.navigation.find(isApiReference);
+    const [firstApiReference] = findApiReferences(docsConfig.navigation);
     return {
         ...docsConfig,
         navigation:
-            apiReference == null
+            firstApiReference == null
                 ? [...docsConfig.navigation, createApiReference(specPath)]
-                : docsConfig.navigation.map((item) => (item === apiReference ? withSpec(apiReference, specPath) : item))
+                : mapNavigation(docsConfig.navigation, (item) =>
+                      item === firstApiReference ? withSpec(firstApiReference, specPath) : item
+                  )
     };
 }
 
@@ -45,7 +61,7 @@ export function renameSpecs({
     }
     return {
         ...docsConfig,
-        navigation: docsConfig.navigation.map((item: unknown) =>
+        navigation: mapNavigation(docsConfig.navigation, (item) =>
             isApiReference(item) && Array.isArray(item.specs)
                 ? { ...item, specs: item.specs.map((spec: unknown) => renameSpec({ spec, renames })) }
                 : item
@@ -55,6 +71,49 @@ export function renameSpecs({
 
 function isApiReference(item: unknown): item is YamlObject {
     return isPlainObject(item) && "api" in item;
+}
+
+function findApiReferences(items: unknown[]): YamlObject[] {
+    return flattenNavigation(items).filter(isApiReference);
+}
+
+/** Every item in document order, nested ones included. What an `api` entry holds is its own layout, so it is not entered. */
+function flattenNavigation(items: unknown[]): unknown[] {
+    return items.flatMap((item) => [
+        item,
+        ...(!isApiReference(item) && isPlainObject(item) ? flattenNavigation(getNestedItems(item)) : [])
+    ]);
+}
+
+function getNestedItems(item: YamlObject): unknown[] {
+    return NESTED_NAVIGATION_KEYS.flatMap((key) => {
+        const nestedItems = item[key];
+        return Array.isArray(nestedItems) ? nestedItems : [];
+    });
+}
+
+function getSpecPathsOf(apiReference: YamlObject): string[] {
+    const specs: unknown[] = Array.isArray(apiReference.specs) ? apiReference.specs : [];
+    return specs.flatMap((spec) => (isPlainObject(spec) && typeof spec.path === "string" ? [spec.path] : []));
+}
+
+/** Applies `transform` to every item, nested ones included. An `api` entry is passed as is. */
+function mapNavigation(items: unknown[], transform: (item: unknown) => unknown): unknown[] {
+    return items.map((item) => transform(mapNestedItems(item, transform)));
+}
+
+function mapNestedItems(item: unknown, transform: (item: unknown) => unknown): unknown {
+    if (isApiReference(item) || !isPlainObject(item)) {
+        return item;
+    }
+    const nested: YamlObject = {};
+    for (const key of NESTED_NAVIGATION_KEYS) {
+        const nestedItems = item[key];
+        if (Array.isArray(nestedItems)) {
+            nested[key] = mapNavigation(nestedItems, transform);
+        }
+    }
+    return { ...item, ...nested };
 }
 
 function createSpec(specPath: string): YamlObject {
@@ -67,7 +126,9 @@ function createApiReference(specPath: string): YamlObject {
 
 function withSpec(apiReference: YamlObject, specPath: string): YamlObject {
     const specs: unknown[] = Array.isArray(apiReference.specs) ? apiReference.specs : [];
-    const isAlreadyListed = specs.some((spec) => isPlainObject(spec) && spec.path === specPath);
+    const isAlreadyListed = getSpecPathsOf(apiReference).some(
+        (listedPath) => path.normalize(listedPath) === path.normalize(specPath)
+    );
     return isAlreadyListed ? apiReference : { ...apiReference, specs: [...specs, createSpec(specPath)] };
 }
 

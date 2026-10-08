@@ -19,8 +19,8 @@ import {
     createOpenAPIWorkspace,
     getOpenAPIFileName
 } from "./createWorkspace.js";
+import { preserveDocsSpecs, repointRelocatedSpecs } from "./docsYmlSync.js";
 import { initializeDocs } from "./initializeDocs.js";
-import { repointRelocatedSpecs } from "./repointRelocatedSpecs.js";
 
 export async function initializeAPI({
     organization,
@@ -61,6 +61,10 @@ export async function initializeAPI({
         openApiPath,
         taskContext: context
     });
+    if (useSdkConfig && directoryOfWorkspace === absolutePathToFernDirectory) {
+        // The API's spec is written into the fern directory, where the docs may keep a spec of their own.
+        await preserveDocsSpecs({ absolutePathToFernDirectory, taskContext: context });
+    }
     const sdkName = directoryOfWorkspace === absolutePathToFernDirectory ? "api" : path.basename(directoryOfWorkspace);
     if (relocatedOpenApiPath != null || openApiUrl != null) {
         await createOpenAPIWorkspace({
@@ -94,7 +98,7 @@ export async function initializeAPI({
 
     // The docs cannot read an SDK Config API, so they are given its spec instead.
     if (useSdkConfig) {
-        await repointRelocatedSpecs({ absolutePathToFernDirectory });
+        await repointRelocatedSpecs({ absolutePathToFernDirectory, taskContext: context });
         if (includeDocs) {
             await initializeDocs({
                 organization,

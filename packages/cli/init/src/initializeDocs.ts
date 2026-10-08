@@ -14,12 +14,13 @@ import { AbsoluteFilePath, cwd, doesPathExist, isURL, join, RelativeFilePath, re
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import { mkdir, readdir, readFile, writeFile } from "fs/promises";
+import { mkdir, readdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
 import { getOpenAPIFileName, materializeOpenAPI } from "./createWorkspace.js";
 import { addSpec, hasFlatNavigation } from "./docsYmlSpecs.js";
+import { updateDocsYml } from "./updateDocsYml.js";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl.js";
 
 const PAGES_DIRECTORY = "pages";
@@ -49,7 +50,11 @@ export async function initializeDocs({
     if (await doesPathExist(docsYmlPath)) {
         taskContext.logger.info(chalk.yellow(`Docs configuration already exists at: ${docsYmlPath}`));
         if (useSdkConfig && openApi != null) {
-            await addSpecToExistingDocsYml({ docsYmlPath, openApi, taskContext });
+            await addSpecToExistingDocsYml({
+                absolutePathToFernDirectory: AbsoluteFilePath.of(path.dirname(docsYmlPath)),
+                openApi,
+                taskContext
+            });
         }
         return;
     }
@@ -105,28 +110,35 @@ export async function initializeDocs({
 
 /** Declares the spec in an existing `docs.yml`, on its first `api` entry or on a new one. */
 async function addSpecToExistingDocsYml({
-    docsYmlPath,
+    absolutePathToFernDirectory,
     openApi,
     taskContext
 }: {
-    docsYmlPath: AbsoluteFilePath;
+    absolutePathToFernDirectory: AbsoluteFilePath;
     openApi: string;
     taskContext: TaskContext;
 }): Promise<void> {
-    const docsConfig: unknown = yaml.load(await readFile(docsYmlPath, "utf8"));
-    if (!hasFlatNavigation(docsConfig)) {
-        taskContext.logger.warn(
-            "The OpenAPI spec was not added because docs.yml has no flat `navigation` list. Add it under an `api` entry's `specs` in docs.yml."
-        );
-        return;
-    }
-    const specPath = await getSpecPathInDocsYml({
-        absolutePathToFernDirectory: AbsoluteFilePath.of(path.dirname(docsYmlPath)),
-        openApiPath: await resolveOpenApiPath({ openApi, taskContext }),
-        taskContext
+    const wasUpdated = await updateDocsYml({
+        absolutePathToFernDirectory,
+        taskContext,
+        update: async (docsConfig) => {
+            if (!hasFlatNavigation(docsConfig)) {
+                taskContext.logger.warn(
+                    "The OpenAPI spec was not added because docs.yml has no flat `navigation` list. Add it under an `api` entry's `specs` in docs.yml."
+                );
+                return docsConfig;
+            }
+            const specPath = await getSpecPathInDocsYml({
+                absolutePathToFernDirectory,
+                openApiPath: await resolveOpenApiPath({ openApi, taskContext }),
+                taskContext
+            });
+            return addSpec({ docsConfig, specPath });
+        }
     });
-    await writeFile(docsYmlPath, yaml.dump(addSpec({ docsConfig, specPath })));
-    taskContext.logger.info(chalk.green("Added the OpenAPI spec to docs.yml"));
+    if (wasUpdated) {
+        taskContext.logger.info(chalk.green("Added the OpenAPI spec to docs.yml"));
+    }
 }
 
 /**
@@ -143,7 +155,8 @@ async function getSpecPathInDocsYml({
     taskContext: TaskContext;
 }): Promise<string> {
     const pathInFernDirectory = path.relative(absolutePathToFernDirectory, openApiPath);
-    const isInFernDirectory = !pathInFernDirectory.startsWith("..") && !path.isAbsolute(pathInFernDirectory);
+    const [firstSegment] = pathInFernDirectory.split(path.sep);
+    const isInFernDirectory = firstSegment !== ".." && !path.isAbsolute(pathInFernDirectory);
     return isInFernDirectory
         ? `./${pathInFernDirectory.split(path.sep).join("/")}`
         : await copySpecIntoFernDirectory({ absolutePathToFernDirectory, openApiPath, taskContext });
@@ -200,7 +213,7 @@ async function copySpecIntoFernDirectory({
 }
 
 /** Returns `fileName`, or the first of `name-1.ext`, `name-2.ext`, ... that does not exist in `directory` yet. */
-async function findFreeFileName({
+export async function findFreeFileName({
     directory,
     fileName
 }: {

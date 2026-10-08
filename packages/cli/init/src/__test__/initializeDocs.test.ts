@@ -176,6 +176,55 @@ describe("initializeDocs", () => {
         });
     });
 
+    it("references a spec in a folder whose name starts with two dots", async () => {
+        const fernDirectory = await createFernDirectory();
+        await mkdir(path.join(fernDirectory, "..specs"));
+        const specInFolder = path.join(fernDirectory, "..specs", "openapi.json");
+        await writeFile(specInFolder, JSON.stringify(MINIMAL_OPENAPI));
+
+        await initialize(specInFolder);
+
+        expect(await readDocsYml()).toMatchObject({
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./..specs/openapi.json" }] }]
+        });
+        expect(await existsInProject("fern", "openapi.json")).toBe(false);
+    });
+
+    it("only says it added a spec to an existing docs.yml when it did", async () => {
+        const fernDirectory = await createFernDirectory();
+        const specInFern = path.join(fernDirectory, "openapi.json");
+        await writeFile(specInFern, JSON.stringify(MINIMAL_OPENAPI));
+        await initialize(specInFern);
+        const messages: string[] = [];
+        const logger = createLogger((level, ...args) => {
+            if (level === LogLevel.Info) {
+                messages.push(args.join(" "));
+            }
+        });
+
+        await initialize(specInFern, createMockTaskContext({ logger }));
+
+        expect(messages.join("\n")).toContain("Docs configuration already exists");
+        expect(messages.join("\n")).not.toContain("Added the OpenAPI spec");
+    });
+
+    it("warns and changes nothing when an existing docs.yml cannot be parsed", async () => {
+        await initialize();
+        const docsYmlPath = path.join(projectDirectory, "fern", "docs.yml");
+        await writeFile(docsYmlPath, "navigation: [unclosed");
+        const warnings: string[] = [];
+        const logger = createLogger((level, ...args) => {
+            if (level === LogLevel.Warn) {
+                warnings.push(args.join(" "));
+            }
+        });
+
+        await initialize(await writeSpec(), createMockTaskContext({ logger }));
+
+        expect(await readFile(docsYmlPath, "utf8")).toBe("navigation: [unclosed");
+        expect(warnings.join("\n")).toContain("could not be parsed");
+    });
+
     it("keeps the welcome page and no api entry when no spec is given", async () => {
         await initialize();
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { addSpec, hasFlatNavigation, renameSpecs } from "../docsYmlSpecs.js";
+import { addSpec, getSpecPaths, hasFlatNavigation, renameSpecs } from "../docsYmlSpecs.js";
 
 const SPEC = { type: "openapi", path: "./openapi.yml" };
 const OTHER_SPEC = { type: "openapi", path: "./other.yml" };
@@ -62,6 +62,42 @@ describe("addSpec", () => {
         expect(addSpec({ docsConfig, specPath: "./openapi.yml" })).toEqual(docsConfig);
     });
 
+    it("does not list the same spec twice when the paths are written differently", () => {
+        const docsConfig = {
+            navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "openapi.yml" }] }]
+        };
+
+        expect(addSpec({ docsConfig, specPath: "./openapi.yml" })).toEqual(docsConfig);
+    });
+
+    it("adds to an api entry nested in a section instead of adding a new one", () => {
+        const docsConfig = {
+            navigation: [
+                { page: "Welcome", path: "w.mdx" },
+                { section: "Guides", contents: [{ section: "Deeper", contents: [{ api: "API Reference" }] }] }
+            ]
+        };
+
+        expect(addSpec({ docsConfig, specPath: "./openapi.yml" }).navigation).toEqual([
+            { page: "Welcome", path: "w.mdx" },
+            {
+                section: "Guides",
+                contents: [{ section: "Deeper", contents: [{ api: "API Reference", specs: [SPEC] }] }]
+            }
+        ]);
+    });
+
+    it("picks the first api entry in document order, nested or not", () => {
+        const docsConfig = {
+            navigation: [{ section: "Guides", contents: [{ api: "Nested" }] }, { api: "Root" }]
+        };
+
+        expect(addSpec({ docsConfig, specPath: "./openapi.yml" }).navigation).toEqual([
+            { section: "Guides", contents: [{ api: "Nested", specs: [SPEC] }] },
+            { api: "Root" }
+        ]);
+    });
+
     it("leaves the given docs.yml untouched", () => {
         const docsConfig = { navigation: [{ api: "API Reference", specs: [OTHER_SPEC] }] };
 
@@ -97,6 +133,26 @@ describe("renameSpecs", () => {
         });
     });
 
+    it("renames specs nested in sections, tabs and tab variants", () => {
+        const api = { api: "API Reference", specs: [SPEC] };
+        const renamedApi = { api: "API Reference", specs: [{ type: "openapi", path: "./apis/api/openapi.yml" }] };
+        const docsConfig = {
+            navigation: [
+                { section: "Guides", contents: [api] },
+                { tab: "Reference", layout: [api] },
+                { tab: "Versions", variants: [{ title: "v1", layout: [api] }] }
+            ]
+        };
+
+        expect(renameSpecs({ docsConfig, renames })).toEqual({
+            navigation: [
+                { section: "Guides", contents: [renamedApi] },
+                { tab: "Reference", layout: [renamedApi] },
+                { tab: "Versions", variants: [{ title: "v1", layout: [renamedApi] }] }
+            ]
+        });
+    });
+
     it("returns an equal config when no spec has a new path", () => {
         const docsConfig = {
             navigation: [
@@ -110,5 +166,23 @@ describe("renameSpecs", () => {
 
     it("returns anything that is not a docs.yml as is", () => {
         expect(renameSpecs({ docsConfig: "docs", renames })).toBe("docs");
+    });
+});
+
+describe("getSpecPaths", () => {
+    it("lists the spec paths of every api entry, nested ones included", () => {
+        const docsConfig = {
+            navigation: [
+                { api: "First", specs: [SPEC] },
+                { section: "Guides", contents: [{ api: "Second", specs: [OTHER_SPEC] }] },
+                { api: "Without specs" }
+            ]
+        };
+
+        expect(getSpecPaths(docsConfig)).toEqual(["./openapi.yml", "./other.yml"]);
+    });
+
+    it("lists nothing for something that is not a docs.yml", () => {
+        expect(getSpecPaths("docs")).toEqual([]);
     });
 });

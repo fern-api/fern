@@ -421,6 +421,41 @@ describe("fern init", () => {
         await expectApiReferenceInDocs({ pathOfDirectory, signal, expect });
     }, 180_000);
 
+    it.concurrent("init --openapi keeps a spec the docs were initialized with", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+        await copyFile(
+            join(FIXTURES_DIR, RelativeFilePath.of("openapi"), RelativeFilePath.of("petstore-openapi.yml")),
+            join(pathOfDirectory, RelativeFilePath.of("petstore-openapi.yml"))
+        );
+        await writeFile(
+            join(pathOfDirectory, RelativeFilePath.of("second-openapi.yml")),
+            "openapi: 3.0.0\ninfo: { title: Second, version: 1.0.0 }\npaths: {}\n"
+        );
+        await runFernCli(["init", "--docs", "--organization", "fern", "--openapi", "petstore-openapi.yml"], {
+            cwd: pathOfDirectory,
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+        const docsSpec = await readFile(join(fernDirectory, RelativeFilePath.of("openapi.yml")), "utf8");
+
+        // The API of this init writes fern/openapi.yml too, which must not replace the docs' own spec.
+        await init({
+            additionalArgs: [{ name: "--openapi", value: "second-openapi.yml" }],
+            directory: pathOfDirectory,
+            env: SDK_CONFIG_ENV,
+            signal
+        });
+
+        const docsYml = await readFile(join(fernDirectory, RelativeFilePath.of("docs.yml")), "utf8");
+        const specPaths = [...docsYml.matchAll(/^\s+path: (\.\/\S+)$/gm)].flatMap((match) => match[1] ?? []);
+        expect(specPaths).toEqual(["./openapi-1.yml", "./openapi.yml"]);
+        expect(await readFile(join(fernDirectory, RelativeFilePath.of("openapi-1.yml")), "utf8")).toBe(docsSpec);
+        expect(await readFile(join(fernDirectory, RelativeFilePath.of("openapi.yml")), "utf8")).toContain("Second");
+        await expectApiReferenceInDocs({ pathOfDirectory, signal, expect });
+    }, 180_000);
+
     it.concurrent("init docs ignores --openapi when SDK Config init is disabled", async ({ expect, signal }) => {
         const tmpDir = await tmp.dir();
         const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
