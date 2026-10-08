@@ -22,6 +22,18 @@ module <%= gem_namespace %>
         @cursor_field = cursor_field
         @get_next_page = block
         @http_response = nil
+        @first_page_requested = false
+        @loaded_page = nil
+      end
+
+      # Sends the request for the first page now instead of on the first iteration, so an API error for that page
+      # is raised here. The page is kept for the iteration, so it is not requested twice. Does nothing if the first
+      # page was already requested.
+      #
+      # @return [self]
+      def load_first_page
+        @loaded_page = next_page unless @first_page_requested
+        self
       end
 
       # Iterates over each page returned by the API.
@@ -38,13 +50,18 @@ module <%= gem_namespace %>
       #
       # @return [Boolean]
       def next?
-        @need_initial_load || !@cursor.nil?
+        !@loaded_page.nil? || @need_initial_load || !@cursor.nil?
       end
 
       # Retrieves the next page from the API.
       #
       # @return [Object, nil]
       def next_page
+        unless @loaded_page.nil?
+          page = @loaded_page
+          @loaded_page = nil
+          return page
+        end
         return if !@need_initial_load && @cursor.nil?
 
         @need_initial_load = false
@@ -55,6 +72,7 @@ module <%= gem_namespace %>
         else
           fetched_page = result
         end
+        @first_page_requested = true
         @cursor = fetched_page.send(@cursor_field)
         fetched_page
       end

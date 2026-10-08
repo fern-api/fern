@@ -61,27 +61,30 @@ client = Seed::Client.new(
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+List endpoints are paginated. A paginated method returns an iterator, not the response object: loop over it to get the items of every page, or call `pages` on it to get each page's full response, including fields besides the items. Each page is requested when it is needed, and an API error is raised where that request is sent.
 
 ```ruby
 require "seed"
 
-# Loop over the items using the provided iterator.
-    page = Seed.client.complex.search(
+# The method returns an iterator over the items of every page. No request is sent until you start
+# iterating, so API errors are raised by the loop.
+items = client.complex.search(
     ...
 )
-page.each do |item|
+items.each do |item|
     puts "Got item: #{item}"
 end
 
-# Alternatively, iterate page-by-page.
-current_page = page
-while current_page
-    current_page.results.each do |item|
-        puts "Got item: #{item}"
-    end
-    current_page = current_page.next_page
-    break if current_page.nil?
+# Call `load_first_page` to send the first request now, so an API error for it is raised here.
+items = client.complex.search(
+    ...
+).load_first_page
+
+# Call `pages` to get each page's full response, including fields besides `conversations`.
+client.complex.search(
+    ...
+).pages.each do |page|
+    puts "Got page: #{page.conversations}"
 end
 ```
 

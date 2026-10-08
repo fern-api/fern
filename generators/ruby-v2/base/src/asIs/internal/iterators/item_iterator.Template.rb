@@ -34,6 +34,16 @@ module <%= gem_namespace %>
         any_items_in_cached_page?
       end
 
+      # Sends the request for the first page now instead of on the first iteration, so an API error for that page
+      # is raised here. The page is kept for the iteration, so it is not requested twice. Does nothing if the first
+      # page was already requested.
+      #
+      # @return [self]
+      def load_first_page
+        @page_iterator.load_first_page
+        self
+      end
+
       # Retrieves the next item from the API.
       def next_element
         item = next_item_from_cached_page
