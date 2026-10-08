@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Upgrade `posthog-node` from 5.35.1 to 5.55.0.
+  type: chore
