@@ -131,6 +131,60 @@ Enable it in `generators.yml`:
 Off by default: enabling it adds a top-level subcommand group and a global
 `--profile` / `-p` flag, which is a surface change for an existing CLI.
 
+#### Minting a credential per profile (`--provision`)
+
+Many APIs hand out per-tool credentials — an API key with its own id — and
+expect a CLI to create one when a profile is set up and delete it when the
+profile goes. Name the two operations and which response fields hold the
+pieces; the framework does the rest, with nothing API-specific baked in:
+
+```yaml
+    profiles:
+      enabled: true
+      provisionOperation:
+        # The operation `profiles create --provision` runs. It is signed with
+        # a bootstrap credential the user supplies once (stdin, or the
+        # scheme's environment variables under --from-env) and never stored.
+        command: iam.keys.create
+        # Optional fixed arguments. `{profile}`, `{cli}`, `{hostname}` and
+        # `{user}` are substituted; the profile's `--set` parameters are
+        # passed alongside (path parameters such as an account id).
+        arguments:
+          FriendlyName: "{cli} on {hostname}"
+        # Credential field → response field (dotted paths allowed). A basic
+        # scheme takes `username` and `password`; a single-value scheme
+        # (bearer, header, query) takes `token`.
+        credential:
+          username: sid
+          password: secret
+        # Optional. The response field holding the credential's non-secret
+        # id, remembered in profiles.toml as `credential_id`.
+        credentialId: sid
+      revokeOperation:
+        command: iam.keys.remove
+        # The revoke operation's parameter that takes `credential_id`. Kept
+        # apart from the profile's `--set` parameters on purpose: a stored
+        # `Sid` would otherwise become the default for every `--sid` flag
+        # in the CLI.
+        credentialIdParameter: Sid
+```
+
+```bash
+# Signed with the account credential from ACME_USERNAME / ACME_PASSWORD;
+# stores the minted key in the keychain and its id in profiles.toml.
+acme profiles create prod --set AccountSid=AC11… --provision --from-env
+acme profiles show prod          # credential_id: SK…  (never the secret)
+
+acme profiles remove prod --revoke   # deletes the key *as the profile*, then the profile
+```
+
+The mint runs before anything is written, so a refused request leaves no
+profile behind; a revoke that fails leaves the profile and its credential in
+place. `--revoke` on a profile that was not provisioned falls back to a stored
+parameter of the same name (`profiles set prod Sid=SK…`), for keys created
+elsewhere. Re-provisioning with `--force` mints a fresh key and warns that the
+previous id is being forgotten rather than silently revoking it.
+
 That gives your users:
 
 ```bash

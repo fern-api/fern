@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, DEFAULT_PROFILES_COMMAND_NAME, hasOpenApiSpecs } from "./copySpecs.js";
-import type { FernCliCustomConfig } from "./customConfig.js";
+import type { FernCliCustomConfig, FernCliProfilesConfig } from "./customConfig.js";
 import { authStrategyVariant, detectAuthBindings } from "./detectAuth.js";
 import { detectGlobalParams } from "./detectGlobalParams.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
@@ -174,7 +174,13 @@ export async function runPipeline(args: {
                 ? (customConfig.profiles.commandName ?? DEFAULT_PROFILES_COMMAND_NAME)
                 : undefined,
         profilesRevokeOperation:
-            customConfig.profiles?.enabled === true ? customConfig.profiles.revokeOperation : undefined,
+            customConfig.profiles?.enabled === true ? revokeOperationCommand(customConfig.profiles) : undefined,
+        profilesRevokeCredentialIdParameter:
+            customConfig.profiles?.enabled === true && typeof customConfig.profiles.revokeOperation === "object"
+                ? customConfig.profiles.revokeOperation.credentialIdParameter
+                : undefined,
+        profilesProvisionOperation:
+            customConfig.profiles?.enabled === true ? customConfig.profiles.provisionOperation : undefined,
         // A strategy only composes bound schemes, so skip deriving one when
         // there are none — `copySpecs` would drop it anyway, and this keeps
         // unauthenticated CLIs off the mapping entirely.
@@ -380,4 +386,10 @@ async function writeFernignore(outputDir: string, binaryName: string): Promise<v
  */
 function licenseFromPackageIdentity(id: string | undefined): LicenseConfigLike | undefined {
     return id === "MIT" ? { type: "basic", id: "MIT" } : undefined;
+}
+
+/** `profiles.revokeOperation` accepts a bare path or `{ command, ... }`. */
+function revokeOperationCommand(profiles: FernCliProfilesConfig): string | undefined {
+    const op = profiles.revokeOperation;
+    return typeof op === "string" ? op : op?.command;
 }

@@ -689,6 +689,74 @@ describe("copySpecs", () => {
         expect(main).toContain('.profiles(ProfilesConfig::new().revoke_operation("iam.keys.remove"))');
     });
 
+    it("emits .revoke_credential_id_parameter(...) and .provision_operation(...) when configured", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles",
+            profilesRevokeOperation: "iam.keys.remove",
+            profilesRevokeCredentialIdParameter: "Sid",
+            profilesProvisionOperation: {
+                command: "iam.keys.create",
+                arguments: { FriendlyName: "{cli} on {hostname}" },
+                credential: { username: "sid", password: "secret" },
+                credentialId: "sid"
+            }
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::profiles::{ProfilesConfig, ProvisionOperation};");
+        expect(main).toContain(
+            '.profiles(ProfilesConfig::new().revoke_operation("iam.keys.remove").revoke_credential_id_parameter("Sid")' +
+                '.provision_operation(ProvisionOperation::new("iam.keys.create")' +
+                '.argument("FriendlyName", "{cli} on {hostname}")' +
+                '.credential_field("password", "secret").credential_field("username", "sid")' +
+                '.credential_id("sid")))'
+        );
+    });
+
+    it("omits .provision_operation(...) and its import by default", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain("ProvisionOperation");
+        expect(main).not.toContain(".revoke_credential_id_parameter");
+    });
+
+    it("rejects a provisionOperation argument that could escape the Rust string literal", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await expect(
+            copySpecs({
+                outputDir,
+                binaryName: BIN,
+                authBindings: [],
+                globalParamBindings: [],
+                specsDir,
+                profilesCommandName: "profiles",
+                profilesProvisionOperation: {
+                    command: "iam.keys.create",
+                    arguments: { FriendlyName: 'x"); std::process::exit(1); ("' },
+                    credential: { token: "secret" }
+                }
+            })
+        ).rejects.toThrow(/Unsafe profiles.provisionOperation.arguments.FriendlyName/);
+    });
+
     it("omits .revoke_operation(...) by default, so --revoke is never registered", async () => {
         const { specsDir, outputDir } = await scaffold();
 

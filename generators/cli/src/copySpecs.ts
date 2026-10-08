@@ -1,5 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
+import type { FernCliProvisionOperationConfig } from "./customConfig.js";
 import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
@@ -75,6 +76,42 @@ export async function hasOpenApiSpecs(specsDir?: string): Promise<boolean> {
  * No-op when no OpenAPI specs are mounted; the orchestrator's gate
  * should have skipped before reaching this point.
  */
+/** `"value"` as a Rust string literal, refusing anything that would break out of it. */
+function rustStringLiteral(value: string, where: string): string {
+    if (!SAFE_RUST_STRING_LITERAL.test(value)) {
+        throw new Error(
+            `Unsafe ${where} "${value}": contains characters that cannot be interpolated into a Rust string literal.`
+        );
+    }
+    return `"${value}"`;
+}
+
+/**
+ * `ProvisionOperation::new("…").argument(…).credential_field(…).credential_id(…)`,
+ * one builder call per configured entry, in a stable order so regenerating
+ * from the same config is byte-identical.
+ */
+function provisionOperationBuilder(op: FernCliProvisionOperationConfig): string {
+    const where = "profiles.provisionOperation";
+    let out = `ProvisionOperation::new(${rustStringLiteral(op.command, `${where}.command`)})`;
+    for (const [name, value] of Object.entries(op.arguments ?? {}).sort(([a], [b]) => a.localeCompare(b))) {
+        out += `.argument(${rustStringLiteral(name, `${where}.arguments key`)}, ${rustStringLiteral(
+            value,
+            `${where}.arguments.${name}`
+        )})`;
+    }
+    for (const [field, responsePath] of Object.entries(op.credential).sort(([a], [b]) => a.localeCompare(b))) {
+        out += `.credential_field(${rustStringLiteral(field, `${where}.credential key`)}, ${rustStringLiteral(
+            responsePath,
+            `${where}.credential.${field}`
+        )})`;
+    }
+    if (op.credentialId != null) {
+        out += `.credential_id(${rustStringLiteral(op.credentialId, `${where}.credentialId`)})`;
+    }
+    return out;
+}
+
 export async function copySpecs(args: {
     outputDir: string;
     binaryName: string;
@@ -100,6 +137,10 @@ export async function copySpecs(args: {
     profilesCommandName?: string;
     /** Dotted command path for `profiles remove --revoke`. */
     profilesRevokeOperation?: string;
+    /** The revoke operation's parameter that takes the provisioned credential's id. */
+    profilesRevokeCredentialIdParameter?: string;
+    /** How `profiles create --provision` mints a credential. */
+    profilesProvisionOperation?: FernCliProvisionOperationConfig;
     /**
      * When set and at least one auth binding exists, emit
      * `.auth_strategy(AuthStrategy::<variant>)` on the OpenApiBinding chain so the
@@ -119,6 +160,8 @@ export async function copySpecs(args: {
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
+        profilesRevokeCredentialIdParameter,
+        profilesProvisionOperation,
         authStrategy
     } = args;
     const manifest = await readSpecsManifest(specsDir);
@@ -153,6 +196,8 @@ export async function copySpecs(args: {
             userAgentSuffixFlag,
             profilesCommandName,
             profilesRevokeOperation,
+            profilesRevokeCredentialIdParameter,
+            profilesProvisionOperation,
             authStrategy
         })
     );
@@ -248,6 +293,8 @@ function renderMainRs(args: {
     userAgentSuffixFlag?: string;
     profilesCommandName?: string;
     profilesRevokeOperation?: string;
+    profilesRevokeCredentialIdParameter?: string;
+    profilesProvisionOperation?: FernCliProvisionOperationConfig;
     authStrategy?: AuthStrategyVariant;
 }): string {
     const {
@@ -260,6 +307,8 @@ function renderMainRs(args: {
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
+        profilesRevokeCredentialIdParameter,
+        profilesProvisionOperation,
         authStrategy
     } = args;
 
@@ -274,7 +323,11 @@ function renderMainRs(args: {
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
     if (profilesCommandName != null) {
-        imports.push("use fern_cli_sdk::profiles::ProfilesConfig;");
+        imports.push(
+            profilesProvisionOperation != null
+                ? "use fern_cli_sdk::profiles::{ProfilesConfig, ProvisionOperation};"
+                : "use fern_cli_sdk::profiles::ProfilesConfig;"
+        );
     }
     const authTypeImports = new Set<string>();
     for (const binding of [...rootAuthBindings, ...bindingAuthBindings]) {
@@ -354,6 +407,15 @@ function renderMainRs(args: {
                 );
             }
             config += `.revoke_operation("${profilesRevokeOperation}")`;
+        }
+        if (profilesRevokeCredentialIdParameter != null) {
+            config += `.revoke_credential_id_parameter(${rustStringLiteral(
+                profilesRevokeCredentialIdParameter,
+                "profiles.revokeOperation.credentialIdParameter"
+            )})`;
+        }
+        if (profilesProvisionOperation != null) {
+            config += `.provision_operation(${provisionOperationBuilder(profilesProvisionOperation)})`;
         }
         lines.push(`        .profiles(${config})`);
     }

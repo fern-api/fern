@@ -1366,6 +1366,10 @@ impl CliApp {
                                 cli_name: &self.name,
                                 bindings: &self.bindings,
                                 revoke_op_path: config.revoke_op_path(),
+                                revoke_credential_id_parameter: config
+                                    .revoke_credential_id_parameter
+                                    .as_deref(),
+                                provision: config.provision_operation.as_ref(),
                                 command_name: &config.command_name,
                                 auth_bindings: &self.auth_bindings,
                                 login_flows: &self.login_flows,

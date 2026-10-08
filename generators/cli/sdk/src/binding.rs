@@ -31,6 +31,43 @@ pub enum DispatchResult {
     Handled,
 }
 
+/// A credential for exactly one request, bypassing the configured sources.
+/// See [`Binding::invoke_operation_as`].
+///
+/// `fields` are the scheme's credential fields by name — `username` and
+/// `password` for basic, `token` for a single-value scheme — the same
+/// vocabulary `auth login --with-token` prompts with.
+#[derive(Clone)]
+pub struct OneOffCredential {
+    pub scheme: String,
+    pub fields: Vec<(String, String)>,
+}
+
+impl std::fmt::Debug for OneOffCredential {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("OneOffCredential")
+            .field("scheme", &self.scheme)
+            .field(
+                "fields",
+                &self
+                    .fields
+                    .iter()
+                    .map(|(k, _)| k.as_str())
+                    .collect::<Vec<_>>(),
+            )
+            .finish()
+    }
+}
+
+impl OneOffCredential {
+    pub fn field(&self, name: &str) -> Option<&str> {
+        self.fields
+            .iter()
+            .find(|(k, _)| k == name)
+            .map(|(_, v)| v.as_str())
+    }
+}
+
 /// The async interface every protocol adapter must implement.
 ///
 /// A binding owns one logical API surface (one or more specs sharing
@@ -155,8 +192,8 @@ pub trait Binding: Send + Sync {
     ///
     /// `op_path` is the command path (`["iam", "keys", "remove"]`) and
     /// `params` a JSON object of parameter name → value, exactly the shape
-    /// `--params` accepts. Returns the decoded response, or `Ok(None)` when
-    /// the operation produced no body.
+    /// `--params` accepts. Returns the decoded response — `Value::Null`
+    /// when the operation produced no body.
     ///
     /// Exists because some framework-owned commands need to call the API on
     /// the user's behalf — `profiles remove --revoke` deleting the key it
@@ -171,6 +208,26 @@ pub trait Binding: Send + Sync {
         &'a self,
         _op_path: &'a [String],
         _params: &'a serde_json::Value,
+    ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
+        Box::pin(async { Ok(None) })
+    }
+
+    /// [`invoke_operation`](Self::invoke_operation), authenticated with
+    /// `credential` instead of the configured sources.
+    ///
+    /// For the bootstrap step of `profiles create --provision`: the request
+    /// that mints a profile's credential has to be signed with something
+    /// else — the user's own account credential, typed once and never
+    /// stored — and the configured chain would resolve to whatever the
+    /// shell or keyring happens to hold.
+    ///
+    /// Same `Ok(None)` contract as `invoke_operation`: the default means
+    /// "not mine" (or "cannot sign ad hoc"), and the caller tries the next.
+    fn invoke_operation_as<'a>(
+        &'a self,
+        _op_path: &'a [String],
+        _params: &'a serde_json::Value,
+        _credential: &'a OneOffCredential,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async { Ok(None) })
     }

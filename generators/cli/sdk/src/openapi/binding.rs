@@ -356,6 +356,137 @@ impl OpenApiBinding {
         })
     }
 
+    /// Shared body of [`Binding::invoke_operation`] and
+    /// [`Binding::invoke_operation_as`]: resolve the path, then run the
+    /// method through the ordinary executor with a quiet pipeline.
+    async fn invoke_with(
+        &self,
+        op_path: &[String],
+        params: &serde_json::Value,
+        credential: Option<&crate::binding::OneOffCredential>,
+    ) -> Result<Option<serde_json::Value>, CliError> {
+        let prepared = self.ensure_prepared()?;
+        // Strip the namespace prefix the same way `dispatch` does, so a
+        // caller names the operation as it appears on the command line.
+        let effective: &[String] = match &self.command_namespace {
+            Some(ns) if op_path.first().map(String::as_str) == Some(ns.as_str()) => &op_path[1..],
+            Some(_) if !op_path.is_empty() => return Ok(None),
+            _ => op_path,
+        };
+        let Some(method) = resolve_method_by_path(&prepared.doc, effective) else {
+            // Not ours — the caller tries the next binding.
+            return Ok(None);
+        };
+
+        let auth_provider = match credential {
+            None => prepared.auth_provider.clone(),
+            Some(credential) => self.one_off_auth_provider(credential, &prepared.doc)?,
+        };
+
+        let params_json = serde_json::to_string(params)
+            .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
+        let params_json = params
+            .as_object()
+            .is_some_and(|o| !o.is_empty())
+            .then_some(params_json.as_str());
+
+        // Quiet: the caller decides what to print. Everything else is
+        // the default request shape — no pagination, no dry run, no
+        // output file.
+        let pipeline = crate::formatter::OutputPipeline {
+            quiet: true,
+            ..Default::default()
+        };
+        executor::execute_method(
+            &prepared.doc,
+            method,
+            params_json,
+            None,
+            &auth_provider,
+            None,
+            None,
+            None,
+            None,
+            false,
+            &executor::PaginationConfig::default(),
+            &pipeline,
+            true,
+            crate::cli_args::resolve_base_url_override_for(&self.inner.name)?.as_deref(),
+            &prepared.http_config,
+            false,
+            false,
+            true,
+            false,
+            &[],
+            &[],
+        )
+        .await
+        // `Ok(None)` is the trait's "not mine" signal, so an operation that
+        // ran and returned no body (a 204 delete) has to come back as
+        // *something* — otherwise the caller would try the next binding and
+        // report the operation as missing.
+        .map(|body| Some(body.unwrap_or(serde_json::Value::Null)))
+    }
+
+    /// The configured provider with `credential`'s scheme rebound to
+    /// literal sources — so the request is signed with exactly what the
+    /// caller handed over, and every other scheme behaves as usual.
+    fn one_off_auth_provider(
+        &self,
+        credential: &crate::binding::OneOffCredential,
+        doc: &RestDescription,
+    ) -> Result<crate::auth::provider::DynAuthProvider, CliError> {
+        use crate::auth::{AuthCredentialSource, SchemeBinding};
+
+        let field = |name: &str| -> Result<AuthCredentialSource, CliError> {
+            credential
+                .field(name)
+                .map(|value| AuthCredentialSource::Literal(value.to_string()))
+                .ok_or_else(|| {
+                    CliError::Auth(format!(
+                        "scheme `{}` needs a `{name}` value to sign this request.",
+                        credential.scheme,
+                    ))
+                })
+        };
+
+        let mut found = false;
+        let mut bindings: Vec<(String, SchemeBinding)> =
+            Vec::with_capacity(self.inner.auth_bindings.len());
+        for (name, binding) in &self.inner.auth_bindings {
+            if name != &credential.scheme {
+                bindings.push((name.clone(), binding.clone()));
+                continue;
+            }
+            found = true;
+            let rebound = match binding {
+                SchemeBinding::Basic { .. } => SchemeBinding::Basic {
+                    username: field("username")?,
+                    password: field("password")?,
+                },
+                SchemeBinding::Token(_) => {
+                    SchemeBinding::Token(field(crate::profiles::provision::TOKEN_FIELD)?)
+                }
+                SchemeBinding::Custom(_) => {
+                    return Err(CliError::Auth(format!(
+                        "scheme `{}` uses a custom auth provider, which cannot sign a \
+                         request with a one-off credential.",
+                        credential.scheme,
+                    )))
+                }
+            };
+            bindings.push((name.clone(), rebound));
+        }
+        if !found {
+            return Err(CliError::Auth(format!(
+                "scheme `{}` is not declared by this CLI's auth configuration.",
+                credential.scheme,
+            )));
+        }
+        Ok(self
+            .inner
+            .build_auth_provider_from_finalized(&bindings, doc))
+    }
 }
 
 impl Binding for OpenApiBinding {
@@ -418,59 +549,16 @@ impl Binding for OpenApiBinding {
         op_path: &'a [String],
         params: &'a serde_json::Value,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
-        Box::pin(async move {
-            let prepared = self.ensure_prepared()?;
-            // Strip the namespace prefix the same way `dispatch` does, so a
-            // caller names the operation as it appears on the command line.
-            let effective: &[String] = match &self.command_namespace {
-                Some(ns) if op_path.first().map(String::as_str) == Some(ns.as_str()) => &op_path[1..],
-                Some(_) if !op_path.is_empty() => return Ok(None),
-                _ => op_path,
-            };
-            let Some(method) = resolve_method_by_path(&prepared.doc, effective) else {
-                // Not ours — the caller tries the next binding.
-                return Ok(None);
-            };
+        Box::pin(self.invoke_with(op_path, params, None))
+    }
 
-            let params_json = serde_json::to_string(params)
-                .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
-            let params_json = params
-                .as_object()
-                .is_some_and(|o| !o.is_empty())
-                .then_some(params_json.as_str());
-
-            // Quiet: the caller decides what to print. Everything else is
-            // the default request shape — no pagination, no dry run, no
-            // output file.
-            let pipeline = crate::formatter::OutputPipeline {
-                quiet: true,
-                ..Default::default()
-            };
-            executor::execute_method(
-                &prepared.doc,
-                method,
-                params_json,
-                None,
-                &prepared.auth_provider,
-                None,
-                None,
-                None,
-                None,
-                false,
-                &executor::PaginationConfig::default(),
-                &pipeline,
-                true,
-                crate::cli_args::resolve_base_url_override_for(&self.inner.name)?.as_deref(),
-                &prepared.http_config,
-                false,
-                false,
-                true,
-                false,
-                &[],
-                &[],
-            )
-            .await
-        })
+    fn invoke_operation_as<'a>(
+        &'a self,
+        op_path: &'a [String],
+        params: &'a serde_json::Value,
+        credential: &'a crate::binding::OneOffCredential,
+    ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
+        Box::pin(self.invoke_with(op_path, params, Some(credential)))
     }
 
     fn tenant_key_candidates(&self) -> Vec<String> {

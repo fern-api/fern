@@ -13,6 +13,7 @@
 //! [profiles.prod]
 //! credential = "prod"              # names a keyring account, never a secret
 //! oauth_client_id = "abc123"       # not a secret; the secret is in the keychain
+//! credential_id = "SK9f..."        # id of the key `create --provision` minted
 //! base_url = "https://api.ashburn.us1.twilio.com"
 //! format = "json"
 //!
@@ -76,6 +77,12 @@ pub struct ProfileEntry {
     /// in the file; the client *secret* is written to the keychain under the
     /// profile-namespaced account.
     pub oauth_client_id: Option<String>,
+    /// Identifier of the remote credential `profiles create --provision`
+    /// minted for this profile (an API key's SID, say). Not a secret — the
+    /// API lists it in its console — and the handle `profiles remove
+    /// --revoke` passes back. Owned, never inherited: a child that borrows
+    /// its parent's credential must not revoke the parent's key.
+    pub credential_id: Option<String>,
     /// Explicit base-URL override, for specs that declare no server
     /// variables to template.
     pub base_url: Option<String>,
@@ -207,6 +214,7 @@ impl ProfileStore {
             parent: str_field(table, "parent"),
             credential: str_field(table, "credential"),
             oauth_client_id: str_field(table, "oauth_client_id"),
+            credential_id: str_field(table, "credential_id"),
             base_url: str_field(table, "base_url"),
             retries: u32_field(table, "retries"),
             format: str_field(table, "format"),
@@ -273,6 +281,7 @@ impl ProfileStore {
             },
         );
         set_str(table, "oauth_client_id", entry.oauth_client_id.as_deref());
+        set_str(table, "credential_id", entry.credential_id.as_deref());
         set_str(table, "base_url", entry.base_url.as_deref());
         set_u32(table, "retries", entry.retries);
         set_str(table, "format", entry.format.as_deref());
@@ -559,6 +568,7 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
     resolved.format = chain
         .first()
         .and_then(|entry| entry.format.clone());
+    resolved.credential_id = chain.first().and_then(|entry| entry.credential_id.clone());
 
     // A profile with no explicit `credential` anywhere in its chain keys its
     // keyring slot by the name of the chain's *root* — not its own.
@@ -583,6 +593,9 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct ResolvedProfile {
     pub name: String,
+    /// The profile's *own* provisioned credential id — not inherited, see
+    /// [`ProfileEntry::credential_id`].
+    pub credential_id: Option<String>,
     /// Keyring account suffix. Always `Some` after [`resolve`] — it defaults
     /// to the profile's own name.
     pub credential: Option<String>,
@@ -811,6 +824,7 @@ AccountSid = "AC99"
         let entry = ProfileEntry {
             name: "au".to_string(),
             parent: Some("prod".to_string()),
+            credential_id: None,
             credential: Some("prod".to_string()),
             oauth_client_id: Some("abc123".to_string()),
             base_url: Some("https://api.au1.example.com".to_string()),

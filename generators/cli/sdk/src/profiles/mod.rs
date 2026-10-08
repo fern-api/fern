@@ -57,8 +57,11 @@
 //! [`AuthCredentialSource::Keyring`]: crate::auth::AuthCredentialSource::Keyring
 
 pub mod commands;
+pub mod provision;
 pub mod selection;
 pub mod store;
+
+use std::collections::BTreeMap;
 
 pub use selection::{
     active, active_source, collides_with_profile_flag, install_for_tests, install_for_tests_from,
@@ -94,6 +97,87 @@ pub struct ProfilesConfig {
     /// parameter the profile does not carry is a clear error rather than a
     /// silent no-op.
     pub revoke_operation: Option<String>,
+    /// Name of the revoke operation's parameter that takes the remote
+    /// credential's identifier (e.g. `Sid`).
+    ///
+    /// `profiles remove --revoke` fills it from the profile's stored
+    /// `credential_id` (written by `--provision`), falling back to a stored
+    /// parameter of the same name. Kept apart from `parameters` on purpose:
+    /// a profile parameter is a default for *every* operation that declares
+    /// the name, and a key `Sid` would become the default `--sid` of
+    /// unrelated commands.
+    pub revoke_credential_id_parameter: Option<String>,
+    /// How `profiles create --provision` mints a remote credential. Unset —
+    /// the default — and the flag is not registered.
+    pub provision_operation: Option<ProvisionOperation>,
+}
+
+/// An operation that creates a remote credential for a profile, and how
+/// its response maps onto the credential the profile stores.
+///
+/// Generic by construction: the generator names the operation, the fixed
+/// arguments it takes, and which response fields hold each half of the
+/// credential. Nothing here knows what an "API key" is.
+///
+/// ```text
+/// ProvisionOperation::new("iam.keys.create")
+///     .argument("FriendlyName", "{cli} on {hostname}")
+///     .credential_field("username", "sid")
+///     .credential_field("password", "secret")
+///     .credential_id("sid")
+/// ```
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ProvisionOperation {
+    /// Dotted command path, e.g. `iam.keys.create`.
+    pub command: String,
+    /// Fixed arguments passed alongside the profile's stored parameters.
+    /// Values may use the `{profile}`, `{cli}`, `{hostname}` and `{user}`
+    /// placeholders; see [`crate::profiles::provision::substitute`].
+    pub arguments: BTreeMap<String, String>,
+    /// Credential field (`username` / `password` for basic, `token` for a
+    /// single-value scheme) → dotted path into the response body.
+    pub credential_fields: BTreeMap<String, String>,
+    /// Dotted response path of the credential's non-secret identifier,
+    /// remembered in `profiles.toml` as `credential_id` so `remove --revoke`
+    /// can name it. Unset when the API needs nothing to revoke.
+    pub credential_id: Option<String>,
+}
+
+impl ProvisionOperation {
+    pub fn new(command: impl Into<String>) -> Self {
+        Self {
+            command: command.into(),
+            arguments: BTreeMap::new(),
+            credential_fields: BTreeMap::new(),
+            credential_id: None,
+        }
+    }
+
+    pub fn argument(mut self, name: impl Into<String>, value: impl Into<String>) -> Self {
+        self.arguments.insert(name.into(), value.into());
+        self
+    }
+
+    pub fn credential_field(
+        mut self,
+        field: impl Into<String>,
+        response_path: impl Into<String>,
+    ) -> Self {
+        self.credential_fields
+            .insert(field.into(), response_path.into());
+        self
+    }
+
+    pub fn credential_id(mut self, response_path: impl Into<String>) -> Self {
+        self.credential_id = Some(response_path.into());
+        self
+    }
+
+    /// The operation as a command path (`iam.keys.create` →
+    /// `["iam", "keys", "create"]`).
+    pub fn op_path(&self) -> Vec<String> {
+        self.command.split('.').map(str::to_string).collect()
+    }
 }
 
 impl Default for ProfilesConfig {
@@ -101,6 +185,8 @@ impl Default for ProfilesConfig {
         Self {
             command_name: "profiles".to_string(),
             revoke_operation: None,
+            revoke_credential_id_parameter: None,
+            provision_operation: None,
         }
     }
 }
@@ -119,6 +205,20 @@ impl ProfilesConfig {
     /// [`Self::revoke_operation`].
     pub fn revoke_operation(mut self, op: impl Into<String>) -> Self {
         self.revoke_operation = Some(op.into());
+        self
+    }
+
+    /// Name the revoke operation's parameter that carries the credential's
+    /// identifier. See [`Self::revoke_credential_id_parameter`].
+    pub fn revoke_credential_id_parameter(mut self, parameter: impl Into<String>) -> Self {
+        self.revoke_credential_id_parameter = Some(parameter.into());
+        self
+    }
+
+    /// Let `profiles create --provision` mint a remote credential. See
+    /// [`ProvisionOperation`].
+    pub fn provision_operation(mut self, op: ProvisionOperation) -> Self {
+        self.provision_operation = Some(op);
         self
     }
 

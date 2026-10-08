@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Named profiles can now mint their own remote credential. A new
+    `profiles.provisionOperation` config names an operation (e.g. an API-key
+    create), its fixed arguments, and which response fields hold each half of
+    the credential; `profiles create --provision` runs it signed with a
+    bootstrap credential (stdin, or `--from-env`), stores the result in the
+    keychain, and remembers the credential's non-secret id as
+    `credential_id`. `profiles.revokeOperation` gains a long form with
+    `credentialIdParameter`, so `profiles remove --revoke` passes that id to
+    the delete call — signed as the profile — without the id ever becoming a
+    default for unrelated commands that share the parameter name.
+  type: feat

@@ -482,6 +482,85 @@ describe("validateCustomConfig — profiles", () => {
         );
     });
 
+    it("accepts the long-form revokeOperation with a credentialIdParameter", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    revokeOperation: { command: "iam.keys.remove", credentialIdParameter: "Sid" }
+                }
+            }).profiles?.revokeOperation
+        ).toEqual({ command: "iam.keys.remove", credentialIdParameter: "Sid" });
+    });
+
+    it("rejects a long-form revokeOperation whose command is not a dotted path", () => {
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, revokeOperation: { command: "remove" } } })
+        ).toThrow(/revokeOperation.command/);
+    });
+
+    it("accepts a provisionOperation and keeps every mapping", () => {
+        const provisionOperation = {
+            command: "iam.keys.create",
+            arguments: { FriendlyName: "{cli} on {hostname}" },
+            credential: { username: "sid", password: "secret" },
+            credentialId: "sid"
+        };
+        expect(
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation } }).profiles?.provisionOperation
+        ).toEqual(provisionOperation);
+    });
+
+    it("accepts a provisionOperation with only the required fields", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { command: "tokens.create", credential: { token: "data.value" } }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({ command: "tokens.create", credential: { token: "data.value" } });
+    });
+
+    it("rejects a provisionOperation without a credential mapping", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { command: "iam.keys.create" } }
+            })
+        ).toThrow(/provisionOperation.credential/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { command: "iam.keys.create", credential: {} } }
+            })
+        ).toThrow(/at least one credential field/);
+    });
+
+    it("rejects provisionOperation values that could not sit in a Rust string literal", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        command: "iam.keys.create",
+                        credential: { username: 'sid")' }
+                    }
+                }
+            })
+        ).toThrow(/provisionOperation.credential.username/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        command: "iam.keys.create",
+                        arguments: { FriendlyName: 'x"); std::process::exit(1); ("' },
+                        credential: { token: "secret" }
+                    }
+                }
+            })
+        ).toThrow(/provisionOperation.arguments.FriendlyName/);
+    });
+
     it("keeps `profiles` itself selectable — it is the default", () => {
         expect(
             validateCustomConfig({ profiles: { enabled: true, commandName: "profiles" } }).profiles?.commandName

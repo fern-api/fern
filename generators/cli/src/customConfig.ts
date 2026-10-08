@@ -201,7 +201,51 @@ export interface FernCliProfilesConfig {
      * stored `parameters` as its arguments, so any parameter it requires
      * has to be on the profile (`profiles create --set <name>=<value>`).
      */
-    revokeOperation?: string;
+    revokeOperation?: string | FernCliRevokeOperationConfig;
+    /**
+     * Let `profiles create --provision` mint a remote credential (an API
+     * key, say) by calling an operation of the API and storing the mapped
+     * response fields as the profile's credential. Absent → the flag is not
+     * registered.
+     */
+    provisionOperation?: FernCliProvisionOperationConfig;
+}
+
+/**
+ * Long form of `profiles.revokeOperation`, for APIs whose revoke call needs
+ * the credential's own identifier.
+ */
+export interface FernCliRevokeOperationConfig {
+    /** Dotted command path, e.g. `iam.keys.remove`. */
+    command: string;
+    /**
+     * The operation's parameter that takes the id `provisionOperation.credentialId`
+     * remembered (e.g. `Sid`). Kept apart from profile parameters so the id
+     * never becomes a default for unrelated commands sharing the name.
+     */
+    credentialIdParameter?: string;
+}
+
+/**
+ * `profiles.provisionOperation`: how `profiles create --provision` mints a
+ * credential. Entirely generic — the config names the operation, its fixed
+ * arguments, and which response fields hold each half of the credential.
+ */
+export interface FernCliProvisionOperationConfig {
+    /** Dotted command path, e.g. `iam.keys.create`. */
+    command: string;
+    /**
+     * Fixed arguments passed alongside the profile's stored parameters.
+     * Values may use `{profile}`, `{cli}`, `{hostname}` and `{user}`.
+     */
+    arguments?: Record<string, string>;
+    /**
+     * Credential field → response field (dotted path). `username` and
+     * `password` for a basic scheme, `token` for a single-value one.
+     */
+    credential: Record<string, string>;
+    /** Response field (dotted path) holding the credential's non-secret id. */
+    credentialId?: string;
 }
 
 /**
@@ -598,6 +642,118 @@ const RESERVED_PROFILES_COMMAND_NAMES: ReadonlySet<string> = new Set([
     "help"
 ]);
 
+/**
+ * Dotted command path. Interpolated into a Rust string literal and split on
+ * `.` at runtime, so anything else would produce a path that silently
+ * matches no operation.
+ */
+const COMMAND_PATH_PATTERN = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/;
+
+function validateCommandPath(value: unknown, where: string): string {
+    if (typeof value !== "string") {
+        throw new Error(`Invalid ${where}: expected a string, got ${typeof value}.`);
+    }
+    if (!COMMAND_PATH_PATTERN.test(value)) {
+        throw new Error(
+            `Invalid ${where}: "${value}" is not a dotted command path. ` +
+                'Use the form "<resource>.<method>" (e.g. "iam.keys.remove").'
+        );
+    }
+    return value;
+}
+
+/**
+ * A parameter or response-field name. Both end up inside a Rust string
+ * literal in main.rs; parameters are matched by wire name at runtime and
+ * response paths are split on `.`, so the alphabet is deliberately narrow.
+ */
+const FIELD_NAME_PATTERN = /^[A-Za-z0-9_.-]+$/;
+
+function validateFieldName(value: unknown, where: string): string {
+    if (typeof value !== "string" || value.length === 0) {
+        throw new Error(`Invalid ${where}: expected a non-empty string, got ${JSON.stringify(value)}.`);
+    }
+    if (!FIELD_NAME_PATTERN.test(value)) {
+        throw new Error(`Invalid ${where}: "${value}" may only contain [A-Za-z0-9_.-].`);
+    }
+    return value;
+}
+
+function validateStringMap(
+    raw: unknown,
+    where: string,
+    validateValue: (v: unknown, w: string) => string
+): Record<string, string> {
+    const obj = asConfigObject(raw, where);
+    const out: Record<string, string> = {};
+    for (const [key, value] of Object.entries(obj)) {
+        validateFieldName(key, `${where} key "${key}"`);
+        out[key] = validateValue(value, `${where}.${key}`);
+    }
+    return out;
+}
+
+/**
+ * A fixed-argument value. Free text (an API key's label, say) bar the
+ * characters that cannot sit inside a Rust string literal.
+ */
+function validateArgumentValue(value: unknown, where: string): string {
+    if (typeof value !== "string") {
+        throw new Error(`Invalid ${where}: expected a string, got ${typeof value}.`);
+    }
+    const escapesLiteral = (ch: string) => ch === '"' || ch === "\\" || (ch.codePointAt(0) ?? 0) < 0x20;
+    if ([...value].some(escapesLiteral)) {
+        throw new Error(`Invalid ${where}: contains quotes, backslashes or control characters.`);
+    }
+    return value;
+}
+
+function validateRevokeOperation(raw: unknown): string | FernCliRevokeOperationConfig {
+    if (typeof raw === "string") {
+        return validateCommandPath(raw, "customConfig.profiles.revokeOperation");
+    }
+    if (typeof raw !== "object" || raw == null || Array.isArray(raw)) {
+        throw new Error(
+            `Invalid customConfig.profiles.revokeOperation: expected a string command path or ` +
+                `a { command, credentialIdParameter } object, got ${Array.isArray(raw) ? "array" : typeof raw}.`
+        );
+    }
+    const obj = asConfigObject(raw, "customConfig.profiles.revokeOperation");
+    const result: FernCliRevokeOperationConfig = {
+        command: validateCommandPath(obj.command, "customConfig.profiles.revokeOperation.command")
+    };
+    if (obj.credentialIdParameter !== undefined) {
+        result.credentialIdParameter = validateFieldName(
+            obj.credentialIdParameter,
+            "customConfig.profiles.revokeOperation.credentialIdParameter"
+        );
+    }
+    return result;
+}
+
+function validateProvisionOperation(raw: unknown): FernCliProvisionOperationConfig {
+    const where = "customConfig.profiles.provisionOperation";
+    const obj = asConfigObject(raw, where);
+    const credential = validateStringMap(obj.credential, `${where}.credential`, validateFieldName);
+    if (Object.keys(credential).length === 0) {
+        throw new Error(
+            `Invalid ${where}.credential: map at least one credential field ` +
+                '(e.g. { username: "sid", password: "secret" }) to a response field.'
+        );
+    }
+    const result: FernCliProvisionOperationConfig = {
+        command: validateCommandPath(obj.command, `${where}.command`),
+        credential
+    };
+    if (obj.arguments !== undefined) {
+        result.arguments = validateStringMap(obj.arguments, `${where}.arguments`, validateArgumentValue);
+    }
+    if (obj.credentialId !== undefined) {
+        result.credentialId = validateFieldName(obj.credentialId, `${where}.credentialId`);
+    }
+    return result;
+}
+
 function validateProfiles(raw: unknown): FernCliProfilesConfig {
     const obj = asConfigObject(raw, "customConfig.profiles");
     const result: FernCliProfilesConfig = {};
@@ -608,21 +764,10 @@ function validateProfiles(raw: unknown): FernCliProfilesConfig {
         result.enabled = obj.enabled;
     }
     if (obj.revokeOperation !== undefined) {
-        if (typeof obj.revokeOperation !== "string") {
-            throw new Error(
-                `Invalid customConfig.profiles.revokeOperation: expected a string, got ${typeof obj.revokeOperation}.`
-            );
-        }
-        // Dotted command path. Interpolated into a Rust string literal and
-        // split on `.` at runtime, so anything else would produce a path
-        // that silently matches no operation.
-        if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(obj.revokeOperation)) {
-            throw new Error(
-                `Invalid customConfig.profiles.revokeOperation: "${obj.revokeOperation}" is not a ` +
-                    'dotted command path. Use the form "<resource>.<method>" (e.g. "iam.keys.remove").'
-            );
-        }
-        result.revokeOperation = obj.revokeOperation;
+        result.revokeOperation = validateRevokeOperation(obj.revokeOperation);
+    }
+    if (obj.provisionOperation !== undefined) {
+        result.provisionOperation = validateProvisionOperation(obj.provisionOperation);
     }
     if (obj.commandName !== undefined) {
         if (typeof obj.commandName !== "string") {
