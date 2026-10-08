@@ -5,6 +5,7 @@ import { getFetchFn } from "./getFetchFn";
 import { makeRequest } from "./makeRequest";
 import { redactUrl } from "./redactUrl";
 import { requestWithRetries } from "./requestWithRetries";
+import { TIMEOUT } from "./signals";
 import { Supplier } from "./Supplier";
 
 export declare namespace PassthroughRequest {
@@ -163,23 +164,32 @@ export async function makePassthroughRequest(
         });
     }
 
-    const response = await requestWithRetries(
-        async () =>
-            makeRequest(
-                fetchFn,
-                fullUrl,
-                method,
-                mergedHeaders,
-                body ?? undefined,
-                timeoutMs,
-                abortSignal,
-                effectiveInit?.credentials === "include",
-                undefined, // duplex
-                false, // disableCache
-            ),
-        maxRetries,
-        abortSignal,
-    );
+    let response: Response;
+    try {
+        response = await requestWithRetries(
+            async () =>
+                makeRequest(
+                    fetchFn,
+                    fullUrl,
+                    method,
+                    mergedHeaders,
+                    body ?? undefined,
+                    timeoutMs,
+                    abortSignal,
+                    effectiveInit?.credentials === "include",
+                    undefined, // duplex
+                    false, // disableCache
+                ),
+            maxRetries,
+            abortSignal,
+        );
+    } catch (error) {
+        // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.
+        if (error === TIMEOUT) {
+            throw createTimeoutError();
+        }
+        throw error;
+    }
 
     if (logger.isDebug()) {
         logger.debug("Passthrough HTTP request completed", {
@@ -190,6 +200,12 @@ export async function makePassthroughRequest(
     }
 
     return response;
+}
+
+function createTimeoutError(): Error {
+    const error = new Error("The request timed out.");
+    error.name = "TimeoutError";
+    return error;
 }
 
 /**
