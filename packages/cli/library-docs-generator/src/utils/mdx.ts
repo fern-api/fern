@@ -107,6 +107,15 @@ export function createFrontmatter(slug: string, title?: string): string {
 }
 
 /**
+ * Prepend an optional slug prefix (e.g., "api-reference") to a slug.
+ * Leading and trailing slashes on the prefix are ignored.
+ */
+export function withSlugPrefix(slug: string, slugPrefix: string | undefined): string {
+    const prefix = slugPrefix?.replace(/^\/+|\/+$/g, "") ?? "";
+    return prefix.length > 0 ? `${prefix}/${slug}` : slug;
+}
+
+/**
  * Escape content for use inside markdown table cells.
  * Pipe characters break table structure and need to be escaped.
  */
