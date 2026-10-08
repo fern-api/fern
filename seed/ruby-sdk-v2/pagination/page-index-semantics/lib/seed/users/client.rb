@@ -10,6 +10,13 @@ module Seed
         @client = client
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -30,7 +37,7 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -68,6 +75,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersMixedTypePaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -80,7 +94,7 @@ module Seed
       # @example
       #   client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
       #
-      # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -115,6 +129,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
@@ -126,7 +147,7 @@ module Seed
       # @example
       #   client.users.list_with_mixed_type_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_body_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
@@ -162,6 +183,13 @@ module Seed
       # This tests that the mock server correctly ignores cursor mismatches
       # when getNextPage() is called with a different cursor value.
       #
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Seed::Users::Types::ListUsersTopLevelBodyCursorPaginationRequest]
       # @option request_options [String] :base_url
@@ -176,7 +204,7 @@ module Seed
       #     filter: "active"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_top_level_body_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
@@ -208,6 +236,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -228,7 +263,7 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -267,6 +302,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -287,7 +329,7 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_double_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -326,6 +368,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
       # @option request_options [String] :base_url
@@ -337,7 +386,7 @@ module Seed
       # @example
       #   client.users.list_with_mixed_type_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_body_offset_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::OffsetItemIterator.new(
@@ -370,6 +419,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -387,7 +443,7 @@ module Seed
       #     order: "asc"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_offset_step_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -425,6 +481,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -442,7 +505,7 @@ module Seed
       #     order: "asc"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersPaginationResponse]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_offset_pagination_has_next_page(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -480,6 +543,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `users` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersExtendedResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -492,7 +562,7 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersExtendedResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_extended_results(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -527,6 +597,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Users::Types::User` in the `users` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersExtendedOptionalListResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -539,7 +616,7 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination
       #
-      # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_extended_results_and_optional_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -574,6 +651,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `String` in the `data` field of every page,
+      # requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Types::UsernameCursor`,
+      # including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -586,7 +670,7 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination(starting_after: "starting_after")
       #
-      # @return [Seed::Types::UsernameCursor]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_usernames(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -621,6 +705,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each `String` in the `data` field of every page,
+      # requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Types::UsernameCursor`,
+      # including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -633,7 +724,7 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination(starting_after: "starting_after")
       #
-      # @return [Seed::Types::UsernameCursor, nil]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_usernames_with_optional_response(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -668,6 +759,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `String` in the `results` field of every page,
+      # requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::UsernameContainer`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -680,7 +778,7 @@ module Seed
       # @example
       #   client.users.list_with_cursor_pagination
       #
-      # @return [Seed::Users::Types::UsernameContainer]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_global_config(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -716,6 +814,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::OffsetItemIterator` that yields each `Seed::Users::Types::User` in the `data` field
+      # of every page, requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersOptionalDataPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -728,7 +833,7 @@ module Seed
       # @example
       #   client.users.list_with_optional_data(page: 1)
       #
-      # @return [Seed::Users::Types::ListUsersOptionalDataPaginationResponse]
+      # @return [Seed::Internal::OffsetItemIterator]
       def list_with_optional_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}
@@ -764,6 +869,13 @@ module Seed
         end
       end
 
+      # Returns a `Seed::Internal::CursorItemIterator` that yields each item in the `data` field of every page,
+      # requesting pages as they are needed. Call `pages` on it to get each page as a
+      # `Seed::Users::Types::ListUsersAliasedDataPaginationResponse`, including its other fields.
+      #
+      # No request is sent by this call. The first page is requested when you start iterating (or call
+      # `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
+      #
       # @param request_options [Hash]
       # @param params [Hash]
       # @option request_options [String] :base_url
@@ -782,7 +894,7 @@ module Seed
       #     starting_after: "starting_after"
       #   )
       #
-      # @return [Seed::Users::Types::ListUsersAliasedDataPaginationResponse]
+      # @return [Seed::Internal::CursorItemIterator]
       def list_with_aliased_data(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_params = {}

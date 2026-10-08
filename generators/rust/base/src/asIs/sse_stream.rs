@@ -103,10 +103,17 @@ pub struct SseStream<T> {
     #[pin]
     inner: Pin<Box<dyn Stream<Item = Result<Event, EventError>> + Send>>,
     terminator: Option<String>,
+    event_discriminator: Option<EventDiscriminator>,
     timeout: Duration,
     #[pin]
     deadline: tokio::time::Sleep,
     _phantom: PhantomData<T>,
+}
+
+/// Protocol-level union discrimination: the union discriminant travels on the SSE `event:` line.
+struct EventDiscriminator {
+    field: String,
+    envelope_events: Vec<String>,
 }
 
 impl<T> SseStream<T>
@@ -160,6 +167,7 @@ where
         Ok(Self {
             inner: Box::pin(events),
             terminator,
+            event_discriminator: None,
             timeout,
             deadline: tokio::time::sleep(timeout),
             _phantom: PhantomData,
@@ -201,6 +209,47 @@ where
     pub fn with_metadata(self) -> SseStreamWithMetadata<T> {
         SseStreamWithMetadata { inner: self }
     }
+
+    /// Discriminate events by their SSE `event:` line, exposed to deserialization as `field`.
+    ///
+    /// Events listed in `envelope_events` are deserialized from `{"<field>": event, "data": data}`;
+    /// all other events have `field` injected into their JSON `data` object.
+    #[allow(dead_code)]
+    pub(crate) fn with_event_discriminator(mut self, field: &str, envelope_events: &[&str]) -> Self {
+        self.event_discriminator = Some(EventDiscriminator {
+            field: field.to_string(),
+            envelope_events: envelope_events.iter().map(|event| event.to_string()).collect(),
+        });
+        self
+    }
+}
+
+fn parse_event_data<T: DeserializeOwned>(
+    event_discriminator: &Option<EventDiscriminator>,
+    event: &Event,
+) -> Result<T, serde_json::Error> {
+    let discriminator = match event_discriminator {
+        Some(discriminator) if !event.event_type.is_empty() => discriminator,
+        _ => return serde_json::from_str(&event.data),
+    };
+    let event_type = serde_json::Value::String(event.event_type.clone());
+    if discriminator
+        .envelope_events
+        .iter()
+        .any(|envelope_event| *envelope_event == event.event_type)
+    {
+        let data = serde_json::from_str(&event.data)
+            .unwrap_or_else(|_| serde_json::Value::String(event.data.clone()));
+        let mut envelope = serde_json::Map::new();
+        envelope.insert(discriminator.field.clone(), event_type);
+        envelope.insert("data".to_string(), data);
+        return serde_json::from_value(serde_json::Value::Object(envelope));
+    }
+    let mut value: serde_json::Value = serde_json::from_str(&event.data)?;
+    if let serde_json::Value::Object(ref mut map) = value {
+        map.entry(discriminator.field.clone()).or_insert(event_type);
+    }
+    serde_json::from_value(value)
 }
 
 impl<T> Stream for SseStream<T>
@@ -225,7 +274,7 @@ where
                 }
 
                 // Deserialize JSON data to typed struct
-                match serde_json::from_str(&event.data) {
+                match parse_event_data(this.event_discriminator, &event) {
                     Ok(value) => Poll::Ready(Some(Ok(value))),
                     Err(e) => Poll::Ready(Some(Err(ApiError::Serialization(e)))),
                 }
@@ -298,7 +347,7 @@ where
                 };
 
                 // Deserialize JSON data
-                match serde_json::from_str(&event.data) {
+                match parse_event_data(inner_pin.event_discriminator, &event) {
                     Ok(data) => Poll::Ready(Some(Ok(SseEvent { data, metadata }))),
                     Err(e) => Poll::Ready(Some(Err(ApiError::Serialization(e)))),
                 }
@@ -321,5 +370,46 @@ where
                 }
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn event(event_type: &str, data: &str) -> Event {
+        Event {
+            event_type: event_type.to_string(),
+            data: data.to_string(),
+            last_event_id: None,
+            retry: None,
+        }
+    }
+
+    fn discriminator(envelope_events: &[&str]) -> Option<EventDiscriminator> {
+        Some(EventDiscriminator {
+            field: "event".to_string(),
+            envelope_events: envelope_events.iter().map(|e| e.to_string()).collect(),
+        })
+    }
+
+    #[test]
+    fn injects_discriminant_into_payload_events() {
+        let value: serde_json::Value =
+            parse_event_data(&discriminator(&[]), &event("error", r#"{"code":3}"#)).unwrap();
+        assert_eq!(value, serde_json::json!({"event": "error", "code": 3}));
+    }
+
+    #[test]
+    fn wraps_envelope_events() {
+        let value: serde_json::Value =
+            parse_event_data(&discriminator(&["entity"]), &event("entity", r#"{"id":"1"}"#)).unwrap();
+        assert_eq!(value, serde_json::json!({"event": "entity", "data": {"id": "1"}}));
+    }
+
+    #[test]
+    fn parses_data_directly_without_discriminator() {
+        let value: serde_json::Value = parse_event_data(&None, &event("entity", r#"{"id":"1"}"#)).unwrap();
+        assert_eq!(value, serde_json::json!({"id": "1"}));
     }
 }

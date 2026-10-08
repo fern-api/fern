@@ -16,6 +16,7 @@ use Seed\Types\StreamProtocolCollisionResponse;
 use Seed\Types\StreamDataContextResponse;
 use Seed\Types\StreamNoContextResponse;
 use Seed\Types\StreamProtocolWithFlatSchemaResponse;
+use Seed\Types\StreamProtocolMixedSchemaResponse;
 use Seed\Types\StreamDataContextWithEnvelopeSchemaResponse;
 use Seed\Types\Event;
 use Seed\Requests\StreamXFernStreamingConditionStreamRequest;
@@ -323,6 +324,56 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 return new SseStream(response: $response, deserializer: fn (string $data) => StreamProtocolWithFlatSchemaResponse::fromJson($data), terminator: null);
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     *
+     * Example:
+     * ```php
+     * $client->streamProtocolMixedSchema(
+     *     new StreamRequest([]),
+     * );
+     * ```
+     *
+     * @param StreamRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return SseStream<StreamProtocolMixedSchemaResponse>
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function streamProtocolMixedSchema(StreamRequest $request, ?array $options = null): SseStream
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "stream/protocol-mixed-schema",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return new SseStream(response: $response, deserializer: fn (string $data) => StreamProtocolMixedSchemaResponse::fromJson($data), terminator: null);
             }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);

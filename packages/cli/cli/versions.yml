@@ -1,4 +1,57 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.149.0
+  changelogEntry:
+    - summary: |
+        Add an optional `type` to inferred bearer auth schemes (`api-key` | `refresh-token`). With
+        `type: refresh-token`, the IR records the get-token endpoint's `grant_type` request property
+        (`InferredAuthSchemeTokenEndpoint.grantType`) so SDKs always send `grant_type=refresh_token`
+        and do not expose `grant_type` as a client option.
+        ```yaml
+        auth-schemes:
+          Bearer:
+            scheme: bearer
+            get-token: POST /authorize
+            type: refresh-token
+        ```
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.5
+  changelogEntry:
+    - summary: |
+        Fix audience filtering dropping the variants of an inline `anyOf`/`oneOf` on a request body
+        property when importing OpenAPI. The variants were removed from the IR, so the property and
+        each variant rendered as `any` in audience-filtered API references.
+      type: fix
+    - summary: |
+        Upgrade `posthog-node` from 5.35.1 to 5.55.0. PostHog clients are created with `isServer: false` so
+        CLI events keep their existing shape and are not tagged `$is_server: true` by the newer SDK.
+      type: chore
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.4
+  changelogEntry:
+    - summary: |
+        `fern generate` with `--version AUTO` no longer rewrites the placeholder version inside
+        files protected by `.fernignore` or inside longer version strings such as
+        `0.0.0-fern-placeholder.7`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.3
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init --docs --openapi <path-or-url>`
+        now copies the OpenAPI spec into the fern directory and declares it under the `- api: API Reference`
+        entry's `specs` in `docs.yml`, so the docs build a full API reference without a `generators.yml` or
+        `sdk-config.yml`. Previously `--openapi` was silently ignored when combined with `--docs`, and the
+        welcome page pointed to `fern init --openapi`, which does not produce an API the docs can read in this
+        mode. If `fern/openapi.json|yml` already exists, the copy is written as `openapi-1.json|yml` (and so on),
+        so an existing API's spec is never overwritten. If `docs.yml` already exists, the command now warns that
+        the spec was not added. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 5.148.2
   changelogEntry:
     - summary: |

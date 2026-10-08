@@ -886,7 +886,7 @@ export class DynamicSnippetsConverter {
 
         // Extract credentials from request body
         if (tokenEndpoint.requestBody != null) {
-            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            const properties = this.getInferredAuthRequestBodyProperties(scheme, tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     parameters.push({
@@ -926,7 +926,7 @@ export class DynamicSnippetsConverter {
 
         // Extract credentials from request body - use wireValue as key
         if (tokenEndpoint.requestBody != null) {
-            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            const properties = this.getInferredAuthRequestBodyProperties(scheme, tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     const propWireValue = getWireValue(property.name);
@@ -936,6 +936,23 @@ export class DynamicSnippetsConverter {
         }
 
         return values;
+    }
+
+    private getInferredAuthRequestBodyProperties(
+        scheme: InferredAuthScheme,
+        requestBody: HttpRequestBody
+    ): Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] {
+        const properties = this.getRequestBodyProperties(requestBody);
+        const grantTypeProperty = scheme.tokenEndpoint.grantType?.requestProperty;
+        if (
+            grantTypeProperty == null ||
+            grantTypeProperty.property.type !== "body" ||
+            (grantTypeProperty.propertyPath?.length ?? 0) > 0
+        ) {
+            return properties;
+        }
+        const grantTypeWireValue = getWireValue(grantTypeProperty.property.name);
+        return properties.filter((property) => getWireValue(property.name) !== grantTypeWireValue);
     }
 
     private getRequestBodyProperties(

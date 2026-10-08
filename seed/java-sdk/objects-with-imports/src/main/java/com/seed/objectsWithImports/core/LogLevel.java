@@ -3,6 +3,8 @@
  */
 package com.seed.objectsWithImports.core;
 
+import java.util.Locale;
+
 /**
  * Log levels for SDK logging configuration.
  * Silent by default — no log output unless explicitly configured.
@@ -31,6 +33,6 @@ public enum LogLevel {
      * @throws IllegalArgumentException if the string does not match any level
      */
     public static LogLevel fromString(String level) {
-        return LogLevel.valueOf(level.toUpperCase());
+        return LogLevel.valueOf(level.toUpperCase(Locale.ROOT));
     }
 }

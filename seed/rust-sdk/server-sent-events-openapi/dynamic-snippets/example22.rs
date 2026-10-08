@@ -8,11 +8,11 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .validate_completion(
-            &SharedCompletionRequest {
+        .stream_x_fern_streaming_shared_schema(
+            &StreamXFernStreamingSharedSchemaRequest {
                 prompt: "prompt".to_string(),
                 model: "model".to_string(),
-                stream: None,
+                stream: false,
             },
             None,
         )

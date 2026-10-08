@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.39.4
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.3
+  changelogEntry:
+    - summary: |
+        Stop automatically replaying requests after server disconnects or incomplete responses (`httpx.RemoteProtocolError`), which could duplicate non-idempotent POST/PATCH operations, even after a 200 status was received. Connection-establishment failures and HTTP-status retries are unchanged. Set `request_options={"retry_remote_protocol_errors": True}` only when replaying the request is safe to explicitly restore the previous behavior.
+      type: fix
+    - summary: |
+        With `pydantic_config.skip_validation: true`, a union value that matches no known member is now
+        returned as its original data (the raw dict) instead of `None`. Previously a response carrying a
+        union variant added after the SDK was generated (e.g. a new `product` on a discriminated union), or
+        one missing its discriminant, silently decoded to `None` and its fields were lost. Known variants
+        still decode to their classes.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.2
+  changelogEntry:
+    - summary: |
+        Generated `core/pydantic_utilities.py` now type-checks under pydantic 2.14, which made mypy report
+        `var-annotated` on the module-level `TypeAdapter` instances.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.39.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) fluent child methods (`response.say(...)`, `gather.play(...)`, ...) keep document order on
+        Python 3.12+. The ordered content list is a pydantic private attribute, and the `runtime_checkable`
+        Protocol used to find it stopped matching on 3.12 (where `isinstance` uses `inspect.getattr_static`),
+        so children appended by the fluent methods were ordered after text and `add_child(...)` elements, e.g.
+        `r.say("a"); r.add_child(XmlElement("Custom")); r.say("b")` rendered `<Custom/><Say>a</Say><Say>b</Say>`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 5.39.0
   changelogEntry:
     - summary: |

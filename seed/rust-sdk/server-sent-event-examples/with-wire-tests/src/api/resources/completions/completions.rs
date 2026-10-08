@@ -128,6 +128,7 @@ impl CompletionsClient {
                 None,
             )
             .await
+            .map(|stream| stream.with_event_discriminator("type", &[]))
     }
 
     /// # Examples
@@ -167,5 +168,6 @@ impl CompletionsClient {
                 Some("[DONE]".to_string()),
             )
             .await
+            .map(|stream| stream.with_event_discriminator("event", &[]))
     }
 }

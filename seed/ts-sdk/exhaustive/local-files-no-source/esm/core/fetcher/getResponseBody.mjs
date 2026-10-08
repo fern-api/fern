@@ -18,6 +18,19 @@ function retainResponse(target, response) {
         writable: false,
     });
 }
+const responseBodyErrors = new WeakSet();
+function responseBodyError(error) {
+    const record = { ok: false, error };
+    responseBodyErrors.add(record);
+    return record;
+}
+/**
+ * Returns true when `value` is a failure record created by `getResponseBody` (for example malformed JSON),
+ * as opposed to a parsed JSON body that happens to have the same shape.
+ */
+export function isResponseBodyError(value) {
+    return typeof value === "object" && value != null && responseBodyErrors.has(value);
+}
 export function getResponseBody(response, responseType) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (responseType) {
@@ -29,25 +42,19 @@ export function getResponseBody(response, responseType) {
                 return yield response.arrayBuffer();
             case "sse":
                 if (response.body == null) {
-                    return {
-                        ok: false,
-                        error: {
-                            reason: "body-is-null",
-                            statusCode: response.status,
-                        },
-                    };
+                    return responseBodyError({
+                        reason: "body-is-null",
+                        statusCode: response.status,
+                    });
                 }
                 retainResponse(response.body, response);
                 return response.body;
             case "streaming":
                 if (response.body == null) {
-                    return {
-                        ok: false,
-                        error: {
-                            reason: "body-is-null",
-                            statusCode: response.status,
-                        },
-                    };
+                    return responseBodyError({
+                        reason: "body-is-null",
+                        statusCode: response.status,
+                    });
                 }
                 retainResponse(response.body, response);
                 return response.body;
@@ -62,14 +69,11 @@ export function getResponseBody(response, responseType) {
                 return responseBody;
             }
             catch (_err) {
-                return {
-                    ok: false,
-                    error: {
-                        reason: "non-json",
-                        statusCode: response.status,
-                        rawBody: text,
-                    },
-                };
+                return responseBodyError({
+                    reason: "non-json",
+                    statusCode: response.status,
+                    rawBody: text,
+                });
             }
         }
         return undefined;

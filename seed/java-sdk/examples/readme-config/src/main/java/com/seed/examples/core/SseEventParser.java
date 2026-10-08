@@ -51,6 +51,27 @@ public final class SseEventParser {
      */
     public static <T> T parseEventLevelUnion(
             String eventType, String data, String id, Long retry, Class<T> unionClass, String discriminatorProperty) {
+        return parseEventLevelUnion(eventType, data, id, retry, unionClass, discriminatorProperty, null);
+    }
+
+    /**
+     * Parse an SSE event using event-level discrimination.
+     * <p>
+     * Events in {@code envelopeEvents} (or every event, if {@code envelopeEvents} is null) are deserialized from the
+     * SSE envelope ({@code event}, {@code data}, {@code id}, {@code retry}). Other events are deserialized from the
+     * JSON {@code data} payload with the discriminator injected.
+     */
+    public static <T> T parseEventLevelUnion(
+            String eventType,
+            String data,
+            String id,
+            Long retry,
+            Class<T> unionClass,
+            String discriminatorProperty,
+            Set<String> envelopeEvents) {
+        if (envelopeEvents != null && eventType != null && !envelopeEvents.contains(eventType)) {
+            return parsePayloadWithInjectedDiscriminator(eventType, data, unionClass, discriminatorProperty);
+        }
         try {
             // Determine if data should be parsed as JSON based on the variant's expected type
             Object parsedData = parseDataForVariant(eventType, data, unionClass, discriminatorProperty);
@@ -69,6 +90,21 @@ public final class SseEventParser {
             // Serialize to JSON and deserialize to target type
             String envelopeJson = ObjectMappers.JSON_MAPPER.writeValueAsString(envelope);
             return ObjectMappers.JSON_MAPPER.readValue(envelopeJson, unionClass);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse SSE event with event-level discrimination", e);
+        }
+    }
+
+    private static <T> T parsePayloadWithInjectedDiscriminator(
+            String eventType, String data, Class<T> unionClass, String discriminatorProperty) {
+        try {
+            Map<String, Object> payload = new HashMap<>();
+            if (data != null && !data.isEmpty()) {
+                payload.putAll(ObjectMappers.JSON_MAPPER.readValue(data, new TypeReference<Map<String, Object>>() {}));
+            }
+            payload.putIfAbsent(discriminatorProperty, eventType);
+            String payloadJson = ObjectMappers.JSON_MAPPER.writeValueAsString(payload);
+            return ObjectMappers.JSON_MAPPER.readValue(payloadJson, unionClass);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse SSE event with event-level discrimination", e);
         }

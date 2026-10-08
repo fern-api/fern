@@ -18,6 +18,7 @@ export * from "./StreamDataContextResponse.js";
 export * from "./StreamDataContextWithEnvelopeSchemaResponse.js";
 export * from "./StreamNoContextResponse.js";
 export * from "./StreamProtocolCollisionResponse.js";
+export * from "./StreamProtocolMixedSchemaResponse.js";
 export * from "./StreamProtocolNoCollisionResponse.js";
 export * from "./StreamProtocolWithFlatSchemaResponse.js";
 export * from "./StreamRequest.js";
