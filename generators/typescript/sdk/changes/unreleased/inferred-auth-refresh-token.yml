@@ -10,3 +10,8 @@
     required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
     `code_verifier` and `redirect_uri`, are no longer auth options.
   type: feat
+- summary: |
+    Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+    `refresh_token`, the provider uses it for the next refresh and calls the optional `onRefreshTokenRotated`
+    auth option with it so it can be persisted.
+  type: feat
