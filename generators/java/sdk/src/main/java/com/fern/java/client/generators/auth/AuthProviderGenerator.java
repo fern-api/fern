@@ -62,7 +62,9 @@ public final class AuthProviderGenerator extends AbstractFileGenerator {
             authProviderInterface.addMethod(MethodSpec.methodBuilder("invalidate")
                     .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
                     .addJavadoc(
-                            "Drops any cached credentials so the next call to getAuthHeaders resolves them again.\n")
+                            "Drops cached credentials that still match the headers a failed request sent, so the next call\n")
+                    .addJavadoc("to getAuthHeaders resolves them again.\n")
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
                     .build());
         }
 

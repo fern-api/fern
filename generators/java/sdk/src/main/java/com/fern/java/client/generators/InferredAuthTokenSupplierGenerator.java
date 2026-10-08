@@ -237,8 +237,17 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
             typeSpecBuilder.addMethod(MethodSpec.methodBuilder(INVALIDATE_METHOD_NAME)
                     .addModifiers(Modifier.PUBLIC)
                     .addJavadoc(
-                            "Drops the cached token so the next call fetches a new one, even if it has not expired.\n")
+                            "Drops the cached token if the failed request sent it, so the next call fetches a new one. A token\n")
+                    .addJavadoc("another request already refreshed is kept.\n")
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
                     .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
+                    .beginControlFlow(
+                            "if (failedHeaders != null && this.$L != null && this.$L.entrySet().stream()"
+                                    + ".anyMatch(entry -> !entry.getValue().equals(failedHeaders.get(entry.getKey()))))",
+                            CACHED_HEADERS_FIELD_NAME,
+                            CACHED_HEADERS_FIELD_NAME)
+                    .addStatement("return")
+                    .endControlFlow()
                     .addStatement("this.$L = null", CACHED_HEADERS_FIELD_NAME)
                     .endControlFlow()
                     .build());

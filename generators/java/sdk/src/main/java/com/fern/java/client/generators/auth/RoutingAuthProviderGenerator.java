@@ -93,7 +93,8 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
             routingAuthProviderClass.addMethod(MethodSpec.methodBuilder("invalidate")
                     .addModifiers(Modifier.PUBLIC)
                     .addAnnotation(Override.class)
-                    .addStatement("$N.values().forEach($T::invalidate)", providersField, authProviderClassName)
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .addStatement("$N.values().forEach(provider -> provider.invalidate(failedHeaders))", providersField)
                     .build());
         }
 

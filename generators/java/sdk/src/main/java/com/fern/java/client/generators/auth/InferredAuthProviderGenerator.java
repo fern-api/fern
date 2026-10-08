@@ -96,7 +96,8 @@ public final class InferredAuthProviderGenerator extends AbstractFileGenerator {
             classBuilder.addMethod(MethodSpec.methodBuilder("invalidate")
                     .addModifiers(Modifier.PUBLIC)
                     .addAnnotation(Override.class)
-                    .addStatement("$N.invalidate()", tokenSupplierField)
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .addStatement("$N.invalidate(failedHeaders)", tokenSupplierField)
                     .build());
         }
 

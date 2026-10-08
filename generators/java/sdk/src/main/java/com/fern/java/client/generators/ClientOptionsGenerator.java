@@ -55,6 +55,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
@@ -90,7 +91,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     Modifier.FINAL)
             .build();
     private static final FieldSpec AUTH_INVALIDATORS_FIELD = FieldSpec.builder(
-                    ParameterizedTypeName.get(List.class, Runnable.class),
+                    ParameterizedTypeName.get(
+                            ClassName.get(List.class),
+                            ParameterizedTypeName.get(
+                                    ClassName.get(Consumer.class),
+                                    ParameterizedTypeName.get(Map.class, String.class, String.class))),
                     "authInvalidators",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
@@ -1069,12 +1074,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
             MethodSpec.Builder invalidateAuthMethod = MethodSpec.methodBuilder(INVALIDATE_AUTH_METHOD_NAME)
                     .addModifiers(Modifier.PUBLIC)
-                    .addJavadoc("Drops cached credentials so the next request resolves auth again.\n")
-                    .addStatement("this.$L.forEach($T::run)", AUTH_INVALIDATORS_FIELD.name, Runnable.class);
+                    .addJavadoc(
+                            "Drops cached credentials that still match the headers a failed request sent, so the next\n")
+                    .addJavadoc(
+                            "request resolves auth again. Credentials another request already refreshed are kept.\n")
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .addStatement(
+                            "this.$L.forEach(invalidator -> invalidator.accept(failedHeaders))",
+                            AUTH_INVALIDATORS_FIELD.name);
             if (authProviderField != null) {
                 invalidateAuthMethod
                         .beginControlFlow("if (this.$L != null)", authProviderField.name)
-                        .addStatement("this.$L.invalidate()", authProviderField.name)
+                        .addStatement("this.$L.invalidate(failedHeaders)", authProviderField.name)
                         .endControlFlow();
             }
             clientOptionsBuilder.addMethod(invalidateAuthMethod.build());
@@ -1353,10 +1364,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             .build())
                     .addMethod(MethodSpec.methodBuilder("addAuthInvalidator")
                             .addModifiers(Modifier.PUBLIC)
-                            .addJavadoc("Registers a callback that drops cached credentials, run before a request is\n")
-                            .addJavadoc("retried after a 401 or 403.\n")
+                            .addJavadoc(
+                                    "Registers a callback that drops cached credentials matching the headers a failed\n")
+                            .addJavadoc("request sent, run before that request is retried after a 401 or 403.\n")
                             .returns(builderClassName)
-                            .addParameter(Runnable.class, "invalidator")
+                            .addParameter(
+                                    ParameterizedTypeName.get(
+                                            ClassName.get(Consumer.class),
+                                            ParameterizedTypeName.get(Map.class, String.class, String.class)),
+                                    "invalidator")
                             .addStatement("this.$L.add(invalidator)", AUTH_INVALIDATORS_FIELD.name)
                             .addStatement("return this")
                             .build());

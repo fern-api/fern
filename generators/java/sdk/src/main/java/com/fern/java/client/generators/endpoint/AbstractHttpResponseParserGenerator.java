@@ -198,13 +198,14 @@ public abstract class AbstractHttpResponseParserGenerator {
                 .nestedClass(AUTH_REFRESH_CLASS_NAME);
         httpResponseBuilder
                 .add(
-                        "$L = $L.newBuilder().tag($T.class, new $T(() -> {\n",
+                        "$L = $L.newBuilder().tag($T.class, new $T(_failedHeaders -> {\n",
                         variables.getOkhttpRequestName(),
                         variables.getOkhttpRequestName(),
                         authRefreshClassName,
                         authRefreshClassName)
                 .indent()
-                .addStatement("$N.$L()", clientOptionsField, ClientOptionsGenerator.INVALIDATE_AUTH_METHOD_NAME)
+                .addStatement(
+                        "$N.$L(_failedHeaders)", clientOptionsField, ClientOptionsGenerator.INVALIDATE_AUTH_METHOD_NAME)
                 .addStatement(
                         "$T<$T, $T> _refreshedHeaders = new $T<>($N.headers($L))",
                         Map.class,

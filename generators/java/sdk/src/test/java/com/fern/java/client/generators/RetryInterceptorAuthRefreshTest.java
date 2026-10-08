@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import okhttp3.Interceptor;
@@ -124,11 +124,11 @@ class RetryInterceptorAuthRefreshTest {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private static Request request(Supplier<Map<String, String>> refresh) throws Exception {
+    private static Request request(Function<Map<String, String>, Map<String, String>> refresh) throws Exception {
         Request.Builder builder =
                 new Request.Builder().url("https://api.example.com/test").header("Authorization", "Bearer old");
         if (refresh != null) {
-            Object authRefresh = authRefreshClass.getConstructor(Supplier.class).newInstance(refresh);
+            Object authRefresh = authRefreshClass.getConstructor(Function.class).newInstance(refresh);
             builder.tag((Class) authRefreshClass, authRefresh);
         }
         return builder.build();
@@ -159,8 +159,8 @@ class RetryInterceptorAuthRefreshTest {
         return chain;
     }
 
-    private static Supplier<Map<String, String>> rotatingToken(AtomicInteger refreshes) {
-        return () -> Map.of("Authorization", "Bearer new-" + refreshes.incrementAndGet());
+    private static Function<Map<String, String>, Map<String, String>> rotatingToken(AtomicInteger refreshes) {
+        return failedHeaders -> Map.of("Authorization", "Bearer new-" + refreshes.incrementAndGet());
     }
 
     @Test
@@ -174,6 +174,28 @@ class RetryInterceptorAuthRefreshTest {
         assertThat(response.code()).isEqualTo(200);
         assertThat(refreshes.get()).isEqualTo(1);
         assertThat(sent).containsExactly("Bearer old", "Bearer new-1");
+    }
+
+    @Test
+    void passesTheHeadersEachFailedAttemptSentToRefresh() throws Exception {
+        AtomicInteger refreshes = new AtomicInteger();
+        List<String> failedAuthorization = new ArrayList<>();
+        List<String> sent = new ArrayList<>();
+        Interceptor.Chain chain = chain(
+                request(failedHeaders -> {
+                    failedAuthorization.add(failedHeaders.get("authorization"));
+                    return Map.of("Authorization", "Bearer new-" + refreshes.incrementAndGet());
+                }),
+                sent,
+                401,
+                401,
+                200);
+
+        Response response = newInterceptor(2).intercept(chain);
+
+        assertThat(response.code()).isEqualTo(200);
+        assertThat(failedAuthorization).containsExactly("Bearer old", "Bearer new-1");
+        assertThat(sent).containsExactly("Bearer old", "Bearer new-1", "Bearer new-2");
     }
 
     @Test
@@ -217,8 +239,8 @@ class RetryInterceptorAuthRefreshTest {
     @Test
     void removesAuthHeaderThatRefreshNoLongerProvides() throws Exception {
         List<String> sent = new ArrayList<>();
-        Interceptor.Chain chain =
-                chain(request(() -> java.util.Collections.singletonMap("Authorization", null)), sent, 401, 200);
+        Interceptor.Chain chain = chain(
+                request(failedHeaders -> java.util.Collections.singletonMap("Authorization", null)), sent, 401, 200);
 
         Response response = newInterceptor(2).intercept(chain);
 
@@ -230,7 +252,7 @@ class RetryInterceptorAuthRefreshTest {
     void doesNotSendRequestAgainWhenRefreshFails() throws Exception {
         List<String> sent = new ArrayList<>();
         Interceptor.Chain chain = chain(
-                request(() -> {
+                request(failedHeaders -> {
                     throw new IllegalStateException("token endpoint unavailable");
                 }),
                 sent,
