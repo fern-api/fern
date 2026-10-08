@@ -339,4 +339,38 @@ describe("Test fetcherImpl", () => {
             vi.useRealTimers();
         }
     });
+
+    it("should clear the previous attempt's timeout before a retry is sent", async () => {
+        vi.useFakeTimers();
+        try {
+            const timersSeenByAttempt: number[] = [];
+            let attempt = 0;
+            global.fetch = vi.fn().mockImplementation(async () => {
+                timersSeenByAttempt.push(vi.getTimerCount());
+                attempt += 1;
+                return attempt === 1
+                    ? new Response("busy", { status: 503, headers: { "Retry-After": "1" } })
+                    : new Response(JSON.stringify({ data: "test" }), {
+                          status: 200,
+                          headers: { "Content-Type": "application/json" },
+                      });
+            });
+
+            const promise = fetcherImpl({
+                url: "https://example.com",
+                method: "GET",
+                maxRetries: 1,
+                timeoutMs: 60_000,
+            });
+            await vi.advanceTimersByTimeAsync(2_000);
+            const result = await promise;
+
+            expect(result.ok).toBe(true);
+            // The retry only sees its own timeout timer, not the first attempt's.
+            expect(timersSeenByAttempt).toEqual([1, 1]);
+            expect(vi.getTimerCount()).toBe(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
 });
