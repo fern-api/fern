@@ -309,7 +309,8 @@
                             },
                             "valuePrefix": "Bearer "
                         }
-                    ]
+                    ],
+                    "grantType": null
                 },
                 "key": "InferredAuth",
                 "playgroundDocs": null,
