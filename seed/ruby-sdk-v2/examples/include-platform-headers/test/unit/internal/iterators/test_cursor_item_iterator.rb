@@ -125,6 +125,16 @@ class CursorItemIteratorTest < Minitest::Test
     assert_raises(ArgumentError) { iterator.load_first_page }
   end
 
+  def test_loops_after_load_first_page_reuse_the_first_page
+    iterator = make_iterator(initial_cursor: nil).load_first_page
+
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 13, @times_called
+    assert_equal (1..10).to_a, iterator.pages.first.cards
+    assert_equal 13, @times_called
+  end
+
   def test_pages_iterator
     iterator = make_iterator(initial_cursor: 0).pages
 
@@ -215,5 +225,116 @@ class CursorItemIteratorTest < Minitest::Test
 
     assert_equal 7, @times_called
     assert_equal [10, 10, 10, 10, 10, 10, 5], lengths
+  end
+
+  def test_items_iterator_restarts_from_the_first_page_on_every_loop
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_equal (1..2).to_a, iterator.first(2)
+    assert_equal (1..2).to_a, iterator.first(2)
+    assert_predicate iterator, :any?
+    assert_equal(NUMBERS, iterator.map { |card| card })
+    assert_equal NUMBERS.length, iterator.count
+    assert_equal NUMBERS, iterator.to_a
+  end
+
+  def test_reading_pages_does_not_skip_items
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_equal (1..10).to_a, iterator.pages.first.cards
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 7, iterator.pages.to_a.length
+    assert_equal NUMBERS, iterator.to_a
+  end
+
+  def test_items_iterator_does_not_mutate_pages
+    responses = NUMBERS.each_slice(10).map.with_index do |cards, index|
+      PageResponse.new(cards: cards, next_cursor: index < 6 ? index + 1 : nil)
+    end
+    iterator = Seed::Internal::CursorItemIterator.new(initial_cursor: nil, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+      responses[cursor || 0]
+    end
+
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal (1..10).to_a, responses.first.cards
+  end
+
+  def test_each_without_a_block_returns_an_enumerator
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_instance_of Enumerator, iterator.each
+    assert_equal NUMBERS, iterator.each.to_a
+    assert_instance_of Enumerator, iterator.pages.each
+    assert_equal 7, iterator.pages.each.to_a.length
+  end
+
+  def test_items_iterator_can_resume_after_a_failed_page
+    failed = false
+    iterator = Seed::Internal::CursorItemIterator.new(initial_cursor: 0, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+      if cursor == 20 && !failed
+        failed = true
+        raise IOError, "temporary failure"
+      end
+      next_cursor = cursor + 10
+      PageResponse.new(cards: NUMBERS[cursor...next_cursor], next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil)
+    end
+
+    items = []
+    begin
+      while (item = iterator.next_element)
+        items.push(item)
+      end
+    rescue IOError
+      retry
+    end
+
+    assert failed
+    assert_equal NUMBERS, items
+  end
+
+  def test_nested_loops_do_not_share_a_position
+    iterator = make_iterator(initial_cursor: 0)
+    seen = []
+    iterator.each do |card|
+      seen.push(card)
+      iterator.first(2)
+    end
+
+    assert_equal NUMBERS, seen
+  end
+
+  def test_loops_do_not_move_manual_iteration
+    iterator = make_iterator(initial_cursor: 0)
+
+    assert_equal 1, iterator.next_element
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 2, iterator.next_element
+    assert_equal (1..10).to_a, iterator.pages.next_page.cards
+    assert_equal 3, iterator.next_element
+  end
+
+  def test_http_response_is_from_the_most_recent_request
+    iterator = Seed::Internal::CursorItemIterator.new(initial_cursor: 0, cursor_field: :next_cursor, item_field: :cards) do |cursor|
+      next_cursor = cursor + 10
+      page = PageResponse.new(cards: NUMBERS[cursor...next_cursor], next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil)
+      [page, "response #{cursor}"]
+    end
+
+    assert_nil iterator.http_response
+    iterator.next_element
+
+    assert_equal "response 0", iterator.http_response
+    iterator.pages.next_page
+    iterator.pages.next_page
+
+    assert_equal "response 10", iterator.http_response
+    assert_equal "response 10", iterator.pages.http_response
+    iterator.first(15)
+
+    assert_equal "response 10", iterator.http_response
+    iterator.to_a
+
+    assert_equal "response 60", iterator.http_response
   end
 end

@@ -48,6 +48,15 @@ public partial interface ISeedApiClient
     );
 
     /// <summary>
+    /// context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+    /// </summary>
+    WithRawResponseStream<StreamProtocolMixedSchemaResponse> StreamProtocolMixedSchemaAsync(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
     /// Mismatched combination: context=data with the envelope+data schema pattern that is normally used with context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the event field and data field into an envelope structure.
     /// </summary>
     WithRawResponseStream<StreamDataContextWithEnvelopeSchemaResponse> StreamDataContextWithEnvelopeSchemaAsync(

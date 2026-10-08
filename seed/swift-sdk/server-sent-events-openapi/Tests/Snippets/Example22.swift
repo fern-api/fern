@@ -5,9 +5,10 @@ enum Example22 {
     static func snippet() async throws {
         let client = ApiClient(baseURL: "https://api.fern.com")
 
-        _ = try await client.validateCompletion(request: .init(
+        _ = try await client.streamXFernStreamingSharedSchema(request: .init(
             prompt: "prompt",
-            model: "model"
+            model: "model",
+            stream: false
         ))
     }
 }

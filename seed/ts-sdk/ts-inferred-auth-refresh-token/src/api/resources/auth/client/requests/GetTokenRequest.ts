@@ -12,7 +12,4 @@ export interface GetTokenRequest {
     refresh_token: string;
     grant_type: string;
     scope?: string;
-    code?: string;
-    code_verifier?: string;
-    redirect_uri?: string;
 }
