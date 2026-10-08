@@ -1,8 +1,10 @@
+import { expandFernignorePatterns } from "@fern-api/github";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
+import { escapeRegExp } from "es-toolkit";
 import { existsSync } from "fs";
 import { lstat, open, readdir, readFile, writeFile } from "fs/promises";
-import { extname, join } from "path";
+import { extname, join, relative, sep } from "path";
 import semver from "semver";
 
 /**
@@ -91,6 +93,14 @@ export function countFilesInDiff(diffContent: string): number {
  */
 export function formatSizeKB(charLength: number): string {
     return (charLength / 1024).toFixed(1);
+}
+
+/**
+ * Matches the placeholder only as a whole version: an occurrence followed by more
+ * version characters (e.g. `0.0.0-fern-placeholder.7` written by hand) is left alone.
+ */
+function magicVersionRegExp(mappedMagicVersion: string): RegExp {
+    return new RegExp(`${escapeRegExp(mappedMagicVersion)}(?![0-9A-Za-z-]|\\.[0-9A-Za-z])`, "g");
 }
 
 interface FileSection {
@@ -1024,7 +1034,10 @@ export class AutoVersioningService {
     ): Promise<void> {
         this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
-        const files = await this.walkDirectory(workingDirectory, () => true);
+        const allFiles = await this.walkDirectory(workingDirectory, () => true);
+        const fernignoredFiles = await this.getFernignoredFiles(workingDirectory, allFiles);
+        const files = allFiles.filter((filePath) => !fernignoredFiles.has(filePath));
+        const magicVersionPattern = magicVersionRegExp(mappedMagicVersion);
 
         const replaceInFile = async (filePath: string): Promise<boolean> => {
             if (await this.isBinaryFile(filePath)) {
@@ -1036,7 +1049,10 @@ export class AutoVersioningService {
                 return false;
             }
 
-            const updated = content.split(mappedMagicVersion).join(finalVersion);
+            const updated = content.replace(magicVersionPattern, () => finalVersion);
+            if (updated === content) {
+                return false;
+            }
             await writeFile(filePath, updated, "utf-8");
             return true;
         };
@@ -1167,6 +1183,27 @@ export class AutoVersioningService {
     /**
      * Recursively walks a directory and returns all file paths matching a filter.
      */
+    /**
+     * Files protected by `.fernignore` hold customer-owned content, so the placeholder
+     * must never be rewritten inside them (e.g. docs that mention `0.0.0-fern-placeholder`).
+     */
+    private async getFernignoredFiles(workingDirectory: string, files: string[]): Promise<Set<string>> {
+        let fernignoreContent: string;
+        try {
+            fernignoreContent = await readFile(join(workingDirectory, ".fernignore"), "utf-8");
+        } catch {
+            return new Set();
+        }
+        const relativePaths = new Map(
+            files.map((filePath) => [relative(workingDirectory, filePath).split(sep).join("/"), filePath])
+        );
+        return new Set(
+            expandFernignorePatterns(fernignoreContent, [...relativePaths.keys()]).map(
+                (relativePath) => relativePaths.get(relativePath) ?? relativePath
+            )
+        );
+    }
+
     private async walkDirectory(dir: string, filter: (filePath: string) => boolean): Promise<string[]> {
         const results: string[] = [];
         const entries = await readdir(dir);
