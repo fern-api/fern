@@ -1474,11 +1474,14 @@ function appendFernSdkGenApiServerCode(message: string, error: FernSdkGenApiSubm
 }
 
 /**
- * Client errors are request or configuration problems the user must fix; timeouts, rate limits,
- * server errors, and transport failures remain network errors.
+ * Client errors are authentication, request, or configuration problems the user must fix; timeouts,
+ * rate limits, server errors, and transport failures remain network errors.
  */
 function getFernSdkGenApiFailureCliErrorCode(error: FernSdkGenApiSubmissionError): CliError.Code {
     const { status } = error;
+    if (status === 401 || status === 403) {
+        return CliError.Code.AuthError;
+    }
     if (status != null && status >= 400 && status < 500 && status !== 408 && status !== 429) {
         return CliError.Code.ConfigError;
     }

@@ -2687,7 +2687,8 @@ describe("isEligibleForFernSdkGenApi", () => {
             { status: 500, code: CliError.Code.NetworkError },
             { status: 503, code: CliError.Code.NetworkError },
             { status: 400, code: CliError.Code.ConfigError },
-            { status: 403, code: CliError.Code.ConfigError },
+            { status: 401, code: CliError.Code.AuthError },
+            { status: 403, code: CliError.Code.AuthError },
             { status: 404, code: CliError.Code.ConfigError }
         ])("classifies an HTTP $status submission failure as $code", async ({ status, code }) => {
             const { failures } = await submit(httpError({ status, data: { message: "Request failed" } }));

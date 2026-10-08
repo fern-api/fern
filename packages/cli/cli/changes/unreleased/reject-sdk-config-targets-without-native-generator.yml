@@ -4,5 +4,5 @@
     Reject SDK Config `cli` targets before login or upload with a clear error, because the CLI generator does not support SDK Config yet. Generate CLI targets from generators.yml instead.
   type: fix
 - summary: |
-    Show the sdk-gen-api error code in `fern generate` build submission and polling failures, and report HTTP 4xx rejections (other than 408 and 429) as configuration errors instead of network errors.
+    Show the sdk-gen-api error code in `fern generate` build submission and polling failures, and report HTTP 401 and 403 rejections as authentication errors and other HTTP 4xx rejections (except 408 and 429) as configuration errors instead of network errors.
   type: fix
