@@ -3,7 +3,10 @@
 - summary: |
     Malformed JSON no longer loses HTTP details. An error response labelled JSON whose body isn't valid
     JSON (for example a `502` HTML page from a proxy) now throws the SDK's API error with the status code,
-    raw body and response headers, instead of a generic JSON parse error. A successful response with
-    malformed JSON now throws the SDK's API error too, instead of resolving the internal
-    `{ ok: false, error: ... }` record as if it were the endpoint's data.
+    raw body and response headers, instead of a generic JSON parse error. Error responses with no
+    `Content-Type` now carry the raw text as the error body. A successful response with a JSON
+    `Content-Type` (`application/json`, `text/json` or `*+json`) and malformed JSON now throws the SDK's
+    API error too, instead of resolving the internal `{ ok: false, error: ... }` record as if it were the
+    endpoint's data. Successful non-JSON bodies, such as `200 OK` as `text/plain` on a void endpoint,
+    still resolve as before.
   type: fix

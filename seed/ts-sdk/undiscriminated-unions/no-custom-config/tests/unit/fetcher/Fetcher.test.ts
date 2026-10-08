@@ -278,6 +278,16 @@ describe("Test fetcherImpl", () => {
         }
     });
 
+    it("should still resolve when a successful response has a plain-text body", async () => {
+        global.fetch = vi.fn().mockResolvedValue(
+            new Response("OK", { status: 200, headers: { "Content-Type": "text/plain" } }),
+        );
+
+        const result = await fetcherImpl({ url: "https://example.com/items", method: "DELETE", maxRetries: 0 });
+
+        expect(result.ok).toBe(true);
+    });
+
     it("should keep the status and raw body when a JSON error response is malformed", async () => {
         global.fetch = vi.fn().mockResolvedValue(
             new Response("<html>Bad Gateway</html>", {
