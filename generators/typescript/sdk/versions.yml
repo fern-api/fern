@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.104.5
+  changelogEntry:
+    - summary: |
+        Paginated endpoints no longer modify the request object you pass in. Calling `getNextPage()`
+        used to write the next cursor or offset into your original request (including nested fields
+        such as `options.offset`), so reusing that object started from the wrong position. The pager
+        now sends an updated copy and leaves your request unchanged.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 3.104.4
   changelogEntry:
     - summary: |
