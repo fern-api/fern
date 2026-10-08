@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `timeoutInSeconds` now also covers reading the response body. Before, the timer stopped as soon as
+    headers arrived, so a response whose JSON body was slow to arrive could take far longer than the
+    timeout. Timeouts are also reported as the SDK's timeout error on every Node version (Node 20+ rejected
+    with the abort reason, which surfaced as a generic error), and the timeout timer is cleared on every
+    exit, including failed requests. Streaming, SSE and binary responses are unchanged.
+  type: fix

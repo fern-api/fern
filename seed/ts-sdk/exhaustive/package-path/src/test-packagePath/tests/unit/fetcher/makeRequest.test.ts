@@ -1,5 +1,10 @@
 import type { Mock } from "vitest";
-import { isCacheNoStoreSupported, makeRequest, resetCacheNoStoreSupported } from "../../../core/fetcher/makeRequest";
+import {
+    clearResponseTimeout,
+    isCacheNoStoreSupported,
+    makeRequest,
+    resetCacheNoStoreSupported,
+} from "../../../core/fetcher/makeRequest";
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";
@@ -149,6 +154,53 @@ describe("Test makeRequest", () => {
             // Restore original Request
             globalThis.Request = OriginalRequest;
             resetCacheNoStoreSupported();
+        }
+    });
+
+    it("should clear the timeout once headers arrive by default", async () => {
+        vi.useFakeTimers();
+        try {
+            await makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined, 1000);
+            expect(vi.getTimerCount()).toBe(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it("should keep the timeout running until clearResponseTimeout when keepTimeoutUntilBodyRead is set", async () => {
+        vi.useFakeTimers();
+        try {
+            const response = await makeRequest(
+                mockFetch,
+                mockGetUrl,
+                "GET",
+                mockHeaders,
+                undefined,
+                1000,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                true,
+            );
+            expect(vi.getTimerCount()).toBe(1);
+            clearResponseTimeout(response);
+            expect(vi.getTimerCount()).toBe(0);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it("should clear the timeout when fetch rejects", async () => {
+        vi.useFakeTimers();
+        try {
+            mockFetch.mockRejectedValue(new TypeError("fetch failed"));
+            await expect(makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined, 1000)).rejects.toThrow(
+                "fetch failed",
+            );
+            expect(vi.getTimerCount()).toBe(0);
+        } finally {
+            vi.useRealTimers();
         }
     });
 });

@@ -1,4 +1,5 @@
 import {
+    clearResponseTimeout,
     isCacheNoStoreSupported,
     makeRequest,
     resetCacheNoStoreSupported,
@@ -152,6 +153,53 @@ describe("Test makeRequest", () => {
             // Restore original Request
             globalThis.Request = OriginalRequest;
             resetCacheNoStoreSupported();
+        }
+    });
+
+    it("should clear the timeout once headers arrive by default", async () => {
+        jest.useFakeTimers();
+        try {
+            await makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined, 1000);
+            expect(jest.getTimerCount()).toBe(0);
+        } finally {
+            jest.useRealTimers();
+        }
+    });
+
+    it("should keep the timeout running until clearResponseTimeout when keepTimeoutUntilBodyRead is set", async () => {
+        jest.useFakeTimers();
+        try {
+            const response = await makeRequest(
+                mockFetch,
+                mockGetUrl,
+                "GET",
+                mockHeaders,
+                undefined,
+                1000,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                true,
+            );
+            expect(jest.getTimerCount()).toBe(1);
+            clearResponseTimeout(response);
+            expect(jest.getTimerCount()).toBe(0);
+        } finally {
+            jest.useRealTimers();
+        }
+    });
+
+    it("should clear the timeout when fetch rejects", async () => {
+        jest.useFakeTimers();
+        try {
+            mockFetch.mockRejectedValue(new TypeError("fetch failed"));
+            await expect(makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined, 1000)).rejects.toThrow(
+                "fetch failed",
+            );
+            expect(jest.getTimerCount()).toBe(0);
+        } finally {
+            jest.useRealTimers();
         }
     });
 });
