@@ -538,6 +538,7 @@ export class XmlObjectGenerator {
                 writer.write("], $result->getAdditionalChildren()");
                 const wrapperNames = this.getWrapperNames();
                 const includeText = !this.hasTextProperty();
+                // $includeText is positional, so $wrapperNames must be written whenever it is.
                 if (wrapperNames.length > 0 || includeText) {
                     writer.write(`, ${this.phpStringList(wrapperNames)}`);
                 }
