@@ -734,6 +734,13 @@ export class Generation {
                 namespace: this.namespaces.publicCore,
                 isReferenceType: true
             }),
+        /** XML comment node held in an element's ordered content */
+        XmlComment: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlComment"),
+                namespace: this.namespaces.publicCore,
+                isReferenceType: true
+            }),
         /** Interface implemented by XML-encoded models */
         IXmlNode: () =>
             this.csharp.classReference({

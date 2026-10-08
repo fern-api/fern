@@ -4,6 +4,8 @@ import { CoreUtility } from "./CoreUtility.js";
 export type XmlExport =
     | "XmlNode"
     | "XmlElement"
+    | "XmlComment"
+    | "XmlSiblingComments"
     | "XmlSerializable"
     | "XmlNodeParser"
     | "XmlBuilder"

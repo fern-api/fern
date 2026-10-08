@@ -407,8 +407,8 @@ def test_sync_retries_on_connect_error(mock_sleep: MagicMock) -> None:
 
 
 @patch("core_utilities.shared.http_client.time.sleep", return_value=None)
-def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
-    """Sync: connection error retries on httpx.RemoteProtocolError."""
+def test_sync_opt_in_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
+    """Sync: ambiguous disconnect retries require an explicit opt-in."""
     mock_client = MagicMock()
     mock_client.request.side_effect = [
         httpx.RemoteProtocolError("Remote end closed connection without response"),
@@ -416,7 +416,7 @@ def test_sync_retries_on_remote_protocol_error(mock_sleep: MagicMock) -> None:
     ]
     http_client = _make_sync_http_client(mock_client)
 
-    response = http_client.request(path="/test", method="GET")
+    response = http_client.request(path="/test", method="POST", request_options={"retry_remote_protocol_errors": True})
 
     assert response.status_code == 200
     assert mock_client.request.call_count == 2
@@ -483,8 +483,8 @@ async def test_async_retries_on_connect_error(mock_sleep: AsyncMock) -> None:
 
 @pytest.mark.asyncio
 @patch("core_utilities.shared.http_client.asyncio.sleep", new_callable=AsyncMock)
-async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
-    """Async: connection error retries on httpx.RemoteProtocolError."""
+async def test_async_opt_in_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> None:
+    """Async: ambiguous disconnect retries require an explicit opt-in."""
     mock_client = MagicMock()
     mock_client.request = AsyncMock(
         side_effect=[
@@ -494,7 +494,9 @@ async def test_async_retries_on_remote_protocol_error(mock_sleep: AsyncMock) -> 
     )
     http_client = _make_async_http_client(mock_client)
 
-    response = await http_client.request(path="/test", method="GET")
+    response = await http_client.request(
+        path="/test", method="POST", request_options={"retry_remote_protocol_errors": True}
+    )
 
     assert response.status_code == 200
     assert mock_client.request.call_count == 2

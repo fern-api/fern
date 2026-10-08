@@ -1,5 +1,6 @@
-import { localName, type XmlNode, XmlParseError } from "./parse.js";
+import { isXmlCommentNode, localName, type XmlNode, XmlParseError } from "./parse.js";
 import type { XmlContent, XmlSerializable } from "./serialize.js";
+import { XmlComment } from "./XmlComment.js";
 import { XmlElement } from "./XmlElement.js";
 
 const DEFAULT_LIST_SEPARATOR = " ";
@@ -54,11 +55,17 @@ export const xmlDate: XmlScalarParser<Date> = (raw, location) => {
     return value;
 };
 
+const MAX_ENUM_VALUES_IN_ERROR = 10;
+
 export function xmlEnum<T extends string>(values: readonly T[]): XmlScalarParser<T> {
     return (raw, location) => {
         const match = values.find((value) => value === raw);
         if (match == null) {
-            throw invalidValue(raw, `one of ${values.map((value) => `"${value}"`).join(", ")}`, location);
+            const shown = values.slice(0, MAX_ENUM_VALUES_IN_ERROR).map((value) => `"${value}"`);
+            if (values.length > MAX_ENUM_VALUES_IN_ERROR) {
+                shown.push(`… (${values.length - MAX_ENUM_VALUES_IN_ERROR} more)`);
+            }
+            throw invalidValue(raw, `one of ${shown.join(", ")}`, location);
         }
         return match;
     };
@@ -132,8 +139,8 @@ export interface XmlContentOptions {
 }
 
 /**
- * Reads the element's text segments and child elements in document order. Known children are
- * parsed with `parse`; any other child is kept verbatim as an `XmlElement`.
+ * Reads the element's text segments, comments and child elements in document order. Known children
+ * are parsed with `parse`; any other child is kept verbatim as an `XmlElement`, comments as `XmlComment`.
  */
 export function xmlContent(
     node: XmlNode,
@@ -149,6 +156,10 @@ export function xmlContent(
             continue;
         }
         beforeFirstElement = false;
+        if (isXmlCommentNode(item)) {
+            content.push(new XmlComment(item.comment));
+            continue;
+        }
         const name = localName(item.name);
         if (skip.includes(name)) {
             continue;

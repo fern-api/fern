@@ -2,14 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setObjectProperty = setObjectProperty;
 /**
- * Sets the value at path of object. If a portion of path doesn’t exist it’s created. This is
- * inspired by Lodash's set function, but is simplified to accommodate our use case.
- * For more details, see https://lodash.com/docs/4.17.15#set.
+ * Returns a copy of object with the value at path set. If a portion of path doesn’t exist it’s created.
+ * Each object along path is shallow-copied, so the original object (and any nested objects it
+ * shares with the copy) is never modified. This is inspired by Lodash's set function, but is
+ * simplified to accommodate our use case. For more details, see https://lodash.com/docs/4.17.15#set.
  *
- * @param object The object to modify.
+ * @param object The object to copy.
  * @param path The path of the property to set.
  * @param value The value to set.
- * @return Returns object.
+ * @return Returns the updated copy of object.
  */
 function setObjectProperty(object, path, value) {
     if (object == null) {
@@ -20,23 +21,28 @@ function setObjectProperty(object, path, value) {
         // Invalid path; do nothing.
         return object;
     }
-    let current = object;
+    const result = Object.assign({}, object);
+    let current = result;
     for (let i = 0; i < keys.length - 1; i++) {
         const key = keys[i];
         if (key == null) {
             // Unreachable.
             continue;
         }
-        if (!current[key] || typeof current[key] !== "object") {
-            current[key] = {};
+        const next = current[key];
+        if (Array.isArray(next)) {
+            current[key] = [...next];
+        }
+        else {
+            current[key] = next != null && typeof next === "object" ? Object.assign({}, next) : {};
         }
         current = current[key];
     }
     const lastKey = keys[keys.length - 1];
     if (lastKey == null) {
         // Unreachable.
-        return object;
+        return result;
     }
     current[lastKey] = value;
-    return object;
+    return result;
 }

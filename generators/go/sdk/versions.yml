@@ -1,4 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.70.2
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.70.1
+  changelogEntry:
+    - summary: |
+        Fix uncompilable streaming methods when `errorCodes: per-endpoint` is set and the endpoint declares no
+        specific error responses. The streaming call no longer references the global `ErrorCodes` variable, which
+        is not generated in per-endpoint mode.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.70.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types can now carry XML comments. `Comment(text)` adds `<!--text-->` inside the element at its
+        position in the ordered content (interleaved with `AddText` segments and child elements), while
+        `CommentBefore(text)` / `CommentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `FromXml` and round-trip through `ToXml`; `XmlElement.AddComment` and
+        the new `core.XmlComment` node expose the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 1.69.1
+  changelogEntry:
+    - summary: |
+        Enum-typed attributes and text on XML (TwiML) types are open on the wire: `FromXml` keeps a value the enum does
+        not declare (e.g. a voice added after the SDK was generated) instead of returning an error, and it round-trips
+        through `ToXml`. This matches how the same enums already behave in JSON.
+      type: fix
+  createdAt: "2026-10-06"
+  irVersion: 67
 - version: 1.69.0
   changelogEntry:
     - summary: |

@@ -470,6 +470,10 @@ impl Binding for OpenApiBinding {
                 &[],
             )
             .await
+            // A bodiless success (`204` on a delete) is still a success:
+            // `None` is reserved for "not my path", so it must not leak
+            // through here or the caller would try the next binding.
+            .map(|value| Some(value.unwrap_or(serde_json::Value::Null)))
         })
     }
 
@@ -871,6 +875,7 @@ impl Binding for OpenApiBinding {
             .await?;
 
             match result {
+                Some(value) if dry_run => Ok(DispatchResult::Record(value)),
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }

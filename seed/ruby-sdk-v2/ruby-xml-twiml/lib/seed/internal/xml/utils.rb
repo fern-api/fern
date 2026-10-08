@@ -28,9 +28,29 @@ module Seed
             output
           end
 
+          # @param node [Element, Serializable, Text, Comment]
+          # @return [Boolean] whether `node` is a {Text} segment or a {Comment} rather than an element
+          def non_element?(node)
+            node.is_a?(Text) || node.is_a?(Comment)
+          end
+
+          # Writes `element` to `output` together with the comments it renders as siblings
+          # ({Comment.before} / {Comment.after}).
+          private def write_element(output, element, scope)
+            write_sibling_comments(output, element, :before)
+            write_element_tag(output, element, scope)
+            write_sibling_comments(output, element, :after)
+          end
+
+          private def write_sibling_comments(output, element, placement)
+            element.children.each do |child|
+              output << child.to_s if child.is_a?(Comment) && child.placement == placement
+            end
+          end
+
           # Writes `element` and its subtree to `output`. `scope` maps the namespace prefixes in scope
           # ("" for the default namespace) to their URIs so declarations are only emitted where they change.
-          private def write_element(output, element, scope)
+          private def write_element_tag(output, element, scope)
             scope = scope.dup
             declarations = {}
             declare = ->(declared_prefix, uri) {
@@ -81,15 +101,18 @@ module Seed
             attributes.each do |name, value|
               output << " " << name << "=\"" << escape_attribute(value) << "\""
             end
-            if element.text.nil? && element.children.empty?
+            content = element.children.reject { |child| child.is_a?(Comment) && !child.inside? }
+            if element.text.nil? && content.empty?
               output << "/>"
               return
             end
             output << ">"
             output << escape_text(element.text) unless element.text.nil?
-            element.children.each do |child|
+            content.each do |child|
               if child.is_a?(Text)
                 output << escape_text(child.value)
+              elsif child.is_a?(Comment)
+                output << child.to_s
               else
                 write_element(output, child.to_xml_element, scope)
               end
@@ -123,14 +146,26 @@ module Seed
           end
 
           # Joins a list of values with a separator for a list-valued attribute or text node.
+          # A String is already in wire form (e.g. "speech dtmf") and is written as-is; any
+          # other single value (for example a Symbol) is written on its own.
           #
-          # @param values [Enumerable, nil]
+          # @param values [Enumerable, String, Object, nil]
           # @param separator [String]
           # @return [String, nil]
           def join_values(values, separator)
             return nil if values.nil?
+            return to_xml_string(values) if values.is_a?(::String)
 
-            values.map { |value| to_xml_string(value) }.compact.join(separator)
+            list_items(values).map { |value| to_xml_string(value) }.compact.join(separator)
+          end
+
+          # Normalizes a list-valued property so a single value is treated as a one-item list.
+          # A Hash is a single (model-like) value, not a list of pairs.
+          #
+          # @param value [Enumerable, Object]
+          # @return [Array]
+          def list_items(value)
+            value.is_a?(::Enumerable) && !value.is_a?(::Hash) ? value.to_a : [value]
           end
 
           # Adds unknown attributes and children back onto an element. Unknown content found inside
@@ -167,7 +202,7 @@ module Seed
           # additional nor text are not written.
           #
           # @param element [Element]
-          # @param content [Array<Element, Serializable, Text>]
+          # @param content [Array<Element, Serializable, Text, Comment>]
           # @param typed [Array<Element, Serializable>] typed child elements, in property order
           # @param wrapped [Hash<String, Array<Element, Serializable>>] items of each wrapped list, keyed by wrapper name
           # @param additional [Array<Element, Serializable>]
@@ -181,7 +216,7 @@ module Seed
             wrappers = {}
             emit_wrapper = ->(name) { emit_wrapper!(element, name, wrapped, wrappers) }
             content.each do |node|
-              if node.is_a?(Text)
+              if non_element?(node)
                 element.add_child(node)
               elsif (remaining[node] || 0).positive?
                 remaining[node] -= 1
@@ -236,15 +271,18 @@ module Seed
           #   the typed children parsed from elements with those names, in document order
           # @param additional [Array<Element, Serializable>]
           # @param wrapper_names [Array<String>]
-          # @return [Array<Element, Serializable, Text>]
-          def content(element, typed, additional, wrapper_names = [])
+          # @param include_text [Boolean] whether the element's text (character data before its first
+          #   child) is part of the content; false for types with a text property, which holds it instead
+          # @return [Array<Element, Serializable, Text, Comment>]
+          def content(element, typed, additional, wrapper_names = [], include_text: false)
             by_name = {}
             typed.each_with_index { |(names, _nodes), index| names.each { |name| by_name[name] = index } }
             positions = Array.new(typed.length, 0)
             additional_ids = {}.compare_by_identity
             additional.each { |node| additional_ids[node] = true }
-            element.children.filter_map do |child|
-              next child if child.is_a?(Text)
+            leading = include_text && !element.text.nil? ? [Text.new(element.text)] : []
+            leading + element.children.filter_map do |child|
+              next child if non_element?(child)
 
               name = child.to_xml_element.name
               index = by_name[name]
@@ -345,10 +383,13 @@ module Seed
               when ::REXML::Element
                 has_element = true
                 element.add_child(from_rexml(child))
+              when ::REXML::Comment
+                has_element = true
+                element.add_child(Comment.new(child.string))
               end
             end
-            # Text before the first child element is the element's text (dropped when whitespace-only);
-            # text between and after child elements is kept as Text segments in document order.
+            # Text before the first child element or comment is the element's text (dropped when
+            # whitespace-only); text between and after them is kept as Text segments in document order.
             element.text = text.strip.empty? ? nil : text
             element
           end
@@ -475,13 +516,13 @@ module Seed
             raise ArgumentError, "Expected a boolean but found '#{raw}'"
           end
 
-          # @param enum [Module] an `Internal::Types::Enum`
-          # @raise [ArgumentError] if the value is not a member of the enum
-          def parse_enum(raw, enum)
-            value = raw.strip
-            raise ArgumentError, "'#{raw}' is not a valid #{enum.name}" unless enum.values.include?(value)
-
-            value
+          # Enums are open on the wire: a value the enum does not declare is kept so documents
+          # written by a newer API version still parse and round-trip.
+          #
+          # @param _enum [Module] an `Internal::Types::Enum`
+          # @return [String] the stripped value, whether or not it is a declared member
+          def parse_enum(raw, _enum)
+            raw.strip
           end
 
           # @raise [ArgumentError] if the value differs from the literal
@@ -523,7 +564,7 @@ module Seed
           def additional_children(element, known_names, wrappers = {})
             result = []
             element.children.each do |child|
-              next if child.is_a?(Text)
+              next if non_element?(child)
 
               child_element = child.to_xml_element
               known_items = wrappers[child_element.name]
@@ -540,7 +581,7 @@ module Seed
               )
               rest.namespace_declarations.merge!(child_element.namespace_declarations)
               child_element.children.each do |item|
-                rest.add_child(item) unless !item.is_a?(Text) && known_items.include?(item.to_xml_element.name)
+                rest.add_child(item) unless !non_element?(item) && known_items.include?(item.to_xml_element.name)
               end
               result << rest if !rest.text.nil? || !rest.attributes.empty? || !rest.children.empty?
             end

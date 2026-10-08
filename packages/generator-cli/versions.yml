@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.10.4
+  changelogEntry:
+    - summary: |
+        Autoversion no longer rewrites the placeholder version inside files protected by
+        `.fernignore` or inside longer version strings. Previously, hand-maintained files such as
+        `AGENTS.md`, docs and `.fern/replay.lock` had `0.0.0-fern-placeholder` replaced, and strings
+        like `0.0.0-fern-placeholder.7` were turned into `1.0.0-dev.10.7`. Only whole occurrences of
+        the placeholder in generator-owned files are now replaced.
+      type: fix
+  createdAt: "2026-10-08"
 - version: 0.10.3
   changelogEntry:
     - summary: |

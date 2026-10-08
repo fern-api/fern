@@ -84,6 +84,7 @@ export const AsIsFiles = {
     },
     Xml: {
         IXmlNode: "IXmlNode.Template.cs",
+        XmlComment: "XmlComment.Template.cs",
         XmlElement: "XmlElement.Template.cs",
         XmlUtils: "XmlUtils.Template.cs"
     },

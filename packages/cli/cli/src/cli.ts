@@ -44,7 +44,11 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import {
+    isDynamicIrWorkerThread,
+    registerDynamicIrWorkerEntrypoint,
+    runDynamicIrWorkerThread
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -118,6 +122,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
+import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
 import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
@@ -146,7 +151,12 @@ if (process.env.UV_THREADPOOL_SIZE == null) {
     process.env.UV_THREADPOOL_SIZE = "8";
 }
 
-void runCli();
+if (isDynamicIrWorkerThread()) {
+    runDynamicIrWorkerThread();
+} else {
+    registerDynamicIrWorkerEntrypoint(typeof __filename === "string" ? __filename : undefined);
+    void runCli();
+}
 
 async function runCli() {
     // Shell completion must be fast and side-effect-free. When the shell
@@ -465,7 +475,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                        taskContext: context
+                        taskContext: context,
+                        openApi: argv.openapi,
+                        useSdkConfig: isSdkConfigInitEnabled()
                     });
                 });
             } else if (argv.mintlify != null) {
@@ -478,7 +490,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
-                const useSdkConfig = isFernSdkGenApiEnabled();
+                const useSdkConfig = isSdkConfigInitEnabled();
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
@@ -795,7 +807,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Run legacy generator groups locally using Docker (SDK Config targets require remote generation)"
+                        "Run the generator(s) locally using Docker. SDK Config targets run on the on-prem generator."
                 })
                 .option("keepDocker", {
                     boolean: true,
@@ -2398,6 +2410,11 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description: "Run the legacy development server"
                 })
+                .option("astro", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the experimental Astro docs preview server instead of Next.js"
+                })
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
@@ -2456,6 +2473,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
+                astro: argv.astro,
                 backendPort,
                 forceDownload: argv.forceDownload,
                 includePrivate: argv.private

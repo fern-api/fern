@@ -21,7 +21,12 @@ pub enum DispatchResult {
     /// A decoded response value. The root `CliApp` will run
     /// `transform_response` / `recover_error` hooks and then format it.
     Value(serde_json::Value),
-    /// The binding already wrote output (dry-run, streaming, file download).
+    /// A single diagnostic record (a `--dry-run` request preview). Hooks run
+    /// as for `Value`, but the root `CliApp` formats it with
+    /// [`OutputPipeline::emit_record`](crate::formatter::OutputPipeline::emit_record)
+    /// so `table` output never mistakes it for a list response.
+    Record(serde_json::Value),
+    /// The binding already wrote output (streaming, file download, paged dry-run).
     /// The root `CliApp` skips its own formatting.
     Handled,
 }
@@ -150,8 +155,8 @@ pub trait Binding: Send + Sync {
     ///
     /// `op_path` is the command path (`["iam", "keys", "remove"]`) and
     /// `params` a JSON object of parameter name → value, exactly the shape
-    /// `--params` accepts. Returns the decoded response, or `Ok(None)` when
-    /// the operation produced no body.
+    /// `--params` accepts. Returns the decoded response — `Value::Null` when
+    /// the operation succeeded without a body, e.g. a `204` delete.
     ///
     /// Exists because some framework-owned commands need to call the API on
     /// the user's behalf — `profiles remove --revoke` deleting the key it

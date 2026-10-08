@@ -12,8 +12,10 @@ from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
 from .inferred_auth_token_provider_generator import (
+    ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
+    get_rotated_refresh_token_callback_type_hint,
 )
 from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
 from fern_python.codegen import AST, SourceFile
@@ -41,6 +43,16 @@ class RootClientConstructorParameter(ConstructorParameter):
     validation_check: typing.Optional[AST.Expression] = None
     exclude_from_wrapper_construction: Optional[bool] = False
     docs: Optional[str] = None
+
+
+@dataclass
+class SelectableInferredAuth:
+    """Inferred auth that sits next to other auth schemes and is picked by the credentials passed."""
+
+    scheme: ir_types.InferredAuthScheme
+    credentials: List[CredentialProperty]
+    selection_param_names: List[str]
+    exclusive_param_names: List[str]
 
 
 class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParameter]):
@@ -81,6 +93,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     TOKEN_PARAMETER_NAME = "token"
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
+    _REFRESH_TOKEN_GRANT_TYPE = "refresh_token"
 
     LOGGING_CONSTRUCTOR_PARAMETER_NAME = "logging"
     LOGGING_CONSTRUCTOR_PARAMETER_DOCS = (
@@ -251,7 +264,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
         is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
-        has_inferred_auth = self._get_inferred_auth_scheme() is not None
+        has_inferred_auth = (
+            self._get_inferred_auth_scheme() is not None or self._get_selectable_inferred_auth() is not None
+        )
 
         # Resolve the actual bearer token parameter name (e.g. "api_key" instead of default "token")
         bearer_token_param_name = self._get_wrapper_bearer_token_kwarg_name(
@@ -404,6 +419,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
         ]
         write_param_block(overload_2_param_names)
+
+        selectable_inferred_auth = self._get_selectable_inferred_auth()
+        if selectable_inferred_auth is not None:
+            str_type_params.update(selectable_inferred_auth.selection_param_names)
+            writer.write_line("")
+            writer.write_line("# or ...")
+            writer.write_line("")
+            write_param_block(
+                [
+                    RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                    *[cred.constructor_param_name for cred in selectable_inferred_auth.credentials],
+                    self._timeout_constructor_parameter_name,
+                    self._max_retries_constructor_parameter_name,
+                    RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+                    RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+                ]
+            )
         writer.write_line("")
 
     def _create_class_declaration(
@@ -551,7 +583,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             else self._context.get_raw_client_class_reference_for_root_client()
         )
 
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[RootClientConstructorParameter]:
+    def _get_constructor_parameters(
+        self, *, is_async: bool, include_selectable_inferred_auth: bool = True
+    ) -> List[RootClientConstructorParameter]:
         parameters: List[RootClientConstructorParameter] = []
 
         environments_config = self._context.ir.environments
@@ -760,6 +794,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         exclude_from_wrapper_construction=True,
                     )
                 )
+            if self._inferred_auth_rotates_refresh_token(inferred_auth_scheme):
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                        type_hint=get_rotated_refresh_token_callback_type_hint(),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Called with the new refresh token whenever the token endpoint rotates it. "
+                            "The presented refresh token is invalidated, so persist the new one."
+                        ),
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
 
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
@@ -832,6 +879,32 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     initializer=AST.Expression("None"),
                 ),
             )
+
+        selectable_inferred_auth = self._get_selectable_inferred_auth() if include_selectable_inferred_auth else None
+        if selectable_inferred_auth is not None:
+            for param_name in selectable_inferred_auth.exclusive_param_names:
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=param_name,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initializer=AST.Expression("None"),
+                        docs="Credential used for inferred authentication.",
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
+            if self._inferred_auth_rotates_refresh_token(selectable_inferred_auth.scheme):
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                        type_hint=get_rotated_refresh_token_callback_type_hint(),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Called with the new refresh token whenever the token endpoint rotates it. "
+                            "The presented refresh token is invalidated, so persist the new one."
+                        ),
+                        exclude_from_wrapper_construction=True,
+                    )
+                )
 
         resolved_timeout = self._context.custom_config.resolved_timeout
         timeout_phrase = (
@@ -1133,8 +1206,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         ]
         token_signature = AST.FunctionSignature(named_parameters=token_params)
 
+        inferred_signatures = self._get_selectable_inferred_auth_constructor_overloads(
+            base_params=base_params, is_async=is_async
+        )
+
         if not is_async:
-            return [oauth_signature, token_signature]
+            return [oauth_signature, token_signature, *inferred_signatures]
 
         # Overload 3 (async only): async token callable (async_token required)
         async_token_params = base_params + [
@@ -1148,7 +1225,36 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         ]
         async_token_signature = AST.FunctionSignature(named_parameters=async_token_params)
 
-        return [oauth_signature, token_signature, async_token_signature]
+        return [oauth_signature, token_signature, async_token_signature, *inferred_signatures]
+
+    def _get_selectable_inferred_auth_constructor_overloads(
+        self, *, base_params: List[AST.NamedFunctionParameter], is_async: bool
+    ) -> List[AST.FunctionSignature]:
+        """Overload for the inferred credentials: selection params are required, other inferred
+        params (including ones shared with OAuth, e.g. client_id) are optional."""
+        selectable_inferred_auth = self._get_selectable_inferred_auth()
+        if selectable_inferred_auth is None:
+            return []
+        params_by_name = {
+            param.constructor_parameter_name: param for param in self._get_constructor_parameters(is_async=is_async)
+        }
+        inferred_params: List[AST.NamedFunctionParameter] = []
+        for cred in selectable_inferred_auth.credentials:
+            name = cred.constructor_param_name
+            if name in selectable_inferred_auth.selection_param_names:
+                inferred_params.append(AST.NamedFunctionParameter(name=name, type_hint=AST.TypeHint.str_()))
+                continue
+            param = params_by_name.get(name)
+            if param is None:
+                continue
+            inferred_params.append(
+                AST.NamedFunctionParameter(
+                    name=name,
+                    type_hint=param.type_hint,
+                    initializer=param.initializer,
+                )
+            )
+        return [AST.FunctionSignature(named_parameters=base_params + inferred_params)]
 
     def _get_non_oauth_constructor_parameters(self, *, is_async: bool) -> List[AST.NamedFunctionParameter]:
         """Get constructor parameters excluding OAuth-specific ones (client_id, client_secret, token, extra oauth params)."""
@@ -1164,6 +1270,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if oauth_config.type == "clientCredentials":
                 for extra_name in self._get_additional_oauth_param_names(oauth_config):
                     oauth_param_names.add(extra_name)
+        selectable_inferred_auth = self._get_selectable_inferred_auth()
+        if selectable_inferred_auth is not None:
+            oauth_param_names.update(selectable_inferred_auth.exclusive_param_names)
         all_params = self._get_constructor_parameters(is_async=is_async)
         return [
             AST.NamedFunctionParameter(
@@ -1232,6 +1341,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
             is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
             inferred_auth_scheme = self._get_inferred_auth_scheme()
+            selectable_inferred_auth = self._get_selectable_inferred_auth()
+            if selectable_inferred_auth is not None:
+                self._write_selectable_inferred_auth_provider(
+                    writer=writer,
+                    client_wrapper_generator=client_wrapper_generator,
+                    selectable_inferred_auth=selectable_inferred_auth,
+                    is_async=is_async,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    transport_variable_name=transport_var_name,
+                )
 
             if use_oauth_token_provider and is_oauth_client_credentials:
                 # OAuth client credentials mode: users can provide either token OR client_id/client_secret
@@ -1304,6 +1424,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     use_oauth_token_provider=use_oauth_token_provider,
                     transport_variable_name=transport_var_name,
                 )
+                if selectable_inferred_auth is not None:
+                    client_wrapper_constructor_kwargs.append(
+                        self._get_selectable_inferred_auth_headers_kwarg(is_async=is_async)
+                    )
                 for param in constructor_parameters:
                     if param.private_member_name is not None:
                         writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
@@ -1328,6 +1452,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     use_oauth_token_provider=use_oauth_token_provider,
                     transport_variable_name=transport_var_name,
                 )
+                if selectable_inferred_auth is not None:
+                    client_wrapper_constructor_kwargs.append(
+                        self._get_selectable_inferred_auth_headers_kwarg(is_async=is_async)
+                    )
                 if inferred_auth_scheme is not None:
                     inferred_auth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
                         client_wrapper_generator=client_wrapper_generator,
@@ -1352,6 +1480,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             (
                                 cred.field_name,
                                 AST.Expression(cred.constructor_param_name),
+                            )
+                        )
+                    if self._inferred_auth_rotates_refresh_token(inferred_auth_scheme):
+                        inferred_auth_provider_kwargs.append(
+                            (
+                                ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME,
+                                AST.Expression(ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME),
                             )
                         )
                     inferred_auth_provider_kwargs.append(
@@ -1465,6 +1600,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             inferred_auth_scheme=inferred_auth_scheme,
         ).get_credential_properties()
 
+    def _inferred_auth_rotates_refresh_token(self, inferred_auth_scheme: ir_types.InferredAuthScheme) -> bool:
+        return InferredAuthTokenProviderGenerator(
+            context=self._context,
+            inferred_auth_scheme=inferred_auth_scheme,
+        ).rotates_refresh_token()
+
     def _get_endpoint_security_inferred_auth_scheme(
         self,
     ) -> Optional[ir_types.InferredAuthScheme]:
@@ -1492,6 +1633,121 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             if maybe_inferred_auth_scheme is not None
             else None
+        )
+
+    def _get_selectable_inferred_auth(self) -> Optional[SelectableInferredAuth]:
+        """Returns the inferred scheme when it is one of several schemes (`any` or endpoint-security)
+        and has credentials of its own that tell it apart from the other schemes. Its params are then
+        added to the constructor and its provider is used only when those credentials are passed.
+        Inferred schemes whose credentials are all shared with other schemes keep the existing wiring.
+        """
+        if "_selectable_inferred_auth" not in self.__dict__:
+            self._selectable_inferred_auth = self._compute_selectable_inferred_auth()
+        return self._selectable_inferred_auth
+
+    def _compute_selectable_inferred_auth(self) -> Optional[SelectableInferredAuth]:
+        if len(self._context.ir.auth.schemes) <= 1:
+            return None
+        if self._context.ir.auth.requirement not in (
+            ir_types.AuthSchemesRequirement.ANY,
+            ir_types.AuthSchemesRequirement.ENDPOINT_SECURITY,
+        ):
+            return None
+        inferred_auth_scheme = next(
+            (
+                inferred
+                for inferred in (
+                    scheme.visit(
+                        bearer=lambda _: None,
+                        basic=lambda _: None,
+                        header=lambda _: None,
+                        oauth=lambda _: None,
+                        inferred=lambda inferred: inferred,
+                    )
+                    for scheme in self._context.ir.auth.schemes
+                )
+                if inferred is not None
+            ),
+            None,
+        )
+        if inferred_auth_scheme is None:
+            return None
+        credentials = [
+            cred for cred in self._get_inferred_auth_credential_properties(inferred_auth_scheme) if not cred.is_literal
+        ]
+        other_param_names = {
+            param.constructor_parameter_name
+            for param in self._get_constructor_parameters(is_async=False, include_selectable_inferred_auth=False)
+        }
+        selection_param_names = [cred.constructor_param_name for cred in credentials if not cred.is_optional]
+        grant_type = inferred_auth_scheme.token_endpoint.grant_type
+        if grant_type is not None and grant_type.value == self._REFRESH_TOKEN_GRANT_TYPE:
+            # With `type: refresh-token` the refresh token is what selects this scheme, even when
+            # the token endpoint marks it optional.
+            for cred in credentials:
+                if (
+                    cred.field_name == self._REFRESH_TOKEN_GRANT_TYPE
+                    and cred.constructor_param_name not in selection_param_names
+                ):
+                    selection_param_names.append(cred.constructor_param_name)
+        if not any(name not in other_param_names for name in selection_param_names):
+            return None
+        return SelectableInferredAuth(
+            scheme=inferred_auth_scheme,
+            credentials=credentials,
+            selection_param_names=selection_param_names,
+            exclusive_param_names=[
+                cred.constructor_param_name
+                for cred in credentials
+                if cred.constructor_param_name not in other_param_names
+            ],
+        )
+
+    def _write_selectable_inferred_auth_provider(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        client_wrapper_generator: ClientWrapperGenerator,
+        selectable_inferred_auth: SelectableInferredAuth,
+        is_async: bool,
+        timeout_local_variable: str,
+        max_retries_local_variable: str,
+        transport_variable_name: Optional[str],
+    ) -> None:
+        """Writes ``inferred_auth_token_provider``, set only when the inferred credentials were passed."""
+        inferred_auth_provider_class = (
+            self._context.core_utilities.get_async_inferred_auth_token_provider()
+            if is_async
+            else self._context.core_utilities.get_inferred_auth_token_provider()
+        )
+        writer.write(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME}: ")
+        writer.write_node(AST.TypeHint.optional(AST.TypeHint(inferred_auth_provider_class)))
+        writer.write_line(" = None")
+        selection_condition = " and ".join(
+            f"{name} is not None" for name in selectable_inferred_auth.selection_param_names
+        )
+        writer.write_line(f"if {selection_condition}:")
+        with writer.indent():
+            self._write_inferred_auth_provider_and_get_auth_headers_kwarg(
+                writer=writer,
+                client_wrapper_generator=client_wrapper_generator,
+                inferred_auth_scheme=selectable_inferred_auth.scheme,
+                is_async=is_async,
+                timeout_local_variable=timeout_local_variable,
+                max_retries_local_variable=max_retries_local_variable,
+                transport_variable_name=transport_variable_name,
+            )
+
+    def _get_selectable_inferred_auth_headers_kwarg(self, *, is_async: bool) -> typing.Tuple[str, AST.Expression]:
+        param_name = (
+            ClientWrapperGenerator.ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+            if is_async
+            else ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+        )
+        provider = self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME
+        return (
+            param_name,
+            AST.Expression(f"{provider}.get_headers if {provider} is not None else None"),
         )
 
     def _write_inferred_auth_provider_and_get_auth_headers_kwarg(
@@ -1528,6 +1784,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if cred.is_literal:
                 continue
             inferred_auth_provider_kwargs.append((cred.field_name, AST.Expression(cred.constructor_param_name)))
+        if self._inferred_auth_rotates_refresh_token(inferred_auth_scheme):
+            inferred_auth_provider_kwargs.append(
+                (ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME, AST.Expression(ROTATED_REFRESH_TOKEN_CALLBACK_PARAM_NAME))
+            )
         inferred_auth_provider_kwargs.append(
             (
                 "client_wrapper",
@@ -1663,6 +1923,38 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
             writer.write_newline_if_last_line_not()
 
+        selectable_inferred_auth = self._get_selectable_inferred_auth()
+        if selectable_inferred_auth is not None:
+            # Inferred credentials (e.g. a refresh token) were passed: they take precedence over
+            # client_id/client_secret, which the inferred token endpoint may also use.
+            writer.write_line(f"elif {self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME} is not None:")
+            with writer.indent():
+                inferred_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    max_retries_local_variable=max_retries_local_variable,
+                    is_async=is_async,
+                    exclude_auth=True,
+                    transport_variable_name=transport_variable_name,
+                )
+                inferred_client_wrapper_kwargs.append(
+                    (
+                        ClientWrapperGenerator.ASYNC_AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME
+                        if is_async
+                        else ClientWrapperGenerator.AUTH_HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+                        AST.Expression(f"{self._INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME}.get_headers"),
+                    )
+                )
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=inferred_client_wrapper_kwargs,
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+
         # elif client_id is not None and client_secret is not None:
         writer.write_line(f"elif {oauth_selection_condition}:")
         with writer.indent():
@@ -1746,7 +2038,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 use_oauth_token_provider=True,
                 transport_variable_name=transport_variable_name,
             )
-            endpoint_security_inferred_scheme = self._get_endpoint_security_inferred_auth_scheme()
+            endpoint_security_inferred_scheme = (
+                self._get_endpoint_security_inferred_auth_scheme() if selectable_inferred_auth is None else None
+            )
             if endpoint_security_inferred_scheme is not None:
                 final_client_wrapper_kwargs.append(
                     self._write_inferred_auth_provider_and_get_auth_headers_kwarg(
@@ -1807,14 +2101,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 )
                 writer.write_newline_if_last_line_not()
             else:
+                missing_credentials_message = (
+                    "The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+                    if selectable_inferred_auth is None
+                    else "The client must be instantiated with either 'token', both 'client_id' and 'client_secret', or "
+                    + " and ".join(f"'{name}'" for name in selectable_inferred_auth.selection_param_names)
+                )
                 writer.write("raise ")
                 writer.write_node(
                     self._context.core_utilities.instantiate_api_error(
                         headers=None,
                         status_code=None,
-                        body=AST.Expression(
-                            "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
-                        ),
+                        body=AST.Expression(f'"{missing_credentials_message}"'),
                     )
                 )
                 writer.write_newline_if_last_line_not()

@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/apiVersion",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithApiVersion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsGlobalHeaderEnvClient } from \"@fern/ts-global-header-env\";\n\nconst client = new SeedTsGlobalHeaderEnvClient({ baseUrl: \"YOUR_BASE_URL\", version: \"2024-01-01\" });\nawait client.service.getWithApiVersion();\n"
+            }
+        }
+    ],
+    "types": {}
+}

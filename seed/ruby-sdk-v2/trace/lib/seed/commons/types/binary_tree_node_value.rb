@@ -6,7 +6,7 @@ module Seed
       class BinaryTreeNodeValue < Internal::Types::Model
         field :node_id, -> { String }, optional: false, nullable: false, api_name: "nodeId"
 
-        field :val, -> { Integer }, optional: false, nullable: false
+        field :val, -> { Float }, optional: false, nullable: false
 
         field :right, -> { String }, optional: true, nullable: false
 

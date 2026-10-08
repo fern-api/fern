@@ -28,6 +28,9 @@ const RESERVED_MEMBER_NAMES = [
     "AdditionalProperties",
     "AddChild",
     "AddText",
+    "Comment",
+    "CommentAfter",
+    "CommentBefore",
     "Equals",
     "FromXElement",
     "FromXml",
@@ -44,7 +47,7 @@ interface GeneratedField {
     type: ast.Type;
 }
 
-interface XmlProperty {
+export interface XmlProperty {
     irProperty: ObjectProperty;
     field: GeneratedField;
     wireName: string;
@@ -89,12 +92,30 @@ export class XmlObjectGenerator {
         });
     }
 
+    public getProperties(): readonly XmlProperty[] {
+        return this.properties;
+    }
+
+    public getXmlEncoding(): FernIr.XmlEncoding {
+        return this.xml;
+    }
+
+    public getContentProperties(): readonly XmlProperty[] {
+        return this.contentProperties;
+    }
+
+    public isWrappedListProperty(property: XmlProperty): boolean {
+        return this.isWrappedList(property);
+    }
+
     public generate(): void {
         this.class_.interfaceReferences.push(this.context.Types.IXmlNode);
         this.addAdditionalFields();
         this.addToXElement();
         this.addToXml();
         this.addToString();
+        this.addEquals();
+        this.addGetHashCode();
         this.addFromXml();
         this.addFromXElement();
         this.addChildItemParsers();
@@ -102,6 +123,7 @@ export class XmlObjectGenerator {
         this.addChildBuilderMethods();
         this.addAddChild();
         this.addAddText();
+        this.addCommentMethods();
     }
 
     /** Element properties holding xml-encoded child models, which live in the ordered content. */
@@ -315,7 +337,7 @@ export class XmlObjectGenerator {
             get: true,
             set: true,
             summary:
-                "Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.",
+                "Ordered content of the element: text segments (string), comments (XmlComment), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.",
             annotations: [jsonIgnore],
             initializer: this.csharp.codeblock("new()")
         });
@@ -519,6 +541,42 @@ export class XmlObjectGenerator {
             bodyType: ast.Method.BodyType.Expression,
             body: this.csharp.codeblock((writer) => {
                 writer.write("ToXml()");
+            })
+        });
+    }
+
+    /**
+     * Records compare collection members by reference, so two separately built (or parsed) values would
+     * never be equal. Equality is defined over the rendered XML instead, matching ToXml()/FromXml().
+     */
+    private addEquals(): void {
+        this.class_.addMethod({
+            name: "Equals",
+            access: ast.Access.Public,
+            virtual: !this.class_.sealed,
+            return_: this.context.Primitive.boolean,
+            parameters: [this.csharp.parameter({ name: "other", type: this.class_.reference.asOptional() })],
+            summary: "Two values are equal when they render to the same XML.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                this.utils(writer, "XmlEquals");
+                writer.write("(this, other)");
+            })
+        });
+    }
+
+    private addGetHashCode(): void {
+        this.class_.addMethod({
+            name: "GetHashCode",
+            access: ast.Access.Public,
+            override: true,
+            return_: this.context.Primitive.integer,
+            parameters: [],
+            summary: "Hash code derived from the rendered XML, consistent with Equals.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                this.utils(writer, "XmlHashCode");
+                writer.write("(this)");
             })
         });
     }
@@ -1128,5 +1186,49 @@ export class XmlObjectGenerator {
                 writer.writeLine("return this;");
             })
         });
+    }
+
+    private addCommentMethods(): void {
+        const methods: { name: string; factory: string | undefined; summary: string }[] = [
+            {
+                name: "Comment",
+                factory: undefined,
+                summary:
+                    "Appends an XML comment (<!--text-->) inside this element after any content added so far and returns this instance for chaining."
+            },
+            {
+                name: "CommentBefore",
+                factory: "Before",
+                summary:
+                    "Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this instance for chaining."
+            },
+            {
+                name: "CommentAfter",
+                factory: "After",
+                summary:
+                    "Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this instance for chaining."
+            }
+        ];
+        for (const method of methods) {
+            this.class_.addMethod({
+                name: method.name,
+                access: ast.Access.Public,
+                return_: this.class_.reference,
+                parameters: [this.csharp.parameter({ name: "text", type: this.context.Primitive.string })],
+                summary: method.summary,
+                body: this.csharp.codeblock((writer) => {
+                    writer.write(`${CONTENT}.Add(`);
+                    if (method.factory == null) {
+                        writer.write("new ");
+                        writer.writeNode(this.context.Types.XmlComment);
+                        writer.writeLine("(text));");
+                    } else {
+                        writer.writeNode(this.context.Types.XmlComment);
+                        writer.writeLine(`.${method.factory}(text));`);
+                    }
+                    writer.writeLine("return this;");
+                })
+            });
+        }
     }
 }

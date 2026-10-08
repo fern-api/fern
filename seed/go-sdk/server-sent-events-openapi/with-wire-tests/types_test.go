@@ -2981,6 +2981,131 @@ func TestGettersStreamProtocolCollisionResponse(t *testing.T) {
 
 }
 
+func TestGettersStreamProtocolMixedSchemaResponse(t *testing.T) {
+	t.Run("GetEvent", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		var expected string
+		obj.Event = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEvent(), "getter should return the property value")
+	})
+
+	t.Run("GetEvent_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *StreamProtocolMixedSchemaResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEvent() // Should return zero value
+	})
+
+	t.Run("GetHeartbeat", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		var expected *DataContextHeartbeat
+		obj.Heartbeat = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetHeartbeat(), "getter should return the property value")
+	})
+
+	t.Run("GetHeartbeat_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		obj.Heartbeat = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHeartbeat(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHeartbeat_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *StreamProtocolMixedSchemaResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHeartbeat() // Should return zero value
+	})
+
+	t.Run("GetEntity", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		var expected *DataContextEntityEvent
+		obj.Entity = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEntity(), "getter should return the property value")
+	})
+
+	t.Run("GetEntity_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		obj.Entity = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetEntity(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetEntity_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *StreamProtocolMixedSchemaResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEntity() // Should return zero value
+	})
+
+	t.Run("GetObjectData", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		var expected *ProtocolObjectEvent
+		obj.ObjectData = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetObjectData(), "getter should return the property value")
+	})
+
+	t.Run("GetObjectData_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &StreamProtocolMixedSchemaResponse{}
+		obj.ObjectData = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetObjectData(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetObjectData_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *StreamProtocolMixedSchemaResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetObjectData() // Should return zero value
+	})
+
+}
+
 func TestGettersStreamProtocolNoCollisionResponse(t *testing.T) {
 	t.Run("GetEvent", func(t *testing.T) {
 		t.Parallel()

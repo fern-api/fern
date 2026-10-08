@@ -3,16 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Requests\StreamXFernStreamingConditionStreamRequest;
+use Seed\Types\StreamRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamXFernStreamingConditionStream(
-    new StreamXFernStreamingConditionStreamRequest([
+$client->streamOasSpecNative(
+    new StreamRequest([
         'query' => 'query',
-        'stream' => true,
     ]),
 );

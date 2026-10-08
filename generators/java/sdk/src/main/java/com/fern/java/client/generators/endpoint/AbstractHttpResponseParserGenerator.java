@@ -1110,6 +1110,25 @@ public abstract class AbstractHttpResponseParserGenerator {
                         // Protocol-level discrimination: discriminator is at SSE envelope level
                         String discriminatorProperty =
                                 discriminationInfo.getDiscriminatorProperty().orElse("event");
+                        if (discriminationInfo.getEnvelopeEvents().isPresent()) {
+                            CodeBlock envelopeEvents = discriminationInfo.getEnvelopeEvents().get().stream()
+                                    .map(event -> CodeBlock.of("$S", event))
+                                    .collect(CodeBlock.joining(", "));
+                            return CodeBlock.of(
+                                    "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $L, $T.asList($L))",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getStreamClassName(),
+                                    bodyTypeName,
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getResponseBodyReaderClassName(),
+                                    variables.getResponseName(),
+                                    discriminatorProperty,
+                                    terminator != null ? CodeBlock.of("$S", terminator) : CodeBlock.of("null"),
+                                    java.util.Arrays.class,
+                                    envelopeEvents);
+                        }
                         if (terminator != null) {
                             return CodeBlock.of(
                                     "$T.fromSseWithEventDiscrimination($T.class, new $T($L), $S, $S)",

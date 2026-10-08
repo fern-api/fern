@@ -305,6 +305,10 @@ def _convert_undiscriminated_union_type(
         except Exception:
             continue
 
+    # No member matched (e.g. a variant added after this SDK was generated, or a missing
+    # discriminant): keep the original data rather than dropping it.
+    return object_
+
 
 def _convert_union_type(
     type_: typing.Type[typing.Any],

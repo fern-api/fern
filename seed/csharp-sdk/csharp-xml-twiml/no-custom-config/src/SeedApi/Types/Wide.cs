@@ -796,7 +796,7 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
+    /// Ordered content of the element: text segments (string), comments (XmlComment), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
     public List<object> Content { get; set; } = new();
@@ -1634,6 +1634,11 @@ public record Wide : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
+    /// Hash code derived from the rendered XML, consistent with Equals.
+    /// </summary>
+    public override int GetHashCode() => XmlUtils.XmlHashCode(this);
+
+    /// <summary>
     /// Adds a <c>&lt;Pause&gt;</c> child element after any content added so far and returns this instance for chaining.
     /// <para>
     /// XML element without an explicit xml.name; falls back to the schema name.
@@ -1675,6 +1680,38 @@ public record Wide : IJsonOnDeserialized, IXmlNode
         Content.Add(text);
         return this;
     }
+
+    /// <summary>
+    /// Appends an XML comment (&lt;!--text--&gt;) inside this element after any content added so far and returns this instance for chaining.
+    /// </summary>
+    public Wide Comment(string text)
+    {
+        Content.Add(new XmlComment(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this instance for chaining.
+    /// </summary>
+    public Wide CommentBefore(string text)
+    {
+        Content.Add(XmlComment.Before(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this instance for chaining.
+    /// </summary>
+    public Wide CommentAfter(string text)
+    {
+        Content.Add(XmlComment.After(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Two values are equal when they render to the same XML.
+    /// </summary>
+    public virtual bool Equals(Wide? other) => XmlUtils.XmlEquals(this, other);
 
     /// <summary>
     /// Returns the XML representation of this value.

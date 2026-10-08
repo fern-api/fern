@@ -6,7 +6,7 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { escapeMdx, generateAnchorId } from "./mdx.js";
+import { escapeMdx, generateAnchorId, withSlugPrefix } from "./mdx.js";
 import { isPrivateModulePath, moduleIsPackage, moduleIsPrivate } from "./modulePages.js";
 
 /**
@@ -14,6 +14,12 @@ import { isPrivateModulePath, moduleIsPackage, moduleIsPrivate } from "./moduleP
  */
 export interface RenderContext {
     baseSlug: string;
+    /**
+     * URL prefix (e.g., the slug of the navigation tab the pages are listed under) prepended
+     * to page slugs. Frontmatter slugs are absolute, so without it the tab is skipped.
+     * Does not affect file paths.
+     */
+    slugPrefix?: string;
     validPaths: Set<string>;
     /** Maps re-exported paths to their actual definition paths */
     pathAliases: Map<string, string>;
@@ -216,7 +222,7 @@ function pathToAnchorUrl(typePath: string, ctx: RenderContext, currentModulePath
     if (ctx.linkToModuleFile != null) {
         return `${ctx.linkToModuleFile(targetModulePath)}#${anchor}`;
     }
-    return `/${ctx.baseSlug}/${targetModulePath.split(".").join("/")}#${anchor}`;
+    return `/${withSlugPrefix(`${ctx.baseSlug}/${targetModulePath.split(".").join("/")}`, ctx.slugPrefix)}#${anchor}`;
 }
 
 /** Regex to match qualified Python paths (at least 2 segments). */

@@ -22,6 +22,8 @@ export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
 export { bundleMdxComponents } from "./bundleMdxComponents.js";
 export {
     DocsDefinitionResolver,
+    getApiRegistrationConcurrency,
+    type OnApiRegistrationQueuedFn,
     type RegisterApiFn,
     type TranslatedApiSpec,
     type UploadedFile

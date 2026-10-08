@@ -2,13 +2,22 @@ export {
     isXmlBuilder,
     type XmlBuilder,
     type XmlBuiltContent,
+    XmlSiblingComments,
     xmlBuild,
     xmlBuildAll,
     xmlBuildContent,
     xmlInitialContent,
 } from "./builder.js";
 export { orderXmlContent, replaceXmlContent } from "./content.js";
-export { localName, parseXml, type XmlNode, XmlParseError } from "./parse.js";
+export {
+    isXmlCommentNode,
+    localName,
+    parseXml,
+    type XmlCommentNode,
+    type XmlNode,
+    type XmlNodeContent,
+    XmlParseError,
+} from "./parse.js";
 export {
     type XmlContentOptions,
     type XmlNodeParser,
@@ -49,4 +58,5 @@ export {
     type XmlContent,
     type XmlSerializable,
 } from "./serialize.js";
+export { isXmlComment, XmlComment } from "./XmlComment.js";
 export { XmlElement } from "./XmlElement.js";

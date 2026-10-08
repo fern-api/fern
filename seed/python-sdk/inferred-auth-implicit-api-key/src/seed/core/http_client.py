@@ -498,7 +498,12 @@ class HttpClient:
                 files=request_files,
                 timeout=timeout,
             )
-        except (httpx.ConnectError, httpx.RemoteProtocolError):
+        except (httpx.ConnectError, httpx.RemoteProtocolError) as error:
+            # A protocol error may occur after the server applied the request, even while reading a 200 body.
+            if isinstance(error, httpx.RemoteProtocolError) and not (
+                request_options is not None and request_options.get("retry_remote_protocol_errors", False)
+            ):
+                raise
             if retries < max_retries:
                 time.sleep(_retry_timeout_from_retries(retries=retries))
                 return self.request(
@@ -848,7 +853,12 @@ class AsyncHttpClient:
                 files=request_files,
                 timeout=timeout,
             )
-        except (httpx.ConnectError, httpx.RemoteProtocolError):
+        except (httpx.ConnectError, httpx.RemoteProtocolError) as error:
+            # A protocol error may occur after the server applied the request, even while reading a 200 body.
+            if isinstance(error, httpx.RemoteProtocolError) and not (
+                request_options is not None and request_options.get("retry_remote_protocol_errors", False)
+            ):
+                raise
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
                 return await self.request(

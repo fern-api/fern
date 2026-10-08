@@ -3,17 +3,17 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Requests\StreamXFernStreamingSharedSchemaRequest;
+use Seed\Requests\StreamXFernStreamingSharedSchemaStreamRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamXFernStreamingSharedSchema(
-    new StreamXFernStreamingSharedSchemaRequest([
+$client->streamXFernStreamingSharedSchemaStream(
+    new StreamXFernStreamingSharedSchemaStreamRequest([
         'prompt' => 'prompt',
         'model' => 'model',
-        'stream' => false,
+        'stream' => true,
     ]),
 );

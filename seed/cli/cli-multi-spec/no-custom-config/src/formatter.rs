@@ -166,6 +166,36 @@ impl OutputPipeline {
         Ok(())
     }
 
+    /// Render a single record (a request preview, a status object) to `out`.
+    ///
+    /// Same as [`emit`](Self::emit) except that in `table` mode the value is
+    /// always laid out as a key/value table. The list heuristic used for API
+    /// responses would otherwise pick the first non-empty array in the object
+    /// (for example a `headers` list) and render only that.
+    pub fn emit_record<W: std::io::Write>(
+        &self,
+        out: &mut W,
+        value: &Value,
+    ) -> Result<(), FormatError> {
+        if self.quiet {
+            return Ok(());
+        }
+        let owned;
+        let effective = match &self.query {
+            Some(_) => {
+                owned = self.apply_query(value)?;
+                &owned
+            }
+            None => value,
+        };
+        let rendered = match self.format {
+            OutputFormat::Table => format_record_table(effective),
+            _ => format_value(effective, &self.format),
+        };
+        writeln!(out, "{rendered}")?;
+        Ok(())
+    }
+
     /// Render a pre-projected `value` to `out` without applying `--query`.
     ///
     /// Used by streaming paths that have already applied `apply_query_streaming`
@@ -448,6 +478,61 @@ fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
 
 fn format_table(value: &Value) -> String {
     format_table_page(value, true)
+}
+
+/// Render `value` as a key/value table regardless of its shape.
+///
+/// Objects are flattened like a single-object response, with one addition:
+/// an array of `[name, value]` pairs (how request headers and query
+/// parameters are modelled) is expanded into `key.name  value` rows instead
+/// of being squashed into one comma-joined cell.
+fn format_record_table(value: &Value) -> String {
+    let Value::Object(obj) = value else {
+        return format_table(value);
+    };
+    let flat = flatten_record(obj, "");
+    let max_key_len = flat.iter().map(|(k, _)| k.len()).max().unwrap_or(0);
+    let mut output = String::new();
+    for (key, val_str) in &flat {
+        let _ = writeln!(output, "{key:max_key_len$}  {val_str}");
+    }
+    output
+}
+
+fn flatten_record(obj: &serde_json::Map<String, Value>, prefix: &str) -> Vec<(String, String)> {
+    let mut out = Vec::new();
+    for (key, val) in obj {
+        let full_key = if prefix.is_empty() {
+            key.clone()
+        } else {
+            format!("{prefix}.{key}")
+        };
+        match val {
+            Value::Object(nested) if !nested.is_empty() => {
+                out.extend(flatten_record(nested, &full_key))
+            }
+            Value::Array(arr) if !arr.is_empty() => match as_name_value_pairs(arr) {
+                Some(pairs) => out.extend(
+                    pairs
+                        .into_iter()
+                        .map(|(name, value)| (format!("{full_key}.{name}"), value_to_cell(value))),
+                ),
+                None => out.push((full_key, value_to_cell(val))),
+            },
+            _ => out.push((full_key, value_to_cell(val))),
+        }
+    }
+    out
+}
+
+/// `Some` when every element is a `[string, value]` pair.
+fn as_name_value_pairs(arr: &[Value]) -> Option<Vec<(&str, &Value)>> {
+    arr.iter()
+        .map(|item| match item {
+            Value::Array(pair) if pair.len() == 2 => pair[0].as_str().map(|name| (name, &pair[1])),
+            _ => None,
+        })
+        .collect()
 }
 
 /// Recursively flatten a JSON object into `(dot.notation.key, string_value)` pairs.
@@ -878,6 +963,90 @@ mod tests {
         let output = format_value(&val, &OutputFormat::Table);
         assert!(output.contains("id"));
         assert!(output.contains("abc"));
+    }
+
+    #[test]
+    fn emit_record_table_keeps_every_field_of_a_request_preview() {
+        // Regression: a dry-run preview has a non-empty `headers` array, which
+        // the list heuristic used to pick as "the items" — rendering a single
+        // header row and dropping url/method/body.
+        let val = json!({
+            "dry_run": true,
+            "url": "https://api.example.com/v1/Messages",
+            "method": "GET",
+            "query_params": [],
+            "headers": [["Twilio-Api-Version", "2026-11-01.preview"]],
+            "body": {},
+            "auth": {"credentials": "resolved"},
+        });
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Table,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: None,
+        };
+        let mut out = Vec::new();
+        pipeline.emit_record(&mut out, &val).unwrap();
+        let text = String::from_utf8(out).unwrap();
+        for needle in [
+            "dry_run",
+            "https://api.example.com/v1/Messages",
+            "method",
+            "GET",
+            "headers.Twilio-Api-Version  2026-11-01.preview",
+            "auth.credentials",
+            "resolved",
+            "body",
+        ] {
+            assert!(text.contains(needle), "missing {needle:?} in:\n{text}");
+        }
+        assert!(
+            !text.contains("---"),
+            "record rendering must not emit a list header rule:\n{text}"
+        );
+    }
+
+    #[test]
+    fn emit_record_non_table_formats_are_unchanged() {
+        let val = json!({"headers": [["X-A", "1"]], "url": "u"});
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Json,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: None,
+        };
+        let mut out = Vec::new();
+        pipeline.emit_record(&mut out, &val).unwrap();
+        assert_eq!(
+            String::from_utf8(out).unwrap(),
+            format!("{}\n", format_value(&val, &OutputFormat::Json))
+        );
+    }
+
+    #[test]
+    fn emit_record_respects_quiet_and_query() {
+        let val = json!({"headers": [["X-A", "1"]], "url": "u"});
+        let quiet = OutputPipeline {
+            format: OutputFormat::Table,
+            color_mode: ColorMode::Never,
+            quiet: true,
+            query: None,
+        };
+        let mut out = Vec::new();
+        quiet.emit_record(&mut out, &val).unwrap();
+        assert!(out.is_empty());
+
+        let queried = OutputPipeline {
+            format: OutputFormat::Table,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: Some("url".to_string()),
+        };
+        let mut out = Vec::new();
+        queried.emit_record(&mut out, &val).unwrap();
+        let text = String::from_utf8(out).unwrap();
+        assert!(text.contains('u'), "{text}");
+        assert!(!text.contains("X-A"), "{text}");
     }
 
     #[test]

@@ -1,14 +1,25 @@
 /**
  * A parsed XML element. Names keep their `prefix:` verbatim (no namespace processing);
  * `text` is the element's own (non-whitespace) character data, and `content` holds the
- * non-blank text segments and child elements in document order.
+ * non-blank text segments, comments and child elements in document order.
  */
 export interface XmlNode {
     name: string;
     attributes: Record<string, string>;
     text: string | undefined;
     children: XmlNode[];
-    content: (string | XmlNode)[];
+    content: XmlNodeContent[];
+}
+
+/** A parsed XML comment; `comment` is the text between `<!--` and `-->`, verbatim. */
+export interface XmlCommentNode {
+    comment: string;
+}
+
+export type XmlNodeContent = string | XmlNode | XmlCommentNode;
+
+export function isXmlCommentNode(item: XmlNodeContent): item is XmlCommentNode {
+    return typeof item !== "string" && "comment" in item;
 }
 
 export class XmlParseError extends Error {
@@ -109,7 +120,7 @@ class Parser {
 
         const children: XmlNode[] = [];
         const text: string[] = [];
-        const content: (string | XmlNode)[] = [];
+        const content: XmlNodeContent[] = [];
         const flushText = (): void => {
             const segment = text.slice(flushedText).join("");
             flushedText = text.length;
@@ -137,7 +148,10 @@ class Parser {
                 text.push(this.source.substring(this.position + 9, end));
                 this.position = end + 3;
             } else if (this.source.startsWith("<!--", this.position)) {
-                this.skipPast("-->", "unterminated comment");
+                flushText();
+                const end = this.indexOfOrThrow("-->", this.position + 4, "unterminated comment");
+                content.push({ comment: this.source.substring(this.position + 4, end) });
+                this.position = end + 3;
             } else if (this.source.startsWith("<?", this.position)) {
                 this.skipPast("?>", "unterminated processing instruction");
             } else if (this.source.startsWith("<!", this.position)) {

@@ -435,7 +435,7 @@ fn is_sensitive_body_key(key: &str) -> bool {
 /// Returns true if a URL query parameter name is sensitive and should be
 /// redacted. Combines the body-key heuristic with extra spec-derived names
 /// (e.g. from `apiKey in: query` security schemes).
-fn is_sensitive_query_param(name: &str, extra: &[&str]) -> bool {
+pub(crate) fn is_sensitive_query_param(name: &str, extra: &[&str]) -> bool {
     is_sensitive_body_key(name) || extra.iter().any(|e| e.eq_ignore_ascii_case(name))
 }
 

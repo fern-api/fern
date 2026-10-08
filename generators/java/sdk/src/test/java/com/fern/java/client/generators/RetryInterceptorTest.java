@@ -28,7 +28,10 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InterruptedIOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -37,10 +40,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Dispatcher;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -66,6 +74,7 @@ class RetryInterceptorTest {
 
     private static URLClassLoader classLoader;
     private static Class<?> interceptorClass;
+    private static Class<?> asyncCallClass;
 
     @BeforeAll
     static void compileEmittedInterceptor(@TempDir Path tempDir) throws Exception {
@@ -109,6 +118,7 @@ class RetryInterceptorTest {
         classLoader =
                 new URLClassLoader(new URL[] {classesDir.toUri().toURL()}, RetryInterceptorTest.class.getClassLoader());
         interceptorClass = classLoader.loadClass(PACKAGE + "." + CLASS_NAME);
+        asyncCallClass = classLoader.loadClass(PACKAGE + "." + CLASS_NAME + "$AsyncCall");
     }
 
     @AfterAll
@@ -245,6 +255,227 @@ class RetryInterceptorTest {
             client.dispatcher().executorService().shutdown();
             client.connectionPool().evictAll();
         } finally {
+            server.stop(0);
+        }
+    }
+
+    @Test
+    void syncInterruptDuringBackoffRestoresInterruptFlag() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any()))
+                .thenReturn(response(429, "Rate limited")
+                        .newBuilder()
+                        .header("Retry-After", "30")
+                        .build());
+        Interceptor interceptor = newInterceptor(3, 60_000L);
+        AtomicReference<Throwable> thrown = new AtomicReference<>();
+        AtomicReference<Boolean> interruptFlag = new AtomicReference<>();
+        Thread thread = new Thread(() -> {
+            try {
+                interceptor.intercept(chain);
+            } catch (Throwable t) {
+                thrown.set(t);
+            }
+            interruptFlag.set(Thread.currentThread().isInterrupted());
+        });
+        thread.start();
+        Thread.sleep(200);
+        thread.interrupt();
+        thread.join(5_000);
+
+        assertThat(thread.isAlive()).isFalse();
+        assertThat(thrown.get()).isInstanceOf(InterruptedIOException.class);
+        assertThat(interruptFlag.get()).isTrue();
+        verify(chain, times(1)).proceed(any());
+    }
+
+    /**
+     * A call waiting to retry must not hold one of the dispatcher's per-host slots: with a single slot, an unrelated
+     * call to the same host has to go out while the first call is still backing off.
+     */
+    @Test
+    void asyncBackoffDoesNotHoldDispatcherSlot() throws Exception {
+        try (TestServer server = new TestServer("2")) {
+            OkHttpClient client = asyncClient(newInterceptor(3, 60_000L));
+            CapturingCallback limited = new CapturingCallback();
+            enqueue(newAsyncCall(client, server.request("/limited")), limited);
+            server.awaitLimitedRequests(1);
+
+            long start = System.nanoTime();
+            CapturingCallback other = new CapturingCallback();
+            enqueue(newAsyncCall(client, server.request("/other")), other);
+            assertThat(other.response().code()).isEqualTo(200);
+            assertThat(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start)).isLessThan(1_000L);
+
+            assertThat(limited.result.isDone()).isFalse();
+            assertThat(limited.response().code()).isEqualTo(200);
+            assertThat(server.limitedRequests.get()).isEqualTo(2);
+            shutdown(client);
+        }
+    }
+
+    @Test
+    void cancellingAsyncCallDuringBackoffStopsRetries() throws Exception {
+        try (TestServer server = new TestServer("1")) {
+            OkHttpClient client = asyncClient(newInterceptor(3, 60_000L));
+            CapturingCallback callback = new CapturingCallback();
+            Object call = newAsyncCall(client, server.request("/limited"));
+            enqueue(call, callback);
+            server.awaitLimitedRequests(1);
+            Thread.sleep(100);
+
+            asyncCallClass.getMethod("cancel").invoke(call);
+            assertThat(callback.result.get(1, TimeUnit.SECONDS)).isInstanceOf(IOException.class);
+
+            CapturingCallback other = new CapturingCallback();
+            enqueue(newAsyncCall(client, server.request("/other")), other);
+            assertThat(other.response().code()).isEqualTo(200);
+
+            Thread.sleep(1_500);
+            assertThat(server.limitedRequests.get()).isEqualTo(1);
+            assertThat(callback.deliveries.get()).isEqualTo(1);
+            shutdown(client);
+        }
+    }
+
+    @Test
+    void asyncCallWithZeroMaxRetriesReturnsFirstResponse() throws Exception {
+        try (TestServer server = new TestServer("30")) {
+            OkHttpClient client = asyncClient(newInterceptor(0, 60_000L));
+            CapturingCallback callback = new CapturingCallback();
+            long start = System.nanoTime();
+            enqueue(newAsyncCall(client, server.request("/limited")), callback);
+
+            assertThat(callback.response().code()).isEqualTo(429);
+            assertThat(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start)).isLessThan(1_000L);
+            assertThat(server.limitedRequests.get()).isEqualTo(1);
+            shutdown(client);
+        }
+    }
+
+    @Test
+    void asyncCallHonoursPerRequestMaxRetriesOverride() throws Exception {
+        try (TestServer server = new TestServer("1")) {
+            OkHttpClient client = asyncClient(newInterceptor(0, 60_000L));
+            Object override = interceptorClass
+                    .getClassLoader()
+                    .loadClass(PACKAGE + "." + CLASS_NAME + "$MaxRetriesOverride")
+                    .getConstructor(int.class)
+                    .newInstance(2);
+            @SuppressWarnings("unchecked")
+            Class<Object> overrideClass = (Class<Object>) override.getClass();
+            Request request = server.request("/limited")
+                    .newBuilder()
+                    .tag(overrideClass, override)
+                    .build();
+            CapturingCallback callback = new CapturingCallback();
+            enqueue(newAsyncCall(client, request), callback);
+
+            assertThat(callback.response().code()).isEqualTo(200);
+            assertThat(server.limitedRequests.get()).isEqualTo(2);
+            shutdown(client);
+        }
+    }
+
+    private static OkHttpClient asyncClient(Interceptor interceptor) {
+        Dispatcher dispatcher = new Dispatcher();
+        dispatcher.setMaxRequestsPerHost(1);
+        return new OkHttpClient.Builder()
+                .dispatcher(dispatcher)
+                .addInterceptor(interceptor)
+                .build();
+    }
+
+    private static void shutdown(OkHttpClient client) {
+        client.dispatcher().executorService().shutdown();
+        client.connectionPool().evictAll();
+    }
+
+    private static Object newAsyncCall(OkHttpClient client, Request request) throws Exception {
+        Method method = interceptorClass.getMethod("newAsyncCall", OkHttpClient.class, Request.class);
+        return method.invoke(null, client, request);
+    }
+
+    private static void enqueue(Object asyncCall, Callback callback) throws Exception {
+        try {
+            asyncCallClass.getMethod("enqueue", Callback.class).invoke(asyncCall, callback);
+        } catch (InvocationTargetException e) {
+            throw (Exception) e.getCause();
+        }
+    }
+
+    private static final class CapturingCallback implements Callback {
+        private final CompletableFuture<Object> result = new CompletableFuture<>();
+        private final AtomicInteger deliveries = new AtomicInteger();
+
+        @Override
+        public void onResponse(Call call, Response response) {
+            deliveries.incrementAndGet();
+            try (Response closing = response) {
+                result.complete(new Response.Builder()
+                        .request(closing.request())
+                        .protocol(closing.protocol())
+                        .code(closing.code())
+                        .message(closing.message())
+                        .build());
+            }
+        }
+
+        @Override
+        public void onFailure(Call call, IOException e) {
+            deliveries.incrementAndGet();
+            result.complete(e);
+        }
+
+        Response response() throws Exception {
+            Object value = result.get(10, TimeUnit.SECONDS);
+            if (value instanceof IOException) {
+                throw (IOException) value;
+            }
+            return (Response) value;
+        }
+    }
+
+    /** {@code /limited} answers 429 with the given {@code Retry-After} once, then 200; {@code /other} answers 200. */
+    private static final class TestServer implements AutoCloseable {
+        private final HttpServer server;
+        private final AtomicInteger limitedRequests = new AtomicInteger();
+
+        TestServer(String retryAfter) throws IOException {
+            server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+            server.setExecutor(java.util.concurrent.Executors.newCachedThreadPool());
+            server.createContext("/limited", exchange -> {
+                if (limitedRequests.incrementAndGet() == 1) {
+                    exchange.getResponseHeaders().add("Retry-After", retryAfter);
+                    exchange.sendResponseHeaders(429, -1);
+                } else {
+                    exchange.sendResponseHeaders(200, -1);
+                }
+                exchange.close();
+            });
+            server.createContext("/other", exchange -> {
+                exchange.sendResponseHeaders(200, -1);
+                exchange.close();
+            });
+            server.start();
+        }
+
+        Request request(String path) {
+            return new Request.Builder()
+                    .url("http://127.0.0.1:" + server.getAddress().getPort() + path)
+                    .build();
+        }
+
+        void awaitLimitedRequests(int count) throws InterruptedException {
+            long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
+            while (limitedRequests.get() < count && System.nanoTime() < deadline) {
+                Thread.sleep(10);
+            }
+            assertThat(limitedRequests.get()).isEqualTo(count);
+        }
+
+        @Override
+        public void close() {
             server.stop(0);
         }
     }

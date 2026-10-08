@@ -14,10 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.StreamXFernStreamingConditionStreamRequest{
-        Query: "query",
+    request := &fern.StreamRequest{
+        Query: fern.String(
+            "query",
+        ),
     }
-    client.StreamXFernStreamingConditionStream(
+    client.StreamOasSpecNative(
         context.TODO(),
         request,
     )

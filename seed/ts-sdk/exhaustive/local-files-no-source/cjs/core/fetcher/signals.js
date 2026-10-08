@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIMEOUT = void 0;
 exports.getTimeoutSignal = getTimeoutSignal;
 exports.anySignal = anySignal;
-const TIMEOUT = "timeout";
+exports.TIMEOUT = "timeout";
 function getTimeoutSignal(timeoutMs) {
     const controller = new AbortController();
-    const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
+    const abortId = setTimeout(() => controller.abort(exports.TIMEOUT), timeoutMs);
     return { signal: controller.signal, abortId };
 }
 function anySignal(...args) {

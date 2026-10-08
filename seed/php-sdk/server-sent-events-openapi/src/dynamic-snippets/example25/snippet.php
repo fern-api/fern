@@ -3,18 +3,17 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\StreamXFernStreamingUnionStreamRequest;
-use Seed\Types\UnionStreamMessageVariant;
+use Seed\Requests\SharedCompletionRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamXFernStreamingUnionStream(
-    StreamXFernStreamingUnionStreamRequest::message(true, new UnionStreamMessageVariant([
-        'streamResponse' => true,
+$client->validateCompletion(
+    new SharedCompletionRequest([
         'prompt' => 'prompt',
-        'message' => 'message',
-    ])),
+        'model' => 'model',
+        'stream' => true,
+    ]),
 );

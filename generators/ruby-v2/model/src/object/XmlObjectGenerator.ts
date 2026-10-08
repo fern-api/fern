@@ -35,6 +35,9 @@ const RESERVED_METHOD_NAMES = new Set([
     "to_xml_element",
     "add_child",
     "add_text",
+    "comment",
+    "comment_before",
+    "comment_after",
     "content",
     "record_content",
     "additional_attributes",
@@ -499,6 +502,7 @@ export class XmlObjectGenerator {
                     : []),
                 `@param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes`,
                 ...attributeOptionDocs,
+                `@yieldparam child [${childClass.name}] the new element, for nesting children inline`,
                 `@return [${childClass.name}]`
             ];
             ruby.comment({ docs: docs.join("\n") }).write(writer);
@@ -506,6 +510,15 @@ export class XmlObjectGenerator {
             writer.writeLine(`def ${methodName}(${params})`);
             writer.indent();
             if (textField != null) {
+                writer.writeLine(`if attributes.key?(:${textField})`);
+                writer.indent();
+                writer.writeLine(
+                    `raise ArgumentError, "${textField} given both positionally and as a keyword" unless ${textField}.nil?`
+                );
+                writer.newLine();
+                writer.writeLine(`${textField} = attributes.delete(:${textField})`);
+                writer.dedent();
+                writer.writeLine("end");
                 writer.write(`child = ${textField}.is_a?(`);
                 childClass.write(writer);
                 writer.write(`) ? ${textField} : `);
@@ -522,6 +535,7 @@ export class XmlObjectGenerator {
                 writer.writeLine(`self.${property.fieldName} = child`);
             }
             writer.writeLine("record_content(child)");
+            writer.writeLine("yield child if block_given?");
             writer.writeLine("child");
             writer.dedent();
             writer.write("end");
