@@ -481,3 +481,86 @@ async fn provisioning_without_revoke_parameters_stores_the_key_and_warns() {
     .await
     .unwrap();
 }
+
+/// A spec whose only server is a template — `{region}` has no default, so
+/// the URL is unusable until the variable is resolved or the base URL is
+/// overridden. Twilio's `https://api.{region}.{city}.twilio.com` is the
+/// motivating case.
+const TEMPLATED_SPEC: &str = r#"
+openapi: 3.0.0
+info: { title: P, version: "1.0" }
+servers:
+  - url: "https://api.{region}.example.com"
+    variables:
+      region: { default: "us1" }
+security: [{ basic: [] }]
+paths:
+  /Keys:
+    post:
+      operationId: keys_create
+      x-fern-sdk-group-name: [keys]
+      x-fern-sdk-method-name: create
+      responses:
+        "201": { description: ok }
+components:
+  securitySchemes:
+    basic: { type: http, scheme: basic }
+"#;
+
+fn templated_app() -> CliApp {
+    CliApp::new("pv")
+        .profiles(ProfilesConfig::new().provision_operation(
+            ProvisionOperation::new("keys.create")
+                .credential_field("username", "sid")
+                .credential_field("password", "secret"),
+        ))
+        .auth(
+            BasicAuth::new("basic")
+                .username_env("PV_USERNAME")
+                .password_env("PV_PASSWORD"),
+        )
+        .binding(OpenApiBinding::new().spec(TEMPLATED_SPEC))
+}
+
+#[tokio::test]
+#[serial]
+async fn provision_honors_base_url_flag_and_resolves_server_variables() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Keys"))
+        .and(header("authorization", PARENT_BASIC))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cret"
+        })))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        // `PV_BASE_URL` is deliberately *not* the mock: only `--base-url`
+        // points there, so the test fails if the flag is ignored.
+        with_parent_env("https://unused.invalid", || {
+            let mut out: Vec<u8> = Vec::new();
+            let code = templated_app().try_run_from_with_output(
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--provision",
+                    "--base-url",
+                    &uri,
+                ],
+                &mut out,
+            );
+            let output = String::from_utf8_lossy(&out);
+            assert_eq!(code, 0, "{output}");
+            assert!(!output.contains("{region}"), "{output}");
+        });
+    })
+    .await
+    .unwrap();
+    drop(server);
+}

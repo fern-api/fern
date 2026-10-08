@@ -417,9 +417,18 @@ impl Binding for OpenApiBinding {
         &'a self,
         op_path: &'a [String],
         params: &'a serde_json::Value,
+        root_matches: &'a clap::ArgMatches,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async move {
             let prepared = self.ensure_prepared()?;
+            let mut doc_owned;
+            let doc = if self.inner.needs_server_var_resolution(&prepared.doc) {
+                doc_owned = prepared.doc.clone();
+                self.inner.apply_server_vars(&mut doc_owned, root_matches);
+                &doc_owned
+            } else {
+                &prepared.doc
+            };
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
@@ -427,7 +436,7 @@ impl Binding for OpenApiBinding {
                 Some(_) if !op_path.is_empty() => return Ok(None),
                 _ => op_path,
             };
-            let Some(method) = resolve_method_by_path(&prepared.doc, effective) else {
+            let Some(method) = resolve_method_by_path(doc, effective) else {
                 // Not ours — the caller tries the next binding.
                 return Ok(None);
             };
@@ -447,7 +456,7 @@ impl Binding for OpenApiBinding {
                 ..Default::default()
             };
             executor::execute_method(
-                &prepared.doc,
+                doc,
                 method,
                 params_json,
                 None,
@@ -460,7 +469,7 @@ impl Binding for OpenApiBinding {
                 &executor::PaginationConfig::default(),
                 &pipeline,
                 true,
-                crate::cli_args::resolve_base_url_override_for(&self.inner.name)?.as_deref(),
+                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?.as_deref(),
                 &prepared.http_config,
                 false,
                 false,

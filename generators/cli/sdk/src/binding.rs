@@ -163,7 +163,10 @@ pub trait Binding: Send + Sync {
     /// created — and they have no `ArgMatches` for the target operation to
     /// hand to [`dispatch`](Self::dispatch). Everything downstream (auth,
     /// retries, TLS, base-URL resolution) is the same stack a normal
-    /// invocation uses; only the argument source differs.
+    /// invocation uses; only the argument source differs. `root_matches`
+    /// is the parsed root command line, so global flags such as
+    /// `--base-url` and the server-variable flags apply exactly as they
+    /// would on a direct invocation.
     ///
     /// Returns `Ok(None)` from the default implementation, meaning "this
     /// binding does not own that path" — the caller should try the next.
@@ -171,6 +174,7 @@ pub trait Binding: Send + Sync {
         &'a self,
         _op_path: &'a [String],
         _params: &'a serde_json::Value,
+        _root_matches: &'a clap::ArgMatches,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async { Ok(None) })
     }

@@ -563,6 +563,10 @@ pub struct ProfilesContext<'a> {
     /// renamed the group (`commandName: tenants`) does not get hints telling
     /// it to run `<bin> profiles use …`, which would not resolve.
     pub command_name: &'a str,
+    /// The parsed root command line, handed to
+    /// [`Binding::invoke_operation`](crate::binding::Binding::invoke_operation)
+    /// so `--base-url` and server-variable flags reach provision/revoke calls.
+    pub root_matches: &'a ArgMatches,
     pub auth_bindings: &'a [(String, SchemeBinding)],
     pub login_flows: &'a [DynLoginFlow],
     pub vocabulary: &'a Vocabulary,
@@ -2061,7 +2065,7 @@ async fn provision_remote_credential(
     let op_path = op.op_path();
     let mut response = None;
     for binding in ctx.bindings {
-        if let Some(value) = binding.invoke_operation(&op_path, &params).await? {
+        if let Some(value) = binding.invoke_operation(&op_path, &params, ctx.root_matches).await? {
             response = Some(value);
             break;
         }
@@ -2166,7 +2170,7 @@ async fn revoke_remote_credential(
     for binding in ctx.bindings {
         // `Ok(None)` means "not my path" — keep looking, exactly as the
         // `--schema` walk does.
-        if binding.invoke_operation(op_path, &params).await?.is_some() {
+        if binding.invoke_operation(op_path, &params, ctx.root_matches).await?.is_some() {
             return Ok(());
         }
     }
