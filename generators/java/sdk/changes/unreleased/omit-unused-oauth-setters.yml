@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `omit-unused-oauth-setters` config option (default `false`). When enabled, clients with
+    endpoint-level security no longer generate builder setters for OAuth token-request properties other
+    than `clientId`/`clientSecret` (for example `code`, `codeVerifier` or `redirectUri` on a token endpoint
+    shared by several grants). Those setters were stored but never sent by the client-credentials flow.
+    The token endpoint method itself still accepts every request property.
+  type: feat
