@@ -202,14 +202,16 @@ export class Streamer {
         }
         // In per-endpoint mode, use the locally generated error codes variable.
         // In global mode, use the ErrorCodes variable from the namespace where the endpoint is defined.
-        const errorCodesReference =
-            this.context.isPerEndpointErrorCodes() && args.errorCodes != null
-                ? args.errorCodes
-                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
-        arguments_.push({
-            name: "ErrorDecoder",
-            value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
-        });
+        // In per-endpoint mode, endpoints without errors have no local errorCodes and no global ErrorCodes exists.
+        const errorCodesReference = this.context.isPerEndpointErrorCodes()
+            ? args.errorCodes
+            : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
+        if (errorCodesReference != null) {
+            arguments_.push({
+                name: "ErrorDecoder",
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
+            });
+        }
         const methodName = resumable ? Streamer.STREAM_WITH_RECONNECT_METHOD_NAME : Streamer.STREAM_METHOD_NAME;
         return go.codeblock((writer) => {
             writer.writeNode(
