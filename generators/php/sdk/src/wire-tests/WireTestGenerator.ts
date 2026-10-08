@@ -7,7 +7,15 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
+import { WireTestExample, WireTestExamples } from "./WireTestExamples.js";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
+
+interface WireTestCase {
+    endpoint: FernIr.HttpEndpoint;
+    example: FernIr.dynamic.EndpointExample;
+    testExample: WireTestExample;
+    testMethodName: string;
+}
 
 /**
  * Generates WireMock-based integration tests for PHP SDK.
@@ -22,6 +30,8 @@ export class WireTestGenerator {
     private readonly case: CaseConverter;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
+    private wireMockConfigContentByTestId: Record<string, WireMockMapping>;
+    private readonly testExamples: WireTestExamples;
     private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
     constructor({ context, ir }: { context: SdkGeneratorContext; ir: FernIr.IntermediateRepresentation }) {
@@ -32,7 +42,10 @@ export class WireTestGenerator {
             throw GeneratorError.internalError("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
-        this.wireMockConfigContent = this.getWireMockConfigContent();
+        this.testExamples = new WireTestExamples(context);
+        const { byEndpoint, byTestId } = this.getWireMockConfigContent();
+        this.wireMockConfigContent = byEndpoint;
+        this.wireMockConfigContentByTestId = byTestId;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
             config: context.config
@@ -67,32 +80,47 @@ export class WireTestGenerator {
         }
 
         // Generate docker-compose.test.yml, wiremock-mappings.json, and WireMockTestCase.php
-        new WireTestSetupGenerator(this.context, this.context.ir).generate();
+        new WireTestSetupGenerator(this.context, this.context.ir, this.testExamples).generate();
     }
 
     private async generateServiceTestFile(
         serviceName: string,
         endpoints: FernIr.HttpEndpoint[]
     ): Promise<{ filename: string; directory: RelativeFilePath; contents: string } | undefined> {
-        const endpointTestCases: Array<{
-            endpoint: FernIr.HttpEndpoint;
-            example: FernIr.dynamic.EndpointExample;
-            service: FernIr.HttpService;
-            exampleIndex: number;
-        }> = [];
+        const endpointTestCases: WireTestCase[] = [];
+        // Each endpoint's first example keeps the plain `test<Endpoint>` name, so reserve those first.
+        const usedTestMethodNames = new Set<string>(endpoints.map((endpoint) => this.getTestMethodName(endpoint)));
 
         for (const endpoint of endpoints) {
-            const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-            if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = dynamicEndpoint.examples[0];
-                if (firstExample) {
-                    const service = Object.values(this.context.ir.services).find((s) =>
-                        s.endpoints.some((e) => e.id === endpoint.id)
-                    );
-                    if (service) {
-                        endpointTestCases.push({ endpoint, example: firstExample, service, exampleIndex: 0 });
-                    }
+            const dynamicExamples = this.dynamicIr.endpoints[endpoint.id]?.examples ?? [];
+            const service = Object.values(this.context.ir.services).find((s) =>
+                s.endpoints.some((e) => e.id === endpoint.id)
+            );
+            if (dynamicExamples.length === 0 || service == null) {
+                continue;
+            }
+            for (const [index, testExample] of this.testExamples.get(service, endpoint).entries()) {
+                let example = dynamicExamples.find(
+                    (dynamicExample) => dynamicExample.id === testExample.dynamicExampleId
+                );
+                if (example == null && index === 0 && testExample.expectedError == null) {
+                    example = dynamicExamples[0];
                 }
+                if (example == null) {
+                    this.context.logger.debug(
+                        `Skipping wire test for example ${testExample.dynamicExampleId} of endpoint ${endpoint.id}: no matching dynamic example`
+                    );
+                    continue;
+                }
+                endpointTestCases.push({
+                    endpoint,
+                    example,
+                    testExample,
+                    testMethodName:
+                        index === 0
+                            ? this.getTestMethodName(endpoint)
+                            : this.getUniqueTestMethodName(endpoint, testExample, usedTestMethodNames)
+                });
             }
         }
 
@@ -184,6 +212,12 @@ export class WireTestGenerator {
                                 })
                             );
                             writer.write(`::custom(${envValues.map(() => "$wiremockUrl").join(", ")}),`);
+                            writer.write("\n");
+                            if (authParams.length > 0) {
+                                writer.write("    ");
+                            }
+                            // Error examples are served with 429/5xx statuses, which must not be retried.
+                            writer.write("options: ['maxRetries' => 0],");
                             if (authParams.length === 0) {
                                 writer.write("\n");
                                 writer.dedent();
@@ -200,6 +234,8 @@ export class WireTestGenerator {
                     writer.writeLine("options: [");
                     writer.indent();
                     writer.writeLine("'baseUrl' => $wiremockUrl,");
+                    // Error examples are served with 429/5xx statuses, which must not be retried.
+                    writer.writeLine("'maxRetries' => 0,");
                     writer.dedent();
                     writer.write("]");
                     if (authParams.length === 0) {
@@ -215,15 +251,7 @@ export class WireTestGenerator {
         });
     }
 
-    private async buildTestFileContent(
-        testClassName: string,
-        testCases: Array<{
-            endpoint: FernIr.HttpEndpoint;
-            example: FernIr.dynamic.EndpointExample;
-            service: FernIr.HttpService;
-            exampleIndex: number;
-        }>
-    ): Promise<php.Class> {
+    private async buildTestFileContent(testClassName: string, testCases: WireTestCase[]): Promise<php.Class> {
         const class_ = php.class_({
             name: testClassName,
             namespace: this.context.getTestsNamespace(),
@@ -250,13 +278,8 @@ export class WireTestGenerator {
         // Add setUp method that instantiates the client once
         class_.addMethod(this.generateSetUpMethod());
 
-        for (const { endpoint, example, service, exampleIndex } of testCases) {
-            const testMethod = await this.generateEndpointTestMethod({
-                endpoint,
-                example,
-                service,
-                exampleIndex
-            });
+        for (const testCase of testCases) {
+            const testMethod = await this.generateEndpointTestMethod(testCase);
             if (testMethod) {
                 class_.addMethod(testMethod);
             }
@@ -267,19 +290,14 @@ export class WireTestGenerator {
     private async generateEndpointTestMethod({
         endpoint,
         example,
-        service,
-        exampleIndex
-    }: {
-        endpoint: FernIr.HttpEndpoint;
-        example: FernIr.dynamic.EndpointExample;
-        service: FernIr.HttpService;
-        exampleIndex: number;
-    }): Promise<php.Method | undefined> {
+        testExample,
+        testMethodName
+    }: WireTestCase): Promise<php.Method | undefined> {
         try {
-            const testName = this.getTestMethodName(endpoint);
-            const basePath = this.buildBasePath(endpoint);
-            const queryParamsCode = this.buildQueryParamsCode(endpoint);
-            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+            const testId = testExample.testId;
+            const basePath = this.buildBasePath(endpoint, testId);
+            const queryParamsCode = this.buildQueryParamsCode(example);
+            const expectedError = testExample.expectedError;
 
             // Generate the API call using FernIr.dynamic snippets generator
             // Skip client instantiation since we instantiate it once in setUp()
@@ -305,23 +323,57 @@ export class WireTestGenerator {
             const isPaginated = endpoint.pagination != null && this.context.config.generatePaginatedClients === true;
 
             return php.method({
-                name: testName,
+                name: testMethodName,
                 access: "public",
                 parameters: [],
                 body: php.codeblock((writer) => {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
 
-                    if (isPaginated) {
-                        writer.write("$response = ");
-                        writer.writeNode(snippetAst);
-                        writer.writeLine("foreach ($response as $item) {");
+                    const writeCall = () => {
+                        if (isPaginated) {
+                            writer.write("$response = ");
+                            writer.writeNode(snippetAst);
+                            writer.writeLine("foreach ($response as $item) {");
+                            writer.indent();
+                            writer.writeLine("break;");
+                            writer.dedent();
+                            writer.writeLine("}");
+                        } else {
+                            writer.writeNode(snippetAst);
+                        }
+                    };
+
+                    if (expectedError != null) {
+                        const exceptionClassReference = this.context.getBaseApiExceptionClassReference();
+                        writer.writeLine("try {");
                         writer.indent();
-                        writer.writeLine("break;");
+                        writeCall();
+                        writer.writeTextStatement(
+                            `$this->fail('Expected ${exceptionClassReference.name} to be thrown')`
+                        );
+                        writer.dedent();
+                        writer.write("} catch (");
+                        writer.writeNode(exceptionClassReference);
+                        writer.writeLine(" $exception) {");
+                        writer.indent();
+                        writer.writeTextStatement(
+                            `$this->assertSame(${expectedError.statusCode}, $exception->getCode())`
+                        );
+                        // WireMock substitutes a placeholder for empty error bodies, so only assert real ones.
+                        if (expectedError.body != null && expectedError.body !== "") {
+                            writer.writeTextStatement("$body = $exception->getBody()");
+                            writer.writeTextStatement("$this->assertIsString($body)");
+                            writer.writeTextStatement(
+                                `$this->assertJsonStringEqualsJsonString('${this.escapeStringForPhpSingleQuotes(
+                                    JSON.stringify(expectedError.body)
+                                )}', $body)`
+                            );
+                        }
                         writer.dedent();
                         writer.writeLine("}");
                     } else {
-                        writer.writeNode(snippetAst);
+                        writeCall();
                     }
 
                     // $this->verifyRequestCount(...);
@@ -361,22 +413,31 @@ export class WireTestGenerator {
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
-    private buildDeterministicTestId(
-        service: FernIr.HttpService,
+    /**
+     * Names tests for additional examples after the endpoint, e.g. `testGetFileThrowsNotFoundError`
+     * for error examples and `testGetFile<ExampleName>` for named success examples.
+     */
+    private getUniqueTestMethodName(
         endpoint: FernIr.HttpEndpoint,
-        exampleIndex: number
+        testExample: WireTestExample,
+        usedTestMethodNames: Set<string>
     ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
-        const endpointName = this.case.snakeSafe(endpoint.name);
-
-        const segments: string[] = [];
-        if (servicePathParts.length > 0) {
-            segments.push(servicePathParts.join("."));
+        const suffix =
+            testExample.expectedError != null
+                ? `Throws${testExample.expectedError.errorName}`
+                : (testExample.exampleName ?? "");
+        const candidate = `${this.getTestMethodName(endpoint)}${suffix}`;
+        let testMethodName = candidate;
+        let counter = 2;
+        while (usedTestMethodNames.has(testMethodName)) {
+            testMethodName = `${candidate}${counter++}`;
         }
-        segments.push(endpointName);
-        segments.push(String(exampleIndex));
+        usedTestMethodNames.add(testMethodName);
+        return testMethodName;
+    }
 
-        return segments.join(".");
+    private escapeStringForPhpSingleQuotes(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
     }
 
     private escapeStringForPhp(value: string): string {
@@ -414,13 +475,12 @@ export class WireTestGenerator {
         return JSON.stringify(value);
     }
 
-    private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-        if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
+    private buildQueryParamsCode(example: FernIr.dynamic.EndpointExample): string {
+        const queryParams = example.queryParameters;
+        if (!queryParams) {
             return "null";
         }
 
-        const queryParams = dynamicEndpoint.examples[0].queryParameters;
         const entries: string[] = [];
 
         for (const [key, value] of Object.entries(queryParams)) {
@@ -445,17 +505,26 @@ export class WireTestGenerator {
         return `${requestMethod} - ${requestUrlPathTemplate}`;
     }
 
-    private getWireMockConfigContent(): Record<string, WireMockMapping> {
-        const out: Record<string, WireMockMapping> = {};
-        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
+    private getWireMockConfigContent(): {
+        byEndpoint: Record<string, WireMockMapping>;
+        byTestId: Record<string, WireMockMapping>;
+    } {
+        const byEndpoint: Record<string, WireMockMapping> = {};
+        const byTestId: Record<string, WireMockMapping> = {};
+        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir, this.testExamples);
         for (const mapping of wiremockStubMapping.mappings) {
+            const testId = mapping.request.headers?.["X-Test-Id"]?.equalTo;
+            if (testId != null) {
+                byTestId[testId] = mapping;
+                continue;
+            }
             const key = this.wiremockMappingKey(mapping.request.method, mapping.request.urlPathTemplate);
-            out[key] = mapping;
+            byEndpoint[key] = mapping;
         }
-        return out;
+        return { byEndpoint, byTestId };
     }
 
-    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint, testId: string): string {
         let basePath = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts || []) {
             basePath += `{${part.pathParameter}}${part.tail}`;
@@ -466,7 +535,7 @@ export class WireTestGenerator {
 
         const mappingKey = this.wiremockMappingKey(endpoint.method, basePath);
 
-        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+        const wiremockMapping = this.wireMockConfigContentByTestId[testId] ?? this.wireMockConfigContent[mappingKey];
         if (wiremockMapping && wiremockMapping.request.pathParameters) {
             Object.entries(wiremockMapping.request.pathParameters).forEach(([paramName, paramValue]) => {
                 const pathParam = paramValue as { equalTo: string };
