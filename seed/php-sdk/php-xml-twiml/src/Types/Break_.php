@@ -86,7 +86,7 @@ class Break_ extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['strength', 'time']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
-        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren()));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren(), [], true));
         return $result;
     }
 
