@@ -1,7 +1,7 @@
 import {
     clearResponseTimeout,
-    isCacheNoStoreSupported,
     makeRequest,
+    isCacheNoStoreSupported,
     resetCacheNoStoreSupported,
 } from "../../../src/core/fetcher/makeRequest";
 import { Mock } from "vitest";

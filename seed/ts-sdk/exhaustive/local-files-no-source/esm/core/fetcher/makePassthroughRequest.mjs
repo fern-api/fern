@@ -15,6 +15,7 @@ import { makeRequest } from "./makeRequest.mjs";
 import { redactUrl } from "./redactUrl.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
 import { Supplier } from "./Supplier.mjs";
+import { TIMEOUT } from "./signals.mjs";
 /**
  * Makes a passthrough HTTP request using the SDK's configuration (auth, retry, logging, etc.)
  * while mimicking the standard `fetch` API.
@@ -119,10 +120,20 @@ export function makePassthroughRequest(input, init, clientOptions, requestOption
                 hasBody: body != null,
             });
         }
-        const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
-            return makeRequest(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.credentials) === "include", undefined, // duplex
-            false);
-        }), maxRetries);
+        let response;
+        try {
+            response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
+                return makeRequest(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.credentials) === "include", undefined, // duplex
+                false);
+            }), maxRetries);
+        }
+        catch (error) {
+            // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.
+            if (error === TIMEOUT) {
+                throw createTimeoutError();
+            }
+            throw error;
+        }
         if (logger.isDebug()) {
             logger.debug("Passthrough HTTP request completed", {
                 method,
@@ -132,6 +143,11 @@ export function makePassthroughRequest(input, init, clientOptions, requestOption
         }
         return response;
     });
+}
+function createTimeoutError() {
+    const error = new Error("The request timed out.");
+    error.name = "TimeoutError";
+    return error;
 }
 /**
  * Returns true when the resolved request URL points at the same origin as the

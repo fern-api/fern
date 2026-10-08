@@ -24,6 +24,7 @@ const makeRequest_js_1 = require("./makeRequest.js");
 const RawResponse_js_1 = require("./RawResponse.js");
 const redactUrl_js_1 = require("./redactUrl.js");
 const requestWithRetries_js_1 = require("./requestWithRetries.js");
+const signals_js_1 = require("./signals.js");
 const SENSITIVE_HEADERS = new Set([
     "authorization",
     "www-authenticate",
@@ -122,9 +123,18 @@ function fetcherImpl(args) {
             };
             logger.debug("Making HTTP request", metadata);
         }
+        // Bodies that are read in full here stay covered by the timeout; streamed bodies are read by the caller.
+        const keepTimeoutUntilBodyRead = args.responseType !== "streaming" && args.responseType !== "sse" && args.responseType !== "binary-response";
+        const attemptResponses = [];
         try {
             const response = yield (0, requestWithRetries_js_1.requestWithRetries)(() => __awaiter(this, void 0, void 0, function* () {
-                return (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse");
+                // A retry means the previous attempt is over; stop its timer now rather than at the end.
+                for (const previousResponse of attemptResponses) {
+                    (0, makeRequest_js_1.clearResponseTimeout)(previousResponse);
+                }
+                const attemptResponse = yield (0, makeRequest_js_1.makeRequest)(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse", keepTimeoutUntilBodyRead);
+                attemptResponses.push(attemptResponse);
+                return attemptResponse;
             }), args.maxRetries);
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
@@ -184,7 +194,7 @@ function fetcherImpl(args) {
                     rawResponse: RawResponse_js_1.abortRawResponse,
                 };
             }
-            else if (error instanceof Error && error.name === "AbortError") {
+            else if (error === signals_js_1.TIMEOUT || (error instanceof Error && error.name === "AbortError")) {
                 if (logger.isError()) {
                     const metadata = {
                         method: args.method,
@@ -238,6 +248,11 @@ function fetcherImpl(args) {
                 },
                 rawResponse: RawResponse_js_1.unknownRawResponse,
             };
+        }
+        finally {
+            for (const attemptResponse of attemptResponses) {
+                (0, makeRequest_js_1.clearResponseTimeout)(attemptResponse);
+            }
         }
     });
 }
