@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.148.4
+  changelogEntry:
+    - summary: |
+        `fern generate` with `--version AUTO` no longer rewrites the placeholder version inside
+        files protected by `.fernignore` or inside longer version strings such as
+        `0.0.0-fern-placeholder.7`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 5.148.3
   changelogEntry:
     - summary: |
