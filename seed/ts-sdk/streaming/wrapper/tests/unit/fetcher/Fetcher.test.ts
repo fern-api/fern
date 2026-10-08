@@ -279,9 +279,9 @@ describe("Test fetcherImpl", () => {
     });
 
     it("should still resolve when a successful response has a plain-text body", async () => {
-        global.fetch = jest.fn().mockResolvedValue(
-            new Response("OK", { status: 200, headers: { "Content-Type": "text/plain" } }),
-        );
+        global.fetch = jest
+            .fn()
+            .mockResolvedValue(new Response("OK", { status: 200, headers: { "Content-Type": "text/plain" } }));
 
         const result = await fetcherImpl({ url: "https://example.com/items", method: "DELETE", maxRetries: 0 });
 
@@ -306,7 +306,9 @@ describe("Test fetcherImpl", () => {
     });
 
     it("should return the raw text for a malformed error body without a content type", async () => {
-        global.fetch = jest.fn().mockResolvedValue(new Response(new TextEncoder().encode('{"broken":'), { status: 500 }));
+        global.fetch = jest
+            .fn()
+            .mockResolvedValue(new Response(new TextEncoder().encode('{"broken":'), { status: 500 }));
 
         const result = await fetcherImpl({ url: "https://example.com/items", method: "GET", maxRetries: 0 });
 

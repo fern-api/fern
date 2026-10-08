@@ -49,13 +49,34 @@ function getRetryDelayFromHeaders(response, retryAttempt) {
     }
     return addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * Math.pow(2, retryAttempt), MAX_RETRY_DELAY));
 }
+/**
+ * Waits `ms` milliseconds, or rejects as soon as `abortSignal` aborts. The timer and
+ * the abort listener are always removed, so a cancelled wait never keeps the process alive.
+ */
+function sleep(ms, abortSignal) {
+    return new Promise((resolve, reject) => {
+        if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
+            reject(abortSignal.reason);
+            return;
+        }
+        const onAbort = () => {
+            clearTimeout(timeoutId);
+            reject(abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.reason);
+        };
+        const timeoutId = setTimeout(() => {
+            abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.removeEventListener("abort", onAbort);
+            resolve();
+        }, ms);
+        abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.addEventListener("abort", onAbort, { once: true });
+    });
+}
 export function requestWithRetries(requestFn_1) {
-    return __awaiter(this, arguments, void 0, function* (requestFn, maxRetries = DEFAULT_MAX_RETRIES) {
+    return __awaiter(this, arguments, void 0, function* (requestFn, maxRetries = DEFAULT_MAX_RETRIES, abortSignal) {
         let response = yield requestFn();
         for (let i = 0; i < maxRetries; ++i) {
             if (isRetryableStatusCode(response.status)) {
                 const delay = getRetryDelayFromHeaders(response, i);
-                yield new Promise((resolve) => setTimeout(resolve, delay));
+                yield sleep(delay, abortSignal);
                 response = yield requestFn();
             }
             else {
