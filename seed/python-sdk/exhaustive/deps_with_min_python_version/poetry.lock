@@ -1076,18 +1076,18 @@ files = [
 
 [[package]]
 name = "langchain"
-version = "1.4.3"
+version = "1.4.4"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 groups = ["dev"]
 files = [
-    {file = "langchain-1.4.3-py3-none-any.whl", hash = "sha256:0334066939dd1c7551889727ed2d09a72dea7a6aed2193ffb61817fb658d8921"},
-    {file = "langchain-1.4.3.tar.gz", hash = "sha256:aed5c1a7cd581f70ddc076b75fdbcbae8031b8373983f86efd287aa70798abc2"},
+    {file = "langchain-1.4.4-py3-none-any.whl", hash = "sha256:2fd27e9a2d54ebcd915ac5ea51d79c772e020567ef6c6a76678182055489b804"},
+    {file = "langchain-1.4.4.tar.gz", hash = "sha256:baac6e13c08460e1decd0e60061b9a87c07135f1c977424040b0b57ff7bc7887"},
 ]
 
 [package.dependencies]
-langchain-core = ">=1.6.3,<2.0.0"
+langchain-core = ">=1.6.9,<2.0.0"
 langgraph = ">=1.2.11,<1.3.0"
 pydantic = ">=2.7.4,<3.0.0"
 
@@ -1103,7 +1103,7 @@ google-genai = ["langchain-google-genai"]
 google-vertexai = ["langchain-google-vertexai"]
 groq = ["langchain-groq"]
 huggingface = ["langchain-huggingface"]
-mcp = ["fastmcp (>=4.0.1,<5.0.0)"]
+mcp = ["fastmcp (>=4.0.11,<5.0.0)"]
 meta = ["langchain-meta"]
 mistralai = ["langchain-mistralai"]
 ollama = ["langchain-ollama"]
@@ -1245,14 +1245,14 @@ websockets = ">=14,<17"
 
 [[package]]
 name = "langsmith"
-version = "0.14.4"
+version = "0.14.5"
 description = "Client library to connect to the LangSmith Observability and Evaluation Platform."
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langsmith-0.14.4-py3-none-any.whl", hash = "sha256:ae0d98c2b0f9292ef7e12451d480937d79a0e7dcf2412ba847de6f053391b44a"},
-    {file = "langsmith-0.14.4.tar.gz", hash = "sha256:a340199fcd2af60358f09dd1d7011bf7282f0d46a98aaa101bc7a521746da764"},
+    {file = "langsmith-0.14.5-py3-none-any.whl", hash = "sha256:f631fccd65f8f57b697ba5cd6550b488a1282ba994e540b3339b1d1affe32996"},
+    {file = "langsmith-0.14.5.tar.gz", hash = "sha256:ebeb638ea94bf8434b2b12d6970b4f9c4ef481124747d5c6f81bdbd9706fd556"},
 ]
 
 [package.dependencies]
