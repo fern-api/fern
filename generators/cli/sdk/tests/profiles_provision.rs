@@ -404,8 +404,78 @@ async fn reprovisioning_an_existing_profile_is_refused_until_the_old_key_is_revo
                 output.contains("--revoke"),
                 "should point at `profiles remove --revoke`: {output}"
             );
-            let (_, shown) = run(true, &["pv", "profiles", "show", "prod", "--format", "json"]);
+            let (_, shown) = run(
+                true,
+                &["pv", "profiles", "show", "prod", "--format", "json"],
+            );
             assert!(shown.contains("SKold"), "old key id must be kept: {shown}");
+        });
+    })
+    .await
+    .unwrap();
+}
+
+/// Without `revokeParameters` the key is still minted and stored, the
+/// profile records no identity, and the user is told so.
+#[tokio::test]
+#[serial]
+async fn provisioning_without_revoke_parameters_stores_the_key_and_warns() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cr3t"
+        })))
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let config = ProfilesConfig::new().provision_operation(
+                ProvisionOperation::new("keys.create")
+                    .credential_field("username", "sid")
+                    .credential_field("password", "secret"),
+            );
+            let app = || {
+                CliApp::new("pv")
+                    .profiles(config.clone())
+                    .auth(
+                        BasicAuth::new("basic")
+                            .username_env("PV_USERNAME")
+                            .password_env("PV_PASSWORD"),
+                    )
+                    .binding(OpenApiBinding::new().spec(SPEC))
+            };
+            let mut out: Vec<u8> = Vec::new();
+            let code = app().try_run_from_with_output(
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--set",
+                    "AccountSid=ACparent",
+                    "--provision",
+                ],
+                &mut out,
+            );
+            let output = String::from_utf8_lossy(&out).into_owned();
+            assert_eq!(code, 0, "{output}");
+            assert!(!output.contains("s3cr3t"), "{output}");
+
+            let mut out: Vec<u8> = Vec::new();
+            app().try_run_from_with_output(&["pv", "profiles", "show", "prod"], &mut out);
+            let shown: serde_json::Value = serde_json::from_slice(&out).expect("json");
+            assert_eq!(shown["account"], "SKnew");
+            assert!(
+                shown.get("credential_parameters").is_none()
+                    || shown["credential_parameters"]
+                        .as_object()
+                        .is_some_and(|m| m.is_empty()),
+                "{shown}"
+            );
         });
     })
     .await

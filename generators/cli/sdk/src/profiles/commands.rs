@@ -836,7 +836,8 @@ async fn handle_create(
             super::keyring_account_for(&scheme, resolved.credential.as_deref().unwrap_or(&name));
         active_store().set(ctx.cli_name, &account, &minted.stored).map_err(|e| {
             CliError::Validation(format!(
-                "provisioned a credential{} but could not store it: {e}.                  Run `profiles remove {name} --revoke` to revoke it.",
+                "provisioned a credential{} but could not store it: {e}. \
+                 Run `profiles remove {name} --revoke` to revoke it.",
                 minted
                     .identity
                     .as_deref()
@@ -857,6 +858,14 @@ async fn handle_create(
                 active_store().backend_label(),
             )),
         );
+        if !minted.recorded_identity {
+            let _ = writeln!(
+                stderr,
+                "  No `revokeParameters` are configured, so the credential's identity was not \
+                 recorded; `profiles remove {name} --revoke` can only pass the profile's own \
+                 parameters.",
+            );
+        }
     }
 
     let verb = if existing_was_updated(matches) {
@@ -2013,6 +2022,9 @@ struct MintedCredential {
     credential_parameters: BTreeMap<String, String>,
     /// The first revoke parameter's value (the key's id), for the success line.
     identity: Option<String>,
+    /// Whether any `revokeParameters` were configured; without them the
+    /// profile has no record of which remote credential it owns.
+    recorded_identity: bool,
 }
 
 /// Call the configured provisioning operation and map its response onto the
@@ -2117,6 +2129,7 @@ async fn provision_remote_credential(
         stored,
         credential_parameters,
         identity,
+        recorded_identity: !op.revoke_parameters.is_empty(),
     })
 }
 
