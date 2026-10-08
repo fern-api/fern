@@ -9,6 +9,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
+- [Pagination](#pagination)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -45,6 +46,35 @@ require "seed"
 client = Seed::MyClient.new(
     base_url: "https://example.com"
 )
+```
+
+## Pagination
+
+List endpoints are paginated. A paginated method returns an iterator, not the response object: loop over it to get the items of every page, or call `pages` on it to get each page's full response, including fields besides the items. Each page is requested when it is needed, and an API error is raised where that request is sent.
+
+```ruby
+require "seed"
+
+# The method returns an iterator over the items of every page. No request is sent until you start
+# iterating, so API errors are raised by the loop.
+items = client.endpoints.pagination.list_items(
+    ...
+)
+items.each do |item|
+    puts "Got item: #{item}"
+end
+
+# Call `load_first_page` to send the first request now, so an API error for it is raised here.
+items = client.endpoints.pagination.list_items(
+    ...
+).load_first_page
+
+# Call `pages` to get each page's full response, including fields besides `items`.
+client.endpoints.pagination.list_items(
+    ...
+).pages.each do |page|
+    puts "Got page: #{page.items}"
+end
 ```
 
 ## Errors
