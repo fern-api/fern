@@ -242,6 +242,7 @@ export async function generateAPIWorkspaces({
                 ...buildGeneratePosthogProperties({
                     project,
                     generations,
+                    isAutomation: automation != null,
                     groupNames,
                     generatorName,
                     token,

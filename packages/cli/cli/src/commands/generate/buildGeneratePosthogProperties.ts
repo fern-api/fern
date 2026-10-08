@@ -1,11 +1,13 @@
-import { type FernToken, getUserIdFromToken } from "@fern-api/auth";
+import { type FernToken, type FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import type { Project } from "@fern-api/project-loader";
+import type { FernSdkConfigV1Payload } from "@fern-api/remote-workspace-runner";
 import type { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import { expandGroupFilter } from "./expandGroupFilter.js";
 import { filterGenerators } from "./filterGenerators.js";
+import { buildAutomationTargeting, selectGeneratorsForAutomation } from "./selectGeneratorsForAutomation.js";
 
 /** The subset of a planned generation needed to describe it in telemetry. */
 export interface GenerationTelemetryInput {
@@ -14,6 +16,8 @@ export interface GenerationTelemetryInput {
     resolvedGroupNames: string[];
     generatorName?: string;
     generatorIndex?: number;
+    /** SDK Config generations carry the targets whose requested outputs describe real delivery. */
+    sdkConfigV1?: Pick<FernSdkConfigV1Payload, "targets">;
 }
 
 /** One generator that `fern generate` is about to run. */
@@ -48,6 +52,7 @@ export interface GeneratePosthogProperties {
 export function buildGeneratePosthogProperties({
     project,
     generations,
+    isAutomation,
     groupNames,
     generatorName,
     token,
@@ -56,13 +61,15 @@ export function buildGeneratePosthogProperties({
 }: {
     project: Project;
     generations: GenerationTelemetryInput[];
+    /** `fern automations generate` drops opted-out generators; report only those that will run. */
+    isAutomation: boolean;
     groupNames: string[] | undefined;
     generatorName: string | undefined;
     token: FernToken | undefined;
     fernUseSdkGenApiEnv: string | undefined;
     sdkGenApiEnabled: boolean;
 }): GeneratePosthogProperties {
-    const requestedGenerators = generations.flatMap(getRequestedGenerators);
+    const requestedGenerators = generations.flatMap((generation) => getRequestedGenerators(generation, isAutomation));
     return {
         workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName }),
         requestedGenerators,
@@ -73,7 +80,10 @@ export function buildGeneratePosthogProperties({
     };
 }
 
-function getRequestedGenerators(generation: GenerationTelemetryInput): RequestedGeneratorTelemetry[] {
+function getRequestedGenerators(
+    generation: GenerationTelemetryInput,
+    isAutomation: boolean
+): RequestedGeneratorTelemetry[] {
     const groups =
         generation.workspace.generatorsConfiguration?.groups.filter((group) =>
             generation.resolvedGroupNames.includes(group.groupName)
@@ -88,15 +98,52 @@ function getRequestedGenerators(generation: GenerationTelemetryInput): Requested
         if (!filtered.ok) {
             return [];
         }
-        return filtered.generators.map((generator) => ({
+        const generators = isAutomation
+            ? getAutomationGenerators(generation, filtered.generators)
+            : filtered.generators;
+        return generators.map((generator) => ({
             workspace: generation.workspace.workspaceName,
             kind: generation.kind,
             group: group.groupName,
             name: generator.name,
             version: generator.version,
-            outputMode: generator.outputMode.type
+            outputMode: getOutputMode(generation, generator)
         }));
     });
+}
+
+function getAutomationGenerators(
+    generation: GenerationTelemetryInput,
+    generators: generatorsYml.GeneratorInvocation[]
+): generatorsYml.GeneratorInvocation[] {
+    const selection = selectGeneratorsForAutomation({
+        generators,
+        rootAutorelease: generation.workspace.generatorsConfiguration?.rawConfiguration.autorelease,
+        targeting: buildAutomationTargeting({
+            generatorIndex: generation.generatorIndex,
+            generatorName: generation.generatorName
+        })
+    });
+    switch (selection.type) {
+        case "run":
+            return selection.generators;
+        case "reject-opted-out":
+        case "empty-after-skip":
+            return [];
+        default:
+            assertNever(selection);
+    }
+}
+
+/**
+ * SDK Config workspaces use placeholder `downloadFiles` invocations, so their real delivery comes
+ * from the matching target's requested output (`download`, `github`, or `publish`).
+ */
+function getOutputMode(generation: GenerationTelemetryInput, generator: generatorsYml.GeneratorInvocation): string {
+    if (generation.kind === "legacy" || generator.sdkConfigTargetIndex == null) {
+        return generator.outputMode.type;
+    }
+    return generation.sdkConfigV1?.targets[generator.sdkConfigTargetIndex]?.requestedOutput?.type ?? "download";
 }
 
 function getAuthProperties(token: FernToken | undefined): Pick<GeneratePosthogProperties, "authType" | "userId"> {
@@ -105,11 +152,20 @@ function getAuthProperties(token: FernToken | undefined): Pick<GeneratePosthogPr
     }
     switch (token.type) {
         case "user":
-            return { authType: "user", userId: getUserIdFromToken(token) };
+            return { authType: "user", userId: tryGetUserIdFromToken(token) };
         case "organization":
             return { authType: "organization", userId: undefined };
         default:
             assertNever(token);
+    }
+}
+
+/** Telemetry must never fail generation, so a token that cannot be decoded reports no user ID. */
+function tryGetUserIdFromToken(token: FernUserToken): string | undefined {
+    try {
+        return getUserIdFromToken(token);
+    } catch {
+        return undefined;
     }
 }
 
