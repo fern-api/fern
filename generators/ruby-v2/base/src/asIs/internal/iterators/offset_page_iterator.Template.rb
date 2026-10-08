@@ -19,43 +19,65 @@ module <%= gem_namespace %>
       #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [<%= gem_namespace %>::Internal::OffsetPageIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
-        @page_number = initial_page || (step ? 0 : 1)
+        @initial_page = initial_page || (step ? 0 : 1)
         @item_field = item_field
         @has_next_field = has_next_field
         @step = step
         @get_next_page = block
-
-        # A cache of whether the API has another page, if it gives us that information...
-        @next_page = nil
-        # ...or the actual next page, preloaded, if it doesn't.
-        @has_next_page = nil
-
         @http_response = nil
         @first_page_requested = false
+        @first_page = nil
+        rewind
       end
 
       # Sends the request for the first page now instead of on the first iteration, so an API error for that page
-      # is raised here. The page is kept for the iteration, so it is not requested twice. Does nothing if the first
+      # is raised here. The page is kept, and every loop that starts from the first page reuses it instead of
+      # requesting it again (an empty first page ends those loops without a new request). Does nothing if the first
       # page was already requested.
       #
       # @return [self]
       def load_first_page
         return self if @first_page_requested
 
-        # `next?` fetches the first page and keeps it in @next_page for the iteration. An empty first page ends the
-        # iteration here, so it is not requested again.
-        @page_number = nil unless next?
+        @first_page = fetch_page(@initial_page)
+        rewind
         self
       end
 
-      # Iterates over each page returned by the API.
+      # Uses the first page that `other` loaded with `load_first_page`, unless this iterator already sent a request.
+      #
+      # @param other [<%= gem_namespace %>::Internal::OffsetPageIterator]
+      # @return [NilClass]
+      def reuse_first_page(other)
+        return if @first_page_requested || other.first_page.nil?
+
+        @first_page = other.first_page
+        rewind
+      end
+
+      # Iterates over each page returned by the API, starting again from the first page on every call.
       #
       # @param block [Proc] The block which each retrieved page is yielded to.
-      # @return [NilClass]
+      # @return [NilClass, Enumerator] An Enumerator when no block is given.
       def each(&block)
+        return enum_for(:each) unless block_given?
+
+        rewind
         while (page = next_page)
           block.call(page)
         end
+      end
+
+      # Resets page-by-page iteration (`next_page` / `next?`) to the first page.
+      #
+      # @return [NilClass]
+      def rewind
+        @page_number = @initial_page
+        # A cache of whether the API has another page, if it gives us that information...
+        @has_next_page = nil
+        # ...or the actual next page, preloaded, if it doesn't. A first page kept by `load_first_page` is reused.
+        @next_page = @first_page
+        nil
       end
 
       # Whether another page will be available from the API.
@@ -63,7 +85,8 @@ module <%= gem_namespace %>
       # @return [Boolean]
       def next?
         return @has_next_page unless @has_next_page.nil?
-        return true if @next_page
+        return true if @next_page && page_has_items?(@next_page)
+        return @has_next_page = false if @next_page
 
         fetched_page = fetch_page(@page_number)
         fetched_page_items = fetched_page&.send(@item_field)
@@ -101,7 +124,16 @@ module <%= gem_namespace %>
         this_page
       end
 
+      protected
+
+      attr_reader :first_page
+
       private
+
+      def page_has_items?(page)
+        items = page.send(@item_field)
+        !items.nil? && !items.empty?
+      end
 
       def fetch_page(page_number)
         result = @get_next_page.call(page_number)
