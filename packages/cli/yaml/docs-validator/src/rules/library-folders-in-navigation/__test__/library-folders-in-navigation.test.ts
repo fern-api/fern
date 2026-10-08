@@ -76,6 +76,13 @@ describe("library-folders-in-navigation", () => {
         expect(violations[0]?.message).toContain("library 'lib'");
     });
 
+    it("ignores an output path that is a file", async () => {
+        rmSync(join(fernDir, RelativeFilePath.of(GENERATED)), { recursive: true, force: true });
+        mkdirSync(join(fernDir, RelativeFilePath.of("docs/generated")), { recursive: true });
+        writeFileSync(join(fernDir, RelativeFilePath.of(GENERATED)), "not a directory");
+        expect(await run([{ folder: `${GENERATED}/functions` }])).toEqual([]);
+    });
+
     it("accepts a folder item pointing at the whole output directory", async () => {
         expect(await run([{ folder: GENERATED }])).toEqual([]);
     });

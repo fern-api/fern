@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
 
 import { readdir } from "fs/promises";
+import { sep } from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
 
 interface NavigationReferences {
@@ -90,7 +91,7 @@ async function checkNavigation({
 }
 
 async function listGeneratedFolders(outputDir: AbsoluteFilePath): Promise<AbsoluteFilePath[]> {
-    const entries = await readdir(outputDir, { withFileTypes: true });
+    const entries = await readdir(outputDir, { withFileTypes: true }).catch(() => []);
     return entries
         .filter((entry) => entry.isDirectory() && !entry.name.startsWith(".") && !entry.name.startsWith("_"))
         .map((entry) => resolve(outputDir, entry.name))
@@ -112,7 +113,9 @@ function isCovered(dir: AbsoluteFilePath, refs: NavigationReferences): boolean {
 }
 
 function isSameOrInside(path: string, ancestor: string): boolean {
-    return path === ancestor || path.startsWith(`${ancestor}/`);
+    const normalizedPath = path.split(sep).join("/");
+    const normalizedAncestor = ancestor.split(sep).join("/");
+    return normalizedPath === normalizedAncestor || normalizedPath.startsWith(`${normalizedAncestor}/`);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
