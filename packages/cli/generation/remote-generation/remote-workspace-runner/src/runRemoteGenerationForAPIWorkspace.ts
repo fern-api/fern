@@ -17,6 +17,7 @@ import { appendFile } from "fs/promises";
 import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
 import {
+    FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR,
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     FernSdkGenApiPreparationBatch,
@@ -27,6 +28,7 @@ import {
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     selectFernSdkGenApiRoute,
+    shouldSkipFernSdkGenApiSdkConfigSupportCheck,
     synthesizesSdkConfig,
     validateFernSdkGenApiDirectPublishCredentials,
     validateFernSdkGenApiPublishTargets,
@@ -42,10 +44,12 @@ import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
 import {
+    assertSdkConfigSupported,
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
+    isSdkConfigSupported,
     selectGeneratorConfigRoute,
     selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute
@@ -230,6 +234,11 @@ export async function runRemoteGenerationForAPIWorkspace({
         if (result.fallbackReason != null) {
             context.logger.debug(
                 `${result.generatorInvocation.name} ${result.generatorInvocation.version} is falling back to Fiddle generation instead of sdk-gen-api: ${result.fallbackReason}`
+            );
+        }
+        if (result.sdkConfigSupportCheckSkipped === true) {
+            context.logger.debug(
+                `Skipping the SDK Config support check for ${result.generatorInvocation.name} because ${FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR}=true; sdk-gen-api may reject this target.`
             );
         }
     }
@@ -437,6 +446,8 @@ export function prepareFernSdkGenApiRoutes({
     error: unknown;
     fallbackReason?: string;
     sdkConfigTargetIndex?: number;
+    /** True when an unsupported SDK Config route was kept because the support check is bypassed. */
+    sdkConfigSupportCheckSkipped?: boolean;
 }> {
     return generators.map((generatorInvocation, generatorIndex) => {
         let resolved = generatorInvocation;
@@ -527,6 +538,7 @@ export function prepareFernSdkGenApiRoutes({
                     resolveSuppliedConfigKind({ resolved, sdkConfigV1, language: configuredLanguage })
                 );
             }
+            const sdkConfigSupportCheckSkipped = checkSdkConfigSupport(route);
             if (route != null && sdkConfigV1 == null) {
                 try {
                     validateFernSdkGenApiDirectPublishCredentials(resolved);
@@ -566,6 +578,7 @@ export function prepareFernSdkGenApiRoutes({
                 generatorInvocation: resolved,
                 route,
                 error: undefined,
+                ...(sdkConfigSupportCheckSkipped ? { sdkConfigSupportCheckSkipped } : {}),
                 ...(sdkConfigV1 == null ? {} : { sdkConfigTargetIndex })
             };
         } catch (error) {
@@ -584,6 +597,26 @@ export function prepareFernSdkGenApiRoutes({
             };
         }
     });
+}
+
+/**
+ * Rejects an SDK Config v1 route whose generator has no published SDK Config generator, before any
+ * source is bundled or uploaded. Returns true when the rejection was bypassed via
+ * FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK so the caller can log it.
+ */
+function checkSdkConfigSupport(route: GenerationConfigRoute | undefined): boolean {
+    if (route?.payloadKind !== "sdk-config-v1" || isSdkConfigSupported(route.generatorId)) {
+        return false;
+    }
+    if (shouldSkipFernSdkGenApiSdkConfigSupportCheck()) {
+        return true;
+    }
+    assertSdkConfigSupported({
+        generatorId: route.generatorId,
+        language: route.language,
+        requestedVersion: route.requestedVersion
+    });
+    return false;
 }
 
 function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation, fallback: number): number {

@@ -65,7 +65,8 @@ export type GeneratorConfigCompatibilityErrorCode =
     | "INVALID_GENERATOR_VERSION"
     | "INVALID_CONFIG_KIND"
     | "LEGACY_FERN_CONFIG_REQUIRED"
-    | "SDK_CONFIG_V1_REQUIRED";
+    | "SDK_CONFIG_V1_REQUIRED"
+    | "SDK_CONFIG_UNSUPPORTED";
 
 export type GeneratorConfigCompatibilityRecommendedAction =
     | "USE_KNOWN_GENERATOR_ID"
@@ -73,7 +74,8 @@ export type GeneratorConfigCompatibilityRecommendedAction =
     | "USE_EXACT_GENERATOR_VERSION"
     | "USE_SUPPORTED_CONFIG_KIND"
     | "USE_LEGACY_FERN_CONFIG"
-    | "USE_SDK_CONFIG_V1";
+    | "USE_SDK_CONFIG_V1"
+    | "USE_GENERATORS_YML";
 
 interface GeneratorConfigCompatibilityErrorInput {
     code: GeneratorConfigCompatibilityErrorCode;
@@ -119,6 +121,52 @@ export class GeneratorConfigCompatibilityError extends Error {
 /** Returns a known generator's language without exposing its cutover policy. */
 export function getGeneratorLanguage(generatorId: string): GeneratorLanguage | undefined {
     return getGeneratorPolicy(generatorId)?.language;
+}
+
+/**
+ * Whether sdk-gen-api can run SDK Config v1 for a generator alias. Returns false only for known
+ * aliases whose policy has no published SDK Config generator; route selection rejects unknown aliases.
+ */
+export function isSdkConfigSupported(generatorId: string): boolean {
+    return getGeneratorPolicy(generatorId)?.sdkConfigSupported ?? true;
+}
+
+/**
+ * Rejects an SDK Config v1 route for a generator alias that has no published SDK Config
+ * generator. Route selection stays version-based; callers apply this check to SDK Config routes.
+ */
+export function assertSdkConfigSupported({
+    generatorId,
+    language,
+    requestedVersion
+}: Omit<SelectGeneratorConfigRouteInput, "requestedVersion"> & { requestedVersion?: string }): void {
+    const input = { generatorId, language, requestedVersion: requestedVersion ?? "unpinned" };
+    const policy = getGeneratorPolicy(generatorId);
+    if (policy === undefined) {
+        throw compatibilityError(input, {
+            code: "UNKNOWN_GENERATOR",
+            message: `Unknown first-party generator: ${generatorId}`,
+            cutoverVersion: null,
+            expectedLanguage: null,
+            expectedConfigKind: null,
+            recommendedAction: "USE_KNOWN_GENERATOR_ID"
+        });
+    }
+    if (policy.sdkConfigSupported) {
+        return;
+    }
+    throw compatibilityError(
+        input,
+        {
+            code: "SDK_CONFIG_UNSUPPORTED",
+            message: `Generator ${generatorId} does not support SDK Config yet: no SDK Config generator is published for language ${policy.language}`,
+            cutoverVersion: policy.cutoverVersion,
+            expectedLanguage: policy.language,
+            expectedConfigKind: "legacy-fern",
+            recommendedAction: "USE_GENERATORS_YML"
+        },
+        "sdk-config-v1"
+    );
 }
 
 /** Validates identity, language, exact version, and config kind, then selects the payload route. */

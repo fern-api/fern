@@ -21,10 +21,11 @@ import {
     prepareFernSdkGenApiRoutes,
     runRemoteGenerationForAPIWorkspace
 } from "../runRemoteGenerationForAPIWorkspace.js";
+import { SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
 
 function invocation(
     name: string,
-    language: "typescript" | "python",
+    language: "typescript" | "python" | "cli",
     version: string
 ): generatorsYml.GeneratorInvocation {
     return {
@@ -204,6 +205,54 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
                 getSpecsTarGzBuffer
             })
         ).rejects.toThrow("fern generate --sdk-config <path>");
+        expect(getSpecsTarGzBuffer).not.toHaveBeenCalled();
+        expect(runInteractiveTask).not.toHaveBeenCalled();
+    });
+
+    it("fails an SDK Config CLI target before source preparation or target work", async () => {
+        const getSpecsTarGzBuffer = vi.fn();
+        const runInteractiveTask = vi.fn();
+
+        await expect(
+            runRemoteGenerationForAPIWorkspace({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: {
+                    workspaceName: "petstore",
+                    generatorsConfiguration: undefined
+                } as never,
+                context: { logger: { warn: vi.fn(), debug: vi.fn() }, runInteractiveTask } as never,
+                generatorGroup: {
+                    groupName: "sdk",
+                    generators: [
+                        {
+                            ...invocation("fernapi/fern-cli-generator", "cli", SDK_CONFIG_UNPINNED_GENERATOR_VERSION),
+                            sdkConfigTargetIndex: 0
+                        }
+                    ],
+                    audiences: { type: "all" }
+                } as never,
+                sdkConfigV1: {
+                    sdkName: "petstore",
+                    sdkVersion: "1.2.3",
+                    targets: [{ body: Buffer.from("{}"), language: "cli" }]
+                },
+                version: "1.2.3",
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                absolutePathToPreview: undefined,
+                mode: undefined,
+                fernignorePath: undefined,
+                skipFernignore: true,
+                dynamicIrOnly: false,
+                validateWorkspace: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                getSpecsTarGzBuffer
+            })
+        ).rejects.toThrow("fernapi/fern-cli-generator does not support SDK Config yet");
         expect(getSpecsTarGzBuffer).not.toHaveBeenCalled();
         expect(runInteractiveTask).not.toHaveBeenCalled();
     });

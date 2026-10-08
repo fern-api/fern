@@ -1,3 +1,4 @@
+// cspell:ignore unstub
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -5,6 +6,7 @@ import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import type { fernConfigJson, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
 import type { Project } from "@fern-api/project-loader";
 import { CliError, createMockTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -61,6 +63,7 @@ describe("generateAPIWorkspaces coexistence", () => {
         } as unknown as CliContext;
         project = createProject(temporaryDirectory);
         vi.mocked(generateWorkspace).mockClear();
+        vi.mocked(askToLogin).mockClear();
     });
 
     afterEach(async () => {
@@ -234,6 +237,148 @@ describe("generateAPIWorkspaces coexistence", () => {
         });
 
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+    });
+
+    describe("SDK Config targets without a native generator", () => {
+        const CLI_UNSUPPORTED_MESSAGE =
+            "SDK Config target 'cli' cannot be generated: fernapi/fern-cli-generator does not support SDK Config yet. Generate it from generators.yml instead.";
+
+        afterEach(() => {
+            vi.unstubAllEnvs();
+        });
+
+        async function writeCliSdkConfig(configPath: string, cliTarget: Record<string, unknown>): Promise<void> {
+            await writeFile(
+                configPath,
+                YAML.stringify({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "payments",
+                    source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                    targets: [
+                        { language: "typescript", output: { delivery: "files" } },
+                        { language: "cli", output: { delivery: "files" }, ...cliTarget }
+                    ]
+                })
+            );
+        }
+
+        interface CliRejectionCase {
+            name: string;
+            explicit: boolean;
+            cliTarget: Record<string, unknown>;
+            targetNames?: string[];
+            bypass?: string;
+        }
+
+        it.each<CliRejectionCase>([
+            { name: "an unpinned explicit --sdk-config target", explicit: true, cliTarget: {} },
+            {
+                name: "an explicit --sdk-config target pinned at the cutover",
+                explicit: true,
+                cliTarget: { generatorVersion: "1.0.0" }
+            },
+            {
+                name: "an explicit --sdk-config target pinned after the cutover",
+                explicit: true,
+                cliTarget: { generatorVersion: "1.2.3" }
+            },
+            {
+                name: "a pre-cutover explicit --sdk-config target as unsupported rather than pre-cutover",
+                explicit: true,
+                cliTarget: { generatorVersion: "0.9.0" }
+            },
+            { name: "an auto-discovered target without selectors", explicit: false, cliTarget: {} },
+            {
+                name: "an auto-discovered target selected by --target",
+                explicit: false,
+                cliTarget: { generatorVersion: "1.0.0" },
+                targetNames: ["cli"]
+            },
+            ...["TRUE", "1", "false"].map((bypass) => ({
+                name: `an auto-discovered target when the bypass is ${JSON.stringify(bypass)}`,
+                explicit: false,
+                cliTarget: {},
+                targetNames: ["cli"],
+                bypass
+            }))
+        ])("rejects $name before login", async ({ explicit, cliTarget, targetNames, bypass }) => {
+            if (bypass != null) {
+                vi.stubEnv("FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK", bypass);
+            }
+            const configPath = path.join(temporaryDirectory, explicit ? "cli-sdk-config.yml" : "sdk-config.yml");
+            await writeCliSdkConfig(configPath, cliTarget);
+
+            await expect(
+                runGenerate({
+                    project,
+                    cliContext,
+                    groupNames: undefined,
+                    targetNames,
+                    ...(explicit ? { sdkConfigPath: configPath } : {})
+                })
+            ).rejects.toBeDefined();
+
+            expect(vi.mocked(cliContext.failAndThrow)).toHaveBeenCalledWith(CLI_UNSUPPORTED_MESSAGE, undefined, {
+                code: CliError.Code.ConfigError
+            });
+            expect(vi.mocked(askToLogin)).not.toHaveBeenCalled();
+            expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
+        });
+
+        it("does not validate a CLI target excluded by --target", async () => {
+            await writeCliSdkConfig(path.join(temporaryDirectory, "sdk-config.yml"), { generatorVersion: "1.0.0" });
+
+            await runGenerate({ project, cliContext, groupNames: undefined, targetNames: ["typescript"] });
+
+            expect(vi.mocked(cliContext.failAndThrow)).not.toHaveBeenCalled();
+            const call = vi.mocked(generateWorkspace).mock.calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
+            expect(call?.sdkConfigV1?.targets.map((target) => target.language)).toEqual(["typescript"]);
+        });
+
+        it("does not validate a CLI target excluded by --generator-index", async () => {
+            const configPath = path.join(temporaryDirectory, "cli-sdk-config.yml");
+            await writeCliSdkConfig(configPath, {});
+
+            await runGenerate({
+                project,
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                generatorIndex: 0,
+                sdkConfigPath: configPath
+            });
+
+            expect(vi.mocked(cliContext.failAndThrow)).not.toHaveBeenCalled();
+            expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+        });
+
+        it("proceeds to generation when the support check is bypassed", async () => {
+            vi.stubEnv("FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK", "true");
+            await writeCliSdkConfig(path.join(temporaryDirectory, "sdk-config.yml"), { generatorVersion: "1.0.0" });
+
+            await runGenerate({ project, cliContext, groupNames: undefined, targetNames: ["cli"] });
+
+            expect(vi.mocked(cliContext.failAndThrow)).not.toHaveBeenCalled();
+            expect(log).toHaveBeenCalledWith(
+                LogLevel.Warn,
+                "Skipping the SDK Config support check for target 'cli' (fernapi/fern-cli-generator) because FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK=true; sdk-gen-api may reject it."
+            );
+            const call = vi.mocked(generateWorkspace).mock.calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
+            expect(call?.sdkConfigV1?.targets.map((target) => target.language)).toEqual(["cli"]);
+        });
+
+        it("keeps generating supported SDK Config targets", async () => {
+            await writeSdkConfig([
+                { language: "typescript", output: { delivery: "files" } },
+                { language: "mcp", output: { delivery: "files" } }
+            ]);
+
+            await runGenerate({ project, cliContext, groupNames: undefined, targetNames: ["typescript", "mcp"] });
+
+            expect(vi.mocked(cliContext.failAndThrow)).not.toHaveBeenCalled();
+            const call = vi.mocked(generateWorkspace).mock.calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
+            expect(call?.sdkConfigV1?.targets.map((target) => target.language)).toEqual(["typescript", "mcp"]);
+        });
     });
 
     it("generates the legacy default and SDK Config targets with --local, on the on-prem adapter", async () => {

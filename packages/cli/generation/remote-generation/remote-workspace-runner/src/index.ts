@@ -17,10 +17,12 @@ export type {
 } from "./fernSdkGenApi.js";
 export {
     createFernSdkGenApiRequest,
+    FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
+    shouldSkipFernSdkGenApiSdkConfigSupportCheck,
     synthesizesSdkConfig,
     validateFernSdkGenApiPublishCredentialSource,
     validateFernSdkGenApiPublishCredentialSources,
@@ -59,7 +61,7 @@ export {
     runRemoteGenerationForAPIWorkspace
 } from "./runRemoteGenerationForAPIWorkspace.js";
 export { runRemoteGenerationForDocsWorkspace } from "./runRemoteGenerationForDocsWorkspace.js";
-export { selectGeneratorConfigRoute } from "./sdk-gen-client/index.js";
+export { isSdkConfigSupported, selectGeneratorConfigRoute } from "./sdk-gen-client/index.js";
 export {
     FERN_GENERATOR_LATEST_VERSION,
     isGeneratorVersionForUnpinnedRoute,

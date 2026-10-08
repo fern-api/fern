@@ -144,13 +144,22 @@ interface FernBuildStatus {
 
 class FernSdkGenApiSubmissionError extends Error {
     public readonly status: number | undefined;
+    /** Axios transport code, such as ERR_BAD_REQUEST. */
     public readonly code: string | undefined;
+    /** Redacted `code` from the sdk-gen-api error response body, such as FERN_BUILD_GENERATOR_RUNTIME_UNAVAILABLE. */
+    public readonly serverCode: string | undefined;
 
-    public constructor(message: string, status: number | undefined, code: string | undefined) {
+    public constructor(
+        message: string,
+        status: number | undefined,
+        code: string | undefined,
+        serverCode: string | undefined = undefined
+    ) {
         super(message);
         this.name = "FernSdkGenApiSubmissionError";
         this.status = status;
         this.code = code;
+        this.serverCode = serverCode;
     }
 }
 
@@ -205,6 +214,16 @@ export interface FernSdkGenApiPublishCredentials {
 export function isFernSdkGenApiEnabled(): boolean {
     const configured = process.env.FERN_USE_SDK_GEN_API ?? process.env.DEFAULT_USE_SDK_GEN_API ?? "false";
     return configured.trim().toLowerCase() === "true";
+}
+
+export const FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR = "FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK";
+
+/**
+ * Hidden QA escape hatch: when exactly `true`, the CLI submits SDK Config targets whose generator
+ * has no published SDK Config generator, so sdk-gen-api's own rejection can be verified.
+ */
+export function shouldSkipFernSdkGenApiSdkConfigSupportCheck(): boolean {
+    return process.env[FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR] === "true";
 }
 
 /**
@@ -1214,9 +1233,12 @@ async function executeFernSdkGenApiBuild(
         logFernSdkGenApiSubmissionFailureDebug(first.context, error, sensitiveValues);
         const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
         return first.context.failAndThrow(
-            `Failed to submit sdk-gen-api build: ${sanitizedError.message}`,
+            appendFernSdkGenApiServerCode(
+                `Failed to submit sdk-gen-api build: ${sanitizedError.message}`,
+                sanitizedError
+            ),
             sanitizedError,
-            { code: CliError.Code.NetworkError }
+            { code: getFernSdkGenApiFailureCliErrorCode(sanitizedError) }
         );
     }
 
@@ -1238,9 +1260,11 @@ async function executeFernSdkGenApiBuild(
             status = sanitizeFernBuildStatus(response.data, sensitiveValues);
         } catch (error) {
             const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
-            return first.context.failAndThrow("Failed to poll sdk-gen-api build", sanitizedError, {
-                code: CliError.Code.NetworkError
-            });
+            return first.context.failAndThrow(
+                appendFernSdkGenApiServerCode("Failed to poll sdk-gen-api build", sanitizedError),
+                sanitizedError,
+                { code: getFernSdkGenApiFailureCliErrorCode(sanitizedError) }
+            );
         }
 
         const missingTarget = request.targets.find(
@@ -1431,8 +1455,34 @@ function sanitizeFernSdkGenApiSubmissionError(error: unknown, sensitiveValues: s
     return new FernSdkGenApiSubmissionError(
         responseMessage ?? redactSensitiveValues(error.message, sensitiveValues),
         error.response?.status ?? error.status,
-        error.code
+        error.code,
+        getFernSdkGenApiResponseCode(error, sensitiveValues)
     );
+}
+
+function getFernSdkGenApiResponseCode(error: AxiosError, sensitiveValues: string[]): string | undefined {
+    const data = error.response?.data;
+    if (typeof data !== "object" || data == null || !("code" in data) || typeof data.code !== "string") {
+        return undefined;
+    }
+    const code = redactSensitiveValues(data.code.trim(), sensitiveValues);
+    return code.length > 0 ? code : undefined;
+}
+
+function appendFernSdkGenApiServerCode(message: string, error: FernSdkGenApiSubmissionError): string {
+    return error.serverCode == null ? message : `${message} [${error.serverCode}]`;
+}
+
+/**
+ * Client errors are request or configuration problems the user must fix; timeouts, rate limits,
+ * server errors, and transport failures remain network errors.
+ */
+function getFernSdkGenApiFailureCliErrorCode(error: FernSdkGenApiSubmissionError): CliError.Code {
+    const { status } = error;
+    if (status != null && status >= 400 && status < 500 && status !== 408 && status !== 429) {
+        return CliError.Code.ConfigError;
+    }
+    return CliError.Code.NetworkError;
 }
 
 function getFernSdkGenApiResponseMessage(error: AxiosError, sensitiveValues: string[]): string | undefined {
@@ -1588,11 +1638,17 @@ export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCo
         `retryable=${error.retryable}`,
         `recommendedAction=${error.recommendedAction}`
     ].join("; ");
-    const migrationHint =
-        error.recommendedAction === "USE_SDK_CONFIG_V1"
-            ? " Run `fern sdk migrate`, then pass the generated document with `fern generate --sdk-config <path>` before using this generator version."
-            : "";
-    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${migrationHint}`;
+    return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${getGeneratorConfigCompatibilityHint(error)}`;
+}
+
+function getGeneratorConfigCompatibilityHint(error: GeneratorConfigCompatibilityError): string {
+    if (error.recommendedAction === "USE_SDK_CONFIG_V1") {
+        return " Run `fern sdk migrate`, then pass the generated document with `fern generate --sdk-config <path>` before using this generator version.";
+    }
+    if (error.recommendedAction === "USE_GENERATORS_YML") {
+        return " Generate this target from generators.yml instead.";
+    }
+    return "";
 }
 
 function resolveFernGeneratorWireVersion(

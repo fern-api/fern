@@ -5,11 +5,18 @@ import type { GeneratorLanguage } from "./generatorConfigCompatibility.js";
 interface GeneratorPolicyDefinition {
     language: GeneratorLanguage;
     cutoverVersion: string;
+    /**
+     * Set to false when no SDK Config (native) generator is published for this alias yet, so
+     * every version runs only on the Fern runtime and sdk-gen-api rejects SDK Config v1 payloads.
+     * Omitted means SDK Config is supported at and after the cutover.
+     */
+    sdkConfigSupported?: false;
 }
 
 /** Validated internal policy associated with one first-party generator alias. */
-export interface GeneratorPolicy extends GeneratorPolicyDefinition {
+export interface GeneratorPolicy extends Omit<GeneratorPolicyDefinition, "sdkConfigSupported"> {
     parsedCutoverVersion: ParsedSemver;
+    sdkConfigSupported: boolean;
 }
 
 type GeneratorPolicyEntry = readonly [string, GeneratorPolicyDefinition];
@@ -42,12 +49,15 @@ export function createGeneratorPolicies(
             if (parsedCutoverVersion === null) {
                 throw new GeneratorConfigPolicyInvariantError(generatorId, policy);
             }
-            return [generatorId, { ...policy, parsedCutoverVersion }];
+            return [
+                generatorId,
+                { ...policy, parsedCutoverVersion, sdkConfigSupported: policy.sdkConfigSupported ?? true }
+            ];
         })
     );
 }
 
-// This is the sole authority for first-party aliases and cutovers.
+// This is the sole authority for first-party aliases, cutovers, and SDK Config support.
 const GENERATOR_POLICIES = createGeneratorPolicies([
     ["fernapi/fern-typescript", { language: "typescript", cutoverVersion: "4.0.0" }],
     ["fernapi/fern-typescript-sdk", { language: "typescript", cutoverVersion: "4.0.0" }],
@@ -63,8 +73,9 @@ const GENERATOR_POLICIES = createGeneratorPolicies([
     ["fernapi/fern-ruby-sdk-v2", { language: "ruby", cutoverVersion: "2.0.0" }],
     ["fernapi/fern-rust-sdk", { language: "rust", cutoverVersion: "1.0.0" }],
     ["fernapi/fern-swift-sdk", { language: "swift", cutoverVersion: "1.0.0" }],
-    ["fernapi/fern-cli", { language: "cli", cutoverVersion: "1.0.0" }],
-    ["fernapi/fern-cli-generator", { language: "cli", cutoverVersion: "1.0.0" }],
+    // No SDK Config generator is published for the CLI yet; every version runs on the Fern runtime.
+    ["fernapi/fern-cli", { language: "cli", cutoverVersion: "1.0.0", sdkConfigSupported: false }],
+    ["fernapi/fern-cli-generator", { language: "cli", cutoverVersion: "1.0.0", sdkConfigSupported: false }],
     ["fernapi/fern-mcp-server", { language: "mcp", cutoverVersion: "0.1.0" }]
 ]);
 

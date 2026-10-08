@@ -1,5 +1,6 @@
 // cspell:ignore kotlin octocat unstub
 import { generatorsYml } from "@fern-api/configuration";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
@@ -41,7 +42,7 @@ import {
     prepareFernSdkGenApiRoutes
 } from "../runRemoteGenerationForAPIWorkspace.js";
 import { type GenerationConfigRoute, validateGeneratorConfigCompatibility } from "../sdk-gen-client/index.js";
-import { SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
+import { FERN_GENERATOR_LATEST_VERSION, SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
 
 const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
@@ -372,6 +373,115 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.route).toBeUndefined();
         expect(result?.error).toHaveProperty("message", expect.stringContaining("LEGACY_FERN_CONFIG_REQUIRED"));
         expect(result?.error).toHaveProperty("message", expect.stringContaining("USE_LEGACY_FERN_CONFIG"));
+    });
+
+    it.each([
+        { name: "unpinned", generatorVersion: undefined },
+        { name: "pinned at the cutover", generatorVersion: "1.0.0" },
+        { name: "pinned after the cutover", generatorVersion: "1.2.0" }
+    ])("rejects an SDK Config CLI target ($name) before upload", ({ generatorVersion }) => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    name: "fernapi/fern-cli-generator",
+                    language: "cli",
+                    version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION
+                })
+            ],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({
+                language: "cli",
+                ...(generatorVersion == null ? {} : { generatorVersion })
+            }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.sdkConfigSupportCheckSkipped).toBeUndefined();
+        expect(result?.error).toBeInstanceOf(CliError);
+        expect(result?.error).toHaveProperty("code", CliError.Code.ConfigError);
+        expect(result?.error).toHaveProperty(
+            "message",
+            `Cannot submit SDK generation to sdk-gen-api: Generator fernapi/fern-cli-generator does not support SDK Config yet: no SDK Config generator is published for language cli [SDK_CONFIG_UNSUPPORTED; generator=fernapi/fern-cli-generator; language=cli; requestedVersion=${generatorVersion ?? "unpinned"}; cutoverVersion=1.0.0; receivedConfigKind=sdk-config-v1; expectedConfigKind=legacy-fern; expectedLanguage=cli; retryable=false; recommendedAction=USE_GENERATORS_YML]. Generate this target from generators.yml instead.`
+        );
+    });
+
+    it.each(["TRUE", "1", " true"])("keeps rejecting SDK Config CLI targets when the bypass is %j", (value) => {
+        vi.stubEnv("FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK", value);
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    name: "fernapi/fern-cli-generator",
+                    language: "cli",
+                    version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION
+                })
+            ],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "cli" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route).toBeUndefined();
+        expect(result?.error).toHaveProperty("message", expect.stringContaining("SDK_CONFIG_UNSUPPORTED"));
+    });
+
+    it("routes an SDK Config CLI target when the support check is bypassed", () => {
+        vi.stubEnv("FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK", "true");
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    name: "fernapi/fern-cli-generator",
+                    language: "cli",
+                    version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION
+                })
+            ],
+            enabled: true,
+            sdkConfigV1: sdkConfigV1({ language: "cli" }),
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.sdkConfigSupportCheckSkipped).toBe(true);
+        expect(result?.route).toMatchObject({
+            generatorId: "fernapi/fern-cli-generator",
+            language: "cli",
+            payloadKind: "sdk-config-v1"
+        });
+    });
+
+    it.each([
+        "fernapi/fern-cli",
+        "fernapi/fern-cli-generator"
+    ])("keeps the generators.yml runtime bundle route for pre-cutover %s", (name) => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name, language: "cli", version: "0.9.0" })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.sdkConfigSupportCheckSkipped).toBeUndefined();
+        expect(result?.route).toMatchObject({ configKind: "legacy-fern", payloadKind: "fern-runtime-bundle" });
+    });
+
+    it.each([
+        { name: "unpinned", version: FERN_GENERATOR_LATEST_VERSION },
+        { name: "pinned", version: "0.1.0" }
+    ])("keeps synthesized SDK Config routing for the $name hosted MCP server", ({ version }) => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [invocation({ name: "fernapi/fern-mcp-server", language: "mcp", version })],
+            enabled: true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.error).toBeUndefined();
+        expect(result?.sdkConfigSupportCheckSkipped).toBeUndefined();
+        expect(result?.route).toMatchObject({ generatorId: "fernapi/fern-mcp-server", payloadKind: "sdk-config-v1" });
     });
 
     it("does not treat an explicit SDK Config generatorVersion latest as omission", () => {
@@ -2472,13 +2582,175 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(telemetry).not.toContain("Authorization");
     });
 
+    describe("submission failure classification", () => {
+        const runtimeUnavailableMessage =
+            "Generator fernapi/fern-cli-generator does not support SDK Config yet: no SDK Config generator is published for language cli. Generate this target from generators.yml instead.";
+
+        function capturingFailureContext(failures: Array<{ message: string; error: unknown; code: unknown }>): never {
+            return {
+                logger: { debug: vi.fn(), info: vi.fn() },
+                failAndThrow: (message: string, error: unknown, options?: { code?: unknown }) => {
+                    failures.push({ message, error, code: options?.code });
+                    throw error instanceof Error ? error : new Error(message);
+                }
+            } as never;
+        }
+
+        function httpError({
+            status,
+            data,
+            axiosCode = status >= 500 ? "ERR_BAD_RESPONSE" : "ERR_BAD_REQUEST"
+        }: {
+            status: number;
+            data: unknown;
+            axiosCode?: string;
+        }): AxiosError {
+            return new AxiosError(`Request failed with status code ${status}`, axiosCode, {} as never, undefined, {
+                status,
+                statusText: "",
+                headers: {},
+                config: {} as never,
+                data
+            });
+        }
+
+        async function submit(
+            error: unknown,
+            token = "token"
+        ): Promise<{ rejection: unknown; failures: Array<{ message: string; error: unknown; code: unknown }> }> {
+            vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+            vi.spyOn(axios, "post").mockRejectedValue(error);
+            const failures: Array<{ message: string; error: unknown; code: unknown }> = [];
+            let rejection: unknown;
+            try {
+                await runFernSdkGenApiBuild({
+                    apiName: "Petstore",
+                    organization: "acme",
+                    cliVersion: "0.0.0",
+                    generatorInvocation: invocation(),
+                    sdkVersion: "1.2.3",
+                    token: { value: token } as never,
+                    specsTarGzBuffer: validSourceArchive,
+                    payload: runtimePayload(validRuntimeBundle),
+                    absolutePathToPreview: undefined,
+                    context: capturingFailureContext(failures)
+                });
+            } catch (caught) {
+                rejection = caught;
+            }
+            return { rejection, failures };
+        }
+
+        it("renders the server error code for a 422 as a configuration error", async () => {
+            const { rejection, failures } = await submit(
+                httpError({
+                    status: 422,
+                    data: {
+                        statusCode: 422,
+                        code: "FERN_BUILD_GENERATOR_RUNTIME_UNAVAILABLE",
+                        message: runtimeUnavailableMessage
+                    }
+                })
+            );
+
+            expect(rejection).toMatchObject({
+                name: "FernSdkGenApiSubmissionError",
+                message: runtimeUnavailableMessage,
+                status: 422,
+                code: "ERR_BAD_REQUEST",
+                serverCode: "FERN_BUILD_GENERATOR_RUNTIME_UNAVAILABLE"
+            });
+            expect(failures).toEqual([
+                {
+                    message: `Failed to submit sdk-gen-api build: ${runtimeUnavailableMessage} [FERN_BUILD_GENERATOR_RUNTIME_UNAVAILABLE]`,
+                    error: rejection,
+                    code: CliError.Code.ConfigError
+                }
+            ]);
+        });
+
+        it("redacts sensitive values in the server error code", async () => {
+            const secret = "server-code-bearer-secret";
+            const { rejection, failures } = await submit(
+                httpError({ status: 400, data: { code: `BAD_${secret}`, message: "Bad request" } }),
+                secret
+            );
+
+            expect(rejection).toHaveProperty("serverCode", "BAD_[REDACTED]");
+            expect(failures[0]?.message).toBe("Failed to submit sdk-gen-api build: Bad request [BAD_[REDACTED]]");
+            expect(failures[0]?.message).not.toContain(secret);
+        });
+
+        it.each([
+            { status: 408, code: CliError.Code.NetworkError },
+            { status: 429, code: CliError.Code.NetworkError },
+            { status: 500, code: CliError.Code.NetworkError },
+            { status: 503, code: CliError.Code.NetworkError },
+            { status: 400, code: CliError.Code.ConfigError },
+            { status: 403, code: CliError.Code.ConfigError },
+            { status: 404, code: CliError.Code.ConfigError }
+        ])("classifies an HTTP $status submission failure as $code", async ({ status, code }) => {
+            const { failures } = await submit(httpError({ status, data: { message: "Request failed" } }));
+
+            expect(failures).toHaveLength(1);
+            expect(failures[0]?.message).toBe("Failed to submit sdk-gen-api build: Request failed");
+            expect(failures[0]?.code).toBe(code);
+        });
+
+        it("keeps a transport failure without a response as a network error", async () => {
+            const { rejection, failures } = await submit(
+                new AxiosError("connect ECONNREFUSED 127.0.0.1:443", "ECONNREFUSED")
+            );
+
+            expect(rejection).toMatchObject({ status: undefined, code: "ECONNREFUSED", serverCode: undefined });
+            expect(failures[0]?.message).toBe("Failed to submit sdk-gen-api build: connect ECONNREFUSED 127.0.0.1:443");
+            expect(failures[0]?.code).toBe(CliError.Code.NetworkError);
+        });
+
+        it("ignores a non-string server error code", async () => {
+            const { rejection, failures } = await submit(
+                httpError({ status: 503, data: { code: 503, message: "Service unavailable" } })
+            );
+
+            expect(rejection).toHaveProperty("serverCode", undefined);
+            expect(failures[0]?.message).toBe("Failed to submit sdk-gen-api build: Service unavailable");
+            expect(failures[0]?.code).toBe(CliError.Code.NetworkError);
+        });
+
+        it("renders the server error code for a 4xx polling failure as a configuration error", async () => {
+            vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+            vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+            vi.spyOn(axios, "get").mockRejectedValue(
+                httpError({ status: 404, data: { code: "FERN_BUILD_NOT_FOUND", message: "Build not found" } })
+            );
+            const failures: Array<{ message: string; error: unknown; code: unknown }> = [];
+
+            await expect(
+                runFernSdkGenApiBuild({
+                    apiName: "Petstore",
+                    organization: "acme",
+                    cliVersion: "0.0.0",
+                    generatorInvocation: invocation(),
+                    sdkVersion: "1.2.3",
+                    token: { value: "token" } as never,
+                    specsTarGzBuffer: validSourceArchive,
+                    payload: runtimePayload(validRuntimeBundle),
+                    absolutePathToPreview: undefined,
+                    context: capturingFailureContext(failures)
+                })
+            ).rejects.toMatchObject({ serverCode: "FERN_BUILD_NOT_FOUND" });
+            expect(failures[0]?.message).toBe("Failed to poll sdk-gen-api build [FERN_BUILD_NOT_FOUND]");
+            expect(failures[0]?.code).toBe(CliError.Code.ConfigError);
+        });
+    });
+
     it("removes credentials, bearer tokens, and Axios request state from polling errors", async () => {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
-        const failures: Array<{ message: string; error: unknown }> = [];
+        const failures: Array<{ message: string; error: unknown; code?: unknown }> = [];
         const capturingContext = {
             logger: { debug: vi.fn(), info: vi.fn() },
-            failAndThrow: (message: string, error: unknown) => {
-                failures.push({ message, error });
+            failAndThrow: (message: string, error: unknown, options?: { code?: unknown }) => {
+                failures.push({ message, error, code: options?.code });
                 throw error instanceof Error ? error : new Error(message);
             }
         } as never;
@@ -2536,6 +2808,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(failures).toHaveLength(1);
         const captured = failures[0];
         expect(captured?.message).toBe("Failed to poll sdk-gen-api build");
+        expect(captured?.code).toBe(CliError.Code.NetworkError);
         expect(captured?.error).not.toHaveProperty("config");
         expect(captured?.error).not.toHaveProperty("request");
         expect(captured?.error).not.toHaveProperty("response");
