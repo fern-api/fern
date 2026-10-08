@@ -155,8 +155,8 @@ pub trait Binding: Send + Sync {
     ///
     /// `op_path` is the command path (`["iam", "keys", "remove"]`) and
     /// `params` a JSON object of parameter name → value, exactly the shape
-    /// `--params` accepts. Returns the decoded response, or `Ok(None)` when
-    /// the operation produced no body.
+    /// `--params` accepts. Returns the decoded response — `Value::Null` when
+    /// the operation succeeded without a body, e.g. a `204` delete.
     ///
     /// Exists because some framework-owned commands need to call the API on
     /// the user's behalf — `profiles remove --revoke` deleting the key it
