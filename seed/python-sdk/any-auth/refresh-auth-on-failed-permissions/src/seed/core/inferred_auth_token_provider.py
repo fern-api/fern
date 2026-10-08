@@ -43,8 +43,14 @@ class InferredAuthTokenProvider:
     def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
         return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)
 
-    def invalidate(self) -> None:
-        self._cached_headers = None
+    def invalidate(self, failed_headers: typing.Optional[typing.Dict[str, str]] = None) -> None:
+        with self._lock:
+            if not (
+                failed_headers is not None
+                and self._cached_headers is not None
+                and any(failed_headers.get(key) != value for key, value in self._cached_headers.items())
+            ):
+                self._cached_headers = None
 
 
 class AsyncInferredAuthTokenProvider:
@@ -79,5 +85,10 @@ class AsyncInferredAuthTokenProvider:
     def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
         return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)
 
-    def invalidate(self) -> None:
-        self._cached_headers = None
+    def invalidate(self, failed_headers: typing.Optional[typing.Dict[str, str]] = None) -> None:
+        if not (
+            failed_headers is not None
+            and self._cached_headers is not None
+            and any(failed_headers.get(key) != value for key, value in self._cached_headers.items())
+        ):
+            self._cached_headers = None

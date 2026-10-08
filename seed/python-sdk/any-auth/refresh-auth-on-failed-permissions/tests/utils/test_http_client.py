@@ -889,11 +889,13 @@ class _RotatingToken:
     def __init__(self) -> None:
         self.token = "old-token"
         self.refresh_count = 0
+        self.failed_authorization: List[str] = []
 
     def headers(self) -> Dict[str, str]:
         return {"Authorization": f"Bearer {self.token}"}
 
-    def refresh(self) -> None:
+    def refresh(self, failed_headers: Dict[str, str]) -> None:
+        self.failed_authorization.append(failed_headers["Authorization"])
         self.refresh_count += 1
         self.token = "new-token"
 
@@ -920,6 +922,7 @@ def test_sync_refreshes_auth_and_retries_on_auth_failure(mock_sleep: MagicMock, 
 
     assert response.status_code == 200
     assert token.refresh_count == 1
+    assert token.failed_authorization == ["Bearer old-token"]
     assert _sent_authorization(mock_client) == ["Bearer old-token", "Bearer new-token"]
     mock_sleep.assert_called_once()
 
@@ -950,7 +953,7 @@ def test_sync_refresh_failure_skips_retry(mock_sleep: MagicMock) -> None:
     mock_client = MagicMock()
     mock_client.request.return_value = _make_response(401)
 
-    def failing_refresh() -> None:
+    def failing_refresh(_failed_headers: Dict[str, str]) -> None:
         raise RuntimeError("refresh failed")
 
     http_client = HttpClient(
@@ -1010,7 +1013,7 @@ async def test_async_refresh_failure_skips_retry(mock_sleep: AsyncMock) -> None:
     mock_client = MagicMock()
     mock_client.request = AsyncMock(return_value=_make_response(401))
 
-    def failing_refresh() -> None:
+    def failing_refresh(_failed_headers: Dict[str, str]) -> None:
         raise RuntimeError("refresh failed")
 
     http_client = AsyncHttpClient(
@@ -1061,7 +1064,7 @@ def test_sync_stream_refreshes_auth_and_retries_on_auth_failure(mock_sleep: Magi
 def test_sync_stream_refresh_failure_skips_retry(mock_sleep: MagicMock) -> None:
     sent: List[str] = []
 
-    def failing_refresh() -> None:
+    def failing_refresh(_failed_headers: Dict[str, str]) -> None:
         raise RuntimeError("refresh failed")
 
     http_client = HttpClient(

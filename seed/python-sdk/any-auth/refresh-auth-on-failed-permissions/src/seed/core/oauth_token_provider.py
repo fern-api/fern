@@ -41,8 +41,17 @@ class OAuthTokenProvider:
     def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
         return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)
 
-    def invalidate(self) -> None:
-        self._access_token = None
+    def invalidate(self, failed_headers: typing.Optional[typing.Dict[str, str]] = None) -> None:
+        with self._lock:
+            if not (
+                failed_headers is not None
+                and self._access_token is not None
+                and not any(
+                    value == self._access_token or value.endswith(" " + self._access_token)
+                    for value in failed_headers.values()
+                )
+            ):
+                self._access_token = None
 
 
 class AsyncOAuthTokenProvider:
@@ -75,5 +84,13 @@ class AsyncOAuthTokenProvider:
     def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
         return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)
 
-    def invalidate(self) -> None:
-        self._access_token = None
+    def invalidate(self, failed_headers: typing.Optional[typing.Dict[str, str]] = None) -> None:
+        if not (
+            failed_headers is not None
+            and self._access_token is not None
+            and not any(
+                value == self._access_token or value.endswith(" " + self._access_token)
+                for value in failed_headers.values()
+            )
+        ):
+            self._access_token = None

@@ -163,7 +163,7 @@ class SeedAnyAuth:
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
-                refresh_auth=lambda: None,
+                refresh_auth=lambda _failed_headers: None,
             )
         elif client_id is not None and client_secret is not None:
             oauth_token_provider = OAuthTokenProvider(
@@ -223,7 +223,7 @@ class SeedAnyAuth:
                 stream_reconnection_enabled=stream_reconnection_enabled,
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
-                refresh_auth=lambda: None,
+                refresh_auth=lambda _failed_headers: None,
             )
         self._auth: typing.Optional[AuthClient] = None
         self._user: typing.Optional[UserClient] = None
@@ -432,7 +432,7 @@ class AsyncSeedAnyAuth:
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
                 async_token=async_token,
-                refresh_auth=lambda: None,
+                refresh_auth=lambda _failed_headers: None,
             )
         elif client_id is not None and client_secret is not None:
             oauth_token_provider = AsyncOAuthTokenProvider(
@@ -489,7 +489,7 @@ class AsyncSeedAnyAuth:
                 stream_reconnection_enabled=stream_reconnection_enabled,
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
-                refresh_auth=lambda: None,
+                refresh_auth=lambda _failed_headers: None,
             )
         self._auth: typing.Optional[AsyncAuthClient] = None
         self._user: typing.Optional[AsyncUserClient] = None

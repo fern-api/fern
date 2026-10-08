@@ -368,7 +368,7 @@ class HttpClient:
         base_url: typing.Optional[typing.Callable[[], str]] = None,
         base_max_retries: int = 2,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None,
+        refresh_auth: typing.Optional[typing.Callable[[typing.Dict[str, str]], typing.Any]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
@@ -521,7 +521,7 @@ class HttpClient:
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 if refresh_auth is not None:
-                    refresh_auth()
+                    refresh_auth(_request_headers)
                 return self.request(
                     path=path,
                     method=method,
@@ -654,7 +654,7 @@ class HttpClient:
             if request_options is not None
             else self.base_max_retries
         )
-        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None
+        refresh_auth: typing.Optional[typing.Callable[[typing.Dict[str, str]], typing.Any]] = None
         with self.httpx_client.stream(
             method=method,
             url=_request_url,
@@ -678,7 +678,7 @@ class HttpClient:
         if refresh_auth is None:
             return
         time.sleep(_retry_timeout(response=stream, retries=retries))
-        refresh_auth()
+        refresh_auth(_request_headers)
         with self.stream(
             path=path,
             method=method,
@@ -709,7 +709,7 @@ class AsyncHttpClient:
         base_max_retries: int = 2,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None,
+        refresh_auth: typing.Optional[typing.Callable[[typing.Dict[str, str]], typing.Any]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
@@ -871,7 +871,7 @@ class AsyncHttpClient:
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 if refresh_auth is not None:
-                    refresh_auth()
+                    refresh_auth(_request_headers)
                 return await self.request(
                     path=path,
                     method=method,
@@ -1007,7 +1007,7 @@ class AsyncHttpClient:
             if request_options is not None
             else self.base_max_retries
         )
-        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None
+        refresh_auth: typing.Optional[typing.Callable[[typing.Dict[str, str]], typing.Any]] = None
         async with self.httpx_client.stream(
             method=method,
             url=_request_url,
@@ -1031,7 +1031,7 @@ class AsyncHttpClient:
         if refresh_auth is None:
             return
         await asyncio.sleep(_retry_timeout(response=stream, retries=retries))
-        refresh_auth()
+        refresh_auth(_request_headers)
         async with self.stream(
             path=path,
             method=method,

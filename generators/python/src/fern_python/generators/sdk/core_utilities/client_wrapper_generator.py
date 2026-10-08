@@ -930,7 +930,12 @@ class ClientWrapperGenerator:
         return [
             AST.NamedFunctionParameter(
                 name=ClientWrapperGenerator.REFRESH_AUTH_PARAMETER_NAME,
-                type_hint=AST.TypeHint.optional(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.any())),
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint.callable(
+                        parameters=[AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())],
+                        return_type=AST.TypeHint.any(),
+                    )
+                ),
                 initializer=AST.Expression(AST.TypeHint.none()),
             )
         ]

@@ -116,7 +116,7 @@ class SyncClientWrapper(BaseClientWrapper):
         stream_reconnection_enabled: typing.Optional[bool] = None,
         max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None,
+        refresh_auth: typing.Optional[typing.Callable[[typing.Dict[str, str]], typing.Any]] = None,
         httpx_client: httpx.Client,
     ):
         super().__init__(
@@ -162,7 +162,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         async_auth_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
-        refresh_auth: typing.Optional[typing.Callable[[], typing.Any]] = None,
+        refresh_auth: typing.Optional[typing.Callable[[typing.Dict[str, str]], typing.Any]] = None,
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(
