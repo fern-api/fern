@@ -1,6 +1,8 @@
 # TEMPORARY: one-off benchmark of `fern docs dev` (Next) vs `--astro`; removed before merge.
 name: Docs Dev Bench (temporary)
-on: workflow_dispatch
+on:
+  push:
+    branches: ["devin/1791475302-smoke-both-renderers"]
 jobs:
   bench:
     runs-on: ubuntu-latest
