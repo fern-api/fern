@@ -185,6 +185,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const attemptResponses: Response[] = [];
     try {
         const response = await requestWithRetries(async () => {
+            // A retry means the previous attempt is over; stop its timer now rather than at the end.
+            for (const previousResponse of attemptResponses) {
+                clearResponseTimeout(previousResponse);
+            }
             const attemptResponse = await makeRequest(
                 fetchFn,
                 url,
