@@ -344,6 +344,75 @@ client.stream_protocol_with_flat_schema()
 </dl>
 </details>
 
+<details><summary><code>client.<a href="src/seed/client.py">stream_protocol_mixed_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedApi
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.stream_protocol_mixed_schema()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `StreamRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.<a href="src/seed/client.py">stream_data_context_with_envelope_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>

@@ -17,6 +17,7 @@ vi.mock("posthog-node", () => ({
     })
 }));
 
+import { PostHog } from "posthog-node";
 import { TelemetryClient } from "../TelemetryClient.js";
 
 // Each test gets its own HOME pointing to a clean temp directory, so the
@@ -42,6 +43,14 @@ afterEach(async () => {
 });
 
 describe("TelemetryClient", () => {
+    it("creates the PostHog client as a non-server client so events are not tagged $is_server", async () => {
+        vi.mocked(PostHog).mockClear();
+
+        await TelemetryClient.create({ isTTY: true });
+
+        expect(PostHog).toHaveBeenCalledWith("phc_test", { isServer: false });
+    });
+
     describe("sendLifecycleEvent", () => {
         it("captures a cli event with the expected shape", async () => {
             const client = await TelemetryClient.create({ isTTY: true });

@@ -1,4 +1,4 @@
-const TIMEOUT = "timeout";
+export const TIMEOUT = "timeout";
 export function getTimeoutSignal(timeoutMs) {
     const controller = new AbortController();
     const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);

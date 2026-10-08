@@ -180,11 +180,7 @@ module Seed
             conn.write_timeout = timeout
             conn.continue_timeout = timeout
 
-            begin
-              response = conn.request(http_request)
-            rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout => e
-              raise Seed::Errors::TimeoutError, e.message
-            end
+            response = wrap_transport_errors { conn.request(http_request) }
 
             break unless should_retry?(response, attempt)
 
@@ -194,6 +190,27 @@ module Seed
           end
 
           response
+        end
+
+        # Socket-level `Errno` failures. Other `SystemCallError`s, such as file errors raised by a
+        # custom HTTP client, are not connection failures and propagate unchanged.
+        NETWORK_ERRNOS = [
+          Errno::ECONNREFUSED, Errno::ECONNRESET, Errno::ECONNABORTED, Errno::EPIPE,
+          Errno::EHOSTUNREACH, Errno::ENETUNREACH, Errno::ENETDOWN, Errno::EHOSTDOWN,
+          Errno::EADDRNOTAVAIL
+        ].freeze
+
+        # Runs a single request attempt, re-raising transport failures as SDK errors so that
+        # rescuing `Errors::ApiError` covers them. The original exception is kept as `cause`.
+        # These failures are not retried: the server may already have processed the request.
+        # @return [Net::HTTPResponse] The HTTP response.
+        def wrap_transport_errors
+          yield
+        rescue Net::OpenTimeout, Net::ReadTimeout, Net::WriteTimeout, Errno::ETIMEDOUT => e
+          raise Seed::Errors::TimeoutError, e.message
+        rescue EOFError, SocketError, OpenSSL::SSL::SSLError, *NETWORK_ERRNOS,
+               Net::ProtocolError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError => e
+          raise Seed::Errors::ConnectionError, e.message
         end
 
         # @param request [Seed::Internal::Http::BaseRequest] The HTTP request.

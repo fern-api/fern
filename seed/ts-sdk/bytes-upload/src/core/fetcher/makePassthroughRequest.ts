@@ -5,8 +5,8 @@ import { getFetchFn } from "./getFetchFn.js";
 import { makeRequest } from "./makeRequest.js";
 import { redactUrl } from "./redactUrl.js";
 import { requestWithRetries } from "./requestWithRetries.js";
-import { TIMEOUT } from "./signals.js";
 import { Supplier } from "./Supplier.js";
+import { TIMEOUT } from "./signals.js";
 
 export declare namespace PassthroughRequest {
     /**
@@ -181,6 +181,7 @@ export async function makePassthroughRequest(
                     false, // disableCache
                 ),
             maxRetries,
+            abortSignal,
         );
     } catch (error) {
         // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.

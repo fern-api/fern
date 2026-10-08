@@ -69,6 +69,8 @@ begin
     result = client.auth.get_token_with_client_credentials
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
+rescue Seed::Errors::ConnectionError => e
+    puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
 rescue Seed::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
 rescue Seed::Errors::ServerError

@@ -1633,3 +1633,20 @@ func TestStream_WithReconnect_RespBodyLeakOnError(t *testing.T) {
 	_, err = stream.Recv()
 	assert.ErrorIs(t, err, io.EOF)
 }
+
+func TestSseStreamReader_EnvelopeEvents(t *testing.T) {
+	input := "event: entity\ndata: {\"id\":\"1\"}\n\nevent: error\ndata: {\"code\":3,\"message\":\"bad input\"}\n\n"
+	reader := newSseStreamReader(strings.NewReader(input), &streamOptions{
+		maxBufSize:         defaultMaxBufSize,
+		eventDiscriminator: "event",
+		envelopeEvents:     []string{"entity"},
+	})
+
+	event, err := reader.ReadEvent()
+	require.NoError(t, err)
+	assert.JSONEq(t, `{"event":"entity","data":{"id":"1"}}`, string(event.Data))
+
+	event, err = reader.ReadEvent()
+	require.NoError(t, err)
+	assert.JSONEq(t, `{"event":"error","code":3,"message":"bad input"}`, string(event.Data))
+}

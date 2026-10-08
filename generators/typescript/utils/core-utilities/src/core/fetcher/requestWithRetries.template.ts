@@ -57,12 +57,35 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
 }
 
 /**
+ * Waits `ms` milliseconds, or rejects as soon as `abortSignal` aborts. The timer and
+ * the abort listener are always removed, so a cancelled wait never keeps the process alive.
+ */
+function sleep(ms: number, abortSignal: AbortSignal | undefined): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (abortSignal?.aborted) {
+            reject(abortSignal.reason);
+            return;
+        }
+        const onAbort = () => {
+            clearTimeout(timeoutId);
+            reject(abortSignal?.reason);
+        };
+        const timeoutId = setTimeout(() => {
+            abortSignal?.removeEventListener("abort", onAbort);
+            resolve();
+        }, ms);
+        abortSignal?.addEventListener("abort", onAbort, { once: true });
+    });
+}
+
+/**
  * @param refreshAuth When provided, 401 and 403 responses are retried like any other retryable
  * status code, and `refreshAuth` is awaited before each of those retries.
  */
 export async function requestWithRetries(
     requestFn: () => Promise<Response>,
     maxRetries: number = DEFAULT_MAX_RETRIES,
+    abortSignal?: AbortSignal,
     refreshAuth?: () => Promise<void>,
 ): Promise<Response> {
     let response: Response = await requestFn();
@@ -72,7 +95,7 @@ export async function requestWithRetries(
         if (isRetryableStatusCode(response.status) || shouldRefreshAuth) {
             const delay = getRetryDelayFromHeaders(response, i);
 
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await sleep(delay, abortSignal);
             if (shouldRefreshAuth) {
                 await refreshAuth();
             }

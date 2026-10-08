@@ -65,6 +65,7 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                         eventDiscriminator: "event",
+                        envelopeEvents: ["string_data", "number_data", "object_data"],
                     },
                 }),
                 rawResponse: _response.rawResponse,
@@ -130,6 +131,7 @@ export class SeedApiClient {
                     eventShape: {
                         type: "sse",
                         eventDiscriminator: "event",
+                        envelopeEvents: ["string_data", "number_data", "object_data"],
                     },
                 }),
                 rawResponse: _response.rawResponse,
@@ -327,6 +329,72 @@ export class SeedApiClient {
             _response.rawResponse,
             "POST",
             "/stream/protocol-with-flat-schema",
+        );
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public streamProtocolMixedSchema(
+        request: SeedApi.StreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedApi.StreamProtocolMixedSchemaResponse>> {
+        return core.HttpResponsePromise.fromPromise(this.__streamProtocolMixedSchema(request, requestOptions));
+    }
+
+    private async __streamProtocolMixedSchema(
+        request: SeedApi.StreamRequest,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedApi.StreamProtocolMixedSchemaResponse>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream/protocol-mixed-schema",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
+            responseType: "sse",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "sse",
+                        eventDiscriminator: "event",
+                        envelopeEvents: ["object_data"],
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/stream/protocol-mixed-schema",
         );
     }
 

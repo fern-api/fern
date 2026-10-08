@@ -96,7 +96,12 @@ export const BaseRubyCustomConfigSchema = z.object({
     // Net::HTTPResponse; it replaces the SDK's own Net::HTTP transport so callers can add
     // proxies, custom TLS, connection reuse, or request/response interceptors. Retries still
     // wrap the custom client. Disabled by default so existing output is byte-identical.
-    allowCustomHttpClient: z.boolean().optional()
+    allowCustomHttpClient: z.boolean().optional(),
+    // Opt-in: cursor and offset paginated methods send the request for the first page before
+    // returning the iterator, so an API error for that page is raised by the method call
+    // instead of by the first iteration. Disabled by default because callers may rescue
+    // errors around the loop, or build an iterator without iterating it.
+    fetchFirstPageOnCall: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

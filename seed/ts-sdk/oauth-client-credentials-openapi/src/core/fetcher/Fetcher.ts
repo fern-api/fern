@@ -7,7 +7,7 @@ import { EndpointSupplier } from "./EndpointSupplier.js";
 import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { getRequestBody } from "./getRequestBody.js";
-import { getResponseBody } from "./getResponseBody.js";
+import { getResponseBody, isResponseBodyError } from "./getResponseBody.js";
 import { Headers } from "./Headers.js";
 import { clearResponseTimeout, makeRequest } from "./makeRequest.js";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
@@ -154,6 +154,11 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
     return newHeaders;
 }
 
+function isJsonContentType(contentType: string | null): boolean {
+    const mediaType = contentType?.split(";")[0]?.trim().toLowerCase() ?? "";
+    return mediaType === "application/json" || mediaType === "text/json" || mediaType.endsWith("+json");
+}
+
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     let url = args.url;
     if (args.queryString != null && args.queryString.length > 0) {
@@ -205,7 +210,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             );
             attemptResponses.push(attemptResponse);
             return attemptResponse;
-        }, args.maxRetries);
+        }, args.maxRetries, args.abortSignal);
 
         if (response.status >= 200 && response.status < 400) {
             if (logger.isDebug()) {
@@ -218,6 +223,18 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 logger.debug("HTTP request succeeded", metadata);
             }
             const body = await getResponseBody(response, args.responseType);
+            // Only a body the server labelled as JSON is an error here; void endpoints may return plain text.
+            if (
+                isResponseBodyError(body) &&
+                body.error.reason === "non-json" &&
+                isJsonContentType(response.headers.get("Content-Type"))
+            ) {
+                return {
+                    ok: false,
+                    error: body.error,
+                    rawResponse: toRawResponse(response),
+                };
+            }
             return {
                 ok: true,
                 body: body as R,

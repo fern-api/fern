@@ -7,7 +7,7 @@ import { EndpointSupplier } from "./EndpointSupplier";
 import { getErrorResponseBody } from "./getErrorResponseBody";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
-import { getResponseBody } from "./getResponseBody";
+import { getResponseBody, isResponseBodyError } from "./getResponseBody";
 import { Headers } from "./Headers";
 import { clearResponseTimeout, makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
@@ -209,6 +209,11 @@ function isReplayableBody(body: BodyInit | undefined): boolean {
     return typeof maybeStream.pipe !== "function" && typeof maybeStream[Symbol.asyncIterator] !== "function";
 }
 
+function isJsonContentType(contentType: string | null): boolean {
+    const mediaType = contentType?.split(";")[0]?.trim().toLowerCase() ?? "";
+    return mediaType === "application/json" || mediaType === "text/json" || mediaType.endsWith("+json");
+}
+
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     let url = args.url;
     if (args.queryString != null && args.queryString.length > 0) {
@@ -263,6 +268,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 return attemptResponse;
             },
             args.maxRetries,
+            args.abortSignal,
             args.authRefresh != null && isReplayableBody(requestBody)
                 ? createAuthHeadersRefresher(args.authRefresh, headers)
                 : undefined,
@@ -279,6 +285,18 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 logger.debug("HTTP request succeeded", metadata);
             }
             const body = await getResponseBody(response, args.responseType);
+            // Only a body the server labelled as JSON is an error here; void endpoints may return plain text.
+            if (
+                isResponseBodyError(body) &&
+                body.error.reason === "non-json" &&
+                isJsonContentType(response.headers.get("Content-Type"))
+            ) {
+                return {
+                    ok: false,
+                    error: body.error,
+                    rawResponse: toRawResponse(response),
+                };
+            }
             return {
                 ok: true,
                 body: body as R,

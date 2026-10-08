@@ -4,6 +4,7 @@ import type * as GeneratorsYml from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema.js";
+import { InferredAuthTypeSchema } from "./InferredAuthTypeSchema.js";
 import { InferredGetTokenEndpointSchema } from "./InferredGetTokenEndpointSchema.js";
 
 export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
@@ -13,6 +14,7 @@ export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
     .object({
         scheme: core.serialization.stringLiteral("bearer"),
         "get-token": InferredGetTokenEndpointSchema,
+        type: InferredAuthTypeSchema.optional(),
     })
     .extend(WithDocsSchema);
 
@@ -20,5 +22,6 @@ export declare namespace InferredBearerAuthSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "bearer";
         "get-token": InferredGetTokenEndpointSchema.Raw;
+        type?: InferredAuthTypeSchema.Raw | null;
     }
 }
