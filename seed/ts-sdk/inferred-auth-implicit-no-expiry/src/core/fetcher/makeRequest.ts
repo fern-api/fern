@@ -1,4 +1,4 @@
-import { anySignal, getTimeoutSignal } from "./signals.js";
+import { anySignal, getTimeoutSignal, TIMEOUT } from "./signals.js";
 
 /**
  * Cached result of checking whether the current runtime supports
@@ -56,9 +56,11 @@ export const makeRequest = async (
     const signals: AbortSignal[] = [];
 
     let timeoutAbortId: ReturnType<typeof setTimeout> | undefined;
+    let timeoutSignal: AbortSignal | undefined;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
         timeoutAbortId = abortId;
+        timeoutSignal = signal;
         signals.push(signal);
     }
 
@@ -81,6 +83,10 @@ export const makeRequest = async (
     } catch (error) {
         if (timeoutAbortId != null) {
             clearTimeout(timeoutAbortId);
+        }
+        // Some runtimes (e.g. Node 18) reject with their own error instead of the abort reason.
+        if (timeoutSignal?.aborted && !abortSignal?.aborted) {
+            throw TIMEOUT;
         }
         throw error;
     }

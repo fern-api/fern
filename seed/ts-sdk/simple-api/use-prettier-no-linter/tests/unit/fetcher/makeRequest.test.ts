@@ -203,4 +203,14 @@ describe("Test makeRequest", () => {
             vi.useRealTimers();
         }
     });
+
+    it("should reject with the timeout reason when the runtime rejects with its own error after the timeout fires", async () => {
+        mockFetch.mockImplementation(
+            (_url: string, init: RequestInit) =>
+                new Promise((_resolve, reject) => {
+                    init.signal?.addEventListener("abort", () => reject(new TypeError("invalid_argument")));
+                }),
+        );
+        await expect(makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined, 10)).rejects.toBe("timeout");
+    });
 });
