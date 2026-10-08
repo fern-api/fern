@@ -1181,9 +1181,6 @@ export class AutoVersioningService {
     }
 
     /**
-     * Recursively walks a directory and returns all file paths matching a filter.
-     */
-    /**
      * Files protected by `.fernignore` hold customer-owned content, so the placeholder
      * must never be rewritten inside them (e.g. docs that mention `0.0.0-fern-placeholder`).
      */
@@ -1204,6 +1201,9 @@ export class AutoVersioningService {
         );
     }
 
+    /**
+     * Recursively walks a directory and returns all file paths matching a filter.
+     */
     private async walkDirectory(dir: string, filter: (filePath: string) => boolean): Promise<string[]> {
         const results: string[] = [];
         const entries = await readdir(dir);
