@@ -689,6 +689,51 @@ describe("copySpecs", () => {
         expect(main).toContain('.profiles(ProfilesConfig::new().revoke_operation("iam.keys.remove"))');
     });
 
+    it("emits .provision_operation(...) and its import when configured", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles",
+            profilesRevokeOperation: "iam.keys.remove",
+            profilesProvisionOperation: {
+                operation: "iam.keys.create",
+                credential: { username: "sid", password: "secret" },
+                revokeParameters: { Sid: "sid" }
+            }
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::profiles::{ProfilesConfig, ProvisionOperation};");
+        expect(main).toContain(
+            '.profiles(ProfilesConfig::new().revoke_operation("iam.keys.remove")' +
+                '.provision_operation(ProvisionOperation::new("iam.keys.create")' +
+                '.credential_field("username", "sid").credential_field("password", "secret")' +
+                '.revoke_parameter("Sid", "sid")))'
+        );
+    });
+
+    it("omits .provision_operation(...) by default, so --provision is never registered", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).not.toContain(".provision_operation");
+        expect(main).not.toContain("ProvisionOperation");
+    });
+
     it("omits .revoke_operation(...) by default, so --revoke is never registered", async () => {
         const { specsDir, outputDir } = await scaffold();
 

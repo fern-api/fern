@@ -1366,6 +1366,7 @@ impl CliApp {
                                 cli_name: &self.name,
                                 bindings: &self.bindings,
                                 revoke_op_path: config.revoke_op_path(),
+                                provision: config.provision_operation.clone(),
                                 command_name: &config.command_name,
                                 auth_bindings: &self.auth_bindings,
                                 login_flows: &self.login_flows,
