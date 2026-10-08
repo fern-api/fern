@@ -134,6 +134,10 @@ fixtures:
     - customConfig:
         enableWireTests: true
       outputFolder: .
+  errors:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enableWireTests: true

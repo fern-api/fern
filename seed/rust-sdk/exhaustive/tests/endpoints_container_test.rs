@@ -13,6 +13,11 @@ async fn test_endpoints_container_get_and_return_list_of_primitives_with_wiremoc
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_list_of_primitives_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -39,6 +44,11 @@ async fn test_endpoints_container_get_and_return_list_of_objects_with_wiremock()
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_list_of_objects_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -77,6 +87,11 @@ async fn test_endpoints_container_get_and_return_set_of_primitives_with_wiremock
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_set_of_primitives_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -103,6 +118,11 @@ async fn test_endpoints_container_get_and_return_set_of_objects_with_wiremock() 
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_set_of_objects_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -135,6 +155,11 @@ async fn test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -164,6 +189,11 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_object_with_wire
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_map_of_prim_to_object_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -200,6 +230,8 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert("X-Test-Id".to_string(), "test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock".to_string());
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -220,6 +252,47 @@ async fn test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_container_get_and_return_map_of_integer_to_object_with_wiremock() {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_map_of_integer_to_object_with_wiremock"
+            .to_string(),
+    );
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .container
+        .get_and_return_map_of_integer_to_object(
+            &HashMap::from([(
+                1,
+                ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            )]),
+            None,
+        )
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count("POST", "/container/map-integer-to-object", None, 1)
+        .await
+        .unwrap();
+}
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_container_get_and_return_optional_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
@@ -229,6 +302,11 @@ async fn test_endpoints_container_get_and_return_optional_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_container_get_and_return_optional_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

@@ -1,0 +1,426 @@
+{
+  "mappings": [
+    {
+      "id": "c26a1099-b1cd-40e4-8772-1ad8f6e30fe0",
+      "name": "fooWithoutEndpointError - default",
+      "request": {
+        "urlPathTemplate": "/foo1",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"bar\": \"bar\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "c26a1099-b1cd-40e4-8772-1ad8f6e30fe0",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "5a15cdd0-9e40-4209-83af-de62bcb51014",
+      "name": "fooWithoutEndpointError - default - test_simple_foo_without_endpoint_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo1",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_without_endpoint_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"bar\": \"bar\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5a15cdd0-9e40-4209-83af-de62bcb51014",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "183b0ac9-fcb8-4bfd-8933-655913bc934e",
+      "name": "fooWithoutEndpointError - default - test_simple_foo_without_endpoint_error_throws_not_found_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo1",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_without_endpoint_error_throws_not_found_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "183b0ac9-fcb8-4bfd-8933-655913bc934e",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "e9384875-78cb-4457-b378-c4689dcfea46",
+      "name": "fooWithoutEndpointError - default - test_simple_foo_without_endpoint_error_throws_bad_request_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo1",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_without_endpoint_error_throws_bad_request_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e9384875-78cb-4457-b378-c4689dcfea46",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "0b7aaea4-59a4-45c3-960a-c87b15828111",
+      "name": "fooWithoutEndpointError - default - test_simple_foo_without_endpoint_error_throws_internal_server_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo1",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_without_endpoint_error_throws_internal_server_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0b7aaea4-59a4-45c3-960a-c87b15828111",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "31d05252-14bf-4713-abb2-0942476b5212",
+      "name": "foo - default",
+      "request": {
+        "urlPathTemplate": "/foo2",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"bar\": \"bar\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "31d05252-14bf-4713-abb2-0942476b5212",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "f447ee50-a7c9-4b1f-8dd9-7560bb395827",
+      "name": "foo - default - test_simple_foo_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo2",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"bar\": \"bar\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f447ee50-a7c9-4b1f-8dd9-7560bb395827",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "1b21e0ed-c7d4-4353-b9da-99df2b59a2fd",
+      "name": "foo - default - test_simple_foo_throws_foo_too_much_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo2",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_throws_foo_too_much_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 429,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1b21e0ed-c7d4-4353-b9da-99df2b59a2fd",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a71d1883-679f-40a1-ba43-52f4ec36b1fa",
+      "name": "foo - default - test_simple_foo_throws_not_found_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo2",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_throws_not_found_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a71d1883-679f-40a1-ba43-52f4ec36b1fa",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "de17ee17-1aa4-4f55-8d3d-e1105a2a71d0",
+      "name": "foo - default - test_simple_foo_throws_bad_request_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo2",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_throws_bad_request_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "de17ee17-1aa4-4f55-8d3d-e1105a2a71d0",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "98784cae-2c03-49b9-a2df-f74c6b301293",
+      "name": "foo - default - test_simple_foo_throws_internal_server_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo2",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_throws_internal_server_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "body": "{\n  \"message\": \"message\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "98784cae-2c03-49b9-a2df-f74c6b301293",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "61c7a35f-04e4-4699-85f5-fe48c20bf27b",
+      "name": "fooWithExamples - default",
+      "request": {
+        "urlPathTemplate": "/foo3",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"bar\": \"hello\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "61c7a35f-04e4-4699-85f5-fe48c20bf27b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "fbcde72f-5b74-4c0b-afa9-22a169e4b9cb",
+      "name": "fooWithExamples - default - test_simple_foo_with_examples_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo3",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_with_examples_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"bar\": \"hello\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fbcde72f-5b74-4c0b-afa9-22a169e4b9cb",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "4ed9b714-8af1-4201-adff-bd6799d78a68",
+      "name": "fooWithExamples - default - test_simple_foo_with_examples_throws_foo_too_much_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/foo3",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_simple_foo_with_examples_throws_foo_too_much_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 429,
+        "body": "{\n  \"message\": \"Too much foo\",\n  \"code\": 1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4ed9b714-8af1-4201-adff-bd6799d78a68",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "total": 14
+  }
+}

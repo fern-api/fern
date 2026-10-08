@@ -35,9 +35,48 @@
           }
         }
       }
+    },
+    {
+      "id": "049d8f8e-24dc-4d52-814b-5927a51cae8f",
+      "name": "get - default - test_user_get_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/users/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "test_user_get_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"email\": \"email\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "049d8f8e-24dc-4d52-814b-5927a51cae8f",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

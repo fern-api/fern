@@ -1,7 +1,13 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { isEqualToMatcher, WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
+import {
+    isEqualToMatcher,
+    WireMock,
+    WireMockMapping,
+    WireMockOptions,
+    WireMockStubMapping
+} from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -9,13 +15,22 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
  * Generates setup files for wire testing, specifically docker-compose configuration
  * to spin up WireMock for testing against.
  */
+export const BYTES_FALLBACK_NAME_SUFFIX = " (bytes fallback)";
+
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
+    private readonly wireMockOptions: WireMockOptions;
+    private wireMockConfig: WireMockStubMapping | undefined;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    constructor(
+        context: SdkGeneratorContext,
+        ir: FernIr.IntermediateRepresentation,
+        wireMockOptions: WireMockOptions = {}
+    ) {
         this.context = context;
         this.ir = ir;
+        this.wireMockOptions = wireMockOptions;
     }
 
     /**
@@ -29,14 +44,24 @@ export class WireTestSetupGenerator {
         this.generateWireTestScript();
     }
 
-    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation, options: WireMockOptions = {}) {
         // @ts-expect-error Nominal type mismatch: Rust SDK uses ir-sdk@66.2.0 while mock-utils
         // resolves to a different version. The types are structurally compatible at runtime.
-        return new WireMock().convertToWireMock(ir);
+        return new WireMock().convertToWireMock(ir, options);
     }
 
-    private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+    /**
+     * The WireMock mappings served to the wire tests, after the Rust-specific post-processing.
+     */
+    public getWireMockConfig(): WireMockStubMapping {
+        if (this.wireMockConfig == null) {
+            this.wireMockConfig = this.buildWireMockConfig();
+        }
+        return this.wireMockConfig;
+    }
+
+    private buildWireMockConfig(): WireMockStubMapping {
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir, this.wireMockOptions);
 
         // Post-process mappings to fix unit type responses
         this.fixUnitTypeResponses(wireMockConfigContent);
@@ -53,6 +78,11 @@ export class WireTestSetupGenerator {
         // by copying the response from a sibling endpoint at the same path.
         this.addBytesEndpointFallbackMappings(wireMockConfigContent);
 
+        return wireMockConfigContent;
+    }
+
+    private generateWireMockConfigFile(): void {
+        const wireMockConfigContent = this.getWireMockConfig();
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
@@ -217,6 +247,10 @@ export class WireTestSetupGenerator {
         // Index existing mappings by method+path
         const existingByKey = new Map<string, WireMockMapping>();
         for (const mapping of wireMockConfig.mappings || []) {
+            // Per-example mappings only match their own test's X-Test-Id header
+            if (mapping.request.headers?.["X-Test-Id"] != null) {
+                continue;
+            }
             const key = `${mapping.request.method}:${mapping.request.urlPathTemplate}`;
             // Keep the first (highest-priority) mapping for each key
             if (!existingByKey.has(key)) {
@@ -233,7 +267,7 @@ export class WireTestSetupGenerator {
                 const fallback: WireMockMapping = {
                     ...sibling,
                     id: `${sibling.id.slice(0, -4)}fb00`,
-                    name: `${sibling.name} (bytes fallback)`,
+                    name: `${sibling.name}${BYTES_FALLBACK_NAME_SUFFIX}`,
                     uuid: `${sibling.uuid.slice(0, -4)}fb00`,
                     priority: 5,
                     request: {

@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "93fa3a0a-0c4d-40dd-a2a1-3c26cefeaf4c",
+      "name": "stream - Stream completions - test_completions_stream_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "93fa3a0a-0c4d-40dd-a2a1-3c26cefeaf4c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "392a038a-4138-4153-a873-41da36997679",
       "name": "streamWithoutTerminator - Stream without terminator",
       "request": {
@@ -51,9 +82,40 @@
           }
         }
       }
+    },
+    {
+      "id": "9c7aeda4-bbef-4932-b644-f48c4f70d830",
+      "name": "streamWithoutTerminator - Stream without terminator - test_completions_stream_without_terminator_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-no-terminator",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_without_terminator_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "9c7aeda4-bbef-4932-b644-f48c4f70d830",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 4
   }
 }

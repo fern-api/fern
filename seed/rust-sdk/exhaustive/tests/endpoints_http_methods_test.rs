@@ -15,6 +15,11 @@ async fn test_endpoints_http_methods_test_get_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_http_methods_test_get_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -41,6 +46,11 @@ async fn test_endpoints_http_methods_test_post_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_http_methods_test_post_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -73,6 +83,11 @@ async fn test_endpoints_http_methods_test_put_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_http_methods_test_put_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -106,6 +121,11 @@ async fn test_endpoints_http_methods_test_patch_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_http_methods_test_patch_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -155,6 +175,11 @@ async fn test_endpoints_http_methods_test_delete_with_wiremock() {
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_http_methods_test_delete_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

@@ -15,6 +15,11 @@ async fn test_endpoints_content_type_post_json_patch_content_type_with_wiremock(
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_content_type_post_json_patch_content_type_with_wiremock".to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client
@@ -63,6 +68,12 @@ async fn test_endpoints_content_type_post_json_patch_content_with_charset_type_w
         ..Default::default()
     };
     config.base_url = wiremock_base_url.to_string();
+    config.max_retries = 0;
+    config.custom_headers.insert(
+        "X-Test-Id".to_string(),
+        "test_endpoints_content_type_post_json_patch_content_with_charset_type_with_wiremock"
+            .to_string(),
+    );
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
 
     let result = client

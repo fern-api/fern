@@ -27,6 +27,68 @@
       }
     },
     {
+      "id": "93fa3a0a-0c4d-40dd-a2a1-3c26cefeaf4c",
+      "name": "stream - Stream completions - test_completions_stream_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"foo\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\"bar\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "93fa3a0a-0c4d-40dd-a2a1-3c26cefeaf4c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "ba391b63-aad4-4002-a908-87eb4494554d",
+      "name": "stream - Bad request - test_completions_stream_throws_bad_request_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_throws_bad_request_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "\"bad request\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ba391b63-aad4-4002-a908-87eb4494554d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
       "name": "streamEvents - Stream events",
       "request": {
@@ -43,6 +105,68 @@
       "uuid": "9a6b501e-3920-47d3-a852-e05e4eba58a6",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "54f84faf-2ad9-4bb2-ab48-0ba5b5e5f2be",
+      "name": "streamEvents - Stream events - test_completions_stream_events_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-events",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_events_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "54f84faf-2ad9-4bb2-ab48-0ba5b5e5f2be",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2a7ff197-058d-4dfe-8c06-d52f8bae708a",
+      "name": "streamEvents - Bad request - test_completions_stream_events_throws_bad_request_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-events",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_events_throws_bad_request_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "\"bad request\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2a7ff197-058d-4dfe-8c06-d52f8bae708a",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -79,6 +203,68 @@
       }
     },
     {
+      "id": "5c1e100c-6208-4d21-ab7c-844cc43517e8",
+      "name": "streamEventsDiscriminantInData - Stream events where discriminant is embedded in data and SSE event line is empty - test_completions_stream_events_discriminant_in_data_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-events-discriminant-in-data",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_events_discriminant_in_data_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: message\ndata: {\"type\":\"group.created\",\"offset\":\"offset-1\",\"group_id\":\"g1\"}\n\nevent: message\ndata: {\"type\":\"group.deleted\",\"offset\":\"offset-2\",\"group_id\":\"g2\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "5c1e100c-6208-4d21-ab7c-844cc43517e8",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "e5dec505-fbd0-40e7-afd1-f494a58e88ba",
+      "name": "streamEventsDiscriminantInData - default - test_completions_stream_events_discriminant_in_data_throws_bad_request_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-events-discriminant-in-data",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_events_discriminant_in_data_throws_bad_request_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e5dec505-fbd0-40e7-afd1-f494a58e88ba",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "0913bb86-4b39-4c8a-9875-111a5210a147",
       "name": "streamEventsContextProtocol - Stream events context protocol",
       "request": {
@@ -103,9 +289,71 @@
           }
         }
       }
+    },
+    {
+      "id": "03ce85f4-b434-4c4e-83a6-3325353e1b7c",
+      "name": "streamEventsContextProtocol - Stream events context protocol - test_completions_stream_events_context_protocol_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-events-context-protocol",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_events_context_protocol_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"event\":\"completion\",\"content\":\"hello\"}\n\nevent: error\ndata: {\"event\":\"error\",\"error\":\"something went wrong\"}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "03ce85f4-b434-4c4e-83a6-3325353e1b7c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a88df206-c995-40e4-915a-9415ad7e6e88",
+      "name": "streamEventsContextProtocol - Bad request context protocol - test_completions_stream_events_context_protocol_throws_bad_request_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/stream-events-context-protocol",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_completions_stream_events_context_protocol_throws_bad_request_error_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": "\"bad request\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a88df206-c995-40e4-915a-9415ad7e6e88",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 4
+    "total": 12
   }
 }

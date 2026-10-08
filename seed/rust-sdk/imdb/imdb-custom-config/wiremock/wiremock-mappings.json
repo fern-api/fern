@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "55b12f2a-1e7b-46f6-952a-d3b69906e41d",
+      "name": "createMovie - default - test_imdb_create_movie_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/movies/create-movie",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_imdb_create_movie_with_wiremock"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "55b12f2a-1e7b-46f6-952a-d3b69906e41d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "53de2297-8f8c-41a3-9e07-390505254c72",
       "name": "getMovie - default",
       "request": {
@@ -56,9 +87,81 @@
           }
         }
       }
+    },
+    {
+      "id": "ae86e43a-3282-46ce-a02b-cf6cd44b2cbd",
+      "name": "getMovie - default - test_imdb_get_movie_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/movies/{movieId}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_imdb_get_movie_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "movieId": {
+            "equalTo": "movieId"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"id\",\n  \"title\": \"title\",\n  \"rating\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ae86e43a-3282-46ce-a02b-cf6cd44b2cbd",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "7f4caa78-fb5f-44fd-bdd7-584481708d87",
+      "name": "getMovie - default - test_imdb_get_movie_throws_not_found_error_with_wiremock",
+      "request": {
+        "urlPathTemplate": "/movies/{movieId}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "test_imdb_get_movie_throws_not_found_error_with_wiremock"
+          }
+        },
+        "pathParameters": {
+          "movieId": {
+            "equalTo": "movieId"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "7f4caa78-fb5f-44fd-bdd7-584481708d87",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 5
   }
 }
