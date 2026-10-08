@@ -178,6 +178,7 @@ export async function makePassthroughRequest(
                 false, // disableCache
             ),
         maxRetries,
+        abortSignal,
     );
 
     if (logger.isDebug()) {

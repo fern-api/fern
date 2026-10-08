@@ -194,6 +194,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.responseType === "streaming" || args.responseType === "sse",
                 ),
             args.maxRetries,
+            args.abortSignal,
         );
 
         if (response.status >= 200 && response.status < 400) {
