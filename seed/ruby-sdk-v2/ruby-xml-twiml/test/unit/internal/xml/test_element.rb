@@ -6,6 +6,7 @@ describe Seed::Internal::Xml::Element do
   XmlTestElement = Seed::Internal::Xml::Element
   XmlTestUtils = Seed::Internal::Xml::Utils
   XmlTestText = Seed::Internal::Xml::Text
+  XmlTestComment = Seed::Internal::Xml::Comment
 
   describe "#to_xml" do
     it "serializes attributes, text and children with escaping" do
@@ -145,6 +146,18 @@ describe Seed::Internal::Xml::Element do
       assert_same second, content[2]
       assert_equal "tail", content[3].value
     end
+
+    it "content includes the leading text when requested" do
+      parsed = XmlTestUtils.parse_document("<Gather>Press a key, then <Say>one</Say></Gather>")
+      say = XmlTestElement.new("Say", text: "one")
+
+      assert_equal 1, XmlTestUtils.content(parsed, [[["Say"], [say]]], []).length
+      content = XmlTestUtils.content(parsed, [[["Say"], [say]]], [], include_text: true)
+
+      assert_equal 2, content.length
+      assert_equal "Press a key, then ", content[0].value
+      assert_same say, content[1]
+    end
   end
 
   describe "scalar parsing" do
@@ -201,6 +214,53 @@ describe Seed::Internal::Xml::Element do
 
     it "rejects text or attributes alongside an element object" do
       assert_raises(ArgumentError) { XmlTestModel.new.add_child(XmlTestElement.new("Custom"), "v") }
+    end
+  end
+
+  describe "comments" do
+    it "keeps comments in their position in the content" do
+      element = XmlTestElement.new("Response").add_comment(" a comment ").add_child(XmlTestElement.new("Hangup")).add_text("loose text")
+
+      assert_equal "<Response><!-- a comment --><Hangup/>loose text</Response>", element.to_xml
+
+      parsed = XmlTestUtils.parse_document(element.to_xml)
+
+      assert_equal 3, parsed.children.length
+      assert_equal XmlTestComment.new(" a comment "), parsed.children[0]
+      assert_equal element.to_xml, parsed.to_xml
+      assert_equal element, parsed
+
+      say = XmlTestUtils.parse_document("<Say><!--x-->text</Say>")
+
+      assert_nil say.text
+      assert_equal "<Say><!--x-->text</Say>", say.to_xml
+    end
+
+    it "renders sibling comments around their element" do
+      say = XmlTestElement.new("Say", text: "x")
+      say.add_child(XmlTestComment.before("before")).add_child(XmlTestComment.after("after"))
+      response = XmlTestElement.new("Response").add_child(XmlTestElement.new("Pause")).add_child(say)
+
+      assert_equal "<Response><Pause/><!--before--><Say>x</Say><!--after--></Response>", response.to_xml
+      assert_equal "#{XmlTestUtils::XML_DECLARATION}<!--before--><Say>x</Say><!--after-->", say.to_xml(xml_declaration: true)
+      assert_empty say.child_elements
+
+      empty = XmlTestElement.new("Hangup").add_child(XmlTestComment.after("done"))
+
+      assert_equal "<Hangup/><!--done-->", empty.to_xml
+    end
+
+    it "rejects an unterminated comment" do
+      assert_raises(ArgumentError) { XmlTestUtils.parse_document("<Response><!-- oops </Response>") }
+    end
+
+    it "keeps comment text from closing the comment early" do
+      element = XmlTestElement.new("Response").add_comment("a -- b --> <Hangup/> -")
+
+      assert_equal "<Response><!--a - - b - -> <Hangup/> - --></Response>", XmlTestUtils.serialize(element)
+      parsed = XmlTestUtils.parse_document(XmlTestUtils.serialize(element))
+
+      assert_equal [XmlTestComment.new("a - - b - -> <Hangup/> - ")], parsed.children
     end
   end
 end

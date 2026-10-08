@@ -151,6 +151,7 @@ export abstract class AbstractPhpGeneratorContext<
             ? [
                   AsIsFiles.XmlNode,
                   AsIsFiles.XmlText,
+                  AsIsFiles.XmlComment,
                   AsIsFiles.XmlElement,
                   AsIsFiles.XmlSerializableType,
                   AsIsFiles.XmlUtils

@@ -289,6 +289,64 @@ client.StreamProtocolWithFlatSchema(
 </dl>
 </details>
 
+<details><summary><code>client.StreamProtocolMixedSchema(request) -> fern.StreamProtocolMixedSchemaResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.StreamRequest{}
+client.StreamProtocolMixedSchema(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.StreamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.StreamDataContextWithEnvelopeSchema(request) -> fern.StreamDataContextWithEnvelopeSchemaResponse</code></summary>
 <dl>
 <dd>

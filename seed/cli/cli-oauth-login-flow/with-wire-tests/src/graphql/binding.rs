@@ -344,6 +344,7 @@ impl Binding for GraphqlBinding {
             .await?;
 
             match result {
+                Some(value) if dry_run => Ok(DispatchResult::Record(value)),
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }

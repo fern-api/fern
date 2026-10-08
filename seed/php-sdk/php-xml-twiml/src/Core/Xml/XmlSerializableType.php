@@ -16,7 +16,7 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     private array $__additionalChildren = [];
 
     /**
-     * @var list<XmlNode|XmlText> Child elements and text segments in document order, including the
+     * @var list<XmlNode|XmlText|XmlComment> Child elements, text segments and comments in document order, including the
      * typed children and the additional children (shared by reference). Decides the order in which
      * toXml() writes them; typed children that are missing here are appended at the end.
      */
@@ -89,7 +89,7 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     }
 
     /**
-     * @return list<XmlNode|XmlText> Child elements and text segments in document order.
+     * @return list<XmlNode|XmlText|XmlComment> Child elements, text segments and comments in document order.
      */
     public function getContent(): array
     {
@@ -97,7 +97,7 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     }
 
     /**
-     * @param list<XmlNode|XmlText> $content
+     * @param list<XmlNode|XmlText|XmlComment> $content
      */
     public function setContent(array $content): static
     {
@@ -123,6 +123,35 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     public function addText(string $text): static
     {
         $this->__content[] = new XmlText($text);
+        return $this;
+    }
+
+    /**
+     * Adds an XML comment (`<!--text-->`) inside this element after the children added so far.
+     */
+    public function comment(string $text): static
+    {
+        $this->__content[] = new XmlComment($text);
+        return $this;
+    }
+
+    /**
+     * Adds an XML comment rendered immediately before this element (as a sibling in its parent,
+     * or before the root element).
+     */
+    public function commentBefore(string $text): static
+    {
+        $this->__content[] = XmlComment::before($text);
+        return $this;
+    }
+
+    /**
+     * Adds an XML comment rendered immediately after this element (as a sibling in its parent,
+     * or after the root element).
+     */
+    public function commentAfter(string $text): static
+    {
+        $this->__content[] = XmlComment::after($text);
         return $this;
     }
 

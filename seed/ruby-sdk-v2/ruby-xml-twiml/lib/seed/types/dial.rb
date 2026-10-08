@@ -27,6 +27,11 @@ module Seed
       # @yieldparam child [Number] the new element, for nesting children inline
       # @return [Number]
       def add_number(phone_number = nil, **attributes)
+        if attributes.key?(:phone_number)
+          raise ArgumentError, "phone_number given both positionally and as a keyword" unless phone_number.nil?
+
+          phone_number = attributes.delete(:phone_number)
+        end
         child = phone_number.is_a?(Seed::Types::Number) ? phone_number : Seed::Types::Number.new(**attributes, phone_number: phone_number)
         self.numbers = [*numbers, child]
         record_content(child)

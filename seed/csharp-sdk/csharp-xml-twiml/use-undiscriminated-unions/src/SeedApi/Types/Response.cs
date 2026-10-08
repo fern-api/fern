@@ -28,7 +28,7 @@ public record Response : IJsonOnDeserialized, IXmlNode
     public Dictionary<string, string> AdditionalAttributes { get; set; } = new();
 
     /// <summary>
-    /// Ordered content of the element: text segments (string), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
+    /// Ordered content of the element: text segments (string), comments (XmlComment), typed child elements and child elements that are not part of the typed model (XmlElement), in the order they are written. Typed children assigned directly to their property are appended after it.
     /// </summary>
     [JsonIgnore]
     public List<object> Content { get; set; } = new();
@@ -43,7 +43,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
         item is global::SeedApi.Say
         || item is global::SeedApi.Dial
         || item is global::SeedApi.Pause
-        || item is global::SeedApi.Hangup;
+        || item is global::SeedApi.Hangup
+        || item is global::SeedApi.Redirect;
 
     private static ResponseChildrenItem ToChildrenItem(object item)
     {
@@ -56,6 +57,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
             case global::SeedApi.Pause value:
                 return value;
             case global::SeedApi.Hangup value:
+                return value;
+            case global::SeedApi.Redirect value:
                 return value;
             default:
                 throw new ArgumentException(
@@ -76,6 +79,8 @@ public record Response : IJsonOnDeserialized, IXmlNode
                 return global::SeedApi.Pause.FromXElement(child);
             case "Hangup":
                 return global::SeedApi.Hangup.FromXElement(child);
+            case "Redirect":
+                return global::SeedApi.Redirect.FromXElement(child);
             default:
                 return null;
         }
@@ -128,6 +133,11 @@ public record Response : IJsonOnDeserialized, IXmlNode
     /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
     /// </summary>
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+
+    /// <summary>
+    /// Hash code derived from the rendered XML, consistent with Equals.
+    /// </summary>
+    public override int GetHashCode() => XmlUtils.XmlHashCode(this);
 
     /// <summary>
     /// Adds a <c>&lt;Say&gt;</c> child element after any content added so far and returns this instance for chaining.
@@ -239,6 +249,38 @@ public record Response : IJsonOnDeserialized, IXmlNode
     }
 
     /// <summary>
+    /// Adds a <c>&lt;Redirect&gt;</c> child element after any content added so far and returns this instance for chaining.
+    /// <para>
+    /// Text element with a required attribute.
+    /// </para>
+    /// </summary>
+    /// <param name="redirect">The <c>&lt;Redirect&gt;</c> element to add.</param>
+    public Response Redirect(Redirect redirect)
+    {
+        Children = XmlUtils.Append<ResponseChildrenItem>(Children, redirect);
+        Content.Add(redirect);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a <c>&lt;Redirect&gt;</c> child element built from the given values and returns this instance for chaining.
+    /// <para>
+    /// Text element with a required attribute.
+    /// </para>
+    /// </summary>
+    public Response Redirect(string url, string method, string? kind = null)
+    {
+        return Redirect(
+            new global::SeedApi.Redirect
+            {
+                Url = url,
+                Method = method,
+                Kind = kind,
+            }
+        );
+    }
+
+    /// <summary>
     /// Adds an arbitrary child element (for elements not covered by the typed model) after any content added so far and returns this instance for chaining.
     /// </summary>
     public Response AddChild(XmlElement child)
@@ -255,6 +297,38 @@ public record Response : IJsonOnDeserialized, IXmlNode
         Content.Add(text);
         return this;
     }
+
+    /// <summary>
+    /// Appends an XML comment (&lt;!--text--&gt;) inside this element after any content added so far and returns this instance for chaining.
+    /// </summary>
+    public Response Comment(string text)
+    {
+        Content.Add(new XmlComment(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this instance for chaining.
+    /// </summary>
+    public Response CommentBefore(string text)
+    {
+        Content.Add(XmlComment.Before(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this instance for chaining.
+    /// </summary>
+    public Response CommentAfter(string text)
+    {
+        Content.Add(XmlComment.After(text));
+        return this;
+    }
+
+    /// <summary>
+    /// Two values are equal when they render to the same XML.
+    /// </summary>
+    public virtual bool Equals(Response? other) => XmlUtils.XmlEquals(this, other);
 
     /// <summary>
     /// Returns the XML representation of this value.

@@ -1,4 +1,52 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.30.3
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 4.30.2
+  changelogEntry:
+    - summary: |
+        The debug logger now lower-cases header names with `Locale.ROOT` when deciding which headers to
+        redact, in both the request and response log lines. Before, it used the JVM's default locale, so on a
+        Turkish or Azerbaijani JVM a header such as `AUTHORIZATION` or `X-API-KEY` lower-cased to a dotless `ı`,
+        missed the redaction list, and its value was logged in plain text. `LogLevel.fromString` now upper-cases
+        with `Locale.ROOT` too, so `fromString("info")` no longer throws on those locales.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 4.30.1
+  changelogEntry:
+    - summary: |
+        Async clients no longer sleep on OkHttp dispatcher threads while waiting to retry. The retry is
+        scheduled after the backoff delay, so calls that are waiting to retry no longer hold OkHttp's
+        per-host request slots (5 by default) and delay unrelated calls. Cancelling the returned future
+        now stops the wait immediately and sends no further attempts.
+      type: fix
+    - summary: |
+        Interrupting a synchronous call while it waits to retry now restores the thread's interrupt
+        flag and throws `InterruptedIOException`, instead of clearing the flag and throwing a generic
+        `IOException`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 4.30.0
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders can now carry XML comments. `comment(text)` adds `<!--text-->` inside the element at
+        its position in the ordered content (interleaved with `addText` segments and child elements), while
+        `commentBefore(text)` / `commentAfter(text)` render a comment immediately before or after the element
+        itself (as a sibling in its parent, or around the root element after the XML declaration). Comments in
+        parsed documents are preserved by `fromXml` and round-trip through `toXml`; `XmlNode.comment(...)`
+        exposes the same for untyped elements.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
 - version: 4.29.0
   changelogEntry:
     - summary: |

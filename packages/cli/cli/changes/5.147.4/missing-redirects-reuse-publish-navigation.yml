@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` and `fern docs publish` no longer build the docs navigation twice.
+    The `missing-redirects` check now runs on the navigation the publish already resolves,
+    instead of resolving the docs a second time during validation. Its warnings are now
+    printed during publishing, and `missing-redirects: error` still stops the publish.
+  type: fix

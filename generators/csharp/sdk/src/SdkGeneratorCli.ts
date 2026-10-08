@@ -5,7 +5,8 @@ import {
     generateModels,
     generateTests as generateModelTests,
     generateVersion,
-    generateWellKnownProtobufFiles
+    generateWellKnownProtobufFiles,
+    generateXmlTests
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -258,6 +259,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             }
             const sdkTests = generateSdkTests({ context });
             for (const file of sdkTests) {
+                context.project.addTestFiles(file);
+            }
+        }
+        if (context.hasXmlTypes()) {
+            for (const file of generateXmlTests({ context })) {
                 context.project.addTestFiles(file);
             }
         }

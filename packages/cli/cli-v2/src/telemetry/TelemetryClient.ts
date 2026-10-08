@@ -39,7 +39,11 @@ export class TelemetryClient {
             usingAccessToken: process.env.FERN_TOKEN != null,
             ...getRunIdProperties()
         };
-        this.posthog = apiKey != null && apiKey.length > 0 && isTelemetryEnabled ? new PostHog(apiKey) : undefined;
+        // isServer: false keeps posthog-node >=5.36 from tagging CLI events with `$is_server: true`.
+        this.posthog =
+            apiKey != null && apiKey.length > 0 && isTelemetryEnabled
+                ? new PostHog(apiKey, { isServer: false })
+                : undefined;
 
         const sentryDsn = process.env.SENTRY_DSN;
         if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {

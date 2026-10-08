@@ -11,7 +11,7 @@ module Seed
 
       field :tree_species, -> { String }, optional: false, nullable: false, api_name: "treeSpecies"
 
-      field :height_in_feet, -> { Integer }, optional: true, nullable: false, api_name: "heightInFeet"
+      field :height_in_feet, -> { Float }, optional: true, nullable: false, api_name: "heightInFeet"
 
       field :planted_date, -> { String }, optional: true, nullable: false, api_name: "plantedDate"
     end

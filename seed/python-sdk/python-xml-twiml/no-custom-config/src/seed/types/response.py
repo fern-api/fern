@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.xml_utilities import (
+    XmlComment,
     XmlContent,
     XmlElement,
     XmlNode,
@@ -22,6 +23,7 @@ from ..core.xml_utilities import (
 from .dial import Dial
 from .hangup import Hangup
 from .pause import Pause
+from .redirect import Redirect
 from .response_children_item import ResponseChildrenItem
 from .say import Say
 
@@ -33,6 +35,8 @@ class Response(UniversalBaseModel):
 
     children: typing.Optional[typing.List[ResponseChildrenItem]] = None
     _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+    _comments_before: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
+    _comments_after: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
 
     def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
@@ -45,6 +49,8 @@ class Response(UniversalBaseModel):
             ],
             children=[],
             content=order_xml_content(self._content, self.children),
+            comments_before=self._comments_before,
+            comments_after=self._comments_after,
             xml_declaration=xml_declaration,
         )
 
@@ -73,7 +79,7 @@ class Response(UniversalBaseModel):
         Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes; text segments and child elements (declared or not) are preserved in document order.
         """
         node = parse_xml(xml, "Response")
-        content = xml_content(node, {"Say": Say, "Dial": Dial, "Pause": Pause, "Hangup": Hangup})
+        content = xml_content(node, {"Say": Say, "Dial": Dial, "Pause": Pause, "Hangup": Hangup, "Redirect": Redirect})
         model = build_xml_model(
             cls,
             dict(
@@ -84,6 +90,7 @@ class Response(UniversalBaseModel):
                         Dial,
                         Pause,
                         Hangup,
+                        Redirect,
                     ),
                     optional=True,
                 ),
@@ -106,6 +113,27 @@ class Response(UniversalBaseModel):
         Appends a text segment after the children added so far and returns this element, so text and child elements can be interleaved.
         """
         self._content.append(text)
+        return self
+
+    def comment(self, text: str) -> Response:
+        """
+        Appends an XML comment (`<!--text-->`) inside this element, after the content added so far, and returns this element.
+        """
+        self._content.append(XmlComment(text))
+        return self
+
+    def comment_before(self, text: str) -> Response:
+        """
+        Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this element.
+        """
+        self._comments_before.append(XmlComment(text))
+        return self
+
+    def comment_after(self, text: str) -> Response:
+        """
+        Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this element.
+        """
+        self._comments_after.append(XmlComment(text))
         return self
 
     def append(self, child: ResponseChildrenItem) -> Response:
@@ -191,6 +219,34 @@ class Response(UniversalBaseModel):
         Appends a `<Hangup>` child element and returns it.
         """
         child = Hangup(**extra_attributes)
+        append_xml_child(self, "children", child)
+        return child
+
+    def redirect(
+        self,
+        url: str,
+        *,
+        method: str,
+        kind: typing.Optional[typing.Literal["redirect"]] = None,
+        **extra_attributes: str,
+    ) -> Redirect:
+        """
+        Appends a `<Redirect>` child element and returns it.
+
+        Text element with a required attribute.
+
+        Parameters
+        ----------
+        url : str
+
+        method : str
+
+        kind : typing.Optional[typing.Literal["redirect"]]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
+        """
+        child = Redirect(url=url, method=method, kind=kind, **extra_attributes)
         append_xml_child(self, "children", child)
         return child
 
