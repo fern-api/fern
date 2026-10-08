@@ -1,4 +1,4 @@
-import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { CaseConverter, getOriginalName, getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -1789,6 +1789,7 @@ describe("${serviceName}", () => {
                         // For SSE endpoints with a protocol-discriminated union, the discriminant travels as
                         // the SSE `event:` field and must be stripped from the data JSON.
                         let discriminantField: string | undefined;
+                        let envelopeEvents = new Set<string>();
                         if (opts != null) {
                             const ssePayload =
                                 opts.endpoint.response?.body?.type === "streaming" &&
@@ -1803,6 +1804,23 @@ describe("${serviceName}", () => {
                                         FernIr.UnionDiscriminatorContext.Protocol
                                 ) {
                                     discriminantField = getWireValue(typeDeclaration.shape.discriminant);
+                                    const envelopeContext = opts.context;
+                                    envelopeEvents = new Set(
+                                        getSseEnvelopeEventNames({
+                                            union: typeDeclaration.shape,
+                                            getObjectPropertyWireValues: (variant) => {
+                                                const variantDeclaration =
+                                                    envelopeContext.type.getTypeDeclaration(variant);
+                                                if (variantDeclaration.shape.type !== "object") {
+                                                    return undefined;
+                                                }
+                                                return [
+                                                    ...(variantDeclaration.shape.extendedProperties ?? []),
+                                                    ...variantDeclaration.shape.properties
+                                                ].map((property) => getWireValue(property.name));
+                                            }
+                                        })
+                                    );
                                 }
                             }
                         }
@@ -1822,7 +1840,9 @@ describe("${serviceName}", () => {
                                     eventType = copy[discriminantField] as string;
                                 }
                                 delete copy[discriminantField];
-                                dataJson = copy;
+                                // Envelope-shaped variants (`{ event, data }`) carry the payload in `data`.
+                                dataJson =
+                                    eventType != null && envelopeEvents.has(eventType) ? (copy.data ?? {}) : copy;
                             }
                             return `event: ${eventType}\ndata: ${JSON.stringify(dataJson)}\n`;
                         });

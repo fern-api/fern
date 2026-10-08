@@ -19,7 +19,7 @@ func do() {
             "query",
         ),
     }
-    client.StreamOasSpecNative(
+    client.StreamDataContextWithEnvelopeSchema(
         context.TODO(),
         request,
     )

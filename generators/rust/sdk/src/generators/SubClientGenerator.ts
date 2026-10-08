@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue, GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { escapeRustKeyword, RustFile } from "@fern-api/rust-base";
@@ -920,6 +920,7 @@ export class SubClientGenerator {
         let executeMethod = "execute_request";
         let typeParameter = "";
         let executeArgs = "";
+        let sseEventDiscriminatorSuffix = "";
 
         const isBytesRequest = this.isBytesEndpoint(endpoint);
 
@@ -989,6 +990,7 @@ export class SubClientGenerator {
                 executeMethod = "execute_sse_request";
                 const terminator = this.getSseTerminator(endpoint);
                 executeArgs += `\n            ${terminator},`;
+                sseEventDiscriminatorSuffix = this.getSseEventDiscriminatorSuffix(endpoint);
             } else if (responseType === "json") {
                 // JSON streaming needs explicit type parameter for inference
                 const innerType = this.getInnerResponseType(endpoint);
@@ -1014,7 +1016,7 @@ export class SubClientGenerator {
         ).await`;
         } else {
             body = `${requestOptionsPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
-        ).await`;
+        ).await${sseEventDiscriminatorSuffix}`;
         }
 
         return {
@@ -2005,6 +2007,35 @@ export class SubClientGenerator {
     /** Whether the endpoint declares an `application/x-www-form-urlencoded` request body. */
     private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         return (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded");
+    }
+
+    /**
+     * For protocol-discriminated SSE unions, the discriminant travels on the SSE `event:` line, so the
+     * stream must be told to expose it to deserialization.
+     */
+    private getSseEventDiscriminatorSuffix(endpoint: FernIr.HttpEndpoint): string {
+        const body = endpoint.response?.body;
+        if (body?.type !== "streaming" || body.value.type !== "sse" || body.value.payload.type !== "named") {
+            return "";
+        }
+        const union = this.context.ir.types[body.value.payload.typeId]?.shape;
+        if (union?.type !== "union" || union.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
+            return "";
+        }
+        const envelopeEvents = getSseEnvelopeEventNames({
+            union,
+            getObjectPropertyWireValues: (variant) => {
+                const variantShape = this.context.ir.types[variant.typeId]?.shape;
+                if (variantShape?.type !== "object") {
+                    return undefined;
+                }
+                return [...(variantShape.extendedProperties ?? []), ...variantShape.properties].map((property) =>
+                    getWireValue(property.name)
+                );
+            }
+        });
+        const envelopeEventsLiteral = envelopeEvents.map((event) => JSON.stringify(event)).join(", ");
+        return `\n        .map(|stream| stream.with_event_discriminator(${JSON.stringify(getWireValue(union.discriminant))}, &[${envelopeEventsLiteral}]))`;
     }
 
     private getSseTerminator(endpoint: FernIr.HttpEndpoint): string {
