@@ -2,8 +2,8 @@ github.com/fern-api/generator-exec-go v1.0.46 h1:WGX3pxFpjtggzfzt339U3QWQOvUsmpI
 github.com/fern-api/generator-exec-go v1.0.46/go.mod h1:Z7V5lZnaD8PblJAynK087662md2wBNhQcAl+W6IIydw=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/hmdsefi/gograph v0.7.1 h1:WKjM6r7pkK1Z6Lsn7YoJisBFHsbvmKa2rAGVN91lZiI=
-github.com/hmdsefi/gograph v0.7.1/go.mod h1:ZrmXi8bO0eWG86DQ4F0kinG1+2zSgZVKIbhadwSCEag=
+github.com/hmdsefi/gograph v0.8.2 h1:bVfkK4GVApb5ZZB/P0y9BjKo8Lt+D/kbJ+uCl4RpshM=
+github.com/hmdsefi/gograph v0.8.2/go.mod h1:ZrmXi8bO0eWG86DQ4F0kinG1+2zSgZVKIbhadwSCEag=
 github.com/stretchr/testify v1.12.1 h1:EuwCh5fleGS7H32xRwO3wRGT7DxrDhLAT6FF8MpWDWE=
 github.com/stretchr/testify v1.12.1/go.mod h1:MDEgiDPPsNp5cuIrHPPCyornHKgEVbtFUmoNlxoYthg=
 go.uber.org/multierr v1.11.0 h1:blXXJkSxSSfBVBlC76pxqeO+LN3aDfLQo+309xJstO0=

@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/fern-api/generator-exec-go v1.0.46
 	github.com/google/uuid v1.6.0
-	github.com/hmdsefi/gograph v0.7.1
+	github.com/hmdsefi/gograph v0.8.2
 	github.com/stretchr/testify v1.12.1
 	go.uber.org/multierr v1.11.0
 	golang.org/x/mod v0.41.0
