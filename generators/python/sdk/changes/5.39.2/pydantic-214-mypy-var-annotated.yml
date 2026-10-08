@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated `core/pydantic_utilities.py` now type-checks under pydantic 2.14, which made mypy report
+    `var-annotated` on the module-level `TypeAdapter` instances.
+  type: fix
