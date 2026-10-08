@@ -7,5 +7,7 @@
     surfaced a generic `"timeout"` error and Node 18 a `TypeError: invalid_argument`), and the timeout timer
     is cleared on every exit, including failed requests. An error status (4xx/5xx) whose body is slower than
     the timeout now also returns the timeout error. Streaming, SSE and binary responses, and the passthrough
-    `client.fetch()` (which returns the raw response), are unchanged: their timer still stops when headers arrive.
+    `client.fetch()` (which returns the raw response), still stop the timer when headers arrive. When
+    `client.fetch()` times out it now rejects like `fetch` does, with an `Error` whose `name` is `"TimeoutError"`;
+    before, it rejected with the bare string `"timeout"`.
   type: fix
