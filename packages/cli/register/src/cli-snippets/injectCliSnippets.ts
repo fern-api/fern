@@ -28,12 +28,48 @@ export function reconstructOpenApiPath(path: EndpointDefinition["path"]): string
     return (path?.parts ?? []).map((part) => (part.type === "literal" ? part.value : `{${part.value}}`)).join("");
 }
 
+/**
+ * Map every subpackage id to the NAME of its top-level ancestor subpackage (a direct child of the
+ * root package). The docs `namespaces` config is keyed on that top-level name (e.g. "v2010"), not on
+ * the leaf subpackage an endpoint happens to live in (e.g. "messages") — an API with namespaces nests
+ * its endpoints under the top-level subpackage, so joining on the leaf name would never match.
+ */
+function buildTopLevelNameBySubpackageId(apiDefinition: ApiDefinition): Map<string, string> {
+    const topLevelName = new Map<string, string>();
+    const assign = (subpackageId: string, name: string): void => {
+        if (topLevelName.has(subpackageId)) {
+            return;
+        }
+        const subpackage = apiDefinition.subpackages[FdrCjsSdk.SubpackageId(subpackageId)];
+        if (subpackage == null) {
+            return;
+        }
+        topLevelName.set(subpackageId, name);
+        for (const childId of subpackage.subpackages ?? []) {
+            assign(childId, name);
+        }
+    };
+    for (const topLevelId of apiDefinition.rootPackage.subpackages ?? []) {
+        const subpackage = apiDefinition.subpackages[FdrCjsSdk.SubpackageId(topLevelId)];
+        if (subpackage != null) {
+            assign(topLevelId, subpackage.name);
+        }
+    }
+    return topLevelName;
+}
+
 function collectPackages(apiDefinition: ApiDefinition): { namespaceName?: string; endpoints: EndpointDefinition[] }[] {
+    const topLevelName = buildTopLevelNameBySubpackageId(apiDefinition);
     const packages: { namespaceName?: string; endpoints: EndpointDefinition[] }[] = [
         { namespaceName: undefined, endpoints: apiDefinition.rootPackage.endpoints }
     ];
-    for (const subpackage of Object.values(apiDefinition.subpackages)) {
-        packages.push({ namespaceName: subpackage.name, endpoints: subpackage.endpoints });
+    for (const [subpackageId, subpackage] of Object.entries(apiDefinition.subpackages)) {
+        // Scope endpoints by their TOP-LEVEL subpackage name (what the `namespaces` config maps),
+        // falling back to the subpackage's own name for a flat (non-nested) API.
+        packages.push({
+            namespaceName: topLevelName.get(subpackageId) ?? subpackage.name,
+            endpoints: subpackage.endpoints
+        });
     }
     return packages;
 }
@@ -92,10 +128,16 @@ export function injectCliSnippetsIntoApiDefinition({
         }
     }
 
-    context?.logger.debug(
+    context?.logger.info(
         `CLI snippets: matched ${stats.matchedEndpoints}/${stats.totalEndpoints} endpoints, ` +
             `injected ${stats.injectedSamples} samples.`
     );
+    if (stats.matchedEndpoints < stats.totalEndpoints) {
+        context?.logger.warn(
+            `CLI snippets: ${stats.totalEndpoints - stats.matchedEndpoints}/${stats.totalEndpoints} endpoints did ` +
+                `not match a catalog command and will render without a CLI tab.`
+        );
+    }
     return stats;
 }
 

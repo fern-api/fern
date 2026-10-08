@@ -239,4 +239,59 @@ describe("injectCliSnippetsIntoApiDefinition", () => {
         expect(stats.matchedEndpoints).toBe(1);
         expect(example.codeSamples?.[0]?.code).toBe("twilio core token");
     });
+
+    it("resolves the namespace via the top-level subpackage for nested (namespaced) APIs", () => {
+        // The endpoint lives in a nested leaf subpackage ("messages"), but the `namespaces` config is
+        // keyed on the top-level subpackage name ("v2010"). A colliding sibling command forces the
+        // join to actually use the namespace, so this fails unless we walk up to the top-level name.
+        const example = makeExample({
+            pathParameters: { AccountSid: "AC123" },
+            requestBodyV3: { type: "json", value: { To: "+1" } }
+        });
+        const endpoint = makeEndpoint({
+            method: "POST",
+            parts: [
+                part("/2010-04-01/Accounts/", "literal"),
+                part("AccountSid", "pathParameter"),
+                part("/Messages.json", "literal")
+            ],
+            examples: [example]
+        });
+        const api = {
+            rootPackage: { endpoints: [], webhooks: [], websockets: [], types: [], subpackages: ["sub_v2010"] },
+            subpackages: {
+                sub_v2010: { name: "v2010", endpoints: [], subpackages: ["sub_messages"] },
+                sub_messages: { name: "messages", endpoints: [endpoint], subpackages: [] }
+            }
+        } as unknown as ApiDefinition;
+        const catalog: CliCatalog = {
+            version: 1,
+            commands: [
+                {
+                    command: ["twilio", "core", "messages", "create"],
+                    namespace: "core",
+                    httpMethod: "POST",
+                    path: "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+                    inputs: [
+                        { wireName: "AccountSid", location: "path", flag: "--account-sid" },
+                        { wireName: "To", location: "body", flag: "--to" }
+                    ]
+                },
+                {
+                    command: ["twilio", "other", "messages", "create"],
+                    namespace: "other",
+                    httpMethod: "POST",
+                    path: "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+                    inputs: []
+                }
+            ]
+        };
+        const stats = injectCliSnippetsIntoApiDefinition({
+            apiDefinition: api,
+            catalog,
+            namespaces: { v2010: "core" }
+        });
+        expect(stats.matchedEndpoints).toBe(1);
+        expect(example.codeSamples?.[0]?.code).toBe("twilio core messages create --account-sid AC123 --to +1");
+    });
 });

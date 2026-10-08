@@ -571,7 +571,9 @@ const previewCliCatalogCache = new Map<string, CliCatalog>();
 /**
  * Load (and cache) the committed CLI catalog synchronously and inject CLI command snippets for local
  * `fern docs dev`. Preview is single-process and the catalog file is stable within a run, so a simple
- * per-path cache avoids re-reading. Fail-open: a bad/missing catalog just omits the CLI tab.
+ * per-path cache avoids re-reading. NOTE: the cache lives for the dev-server process, so editing
+ * cli-catalog.json during a running `fern docs dev` session requires a restart to take effect.
+ * Fail-open: a bad/missing catalog just omits the CLI tab.
  */
 function injectCliSnippetsForPreview(
     apiDefinition: APIV1Write.ApiDefinition,

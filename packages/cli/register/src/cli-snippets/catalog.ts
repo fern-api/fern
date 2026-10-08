@@ -145,10 +145,12 @@ export function buildCatalogIndex(catalog: CliCatalog, context?: TaskContext): C
         }
     }
 
+    const warnedKeys = new Set<string>();
     return {
         size: catalog.commands.length,
         lookup(method, path, mappedNamespace) {
-            const candidates = byKey.get(indexKey(method, path));
+            const key = indexKey(method, path);
+            const candidates = byKey.get(key);
             if (candidates == null || candidates.length === 0) {
                 return undefined;
             }
@@ -161,7 +163,17 @@ export function buildCatalogIndex(catalog: CliCatalog, context?: TaskContext): C
                     return scoped[0];
                 }
             }
-            // Ambiguous and unresolvable by namespace — refuse to guess.
+            // Multiple commands share this method+path and no namespace resolved to exactly one.
+            // Refuse to guess, and log once so the skipped join is diagnosable rather than silent.
+            if (!warnedKeys.has(key)) {
+                warnedKeys.add(key);
+                const namespaces = candidates.map((c) => c.namespace ?? "<none>").join(", ");
+                context?.logger.warn(
+                    `CLI catalog has ${candidates.length} commands for ${key} (namespaces: ${namespaces}); ` +
+                        `${mappedNamespace != null ? `none matched namespace "${mappedNamespace}"` : "no namespace was provided"}. ` +
+                        `Skipping CLI snippet for it.`
+                );
+            }
             return undefined;
         }
     };
