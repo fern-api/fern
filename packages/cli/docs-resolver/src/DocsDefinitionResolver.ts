@@ -1130,7 +1130,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.llmsTxtFile != null ||
                 this.parsedDocsConfig.llmsFullTxtFile != null ||
                 this.parsedDocsConfig.robotsTxtFile != null ||
-                this.parsedDocsConfig.experimental?.robotsTxtOnInstanceUrl != null
+                this.parsedDocsConfig.experimental?.robotsTxtOnInstanceUrl === true
                     ? ({
                           ...this.parsedDocsConfig.agents,
                           llmsTxt: this.getFileId(this.parsedDocsConfig.llmsTxtFile),
