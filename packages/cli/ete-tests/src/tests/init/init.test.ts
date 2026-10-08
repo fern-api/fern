@@ -263,6 +263,26 @@ describe("fern init", () => {
         expect(docsDefinition).toMatch(/"type":\s*"endpoint"/);
     }, 180_000);
 
+    it.concurrent("init docs ignores --openapi when SDK Config init is disabled", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
+        await copyFile(
+            join(FIXTURES_DIR, RelativeFilePath.of("openapi"), RelativeFilePath.of("petstore-openapi.yml")),
+            join(pathOfDirectory, RelativeFilePath.of("petstore-openapi.yml"))
+        );
+
+        await runFernCli(["init", "--docs", "--organization", "fern", "--openapi", "petstore-openapi.yml"], {
+            cwd: pathOfDirectory,
+            env: { FERN_USE_SDK_CONFIG: "false" },
+            signal
+        });
+
+        const docsYml = yaml.load(await readFile(join(fernDirectory, RelativeFilePath.of("docs.yml")), "utf8"));
+        expect(docsYml).toMatchObject({ navigation: [{ page: "Welcome", path: "pages/welcome.mdx" }] });
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("openapi.yml")))).toBe(false);
+    }, 180_000);
+
     it.concurrent("init --docs --openapi leaves the SDK API of an earlier init --openapi untouched", async ({
         expect,
         signal

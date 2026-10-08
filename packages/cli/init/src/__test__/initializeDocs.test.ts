@@ -187,6 +187,20 @@ describe("initializeDocs", () => {
         expect(loadOpenAPIFromUrl).not.toHaveBeenCalled();
     });
 
+    it("does not warn about an ignored spec when SDK Config init is off and docs.yml already exists", async () => {
+        await initialize();
+        const warnings: string[] = [];
+        const logger = createLogger((level, ...args) => {
+            if (level === LogLevel.Warn) {
+                warnings.push(args.join(" "));
+            }
+        });
+
+        await initialize(await writeSpec(), createMockTaskContext({ logger }), false);
+
+        expect(warnings).toEqual([]);
+    });
+
     it("does not validate or download the spec when docs.yml already exists", async () => {
         await initialize();
 
