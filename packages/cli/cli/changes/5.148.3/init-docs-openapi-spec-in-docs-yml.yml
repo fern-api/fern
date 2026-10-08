@@ -1,0 +1,10 @@
+- summary: |
+    When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init --docs --openapi <path-or-url>`
+    now copies the OpenAPI spec into the fern directory and declares it under the `- api: API Reference`
+    entry's `specs` in `docs.yml`, so the docs build a full API reference without a `generators.yml` or
+    `sdk-config.yml`. Previously `--openapi` was silently ignored when combined with `--docs`, and the
+    welcome page pointed to `fern init --openapi`, which does not produce an API the docs can read in this
+    mode. If `fern/openapi.json|yml` already exists, the copy is written as `openapi-1.json|yml` (and so on),
+    so an existing API's spec is never overwritten. If `docs.yml` already exists, the command now warns that
+    the spec was not added. Without the flag, behavior is unchanged.
+  type: fix

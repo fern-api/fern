@@ -29,6 +29,8 @@ export interface GenerateOptions {
     slug: string;
     /** Display title for the library section (e.g., "Python SDK Reference") */
     title: string;
+    /** URL prefix prepended to frontmatter slugs but not file paths (e.g., "api-reference") */
+    slugPrefix?: string;
 }
 
 export interface GenerateResult {
@@ -52,11 +54,11 @@ export interface GenerateResult {
  * serves as the section overview, and `navigation` contains child items.
  */
 export function generate(options: GenerateOptions): GenerateResult {
-    const { ir, outputDir, slug } = options;
+    const { ir, outputDir, slug, slugPrefix } = options;
 
     // Stage 1: Build type link data (single-pass IR traversal)
     const { validPaths, pathAliases, publicPaths, packageModules } = buildTypeLinkData(ir);
-    const ctx: RenderContext = { baseSlug: slug, validPaths, pathAliases, publicPaths };
+    const ctx: RenderContext = { baseSlug: slug, slugPrefix, validPaths, pathAliases, publicPaths };
 
     // Stage 2: Render pages into a staging directory, then swap it in. The generator owns
     // the library's page tree, so the previous tree is replaced wholesale (a module that
