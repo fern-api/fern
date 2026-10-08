@@ -632,6 +632,7 @@ async fn handle_create(
     store: &mut ProfileStore,
 ) -> Result<(), CliError> {
     let provision = matches.try_get_one::<bool>("provision").ok().flatten() == Some(&true);
+    let captures = provision || matches.get_flag("with-token") || matches.get_flag("from-env");
     let name = matches
         .get_one::<String>("name")
         .cloned()
@@ -659,15 +660,15 @@ async fn handle_create(
         )));
     }
 
-    if provision {
+    if captures {
         if let Some(previous) = existing.as_ref().and_then(|e| e.credential_id.as_deref()) {
             let _ = writeln!(
                 std::io::stderr(),
                 "{}",
                 login::yellow(&format!(
-                    "! profile `{name}` already holds credential `{previous}`; --provision mints a \
-                     new one and forgets this id, so revoke `{previous}` yourself if it should not \
-                     outlive the profile."
+                    "! profile `{name}` already holds credential `{previous}`; the new credential \
+                     replaces it and forgets this id, so revoke `{previous}` yourself if it should \
+                     not outlive the profile."
                 )),
             );
         }
@@ -770,8 +771,7 @@ async fn handle_create(
     //
     // An explicit `--credential` still wins: sharing a slot deliberately is a
     // supported thing to ask for.
-    if (matches.get_flag("with-token") || matches.get_flag("from-env") || provision)
-        && matches.get_one::<String>("credential").is_none()
+    if captures && matches.get_one::<String>("credential").is_none()
     {
         entry.credential = Some(name.clone());
     }
@@ -785,6 +785,7 @@ async fn handle_create(
     // Credential capture happens before the write: if the keychain refuses,
     // we must not leave a profile pointing at an empty slot.
     let mut stderr = std::io::stderr();
+    let mut minted_id: Option<String> = None;
     if provision {
         // Mint first, store second, write the file last: a refused mint
         // leaves nothing behind, and a refused keychain write leaves no
@@ -811,6 +812,7 @@ async fn handle_create(
             ),
         );
         entry.credential_id = minted.credential_id.clone();
+        minted_id = minted.credential_id.clone();
         active_store()
             .set(ctx.cli_name, &account, &minted.stored)
             .map_err(|err| match &minted.credential_id {
@@ -855,6 +857,10 @@ async fn handle_create(
             (false, None) => login::env_credential(ctx.auth_bindings, &scheme)
                 .ok_or_else(|| login::from_env_error(ctx.cli_name, &scheme, "a credential"))?,
         };
+        // A hand-supplied credential is not the one `--provision` minted;
+        // keeping the old id would point `remove --revoke` at a key this
+        // profile no longer uses.
+        entry.credential_id = None;
         active_store().set(ctx.cli_name, &account, &stored)?;
         let _ = writeln!(
             stderr,
@@ -870,7 +876,13 @@ async fn handle_create(
     if matches.get_flag("use") {
         store.set_active(&name);
     }
-    store.save()?;
+    store.save().map_err(|err| match &minted_id {
+        Some(id) => CliError::Auth(format!(
+            "{err}\n  Credential `{id}` was created and stored in the keychain, but the profile \
+             file could not be written; retry with --force --provision, or revoke `{id}` by hand."
+        )),
+        None => err,
+    })?;
 
     let verb = if existing_was_updated(matches) {
         "Updated"
@@ -1065,7 +1077,22 @@ async fn provision_remote_credential(
         ))
     })?;
 
-    let values = super::provision::credential_values(op, &response, fields.as_deref())?;
+    // Read the id first: if the response then fails to map onto the
+    // credential, the key still exists remotely, and the error must name it
+    // so it can be revoked by hand.
+    let credential_id = op
+        .credential_id
+        .as_deref()
+        .map(|path| super::provision::response_field(&response, path))
+        .transpose()?;
+    let values = super::provision::credential_values(op, &response, fields.as_deref()).map_err(
+        |err| match &credential_id {
+            Some(id) => CliError::Validation(format!(
+                "{err}\n  The remote credential `{id}` was created but not stored; revoke it by hand."
+            )),
+            None => err,
+        },
+    )?;
     let stored = match &fields {
         Some(_) => {
             let pairs: Vec<(&str, String)> = values
@@ -1080,11 +1107,6 @@ async fn provision_remote_credential(
             .map(|(_, value)| value)
             .ok_or_else(|| CliError::Validation("--provision: no credential value".to_string()))?,
     };
-    let credential_id = op
-        .credential_id
-        .as_deref()
-        .map(|path| super::provision::response_field(&response, path))
-        .transpose()?;
     Ok(MintedCredential {
         stored,
         credential_id,

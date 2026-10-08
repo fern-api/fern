@@ -428,9 +428,11 @@ impl OpenApiBinding {
         .map(|body| Some(body.unwrap_or(serde_json::Value::Null)))
     }
 
-    /// The configured provider with `credential`'s scheme rebound to
-    /// literal sources — so the request is signed with exactly what the
-    /// caller handed over, and every other scheme behaves as usual.
+    /// A provider that knows only `credential`'s scheme, bound to literal
+    /// sources — so the request is signed with exactly what the caller
+    /// handed over. Every other scheme is dropped: were they kept, an
+    /// operation that also accepts one of them could be signed with an
+    /// ambient credential from the environment or keychain instead.
     fn one_off_auth_provider(
         &self,
         credential: &crate::binding::OneOffCredential,
@@ -451,11 +453,9 @@ impl OpenApiBinding {
         };
 
         let mut found = false;
-        let mut bindings: Vec<(String, SchemeBinding)> =
-            Vec::with_capacity(self.inner.auth_bindings.len());
+        let mut bindings: Vec<(String, SchemeBinding)> = Vec::with_capacity(1);
         for (name, binding) in &self.inner.auth_bindings {
             if name != &credential.scheme {
-                bindings.push((name.clone(), binding.clone()));
                 continue;
             }
             found = true;
