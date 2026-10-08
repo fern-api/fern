@@ -1,0 +1,51 @@
+openapi: 3.0.3
+info:
+  title: Plants
+  version: "1.0"
+paths:
+  /plants:
+    post:
+      operationId: createPlant
+      x-fern-audiences:
+        - public
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - care
+              properties:
+                care:
+                  anyOf:
+                    - title: WateringSchedule
+                      type: object
+                      properties:
+                        intervalDays:
+                          type: number
+                    - title: SoilRequirements
+                      type: object
+                      properties:
+                        soilType:
+                          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  care:
+                    anyOf:
+                      - title: WateringScheduleResponse
+                        type: object
+                        properties:
+                          intervalDays:
+                            type: number
+                      - title: SoilRequirementsResponse
+                        type: object
+                        properties:
+                          soilType:
+                            type: string
