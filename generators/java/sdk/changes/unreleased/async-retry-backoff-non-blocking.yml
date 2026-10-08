@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Async clients no longer sleep on OkHttp dispatcher threads while waiting to retry. The retry is
+    scheduled after the backoff delay, so calls that are waiting to retry no longer hold OkHttp's
+    per-host request slots (5 by default) and delay unrelated calls. Cancelling the returned future
+    now stops the wait immediately and sends no further attempts.
+  type: fix
+- summary: |
+    Interrupting a synchronous call while it waits to retry now restores the thread's interrupt
+    flag and throws `InterruptedIOException`, instead of clearing the flag and throwing a generic
+    `IOException`.
+  type: fix

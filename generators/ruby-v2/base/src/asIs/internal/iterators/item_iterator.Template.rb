@@ -49,6 +49,19 @@ module <%= gem_namespace %>
         any_items_in_cached_page?
       end
 
+      # Sends the request for the first page now instead of on the first iteration, so an API error for that page
+      # is raised here. The page is kept, and every loop (over items or `pages`) that starts from the first page
+      # reuses it instead of requesting it again. Does nothing if this pager already sent a request.
+      #
+      # @return [self]
+      def load_first_page
+        return self if @requested
+
+        @item_pages.load_first_page
+        @page_iterator.reuse_first_page(@item_pages)
+        self
+      end
+
       # Retrieves the next item from the API.
       def next_element
         item = next_item_from_cached_page
@@ -64,6 +77,7 @@ module <%= gem_namespace %>
       def track_http_responses(get_page)
         proc do |*args|
           result = get_page.call(*args)
+          @requested = true
           @http_response = result[1] if result.is_a?(Array)
           result
         end

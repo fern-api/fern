@@ -78,7 +78,7 @@ public class AsyncRawPrimitiveClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-      Call okhttpCall = client.newCall(okhttpRequest);
+      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
       okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -148,7 +148,7 @@ public class AsyncRawPrimitiveClient {
           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Integer>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -218,7 +218,7 @@ public class AsyncRawPrimitiveClient {
             okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
           }
           CompletableFuture<SeedExhaustiveHttpResponse<Long>> future = new CompletableFuture<>();
-          Call okhttpCall = client.newCall(okhttpRequest);
+          RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
           okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -289,7 +289,7 @@ public class AsyncRawPrimitiveClient {
               okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
             }
             CompletableFuture<SeedExhaustiveHttpResponse<Double>> future = new CompletableFuture<>();
-            Call okhttpCall = client.newCall(okhttpRequest);
+            RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
             okhttpCall.enqueue(new Callback() {
               @Override
               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -360,7 +360,7 @@ public class AsyncRawPrimitiveClient {
                 okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
               }
               CompletableFuture<SeedExhaustiveHttpResponse<Boolean>> future = new CompletableFuture<>();
-              Call okhttpCall = client.newCall(okhttpRequest);
+              RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
               okhttpCall.enqueue(new Callback() {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -431,7 +431,7 @@ public class AsyncRawPrimitiveClient {
                   okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                 }
                 CompletableFuture<SeedExhaustiveHttpResponse<OffsetDateTime>> future = new CompletableFuture<>();
-                Call okhttpCall = client.newCall(okhttpRequest);
+                RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                 okhttpCall.enqueue(new Callback() {
                   @Override
                   public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -502,7 +502,7 @@ public class AsyncRawPrimitiveClient {
                     okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                   }
                   CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                  Call okhttpCall = client.newCall(okhttpRequest);
+                  RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                   okhttpCall.enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -573,7 +573,7 @@ public class AsyncRawPrimitiveClient {
                       okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                     }
                     CompletableFuture<SeedExhaustiveHttpResponse<UUID>> future = new CompletableFuture<>();
-                    Call okhttpCall = client.newCall(okhttpRequest);
+                    RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                     okhttpCall.enqueue(new Callback() {
                       @Override
                       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -644,7 +644,7 @@ public class AsyncRawPrimitiveClient {
                         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                       }
                       CompletableFuture<SeedExhaustiveHttpResponse<byte[]>> future = new CompletableFuture<>();
-                      Call okhttpCall = client.newCall(okhttpRequest);
+                      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                       okhttpCall.enqueue(new Callback() {
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

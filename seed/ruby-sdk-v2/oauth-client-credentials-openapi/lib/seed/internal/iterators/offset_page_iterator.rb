@@ -25,6 +25,33 @@ module Seed
         @step = step
         @get_next_page = block
         @http_response = nil
+        @first_page_requested = false
+        @first_page = nil
+        rewind
+      end
+
+      # Sends the request for the first page now instead of on the first iteration, so an API error for that page
+      # is raised here. The page is kept, and every loop that starts from the first page reuses it instead of
+      # requesting it again (an empty first page ends those loops without a new request). Does nothing if the first
+      # page was already requested.
+      #
+      # @return [self]
+      def load_first_page
+        return self if @first_page_requested
+
+        @first_page = fetch_page(@initial_page)
+        rewind
+        self
+      end
+
+      # Uses the first page that `other` loaded with `load_first_page`, unless this iterator already sent a request.
+      #
+      # @param other [Seed::Internal::OffsetPageIterator]
+      # @return [NilClass]
+      def reuse_first_page(other)
+        return if @first_page_requested || other.first_page.nil?
+
+        @first_page = other.first_page
         rewind
       end
 
@@ -48,8 +75,8 @@ module Seed
         @page_number = @initial_page
         # A cache of whether the API has another page, if it gives us that information...
         @has_next_page = nil
-        # ...or the actual next page, preloaded, if it doesn't.
-        @next_page = nil
+        # ...or the actual next page, preloaded, if it doesn't. A first page kept by `load_first_page` is reused.
+        @next_page = @first_page
         nil
       end
 
@@ -58,7 +85,8 @@ module Seed
       # @return [Boolean]
       def next?
         return @has_next_page unless @has_next_page.nil?
-        return true if @next_page
+        return true if @next_page && page_has_items?(@next_page)
+        return @has_next_page = false if @next_page
 
         fetched_page = fetch_page(@page_number)
         fetched_page_items = fetched_page&.send(@item_field)
@@ -96,10 +124,20 @@ module Seed
         this_page
       end
 
+      protected
+
+      attr_reader :first_page
+
       private
+
+      def page_has_items?(page)
+        items = page.send(@item_field)
+        !items.nil? && !items.empty?
+      end
 
       def fetch_page(page_number)
         result = @get_next_page.call(page_number)
+        @first_page_requested = true
         if result.is_a?(Array)
           fetched_page, raw_response = result
           @http_response = raw_response

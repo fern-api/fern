@@ -98,6 +98,43 @@ class CursorItemIteratorTest < Minitest::Test
     assert_equal NUMBERS, items
   end
 
+  def test_load_first_page_requests_the_first_page_once
+    iterator = make_iterator(initial_cursor: nil)
+
+    assert_same iterator, iterator.load_first_page
+    assert_equal 1, @times_called
+
+    iterator.load_first_page
+
+    assert_equal 1, @times_called
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 7, @times_called
+
+    pages = make_iterator(initial_cursor: 0).load_first_page.pages
+
+    assert_equal 1, @times_called
+    assert_equal (1..10).to_a, pages.next_page.cards
+    assert_equal 1, @times_called
+  end
+
+  def test_load_first_page_raises_api_errors_at_the_call
+    iterator = Seed::Internal::CursorItemIterator.new(initial_cursor: nil, cursor_field: :next_cursor, item_field: :cards) do |_cursor|
+      raise ArgumentError, "first page failed"
+    end
+
+    assert_raises(ArgumentError) { iterator.load_first_page }
+  end
+
+  def test_loops_after_load_first_page_reuse_the_first_page
+    iterator = make_iterator(initial_cursor: nil).load_first_page
+
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal 13, @times_called
+    assert_equal (1..10).to_a, iterator.pages.first.cards
+    assert_equal 13, @times_called
+  end
+
   def test_pages_iterator
     iterator = make_iterator(initial_cursor: 0).pages
 
