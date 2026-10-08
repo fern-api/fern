@@ -12,7 +12,6 @@ describe("AuthClient", () => {
         const client = new SeedTsInferredAuthRefreshTokenClient({
             maxRetries: 0,
             refreshToken: "my-refresh-token",
-            grantType: "refresh_token",
             scope: "read",
             environment: server.baseUrl,
         });
