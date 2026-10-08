@@ -181,6 +181,7 @@ export async function makePassthroughRequest(
                     false, // disableCache
                 ),
             maxRetries,
+            abortSignal,
         );
     } catch (error) {
         // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.

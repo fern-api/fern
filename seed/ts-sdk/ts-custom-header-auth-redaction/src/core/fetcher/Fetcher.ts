@@ -206,7 +206,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             );
             attemptResponses.push(attemptResponse);
             return attemptResponse;
-        }, args.maxRetries);
+        }, args.maxRetries, args.abortSignal);
 
         if (response.status >= 200 && response.status < 400) {
             if (logger.isDebug()) {
