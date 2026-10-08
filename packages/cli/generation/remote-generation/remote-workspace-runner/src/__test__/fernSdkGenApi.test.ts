@@ -2683,6 +2683,9 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         it.each([
             { status: 408, code: CliError.Code.NetworkError },
+            { status: 409, code: CliError.Code.NetworkError },
+            { status: 423, code: CliError.Code.NetworkError },
+            { status: 425, code: CliError.Code.NetworkError },
             { status: 429, code: CliError.Code.NetworkError },
             { status: 500, code: CliError.Code.NetworkError },
             { status: 503, code: CliError.Code.NetworkError },

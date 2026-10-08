@@ -1473,16 +1473,19 @@ function appendFernSdkGenApiServerCode(message: string, error: FernSdkGenApiSubm
     return error.serverCode == null ? message : `${message} [${error.serverCode}]`;
 }
 
+/** 4xx statuses that usually clear on retry: timeout, conflict, locked, too early, rate limited. */
+const TRANSIENT_CLIENT_ERROR_STATUSES: ReadonlySet<number> = new Set([408, 409, 423, 425, 429]);
+
 /**
- * Client errors are authentication, request, or configuration problems the user must fix; timeouts,
- * rate limits, server errors, and transport failures remain network errors.
+ * Client errors are authentication, request, or configuration problems the user must fix; transient
+ * client errors, server errors, and transport failures remain network errors.
  */
 function getFernSdkGenApiFailureCliErrorCode(error: FernSdkGenApiSubmissionError): CliError.Code {
     const { status } = error;
     if (status === 401 || status === 403) {
         return CliError.Code.AuthError;
     }
-    if (status != null && status >= 400 && status < 500 && status !== 408 && status !== 429) {
+    if (status != null && status >= 400 && status < 500 && !TRANSIENT_CLIENT_ERROR_STATUSES.has(status)) {
         return CliError.Code.ConfigError;
     }
     return CliError.Code.NetworkError;
