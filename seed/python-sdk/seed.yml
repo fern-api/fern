@@ -384,6 +384,10 @@ fixtures:
     - customConfig:
         auto-generate-idempotency-key: true
       outputFolder: auto-generate-idempotency-key
+  inferred-auth-implicit:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
