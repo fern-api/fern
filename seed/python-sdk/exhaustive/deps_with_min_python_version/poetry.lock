@@ -1114,14 +1114,14 @@ xai = ["langchain-xai"]
 
 [[package]]
 name = "langchain-core"
-version = "1.6.8"
+version = "1.6.9"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 groups = ["dev"]
 files = [
-    {file = "langchain_core-1.6.8-py3-none-any.whl", hash = "sha256:7d34986e19efa66547646f365e4367675ed858c3dba04eccb944cd0e217ae503"},
-    {file = "langchain_core-1.6.8.tar.gz", hash = "sha256:e679a8a41a66f776832ec2606cb6e8eaef65154722f98d89bc3ef70af83834ee"},
+    {file = "langchain_core-1.6.9-py3-none-any.whl", hash = "sha256:2bacea12270fd4cfdeeefdc5977e7e8b3c30814c509534d1ef43f4e5b7d3f657"},
+    {file = "langchain_core-1.6.9.tar.gz", hash = "sha256:34394228603e6f0bd24ce4e773b58b7d160e1b8cf489ecb350cf41f5366f5e92"},
 ]
 
 [package.dependencies]
