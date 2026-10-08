@@ -431,6 +431,7 @@ export declare namespace DocsNavigationItem {
         showErrors: boolean;
         tagDescriptionPages: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        cliSnippetsConfiguration: CliSnippetsConfiguration | undefined;
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
@@ -489,6 +490,11 @@ export declare namespace DocsNavigationItem {
         csharp: string | VersionedSnippetLanguageConfiguration | undefined;
         php: string | VersionedSnippetLanguageConfiguration | undefined;
         swift: string | VersionedSnippetLanguageConfiguration | undefined;
+    }
+
+    export interface CliSnippetsConfiguration {
+        catalogAbsolutePath: AbsoluteFilePath;
+        namespaces: Record<string, string> | undefined;
     }
 }
 

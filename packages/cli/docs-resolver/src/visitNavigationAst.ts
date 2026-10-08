@@ -97,6 +97,7 @@ async function visitNavigationItem({
         displayErrors: noop,
         tagDescriptionPages: noop,
         snippets: noop,
+        cliSnippets: noop,
         summary: noop,
         title: noop,
         layout: noop,

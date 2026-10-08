@@ -1696,6 +1696,7 @@ types:
         type: optional<boolean>
         docs: If true, a page will be created for each tag in the OpenAPI spec that contains a description.
       snippets: optional<SnippetsConfiguration>
+      cli-snippets: optional<CliSnippetsConfiguration>
       postman:
         type: optional<string>
         docs: URL to a Postman collection for this API reference
@@ -1972,6 +1973,16 @@ types:
       php: optional<SnippetLanguageConfiguration>
       swift: optional<SnippetLanguageConfiguration>
       rust: optional<SnippetLanguageConfiguration>
+
+  CliSnippetsConfiguration:
+    docs: Configuration for injecting CLI command snippets onto API reference endpoints.
+    properties:
+      catalog:
+        type: string
+        docs: Path (relative to docs.yml) to the committed CLI command catalog JSON.
+      namespaces:
+        type: optional<map<string, string>>
+        docs: Optional map from this API's namespace name to the catalog namespace it corresponds to. Omit to match on method+path alone.
 
   ColorsConfiguration:
     properties:

@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { getUserToken } from "@fern-api/auth";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
@@ -40,7 +41,8 @@ import {
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
-import { convertIrToFdrApi } from "@fern-api/register";
+import type { CliCatalog, CliSnippetsConfig } from "@fern-api/register";
+import { convertIrToFdrApi, injectCliSnippetsIntoApiDefinition, parseCliCatalog } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { readFile } from "fs/promises";
@@ -512,16 +514,20 @@ function convertTranslatedIrToReadApi(
     apiDefinitionId: string,
     context: TaskContext
 ): APIV1Read.ApiDefinition {
+    const writeApi = convertIrToFdrApi({
+        ir: spec.ir,
+        snippetsConfig: spec.snippetsConfig,
+        playgroundConfig: spec.playgroundConfig,
+        graphqlOperations: spec.graphqlOperations ?? {},
+        graphqlTypes: spec.graphqlTypes ?? {},
+        context,
+        apiNameOverride: spec.apiName
+    });
+    if (spec.cliSnippetsConfig != null) {
+        injectCliSnippetsForPreview(writeApi, spec.cliSnippetsConfig, context);
+    }
     const dbApiDefinition = convertAPIDefinitionToDb(
-        convertIrToFdrApi({
-            ir: spec.ir,
-            snippetsConfig: spec.snippetsConfig,
-            playgroundConfig: spec.playgroundConfig,
-            graphqlOperations: spec.graphqlOperations ?? {},
-            graphqlTypes: spec.graphqlTypes ?? {},
-            context,
-            apiNameOverride: spec.apiName
-        }),
+        writeApi,
         FdrAPI.ApiDefinitionId(apiDefinitionId),
         new SDKSnippetHolder({
             snippetsConfigWithSdkId: {},
@@ -560,6 +566,30 @@ async function applyGlobalThemeIfNeeded(
     return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
 }
 
+const previewCliCatalogCache = new Map<string, CliCatalog>();
+
+/**
+ * Load (and cache) the committed CLI catalog synchronously and inject CLI command snippets for local
+ * `fern docs dev`. Preview is single-process and the catalog file is stable within a run, so a simple
+ * per-path cache avoids re-reading. Fail-open: a bad/missing catalog just omits the CLI tab.
+ */
+function injectCliSnippetsForPreview(
+    apiDefinition: APIV1Write.ApiDefinition,
+    config: CliSnippetsConfig,
+    context: TaskContext
+): void {
+    try {
+        let catalog = previewCliCatalogCache.get(config.catalogAbsolutePath);
+        if (catalog == null) {
+            catalog = parseCliCatalog(JSON.parse(readFileSync(config.catalogAbsolutePath, "utf-8")));
+            previewCliCatalogCache.set(config.catalogAbsolutePath, catalog);
+        }
+        injectCliSnippetsIntoApiDefinition({ apiDefinition, catalog, namespaces: config.namespaces, context });
+    } catch (error) {
+        context.logger.warn(`Skipping CLI snippet injection in preview: ${(error as Error).message}`);
+    }
+}
+
 type APIDefinitionID = string;
 
 class ReferencedAPICollector {
@@ -572,6 +602,7 @@ class ReferencedAPICollector {
     public addReferencedAPI({
         ir,
         snippetsConfig,
+        cliSnippetsConfig,
         playgroundConfig,
         apiName,
         graphqlOperations = {},
@@ -579,6 +610,7 @@ class ReferencedAPICollector {
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
+        cliSnippetsConfig?: CliSnippetsConfig;
         playgroundConfig?: { oauth?: boolean };
         apiName?: string;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
@@ -596,6 +628,9 @@ class ReferencedAPICollector {
                 context: this.context,
                 apiNameOverride: apiName
             });
+            if (cliSnippetsConfig != null) {
+                injectCliSnippetsForPreview(writeApiDefinition, cliSnippetsConfig, this.context);
+            }
             this.writeApis.set(id, writeApiDefinition);
 
             const dbApiDefinition = convertAPIDefinitionToDb(

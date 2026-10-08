@@ -21,7 +21,7 @@ import {
     type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { convertIrToFdrApi, injectCliSnippets } from "@fern-api/register";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
@@ -550,7 +550,7 @@ function toReadApiDefinition(
  * with their translated equivalents (produced from translated OpenAPI specs
  * under `translations/<locale>/apis/<apiName>/`).
  */
-export function buildLocaleApiDefinitions({
+export async function buildLocaleApiDefinitions({
     baseApiDefinitions,
     translatedSpecs,
     context
@@ -558,7 +558,7 @@ export function buildLocaleApiDefinitions({
     baseApiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     translatedSpecs: Map<string, TranslatedApiSpec>;
     context: TaskContext;
-}): Map<string, APIV1Write.ApiDefinition> {
+}): Promise<Map<string, APIV1Write.ApiDefinition>> {
     // Shallow clone — replaced entries are new objects from convertIrToFdrApi.
     const localeApiDefs = new Map(baseApiDefinitions);
     for (const [baseApiId, spec] of translatedSpecs) {
@@ -572,6 +572,9 @@ export function buildLocaleApiDefinitions({
                 context,
                 apiNameOverride: spec.apiName
             });
+            if (spec.cliSnippetsConfig != null) {
+                await injectCliSnippets({ apiDefinition: translatedApiDef, config: spec.cliSnippetsConfig, context });
+            }
             localeApiDefs.set(baseApiId, translatedApiDef);
         } catch (error) {
             context.logger.warn(
@@ -664,7 +667,7 @@ export async function buildAllTranslationInputs({
             let localeApiDefinitions = apiDefinitions;
             let translatedApiDefinitionIds: ReadonlySet<string> = new Set();
             if (localeTranslatedSpecs != null && localeTranslatedSpecs.size > 0) {
-                localeApiDefinitions = buildLocaleApiDefinitions({
+                localeApiDefinitions = await buildLocaleApiDefinitions({
                     baseApiDefinitions: apiDefinitions,
                     translatedSpecs: localeTranslatedSpecs,
                     context

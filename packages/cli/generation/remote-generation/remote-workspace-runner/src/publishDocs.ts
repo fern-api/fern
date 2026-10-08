@@ -55,7 +55,7 @@ import {
 } from "@fern-api/fs-utils";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { convertIrToFdrApi } from "@fern-api/register";
+import { convertIrToFdrApi, injectCliSnippets } from "@fern-api/register";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
@@ -492,6 +492,7 @@ export async function publishDocs({
         const registerApiToFdr: RegisterApiFn = async ({
             ir,
             snippetsConfig,
+            cliSnippetsConfig,
             playgroundConfig,
             apiName,
             workspace,
@@ -509,6 +510,11 @@ export async function publishDocs({
                 context,
                 apiNameOverride: apiName
             });
+
+            // Inject CLI command snippets (mutates apiDefinition in place) when configured for this API.
+            if (cliSnippetsConfig != null) {
+                await injectCliSnippets({ apiDefinition, config: cliSnippetsConfig, context });
+            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;

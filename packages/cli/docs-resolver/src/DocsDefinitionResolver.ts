@@ -118,6 +118,7 @@ type UploadFilesFn = (files: FilePathPair[]) => AsyncOrSync<UploadedFile[]>;
 export type RegisterApiFn = (opts: {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
+    cliSnippetsConfig?: docsYml.DocsNavigationItem.CliSnippetsConfiguration;
     playgroundConfig?: PlaygroundConfig;
     apiName?: string;
     workspace?: FernWorkspace;
@@ -128,6 +129,7 @@ export type RegisterApiFn = (opts: {
 /** Called as each API's IR is built during navigation, before its deferred registration. */
 export type OnApiRegistrationQueuedFn = (opts: {
     snippetsConfig: APIV1Write.SnippetsConfig;
+    cliSnippetsConfig?: docsYml.DocsNavigationItem.CliSnippetsConfiguration;
     apiName?: string;
     workspace?: FernWorkspace;
 }) => void;
@@ -143,6 +145,7 @@ export type OnApiRegistrationQueuedFn = (opts: {
 export interface TranslatedApiSpec {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
+    cliSnippetsConfig?: docsYml.DocsNavigationItem.CliSnippetsConfiguration;
     playgroundConfig?: PlaygroundConfig;
     apiName?: string;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
@@ -465,6 +468,7 @@ export class DocsDefinitionResolver {
     private pendingApiRegistrations: Array<{
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
+        cliSnippetsConfig?: docsYml.DocsNavigationItem.CliSnippetsConfiguration;
         playgroundConfig?: PlaygroundConfig;
         apiName?: string;
         workspace?: FernWorkspace;
@@ -732,6 +736,7 @@ export class DocsDefinitionResolver {
                         JSON.stringify({
                             ir: pending.ir,
                             snippetsConfig: pending.snippetsConfig,
+                            cliSnippetsConfig: pending.cliSnippetsConfig,
                             playgroundConfig: pending.playgroundConfig,
                             apiName: pending.apiName,
                             workspace: sourceFiles,
@@ -755,6 +760,7 @@ export class DocsDefinitionResolver {
                     await this.registerApi({
                         ir: pending.ir,
                         snippetsConfig: pending.snippetsConfig,
+                        cliSnippetsConfig: pending.cliSnippetsConfig,
                         playgroundConfig: pending.playgroundConfig,
                         apiName: pending.apiName,
                         workspace: pending.workspace,
@@ -793,6 +799,7 @@ export class DocsDefinitionResolver {
                         localeMap.set(realApiDefinitionId, {
                             ir: translatedIr,
                             snippetsConfig: pending.snippetsConfig,
+                            cliSnippetsConfig: pending.cliSnippetsConfig,
                             playgroundConfig: pending.playgroundConfig,
                             apiName: pending.apiName,
                             graphqlOperations: pending.graphqlOperations,
@@ -2076,6 +2083,7 @@ export class DocsDefinitionResolver {
         const { apiWorkspaces, ossWorkspaces } = await this.resolveApiWorkspaces(contentSource);
         const directApiWorkspace = await this.createDirectApiWorkspace(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
+        const cliSnippetsConfig = item.cliSnippetsConfiguration;
 
         // GraphQL is registered separately from the Fern IR below. A GraphQL-only direct
         // workspace therefore has no OpenAPI/AsyncAPI IR for the v3 parser to produce, and
@@ -2270,6 +2278,7 @@ export class DocsDefinitionResolver {
         this.pendingApiRegistrations.push({
             ir,
             snippetsConfig,
+            cliSnippetsConfig,
             playgroundConfig: { oauth: item.playground?.oauth },
             apiName: apiNameForRegistration,
             workspace,
@@ -2279,7 +2288,12 @@ export class DocsDefinitionResolver {
             apiReferenceNode,
             translatedIrsByLocale
         });
-        this.onApiRegistrationQueued?.({ snippetsConfig, apiName: apiNameForRegistration, workspace });
+        this.onApiRegistrationQueued?.({
+            snippetsConfig,
+            cliSnippetsConfig,
+            apiName: apiNameForRegistration,
+            workspace
+        });
 
         return apiReferenceNode;
     }

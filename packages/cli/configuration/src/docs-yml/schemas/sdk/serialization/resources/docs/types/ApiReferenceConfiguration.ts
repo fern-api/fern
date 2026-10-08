@@ -6,6 +6,7 @@ import * as serializers from "../../../index.js";
 import { ApiSpecConfiguration } from "./ApiSpecConfiguration.js";
 import { Audience } from "./Audience.js";
 import { Availability } from "./Availability.js";
+import { CliSnippetsConfiguration } from "./CliSnippetsConfiguration.js";
 import { CollapsedValue } from "./CollapsedValue.js";
 import { PlaygroundSettings } from "./PlaygroundSettings.js";
 import { SnippetsConfiguration } from "./SnippetsConfiguration.js";
@@ -28,6 +29,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
             core.serialization.boolean().optional(),
         ),
         snippets: SnippetsConfiguration.optional(),
+        cliSnippets: core.serialization.property("cli-snippets", CliSnippetsConfiguration.optional()),
         postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
@@ -55,6 +57,7 @@ export declare namespace ApiReferenceConfiguration {
         "display-errors"?: boolean | null;
         "tag-description-pages"?: boolean | null;
         snippets?: SnippetsConfiguration.Raw | null;
+        "cli-snippets"?: CliSnippetsConfiguration.Raw | null;
         postman?: string | null;
         summary?: string | null;
         layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;

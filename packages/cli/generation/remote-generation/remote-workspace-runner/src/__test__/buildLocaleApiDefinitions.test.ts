@@ -7,7 +7,8 @@ import { buildLocaleApiDefinitions } from "../publishDocsLedger.js";
 
 // Mock the heavy @fern-api/register module so we don't need a real IR.
 vi.mock("@fern-api/register", () => ({
-    convertIrToFdrApi: vi.fn()
+    convertIrToFdrApi: vi.fn(),
+    injectCliSnippets: vi.fn()
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -57,7 +58,7 @@ describe("buildLocaleApiDefinitions", () => {
         mockConvertIrToFdrApi.mockReset();
     });
 
-    it("replaces base definitions with translated ones for matching API IDs", () => {
+    it("replaces base definitions with translated ones for matching API IDs", async () => {
         const baseDef = makeApiDefinition({ apiName: "english" } as Partial<APIV1Write.ApiDefinition>);
         const translatedDef = makeApiDefinition({ apiName: "chinese" } as Partial<APIV1Write.ApiDefinition>);
         mockConvertIrToFdrApi.mockReturnValue(translatedDef);
@@ -66,7 +67,7 @@ describe("buildLocaleApiDefinitions", () => {
         const translatedSpecs = new Map([["api-1", makeTranslatedSpec()]]);
         const context = makeContext();
 
-        const result = buildLocaleApiDefinitions({
+        const result = await buildLocaleApiDefinitions({
             baseApiDefinitions,
             translatedSpecs,
             context
@@ -76,7 +77,7 @@ describe("buildLocaleApiDefinitions", () => {
         expect(result.get("api-1")).not.toBe(baseDef);
     });
 
-    it("preserves base definitions for APIs without translations", () => {
+    it("preserves base definitions for APIs without translations", async () => {
         const baseDef1 = makeApiDefinition();
         const baseDef2 = makeApiDefinition();
         const translatedDef = makeApiDefinition({ apiName: "translated" } as Partial<APIV1Write.ApiDefinition>);
@@ -90,7 +91,7 @@ describe("buildLocaleApiDefinitions", () => {
         const translatedSpecs = new Map([["api-1", makeTranslatedSpec()]]);
         const context = makeContext();
 
-        const result = buildLocaleApiDefinitions({
+        const result = await buildLocaleApiDefinitions({
             baseApiDefinitions,
             translatedSpecs,
             context
@@ -100,7 +101,7 @@ describe("buildLocaleApiDefinitions", () => {
         expect(result.get("api-2")).toBe(baseDef2);
     });
 
-    it("does not mutate the original base map", () => {
+    it("does not mutate the original base map", async () => {
         const baseDef = makeApiDefinition();
         const translatedDef = makeApiDefinition({ apiName: "translated" } as Partial<APIV1Write.ApiDefinition>);
         mockConvertIrToFdrApi.mockReturnValue(translatedDef);
@@ -109,7 +110,7 @@ describe("buildLocaleApiDefinitions", () => {
         const translatedSpecs = new Map([["api-1", makeTranslatedSpec()]]);
         const context = makeContext();
 
-        buildLocaleApiDefinitions({
+        await buildLocaleApiDefinitions({
             baseApiDefinitions,
             translatedSpecs,
             context
@@ -119,7 +120,7 @@ describe("buildLocaleApiDefinitions", () => {
         expect(baseApiDefinitions.get("api-1")).toBe(baseDef);
     });
 
-    it("falls back to base definition when conversion throws", () => {
+    it("falls back to base definition when conversion throws", async () => {
         const baseDef = makeApiDefinition();
         mockConvertIrToFdrApi.mockImplementation(() => {
             throw new Error("IR conversion failed");
@@ -129,7 +130,7 @@ describe("buildLocaleApiDefinitions", () => {
         const translatedSpecs = new Map([["api-1", makeTranslatedSpec()]]);
         const context = makeContext();
 
-        const result = buildLocaleApiDefinitions({
+        const result = await buildLocaleApiDefinitions({
             baseApiDefinitions,
             translatedSpecs,
             context
@@ -142,7 +143,7 @@ describe("buildLocaleApiDefinitions", () => {
         );
     });
 
-    it("passes correct arguments to convertIrToFdrApi", () => {
+    it("passes correct arguments to convertIrToFdrApi", async () => {
         const translatedDef = makeApiDefinition();
         mockConvertIrToFdrApi.mockReturnValue(translatedDef);
 
@@ -152,7 +153,7 @@ describe("buildLocaleApiDefinitions", () => {
         });
         const context = makeContext();
 
-        buildLocaleApiDefinitions({
+        await buildLocaleApiDefinitions({
             baseApiDefinitions: new Map([["api-1", makeApiDefinition()]]),
             translatedSpecs: new Map([["api-1", spec]]),
             context

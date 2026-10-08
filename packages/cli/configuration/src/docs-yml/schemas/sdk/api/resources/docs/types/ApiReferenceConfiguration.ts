@@ -16,6 +16,7 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     /** If true, a page will be created for each tag in the OpenAPI spec that contains a description. */
     tagDescriptionPages?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
+    cliSnippets?: FernDocsConfig.CliSnippetsConfiguration;
     /** URL to a Postman collection for this API reference */
     postman?: string;
     /** Relative path to the markdown file */
