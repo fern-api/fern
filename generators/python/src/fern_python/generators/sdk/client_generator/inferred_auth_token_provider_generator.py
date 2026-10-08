@@ -3,6 +3,7 @@ from typing import List, Optional, Tuple
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
+from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
@@ -27,6 +28,7 @@ class CredentialProperty:
     # Set when the auth scheme fixes this property's value (e.g. `grant_type` for `type: refresh-token`).
     # Such properties are treated like literals for the client constructor and sent with this value.
     fixed_value: Optional[str] = None
+    is_header: bool = False
 
 
 class InferredAuthTokenProviderGenerator:
@@ -45,6 +47,8 @@ class InferredAuthTokenProviderGenerator:
         self._inferred_auth_scheme: ir_types.InferredAuthScheme = inferred_auth_scheme
 
     def generate(self, source_file: SourceFile) -> None:
+        if self._omits_unset_params():
+            source_file.add_arbitrary_code(AST.CodeWriter(self._write_omit_declaration))
         source_file.add_class_declaration(
             declaration=self._create_class_declaration(is_async=False),
             should_export=False,
@@ -471,12 +475,10 @@ class InferredAuthTokenProviderGenerator:
                 continue
             if prop.is_literal:
                 continue
-            kwargs.append(
-                (
-                    prop.field_name,
-                    AST.Expression(f"self._{prop.field_name}"),
-                )
-            )
+            value = f"self._{prop.field_name}"
+            if self._omits_unset_params() and prop.is_optional and not prop.is_header:
+                value = f"{value} if {value} is not None else {DEFAULT_BODY_PARAMETER_VALUE}"
+            kwargs.append((prop.field_name, AST.Expression(value)))
 
         endpoint_name = resolve_name(http_endpoint.name).snake_case.safe_name
 
@@ -486,6 +488,15 @@ class InferredAuthTokenProviderGenerator:
             ),
             kwargs=kwargs,
         )
+
+    def _omits_unset_params(self) -> bool:
+        return self._context.custom_config.omit_unset_inferred_auth_params
+
+    def _write_omit_declaration(self, writer: AST.NodeWriter) -> None:
+        writer.write_line("# used to leave unset optional parameters out of the token request")
+        writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
+        writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
+        writer.write_newline_if_last_line_not()
 
     def _get_expires_at_function_declaration(self) -> AST.FunctionDeclaration:
         named_parameters = [
@@ -544,6 +555,7 @@ class InferredAuthTokenProviderGenerator:
                     is_literal=is_literal,
                     literal_value=literal_value,
                     is_optional=is_optional,
+                    is_header=True,
                 )
             )
 
