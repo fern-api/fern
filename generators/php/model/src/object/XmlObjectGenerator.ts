@@ -444,6 +444,10 @@ export class XmlObjectGenerator {
         return property.value.type === "scalar" && property.value.kind === "date";
     }
 
+    private hasTextProperty(): boolean {
+        return this.properties.some((property) => property.kind === FernIr.XmlPropertyKind.Text);
+    }
+
     private getWrapperNames(): string[] {
         return this.properties
             .filter((property) => property.kind === "ELEMENT" && property.isList && property.wrapped)
@@ -533,8 +537,12 @@ export class XmlObjectGenerator {
                 writer.write(this.getTypedContentPairs().join(", "));
                 writer.write("], $result->getAdditionalChildren()");
                 const wrapperNames = this.getWrapperNames();
-                if (wrapperNames.length > 0) {
+                const includeText = !this.hasTextProperty();
+                if (wrapperNames.length > 0 || includeText) {
                     writer.write(`, ${this.phpStringList(wrapperNames)}`);
+                }
+                if (includeText) {
+                    writer.write(", true");
                 }
                 writer.writeLine("));");
                 writer.writeLine("return $result;");
