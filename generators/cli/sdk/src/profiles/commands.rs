@@ -771,8 +771,7 @@ async fn handle_create(
     //
     // An explicit `--credential` still wins: sharing a slot deliberately is a
     // supported thing to ask for.
-    if captures && matches.get_one::<String>("credential").is_none()
-    {
+    if captures && matches.get_one::<String>("credential").is_none() {
         entry.credential = Some(name.clone());
     }
 
