@@ -8,8 +8,8 @@ export interface FeatureFlagContext {
     org: string;
 }
 
-/** The value PostHog evaluated for a flag, or `undefined` when no value was returned. */
-export type FeatureFlagResultValue = { enabled: boolean; variant: string | undefined } | undefined;
+/** The parts of a PostHog flag result that decide whether it is on; `undefined` when no value was returned. */
+export type FeatureFlagResultValue = { readonly enabled: boolean; readonly variant?: string } | undefined;
 
 export interface FeatureFlagClient {
     /**
@@ -34,8 +34,8 @@ export function isFeatureFlagValueEnabled(value: FeatureFlagResultValue): boolea
 }
 
 export class NoopFeatureFlagClient implements FeatureFlagClient {
-    public async isEnabled(): Promise<boolean> {
-        return false;
+    public isEnabled(): Promise<boolean> {
+        return Promise.resolve(false);
     }
 
     public getCachedValue(): boolean | undefined {
@@ -99,9 +99,7 @@ export class PosthogFeatureFlagClient implements FeatureFlagClient {
                 // Flag checks run even when telemetry is disabled, so they never emit events.
                 sendFeatureFlagEvents: false
             });
-            return isFeatureFlagValueEnabled(
-                result == null ? undefined : { enabled: result.enabled, variant: result.variant }
-            );
+            return isFeatureFlagValueEnabled(result);
         } catch {
             // Flags gate rollouts; an unreachable PostHog must fall back to the default (off), never fail the CLI.
             return false;

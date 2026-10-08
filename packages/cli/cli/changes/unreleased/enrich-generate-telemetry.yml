@@ -2,6 +2,6 @@
 
 - summary: |
     Enrich the `fern generate` telemetry event with the requested generators (including SDK Config targets),
-    the credential type and Fern user ID behind the request, and whether `FERN_USE_SDK_GEN_API` was set
-    to `true` alongside the effective sdk-gen-api state.
+    the credential type and Fern user ID behind the request, the `use-sdk-gen-api` feature flag value, and the
+    CLI release environment it was evaluated for.
   type: chore

@@ -26,7 +26,12 @@ function createClient(result: FlagResult | Error = undefined) {
 
 describe("PosthogFeatureFlagClient", () => {
     it("evaluates the flag per organization with org and environment as targeting properties", async () => {
-        const { client, getFeatureFlagResult } = createClient({ key: "use-sdk-gen-api", enabled: true });
+        const { client, getFeatureFlagResult } = createClient({
+            key: "use-sdk-gen-api",
+            enabled: true,
+            variant: undefined,
+            payload: undefined
+        });
 
         await expect(client.isEnabled("use-sdk-gen-api", { org: "acme" })).resolves.toBe(true);
 
@@ -40,7 +45,10 @@ describe("PosthogFeatureFlagClient", () => {
 
     it.each([
         { name: "a missing flag", result: undefined },
-        { name: "a disabled boolean flag", result: { key: "use-sdk-gen-api", enabled: false } },
+        {
+            name: "a disabled boolean flag",
+            result: { key: "use-sdk-gen-api", enabled: false, variant: undefined, payload: undefined }
+        },
         { name: "a request failure", result: new Error("network down") }
     ])("defaults to off for $name", async ({ result }) => {
         const { client } = createClient(result);
@@ -49,7 +57,12 @@ describe("PosthogFeatureFlagClient", () => {
     });
 
     it("makes one request per flag and org and exposes the resolved value from cache", async () => {
-        const { client, getFeatureFlagResult } = createClient({ key: "use-sdk-gen-api", enabled: true });
+        const { client, getFeatureFlagResult } = createClient({
+            key: "use-sdk-gen-api",
+            enabled: true,
+            variant: undefined,
+            payload: undefined
+        });
 
         expect(client.getCachedValue("use-sdk-gen-api", { org: "acme" })).toBeUndefined();
         await Promise.all([
@@ -82,6 +95,36 @@ describe("NoopFeatureFlagClient", () => {
 
         await expect(client.isEnabled()).resolves.toBe(false);
         expect(client.getCachedValue()).toBeUndefined();
+    });
+});
+
+describe("getFeatureFlagClient", () => {
+    it.each([undefined, "", "   "])("keeps every flag off without a PostHog key (%j)", async (key) => {
+        vi.resetModules();
+        vi.stubEnv("POSTHOG_FEATURE_FLAGS_API_KEY", key);
+        try {
+            const { getFeatureFlagClient } = await import("../src/feature-flags/getFeatureFlagClient.js");
+
+            expect(getFeatureFlagClient()).toBeInstanceOf(
+                (await import("../src/feature-flags/FeatureFlagClient.js")).NoopFeatureFlagClient
+            );
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
+    it("evaluates flags through PostHog when a key is baked in", async () => {
+        vi.resetModules();
+        vi.stubEnv("POSTHOG_FEATURE_FLAGS_API_KEY", "phc_test");
+        try {
+            const { getFeatureFlagClient } = await import("../src/feature-flags/getFeatureFlagClient.js");
+
+            expect(getFeatureFlagClient()).toBeInstanceOf(
+                (await import("../src/feature-flags/FeatureFlagClient.js")).PosthogFeatureFlagClient
+            );
+        } finally {
+            vi.unstubAllEnvs();
+        }
     });
 });
 
