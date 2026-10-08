@@ -176,6 +176,8 @@ export async function runPipeline(args: {
                 : undefined,
         profilesRevokeOperation:
             customConfig.profiles?.enabled === true ? customConfig.profiles.revokeOperation : undefined,
+        profilesProvisionOperation:
+            customConfig.profiles?.enabled === true ? customConfig.profiles.provisionOperation : undefined,
         // A strategy only composes bound schemes, so skip deriving one when
         // there are none — `copySpecs` would drop it anyway, and this keeps
         // unauthenticated CLIs off the mapping entirely.

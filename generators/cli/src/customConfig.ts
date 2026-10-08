@@ -213,6 +213,47 @@ export interface FernCliProfilesConfig {
      * has to be on the profile (`profiles create --set <name>=<value>`).
      */
     revokeOperation?: string;
+
+    /**
+     * An operation that mints a profile's remote credential (an API key),
+     * and how its response maps onto the credential.
+     *
+     * When set, `profiles create` grows a `--provision` flag that calls the
+     * operation with the caller's current (environment) credential, stores
+     * the mapped response fields in the profile's keyring slot, and records
+     * the fields `profiles remove --revoke` later needs. Unset — the
+     * default — and the flag is not registered at all.
+     */
+    provisionOperation?: FernCliProfilesProvisionConfig;
+}
+
+/**
+ * Configuration for `profiles create --provision`.
+ */
+export interface FernCliProfilesProvisionConfig {
+    /**
+     * Dotted command path of the operation that creates the credential,
+     * e.g. `iam.keys.create`. Invoked with the profile's stored parameters
+     * as its arguments, like `revokeOperation`.
+     */
+    operation: string;
+
+    /**
+     * Credential field → top-level response field that supplies it. The
+     * keys are the halves the auth scheme stores (`username` / `password`
+     * for basic auth, `client_id` / `client_secret` for OAuth2 client
+     * credentials, `token` for a single-value scheme), e.g.
+     * `{ username: "sid", password: "secret" }`.
+     */
+    credential: Record<string, string>;
+
+    /**
+     * Parameter the `revokeOperation` takes → response field it is read
+     * from, e.g. `{ Sid: "sid" }`. Stored on the profile as
+     * `credential_parameters` and consulted only by `--revoke`, never as a
+     * request default.
+     */
+    revokeParameters?: Record<string, string>;
 }
 
 /**
@@ -649,6 +690,9 @@ function validateProfiles(raw: unknown): FernCliProfilesConfig {
         }
         result.revokeOperation = obj.revokeOperation;
     }
+    if (obj.provisionOperation !== undefined) {
+        result.provisionOperation = validateProvisionOperation(obj.provisionOperation);
+    }
     if (obj.commandName !== undefined) {
         if (typeof obj.commandName !== "string") {
             throw new Error(
@@ -671,6 +715,51 @@ function validateProfiles(raw: unknown): FernCliProfilesConfig {
             );
         }
         result.commandName = obj.commandName;
+    }
+    return result;
+}
+
+const DOTTED_COMMAND_PATH = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/;
+// Interpolated into Rust string literals; a response field is a JSON key
+// and a parameter name is a wire name, both of which are identifier-like.
+const FIELD_NAME = /^[A-Za-z0-9_.-]+$/;
+
+function validateStringMap(raw: unknown, label: string): Record<string, string> {
+    const obj = asConfigObject(raw, label);
+    const result: Record<string, string> = {};
+    for (const [key, value] of Object.entries(obj)) {
+        if (typeof value !== "string") {
+            throw new Error(`Invalid ${label}.${key}: expected a string, got ${typeof value}.`);
+        }
+        if (!FIELD_NAME.test(key) || !FIELD_NAME.test(value)) {
+            throw new Error(
+                `Invalid ${label}: "${key}: ${value}" — keys and values must be field names ([A-Za-z0-9_.-]).`
+            );
+        }
+        result[key] = value;
+    }
+    return result;
+}
+
+function validateProvisionOperation(raw: unknown): FernCliProfilesProvisionConfig {
+    const label = "customConfig.profiles.provisionOperation";
+    const obj = asConfigObject(raw, label);
+    if (typeof obj.operation !== "string") {
+        throw new Error(`Invalid ${label}.operation: expected a string, got ${typeof obj.operation}.`);
+    }
+    if (!DOTTED_COMMAND_PATH.test(obj.operation)) {
+        throw new Error(
+            `Invalid ${label}.operation: "${obj.operation}" is not a dotted command path. ` +
+                'Use the form "<resource>.<method>" (e.g. "iam.keys.create").'
+        );
+    }
+    const credential = validateStringMap(obj.credential, `${label}.credential`);
+    if (Object.keys(credential).length === 0) {
+        throw new Error(`Invalid ${label}.credential: at least one credential field must be mapped.`);
+    }
+    const result: FernCliProfilesProvisionConfig = { operation: obj.operation, credential };
+    if (obj.revokeParameters !== undefined) {
+        result.revokeParameters = validateStringMap(obj.revokeParameters, `${label}.revokeParameters`);
     }
     return result;
 }
