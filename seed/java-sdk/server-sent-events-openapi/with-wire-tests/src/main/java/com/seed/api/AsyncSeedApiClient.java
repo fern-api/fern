@@ -20,6 +20,7 @@ import com.seed.api.types.StreamDataContextResponse;
 import com.seed.api.types.StreamDataContextWithEnvelopeSchemaResponse;
 import com.seed.api.types.StreamNoContextResponse;
 import com.seed.api.types.StreamProtocolCollisionResponse;
+import com.seed.api.types.StreamProtocolMixedSchemaResponse;
 import com.seed.api.types.StreamProtocolNoCollisionResponse;
 import com.seed.api.types.StreamProtocolWithFlatSchemaResponse;
 import com.seed.api.types.StreamRequest;
@@ -363,6 +364,73 @@ public class AsyncSeedApiClient implements AutoCloseable {
         CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolWithFlatSchemaResponse>>> rawFuture =
                 this.rawClient.streamProtocolWithFlatSchema(request, requestOptions);
         CompletableFuture<Iterable<StreamProtocolWithFlatSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema() {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema();
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema(requestOptions);
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            StreamRequest request) {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema(request);
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
+                rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+     */
+    public CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> streamProtocolMixedSchema(
+            StreamRequest request, RequestOptions requestOptions) {
+        CompletableFuture<SeedApiHttpResponse<Iterable<StreamProtocolMixedSchemaResponse>>> rawFuture =
+                this.rawClient.streamProtocolMixedSchema(request, requestOptions);
+        CompletableFuture<Iterable<StreamProtocolMixedSchemaResponse>> future =
                 rawFuture.thenApply(response -> response.body());
         future.whenComplete((result_, throwable_) -> {
             if (future.isCancelled()) {

@@ -25,6 +25,7 @@ import com.seed.serverSentEvents.resources.completions.types.StreamEventContextP
 import com.seed.serverSentEvents.resources.completions.types.StreamEventDiscriminantInData;
 import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
@@ -290,7 +291,11 @@ public class AsyncRawCompletionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new SeedServerSentEventsHttpResponse<>(
                                 Stream.fromSseWithEventDiscrimination(
-                                        StreamEventDiscriminantInData.class, new ResponseBodyReader(response), "type"),
+                                        StreamEventDiscriminantInData.class,
+                                        new ResponseBodyReader(response),
+                                        "type",
+                                        null,
+                                        Arrays.asList()),
                                 response));
                         return;
                     }
@@ -389,7 +394,8 @@ public class AsyncRawCompletionsClient {
                                         StreamEventContextProtocol.class,
                                         new ResponseBodyReader(response),
                                         "event",
-                                        "[DONE]"),
+                                        "[DONE]",
+                                        Arrays.asList()),
                                 response));
                         return;
                     }

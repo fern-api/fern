@@ -16,10 +16,11 @@ import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
 import { getResponseBody } from "./getResponseBody.mjs";
 import { Headers } from "./Headers.mjs";
-import { makeRequest } from "./makeRequest.mjs";
+import { clearResponseTimeout, makeRequest } from "./makeRequest.mjs";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 import { redactUrl, SENSITIVE_QUERY_PARAMS } from "./redactUrl.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
+import { TIMEOUT } from "./signals.mjs";
 const SENSITIVE_HEADERS = new Set([
     "authorization",
     "www-authenticate",
@@ -118,9 +119,18 @@ export function fetcherImpl(args) {
             };
             logger.debug("Making HTTP request", metadata);
         }
+        // Bodies that are read in full here stay covered by the timeout; streamed bodies are read by the caller.
+        const keepTimeoutUntilBodyRead = args.responseType !== "streaming" && args.responseType !== "sse" && args.responseType !== "binary-response";
+        const attemptResponses = [];
         try {
             const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
-                return makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse");
+                // A retry means the previous attempt is over; stop its timer now rather than at the end.
+                for (const previousResponse of attemptResponses) {
+                    clearResponseTimeout(previousResponse);
+                }
+                const attemptResponse = yield makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse", keepTimeoutUntilBodyRead);
+                attemptResponses.push(attemptResponse);
+                return attemptResponse;
             }), args.maxRetries);
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
@@ -180,7 +190,7 @@ export function fetcherImpl(args) {
                     rawResponse: abortRawResponse,
                 };
             }
-            else if (error instanceof Error && error.name === "AbortError") {
+            else if (error === TIMEOUT || (error instanceof Error && error.name === "AbortError")) {
                 if (logger.isError()) {
                     const metadata = {
                         method: args.method,
@@ -234,6 +244,11 @@ export function fetcherImpl(args) {
                 },
                 rawResponse: unknownRawResponse,
             };
+        }
+        finally {
+            for (const attemptResponse of attemptResponses) {
+                clearResponseTimeout(attemptResponse);
+            }
         }
     });
 }
