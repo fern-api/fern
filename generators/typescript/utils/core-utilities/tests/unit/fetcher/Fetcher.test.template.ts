@@ -314,6 +314,33 @@ describe("Test fetcherImpl", () => {
             expect(sentTestHeader).toEqual(["x-test-header", "x-test-header"]);
         });
 
+        it("should pass the auth headers each failed attempt was sent with to refresh", async () => {
+            mockFetchResponses(
+                new Response("", { status: 401 }),
+                new Response("", { status: 401 }),
+                new Response(JSON.stringify({}), { status: 200 }),
+            );
+            const refresh = jest
+                .fn()
+                .mockResolvedValueOnce({ Authorization: "Bearer token-1" })
+                .mockResolvedValueOnce({ Authorization: "Bearer token-2" });
+
+            await fetcherImpl({
+                url: "https://example.com/resource",
+                method: "GET",
+                headers: { Authorization: "Bearer token-0" },
+                maxRetries: 2,
+                responseType: "json",
+                authRefresh: { headers: { Authorization: "Bearer token-0" }, refresh },
+            });
+
+            expect(refresh.mock.calls).toEqual([
+                [{ Authorization: "Bearer token-0" }],
+                [{ Authorization: "Bearer token-1" }],
+            ]);
+            expect(sentAuthorization).toEqual(["Bearer token-0", "Bearer token-1", "Bearer token-2"]);
+        });
+
         it("should keep auth headers overridden by the caller", async () => {
             mockFetchResponses(new Response("", { status: 403 }), new Response(JSON.stringify({}), { status: 200 }));
             const refresh = jest.fn().mockResolvedValue({ Authorization: "Bearer new-token" });

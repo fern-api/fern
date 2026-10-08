@@ -50,8 +50,8 @@ export declare namespace Fetcher {
     export interface AuthRefresh {
         /** The auth headers that were merged into `headers` for the initial request. */
         headers: Record<string, string>;
-        /** Resolves auth again, bypassing any cached credentials, and returns the new auth headers. */
-        refresh: () => Promise<Record<string, string>>;
+        /** Resolves auth again, replacing `failedAuthHeaders` if they are still cached, and returns the new auth headers. */
+        refresh: (failedAuthHeaders: Record<string, string>) => Promise<Record<string, string>>;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -177,7 +177,7 @@ function createAuthHeadersRefresher(authRefresh: Fetcher.AuthRefresh, headers: H
     return async () => {
         let refreshedAuthHeaders: Record<string, string>;
         try {
-            refreshedAuthHeaders = await authRefresh.refresh();
+            refreshedAuthHeaders = await authRefresh.refresh(currentAuthHeaders);
         } catch (error) {
             throw new AuthRefreshFailure(error);
         }

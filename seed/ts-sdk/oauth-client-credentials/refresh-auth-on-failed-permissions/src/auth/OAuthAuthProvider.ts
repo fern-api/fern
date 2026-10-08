@@ -61,11 +61,16 @@ export class OAuthAuthProvider implements core.AuthProvider {
     public async getAuthRequest({
         endpointMetadata,
         forceRefresh,
+        failedAuthHeaders,
     }: {
         endpointMetadata?: core.EndpointMetadata;
         forceRefresh?: boolean;
+        failedAuthHeaders?: Record<string, string>;
     } = {}): Promise<core.AuthRequest> {
-        const token = await this.getToken({ endpointMetadata, forceRefresh });
+        const token = await this.getToken({
+            endpointMetadata,
+            forceRefresh: forceRefresh === true && this.isCachedTokenRejected(failedAuthHeaders),
+        });
 
         return {
             headers: {
@@ -89,6 +94,15 @@ export class OAuthAuthProvider implements core.AuthProvider {
             return this.refreshPromise;
         }
         return this.refresh({ endpointMetadata });
+    }
+
+    private isCachedTokenRejected(failedAuthHeaders: Record<string, string> | undefined): boolean {
+        // A different cached token means another request already refreshed it.
+        const token = this.accessToken;
+        if (token == null || failedAuthHeaders == null) {
+            return true;
+        }
+        return failedAuthHeaders.Authorization === `Bearer ${token}`;
     }
 
     private async refresh({ endpointMetadata }: { endpointMetadata?: core.EndpointMetadata } = {}): Promise<string> {

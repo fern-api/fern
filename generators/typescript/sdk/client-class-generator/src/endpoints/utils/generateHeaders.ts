@@ -2,7 +2,7 @@ import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
+import { FAILED_AUTH_HEADERS_ARG_NAME } from "../../auth-provider/getAuthRequestParameter.js";
 import { GeneratedHeader } from "../../GeneratedHeader.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { RequestParameter } from "../../request-parameter/RequestParameter.js";
@@ -33,7 +33,7 @@ function shouldSendAuthHeaders({
  * the auth headers resolved by `generateHeaders` plus a callback that forces the auth provider to
  * resolve them again, e.g.
  *
- *   { headers: _authRequest.headers, refresh: async () => (await this._options.authProvider.getAuthRequest({ forceRefresh: true })).headers }
+ *   { headers: _authRequest.headers, refresh: async (failedAuthHeaders) => (await this._options.authProvider.getAuthRequest({ forceRefresh: true, failedAuthHeaders })).headers }
  */
 export function getAuthRefreshFetcherArg({
     context,
@@ -60,6 +60,7 @@ export function getAuthRefreshFetcherArg({
         );
     }
     getAuthRequestArgs.push(ts.factory.createPropertyAssignment("forceRefresh", ts.factory.createTrue()));
+    getAuthRequestArgs.push(ts.factory.createShorthandPropertyAssignment(FAILED_AUTH_HEADERS_ARG_NAME));
     const refreshedAuthRequest = context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
         generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
         ts.factory.createObjectLiteralExpression(getAuthRequestArgs)
@@ -75,7 +76,7 @@ export function getAuthRefreshFetcherArg({
                 ts.factory.createArrowFunction(
                     [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
                     undefined,
-                    [],
+                    [ts.factory.createParameterDeclaration(undefined, undefined, FAILED_AUTH_HEADERS_ARG_NAME)],
                     undefined,
                     ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                     ts.factory.createPropertyAccessExpression(

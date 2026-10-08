@@ -20,7 +20,11 @@ import {
 } from "ts-morph";
 
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
-import { FORCE_REFRESH_ARG_NAME, getDestructuredAuthRequestParameter } from "./getAuthRequestParameter.js";
+import {
+    FAILED_AUTH_HEADERS_ARG_NAME,
+    FORCE_REFRESH_ARG_NAME,
+    getDestructuredAuthRequestParameter
+} from "./getAuthRequestParameter.js";
 
 export declare namespace InferredAuthProviderGenerator {
     export interface Init {
@@ -336,10 +340,15 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                               this.refreshAuthOnFailedPermissions
                                   ? `
         if (${FORCE_REFRESH_ARG_NAME}) {
-            // Let an in-flight token request settle first so concurrent refreshes share one new request.
-            const staleAuthRequestPromise = this.${AUTH_REQUEST_PROMISE_FIELD_NAME};
-            await staleAuthRequestPromise?.catch(() => undefined);
-            if (this.${AUTH_REQUEST_PROMISE_FIELD_NAME} === staleAuthRequestPromise) {
+            // Let an in-flight token request settle first so concurrent refreshes share one new request,
+            // and keep a cached auth request that differs from the failed one: another request already refreshed it.
+            const cachedAuthRequestPromise = this.${AUTH_REQUEST_PROMISE_FIELD_NAME};
+            const cachedAuthRequest = await cachedAuthRequestPromise?.catch(() => undefined);
+            const cachedAuthRequestFailed =
+                ${FAILED_AUTH_HEADERS_ARG_NAME} == null ||
+                cachedAuthRequest == null ||
+                Object.entries(cachedAuthRequest.headers).every(([key, value]) => ${FAILED_AUTH_HEADERS_ARG_NAME}[key] === value);
+            if (this.${AUTH_REQUEST_PROMISE_FIELD_NAME} === cachedAuthRequestPromise && cachedAuthRequestFailed) {
                 this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
             }
         }`

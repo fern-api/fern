@@ -45,15 +45,22 @@ export class InferredAuthProvider implements core.AuthProvider {
     public async getAuthRequest({
         endpointMetadata,
         forceRefresh,
+        failedAuthHeaders,
     }: {
         endpointMetadata?: core.EndpointMetadata;
         forceRefresh?: boolean;
+        failedAuthHeaders?: Record<string, string>;
     } = {}): Promise<core.AuthRequest> {
         if (forceRefresh) {
-            // Let an in-flight token request settle first so concurrent refreshes share one new request.
-            const staleAuthRequestPromise = this.authRequestPromise;
-            await staleAuthRequestPromise?.catch(() => undefined);
-            if (this.authRequestPromise === staleAuthRequestPromise) {
+            // Let an in-flight token request settle first so concurrent refreshes share one new request,
+            // and keep a cached auth request that differs from the failed one: another request already refreshed it.
+            const cachedAuthRequestPromise = this.authRequestPromise;
+            const cachedAuthRequest = await cachedAuthRequestPromise?.catch(() => undefined);
+            const cachedAuthRequestFailed =
+                failedAuthHeaders == null ||
+                cachedAuthRequest == null ||
+                Object.entries(cachedAuthRequest.headers).every(([key, value]) => failedAuthHeaders[key] === value);
+            if (this.authRequestPromise === cachedAuthRequestPromise && cachedAuthRequestFailed) {
                 this.authRequestPromise = undefined;
             }
         }

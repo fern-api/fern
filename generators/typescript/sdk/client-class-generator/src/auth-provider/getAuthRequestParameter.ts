@@ -3,14 +3,18 @@ import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export const FORCE_REFRESH_ARG_NAME = "forceRefresh";
+export const FAILED_AUTH_HEADERS_ARG_NAME = "failedAuthHeaders";
 
 /**
  * The type of the argument to `AuthProvider.getAuthRequest`, e.g.
- * `{ endpointMetadata?: core.EndpointMetadata; forceRefresh?: boolean }`.
+ * `{ endpointMetadata?: core.EndpointMetadata; forceRefresh?: boolean; failedAuthHeaders?: Record<string, string> }`.
  */
 export function getAuthRequestArgType(
     context: FileContext,
-    { includeForceRefresh }: { includeForceRefresh: boolean }
+    {
+        includeForceRefresh,
+        includeFailedAuthHeaders = includeForceRefresh
+    }: { includeForceRefresh: boolean; includeFailedAuthHeaders?: boolean }
 ): string {
     const properties = [
         ts.factory.createPropertySignature(
@@ -30,6 +34,19 @@ export function getAuthRequestArgType(
             )
         );
     }
+    if (includeFailedAuthHeaders) {
+        properties.push(
+            ts.factory.createPropertySignature(
+                undefined,
+                FAILED_AUTH_HEADERS_ARG_NAME,
+                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                ts.factory.createTypeReferenceNode("Record", [
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                ])
+            )
+        );
+    }
     return getTextOfTsNode(ts.factory.createTypeLiteralNode(properties));
 }
 
@@ -38,11 +55,21 @@ export function getAuthRequestArgType(
  */
 export function getDestructuredAuthRequestParameter(
     context: FileContext,
-    { includeForceRefresh }: { includeForceRefresh: boolean }
+    {
+        includeForceRefresh,
+        includeFailedAuthHeaders = includeForceRefresh
+    }: { includeForceRefresh: boolean; includeFailedAuthHeaders?: boolean }
 ): { name: string; type: string; initializer: string } {
+    const names = ["endpointMetadata"];
+    if (includeForceRefresh) {
+        names.push(FORCE_REFRESH_ARG_NAME);
+    }
+    if (includeFailedAuthHeaders) {
+        names.push(FAILED_AUTH_HEADERS_ARG_NAME);
+    }
     return {
-        name: includeForceRefresh ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME} }` : "{ endpointMetadata }",
-        type: getAuthRequestArgType(context, { includeForceRefresh }),
+        name: `{ ${names.join(", ")} }`,
+        type: getAuthRequestArgType(context, { includeForceRefresh, includeFailedAuthHeaders }),
         initializer: "{}"
     };
 }

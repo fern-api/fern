@@ -5,7 +5,11 @@ import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } fr
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
 import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator.js";
 import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator.js";
-import { FORCE_REFRESH_ARG_NAME, getDestructuredAuthRequestParameter } from "./getAuthRequestParameter.js";
+import {
+    FAILED_AUTH_HEADERS_ARG_NAME,
+    FORCE_REFRESH_ARG_NAME,
+    getDestructuredAuthRequestParameter
+} from "./getAuthRequestParameter.js";
 import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator.js";
 import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator.js";
 import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator.js";
@@ -326,7 +330,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
             if (provider == null) {
                 throw new Error(\`Internal error: auth provider not found for scheme: \${schemeKey}\`);
             }
-            const authRequest = await provider.getAuthRequest(${this.refreshAuthOnFailedPermissions ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME} }` : "{ endpointMetadata }"});
+            const authRequest = await provider.getAuthRequest(${this.refreshAuthOnFailedPermissions ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME}, ${FAILED_AUTH_HEADERS_ARG_NAME} }` : "{ endpointMetadata }"});
             Object.assign(combinedHeaders, authRequest.headers);
         }
 

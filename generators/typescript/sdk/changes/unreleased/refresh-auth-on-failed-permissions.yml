@@ -4,7 +4,8 @@
     Add the `refreshAuthOnFailedPermissions` config option (default `false`). When enabled, a 401 or 403
     response is retried with the same `maxRetries` and backoff as other retryable status codes, and the SDK
     refreshes auth before each retry. OAuth and inferred auth providers bypass their cached token and fetch a
-    new one, and supplier-based credentials (e.g. a bearer token supplier) are re-read, so a token rotated
+    new one (unless another request already refreshed the token the failed request used, in which case that
+    newer token is reused), and supplier-based credentials (e.g. a bearer token supplier) are re-read, so a token rotated
     before it expires is picked up. If refreshing auth fails, that error is thrown and the request is not retried.
     Requests with a stream body (e.g. a stream upload) can't be resent, so their 401/403 is returned as is.
   type: feat

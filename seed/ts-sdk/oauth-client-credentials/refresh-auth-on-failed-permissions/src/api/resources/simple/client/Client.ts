@@ -56,7 +56,9 @@ export class SimpleClient {
             logging: this._options.logging,
             authRefresh: {
                 headers: _authRequest.headers,
-                refresh: async () => (await this._options.authProvider.getAuthRequest({ forceRefresh: true })).headers,
+                refresh: async (failedAuthHeaders) =>
+                    (await this._options.authProvider.getAuthRequest({ forceRefresh: true, failedAuthHeaders }))
+                        .headers,
             },
         });
         if (_response.ok) {

@@ -5,7 +5,11 @@ import type { FileContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
-import { FORCE_REFRESH_ARG_NAME, getDestructuredAuthRequestParameter } from "./getAuthRequestParameter.js";
+import {
+    FAILED_AUTH_HEADERS_ARG_NAME,
+    FORCE_REFRESH_ARG_NAME,
+    getDestructuredAuthRequestParameter
+} from "./getAuthRequestParameter.js";
 import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace OAuthAuthProviderGenerator {
@@ -38,6 +42,7 @@ const REFRESH_PROMISE_FIELD_NAME = "refreshPromise";
 const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 const DEFAULT_TOKEN_HEADER = "Authorization";
 const DEFAULT_TOKEN_PREFIX = "Bearer";
+const IS_CACHED_TOKEN_REJECTED_METHOD_NAME = "isCachedTokenRejected";
 const DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 const GRANT_TYPE_WIRE_VALUE = "grant_type";
 const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
@@ -525,7 +530,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ])
                 ),
                 statements: `
-        const token = await this.getToken(${this.refreshAuthOnFailedPermissions ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME} }` : "{ endpointMetadata }"});
+        const token = await this.getToken(${this.refreshAuthOnFailedPermissions ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME}: ${FORCE_REFRESH_ARG_NAME} === true && this.${IS_CACHED_TOKEN_REJECTED_METHOD_NAME}(${FAILED_AUTH_HEADERS_ARG_NAME}) }` : "{ endpointMetadata }"});
 
         return {
             headers: {
@@ -542,11 +547,36 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     getDestructuredAuthRequestParameter(context, {
-                        includeForceRefresh: this.refreshAuthOnFailedPermissions
+                        includeForceRefresh: this.refreshAuthOnFailedPermissions,
+                        includeFailedAuthHeaders: false
                     })
                 ],
                 statements: getTokenStatements
             },
+            ...(this.refreshAuthOnFailedPermissions
+                ? [
+                      {
+                          kind: StructureKind.Method as const,
+                          scope: Scope.Private,
+                          name: IS_CACHED_TOKEN_REJECTED_METHOD_NAME,
+                          returnType: "boolean",
+                          parameters: [
+                              {
+                                  name: FAILED_AUTH_HEADERS_ARG_NAME,
+                                  type: "Record<string, string> | undefined"
+                              }
+                          ],
+                          statements: `
+        // A different cached token means another request already refreshed it.
+        const token = this.${ACCESS_TOKEN_FIELD_NAME};
+        if (token == null || ${FAILED_AUTH_HEADERS_ARG_NAME} == null) {
+            return true;
+        }
+        return ${FAILED_AUTH_HEADERS_ARG_NAME}[${tokenHeader}] === ${tokenValue};
+        `
+                      }
+                  ]
+                : []),
             {
                 kind: StructureKind.Method,
                 scope: Scope.Private,

@@ -50,8 +50,8 @@ export declare namespace Fetcher {
     export interface AuthRefresh {
         /** The auth headers that were merged into `headers` for the initial request. */
         headers: Record<string, string>;
-        /** Resolves auth again, bypassing any cached credentials, and returns the new auth headers. */
-        refresh: () => Promise<Record<string, string>>;
+        /** Resolves auth again, replacing `failedAuthHeaders` if they are still cached, and returns the new auth headers. */
+        refresh: (failedAuthHeaders: Record<string, string>) => Promise<Record<string, string>>;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -177,7 +177,7 @@ function createAuthHeadersRefresher(authRefresh: Fetcher.AuthRefresh, headers: H
     return async () => {
         let refreshedAuthHeaders: Record<string, string>;
         try {
-            refreshedAuthHeaders = await authRefresh.refresh();
+            refreshedAuthHeaders = await authRefresh.refresh(currentAuthHeaders);
         } catch (error) {
             throw new AuthRefreshFailure(error);
         }
@@ -194,6 +194,18 @@ function createAuthHeadersRefresher(authRefresh: Fetcher.AuthRefresh, headers: H
         }
         currentAuthHeaders = refreshedAuthHeaders;
     };
+}
+
+/** Stream bodies are consumed by the first attempt, so a request with one can't be resent. */
+function isReplayableBody(body: BodyInit | undefined): boolean {
+    if (body == null || typeof body !== "object") {
+        return true;
+    }
+    if (typeof ReadableStream !== "undefined" && body instanceof ReadableStream) {
+        return false;
+    }
+    const maybeStream = body as { pipe?: unknown; [Symbol.asyncIterator]?: unknown };
+    return typeof maybeStream.pipe !== "function" && typeof maybeStream[Symbol.asyncIterator] !== "function";
 }
 
 export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
@@ -238,7 +250,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.responseType === "streaming" || args.responseType === "sse",
                 ),
             args.maxRetries,
-            args.authRefresh != null ? createAuthHeadersRefresher(args.authRefresh, headers) : undefined,
+            args.authRefresh != null && isReplayableBody(requestBody)
+                ? createAuthHeadersRefresher(args.authRefresh, headers)
+                : undefined,
         );
 
         if (response.status >= 200 && response.status < 400) {
