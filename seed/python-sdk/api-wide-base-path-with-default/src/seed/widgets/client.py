@@ -45,7 +45,7 @@ class WidgetsClient:
         from seed import SeedApi
 
         client = SeedApi(
-            "v1beta",
+            api_version="v1beta",
             base_url="https://yourhost.com/path/to/api",
         )
         client.widgets.create(
@@ -92,7 +92,7 @@ class AsyncWidgetsClient:
         from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
-            "v1beta",
+            api_version="v1beta",
             base_url="https://yourhost.com/path/to/api",
         )
 
