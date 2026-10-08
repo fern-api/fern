@@ -207,7 +207,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 logger.debug("HTTP request succeeded", metadata);
             }
             const body = await getResponseBody(response, args.responseType);
-            if (isResponseBodyError(body)) {
+            if (isResponseBodyError(body) && body.error.reason === "non-json") {
                 return {
                     ok: false,
                     error: body.error,
