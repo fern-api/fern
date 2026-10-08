@@ -1,0 +1,8 @@
+name: python-inferred-auth-refresh-token
+
+auth: InferredAuthScheme
+auth-schemes:
+  InferredAuthScheme:
+    scheme: bearer
+    get-token: POST /token
+    type: refresh-token

@@ -531,6 +531,12 @@ fixtures:
   python-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
+  python-inferred-auth-refresh-token:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        omit_unset_inferred_auth_params: true
+      outputFolder: omit-unset-inferred-auth-params
   oauth-pkce:
     - customConfig:
         enable_wire_tests: true
