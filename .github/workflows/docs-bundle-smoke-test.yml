@@ -212,7 +212,8 @@ jobs:
           retention-days: 7
 
       - name: Run smoke tests (astro, with server restart on crash)
-        if: steps.node-check.outputs.available == 'true'
+        # Run even if the Next run failed so each renderer gets independent coverage
+        if: ${{ !cancelled() && steps.node-check.outputs.available == 'true' }}
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         env:
           FERN_NO_VERSION_REDIRECTION: "true"

@@ -34,7 +34,7 @@ run(){ # name args port cachedir mode
   local reload=timeout; for i in $(seq 1 600); do curl -s http://localhost:$port/welcome | grep -q $m && { reload=$(printf "%.1fs" $(echo "$(date +%s.%N) - $e0"|bc)); break; }; sleep 0.1; sample >/dev/null; done
   cp /tmp/w.bak $WELCOME; sleep 3; sample >/dev/null
   # load burst: 40 requests to welcome, measure cpu during
-  local l0=$(date +%s.%N); for i in $(seq 1 40); do curl -s -o /dev/null http://localhost:$port/welcome & done; wait; local burst=$(printf "%.1fs" $(echo "$(date +%s.%N) - $l0"|bc))
+  local l0=$(date +%s.%N); local pids=(); for i in $(seq 1 40); do curl -s -o /dev/null http://localhost:$port/welcome & pids+=($!); done; wait "${pids[@]}"; local burst=$(printf "%.1fs" $(echo "$(date +%s.%N) - $l0"|bc))
   read post_rss post_cpu < <(sample)
   local disk=$(du -sm "$cache" 2>/dev/null | cut -f1)
   echo "RESULT $name/$mode: ready=${ready}s idle_rss=$((idle_rss/1024))MB peak_rss=$(( $(cat $peakf)/1024 ))MB post_rss=$((post_rss/1024))MB reload=$reload burst40=$burst bundle_disk=${disk}MB"
