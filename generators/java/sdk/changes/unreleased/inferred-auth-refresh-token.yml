@@ -3,8 +3,7 @@
     `grant_type=refresh_token`, and `grantType` is no longer a client builder option. Only the parameters of
     the OAuth refresh token grant (`refreshToken`, `scope`, `clientId`, `clientSecret`) plus any required
     ones are builder options and sent. Optional parameters of other grants on a shared token endpoint, such as
-    `code`, `codeVerifier` and `redirectUri`, stay on the token endpoint method only. Unset optional parameters
-    are left out of the token request.
+    `code`, `codeVerifier` and `redirectUri`, stay on the token endpoint method only.
   type: feat
 - summary: |
     Inferred auth with `type: refresh-token` rotates the refresh token. When the token response returns a new
