@@ -218,7 +218,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     // race a sibling into remote registration or generation.
     const routePreparation = prepareFernSdkGenApiRoutes({
         generators: generatorGroup.generators,
-        enabled: isFernSdkGenApiEnabled(),
+        enabled: await isFernSdkGenApiEnabled({ organization }),
         sdkConfigV1,
         requireEnvVars,
         isPreview: isSdkPreview,
@@ -488,7 +488,7 @@ export function prepareFernSdkGenApiRoutes({
                 // generation, where they would fail opaquely.
                 if (isSdkGenApiOnly(resolved.name)) {
                     throw new CliError({
-                        message: `${resolved.name} requires the environment variable FERN_USE_SDK_GEN_API=true.`,
+                        message: `${resolved.name} requires sdk-gen-api generation, which is not enabled for this organization. Contact Fern support to enable it.`,
                         code: CliError.Code.ConfigError
                     });
                 }

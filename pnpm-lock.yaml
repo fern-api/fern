@@ -6435,6 +6435,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
+      '@fern-api/posthog-manager':
+        specifier: workspace:*
+        version: link:../../../posthog-manager
       '@fern-api/register':
         specifier: workspace:*
         version: link:../../../register

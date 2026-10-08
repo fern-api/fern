@@ -6,6 +6,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const runGenerator = vi.hoisted(() => vi.fn());
 
+vi.mock("@fern-api/posthog-manager", () => ({
+    getFeatureFlagClient: () => ({
+        isEnabled: async (flag: string) => flag === "use-sdk-gen-api",
+        getCachedValue: () => undefined
+    })
+}));
+
 vi.mock("../runRemoteGenerationForGenerator.js", () => ({
     runRemoteGenerationForGenerator: runGenerator
 }));
@@ -140,7 +147,6 @@ async function runMixedFailure(
 
 describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
     beforeEach(() => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
         runGenerator.mockReset();
     });
 

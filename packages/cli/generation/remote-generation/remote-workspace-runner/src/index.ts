@@ -19,9 +19,11 @@ export {
     createFernSdkGenApiRequest,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getResolvedFernSdkGenApiEnabled,
     isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
     synthesizesSdkConfig,
+    USE_SDK_GEN_API_FEATURE_FLAG,
     validateFernSdkGenApiPublishCredentialSource,
     validateFernSdkGenApiPublishCredentialSources,
     validateFernSdkGenApiPublishTargets

@@ -4,6 +4,7 @@ import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
+import { getFeatureFlagClient } from "@fern-api/posthog-manager";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
@@ -202,9 +203,23 @@ export interface FernSdkGenApiPublishCredentials {
     targets: FernSdkGenApiPublishCredential[];
 }
 
-export function isFernSdkGenApiEnabled(): boolean {
-    const configured = process.env.FERN_USE_SDK_GEN_API ?? process.env.DEFAULT_USE_SDK_GEN_API ?? "false";
-    return configured.trim().toLowerCase() === "true";
+/**
+ * PostHog feature flag that routes an organization's generation through sdk-gen-api. Evaluated with
+ * the org and the CLI release environment (`prod`, `pre-prod`, `beta`, ...) as properties, so
+ * release conditions can target specific orgs and/or distributions. Off unless PostHog says otherwise.
+ */
+export const USE_SDK_GEN_API_FEATURE_FLAG = "use-sdk-gen-api";
+
+export async function isFernSdkGenApiEnabled({ organization }: { organization: string }): Promise<boolean> {
+    return getFeatureFlagClient().isEnabled(USE_SDK_GEN_API_FEATURE_FLAG, { org: organization });
+}
+
+/**
+ * The flag value already resolved in this process, without a network request. For latency-bound
+ * paths such as the exit-time upgrade nudge; `undefined` means the flag has not been evaluated.
+ */
+export function getResolvedFernSdkGenApiEnabled({ organization }: { organization: string }): boolean | undefined {
+    return getFeatureFlagClient().getCachedValue(USE_SDK_GEN_API_FEATURE_FLAG, { org: organization });
 }
 
 /**
@@ -1085,7 +1100,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     }
     if (!origin) {
         return first.context.failAndThrow(
-            "FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true",
+            "FERN_SDK_GEN_API_ORIGIN is required when sdk-gen-api generation is enabled",
             undefined,
             { code: CliError.Code.ConfigError }
         );

@@ -245,7 +245,7 @@ export async function loadAndUpdateGenerators({
 
             const currentGeneratorVersion = generator.get("version") as string;
             const tracksLatest = currentGeneratorVersion === "latest";
-            const useSdkGenApi = isFernSdkGenApiEnabled();
+            const useSdkGenApi = await isFernSdkGenApiEnabled({ organization });
             if (useSdkGenApi && !tracksLatest && getSdkGenApiToken == null) {
                 throw new Error("SDK Gen API generator version discovery requires authentication");
             }
@@ -428,7 +428,9 @@ export async function upgradeGenerator({
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     const { apiWorkspaces } = project;
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    const getSdkGenApiToken = (await isFernSdkGenApiEnabled({ organization: project.config.organization }))
+        ? createSdkGenApiTokenProvider(cliContext)
+        : undefined;
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
     const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];

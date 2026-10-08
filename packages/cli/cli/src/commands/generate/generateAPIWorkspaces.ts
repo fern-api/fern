@@ -4,6 +4,7 @@ import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
+import { getCliReleaseEnvironment } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import {
     type AutomationRunOptions,
@@ -245,8 +246,11 @@ export async function generateAPIWorkspaces({
                     groupNames,
                     generatorName,
                     token,
-                    fernUseSdkGenApiEnv: process.env.FERN_USE_SDK_GEN_API,
-                    sdkGenApiEnabled: isFernSdkGenApiEnabled()
+                    // Resolving the flag here also warms the per-process cache the remote runner reads.
+                    sdkGenApiEnabled: useLocalDocker
+                        ? undefined
+                        : await isFernSdkGenApiEnabled({ organization: project.config.organization }),
+                    cliReleaseEnvironment: getCliReleaseEnvironment()
                 })
             }
         });

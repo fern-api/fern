@@ -19,6 +19,16 @@ vi.mock("@fern-api/login", () => ({
     askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" }))
 }));
 
+const featureFlags = vi.hoisted(() => ({
+    isEnabled: vi.fn(async (_flag: string, _context: { org: string }) => false),
+    getCachedValue: vi.fn((): boolean | undefined => undefined)
+}));
+
+vi.mock("@fern-api/posthog-manager", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("@fern-api/posthog-manager")>()),
+    getFeatureFlagClient: () => featureFlags
+}));
+
 vi.mock("../checkOutputDirectory.js", () => ({
     checkOutputDirectory: vi.fn(async () => ({ shouldProceed: true }))
 }));
@@ -122,13 +132,10 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(kinds).toEqual(expected);
     });
 
-    it("reports requested generators, auth, and sdk-gen-api state in the generate telemetry event", async () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
-        try {
-            await runGenerate({ project, cliContext, groupNames: ["python-sdk"], targetNames: ["typescript"] });
-        } finally {
-            vi.unstubAllEnvs();
-        }
+    it("reports requested generators, auth, and the sdk-gen-api flag in the generate telemetry event", async () => {
+        featureFlags.isEnabled.mockResolvedValueOnce(true);
+
+        await runGenerate({ project, cliContext, groupNames: ["python-sdk"], targetNames: ["typescript"] });
 
         expect(vi.mocked(cliContext.instrumentPostHogEvent)).toHaveBeenCalledOnce();
         const event = vi.mocked(cliContext.instrumentPostHogEvent).mock.calls[0]?.[0];
@@ -139,14 +146,32 @@ describe("generateAPIWorkspaces coexistence", () => {
                 generatorNames: ["fernapi/fern-python-sdk", "fernapi/fern-typescript-sdk"],
                 authType: "organization",
                 userId: undefined,
-                fernUseSdkGenApiEnv: true,
-                sdkGenApiEnabled: true
+                sdkGenApiEnabled: true,
+                cliReleaseEnvironment: "local"
             }
         });
+        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", { org: "test" });
         expect(event?.properties?.requestedGenerators).toEqual([
             expect.objectContaining({ kind: "legacy", group: "python-sdk", name: "fernapi/fern-python-sdk" }),
             expect.objectContaining({ kind: "sdk-config", name: "fernapi/fern-typescript-sdk" })
         ]);
+    });
+
+    it("does not request the sdk-gen-api flag for local generation", async () => {
+        featureFlags.isEnabled.mockClear();
+
+        await runGenerate({
+            project,
+            cliContext,
+            groupNames: ["python-sdk"],
+            targetNames: undefined,
+            useLocalDocker: true
+        });
+
+        expect(featureFlags.isEnabled).not.toHaveBeenCalled();
+        expect(vi.mocked(cliContext.instrumentPostHogEvent).mock.calls[0]?.[0]?.properties).toMatchObject({
+            sdkGenApiEnabled: undefined
+        });
     });
 
     it("uses an explicitly selected SDK Config instead of the workspace default", async () => {

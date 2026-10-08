@@ -90,8 +90,8 @@ function build(
         groupNames: ["sdks"],
         generatorName: undefined,
         token: undefined,
-        fernUseSdkGenApiEnv: undefined,
         sdkGenApiEnabled: false,
+        cliReleaseEnvironment: "prod",
         ...overrides
     });
 }
@@ -224,19 +224,16 @@ describe("buildGeneratePosthogProperties", () => {
     });
 
     it.each([
-        { value: "true", expected: true },
-        { value: " TRUE ", expected: true },
-        { value: "false", expected: false },
-        { value: "1", expected: false },
-        { value: undefined, expected: false }
-    ])("reports FERN_USE_SDK_GEN_API=$value as $expected", ({ value, expected }) => {
-        expect(build({ fernUseSdkGenApiEnv: value }).fernUseSdkGenApiEnv).toBe(expected);
-    });
-
-    it("reports the effective sdk-gen-api state separately from the env var", () => {
-        expect(build({ fernUseSdkGenApiEnv: undefined, sdkGenApiEnabled: true })).toMatchObject({
-            fernUseSdkGenApiEnv: false,
-            sdkGenApiEnabled: true
+        { sdkGenApiEnabled: true, cliReleaseEnvironment: "pre-prod" as const },
+        { sdkGenApiEnabled: false, cliReleaseEnvironment: "prod" as const },
+        { sdkGenApiEnabled: undefined, cliReleaseEnvironment: "beta" as const }
+    ])("reports sdkGenApiEnabled=$sdkGenApiEnabled for the $cliReleaseEnvironment release environment", ({
+        sdkGenApiEnabled,
+        cliReleaseEnvironment
+    }) => {
+        expect(build({ sdkGenApiEnabled, cliReleaseEnvironment })).toMatchObject({
+            sdkGenApiEnabled,
+            cliReleaseEnvironment
         });
     });
 });

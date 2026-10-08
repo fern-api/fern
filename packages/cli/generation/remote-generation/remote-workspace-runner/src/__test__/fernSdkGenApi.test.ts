@@ -18,6 +18,7 @@ import {
     type FernSdkGenApiRequestedOutput,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getResolvedFernSdkGenApiEnabled,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
     mapFernSdkGenApiOutput,
@@ -47,6 +48,15 @@ const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
     migrateForGenerator: vi.fn(),
     migrateToVersionForGenerator: vi.fn()
+}));
+
+const featureFlags = vi.hoisted(() => ({
+    isEnabled: vi.fn(async (_flag: string, _context: { org: string }) => false),
+    getCachedValue: vi.fn((_flag: string, _context: { org: string }): boolean | undefined => undefined)
+}));
+
+vi.mock("@fern-api/posthog-manager", () => ({
+    getFeatureFlagClient: () => featureFlags
 }));
 
 vi.mock("@fern-api/core", async (importOriginal) => ({
@@ -3000,25 +3010,30 @@ describe("isEligibleForFernSdkGenApi", () => {
 });
 
 describe("sdk-gen-api environment configuration", () => {
-    it("is disabled by default", () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", undefined);
-        vi.stubEnv("DEFAULT_USE_SDK_GEN_API", undefined);
-
-        expect(isFernSdkGenApiEnabled()).toBe(false);
+    beforeEach(() => {
+        featureFlags.isEnabled.mockClear();
+        featureFlags.getCachedValue.mockClear();
     });
 
-    it("uses the baked default when no runtime override is present", () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", undefined);
-        vi.stubEnv("DEFAULT_USE_SDK_GEN_API", " true ");
+    it("is off when the use-sdk-gen-api feature flag has not been evaluated as on", async () => {
+        featureFlags.isEnabled.mockResolvedValueOnce(false);
 
-        expect(isFernSdkGenApiEnabled()).toBe(true);
+        await expect(isFernSdkGenApiEnabled({ organization: "acme" })).resolves.toBe(false);
+        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", { org: "acme" });
     });
 
-    it("lets the runtime flag override the baked default", () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", "false");
-        vi.stubEnv("DEFAULT_USE_SDK_GEN_API", "true");
+    it("follows the use-sdk-gen-api feature flag for the organization", async () => {
+        featureFlags.isEnabled.mockResolvedValueOnce(true);
 
-        expect(isFernSdkGenApiEnabled()).toBe(false);
+        await expect(isFernSdkGenApiEnabled({ organization: "acme" })).resolves.toBe(true);
+    });
+
+    it("exposes the already-resolved flag value without a request", () => {
+        featureFlags.getCachedValue.mockReturnValueOnce(true);
+
+        expect(getResolvedFernSdkGenApiEnabled({ organization: "acme" })).toBe(true);
+        expect(featureFlags.getCachedValue).toHaveBeenCalledWith("use-sdk-gen-api", { org: "acme" });
+        expect(featureFlags.isEnabled).not.toHaveBeenCalled();
     });
 
     it("prefers the runtime origin and removes its trailing slash", () => {

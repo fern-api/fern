@@ -8,6 +8,8 @@ import { getLatestGeneratorVersions, processGeneratorGroups } from "./getGenerat
 
 const h = vi.hoisted(() => ({
     sdkGenApiEnabled: false,
+    resolvedSdkGenApiEnabled: undefined as boolean | undefined,
+    isFernSdkGenApiEnabled: vi.fn(),
     getLatestGeneratorVersion: vi.fn(),
     loadGeneratorsConfiguration: vi.fn(),
     askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" }))
@@ -23,7 +25,9 @@ vi.mock("@fern-api/configuration-loader", () => ({
 vi.mock("@fern-api/remote-workspace-runner", () => ({
     getFernSdkGenApiLanguage: vi.fn(() => "typescript"),
     getFernSdkGenApiOrigin: vi.fn(() => "https://sdk-gen.example.com"),
-    isFernSdkGenApiEnabled: vi.fn(() => h.sdkGenApiEnabled)
+    getResolvedFernSdkGenApiEnabled: vi.fn(() => h.resolvedSdkGenApiEnabled),
+    isFernSdkGenApiEnabled: h.isFernSdkGenApiEnabled,
+    USE_SDK_GEN_API_FEATURE_FLAG: "use-sdk-gen-api"
 }));
 vi.mock("@fern-api/login", () => ({ askToLogin: h.askToLogin }));
 
@@ -36,6 +40,8 @@ describe("generator upgrade version reporting", () => {
         vi.clearAllMocks();
         vi.unstubAllGlobals();
         h.sdkGenApiEnabled = false;
+        h.resolvedSdkGenApiEnabled = undefined;
+        h.isFernSdkGenApiEnabled.mockImplementation(async () => h.sdkGenApiEnabled);
         context = {
             logger: {
                 debug: vi.fn(),
@@ -105,6 +111,45 @@ describe("generator upgrade version reporting", () => {
 
         await getLatestGeneratorVersions({ cliContext, project });
 
+        expect(h.getLatestGeneratorVersion).toHaveBeenCalledOnce();
+        expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it("evaluates the sdk-gen-api flag once per lookup for the project's organization", async () => {
+        h.getLatestGeneratorVersion.mockResolvedValue("0.52.0");
+        vi.stubGlobal("fetch", vi.fn());
+
+        await getLatestGeneratorVersions({ cliContext, project });
+
+        expect(h.isFernSdkGenApiEnabled).toHaveBeenCalledOnce();
+        expect(h.isFernSdkGenApiEnabled).toHaveBeenCalledWith({ organization: "test-org" });
+    });
+
+    it("reuses an already-resolved flag without a request when skipFeatureFlagRequest is set", async () => {
+        h.resolvedSdkGenApiEnabled = true;
+        const fetchMock = vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                targets: [{ targetId: "generator", state: "RESOLVED", compatibleVersion: "0.51.7" }]
+            })
+        });
+        vi.stubGlobal("fetch", fetchMock);
+
+        await getLatestGeneratorVersions({ cliContext, project, skipFeatureFlagRequest: true });
+
+        expect(h.isFernSdkGenApiEnabled).not.toHaveBeenCalled();
+        expect(fetchMock).toHaveBeenCalledOnce();
+        expect(h.getLatestGeneratorVersion).not.toHaveBeenCalled();
+    });
+
+    it("falls back to FDR when skipFeatureFlagRequest is set and the flag was never resolved", async () => {
+        h.getLatestGeneratorVersion.mockResolvedValue("0.52.0");
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        await getLatestGeneratorVersions({ cliContext, project, skipFeatureFlagRequest: true });
+
+        expect(h.isFernSdkGenApiEnabled).not.toHaveBeenCalled();
         expect(h.getLatestGeneratorVersion).toHaveBeenCalledOnce();
         expect(fetchMock).not.toHaveBeenCalled();
     });

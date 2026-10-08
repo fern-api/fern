@@ -1,0 +1,122 @@
+import { PostHog } from "posthog-node";
+
+import type { CliReleaseEnvironment } from "./CliReleaseEnvironment.js";
+
+/** Inputs PostHog release conditions can target. */
+export interface FeatureFlagContext {
+    /** The Fern organization from `fern.config.json` / `fern.yml`. */
+    org: string;
+}
+
+/** The value PostHog evaluated for a flag, or `undefined` when no value was returned. */
+export type FeatureFlagResultValue = { enabled: boolean; variant: string | undefined } | undefined;
+
+export interface FeatureFlagClient {
+    /**
+     * Resolves a boolean feature flag for an organization. Resolves to `false` when the flag does
+     * not exist, is off, cannot be reached, or is quota limited. Results are cached per process.
+     */
+    isEnabled(flag: string, context: FeatureFlagContext): Promise<boolean>;
+    /** Returns a previously resolved value without making a request, or `undefined` if none exists yet. */
+    getCachedValue(flag: string, context: FeatureFlagContext): boolean | undefined;
+}
+
+/**
+ * A flag is on when PostHog returns `true` for a boolean flag, or the `"true"` variant for a
+ * multivariate flag. Multivariate flags let a release condition force `"false"` for one org
+ * ahead of a catch-all condition that turns the flag on for everyone else.
+ */
+export function isFeatureFlagValueEnabled(value: FeatureFlagResultValue): boolean {
+    if (value == null || !value.enabled) {
+        return false;
+    }
+    return value.variant == null || value.variant === "true";
+}
+
+export class NoopFeatureFlagClient implements FeatureFlagClient {
+    public async isEnabled(): Promise<boolean> {
+        return false;
+    }
+
+    public getCachedValue(): boolean | undefined {
+        return undefined;
+    }
+}
+
+/** The subset of the PostHog client the flag client uses, so tests can substitute it. */
+export type FeatureFlagEvaluator = Pick<PostHog, "getFeatureFlagResult">;
+
+const FLAG_REQUEST_TIMEOUT_MS = 3000;
+
+export class PosthogFeatureFlagClient implements FeatureFlagClient {
+    private readonly evaluator: FeatureFlagEvaluator;
+    private readonly environment: CliReleaseEnvironment;
+    private readonly pending = new Map<string, Promise<boolean>>();
+    private readonly resolved = new Map<string, boolean>();
+
+    constructor({
+        environment,
+        posthogApiKey,
+        evaluator
+    }: {
+        environment: CliReleaseEnvironment;
+        posthogApiKey?: string;
+        evaluator?: FeatureFlagEvaluator;
+    }) {
+        this.environment = environment;
+        this.evaluator =
+            evaluator ?? new PostHog(posthogApiKey ?? "", { featureFlagsRequestTimeoutMs: FLAG_REQUEST_TIMEOUT_MS });
+    }
+
+    public isEnabled(flag: string, context: FeatureFlagContext): Promise<boolean> {
+        const cacheKey = getCacheKey(flag, context);
+        const existing = this.pending.get(cacheKey);
+        if (existing != null) {
+            return existing;
+        }
+        const evaluation = this.evaluateAndRemember(flag, context, cacheKey);
+        this.pending.set(cacheKey, evaluation);
+        return evaluation;
+    }
+
+    private async evaluateAndRemember(flag: string, context: FeatureFlagContext, cacheKey: string): Promise<boolean> {
+        const enabled = await this.evaluate(flag, context);
+        this.resolved.set(cacheKey, enabled);
+        return enabled;
+    }
+
+    public getCachedValue(flag: string, context: FeatureFlagContext): boolean | undefined {
+        return this.resolved.get(getCacheKey(flag, context));
+    }
+
+    private async evaluate(flag: string, { org }: FeatureFlagContext): Promise<boolean> {
+        const properties = { org, environment: this.environment };
+        try {
+            const result = await this.evaluator.getFeatureFlagResult(flag, getFlagDistinctId(org), {
+                personProperties: properties,
+                groups: { organization: org },
+                groupProperties: { organization: properties },
+                // Flag checks run even when telemetry is disabled, so they never emit events.
+                sendFeatureFlagEvents: false
+            });
+            return isFeatureFlagValueEnabled(
+                result == null ? undefined : { enabled: result.enabled, variant: result.variant }
+            );
+        } catch {
+            // Flags gate rollouts; an unreachable PostHog must fall back to the default (off), never fail the CLI.
+            return false;
+        }
+    }
+}
+
+/**
+ * Flags are evaluated per organization (not per user) so percentage rollouts bucket whole orgs
+ * and no user identity is sent for users who opted out of telemetry.
+ */
+export function getFlagDistinctId(org: string): string {
+    return `org:${org}`;
+}
+
+function getCacheKey(flag: string, { org }: FeatureFlagContext): string {
+    return JSON.stringify([flag, org]);
+}

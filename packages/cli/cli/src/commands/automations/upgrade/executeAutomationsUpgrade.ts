@@ -209,7 +209,9 @@ async function upgradeGeneratorsForAllWorkspaces({
     const generators: GeneratorUpgradeEntry[] = [];
     const skippedMajor: SkippedMajorEntry[] = [];
     const alreadyUpToDate: AlreadyUpToDateEntry[] = [];
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    const getSdkGenApiToken = (await isFernSdkGenApiEnabled({ organization: project.config.organization }))
+        ? createSdkGenApiTokenProvider(cliContext)
+        : undefined;
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {

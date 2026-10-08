@@ -7,7 +7,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import { getResolvedFernSdkGenApiEnabled, isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
@@ -53,7 +53,8 @@ export async function getLatestGeneratorVersions({
     generatorFilter,
     groupFilter,
     channel,
-    includeMajor
+    includeMajor,
+    skipFeatureFlagRequest
 }: {
     cliContext: CliContext;
     project: Project;
@@ -61,9 +62,15 @@ export async function getLatestGeneratorVersions({
     groupFilter?: string;
     channel?: ReleaseType;
     includeMajor?: boolean;
+    /** Use only a feature flag value already resolved in this process (see {@link resolveSdkGenApiEnabled}). */
+    skipFeatureFlagRequest?: boolean;
 }): Promise<GeneratorVersions> {
     const { apiWorkspaces } = project;
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    const useSdkGenApi = await resolveSdkGenApiEnabled({
+        organization: project.config.organization,
+        skipFeatureFlagRequest
+    });
+    const getSdkGenApiToken = useSdkGenApi ? createSdkGenApiTokenProvider(cliContext) : undefined;
     if (apiWorkspaces.length === 1) {
         const versions: SingleApiWorkspaceGeneratorVersions = { type: "singleApi", versions: {} };
         await processGeneratorsYml({
@@ -88,6 +95,7 @@ export async function getLatestGeneratorVersions({
                     channel,
                     includeMajor,
                     organization: project.config.organization,
+                    useSdkGenApi,
                     getSdkGenApiToken,
                     context
                 });
@@ -138,6 +146,7 @@ export async function getLatestGeneratorVersions({
                 channel,
                 includeMajor,
                 organization: project.config.organization,
+                useSdkGenApi,
                 getSdkGenApiToken,
                 context
             });
@@ -249,6 +258,7 @@ async function lookupLatestGeneratorVersion({
     channel,
     includeMajor,
     organization,
+    useSdkGenApi,
     getSdkGenApiToken,
     context
 }: {
@@ -259,13 +269,14 @@ async function lookupLatestGeneratorVersion({
     channel?: ReleaseType;
     includeMajor?: boolean;
     organization: string;
+    useSdkGenApi: boolean;
     getSdkGenApiToken?: GetSdkGenApiToken;
     context: TaskContext;
 }): Promise<string | undefined> {
     if (currentGeneratorVersion === "latest") {
         return "latest";
     }
-    if (isFernSdkGenApiEnabled()) {
+    if (useSdkGenApi) {
         if (getSdkGenApiToken == null) {
             throw new Error("SDK Gen API generator version discovery requires authentication");
         }
@@ -297,7 +308,8 @@ export async function getProjectGeneratorUpgrades({
     generatorFilter,
     groupFilter,
     channel,
-    includeMajor
+    includeMajor,
+    skipFeatureFlagRequest
 }: {
     project: Project | undefined;
     cliContext: CliContext;
@@ -305,6 +317,8 @@ export async function getProjectGeneratorUpgrades({
     groupFilter?: string;
     channel?: ReleaseType;
     includeMajor?: boolean;
+    /** Use only a feature flag value already resolved in this process (see {@link resolveSdkGenApiEnabled}). */
+    skipFeatureFlagRequest?: boolean;
 }): Promise<FernGeneratorUpgradeInfo[]> {
     const generatorUpgrades: FernGeneratorUpgradeInfo[] = [];
     if (project != null) {
@@ -314,7 +328,8 @@ export async function getProjectGeneratorUpgrades({
             generatorFilter,
             groupFilter,
             channel,
-            includeMajor
+            includeMajor,
+            skipFeatureFlagRequest
         });
 
         if (latestVersions.type === "multiApi") {
@@ -326,4 +341,23 @@ export async function getProjectGeneratorUpgrades({
         }
     }
     return generatorUpgrades;
+}
+
+/**
+ * Whether generator versions come from sdk-gen-api. Latency-bound callers (the exit-time upgrade
+ * nudge, which races a 300ms timeout on every command) pass `skipFeatureFlagRequest` to reuse a
+ * value an earlier command step already fetched instead of adding a PostHog request; with no
+ * earlier value they fall back to FDR versions.
+ */
+async function resolveSdkGenApiEnabled({
+    organization,
+    skipFeatureFlagRequest
+}: {
+    organization: string;
+    skipFeatureFlagRequest: boolean | undefined;
+}): Promise<boolean> {
+    if (skipFeatureFlagRequest === true) {
+        return getResolvedFernSdkGenApiEnabled({ organization }) ?? false;
+    }
+    return isFernSdkGenApiEnabled({ organization });
 }

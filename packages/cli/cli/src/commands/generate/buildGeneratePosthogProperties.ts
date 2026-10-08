@@ -1,6 +1,7 @@
 import { type FernToken, getUserIdFromToken } from "@fern-api/auth";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
+import type { CliReleaseEnvironment } from "@fern-api/posthog-manager";
 import type { Project } from "@fern-api/project-loader";
 import type { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
@@ -39,10 +40,13 @@ export interface GeneratePosthogProperties {
     authType: GenerateAuthType;
     /** The Fern user ID when a user token authenticated the request; undefined for org tokens. */
     userId: string | undefined;
-    /** Whether the `FERN_USE_SDK_GEN_API` environment variable was explicitly set to `true`. */
-    fernUseSdkGenApiEnv: boolean;
-    /** Whether sdk-gen-api routing is enabled after applying the env var and the build default. */
-    sdkGenApiEnabled: boolean;
+    /**
+     * The `use-sdk-gen-api` feature flag value for this org and release environment. Undefined for
+     * local (Docker) generation, which never routes through sdk-gen-api, so no flag request is made.
+     */
+    sdkGenApiEnabled: boolean | undefined;
+    /** The CLI distribution (`prod`, `pre-prod`, `beta`, ...) the flag was evaluated for. */
+    cliReleaseEnvironment: CliReleaseEnvironment;
 }
 
 export function buildGeneratePosthogProperties({
@@ -51,16 +55,16 @@ export function buildGeneratePosthogProperties({
     groupNames,
     generatorName,
     token,
-    fernUseSdkGenApiEnv,
-    sdkGenApiEnabled
+    sdkGenApiEnabled,
+    cliReleaseEnvironment
 }: {
     project: Project;
     generations: GenerationTelemetryInput[];
     groupNames: string[] | undefined;
     generatorName: string | undefined;
     token: FernToken | undefined;
-    fernUseSdkGenApiEnv: string | undefined;
-    sdkGenApiEnabled: boolean;
+    sdkGenApiEnabled: boolean | undefined;
+    cliReleaseEnvironment: CliReleaseEnvironment;
 }): GeneratePosthogProperties {
     const requestedGenerators = generations.flatMap(getRequestedGenerators);
     return {
@@ -68,8 +72,8 @@ export function buildGeneratePosthogProperties({
         requestedGenerators,
         generatorNames: [...new Set(requestedGenerators.map(({ name }) => name))].sort(),
         ...getAuthProperties(token),
-        fernUseSdkGenApiEnv: isTrueEnvValue(fernUseSdkGenApiEnv),
-        sdkGenApiEnabled
+        sdkGenApiEnabled,
+        cliReleaseEnvironment
     };
 }
 
@@ -111,10 +115,6 @@ function getAuthProperties(token: FernToken | undefined): Pick<GeneratePosthogPr
         default:
             assertNever(token);
     }
-}
-
-function isTrueEnvValue(value: string | undefined): boolean {
-    return value?.trim().toLowerCase() === "true";
 }
 
 /** Builds the legacy `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */
