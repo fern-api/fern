@@ -119,7 +119,7 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
         );
     });
 
-    it("preserves active optional fields without materializing their defaults", () => {
+    it("preserves active customer fields without materializing their defaults", () => {
         const mapFernGroupToSdkConfig = vi.fn(
             ({ source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({
                 diagnostics: [],
@@ -127,7 +127,7 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
                     schemaVersion: "sdk-config/v1",
                     sdkName: "weather",
                     source,
-                    generation: { generateFullProject: true },
+                    generation: { buildAllModels: true },
                     targets: [{ language: "mcp", output: { delivery: "files" } }]
                 })
             })
@@ -141,7 +141,7 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
         });
 
         expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
-            generation: { generateFullProject: true }
+            generation: { buildAllModels: true }
         });
     });
 

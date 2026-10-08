@@ -304,6 +304,54 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsyn
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfIntegerToObjectAsync</a>(Dictionary&lt;int, ObjectWithRequiredField&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;int, ObjectWithRequiredField&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Container.GetAndReturnMapOfIntegerToObjectAsync(
+    new Dictionary<int, ObjectWithRequiredField>()
+    {
+        {
+            1,
+            new ObjectWithRequiredField { String = "string" }
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Dictionary<int, ObjectWithRequiredField>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnOptionalAsync</a>(ObjectWithRequiredField? { ... }) -> WithRawResponseTask&lt;ObjectWithRequiredField?&gt;</code></summary>
 <dl>
 <dd>

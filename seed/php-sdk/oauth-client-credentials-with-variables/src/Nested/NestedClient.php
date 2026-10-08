@@ -20,6 +20,7 @@ class NestedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
@@ -37,6 +38,7 @@ class NestedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
+     *   rootVariable?: string,
      * } $options
      */
     public function __construct(

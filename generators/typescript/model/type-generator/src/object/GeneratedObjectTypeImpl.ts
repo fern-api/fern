@@ -27,8 +27,8 @@ export declare namespace GeneratedObjectTypeImpl {
     export interface Init<Context extends BaseContext>
         extends AbstractGeneratedType.Init<FernIr.ObjectTypeDeclaration, Context> {
         xml?: FernIr.XmlEncoding;
-        isXmlRoot?: boolean;
         useBigInt?: boolean;
+        enableForwardCompatibleEnums?: boolean;
     }
 }
 
@@ -51,7 +51,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     private readonly allObjectProperties: FernIr.ObjectProperty[];
     private readonly xmlGenerator: XmlObjectGenerator<Context> | undefined;
     public readonly type = "object";
-    constructor({ xml, isXmlRoot = false, useBigInt = false, ...init }: GeneratedObjectTypeImpl.Init<Context>) {
+    constructor({
+        xml,
+        useBigInt = false,
+        enableForwardCompatibleEnums = false,
+        ...init
+    }: GeneratedObjectTypeImpl.Init<Context>) {
         super(init);
         this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
         this.xmlGenerator =
@@ -61,8 +66,8 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                       docs: init.docs,
                       shape: this.shape,
                       xml,
-                      isXmlRoot,
                       useBigInt,
+                      enableForwardCompatibleEnums,
                       includeSerdeLayer: this.includeSerdeLayer,
                       noOptionalProperties: this.noOptionalProperties,
                       getPropertyKey: (property) => this.getPropertyKeyFromProperty(property),

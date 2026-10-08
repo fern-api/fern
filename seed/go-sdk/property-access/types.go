@@ -9,7 +9,6 @@ import (
 	big "math/big"
 )
 
-// Admin user object
 var (
 	adminFieldID         = big.NewInt(1 << 0)
 	adminFieldEmail      = big.NewInt(1 << 1)
@@ -18,6 +17,7 @@ var (
 	adminFieldAdminLevel = big.NewInt(1 << 4)
 )
 
+// Admin user object
 type Admin struct {
 	// The unique identifier for the user.
 	ID string `json:"id" url:"id"`
@@ -80,10 +80,12 @@ func (a *Admin) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Admin) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -210,10 +212,12 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Foo) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetNormal sets the Normal field and marks it as non-optional;
@@ -279,7 +283,6 @@ func (f *Foo) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-// User object
 var (
 	userFieldID       = big.NewInt(1 << 0)
 	userFieldEmail    = big.NewInt(1 << 1)
@@ -287,6 +290,7 @@ var (
 	userFieldProfile  = big.NewInt(1 << 3)
 )
 
+// User object
 type User struct {
 	// The unique identifier for the user.
 	ID string `json:"id" url:"id"`
@@ -340,10 +344,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -734,13 +740,13 @@ func (u *UserOrAdminDiscriminated) validate() error {
 	return nil
 }
 
-// User profile object
 var (
 	userProfileFieldName         = big.NewInt(1 << 0)
 	userProfileFieldVerification = big.NewInt(1 << 1)
 	userProfileFieldSsn          = big.NewInt(1 << 2)
 )
 
+// User profile object
 type UserProfile struct {
 	// The name of the user.
 	Name string `json:"name" url:"name"`
@@ -785,10 +791,12 @@ func (u *UserProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserProfile) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -854,11 +862,11 @@ func (u *UserProfile) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// User profile verification object
 var (
 	userProfileVerificationFieldVerified = big.NewInt(1 << 0)
 )
 
+// User profile verification object
 type UserProfileVerification struct {
 	// User profile verification status
 	Verified string `json:"verified" url:"verified"`
@@ -885,10 +893,12 @@ func (u *UserProfileVerification) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserProfileVerification) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetVerified sets the Verified field and marks it as non-optional;

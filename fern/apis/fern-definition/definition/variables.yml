@@ -13,6 +13,12 @@ types:
       - commons.WithDocsSchema
     properties:
       type: string
+      env:
+        type: optional<string>
+        docs: |
+          The name of an environment variable the generated SDK reads when the
+          variable is not passed to the client constructor. Makes the variable
+          optional at client construction.
 
   VariableReferenceSchema:
     extends:

@@ -4,6 +4,7 @@
 package com.seed.javaStreamingAcceptHeader.resources.dummy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.javaStreamingAcceptHeader.core.BodyProperties;
 import com.seed.javaStreamingAcceptHeader.core.ClientOptions;
 import com.seed.javaStreamingAcceptHeader.core.MediaTypes;
 import com.seed.javaStreamingAcceptHeader.core.ObjectMappers;
@@ -54,7 +55,9 @@ public class RawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedJavaStreamingAcceptHeaderException("Failed to serialize request", e);
         }
@@ -121,7 +124,9 @@ public class RawDummyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedJavaStreamingAcceptHeaderException("Failed to serialize request", e);
         }

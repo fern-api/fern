@@ -19,6 +19,7 @@ components:
               - $ref: "#/components/schemas/Dial"
               - $ref: "#/components/schemas/Pause"
               - $ref: "#/components/schemas/Hangup"
+              - $ref: "#/components/schemas/Redirect"
     Say:
       type: object
       description: <Say> TwiML Verb
@@ -1157,6 +1158,25 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Pause"
+    Redirect:
+      type: object
+      description: Text element with a required attribute.
+      xml:
+        name: Redirect
+      required: [url, method]
+      properties:
+        url:
+          type: string
+          x-fern-xml-text: true
+        method:
+          type: string
+          xml:
+            attribute: true
+        kind:
+          type: string
+          x-fern-type: literal<"redirect">
+          xml:
+            attribute: true
     PlainObject:
       type: object
       description: Not XML-encoded; properties must not carry xml metadata.

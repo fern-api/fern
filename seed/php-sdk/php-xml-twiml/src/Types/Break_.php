@@ -4,8 +4,8 @@ namespace Seed\Types;
 
 use Seed\Core\Xml\XmlSerializableType;
 use Seed\Core\Json\JsonProperty;
-use Seed\Core\Xml\XmlElement;
 use Seed\Core\Xml\XmlUtils;
+use Seed\Core\Xml\XmlElement;
 use InvalidArgumentException;
 
 /**
@@ -27,7 +27,10 @@ class Break_ extends XmlSerializableType
 
     /**
      * @param array{
-     *   strength?: ?value-of<BreakStrength>,
+     *   strength?: (
+     *    value-of<BreakStrength>
+     *   |BreakStrength
+     * )|null,
      *   time?: ?string,
      * } $values
      *   - `strength`: Set a pause based on strength
@@ -36,7 +39,9 @@ class Break_ extends XmlSerializableType
     public function __construct(
         array $values = [],
     ) {
-        $this->strength = $values['strength'] ?? null;
+        /** @var ?value-of<BreakStrength> $strength */
+        $strength = XmlUtils::enumValue($values['strength'] ?? null);
+        $this->strength = $strength;
         $this->time = $values['time'] ?? null;
     }
 
@@ -48,9 +53,10 @@ class Break_ extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('break');
+        $typed = [];
         $element->setAttribute('strength', $this->strength);
         $element->setAttribute('time', $this->time);
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -75,11 +81,12 @@ class Break_ extends XmlSerializableType
     {
         XmlUtils::requireName($element, 'break');
         $result = new self([
-            'strength' => XmlUtils::parseEnum($element->getAttribute('strength'), BreakStrength::class)?->value,
+            'strength' => XmlUtils::parseEnumValue($element->getAttribute('strength'), BreakStrength::class),
             'time' => $element->getAttribute('time'),
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['strength', 'time']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren(), [], true));
         return $result;
     }
 

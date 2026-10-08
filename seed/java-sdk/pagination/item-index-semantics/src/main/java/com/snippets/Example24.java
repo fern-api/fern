@@ -14,7 +14,7 @@ public class Example24 {
         client.users()
                 .listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest.builder()
                         .page(1)
-                        .limit(1)
+                        .limit(10)
                         .order(Order.ASC)
                         .build());
     }

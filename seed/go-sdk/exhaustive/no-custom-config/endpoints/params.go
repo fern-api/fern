@@ -22,10 +22,12 @@ type CreateWithBodyAndQuery struct {
 }
 
 func (c *CreateWithBodyAndQuery) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -62,10 +64,12 @@ type GetWithMultipleQuery struct {
 }
 
 func (g *GetWithMultipleQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -94,10 +98,12 @@ type GetWithInlinePath struct {
 }
 
 func (g *GetWithInlinePath) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -121,10 +127,12 @@ type GetWithInlinePathAndQuery struct {
 }
 
 func (g *GetWithInlinePathAndQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -153,10 +161,12 @@ type GetWithPathAndQuery struct {
 }
 
 func (g *GetWithPathAndQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -180,10 +190,12 @@ type GetWithQuery struct {
 }
 
 func (g *GetWithQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -213,10 +225,12 @@ type ModifyResourceAtInlinedPath struct {
 }
 
 func (m *ModifyResourceAtInlinedPath) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -252,10 +266,12 @@ type UploadBytesWithQuery struct {
 }
 
 func (u *UploadBytesWithQuery) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetFields sets the Fields field and marks it as non-optional;

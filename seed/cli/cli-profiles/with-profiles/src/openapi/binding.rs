@@ -470,6 +470,10 @@ impl Binding for OpenApiBinding {
                 &[],
             )
             .await
+            // A bodiless success (`204` on a delete) is still a success:
+            // `None` is reserved for "not my path", so it must not leak
+            // through here or the caller would try the next binding.
+            .map(|value| Some(value.unwrap_or(serde_json::Value::Null)))
         })
     }
 
@@ -700,13 +704,14 @@ impl Binding for OpenApiBinding {
             // `default_value` because the flag is registered per operation, in
             // `build_resource_command`, which has no access to the CLI name
             // needed for `<PREFIX>_RETRIES`. Same precedence either way:
-            // flag > env > profile > whatever the spec declared.
+            // flag > selected profile > env > whatever the spec declared.
             crate::openapi::discovery::set_retries_override(
                 matched_args
                     .try_get_one::<u32>("retries")
                     .ok()
                     .flatten()
                     .copied()
+                    .or_else(crate::profiles::retries)
                     .or_else(|| {
                         std::env::var(format!(
                             "{}_RETRIES",
@@ -714,8 +719,7 @@ impl Binding for OpenApiBinding {
                         ))
                         .ok()
                         .and_then(|raw| raw.trim().parse::<u32>().ok())
-                    })
-                    .or_else(crate::profiles::retries),
+                    }),
             );
             let no_stream = matched_args
                 .try_get_one::<bool>("no-stream")
@@ -871,6 +875,7 @@ impl Binding for OpenApiBinding {
             .await?;
 
             match result {
+                Some(value) if dry_run => Ok(DispatchResult::Record(value)),
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }

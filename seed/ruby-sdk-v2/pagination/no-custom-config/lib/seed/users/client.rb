@@ -274,8 +274,8 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Integer, nil] :page
-      # @option params [Integer, nil] :per_page
+      # @option params [Float, nil] :page
+      # @option params [Float, nil] :per_page
       # @option params [Seed::Users::Types::Order, nil] :order
       # @option params [String, nil] :starting_after
       #

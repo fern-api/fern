@@ -11,14 +11,11 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_mixed_required_and_optional_fields(
-            &ObjectWithMixedRequiredAndOptionalFields {
-                required_string: "hello".to_string(),
-                required_integer: 0,
-                optional_string: Some("world".to_string()),
-                required_long: 0,
-                ..Default::default()
-            },
+        .get_and_return_map_of_documented_unknown_type(
+            &MapOfDocumentedUnknownType(HashMap::from([(
+                "string".to_string(),
+                DocumentedUnknownType(serde_json::json!({"key":"value"})),
+            )])),
             None,
         )
         .await;

@@ -4,6 +4,7 @@
 package com.seed.multiUrlEnvironment.resources.ec2;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.multiUrlEnvironment.core.BodyProperties;
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.MediaTypes;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
@@ -51,7 +52,9 @@ public class AsyncRawEc2Client {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedMultiUrlEnvironmentException("Failed to serialize request", e);
         }

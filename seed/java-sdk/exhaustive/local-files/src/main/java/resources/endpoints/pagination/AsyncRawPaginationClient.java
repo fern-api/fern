@@ -100,7 +100,8 @@ public class AsyncRawPaginationClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedExhaustiveHttpResponse<SyncPagingIterable<ObjectWithRequiredField>>> future = new CompletableFuture<>();
-      client.newCall(okhttpRequest).enqueue(new Callback() {
+      Call okhttpCall = client.newCall(okhttpRequest);
+      okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
@@ -110,7 +111,7 @@ public class AsyncRawPaginationClient {
               Optional<String> startingAfter = parsedResponse.getNext();
               ListItemsRequest nextRequest = ListItemsRequest.builder().from(request).cursor(startingAfter).build();
               List<ObjectWithRequiredField> result = parsedResponse.getItems();
-              future.complete(new SeedExhaustiveHttpResponse<>(new SyncPagingIterable<ObjectWithRequiredField>(startingAfter.isPresent(), result, parsedResponse, () -> {
+              future.complete(new SeedExhaustiveHttpResponse<>(new SyncPagingIterable<ObjectWithRequiredField>(startingAfter.isPresent() && !startingAfter.get().isEmpty(), result, parsedResponse, () -> {
                     try {
                       return listItems(nextRequest, requestOptions).get().body();
                     }
@@ -136,6 +137,11 @@ public class AsyncRawPaginationClient {
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
           future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+        }
+      });
+      future.whenComplete((result_, throwable_) -> {
+        if (future.isCancelled()) {
+          okhttpCall.cancel();
         }
       });
       return future;

@@ -992,6 +992,288 @@
             },
             "examples": null
         },
+        "endpoint_user.getWithBearer": {
+            "auth": {
+                "type": "oauth",
+                "clientId": {
+                    "originalName": "clientId",
+                    "camelCase": {
+                        "unsafeName": "clientID",
+                        "safeName": "clientID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_id",
+                        "safeName": "client_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_ID",
+                        "safeName": "CLIENT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientID",
+                        "safeName": "ClientID"
+                    }
+                },
+                "clientSecret": {
+                    "originalName": "clientSecret",
+                    "camelCase": {
+                        "unsafeName": "clientSecret",
+                        "safeName": "clientSecret"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_secret",
+                        "safeName": "client_secret"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_SECRET",
+                        "safeName": "CLIENT_SECRET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientSecret",
+                        "safeName": "ClientSecret"
+                    }
+                },
+                "customProperties": null,
+                "wrapperProperty": {
+                    "originalName": "OAuth",
+                    "camelCase": {
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithBearer",
+                    "camelCase": {
+                        "unsafeName": "getWithBearer",
+                        "safeName": "getWithBearer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_bearer",
+                        "safeName": "get_with_bearer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_BEARER",
+                        "safeName": "GET_WITH_BEARER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithBearer",
+                        "safeName": "GetWithBearer"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/bearer"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_user.getWithBasic": {
+            "auth": {
+                "type": "oauth",
+                "clientId": {
+                    "originalName": "clientId",
+                    "camelCase": {
+                        "unsafeName": "clientID",
+                        "safeName": "clientID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_id",
+                        "safeName": "client_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_ID",
+                        "safeName": "CLIENT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientID",
+                        "safeName": "ClientID"
+                    }
+                },
+                "clientSecret": {
+                    "originalName": "clientSecret",
+                    "camelCase": {
+                        "unsafeName": "clientSecret",
+                        "safeName": "clientSecret"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_secret",
+                        "safeName": "client_secret"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_SECRET",
+                        "safeName": "CLIENT_SECRET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientSecret",
+                        "safeName": "ClientSecret"
+                    }
+                },
+                "customProperties": null,
+                "wrapperProperty": {
+                    "originalName": "OAuth",
+                    "camelCase": {
+                        "unsafeName": "oAuth",
+                        "safeName": "oAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "o_auth",
+                        "safeName": "o_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "O_AUTH",
+                        "safeName": "O_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OAuth",
+                        "safeName": "OAuth"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithBasic",
+                    "camelCase": {
+                        "unsafeName": "getWithBasic",
+                        "safeName": "getWithBasic"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_basic",
+                        "safeName": "get_with_basic"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_BASIC",
+                        "safeName": "GET_WITH_BASIC"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithBasic",
+                        "safeName": "GetWithBasic"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/basic"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null,
+                "bodyRequired": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_user.getAnonymous": {
             "auth": {
                 "type": "oauth",

@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.PostSubmitRequest;
 import com.seed.api.types.PostSubmitResponse;
 import com.seed.api.types.TokenRequest;
@@ -29,25 +30,56 @@ public class AsyncSeedApiClient implements AutoCloseable {
     }
 
     public CompletableFuture<PostSubmitResponse> submitFormData(PostSubmitRequest request) {
-        return this.rawClient.submitFormData(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<PostSubmitResponse>> rawFuture = this.rawClient.submitFormData(request);
+        CompletableFuture<PostSubmitResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<PostSubmitResponse> submitFormData(
             PostSubmitRequest request, RequestOptions requestOptions) {
-        return this.rawClient.submitFormData(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<PostSubmitResponse>> rawFuture =
+                this.rawClient.submitFormData(request, requestOptions);
+        CompletableFuture<PostSubmitResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> getToken(TokenRequest request) {
-        return this.rawClient.getToken(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TokenResponse>> rawFuture = this.rawClient.getToken(request);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<TokenResponse> getToken(TokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getToken(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<TokenResponse>> rawFuture =
+                this.rawClient.getToken(request, requestOptions);
+        CompletableFuture<TokenResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
-     * Releases resources owned by this client. See {@code ClientOptions.close()} for what is
-     * and is not released.
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
      */
     @Override
     public void close() {

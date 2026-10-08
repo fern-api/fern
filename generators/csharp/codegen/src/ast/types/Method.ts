@@ -29,6 +29,7 @@ export class Method extends MemberNode {
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
     public readonly override: boolean;
+    public readonly virtual: boolean;
     private readonly parameters: Parameter[];
     private readonly typeParameters: Type[];
     private readonly annotations: Annotation[];
@@ -39,6 +40,7 @@ export class Method extends MemberNode {
             name,
             isAsync,
             override,
+            virtual,
             access,
             return_,
             body,
@@ -62,6 +64,7 @@ export class Method extends MemberNode {
         this.name = name;
         this.isAsync = isAsync ?? false;
         this.override = override ?? false;
+        this.virtual = virtual ?? false;
         this.access = access;
         this.return = return_;
         this.noBody = noBody ?? false;
@@ -112,6 +115,9 @@ export class Method extends MemberNode {
         }
         if (this.override) {
             writer.write("override ");
+        }
+        if (this.virtual && !this.override) {
+            writer.write("virtual ");
         }
         if (this.return == null) {
             if (this.isAsync) {
@@ -190,6 +196,8 @@ export namespace Method {
         type?: MethodType;
         /* Whether the method overrides a method in it's base class */
         override?: boolean;
+        /* Whether the method can be overridden in derived classes */
+        virtual?: boolean;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync?: boolean;
         /* The return type of the method */

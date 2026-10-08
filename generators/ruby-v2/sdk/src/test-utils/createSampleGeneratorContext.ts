@@ -5,11 +5,14 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-export async function createSampleGeneratorContext(pathToDefinition: string): Promise<SdkGeneratorContext> {
+export async function createSampleGeneratorContext(
+    pathToDefinition: string,
+    rawCustomConfig: Record<string, unknown> = {}
+): Promise<SdkGeneratorContext> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(pathToDefinition);
     const irVersion = await getIrVersionFromPackageJson(__dirname);
     const ir = await createMigratedSampleIr<FernIr.IntermediateRepresentation>(absolutePathToWorkspace, irVersion);
-    const customConfig: SdkCustomConfigSchema = SdkCustomConfigSchema.parse({});
+    const customConfig: SdkCustomConfigSchema = SdkCustomConfigSchema.parse(rawCustomConfig);
     const notificationService = new GeneratorNotificationService({
         type: "local",
         _visit: (visitor) => visitor.local()

@@ -26,10 +26,12 @@ type TestMethodNameTestGroupRequest struct {
 }
 
 func (t *TestMethodNameTestGroupRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetPathParam sets the PathParam field and marks it as non-optional;
@@ -104,10 +106,12 @@ func (p *PlainObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PlainObject) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

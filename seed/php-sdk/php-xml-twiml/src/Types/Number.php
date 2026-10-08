@@ -43,9 +43,10 @@ class Number extends XmlSerializableType
     public function toXmlElement(): XmlElement
     {
         $element = new XmlElement('Number');
+        $typed = [];
         $element->text = XmlUtils::toXmlString($this->phoneNumber);
         $element->setAttribute('sendDigits', $this->sendDigits);
-        XmlUtils::addAdditional($element, $this->getAdditionalAttributes(), $this->getAdditionalChildren());
+        XmlUtils::addContent($element, $this->getContent(), $typed, [], $this->getAdditionalChildren(), $this->getAdditionalAttributes());
         return $element;
     }
 
@@ -75,6 +76,7 @@ class Number extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['sendDigits']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren()));
         return $result;
     }
 

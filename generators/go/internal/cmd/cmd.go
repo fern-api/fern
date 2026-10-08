@@ -71,6 +71,7 @@ type Config struct {
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
 	AllowUserAgentAppInfo          bool
+	UserAgentOnly                  bool
 	LegacyNullableAliasPointers    bool
 	Organization                   string
 	CoordinatorURL                 string
@@ -250,6 +251,7 @@ func newConfig(configFilename string) (*Config, error) {
 		OmitFernHeaders:                *customConfig.OmitFernHeaders,
 		IncludePlatformHeaders:         *customConfig.IncludePlatformHeaders,
 		AllowUserAgentAppInfo:          *customConfig.AllowUserAgentAppInfo,
+		UserAgentOnly:                  *customConfig.UserAgentOnly,
 		LegacyNullableAliasPointers:    *customConfig.LegacyNullableAliasPointers,
 		Organization:                   config.Organization,
 		AlwaysSendRequiredProperties:   *customConfig.AlwaysSendRequiredProperties,
@@ -322,6 +324,7 @@ type customConfig struct {
 	OmitFernHeaders                *bool         `json:"omitFernHeaders,omitempty"`
 	IncludePlatformHeaders         *bool         `json:"includePlatformHeaders,omitempty"`
 	AllowUserAgentAppInfo          *bool         `json:"allowUserAgentAppInfo,omitempty"`
+	UserAgentOnly                  *bool         `json:"userAgentOnly,omitempty"`
 	LegacyNullableAliasPointers    *bool         `json:"legacyNullableAliasPointers,omitempty"`
 	ClientName                     string        `json:"clientName,omitempty"`
 	ClientConstructorName          string        `json:"clientConstructorName,omitempty"`
@@ -558,6 +561,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.AllowUserAgentAppInfo == nil {
 		customConfig.AllowUserAgentAppInfo = gospec.Ptr(false)
+	}
+	if customConfig.UserAgentOnly == nil {
+		customConfig.UserAgentOnly = gospec.Ptr(false)
 	}
 	if customConfig.LegacyNullableAliasPointers == nil {
 		customConfig.LegacyNullableAliasPointers = gospec.Ptr(false)

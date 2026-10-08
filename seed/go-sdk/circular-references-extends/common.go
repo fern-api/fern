@@ -38,10 +38,12 @@ func (b *BaseType) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BaseType) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetChildRef sets the ChildRef field and marks it as non-optional;
@@ -131,10 +133,12 @@ func (c *ChildType) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ChildType) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetChildRef sets the ChildRef field and marks it as non-optional;

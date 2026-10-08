@@ -25,10 +25,12 @@ type FindRequest struct {
 }
 
 func (f *FindRequest) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetOptionalString sets the OptionalString field and marks it as non-optional;
@@ -102,10 +104,12 @@ func (i *ImportingType) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *ImportingType) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetImported sets the Imported field and marks it as non-optional;

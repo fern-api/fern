@@ -88,8 +88,15 @@ export class UsersClient {
             hasNextPage: (response) => (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "options.offset", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "options.offset", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -171,8 +178,15 @@ export class UsersClient {
                 (request?.options?.count == null || (response?.data ?? []).length >= request?.options?.count),
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
-                _offset += response?.data != null ? response.data.length : 1;
-                return list(core.setObjectProperty(request, "options.offset", _offset));
+                const _nextOffset = _offset + (response?.data != null ? response.data.length : 1);
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "options.offset", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }

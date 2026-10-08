@@ -21,10 +21,12 @@ type StreamCompletionRequest struct {
 }
 
 func (s *StreamCompletionRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -67,10 +69,12 @@ type StreamEventsRequest struct {
 }
 
 func (s *StreamEventsRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -113,10 +117,12 @@ type StreamEventsContextProtocolRequest struct {
 }
 
 func (s *StreamEventsContextProtocolRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -159,10 +165,12 @@ type StreamEventsDiscriminantInDataRequest struct {
 }
 
 func (s *StreamEventsDiscriminantInDataRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -222,10 +230,12 @@ func (c *CompletionEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CompletionEvent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -315,10 +325,12 @@ func (e *ErrorEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *ErrorEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetError sets the Error field and marks it as non-optional;
@@ -415,10 +427,12 @@ func (e *EventEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EventEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEvent sets the Event field and marks it as non-optional;
@@ -515,10 +529,12 @@ func (g *GroupCreatedEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GroupCreatedEvent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -615,10 +631,12 @@ func (g *GroupDeletedEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GroupDeletedEvent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -1117,10 +1135,12 @@ func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *StreamedCompletion) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetDelta sets the Delta field and marks it as non-optional;

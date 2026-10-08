@@ -64,7 +64,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedCrossPackageTypeNamesHttpResponse<Response>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        Call okhttpCall = client.newCall(okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -91,6 +92,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedCrossPackageTypeNamesException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

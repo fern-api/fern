@@ -448,6 +448,12 @@ fixtures:
     - outputFolder: refresh-auth-on-failed-permissions
       customConfig:
         refreshAuthOnFailedPermissions: true
+  ts-global-header-env:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
   single-url-environment-default:
     - outputFolder: no-custom-config
       customConfig: null
@@ -511,6 +517,10 @@ fixtures:
       customConfig:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
@@ -672,6 +682,9 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
 
 scripts:
   - image: fernapi/ts-seed

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now registers API definitions with FDR four at a time instead of one
+    after another, which shortens publishes for docs sites with many APIs or API versions. Set
+    `FERN_DOCS_API_REGISTRATION_CONCURRENCY` to change the limit (`1` restores serial registration).
+  type: fix

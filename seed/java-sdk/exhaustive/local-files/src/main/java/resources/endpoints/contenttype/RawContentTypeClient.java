@@ -5,6 +5,7 @@
 package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
@@ -57,7 +58,7 @@ public class RawContentTypeClient {
       }
       RequestBody body;
       try {
-        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json"));
+        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaType.parse("application/json-patch+json"));
       }
       catch(JsonProcessingException e) {
         throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -117,7 +118,7 @@ public class RawContentTypeClient {
         }
         RequestBody body;
         try {
-          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json-patch+json; charset=utf-8"));
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(request, requestOptions != null ? requestOptions.getBodyProperties() : null)), MediaType.parse("application/json-patch+json; charset=utf-8"));
         }
         catch(JsonProcessingException e) {
           throw new SeedExhaustiveException("Failed to serialize request", e);

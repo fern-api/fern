@@ -15,10 +15,18 @@ public static class WebhooksHelper
         string requestBody,
         string signatureHeader,
         string signatureKey,
-        string timestampHeader
+        string timestampHeader,
+        string? algorithm = null
     )
     {
-        if (requestBody == null || signatureHeader == null || signatureKey == null)
+        if (string.IsNullOrEmpty(signatureHeader))
+        {
+            System.Diagnostics.Trace.TraceWarning(
+                "Webhook signature verification could not run: missing signature header"
+            );
+            return false;
+        }
+        if (requestBody == null || signatureKey == null)
         {
             return false;
         }
@@ -55,10 +63,17 @@ public static class WebhooksHelper
         var expected = WebhookSignature.ComputeHmacSignature(
             payload,
             signatureKey,
-            "sha256",
+            algorithm ?? "sha256",
             "hex"
         );
 
-        return WebhookSignature.TimingSafeEqual(sig, expected);
+        var valid = WebhookSignature.TimingSafeEqual(sig, expected);
+        if (!valid)
+        {
+            System.Diagnostics.Trace.TraceWarning(
+                "Webhook signature verification failed: signature mismatch"
+            );
+        }
+        return valid;
     }
 }

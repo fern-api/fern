@@ -93,6 +93,7 @@ func TestAppInfoTypeEmittedRegardlessOfVersionAndPlatformHeaders(t *testing.T) {
 		"",              // sdkVersion (empty -> platform headers early-return)
 		nil,             // environmentsConfig
 		nil,             // inferredParams
+		nil,             // variables
 	)
 	if err != nil {
 		t.Fatalf("WriteRequestOptionsDefinition returned error: %v", err)
@@ -146,6 +147,7 @@ func TestAppInfoTypeNotEmittedWhenFeatureDisabled(t *testing.T) {
 		&ir.SdkConfig{},
 		&ModuleConfig{},
 		"",
+		nil,
 		nil,
 		nil,
 	)

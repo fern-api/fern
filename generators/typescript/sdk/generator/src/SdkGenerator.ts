@@ -165,6 +165,7 @@ export declare namespace SdkGenerator {
         packagePath: string | undefined;
         omitFernHeaders: boolean;
         includePlatformHeaders: boolean;
+        userAgentOnly: boolean;
         allowUserAgentAppInfo: boolean;
         useDefaultRequestParameterValues: boolean;
         packageManager: "pnpm" | "yarn";
@@ -584,13 +585,15 @@ export class SdkGenerator {
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
             alwaysSendAuth: config.alwaysSendAuth,
-            refreshAuthOnFailedPermissions: config.refreshAuthOnFailedPermissions
+            refreshAuthOnFailedPermissions: config.refreshAuthOnFailedPermissions,
+            guardProcessEnvAccess: config.guardProcessEnvAccess
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
             includePlatformHeaders: config.includePlatformHeaders,
+            userAgentOnly: config.userAgentOnly,
             allowUserAgentAppInfo: config.allowUserAgentAppInfo,
             guardProcessEnvAccess: config.guardProcessEnvAccess,
             retainOriginalCasing: config.retainOriginalCasing,

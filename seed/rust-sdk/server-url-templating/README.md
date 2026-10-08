@@ -74,7 +74,7 @@ This SDK allows you to configure different environments for API requests.
 use seed_api::prelude::{*};
 
 let config = ClientConfig {
-    base_url: Environment::RegionalApiServer.url().to_string(),
+    environment: Some(Environment::regional_api_server()),
     ..Default::default()
 };
 let client = Client::new(config).expect("Failed to build client");

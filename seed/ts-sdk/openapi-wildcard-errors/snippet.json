@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/items",
+                "method": "POST",
+                "identifier_override": "endpoint_items.createItem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-wildcard-errors\";\n\nconst client = new SeedApiClient;\nawait client.items.createItem({\n    name: \"name\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/items/{item_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_items.getItem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/openapi-wildcard-errors\";\n\nconst client = new SeedApiClient;\nawait client.items.getItem({\n    item_id: \"item_id\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

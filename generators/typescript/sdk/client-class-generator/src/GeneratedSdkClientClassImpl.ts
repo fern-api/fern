@@ -85,6 +85,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
         refreshAuthOnFailedPermissions: boolean;
+        guardProcessEnvAccess?: boolean;
     }
 }
 
@@ -132,6 +133,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
     private readonly refreshAuthOnFailedPermissions: boolean;
+    private readonly guardProcessEnvAccess: boolean;
 
     constructor({
         caseConverter,
@@ -162,7 +164,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         parameterNaming,
         offsetSemantics,
         alwaysSendAuth,
-        refreshAuthOnFailedPermissions
+        refreshAuthOnFailedPermissions,
+        guardProcessEnvAccess
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -186,6 +189,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
         this.refreshAuthOnFailedPermissions = refreshAuthOnFailedPermissions;
+        this.guardProcessEnvAccess = guardProcessEnvAccess ?? false;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -594,6 +598,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getRefreshAuthOnFailedPermissions(): boolean {
         return this.refreshAuthOnFailedPermissions;
+    }
+
+    public getGuardProcessEnvAccess(): boolean {
+        return this.guardProcessEnvAccess;
     }
 
     public accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression {

@@ -41,10 +41,12 @@ func (g *GetTokenRequest) GrantType() string {
 }
 
 func (g *GetTokenRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetCid sets the Cid field and marks it as non-optional;
@@ -144,10 +146,12 @@ func (r *RefreshTokenRequest) GrantType() string {
 }
 
 func (r *RefreshTokenRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -205,13 +209,13 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// An OAuth token response.
 var (
 	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
 	tokenResponseFieldExpiresIn    = big.NewInt(1 << 1)
 	tokenResponseFieldRefreshToken = big.NewInt(1 << 2)
 )
 
+// An OAuth token response.
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
@@ -253,10 +257,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

@@ -8,8 +8,8 @@ enum Example24 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(request: ObjectWithDocumentedUnknownType(
-            documentedUnknownType: .object([
+        _ = try await client.endpoints.object.getAndReturnWithUnknownField(request: ObjectWithUnknownField(
+            unknown: .object([
                 "key": .string("value")
             ])
         ))

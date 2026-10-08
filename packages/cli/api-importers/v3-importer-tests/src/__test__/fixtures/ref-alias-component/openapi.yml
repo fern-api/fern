@@ -1,0 +1,43 @@
+openapi: 3.0.3
+info:
+  title: Ref alias component
+  version: 1.0.0
+paths:
+  /plants/copy-batch:
+    post:
+      operationId: copyPlantsBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CopyPlantsBatchRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantBatchResult"
+components:
+  schemas:
+    PlantBatchBase:
+      type: object
+      required:
+        - plantIds
+      properties:
+        plantIds:
+          type: array
+          items:
+            type: string
+        autorename:
+          type: boolean
+    CopyPlantsBatchRequest:
+      $ref: "#/components/schemas/PlantBatchBase"
+    MovePlantsBatchRequest:
+      $ref: "#/components/schemas/CopyPlantsBatchRequest"
+    PlantBatchResult:
+      type: object
+      properties:
+        copied:
+          type: integer

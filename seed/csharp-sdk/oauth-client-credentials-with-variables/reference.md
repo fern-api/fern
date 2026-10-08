@@ -152,7 +152,7 @@ await client.Nested.Api.GetSomethingAsync();
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedOauthClientCredentialsWithVariables/Service/ServiceClient.cs">PostAsync</a>(endpointParam) -> WithRawResponseTask</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedOauthClientCredentialsWithVariables/Service/ServiceClient.cs">PostAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -165,23 +165,8 @@ await client.Nested.Api.GetSomethingAsync();
 <dd>
 
 ```csharp
-await client.Service.PostAsync("endpointParam");
+await client.Service.PostAsync();
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**endpointParam:** `string` 
-    
 </dd>
 </dl>
 </dd>

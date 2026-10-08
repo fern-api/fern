@@ -11,6 +11,7 @@
 //! | `server_variables` | `server_var(...)` substitution |
 //! | `base_url`         | [`crate::cli_args::resolve_base_url_override`] |
 //! | `format`           | [`crate::formatter::OutputPipeline`] |
+//! | `transport`        | [`crate::http::HttpConfig`]'s env-var fallbacks |
 //!
 //! That is what keeps the feature tractable *and* generic: nothing about
 //! auth, HTTP, retries, or command construction changes.
@@ -60,11 +61,13 @@ pub mod selection;
 pub mod store;
 
 pub use selection::{
-    active, active_source, collides_with_profile_flag, install_for_tests,
-    install_for_tests_from, outranks_env, reserve_profile_flag, resolve_selection, Selection,
-    SelectionSource,
+    active, active_source, collides_with_profile_flag, install_for_tests, install_for_tests_from,
+    outranks_env, reserve_profile_flag, resolve_selection, Selection, SelectionSource,
 };
-pub use store::{ProfileEntry, ProfileStore, ResolvedProfile, PROFILES_FILENAME, PROFILES_VERSION};
+pub use store::{
+    ProfileEntry, ProfileStore, ResolvedProfile, TransportSettings, PROFILES_FILENAME,
+    PROFILES_VERSION,
+};
 
 /// Generator-supplied configuration for the profiles feature.
 ///
@@ -91,6 +94,65 @@ pub struct ProfilesConfig {
     /// parameter the profile does not carry is a clear error rather than a
     /// silent no-op.
     pub revoke_operation: Option<String>,
+    /// An operation that mints a profile's remote credential, e.g. an API
+    /// key, and how its response maps onto the credential.
+    ///
+    /// When set, `profiles create` grows a `--provision` flag that calls it
+    /// with the caller's current (environment) credential, stores the
+    /// returned halves in the profile's keyring slot, and records the
+    /// response fields `profiles remove --revoke` later needs. Unset — the
+    /// default — and the flag is not registered at all.
+    pub provision_operation: Option<ProvisionOperation>,
+}
+
+/// How `profiles create --provision` turns an operation's response into a
+/// stored credential. See [`ProfilesConfig::provision_operation`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ProvisionOperation {
+    /// Dotted command path of the operation, e.g. `iam.keys.create`.
+    pub operation: String,
+    /// Credential field (`username`, `password`, `client_id`, …) → top-level
+    /// response field that supplies it (`sid`, `secret`, …).
+    pub credential_fields: Vec<(String, String)>,
+    /// Parameter the revoke operation takes (`Sid`) → response field it is
+    /// read from. Stored on the profile as `credential_parameters`, consulted
+    /// only by `profiles remove --revoke` — never as a request default.
+    pub revoke_parameters: Vec<(String, String)>,
+}
+
+impl ProvisionOperation {
+    pub fn new(operation: impl Into<String>) -> Self {
+        Self {
+            operation: operation.into(),
+            credential_fields: Vec::new(),
+            revoke_parameters: Vec::new(),
+        }
+    }
+
+    pub fn credential_field(
+        mut self,
+        field: impl Into<String>,
+        response_field: impl Into<String>,
+    ) -> Self {
+        self.credential_fields
+            .push((field.into(), response_field.into()));
+        self
+    }
+
+    pub fn revoke_parameter(
+        mut self,
+        parameter: impl Into<String>,
+        response_field: impl Into<String>,
+    ) -> Self {
+        self.revoke_parameters
+            .push((parameter.into(), response_field.into()));
+        self
+    }
+
+    /// The operation as a command path (`iam.keys.create` → `["iam", "keys", "create"]`).
+    pub fn op_path(&self) -> Vec<String> {
+        self.operation.split('.').map(str::to_string).collect()
+    }
 }
 
 impl Default for ProfilesConfig {
@@ -98,6 +160,7 @@ impl Default for ProfilesConfig {
         Self {
             command_name: "profiles".to_string(),
             revoke_operation: None,
+            provision_operation: None,
         }
     }
 }
@@ -116,6 +179,13 @@ impl ProfilesConfig {
     /// [`Self::revoke_operation`].
     pub fn revoke_operation(mut self, op: impl Into<String>) -> Self {
         self.revoke_operation = Some(op.into());
+        self
+    }
+
+    /// Name the operation `profiles create --provision` invokes. See
+    /// [`Self::provision_operation`].
+    pub fn provision_operation(mut self, op: ProvisionOperation) -> Self {
+        self.provision_operation = Some(op);
         self
     }
 
@@ -208,6 +278,20 @@ pub fn oauth_client_id() -> Option<String> {
     active()?.oauth_client_id.clone()
 }
 
+/// The profile's transport settings (timeout, proxy, CA bundle, insecure,
+/// user-agent suffix), or the empty set when running unprofiled.
+pub fn transport() -> TransportSettings {
+    active().map(|p| p.transport.clone()).unwrap_or_default()
+}
+
+/// Pick between a profile's stored transport value and the env var's: the
+/// profile wins whenever it has a value and the env var fills in only what
+/// the profile leaves unset — the same rule [`outranks_env`] applies to every
+/// other profile field (a `Some` here implies a profile is in play).
+pub fn transport_pick<T>(profile: Option<T>, env: impl FnOnce() -> Option<T>) -> Option<T> {
+    profile.or_else(env)
+}
+
 /// The active profile's name, for `auth status` and diagnostics.
 pub fn active_name() -> Option<String> {
     active().map(|p| p.name.clone())
@@ -287,7 +371,10 @@ mod tests {
             ]
             .into(),
         );
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("exact"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("exact")
+        );
     }
 
     #[test]

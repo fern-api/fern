@@ -7,7 +7,13 @@ import {
     NopFormatter
 } from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
-import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
+import {
+    ast,
+    CsharpConfigSchema,
+    escapeForCSharpString,
+    Generation,
+    getSdkVariableOptionName
+} from "@fern-api/csharp-codegen";
 
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
@@ -19,7 +25,18 @@ import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsG
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { exampleOmitsRequestBody } from "./utils/exampleUtils.js";
 
+/** A client-level SDK variable (`variables` in `api.yml` / `x-fern-sdk-variables` in OpenAPI). */
+export interface SdkVariableOption {
+    variable: FernIr.VariableDeclaration;
+    /** The PascalCase ClientOptions property name exposed to the user. */
+    optionName: string;
+    /** Whether the variable is a plain string, in which case the `envVar` fallback applies. */
+    isString: boolean;
+}
+
 export class SdkGeneratorContext extends GeneratorContext {
+    private sdkVariableOptions: SdkVariableOption[] | undefined;
+    private sdkVariableOptionsById: Map<string, SdkVariableOption> | undefined;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
@@ -130,6 +147,50 @@ export class SdkGeneratorContext extends GeneratorContext {
             : this.names.variables.client;
     }
 
+    /**
+     * Returns the SDK variables declared on the API, paired with the ClientOptions property
+     * each is exposed under. Path parameters bound to a variable are read from the client
+     * options instead of being accepted on every endpoint method.
+     */
+    public getSdkVariableOptions(): SdkVariableOption[] {
+        if (this.sdkVariableOptions == null) {
+            this.sdkVariableOptions = (this.ir.variables ?? []).map((variable) => ({
+                variable,
+                optionName: getSdkVariableOptionName(
+                    typeof variable.name === "string"
+                        ? this.generation.case.pascalSafe(variable.name)
+                        : variable.name.pascalCase.safeName
+                ),
+                isString: variable.type.type === "primitive" && variable.type.primitive.v1 === "STRING"
+            }));
+            this.sdkVariableOptionsById = new Map(
+                this.sdkVariableOptions.map((option) => [option.variable.id, option])
+            );
+        }
+        return this.sdkVariableOptions;
+    }
+
+    public getSdkVariableForPathParameter(pathParameter: FernIr.PathParameter): SdkVariableOption | undefined {
+        if (pathParameter.variable == null) {
+            return undefined;
+        }
+        this.getSdkVariableOptions();
+        return this.sdkVariableOptionsById?.get(pathParameter.variable);
+    }
+
+    /**
+     * Returns the expression an endpoint uses to read a bound SDK variable from the client
+     * options, throwing a clear error when it was neither set on the client nor (for string
+     * variables that declare one) resolved from the environment variable.
+     */
+    public getSdkVariableValueExpression(option: SdkVariableOption): string {
+        const envHint =
+            option.variable.envVar != null && option.isString
+                ? ` or set the ${escapeForCSharpString(option.variable.envVar)} environment variable`
+                : "";
+        return `(_client.Options.${option.optionName} ?? throw new global::System.ArgumentException("The '${option.optionName}' SDK variable is required. Set ClientOptions.${option.optionName}${envHint}."))`;
+    }
+
     public includePathParametersInWrappedRequest({
         endpoint,
         wrapper
@@ -139,7 +200,10 @@ export class SdkGeneratorContext extends GeneratorContext {
     }): boolean {
         const inlinePathParameters = this.settings.shouldInlinePathParameters;
         const wrapperShouldIncludePathParameters = wrapper.includePathParameters ?? false;
-        return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
+        const hasPerCallPathParameters = endpoint.allPathParameters.some(
+            (pathParameter) => this.getSdkVariableForPathParameter(pathParameter) == null
+        );
+        return hasPerCallPathParameters && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
     public hasFormUrlEncodedEndpoints(): boolean {
@@ -336,7 +400,7 @@ export class SdkGeneratorContext extends GeneratorContext {
             files.push(AsIsFiles.GrpcRequestOptions);
         }
         if (this.hasXmlTypes()) {
-            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlElement);
+            files.push(AsIsFiles.Xml.IXmlNode, AsIsFiles.Xml.XmlComment, AsIsFiles.Xml.XmlElement);
         }
         return files;
     }
