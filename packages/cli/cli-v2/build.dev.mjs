@@ -13,9 +13,6 @@ buildCli({
         VENUS_AUDIENCE: "venus-prod",
         LOCAL_STORAGE_FOLDER: ".fern",
         POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
-        // Feature flags are evaluated independently of event telemetry; an empty key turns every flag off.
-        POSTHOG_FEATURE_FLAGS_API_KEY: process.env.POSTHOG_API_KEY ?? "",
-        FERN_CLI_RELEASE_ENVIRONMENT: "dev",
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",
         SENTRY_ENVIRONMENT: "development",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
