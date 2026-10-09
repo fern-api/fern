@@ -1,0 +1,4 @@
+- summary: |
+    `fern sdk migrate --strict` no longer fails when local-file-system output internally requests
+    snippets for documentation generation without a user-configured `snippets.path`.
+  type: fix

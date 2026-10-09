@@ -20,7 +20,17 @@ describe("fern sdk migrate", { timeout: TEST_TIMEOUT }, () => {
         const docs = join(directory, RelativeFilePath.of("fern/docs.yml"));
         const originalDocs = await readFile(docs, "utf8");
 
-        const command = ["sdk", "migrate", "--api", "default", "--group", "production", "--language", "typescript"];
+        const command = [
+            "sdk",
+            "migrate",
+            "--api",
+            "default",
+            "--group",
+            "production",
+            "--language",
+            "typescript",
+            "--strict"
+        ];
         const result = await runFernCli(command, { cwd: directory, env: CLI_ENV, signal });
 
         await expect(access(generators)).rejects.toMatchObject({ code: "ENOENT" });

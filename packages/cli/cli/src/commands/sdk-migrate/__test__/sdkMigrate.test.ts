@@ -63,6 +63,53 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.generation).toBeUndefined();
     });
 
+    it("omits downloadSnippets synthesized for local output", () => {
+        const generator = createGenerator("fernapi/fern-php-sdk", "php", "2.16.0");
+        generator.raw = {
+            name: "fernapi/fern-php-sdk",
+            version: "2.16.0",
+            output: { location: "local-file-system", path: "./generated" }
+        };
+        generator.outputMode = FernFiddle.OutputMode.downloadFiles({ downloadSnippets: true });
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output).toEqual({ delivery: "files", path: "./generated" });
+        expect(result.sdkConfig.docs).toBeUndefined();
+        expect(result.diagnostics).not.toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ path: ["group", "generators", 0, "outputMode", "downloadSnippets"] })
+            ])
+        );
+    });
+
+    it("preserves explicitly configured snippets for migration", () => {
+        const generator = createGenerator("fernapi/fern-php-sdk", "php", "2.16.0");
+        generator.raw = {
+            name: "fernapi/fern-php-sdk",
+            version: "2.16.0",
+            output: { location: "local-file-system", path: "./generated" },
+            snippets: { path: "./snippets.json" }
+        };
+        generator.outputMode = FernFiddle.OutputMode.downloadFiles({ downloadSnippets: true });
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.diagnostics).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ path: ["group", "generators", 0, "outputMode", "downloadSnippets"] })
+            ])
+        );
+    });
+
     it("preserves exact publish credential environment expressions and omits literal secrets", () => {
         const safe = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
         safe.outputMode = FernFiddle.OutputMode.publishV2(
