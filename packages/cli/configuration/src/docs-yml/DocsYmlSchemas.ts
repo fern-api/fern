@@ -238,7 +238,8 @@ export const AiExamplesConfig = z.object({
 
 export const AIChatWebsiteDatasource = z.object({
     url: z.string(),
-    title: z.string().optional()
+    title: z.string().optional(),
+    locale: z.string().optional()
 });
 
 export const AIChatDatasource = AIChatWebsiteDatasource;

@@ -10,11 +10,13 @@ export const AiChatWebsiteDatasource: core.serialization.ObjectSchema<
 > = core.serialization.object({
     url: core.serialization.string(),
     title: core.serialization.string().optional(),
+    locale: core.serialization.string().optional(),
 });
 
 export declare namespace AiChatWebsiteDatasource {
     export interface Raw {
         url: string;
         title?: string | null;
+        locale?: string | null;
     }
 }

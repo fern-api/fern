@@ -1876,6 +1876,9 @@
                   },
                   "title": {
                     "type": "string"
+                  },
+                  "locale": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -1927,6 +1930,9 @@
                     "type": "string"
                   },
                   "title": {
+                    "type": "string"
+                  },
+                  "locale": {
                     "type": "string"
                   }
                 },
