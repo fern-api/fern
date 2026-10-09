@@ -245,7 +245,6 @@ export async function generateAPIWorkspaces({
                     isAutomation: automation != null,
                     groupNames,
                     generatorName,
-                    token,
                     fernUseSdkGenApiEnv: process.env.FERN_USE_SDK_GEN_API,
                     sdkGenApiEnabled: isFernSdkGenApiEnabled()
                 })

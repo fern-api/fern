@@ -7,12 +7,6 @@ import { describe, expect, it } from "vitest";
 
 import { buildGeneratePosthogProperties, type GenerationTelemetryInput } from "../buildGeneratePosthogProperties.js";
 
-/** `getUserIdFromToken` decodes without verifying, so a well-formed unsigned token is enough. */
-function createUnsignedJwt(payload: Record<string, string>): string {
-    const encode = (value: Record<string, string>) => Buffer.from(JSON.stringify(value)).toString("base64url");
-    return `${encode({ alg: "none", typ: "JWT" })}.${encode(payload)}.`;
-}
-
 function createGenerator(name: string, version: string): generatorsYml.GeneratorInvocation {
     return {
         name,
@@ -90,11 +84,14 @@ function build(
         isAutomation: false,
         groupNames: ["sdks"],
         generatorName: undefined,
-        token: undefined,
         fernUseSdkGenApiEnv: undefined,
         sdkGenApiEnabled: false,
         ...overrides
     });
+}
+
+function requestedGeneratorNames(properties: ReturnType<typeof buildGeneratePosthogProperties>): string[] {
+    return properties.requestedGenerators.map(({ name }) => name);
 }
 
 describe("buildGeneratePosthogProperties", () => {
@@ -119,7 +116,6 @@ describe("buildGeneratePosthogProperties", () => {
                 outputMode: "downloadFiles"
             }
         ]);
-        expect(properties.generatorNames).toEqual(["fernapi/fern-python-sdk", "fernapi/fern-typescript-sdk"]);
     });
 
     it("honors --generator name and index filters", () => {
@@ -133,7 +129,7 @@ describe("buildGeneratePosthogProperties", () => {
                         generatorName: "fernapi/fern-typescript-sdk"
                     }
                 ]
-            }).generatorNames
+            }).requestedGenerators.map(({ name }) => name)
         ).toEqual(["fernapi/fern-typescript-sdk"]);
 
         expect(
@@ -141,11 +137,11 @@ describe("buildGeneratePosthogProperties", () => {
                 generations: [
                     { kind: "legacy", workspace: legacyWorkspace, resolvedGroupNames: ["sdks"], generatorIndex: 0 }
                 ]
-            }).generatorNames
+            }).requestedGenerators.map(({ name }) => name)
         ).toEqual(["fernapi/fern-python-sdk"]);
     });
 
-    it("includes SDK Config generations alongside legacy groups and de-duplicates generator names", () => {
+    it("includes SDK Config generations alongside legacy groups", () => {
         const sdkConfigWorkspace = {
             workspaceName: "payments",
             generatorsConfiguration: createGeneratorsConfiguration([
@@ -178,10 +174,11 @@ describe("buildGeneratePosthogProperties", () => {
                 outputMode: "downloadFiles"
             }
         ]);
-        expect(properties.generatorNames).toEqual([
-            "fernapi/fern-go-sdk",
+        expect(requestedGeneratorNames(properties)).toEqual([
             "fernapi/fern-python-sdk",
-            "fernapi/fern-typescript-sdk"
+            "fernapi/fern-typescript-sdk",
+            "fernapi/fern-go-sdk",
+            "fernapi/fern-python-sdk"
         ]);
     });
 
@@ -198,10 +195,12 @@ describe("buildGeneratePosthogProperties", () => {
         } satisfies GenerationTelemetryInput["workspace"];
         const generations: GenerationTelemetryInput[] = [{ kind: "legacy", workspace, resolvedGroupNames: ["sdks"] }];
 
-        expect(build({ generations, isAutomation: true }).generatorNames).toEqual(["fernapi/fern-python-sdk"]);
-        expect(build({ generations, isAutomation: false }).generatorNames).toEqual([
-            "fernapi/fern-java-sdk",
+        expect(requestedGeneratorNames(build({ generations, isAutomation: true }))).toEqual([
             "fernapi/fern-python-sdk"
+        ]);
+        expect(requestedGeneratorNames(build({ generations, isAutomation: false }))).toEqual([
+            "fernapi/fern-python-sdk",
+            "fernapi/fern-java-sdk"
         ]);
     });
 
@@ -268,37 +267,6 @@ describe("buildGeneratePosthogProperties", () => {
                 ]
             }
         ]);
-    });
-
-    it("identifies the user behind a user token", () => {
-        const value = createUnsignedJwt({ sub: "auth0|user-123" });
-
-        expect(build({ token: { type: "user", value } })).toMatchObject({ authType: "user", userId: "auth0|user-123" });
-    });
-
-    it("reports no user ID instead of failing for an undecodable user token", () => {
-        expect(build({ token: { type: "user", value: "not-a-jwt" } })).toMatchObject({
-            authType: "user",
-            userId: undefined
-        });
-    });
-
-    it("reports organization tokens and anonymous runs without a user ID", () => {
-        expect(build({ token: { type: "organization", value: "org-token" } })).toMatchObject({
-            authType: "organization",
-            userId: undefined
-        });
-        expect(build({ token: undefined })).toMatchObject({ authType: "none", userId: undefined });
-    });
-
-    it.each([
-        { value: "true", expected: true },
-        { value: " TRUE ", expected: true },
-        { value: "false", expected: false },
-        { value: "1", expected: false },
-        { value: undefined, expected: false }
-    ])("reports FERN_USE_SDK_GEN_API=$value as $expected", ({ value, expected }) => {
-        expect(build({ fernUseSdkGenApiEnv: value }).fernUseSdkGenApiEnv).toBe(expected);
     });
 
     it("reports the effective sdk-gen-api state separately from the env var", () => {

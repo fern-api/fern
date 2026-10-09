@@ -122,7 +122,7 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(kinds).toEqual(expected);
     });
 
-    it("reports requested generators, auth, and sdk-gen-api state in the generate telemetry event", async () => {
+    it("reports requested generators and sdk-gen-api state in the generate telemetry event", async () => {
         vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
         try {
             await runGenerate({ project, cliContext, groupNames: ["python-sdk"], targetNames: ["typescript"] });
@@ -136,9 +136,6 @@ describe("generateAPIWorkspaces coexistence", () => {
             orgId: "test",
             command: "fern generate",
             properties: {
-                generatorNames: ["fernapi/fern-python-sdk", "fernapi/fern-typescript-sdk"],
-                authType: "organization",
-                userId: undefined,
                 fernUseSdkGenApiEnv: true,
                 sdkGenApiEnabled: true
             }
@@ -147,6 +144,10 @@ describe("generateAPIWorkspaces coexistence", () => {
             expect.objectContaining({ kind: "legacy", group: "python-sdk", name: "fernapi/fern-python-sdk" }),
             expect.objectContaining({ kind: "sdk-config", name: "fernapi/fern-typescript-sdk" })
         ]);
+        // Identity and auth already come from the distinct ID, `userEmail`, and `usingAccessToken`.
+        for (const redundant of ["userId", "authType", "generatorNames"]) {
+            expect(event?.properties).not.toHaveProperty(redundant);
+        }
     });
 
     it("uses an explicitly selected SDK Config instead of the workspace default", async () => {

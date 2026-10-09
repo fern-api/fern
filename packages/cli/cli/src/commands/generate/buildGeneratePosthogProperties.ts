@@ -1,4 +1,3 @@
-import { type FernToken, type FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import type { Project } from "@fern-api/project-loader";
@@ -30,19 +29,11 @@ export interface RequestedGeneratorTelemetry {
     outputMode: string;
 }
 
-export type GenerateAuthType = "user" | "organization" | "none";
-
 export interface GeneratePosthogProperties {
     /** Retained unchanged for existing dashboards; prefer `requestedGenerators` for new analysis. */
     workspaces: ReturnType<typeof buildPosthogWorkspaces>;
     /** Every generator selected to run, after group, alias, `--generator`, and SDK Config resolution. */
     requestedGenerators: RequestedGeneratorTelemetry[];
-    /** Unique, sorted generator names from `requestedGenerators`, for simple PostHog breakdowns. */
-    generatorNames: string[];
-    /** Which credential authenticated the generation request. */
-    authType: GenerateAuthType;
-    /** The Fern user ID when a user token authenticated the request; undefined for org tokens. */
-    userId: string | undefined;
     /** Whether the `FERN_USE_SDK_GEN_API` environment variable was explicitly set to `true`. */
     fernUseSdkGenApiEnv: boolean;
     /** Whether sdk-gen-api routing is enabled after applying the env var and the build default. */
@@ -55,7 +46,6 @@ export function buildGeneratePosthogProperties({
     isAutomation,
     groupNames,
     generatorName,
-    token,
     fernUseSdkGenApiEnv,
     sdkGenApiEnabled
 }: {
@@ -65,16 +55,12 @@ export function buildGeneratePosthogProperties({
     isAutomation: boolean;
     groupNames: string[] | undefined;
     generatorName: string | undefined;
-    token: FernToken | undefined;
     fernUseSdkGenApiEnv: string | undefined;
     sdkGenApiEnabled: boolean;
 }): GeneratePosthogProperties {
-    const requestedGenerators = generations.flatMap((generation) => getRequestedGenerators(generation, isAutomation));
     return {
         workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName }),
-        requestedGenerators,
-        generatorNames: [...new Set(requestedGenerators.map(({ name }) => name))].sort(),
-        ...getAuthProperties(token),
+        requestedGenerators: generations.flatMap((generation) => getRequestedGenerators(generation, isAutomation)),
         fernUseSdkGenApiEnv: isTrueEnvValue(fernUseSdkGenApiEnv),
         sdkGenApiEnabled
     };
@@ -144,29 +130,6 @@ function getOutputMode(generation: GenerationTelemetryInput, generator: generato
         return generator.outputMode.type;
     }
     return generation.sdkConfigV1?.targets[generator.sdkConfigTargetIndex]?.requestedOutput?.type ?? "download";
-}
-
-function getAuthProperties(token: FernToken | undefined): Pick<GeneratePosthogProperties, "authType" | "userId"> {
-    if (token == null) {
-        return { authType: "none", userId: undefined };
-    }
-    switch (token.type) {
-        case "user":
-            return { authType: "user", userId: tryGetUserIdFromToken(token) };
-        case "organization":
-            return { authType: "organization", userId: undefined };
-        default:
-            assertNever(token);
-    }
-}
-
-/** Telemetry must never fail generation, so a token that cannot be decoded reports no user ID. */
-function tryGetUserIdFromToken(token: FernUserToken): string | undefined {
-    try {
-        return getUserIdFromToken(token);
-    } catch {
-        return undefined;
-    }
 }
 
 function isTrueEnvValue(value: string | undefined): boolean {
