@@ -62,8 +62,9 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
   reproduced without IR support. Sourcing the flag from the wire name is correct for every other case,
   including headers (`X-Custom-Header` → `--x-custom-header`).
 - **Flag-collision winner.** When two parameters resolve to the same flag the runtime sorts by wire
-  name and keeps the first; this port keeps whichever it emits first in IR order and drops the rest. It
-  never emits a duplicate flag, but for the rare genuine collision the two can pick different winners.
+  name and keeps the first; this port keeps whichever it emits first in IR order and drops the rest
+  (surfacing a warning for the dropped one). It never emits a duplicate flag, but for the rare genuine
+  collision the two can pick different winners.
 - **Non-ASCII / control-character parameter names are omitted.** Such a name can't be sanitized into a
   flag, so the runtime registers no argument for it — it can be supplied via neither a flag nor
   `--params` (passing it in `--params` panics the CLI, i.e. the operation is effectively unusable in

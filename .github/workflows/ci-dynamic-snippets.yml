@@ -46,7 +46,14 @@ jobs:
       - name: Compute changed dynamic-snippets packages
         id: filter
         run: |
-          CHANGED=$(git diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}")
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          if [ -z "$BASE" ] || [ -z "$HEAD" ]; then
+            # Non-pull_request trigger (base/head unset): fall back to the last commit.
+            CHANGED=$(git diff --name-only HEAD~1 HEAD)
+          else
+            CHANGED=$(git diff --name-only "$BASE...$HEAD")
+          fi
           emit() {
             if echo "$CHANGED" | grep -q "^generators/$1/dynamic-snippets/"; then
               echo "$2=true" >> "$GITHUB_OUTPUT"
@@ -367,9 +374,9 @@ jobs:
         run: pnpm turbo run test --filter=@fern-api/cli-dynamic-snippets
 
   cli-runtime:
-    # Runs on a Rust-enabled runner (ubuntu-latest ships cargo), so the committed --schema golden can
-    # be regenerated from the real runtime and the cargo-gated --dry-run tests execute. Triggered when
-    # the CLI snippets package OR the Rust naming source changes, catching runtime naming drift.
+    # Installs a Rust toolchain so the committed --schema golden can be regenerated from the real
+    # runtime and the cargo-gated --dry-run tests execute. Triggered when the CLI snippets package OR
+    # the Rust naming source changes, catching runtime naming drift.
     needs: [changes]
     if: needs.changes.outputs.cli == 'true' || needs.changes.outputs.cliRuntime == 'true'
     runs-on: ubuntu-latest
@@ -379,6 +386,9 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Regenerate --schema golden and fail on drift
         run: |

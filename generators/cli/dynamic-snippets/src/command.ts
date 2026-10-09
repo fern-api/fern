@@ -34,18 +34,22 @@ export class CliCommandBuilder {
      * flag, the runtime keeps the first and drops the rest (commands.rs collision handling); mirror
      * that by ignoring a flag already emitted, so the command never carries a duplicate `--flag`.
      */
-    public pushFlag(flag: string, value: unknown): void {
+    public pushFlag(flag: string, value: unknown): boolean {
         if (this.seenFlags.has(flag)) {
-            return;
+            return false;
         }
         this.seenFlags.add(flag);
         this.tokens.push(flag, shellQuote(formatScalar(value)));
+        return true;
     }
 
-    /** Emit a repeated flag, once per array element: `--flag a --flag b`. Skipped on flag collision. */
-    public pushRepeatedFlag(flag: string, values: unknown[]): void {
+    /**
+     * Emit a repeated flag, once per array element: `--flag a --flag b`. Returns `false` (and emits
+     * nothing) when the flag has already been used — a collision the caller can surface.
+     */
+    public pushRepeatedFlag(flag: string, values: unknown[]): boolean {
         if (this.seenFlags.has(flag)) {
-            return;
+            return false;
         }
         this.seenFlags.add(flag);
         for (const element of values) {
@@ -53,6 +57,7 @@ export class CliCommandBuilder {
                 this.tokens.push(flag, shellQuote(formatScalar(element)));
             }
         }
+        return true;
     }
 
     /** Route a value the runtime can only accept through `--params` (flagless, nested, array-of-object). */

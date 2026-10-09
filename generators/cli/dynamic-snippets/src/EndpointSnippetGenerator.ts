@@ -161,15 +161,18 @@ export class EndpointSnippetGenerator {
             return;
         }
         this.context.errors.scope(scopeLabel(location));
-        const associated = this.context.associateByWireValue({
-            parameters,
-            values: values ?? {},
-            ignoreMissingParameters: true
-        });
-        for (const instance of associated) {
-            this.emitValue({ builder, location, name: instance.name, value: instance.value });
+        try {
+            const associated = this.context.associateByWireValue({
+                parameters,
+                values: values ?? {},
+                ignoreMissingParameters: true
+            });
+            for (const instance of associated) {
+                this.emitValue({ builder, location, name: instance.name, value: instance.value });
+            }
+        } finally {
+            this.context.errors.unscope();
         }
-        this.context.errors.unscope();
     }
 
     private emitInlinedRequestBody({
@@ -182,25 +185,28 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): void {
         this.context.errors.scope("Body");
-        switch (body.type) {
-            case "properties":
-                this.emitObjectBody({ builder, properties: body.value, value: snippet.requestBody });
-                break;
-            case "referenced":
-                this.emitReferencedBody({ builder, body: body.bodyType, value: snippet.requestBody });
-                break;
-            case "fileUpload":
-                this.emitObjectBody({
-                    builder,
-                    properties: fileUploadParameters(body),
-                    value: snippet.requestBody,
-                    multipart: true
-                });
-                break;
-            default:
-                assertNever(body);
+        try {
+            switch (body.type) {
+                case "properties":
+                    this.emitObjectBody({ builder, properties: body.value, value: snippet.requestBody });
+                    break;
+                case "referenced":
+                    this.emitReferencedBody({ builder, body: body.bodyType, value: snippet.requestBody });
+                    break;
+                case "fileUpload":
+                    this.emitObjectBody({
+                        builder,
+                        properties: fileUploadParameters(body),
+                        value: snippet.requestBody,
+                        multipart: true
+                    });
+                    break;
+                default:
+                    assertNever(body);
+            }
+        } finally {
+            this.context.errors.unscope();
         }
-        this.context.errors.unscope();
     }
 
     private emitReferencedBody({
@@ -335,7 +341,7 @@ export class EndpointSnippetGenerator {
         const flag = `--${flagName}`;
         if (Array.isArray(value)) {
             if (value.every((element) => !isPlainObject(element) && !Array.isArray(element))) {
-                builder.pushRepeatedFlag(flag, value);
+                this.warnIfFlagCollision(builder.pushRepeatedFlag(flag, value), flag, wireValue);
             } else {
                 builder.routeToParams([wireValue], value);
             }
@@ -345,7 +351,22 @@ export class EndpointSnippetGenerator {
             builder.routeToParams([wireValue], value);
             return;
         }
-        builder.pushFlag(flag, value);
+        this.warnIfFlagCollision(builder.pushFlag(flag, value), flag, wireValue);
+    }
+
+    /**
+     * When two parameters resolve to the same flag the runtime keeps the first and drops the rest; the
+     * builder mirrors that by refusing the duplicate. Surface a warning so the dropped value is visible
+     * to docs consumers rather than producing a quietly incomplete command (consistent with the
+     * omitted-parameter warnings above).
+     */
+    private warnIfFlagCollision(emitted: boolean, flag: string, wireValue: string): void {
+        if (!emitted) {
+            this.context.errors.add({
+                severity: Severity.Warning,
+                message: `Parameter "${wireValue}" was omitted from the CLI snippet: its flag "${flag}" collides with another parameter's and the runtime keeps only the first.`
+            });
+        }
     }
 
     /** Resolve a type reference to its object properties, if it names (or aliases) an object type. */
@@ -391,12 +412,16 @@ function fileUploadParameters(body: FernIr.dynamic.FileUploadRequestBody): FernI
                 parameters.push(property);
                 break;
             case "file":
-            case "fileArray":
-                parameters.push({
+            case "fileArray": {
+                // A file field's CLI value is a path string; model it as a plain string parameter.
+                // Fully typed (no cast) so the compiler catches any drift in NamedParameter/TypeReference.
+                const fileParameter: FernIr.dynamic.NamedParameter = {
                     name: { wireValue: property.wireValue, name: property.name },
                     typeReference: { type: "primitive", value: "STRING" }
-                } as FernIr.dynamic.NamedParameter);
+                };
+                parameters.push(fileParameter);
                 break;
+            }
             default:
                 break;
         }

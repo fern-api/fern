@@ -240,8 +240,11 @@ describe("DynamicSnippetsGenerator", () => {
             endpoint: { method: "POST", path: "/Messages" },
             queryParameters: { PageSize: 20, page_size: 50 }
         });
-        expect(result.errors).toBeUndefined();
         expect(result.snippet).toBe("twilio messages create --page-size 20");
+        // The dropped colliding parameter surfaces as a warning (consistent with omitted fields).
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors?.[0]?.severity).toBe("WARNING");
+        expect(result.errors?.[0]?.message).toContain("page_size");
     });
 
     it("omits a reserved multipart field (no flag, no bogus --output-param)", () => {
