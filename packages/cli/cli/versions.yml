@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.151.2
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init` now also initializes the docs with the
+        API's spec, because the docs cannot read an `sdk-config.yml` API. `fern init` and `fern init --openapi <path-or-url>`
+        initialize both the API and the docs, `fern init --api` only the API, and `fern init --docs --openapi <path-or-url>`
+        only the docs. The docs read the same `openapi.json|yml` as the API's `sdk-config.yml`, and a later `fern init`
+        that moves the API into `apis/` updates the path in `docs.yml`. In a project that already has a `docs.yml`, the
+        spec is added to its first `api` entry, or to a new one, instead of only printing a warning. A spec that does not
+        live in the fern directory, such as a URL, is copied there as `openapi-1.json|yml` (and so on when the name is
+        taken), so an existing API's spec is never overwritten. A spec that `docs.yml` already reads from the fern directory is not overwritten by a later `fern init`, which gives it a free name instead. If `docs.yml` splits its navigation into tabs, it is left
+        unchanged and the command warns. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 5.151.1
   changelogEntry:
     - summary: |
