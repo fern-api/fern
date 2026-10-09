@@ -75,4 +75,14 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
   generator omits it. (Both this and the non-ASCII case are runtime limitations worth filing upstream.)
 - **Binary-name fallback.** When `customConfig.binaryName` is unset, the binary name falls back to the
   workspace name (`generatorConfig.apiName`). The Rust generator falls back to `apiDisplayName`, which
-  the dynamic IR does not carry; the workspace name is its closest available analogue.
+  the dynamic IR does not carry; the workspace name is its closest available analogue. (The name is
+  normalized with the CLI's own `toKebabCase`, so acronym/mixed-case names like `MyCLI` → `mycli`.)
+- **Binary (`bytes`) request bodies are omitted.** The runtime exposes a binary body as a file-path
+  flag (`--file`/`--body`, or an `x-fern-parameter-name` override), but the dynamic IR carries no flag
+  metadata to pick the right one, so the upload argument is dropped (with a warning). Needs IR support
+  — worth filing upstream.
+
+Honored from `customConfig`: `binaryName`, `rootGroup` (nests commands under `<binary> <rootGroup> …`),
+and the config-dependent reserved flags (`userAgentSuffixFlag`, and `profile` when `profiles` is
+enabled). An explicit `null` value is emitted as the runtime's null sentinel (`--flag null`), and a
+non-object request body (array / map / primitive) is sent whole via `--json`.

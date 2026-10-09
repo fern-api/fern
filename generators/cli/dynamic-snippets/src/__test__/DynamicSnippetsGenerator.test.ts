@@ -294,4 +294,90 @@ describe("DynamicSnippetsGenerator", () => {
         );
         expect(result.snippet).toBe("my-cli messages create --to +1555");
     });
+
+    it("normalizes an acronym/mixed-case binaryName like the CLI (MyCLI -> mycli)", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "create",
+                location: { method: "POST", path: "/Messages" },
+                body: { type: "properties", value: [param("To")] }
+            })
+        );
+        const result = generate(
+            ir,
+            { endpoint: { method: "POST", path: "/Messages" }, requestBody: { To: "+1555" } },
+            { binaryName: "MyCLI" }
+        );
+        // camelToKebab would give `my-c-l-i`; the CLI's toKebabCase gives `mycli` (the real binary).
+        expect(result.snippet).toBe("mycli messages create --to +1555");
+    });
+
+    it("nests commands under customConfig.rootGroup", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "create",
+                location: { method: "POST", path: "/Messages" },
+                body: { type: "properties", value: [param("To")] }
+            })
+        );
+        const result = generate(
+            ir,
+            { endpoint: { method: "POST", path: "/Messages" }, requestBody: { To: "+1555" } },
+            { binaryName: "acme", rootGroup: "api" }
+        );
+        expect(result.snippet).toBe("acme api messages create --to +1555");
+    });
+
+    it("emits an explicit null as the runtime's null sentinel (--flag null), not dropped", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "update",
+                location: { method: "PATCH", path: "/Messages" },
+                body: { type: "properties", value: [param("Nickname")] }
+            })
+        );
+        const result = generate(ir, {
+            endpoint: { method: "PATCH", path: "/Messages" },
+            requestBody: { Nickname: null }
+        });
+        expect(result.snippet).toBe("twilio messages update --nickname null");
+    });
+
+    it("suffixes -param on a parameter colliding with the profile flag when profiles are enabled", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "create",
+                location: { method: "POST", path: "/Messages" },
+                queryParameters: [param("profile")]
+            })
+        );
+        const result = generate(
+            ir,
+            { endpoint: { method: "POST", path: "/Messages" }, queryParameters: { profile: "x" } },
+            { binaryName: "twilio", profiles: { enabled: true } }
+        );
+        // With profiles enabled the runtime reserves --profile, so the query param gets --profile-param.
+        expect(result.snippet).toBe("twilio messages create --profile-param x");
+    });
+
+    it("sends a non-object referenced body through --json", () => {
+        const declaration: FernIr.dynamic.Declaration = {
+            fernFilepath: { allParts: [nm("exports")], packagePath: [nm("exports")] },
+            name: nm("create")
+        };
+        const endpoint = {
+            declaration,
+            location: { method: "POST", path: "/Exports" },
+            request: { type: "body", body: { type: "typeReference", value: { type: "list", value: STRING } } },
+            response: { type: "json" }
+        } as unknown as FernIr.dynamic.Endpoint;
+        const ir = buildIr(endpoint);
+        const result = generate(ir, { endpoint: { method: "POST", path: "/Exports" }, requestBody: ["a", "b"] });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe(`twilio exports create --json '["a","b"]'`);
+    });
 });

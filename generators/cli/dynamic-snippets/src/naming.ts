@@ -50,13 +50,12 @@ const BUILTIN_FLAG_NAME_SET = new Set(BUILTIN_FLAG_NAMES);
  * Whether a parameter-derived flag long name is reserved by the runtime and therefore must be
  * mangled (`-param` suffix) to avoid a clap duplicate-flag panic.
  *
- * The Rust `flag_name_is_reserved` also consults two config-dependent reservations (a renamed
- * user-agent suffix flag and a `--profile` flag). Neither is configured in the default snippet
- * generation path — the suffix flag defaults to `user-agent-suffix`, which is already in
- * BUILTIN_FLAG_NAMES — so the built-in set is the single source of truth here.
+ * Mirrors the Rust `flag_name_is_reserved`: the always-present built-ins, plus two
+ * config-dependent reservations the caller supplies in `additionalReserved` — a renamed
+ * `userAgentSuffixFlag` and the `profile` flag when `profiles` is enabled.
  */
-export function flagNameIsReserved(flag: string): boolean {
-    return BUILTIN_FLAG_NAME_SET.has(flag);
+export function flagNameIsReserved(flag: string, additionalReserved?: ReadonlySet<string>): boolean {
+    return BUILTIN_FLAG_NAME_SET.has(flag) || (additionalReserved?.has(flag) ?? false);
 }
 
 /**
@@ -207,7 +206,11 @@ export interface FlagNameParameter {
  * suffix. Returns `undefined` when `sanitizeFlagName` rejects the name — the caller then routes the
  * value through the command's `--params` catch-all.
  */
-export function resolveParamFlagName(param: FlagNameParameter, wireName: string): string | undefined {
+export function resolveParamFlagName(
+    param: FlagNameParameter,
+    wireName: string,
+    additionalReserved?: ReadonlySet<string>
+): string | undefined {
     let flag: string;
     if (param.flagNameOverride != null) {
         flag = param.flagNameOverride;
@@ -223,7 +226,7 @@ export function resolveParamFlagName(param: FlagNameParameter, wireName: string)
             flag = sanitized;
         }
     }
-    if (flagNameIsReserved(flag)) {
+    if (flagNameIsReserved(flag, additionalReserved)) {
         flag = `${flag}-param`;
     }
     return flag;
@@ -235,9 +238,27 @@ export function resolveParamFlagName(param: FlagNameParameter, wireName: string)
  * `undefined` when that name is reserved — unlike ordinary params, a reserved multipart field gets
  * NO flag (no `-param` suffix) and is reachable only through `--params`.
  */
-export function resolveMultipartFieldFlagName(wireName: string): string | undefined {
+export function resolveMultipartFieldFlagName(
+    wireName: string,
+    additionalReserved?: ReadonlySet<string>
+): string | undefined {
     const kebab = toKebabFlag(wireName);
-    return flagNameIsReserved(kebab) ? undefined : kebab;
+    return flagNameIsReserved(kebab, additionalReserved) ? undefined : kebab;
+}
+
+/**
+ * Normalize a binary name the way the CLI generator's `deriveBinaryName` does
+ * (generators/cli/src/identity.ts `toKebabCase`): lowercase first, then collapse non-alphanumeric
+ * runs to single dashes and trim. This differs from `camelToKebab` — e.g. `MyCLI` → `mycli` (the
+ * actual executable), not `my-c-l-i` — so the snippet invokes the binary that was really generated.
+ */
+export function kebabCaseBinaryName(input: string): string {
+    return input
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .replace(/-{2,}/g, "-");
 }
 
 function isAsciiAlphanumeric(ch: string): boolean {

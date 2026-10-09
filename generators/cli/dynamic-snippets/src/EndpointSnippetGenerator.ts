@@ -224,16 +224,22 @@ export class EndpointSnippetGenerator {
                 if (properties != null) {
                     this.emitObjectBody({ builder, properties, value });
                 } else {
-                    // Non-object bodies (unions, aliases, containers, primitives) can't be flattened into
-                    // per-field flags; the runtime accepts them through the `--params` catch-all.
-                    this.routeWholeBody({ builder, value });
+                    // Non-object bodies (unions, aliases, maps, arrays, primitives) can't be flattened
+                    // into per-field flags. The runtime accepts the whole body — including non-object
+                    // JSON like an array or a scalar — through `--json`, so send it verbatim there.
+                    builder.setJsonBody(value);
                 }
                 break;
             }
             case "bytes":
+                // The runtime exposes a binary body as a file-path flag (default `--file`/`--body`, or an
+                // x-fern-parameter-name override), but the dynamic IR carries no flag metadata to pick it
+                // reliably, so the upload argument is omitted. Warn (not fail) so the snippet still renders
+                // and docs can flag the gap. See the package README.
                 this.context.errors.add({
-                    severity: Severity.Critical,
-                    message: "Binary (bytes) request bodies are not supported in CLI snippets"
+                    severity: Severity.Warning,
+                    message:
+                        "Binary (bytes) request body omitted from the CLI snippet: the dynamic IR does not carry the runtime's file-flag metadata."
                 });
                 break;
             default:
@@ -272,22 +278,6 @@ export class EndpointSnippetGenerator {
         }
     }
 
-    private routeWholeBody({ builder, value }: { builder: CliCommandBuilder; value: unknown }): void {
-        const record = this.context.getRecord(value);
-        if (record == null) {
-            return;
-        }
-        if (Object.keys(record).some((key) => key.includes("."))) {
-            builder.setJsonBody(record);
-            return;
-        }
-        for (const [key, entry] of Object.entries(record)) {
-            if (entry !== undefined) {
-                builder.routeToParams([key], entry);
-            }
-        }
-    }
-
     /**
      * Emit one resolved input. Scalars render as `--flag value`; arrays of scalars repeat the flag;
      * objects and arrays-of-objects (and any input the runtime exposes no flag for) route through
@@ -306,7 +296,11 @@ export class EndpointSnippetGenerator {
         value: unknown;
         multipart?: boolean;
     }): void {
-        if (value === undefined || value === null) {
+        // Only a missing input is skipped. An explicit null (e.g. a PATCH body clearing a nullable
+        // field) is a value and must survive: it flows through to the flag as `--<flag> null`, which is
+        // the runtime's null sentinel for nullable parameters (its value parser maps "null" → JSON
+        // null). Dropping it would silently change the request.
+        if (value === undefined) {
             return;
         }
         const wireValue = name.wireValue;
@@ -319,9 +313,12 @@ export class EndpointSnippetGenerator {
         // it cannot be reproduced here without IR support. See the package README.
         //
         // Multipart (file-upload) fields follow the multipart flag rule: a reserved name gets NO flag.
+        // `getReservedFlagNames()` adds the config-dependent reservations (renamed user-agent flag,
+        // `profile` when profiles are enabled) so a parameter colliding with one gets the `-param` suffix.
+        const reserved = this.context.getReservedFlagNames();
         const flagName = multipart
-            ? resolveMultipartFieldFlagName(wireValue)
-            : resolveParamFlagName({ location }, wireValue);
+            ? resolveMultipartFieldFlagName(wireValue, reserved)
+            : resolveParamFlagName({ location }, wireValue, reserved);
         if (flagName == null) {
             // The field has no flag the runtime will accept, and it can't be supplied through --params
             // either: a non-multipart unsanitizable name (non-ASCII / control chars) has no registered

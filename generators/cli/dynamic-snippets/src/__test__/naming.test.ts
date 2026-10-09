@@ -107,4 +107,13 @@ describe("resolveParamFlagName", () => {
     it("returns undefined when a non-body name cannot sanitize", () => {
         expect(resolveParamFlagName({ location: "query" }, "日本語")).toBeUndefined();
     });
+    it("suffixes -param for config-dependent reserved flags (profile, renamed user-agent)", () => {
+        // `profile` isn't a built-in, but when profiles are enabled the runtime reserves it; passing it
+        // as an additional reserved name must trigger the -param suffix (same as a built-in collision).
+        const reserved = new Set(["profile", "via"]);
+        expect(resolveParamFlagName({ location: "query" }, "profile", reserved)).toBe("profile-param");
+        expect(resolveParamFlagName({ location: "query" }, "via", reserved)).toBe("via-param");
+        // Without the reservation it's an ordinary flag.
+        expect(resolveParamFlagName({ location: "query" }, "profile")).toBe("profile");
+    });
 });

@@ -24,6 +24,7 @@ export class CliCommandBuilder {
     private readonly seenFlags = new Set<string>();
     private hasParamsPayload = false;
     private jsonBody: unknown = undefined;
+    private jsonBodySet = false;
 
     constructor(prefix: string[]) {
         this.tokens = [...prefix];
@@ -66,15 +67,25 @@ export class CliCommandBuilder {
         this.hasParamsPayload = true;
     }
 
-    /** Send the entire request body verbatim through `--json` (literal-dotted-key bodies). */
+    /**
+     * Send the entire request body verbatim through `--json`. Used both for literal-dotted-key object
+     * bodies and for non-object referenced bodies (arrays, maps, primitives) that can't be flattened
+     * into per-field flags — `--json` carries any JSON value.
+     */
     public setJsonBody(value: unknown): void {
         this.jsonBody = value;
+        this.jsonBodySet = true;
     }
 
     public build(): string {
         const tokens = [...this.tokens];
-        if (isPlainObject(this.jsonBody) && Object.keys(this.jsonBody).length > 0) {
-            tokens.push(JSON_BODY_FLAG, shellQuote(JSON.stringify(this.jsonBody)));
+        if (this.jsonBodySet && this.jsonBody != null) {
+            // Skip only an empty object (an empty `--json '{}'` adds nothing); arrays, primitives, and
+            // non-empty objects are all emitted.
+            const isEmptyObject = isPlainObject(this.jsonBody) && Object.keys(this.jsonBody).length === 0;
+            if (!isEmptyObject) {
+                tokens.push(JSON_BODY_FLAG, shellQuote(JSON.stringify(this.jsonBody)));
+            }
         }
         if (this.hasParamsPayload) {
             tokens.push(PARAMS_FLAG, shellQuote(JSON.stringify(this.paramsPayload)));
