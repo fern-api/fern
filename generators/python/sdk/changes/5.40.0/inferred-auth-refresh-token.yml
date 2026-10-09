@@ -1,0 +1,29 @@
+- summary: |
+    Support inferred bearer auth with `type: refresh-token`. The generated `InferredAuthTokenProvider`
+    always sends `grant_type="refresh_token"` to the get-token endpoint, and `grant_type` is no longer
+    a client constructor parameter. Users pass only the refresh token (and any other non-literal
+    token endpoint parameters).
+  type: feat
+- summary: |
+    Inferred auth now works next to other auth schemes (`auth: any` and endpoint-security) when it has
+    credentials of its own, e.g. a `type: refresh-token` scheme next to OAuth client credentials.
+    The client takes the inferred credentials as optional constructor parameters (shared ones such as
+    `client_id` are added once) and uses the inferred token provider when they are passed, so
+    `Client(refresh_token=...)` and `Client(client_id=..., client_secret=...)` both work.
+  type: feat
+- summary: |
+    With `type: refresh-token`, inferred auth only exposes and sends the token endpoint parameters used by
+    the OAuth refresh token grant (`refresh_token`, `scope`, `client_id`, `client_secret`) plus any
+    required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
+    `code_verifier` and `redirect_uri`, are no longer client constructor parameters.
+  type: feat
+- summary: |
+    Add the `omit_unset_inferred_auth_params` config option (default `false`). When enabled, the inferred auth
+    token provider leaves unset optional token request parameters out of the get-token request instead of
+    sending them as `null` (JSON) or empty values (form-encoded).
+  type: feat
+- summary: |
+    Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+    `refresh_token`, the provider uses it for the next refresh, and the client calls the optional
+    `on_refresh_token_rotated` callback with it so it can be persisted.
+  type: feat

@@ -736,6 +736,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined
@@ -1242,6 +1243,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined
@@ -1752,6 +1754,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined
@@ -1807,6 +1810,7 @@ describe("BaseClientTypeGenerator", () => {
                                 subpackageId: undefined
                             },
                             expiryProperty: undefined,
+                            grantType: undefined,
                             authenticatedRequestHeaders: []
                         },
                         docs: undefined

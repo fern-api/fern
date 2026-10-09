@@ -3,6 +3,7 @@ import {
     ExportedFilePath,
     getPropertyKey,
     getTextOfTsNode,
+    getWireValue,
     maybeAddDocsStructure,
     PackageId,
     toCamelCase
@@ -44,6 +45,10 @@ const EXPIRES_AT_FIELD_NAME = "expiresAt";
 const AUTH_REQUEST_PROMISE_FIELD_NAME = "authRequestPromise";
 const RESPONSE_VAR_NAME = "response";
 const EXPIRES_IN_SECONDS_PARAM_NAME = "expiresInSeconds";
+const REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+const REFRESH_TOKEN_WIRE_KEY = "refresh_token";
+const ROTATED_REFRESH_TOKEN_FIELD_NAME = "rotatedRefreshToken";
+const ON_REFRESH_TOKEN_ROTATED_OPTION_NAME = "onRefreshTokenRotated";
 
 export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -154,7 +159,50 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                 docs: param.docs
             });
         }
+        if (this.getRotatedRefreshTokenResponseProperty(context) != null) {
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: ON_REFRESH_TOKEN_ROTATED_OPTION_NAME,
+                type: "(refreshToken: string) => void | Promise<void>",
+                hasQuestionToken: true,
+                docs: [
+                    "Called with the new refresh token whenever the token endpoint rotates it. The presented refresh token is invalidated, so persist the new one."
+                ]
+            });
+        }
         return properties.length > 0 ? properties : undefined;
+    }
+
+    /**
+     * With a fixed `refresh_token` grant, the token endpoint may return a new (rotated) refresh token that
+     * replaces the presented one. Returns the response property to read it from, if the response has one.
+     */
+    private getRotatedRefreshTokenResponseProperty(context: FileContext): FernIr.ResponseProperty | undefined {
+        if (this.authScheme.tokenEndpoint.grantType?.value !== REFRESH_TOKEN_GRANT_TYPE) {
+            return undefined;
+        }
+        const sendsRefreshToken = context.authProvider
+            .getPropertiesForAuthTokenParams(FernIr.AuthScheme.inferred(this.authScheme))
+            .some((param) => getPropertyKey(param.wireKey) === REFRESH_TOKEN_WIRE_KEY);
+        if (!sendsRefreshToken) {
+            return undefined;
+        }
+        const body = this.endpoint.response?.body;
+        if (body?.type !== "json" || body.value.type !== "response") {
+            return undefined;
+        }
+        const responseBodyType = body.value.responseBodyType;
+        if (responseBodyType.type !== "named") {
+            return undefined;
+        }
+        const shape = this.ir.types[responseBodyType.typeId]?.shape;
+        if (shape?.type !== "object") {
+            return undefined;
+        }
+        const property = [...shape.properties, ...(shape.extendedProperties ?? [])].find(
+            (p) => getWireValue(p.name) === REFRESH_TOKEN_WIRE_KEY
+        );
+        return property != null ? { propertyPath: undefined, property } : undefined;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -238,6 +286,16 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     isReadonly: true,
                     scope: Scope.Private
                 },
+                ...(this.getRotatedRefreshTokenResponseProperty(context) != null
+                    ? [
+                          {
+                              name: ROTATED_REFRESH_TOKEN_FIELD_NAME,
+                              type: "string | undefined",
+                              hasQuestionToken: false,
+                              scope: Scope.Private
+                          }
+                      ]
+                    : []),
                 ...(this.authScheme.tokenEndpoint.expiryProperty
                     ? [
                           {
@@ -399,6 +457,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         requestWrapper: GeneratedRequestWrapper | undefined;
     }): MethodDeclarationStructure {
         const requestProperties = this.getRequestProperties({ context, requestWrapper });
+        const rotatedRefreshTokenProperty = this.getRotatedRefreshTokenResponseProperty(context);
 
         // Generate variable declarations and validation checks for each parameter
         const parameterStatements: (string | WriterFunction | StatementStructures)[] = [];
@@ -408,8 +467,12 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             // Generate: if(paramName == null) { throwRequiredAuthParamErrorMessage("\${WRAPPER_PROPERTY}.paramName"); } OR return early
             for (const p of requestProperties) {
                 const varName = p.safeName;
+                const rotatedPrefix =
+                    rotatedRefreshTokenProperty != null && getPropertyKey(p.name) === REFRESH_TOKEN_WIRE_KEY
+                        ? `this.${ROTATED_REFRESH_TOKEN_FIELD_NAME} ?? `
+                        : "";
                 parameterStatements.push(
-                    `const ${varName} = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.${p.safeName});`
+                    `const ${varName} = ${rotatedPrefix}await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.${p.safeName});`
                 );
 
                 if (!p.isOptional) {
@@ -478,6 +541,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                       )
                   ]
                 : []),
+            // keep the rotated refresh token for the next refresh and let the caller persist it
+            ...(rotatedRefreshTokenProperty != null
+                ? [this.generateRotateRefreshTokenStatement({ context, property: rotatedRefreshTokenProperty })]
+                : []),
             // return the auth request
             getTextOfTsNode(
                 ts.factory.createReturnStatement(
@@ -537,6 +604,24 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         return method;
     }
 
+    private generateRotateRefreshTokenStatement({
+        context,
+        property
+    }: {
+        context: FileContext;
+        property: FernIr.ResponseProperty;
+    }): string {
+        const newRefreshToken = context.type.generateGetterForResponsePropertyAsString({
+            variable: RESPONSE_VAR_NAME,
+            property
+        });
+        const callback = `this.${OPTIONS_FIELD_NAME}${this.keepIfWrapper("[WRAPPER_PROPERTY]?")}.${ON_REFRESH_TOKEN_ROTATED_OPTION_NAME}`;
+        return `if (${newRefreshToken} != null) {
+    this.${ROTATED_REFRESH_TOKEN_FIELD_NAME} = ${newRefreshToken};
+    await ${callback}?.(${newRefreshToken});
+}`;
+    }
+
     private getAuthTokenEndpointReferenceFromRoot(context: FileContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createPropertyAccessExpression(ts.factory.createThis(), CLIENT_FIELD_NAME),
@@ -552,6 +637,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         requestWrapper: GeneratedRequestWrapper | undefined;
     }): ts.Expression[] {
         const requestProperties = this.getRequestProperties({ context, requestWrapper });
+        const rotatesRefreshToken = this.getRotatedRefreshTokenResponseProperty(context) != null;
 
         // Build the request object
         const propertyAssignments = requestProperties.map((p) => {
@@ -568,10 +654,40 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     ts.factory.createIdentifier(p.safeName)
                 );
                 valueExpression = context.coreUtilities.fetcher.Supplier.get(propertyAccess);
+                if (rotatesRefreshToken && getPropertyKey(p.name) === REFRESH_TOKEN_WIRE_KEY) {
+                    valueExpression = ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            ROTATED_REFRESH_TOKEN_FIELD_NAME
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        valueExpression
+                    );
+                }
             }
 
             return ts.factory.createPropertyAssignment(ts.factory.createIdentifier(p.name), valueExpression);
         });
+
+        // The grant type is fixed by the auth scheme (e.g. `type: refresh-token`), so it is sent as a
+        // constant instead of being read from the client options. Literal grant types are already
+        // set by the endpoint itself and are not part of the request properties.
+        const grantType = context.authProvider.getInferredAuthGrantType(this.authScheme);
+        if (
+            grantType != null &&
+            // Without a wrapper, getInferredAuthGrantType already found the key in the request body.
+            (requestWrapper == null ||
+                requestWrapper
+                    .getRequestProperties(context)
+                    .some((p) => getPropertyKey(p.name) === grantType.requestKey))
+        ) {
+            propertyAssignments.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier(grantType.requestKey),
+                    ts.factory.createStringLiteral(grantType.value)
+                )
+            );
+        }
 
         return [ts.factory.createObjectLiteralExpression(propertyAssignments, true)];
     }
@@ -603,6 +719,21 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
      * to extracting properties from the endpoint's request body (for justRequestBody endpoints).
      */
     private getRequestProperties({
+        context,
+        requestWrapper
+    }: {
+        context: FileContext;
+        requestWrapper: GeneratedRequestWrapper | undefined;
+    }): GeneratedRequestWrapper.Property[] {
+        const grantTypeKey = context.authProvider.getInferredAuthGrantType(this.authScheme)?.requestKey;
+        return this.getAllRequestProperties({ context, requestWrapper }).filter(
+            (p) =>
+                getPropertyKey(p.name) !== grantTypeKey &&
+                context.authProvider.isUsedByInferredAuthGrantType(this.authScheme, p)
+        );
+    }
+
+    private getAllRequestProperties({
         context,
         requestWrapper
     }: {

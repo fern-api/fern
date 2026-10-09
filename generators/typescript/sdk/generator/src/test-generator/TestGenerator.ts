@@ -470,7 +470,11 @@ describe("test", () => {
                     ).filter((example) => example.response.type === "ok");
                     const example = successfulExamples[0];
                     if (example && example.response.type === "ok") {
-                        const rawRequestBody = this.getRequestExample(example.request);
+                        const rawRequestBody = this.getInferredAuthMockRequestBody({
+                            scheme,
+                            request: example.request,
+                            context
+                        });
                         const rawResponseBody = this.getResponseExample(example.response);
                         const responseStatusCode = getExampleResponseStatusCode({
                             response: example.response,
@@ -792,6 +796,65 @@ export function ${functionName}(server: MockServer): void {
             });
         });
         return authOptions;
+    }
+
+    /**
+     * With a fixed grant type, the generated InferredAuthProvider always sends that value and only
+     * sends the params it exposes, so the mock must expect exactly those instead of the raw example.
+     */
+    private getInferredAuthMockRequestBody({
+        scheme,
+        request,
+        context
+    }: {
+        scheme: FernIr.InferredAuthScheme;
+        request: FernIr.ExampleRequestBody | undefined;
+        context: FileContext;
+    }): Code | undefined {
+        const grantType = scheme.tokenEndpoint.grantType;
+        const exampleProperties =
+            request?.type === "inlinedRequestBody"
+                ? request.properties
+                : request?.type === "reference"
+                  ? getExampleObjectProperties(request)
+                  : undefined;
+        if (grantType == null || exampleProperties == null) {
+            return this.getRequestExample(request);
+        }
+        const grantTypeWireKey = getWireValue(grantType.requestProperty.property.name);
+        const sentWireKeys = new Set(
+            context.authProvider
+                .getPropertiesForAuthTokenParams(FernIr.AuthScheme.inferred(scheme))
+                .map((param) => getWireValue(param.wireKey))
+        );
+        const body: Record<string, Code> = {};
+        for (const property of exampleProperties) {
+            const wireKey = getWireValue(property.name);
+            if (wireKey === grantTypeWireKey) {
+                body[wireKey] = code`${JSON.stringify(grantType.value)}`;
+            } else if (sentWireKeys.has(wireKey)) {
+                const value = this.createRawJsonExample({
+                    example: property.value,
+                    isForRequest: true,
+                    isForResponse: false
+                });
+                if (!isCodeUndefined(value)) {
+                    body[wireKey] = value;
+                }
+            }
+        }
+        body[grantTypeWireKey] ??= code`${JSON.stringify(grantType.value)}`;
+        return code`${literalOf(body)}`;
+    }
+
+    private getMockedTokenEndpointId(scheme: FernIr.AuthScheme): string | undefined {
+        if (scheme.type === "inferred") {
+            return scheme.tokenEndpoint.endpoint.endpointId;
+        }
+        if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+            return scheme.configuration.tokenEndpoint.endpointReference.endpointId;
+        }
+        return undefined;
     }
 
     private getAuthRequestExampleOptions({
@@ -1365,6 +1428,22 @@ describe("${serviceName}", () => {
         let mockAuthSnippet: Code | undefined;
         if (this.shouldBuildMockAuthFile({ context })) {
             const mockFunctionNames: string[] = [];
+            // A refresh-token inferred scheme and an alternative scheme on the same token endpoint send
+            // different bodies; a body mismatch on one handler passes the request through instead of
+            // falling back to the other. Endpoints only need one of the alternatives, so mock the first.
+            const mockedTokenEndpoints = new Map<string, boolean>();
+            const addMockFunction = (scheme: FernIr.AuthScheme, dedupeAlternatives: boolean): void => {
+                const tokenEndpointId = this.getMockedTokenEndpointId(scheme);
+                const hasFixedGrantType = scheme.type === "inferred" && scheme.tokenEndpoint.grantType != null;
+                if (dedupeAlternatives && tokenEndpointId != null) {
+                    const mockedHasFixedGrantType = mockedTokenEndpoints.get(tokenEndpointId);
+                    if (mockedHasFixedGrantType != null && (mockedHasFixedGrantType || hasFixedGrantType)) {
+                        return;
+                    }
+                    mockedTokenEndpoints.set(tokenEndpointId, hasFixedGrantType || (mockedHasFixedGrantType ?? false));
+                }
+                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+            };
 
             // Determine which auth schemes to mock based on auth requirement
             const authRequirement = this.ir.auth.requirement;
@@ -1373,9 +1452,9 @@ describe("${serviceName}", () => {
                 // For ANY and ALL: include all OAuth and InferredAuth schemes that exist
                 for (const scheme of this.ir.auth.schemes) {
                     if (scheme.type === "oauth" && this.canMockOAuth()) {
-                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                        addMockFunction(scheme, authRequirement === "ANY");
                     } else if (scheme.type === "inferred") {
-                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                        addMockFunction(scheme, authRequirement === "ANY");
                     }
                 }
             } else if (authRequirement === "ENDPOINT_SECURITY") {
@@ -1384,6 +1463,7 @@ describe("${serviceName}", () => {
                     // Get all auth scheme keys required by this endpoint
                     // endpoint.security is an array of collections where each collection is a Record<AuthSchemeKey, AuthScope[]>
                     // We'll collect all unique auth scheme keys from all collections
+                    const onlyAlternatives = endpoint.security.every((item) => Object.keys(item).length <= 1);
                     const requiredSchemeKeys = new Set<string>();
                     for (const securityItem of endpoint.security) {
                         for (const schemeKey of Object.keys(securityItem)) {
@@ -1395,9 +1475,9 @@ describe("${serviceName}", () => {
                     for (const scheme of this.ir.auth.schemes) {
                         if (requiredSchemeKeys.has(scheme.key)) {
                             if (scheme.type === "oauth" && this.canMockOAuth()) {
-                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                                addMockFunction(scheme, onlyAlternatives);
                             } else if (scheme.type === "inferred") {
-                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                                addMockFunction(scheme, onlyAlternatives);
                             }
                         }
                     }
@@ -2328,6 +2408,32 @@ function getExampleErrorDeclarationOrThrow({
         throw new Error(`Error with ID ${exampleError.error.errorId} not found in IR`);
     }
     return error;
+}
+
+function getExampleObjectProperties({
+    shape
+}: FernIr.ExampleTypeReference):
+    | Array<{ name: FernIr.NameAndWireValueOrString; value: FernIr.ExampleTypeReference }>
+    | undefined {
+    if (shape.type === "container") {
+        const container = shape.container;
+        if (container.type === "optional") {
+            return container.optional != null ? getExampleObjectProperties(container.optional) : undefined;
+        }
+        if (container.type === "nullable") {
+            return container.nullable != null ? getExampleObjectProperties(container.nullable) : undefined;
+        }
+        return undefined;
+    }
+    if (shape.type === "named") {
+        if (shape.shape.type === "alias") {
+            return getExampleObjectProperties(shape.shape.value);
+        }
+        if (shape.shape.type === "object") {
+            return shape.shape.properties;
+        }
+    }
+    return undefined;
 }
 
 function isCodeUndefined(code: Code): boolean {

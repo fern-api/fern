@@ -235,6 +235,105 @@
                         },
                         "propertyAccess": null,
                         "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "code",
+                            "name": {
+                                "originalName": "code",
+                                "camelCase": {
+                                    "unsafeName": "code",
+                                    "safeName": "code"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "code",
+                                    "safeName": "code"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CODE",
+                                    "safeName": "CODE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Code",
+                                    "safeName": "Code"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "code_verifier",
+                            "name": {
+                                "originalName": "code_verifier",
+                                "camelCase": {
+                                    "unsafeName": "codeVerifier",
+                                    "safeName": "codeVerifier"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "code_verifier",
+                                    "safeName": "code_verifier"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CODE_VERIFIER",
+                                    "safeName": "CODE_VERIFIER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CodeVerifier",
+                                    "safeName": "CodeVerifier"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "redirect_uri",
+                            "name": {
+                                "originalName": "redirect_uri",
+                                "camelCase": {
+                                    "unsafeName": "redirectURI",
+                                    "safeName": "redirectURI"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "redirect_uri",
+                                    "safeName": "redirect_uri"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REDIRECT_URI",
+                                    "safeName": "REDIRECT_URI"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RedirectURI",
+                                    "safeName": "RedirectURI"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "wrapperProperty": null
@@ -471,6 +570,105 @@
                             },
                             "propertyAccess": null,
                             "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "code",
+                                "name": {
+                                    "originalName": "code",
+                                    "camelCase": {
+                                        "unsafeName": "code",
+                                        "safeName": "code"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "code",
+                                        "safeName": "code"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CODE",
+                                        "safeName": "CODE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Code",
+                                        "safeName": "Code"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "code_verifier",
+                                "name": {
+                                    "originalName": "code_verifier",
+                                    "camelCase": {
+                                        "unsafeName": "codeVerifier",
+                                        "safeName": "codeVerifier"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "code_verifier",
+                                        "safeName": "code_verifier"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CODE_VERIFIER",
+                                        "safeName": "CODE_VERIFIER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "CodeVerifier",
+                                        "safeName": "CodeVerifier"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "redirect_uri",
+                                "name": {
+                                    "originalName": "redirect_uri",
+                                    "camelCase": {
+                                        "unsafeName": "redirectURI",
+                                        "safeName": "redirectURI"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "redirect_uri",
+                                        "safeName": "redirect_uri"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REDIRECT_URI",
+                                        "safeName": "REDIRECT_URI"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "RedirectURI",
+                                        "safeName": "RedirectURI"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -538,6 +736,105 @@
                                 "pascalCase": {
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "code",
+                            "name": {
+                                "originalName": "code",
+                                "camelCase": {
+                                    "unsafeName": "code",
+                                    "safeName": "code"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "code",
+                                    "safeName": "code"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CODE",
+                                    "safeName": "CODE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Code",
+                                    "safeName": "Code"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "code_verifier",
+                            "name": {
+                                "originalName": "code_verifier",
+                                "camelCase": {
+                                    "unsafeName": "codeVerifier",
+                                    "safeName": "codeVerifier"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "code_verifier",
+                                    "safeName": "code_verifier"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CODE_VERIFIER",
+                                    "safeName": "CODE_VERIFIER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CodeVerifier",
+                                    "safeName": "CodeVerifier"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "redirect_uri",
+                            "name": {
+                                "originalName": "redirect_uri",
+                                "camelCase": {
+                                    "unsafeName": "redirectURI",
+                                    "safeName": "redirectURI"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "redirect_uri",
+                                    "safeName": "redirect_uri"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REDIRECT_URI",
+                                    "safeName": "REDIRECT_URI"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RedirectURI",
+                                    "safeName": "RedirectURI"
                                 }
                             }
                         },

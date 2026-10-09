@@ -9,6 +9,7 @@ const BUFFER_IN_MINUTES = 2 as const;
 export class InferredAuthProvider implements core.AuthProvider {
     private readonly client: AuthClient;
     private readonly options: InferredAuthProvider.Options;
+    private rotatedRefreshToken: string | undefined;
     private expiresAt: Date | undefined;
     private authRequestPromise: Promise<core.AuthRequest> | undefined;
 
@@ -18,7 +19,7 @@ export class InferredAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<InferredAuthProvider.Options>): boolean {
-        return options?.refreshToken != null && options?.grantType != null;
+        return options?.refreshToken != null;
     }
 
     private async getCachedAuthRequest(): Promise<core.AuthRequest> {
@@ -51,11 +52,16 @@ export class InferredAuthProvider implements core.AuthProvider {
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
         const response = await this.client.getTokenWithRefreshToken({
-            refresh_token: await core.Supplier.get(this.options.refreshToken),
-            grant_type: await core.Supplier.get(this.options.grantType),
+            refresh_token: this.rotatedRefreshToken ?? (await core.Supplier.get(this.options.refreshToken)),
             scope: await core.Supplier.get(this.options.scope),
+            grant_type: "refresh_token",
         });
         this.expiresAt = getExpiresAt(response.expires_in);
+        if (response.refresh_token != null) {
+            this.rotatedRefreshToken = response.refresh_token;
+            await this.options.onRefreshTokenRotated?.(response.refresh_token);
+        }
+
         return {
             headers: {
                 Authorization: `Bearer ${response.access_token}`,
@@ -71,12 +77,13 @@ function getExpiresAt(expiresInSeconds: number): Date {
 export namespace InferredAuthProvider {
     export const AUTH_SCHEME = "InferredAuthScheme" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        "Please provide refreshToken and grantType when initializing the client" as const;
+        "Please provide refreshToken when initializing the client" as const;
 
     export interface AuthOptions {
         refreshToken: core.Supplier<string>;
-        grantType: core.Supplier<string>;
         scope?: core.Supplier<string>;
+        /** Called with the new refresh token whenever the token endpoint rotates it. The presented refresh token is invalidated, so persist the new one. */
+        onRefreshTokenRotated?: (refreshToken: string) => void | Promise<void>;
     }
 
     export type Options = BaseClientOptions;
