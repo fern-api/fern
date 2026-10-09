@@ -59,13 +59,20 @@ describe("getDocsDevExcludeRules", () => {
         ]);
     });
 
-    it("excludes rules that rebuild API references when API references are skipped", () => {
-        expect(getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: true, skipApi: true }).sort()).toEqual([
+    it("excludes rules that rebuild API references or read API specs when API references are skipped", () => {
+        const expected = [
             "missing-redirects",
-            "valid-markdown-links"
-        ]);
+            "no-non-component-refs",
+            "no-openapi-v2-in-docs",
+            "valid-local-references",
+            "valid-markdown-links",
+            "valid-openapi-examples"
+        ];
+        expect(getDocsDevExcludeRules({ brokenLinks: true, apiWorkspacesLoaded: true, skipApi: true }).sort()).toEqual(
+            expected
+        );
         expect(getDocsDevExcludeRules({ brokenLinks: false, apiWorkspacesLoaded: true, skipApi: true }).sort()).toEqual(
-            ["missing-redirects", "valid-markdown-links"]
+            expected
         );
     });
 
