@@ -149,6 +149,21 @@ public final class OAuthAuthProviderGenerator extends AbstractFileGenerator {
                 .addMethod(buildRefreshMethod(oauthTokenSupplierClassName, tokenPrefix))
                 .addMethod(buildGetExpiresAtMethod())
                 .addMethod(buildCanCreateMethod(clientIdEnvVar, clientSecretEnvVar));
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            classBuilder.addMethod(MethodSpec.methodBuilder("invalidate")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addAnnotation(Override.class)
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .beginControlFlow("synchronized (refreshLock)")
+                    .beginControlFlow(
+                            "if (failedHeaders != null && this.accessToken != null && failedHeaders.values().stream()"
+                                    + ".noneMatch(value -> value.equals(this.accessToken) || value.endsWith(\" \" + this.accessToken)))")
+                    .addStatement("return")
+                    .endControlFlow()
+                    .addStatement("this.accessToken = null")
+                    .endControlFlow()
+                    .build());
+        }
 
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), classBuilder.build()).build();

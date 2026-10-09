@@ -58,6 +58,15 @@ fixtures:
     - outputFolder: .
       customConfig:
         enable-wire-tests: true
+    - outputFolder: refresh-auth-on-failed-permissions
+      customConfig:
+        refresh-auth-on-failed-permissions: true
+  java-endpoint-security-token-subpackage:
+    - customConfig: null
+      outputFolder: .
+    - customConfig:
+        refresh-auth-on-failed-permissions: true
+      outputFolder: refresh-auth-on-failed-permissions
   errors:
     - outputFolder: .
       customConfig:

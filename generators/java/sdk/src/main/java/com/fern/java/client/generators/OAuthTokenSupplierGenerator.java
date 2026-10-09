@@ -64,6 +64,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String GET_TOKEN_REQUEST_NAME = "getTokenRequest";
     private static final String EXPIRES_AT_FIELD_NAME = "expiresAt";
     private static final String TOKEN_LOCK_FIELD_NAME = "tokenLock";
+    public static final String INVALIDATE_METHOD_NAME = "invalidate";
     private static final String BUFFER_IN_MINUTES_CONSTANT_NAME = "BUFFER_IN_MINUTES";
     private static final String EXPIRES_IN_SECONDS_PARAMETER_NAME = "expiresInSeconds";
 
@@ -302,6 +303,26 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         customPropertiesWithNames,
                         httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            oauthTypeSpecBuilder.addMethod(MethodSpec.methodBuilder(INVALIDATE_METHOD_NAME)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Drops the cached token if the failed request sent it, so the next call fetches a new one. A token\n")
+                    .addJavadoc("another request already refreshed is kept.\n")
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .beginControlFlow("synchronized ($L)", TOKEN_LOCK_FIELD_NAME)
+                    .beginControlFlow(
+                            "if (failedHeaders != null && this.$L != null && failedHeaders.values().stream()"
+                                    + ".noneMatch(value -> value.equals(this.$L) || value.endsWith(\" \" + this.$L)))",
+                            ACCESS_TOKEN_FIELD_NAME,
+                            ACCESS_TOKEN_FIELD_NAME,
+                            ACCESS_TOKEN_FIELD_NAME)
+                    .addStatement("return")
+                    .endControlFlow()
+                    .addStatement("this.$L = null", ACCESS_TOKEN_FIELD_NAME)
+                    .endControlFlow()
+                    .build());
+        }
         if (refreshRequired) {
             oauthTypeSpecBuilder
                     .addField(

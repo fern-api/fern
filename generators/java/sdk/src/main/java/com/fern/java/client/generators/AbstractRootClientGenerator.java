@@ -1914,6 +1914,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         inferredAuthTokenSupplierClassName,
                         inferredAuthTokenSupplierClassName,
                         constructorArgs.build());
+                if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+                    configureAuthMethod.addStatement(
+                            "builder.addAuthInvalidator(inferredAuthTokenSupplier::invalidate)");
+                }
 
                 // Add headers from the supplier - the supplier returns a Map<String, String>
                 // For each authenticated header, we add a header supplier that gets the value from the map
@@ -2172,8 +2176,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                         oauthTokenSupplierClassName,
                                         oauthTokenSupplierClassName,
                                         oauthConstructorArgs.build())
-                                .addStatement("builder.addHeader($S, oAuthTokenSupplier)", tokenHeader)
-                                .endControlFlow();
+                                .addStatement("builder.addHeader($S, oAuthTokenSupplier)", tokenHeader);
+                        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+                            configureAuthMethod.addStatement(
+                                    "builder.addAuthInvalidator(oAuthTokenSupplier::invalidate)");
+                        }
+                        configureAuthMethod.endControlFlow();
                     }
                 }
                 return null;
@@ -2315,11 +2323,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         oauthTokenSupplierClassName,
                         oauthTokenSupplierClassName,
                         oauthConstructorArgs.build());
+                String authInvalidatorCall =
+                        clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()
+                                ? ".addAuthInvalidator(oAuthTokenSupplier::invalidate)"
+                                : "";
                 credentialsBuildMethod.addStatement(
-                        "$T finalOptions = $T.Builder.from(baseOptions).addHeader($S, oAuthTokenSupplier).build()",
+                        "$T finalOptions = $T.Builder.from(baseOptions).addHeader($S, oAuthTokenSupplier)$L.build()",
                         generatedClientOptions.getClassName(),
                         generatedClientOptions.getClassName(),
-                        tokenHeader);
+                        tokenHeader,
+                        authInvalidatorCall);
                 credentialsBuildMethod.addStatement("return new $T(finalOptions)", className());
 
                 credentialsAuthBuilder.addMethod(credentialsBuildMethod.build());

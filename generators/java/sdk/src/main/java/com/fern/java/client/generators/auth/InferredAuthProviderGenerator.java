@@ -16,7 +16,7 @@
 
 package com.fern.java.client.generators.auth;
 
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -38,11 +38,12 @@ public final class InferredAuthProviderGenerator extends AbstractFileGenerator {
     private final String schemeName;
     private final ClassName inferredAuthTokenSupplierClassName;
 
+    private final ClientGeneratorContext clientGeneratorContext;
+
     public InferredAuthProviderGenerator(
-            AbstractGeneratorContext<?, ?> generatorContext,
-            String schemeName,
-            ClassName inferredAuthTokenSupplierClassName) {
+            ClientGeneratorContext generatorContext, String schemeName, ClassName inferredAuthTokenSupplierClassName) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("InferredAuthProvider"), generatorContext);
+        this.clientGeneratorContext = generatorContext;
         this.schemeName = schemeName;
         this.inferredAuthTokenSupplierClassName = inferredAuthTokenSupplierClassName;
     }
@@ -91,6 +92,14 @@ public final class InferredAuthProviderGenerator extends AbstractFileGenerator {
                 .addField(tokenSupplierField)
                 .addMethod(buildConstructor(tokenSupplierField))
                 .addMethod(buildGetAuthHeaders(endpointMetadataClassName, tokenSupplierField));
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            classBuilder.addMethod(MethodSpec.methodBuilder("invalidate")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addAnnotation(Override.class)
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .addStatement("$N.invalidate(failedHeaders)", tokenSupplierField)
+                    .build());
+        }
 
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), classBuilder.build()).build();

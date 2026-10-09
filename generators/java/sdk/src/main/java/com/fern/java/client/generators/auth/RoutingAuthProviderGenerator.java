@@ -16,7 +16,7 @@
 
 package com.fern.java.client.generators.auth;
 
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -37,8 +37,11 @@ import javax.lang.model.element.Modifier;
  */
 public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
 
-    public RoutingAuthProviderGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
+    private final ClientGeneratorContext clientGeneratorContext;
+
+    public RoutingAuthProviderGenerator(ClientGeneratorContext generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("RoutingAuthProvider"), generatorContext);
+        this.clientGeneratorContext = generatorContext;
     }
 
     @Override
@@ -71,7 +74,7 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
                 ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), scopesType);
         ParameterizedTypeName securityType = ParameterizedTypeName.get(ClassName.get(List.class), schemeMapType);
 
-        TypeSpec routingAuthProviderClass = TypeSpec.classBuilder(className)
+        TypeSpec.Builder routingAuthProviderClass = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addSuperinterface(authProviderClassName)
                 .addJavadoc(
@@ -85,10 +88,17 @@ public final class RoutingAuthProviderGenerator extends AbstractFileGenerator {
                 .addMethod(buildGetAuthHeaders(
                         authProviderClassName, endpointMetadataClassName, providersField, securityType, schemeMapType))
                 .addMethod(buildBuilderMethod())
-                .addType(buildBuilderClass(authProviderClassName, providersMapType, errorMessagesMapType))
-                .build();
+                .addType(buildBuilderClass(authProviderClassName, providersMapType, errorMessagesMapType));
+        if (clientGeneratorContext.getCustomConfig().refreshAuthOnFailedPermissions()) {
+            routingAuthProviderClass.addMethod(MethodSpec.methodBuilder("invalidate")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addAnnotation(Override.class)
+                    .addParameter(ParameterizedTypeName.get(Map.class, String.class, String.class), "failedHeaders")
+                    .addStatement("$N.values().forEach(provider -> provider.invalidate(failedHeaders))", providersField)
+                    .build());
+        }
 
-        JavaFile javaFile = JavaFile.builder(className.packageName(), routingAuthProviderClass)
+        JavaFile javaFile = JavaFile.builder(className.packageName(), routingAuthProviderClass.build())
                 .build();
 
         return GeneratedJavaFile.builder()

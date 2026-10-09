@@ -48,6 +48,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     includePlatformHeaders: z.boolean().optional(),
     userAgentOnly: z.boolean().optional(),
     "retry-status-codes": z.optional(z.enum(["legacy", "recommended"])),
+    "refresh-auth-on-failed-permissions": z.optional(z.boolean()),
 
     // Hidden options (for debugging).
     "enable-gradle-profiling": z.boolean().optional(),

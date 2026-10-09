@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `refresh-auth-on-failed-permissions` config flag. When enabled, HTTP 401 and 403
+    responses from endpoints that send auth are retried with the SDK's normal retry policy (max retries and backoff), and auth is
+    refreshed before each retry: cached OAuth client-credentials and inferred-auth tokens are invalidated
+    and fetched again (unless another request already refreshed them, in which case the newer token is
+    reused), and header suppliers are re-read. This lets the auth owner rotate a token before
+    it expires. If refreshing auth fails, the error is raised and the request is not retried.
+  type: feat
