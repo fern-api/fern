@@ -14,7 +14,7 @@ import { planRetarget, type RetargetPlan } from "./retargetSdkConfig.js";
 import { resolveFromConfigDir } from "./rules/output.js";
 import { loadSpecFacts } from "./specFacts.js";
 import type { RubiconDiagnostic, SpecFacts } from "./types.js";
-import { DEFAULT_GENERATOR_VERSION } from "./versions.js";
+import { resolveGeneratorVersion } from "./versions.js";
 import { applyFileChanges, type FileChanges, mergeOverlays, planFileChanges } from "./writeGeneratorsConfiguration.js";
 
 export interface RubiconOptions {
@@ -86,12 +86,13 @@ export async function runRubicon(options: RubiconOptions): Promise<RubiconResult
     }
     const ir = expanded.ir;
 
+    const version = resolveGeneratorVersion({ pinned: ir.target.generatorVersion, flag: options.generatorVersion });
     const inspected = await inspectSpecs(options.context, ir, configDir);
     const mapped = mapSdkConfigToGeneratorsYml(ir, {
         configDir,
         outDir: options.outDir,
         specFacts: inspected.facts,
-        generatorVersion: ir.target.generatorVersion ?? options.generatorVersion ?? DEFAULT_GENERATOR_VERSION
+        generatorVersion: version.version
     });
     const slot = await planGeneratorsSlot({ folder: options.outDir, force: options.force });
     const carried = carryOver(slot.slot?.previous, mapped.generatorsYml);
@@ -103,6 +104,7 @@ export async function runRubicon(options: RubiconOptions): Promise<RubiconResult
     });
 
     const diagnostics = [
+        ...version.diagnostics,
         ...inspected.diagnostics,
         ...mapped.diagnostics,
         ...multiSpecWarning(ir, carried.carried),
