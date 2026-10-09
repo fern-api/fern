@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The token supplier always sends
+        `grant_type=refresh_token`, and `grantType` is no longer a client builder option. Only the parameters of
+        the OAuth refresh token grant (`refreshToken`, `scope`, `clientId`, `clientSecret`) plus any required
+        ones are builder options and sent. Optional parameters of other grants on a shared token endpoint, such as
+        `code`, `codeVerifier` and `redirectUri`, stay on the token endpoint method only.
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` rotates the refresh token. When the token response returns a new
+        `refresh_token`, the supplier uses it for the next refresh and passes it to the optional
+        `onRefreshTokenRotated(Consumer<String>)` builder option so it can be persisted. With endpoint security, a
+        provided refresh token selects the refresh token scheme over OAuth client credentials.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 4.31.0
   changelogEntry:
     - summary: |
