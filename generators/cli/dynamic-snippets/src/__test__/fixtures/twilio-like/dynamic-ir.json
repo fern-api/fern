@@ -748,6 +748,107 @@
       "additionalProperties": false,
       "type": "object"
     },
+    "type_diagnostics:ListDiagnosticsResponse": {
+      "declaration": {
+        "name": {
+          "originalName": "ListDiagnosticsResponse",
+          "camelCase": {
+            "unsafeName": "listDiagnosticsResponse",
+            "safeName": "listDiagnosticsResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "list_diagnostics_response",
+            "safeName": "list_diagnostics_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_DIAGNOSTICS_RESPONSE",
+            "safeName": "LIST_DIAGNOSTICS_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "ListDiagnosticsResponse",
+            "safeName": "ListDiagnosticsResponse"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "diagnostics",
+              "camelCase": {
+                "unsafeName": "diagnostics",
+                "safeName": "diagnostics"
+              },
+              "snakeCase": {
+                "unsafeName": "diagnostics",
+                "safeName": "diagnostics"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DIAGNOSTICS",
+                "safeName": "DIAGNOSTICS"
+              },
+              "pascalCase": {
+                "unsafeName": "Diagnostics",
+                "safeName": "Diagnostics"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "diagnostics",
+            "camelCase": {
+              "unsafeName": "diagnostics",
+              "safeName": "diagnostics"
+            },
+            "snakeCase": {
+              "unsafeName": "diagnostics",
+              "safeName": "diagnostics"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DIAGNOSTICS",
+              "safeName": "DIAGNOSTICS"
+            },
+            "pascalCase": {
+              "unsafeName": "Diagnostics",
+              "safeName": "Diagnostics"
+            }
+          }
+        }
+      },
+      "properties": [
+        {
+          "name": {
+            "wireValue": "ok",
+            "name": {
+              "originalName": "ok",
+              "camelCase": {
+                "unsafeName": "ok",
+                "safeName": "ok"
+              },
+              "snakeCase": {
+                "unsafeName": "ok",
+                "safeName": "ok"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "OK",
+                "safeName": "OK"
+              },
+              "pascalCase": {
+                "unsafeName": "Ok",
+                "safeName": "Ok"
+              }
+            }
+          },
+          "typeReference": {
+            "value": {
+              "value": "BOOLEAN",
+              "type": "primitive"
+            },
+            "type": "optional"
+          }
+        }
+      ],
+      "additionalProperties": false,
+      "type": "object"
+    },
     "type_chat/v1:SendV1Response": {
       "declaration": {
         "name": {
@@ -2381,6 +2482,185 @@
         },
         "metadata": {
           "includePathParameters": true,
+          "onlyPathParameters": false
+        },
+        "type": "inlined"
+      },
+      "response": {
+        "type": "json"
+      }
+    },
+    "endpoint_diagnostics.listDiagnostics": {
+      "declaration": {
+        "name": {
+          "originalName": "listDiagnostics",
+          "camelCase": {
+            "unsafeName": "listDiagnostics",
+            "safeName": "listDiagnostics"
+          },
+          "snakeCase": {
+            "unsafeName": "list_diagnostics",
+            "safeName": "list_diagnostics"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_DIAGNOSTICS",
+            "safeName": "LIST_DIAGNOSTICS"
+          },
+          "pascalCase": {
+            "unsafeName": "ListDiagnostics",
+            "safeName": "ListDiagnostics"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "diagnostics",
+              "camelCase": {
+                "unsafeName": "diagnostics",
+                "safeName": "diagnostics"
+              },
+              "snakeCase": {
+                "unsafeName": "diagnostics",
+                "safeName": "diagnostics"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DIAGNOSTICS",
+                "safeName": "DIAGNOSTICS"
+              },
+              "pascalCase": {
+                "unsafeName": "Diagnostics",
+                "safeName": "Diagnostics"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "diagnostics",
+            "camelCase": {
+              "unsafeName": "diagnostics",
+              "safeName": "diagnostics"
+            },
+            "snakeCase": {
+              "unsafeName": "diagnostics",
+              "safeName": "diagnostics"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DIAGNOSTICS",
+              "safeName": "DIAGNOSTICS"
+            },
+            "pascalCase": {
+              "unsafeName": "Diagnostics",
+              "safeName": "Diagnostics"
+            }
+          }
+        }
+      },
+      "location": {
+        "method": "GET",
+        "path": "/Diagnostics"
+      },
+      "request": {
+        "declaration": {
+          "name": {
+            "originalName": "ListDiagnosticsRequest",
+            "camelCase": {
+              "unsafeName": "listDiagnosticsRequest",
+              "safeName": "listDiagnosticsRequest"
+            },
+            "snakeCase": {
+              "unsafeName": "list_diagnostics_request",
+              "safeName": "list_diagnostics_request"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_DIAGNOSTICS_REQUEST",
+              "safeName": "LIST_DIAGNOSTICS_REQUEST"
+            },
+            "pascalCase": {
+              "unsafeName": "ListDiagnosticsRequest",
+              "safeName": "ListDiagnosticsRequest"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "diagnostics",
+                "camelCase": {
+                  "unsafeName": "diagnostics",
+                  "safeName": "diagnostics"
+                },
+                "snakeCase": {
+                  "unsafeName": "diagnostics",
+                  "safeName": "diagnostics"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "DIAGNOSTICS",
+                  "safeName": "DIAGNOSTICS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Diagnostics",
+                  "safeName": "Diagnostics"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "diagnostics",
+              "camelCase": {
+                "unsafeName": "diagnostics",
+                "safeName": "diagnostics"
+              },
+              "snakeCase": {
+                "unsafeName": "diagnostics",
+                "safeName": "diagnostics"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DIAGNOSTICS",
+                "safeName": "DIAGNOSTICS"
+              },
+              "pascalCase": {
+                "unsafeName": "Diagnostics",
+                "safeName": "Diagnostics"
+              }
+            }
+          }
+        },
+        "pathParameters": [],
+        "queryParameters": [
+          {
+            "name": {
+              "wireValue": "日本語",
+              "name": {
+                "originalName": "日本語",
+                "camelCase": {
+                  "unsafeName": "日本語",
+                  "safeName": "日本語"
+                },
+                "snakeCase": {
+                  "unsafeName": "日本語",
+                  "safeName": "日本語"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "日本語",
+                  "safeName": "日本語"
+                },
+                "pascalCase": {
+                  "unsafeName": "日本語",
+                  "safeName": "日本語"
+                }
+              }
+            },
+            "typeReference": {
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
+            }
+          }
+        ],
+        "headers": [],
+        "metadata": {
+          "includePathParameters": false,
           "onlyPathParameters": false
         },
         "type": "inlined"

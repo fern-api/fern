@@ -63,29 +63,31 @@ describe("flag parity with the CLI runtime --schema golden", () => {
                 for (const input of command.inputs) {
                     it(`${command.operation}: ${input.wireName} (${input.location}) → ${input.flag ?? "--params"}`, () => {
                         expect(PARAMETER_LOCATIONS).toContain(input.location as ParameterLocation);
-                        // This test validates the pure wire-name → flag rule. A wire name containing a
-                        // character sanitizing would drop (e.g. `DateCreated<`) can only get its flag from
-                        // an x-fern-parameter-name rename, which needs the SDK name — out of scope for a
-                        // wire-name-only check. Those are covered end-to-end (with the real dynamic IR) by
-                        // dynamic-ir.e2e.test.ts; skip them here.
-                        if (/[^A-Za-z0-9_-]/.test(input.wireName)) {
-                            expect(input.flag).toBeDefined();
-                            return;
-                        }
+                        // This test validates the pure wire-name → flag rule (no SDK name).
                         const resolved = resolveParamFlagName(
                             { location: input.location as ParameterLocation },
                             input.wireName
                         );
-                        if (input.flag != null) {
-                            // The runtime exposes a dedicated flag; the port must reproduce it verbatim
-                            // (the runtime's flag already includes the leading "--").
-                            expect(resolved).toBeDefined();
-                            expect(`--${resolved}`).toBe(input.flag);
-                        } else {
-                            // No dedicated flag ⇒ the input is reachable only through --params; the port
-                            // must likewise decline to produce a flag.
+                        if (input.flag == null) {
+                            // No runtime flag (`--params`-only, or a sanitize-reject like `日本語`) — the
+                            // port must likewise decline to produce one, even for a special-char name.
                             expect(resolved).toBeUndefined();
+                            return;
                         }
+                        if (/[^A-Za-z0-9_-]/.test(input.wireName) && `--${resolved}` !== input.flag) {
+                            // The wire name has characters sanitizing drops, and the runtime's flag doesn't
+                            // match what the wire name sanitizes to — it comes from an x-fern-parameter-name
+                            // rename (e.g. `DateCreated<` → `--date-created-before`). The wire-name-only rule
+                            // can't reproduce that; the SDK-name heuristic is covered end-to-end by
+                            // dynamic-ir.e2e.test.ts. Just confirm a flag exists.
+                            expect(input.flag).toBeDefined();
+                            return;
+                        }
+                        // The runtime exposes a dedicated flag; the port must reproduce it verbatim (the
+                        // runtime's flag already includes the leading "--"). A mismatch on a flag-expressible
+                        // wire name is a genuine port bug and fails here.
+                        expect(resolved).toBeDefined();
+                        expect(`--${resolved}`).toBe(input.flag);
                     });
                 }
             }

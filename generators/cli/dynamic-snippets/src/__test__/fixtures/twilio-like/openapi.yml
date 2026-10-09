@@ -206,3 +206,19 @@ paths:
           content:
             application/json:
               schema: { type: object, properties: { sid: { type: string } } }
+  /Diagnostics:
+    get:
+      operationId: listDiagnostics
+      tags: [diagnostics]
+      parameters:
+        - name: "日本語"
+          in: query
+          required: false
+          schema: { type: string }
+          example: unicode-value
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { type: object, properties: { ok: { type: boolean } } }

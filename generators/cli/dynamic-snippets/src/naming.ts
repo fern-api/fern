@@ -259,9 +259,17 @@ export function resolveMultipartFieldFlagName(
  * `--date-created-before`, which otherwise sanitize to `--date-created` and collide with `DateCreated`),
  * while leaving every `[A-Za-z0-9_-]`-only name on the wire-name path. A rename whose wire name is
  * itself flag-expressible still can't be recovered without IR support (see README).
+ *
+ * The special-character wire name must still *sanitize* to a flag for the SDK name to be used. A name
+ * that sanitizing rejects outright (non-ASCII, e.g. `日本語`) gets NO flag from the runtime either, so
+ * it stays on the wire-name path and remains flagless — rather than picking up a flag from the
+ * importer's (possibly transliterated-ASCII) SDK name.
  */
 export function flagSourceName(wireValue: string, sdkName: string): string {
-    return /[^A-Za-z0-9_-]/.test(wireValue) ? sdkName : wireValue;
+    if (!/[^A-Za-z0-9_-]/.test(wireValue)) {
+        return wireValue;
+    }
+    return sanitizeFlagName(wireValue) != null ? sdkName : wireValue;
 }
 
 /**

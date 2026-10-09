@@ -315,10 +315,16 @@ export class EndpointSnippetGenerator {
         // `getReservedFlagNames()` adds the config-dependent reservations (renamed user-agent flag,
         // `profile` when profiles are enabled) so a parameter colliding with one gets the `-param` suffix.
         const reserved = this.context.getReservedFlagNames();
-        const flagSource = flagSourceName(wireValue, name.name.originalName);
+        // Multipart fields are never renamed by the runtime (`resolve_multipart_field_flag_name` uses
+        // only `to_kebab_flag(wire_name)`), so they always use the wire name. The rename heuristic
+        // applies only to ordinary params.
         const flagName = multipart
-            ? resolveMultipartFieldFlagName(flagSource, reserved)
-            : resolveParamFlagName({ location, displayName: flagSource }, wireValue, reserved);
+            ? resolveMultipartFieldFlagName(wireValue, reserved)
+            : resolveParamFlagName(
+                  { location, displayName: flagSourceName(wireValue, name.name.originalName) },
+                  wireValue,
+                  reserved
+              );
         if (flagName == null) {
             // The field has no flag the runtime will accept, and it can't be supplied through --params
             // either: a non-multipart unsanitizable name (non-ASCII / control chars) has no registered

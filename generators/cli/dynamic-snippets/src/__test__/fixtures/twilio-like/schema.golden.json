@@ -131,6 +131,22 @@
       ]
     },
     {
+      "operation": "diagnostics.list-diagnostics",
+      "command": [
+        "diagnostics",
+        "list-diagnostics"
+      ],
+      "httpMethod": "GET",
+      "path": "/Diagnostics",
+      "inputs": [
+        {
+          "wireName": "日本語",
+          "location": "query",
+          "type": "string"
+        }
+      ]
+    },
+    {
       "operation": "media.upload-media",
       "command": [
         "media",

@@ -129,6 +129,20 @@ describe("flag emission from the real dynamic IR", () => {
         );
     });
 
+    it("omits a non-ASCII parameter (no flag) even after the rename heuristic", () => {
+        // `日本語` has characters outside [A-Za-z0-9_-], so the rename heuristic considers the SDK name —
+        // but the importer keeps a non-ASCII `originalName`, which also can't sanitize, so it stays
+        // flagless (matching the runtime, which lists it with no flag). Verified through the real dynamic
+        // IR. Not dry-run: an operation with a non-ASCII param panics the runtime at build time.
+        const result = generator().generateSync({
+            endpoint: { method: "GET", path: "/Diagnostics" },
+            queryParameters: { 日本語: "x" }
+        });
+        expect(result.snippet).toBe("twilio-like diagnostics list-diagnostics");
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors?.[0]?.severity).toBe("WARNING");
+    });
+
     it("emits a namespaced (multi-part) command path", () => {
         const result = generator().generateSync({
             endpoint: { method: "POST", path: "/Chat/v1/Messages" },
