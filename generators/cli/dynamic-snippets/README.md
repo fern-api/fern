@@ -68,6 +68,10 @@ A change to the importer's command naming surfaces as an `dynamic-ir.e2e.test.ts
   flag, so the runtime registers no argument for it — it can be supplied via neither a flag nor
   `--params` (passing it in `--params` panics the CLI, i.e. the operation is effectively unusable in
   the runtime itself). The generator omits the parameter rather than emit a command that fails.
+- **Reserved-name multipart fields are omitted.** A multipart field whose name collides with a built-in
+  flag (`output`, `format`, `json`, …) gets no flag, and the runtime mis-routes its `--params` value
+  into the query string instead of the form body, so it can't be delivered correctly either. The
+  generator omits it. (Both this and the non-ASCII case are runtime limitations worth filing upstream.)
 - **Binary-name fallback.** When `customConfig.binaryName` is unset, the binary name falls back to the
   workspace name (`generatorConfig.apiName`). The Rust generator falls back to `apiDisplayName`, which
   the dynamic IR does not carry; the workspace name is its closest available analogue.

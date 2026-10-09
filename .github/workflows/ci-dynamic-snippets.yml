@@ -46,7 +46,7 @@ jobs:
       - name: Compute changed dynamic-snippets packages
         id: filter
         run: |
-          CHANGED=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}")
+          CHANGED=$(git diff --name-only "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}")
           emit() {
             if echo "$CHANGED" | grep -q "^generators/$1/dynamic-snippets/"; then
               echo "$2=true" >> "$GITHUB_OUTPUT"

@@ -244,9 +244,10 @@ describe("DynamicSnippetsGenerator", () => {
         expect(result.snippet).toBe("twilio messages create --page-size 20");
     });
 
-    it("gives multipart fields no -param suffix: a reserved field goes to --params", () => {
+    it("omits a reserved multipart field (no flag, no bogus --output-param)", () => {
         // Multipart (file-upload) fields follow resolve_multipart_field_flag_name: a reserved name
-        // (output) gets NO flag and is reachable only via --params — not a bogus --output-param.
+        // (output) gets NO flag. It also can't be delivered via --params (the runtime mis-routes it
+        // into the query string), so it is omitted entirely rather than emitting --output-param.
         const fileUploadBody = {
             type: "fileUpload",
             properties: [
@@ -268,9 +269,7 @@ describe("DynamicSnippetsGenerator", () => {
             requestBody: { ProfileImage: "/path/img.png", output: "raw", To: "+15551234567" }
         });
         expect(result.errors).toBeUndefined();
-        expect(result.snippet).toBe(
-            `twilio media upload --profile-image /path/img.png --to +15551234567 --params '{"output":"raw"}'`
-        );
+        expect(result.snippet).toBe("twilio media upload --profile-image /path/img.png --to +15551234567");
     });
 
     it("honors a binaryName custom config override", () => {

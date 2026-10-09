@@ -5,7 +5,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, it } from "vitest";
 
 import { DynamicSnippetsGenerator } from "../DynamicSnippetsGenerator.js";
 
@@ -109,73 +109,98 @@ describe.skipIf(cargo == null)("every assembled command passes the runtime --dry
         writeFileSync(filePath, "fake-bytes");
     }, 600_000);
 
-    // Example values per endpoint (keyed by "METHOD path"), covering every parameter location/shape.
-    function requestsByEndpoint(): Record<string, FernIr.dynamic.EndpointSnippetRequest> {
-        return {
-            "POST /2010-04-01/Accounts/{AccountSid}/Messages.json": {
-                endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Messages.json" },
-                pathParameters: { AccountSid: "AC123" },
-                requestBody: { To: "+15558675310", From: "+15017122661", Body: "Hi" }
+    // Example values per endpoint, plus the query-param keys the request legitimately carries. Asserting
+    // the dry-run's query_params match exactly catches values that leak to the wrong place (e.g. a body
+    // or multipart field mis-routed into the query string) — exit 0 alone would not.
+    function cases(): Array<{ request: FernIr.dynamic.EndpointSnippetRequest; expectedQueryKeys: string[] }> {
+        return [
+            {
+                request: {
+                    endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Messages.json" },
+                    pathParameters: { AccountSid: "AC123" },
+                    requestBody: { To: "+15558675310", From: "+15017122661", Body: "Hi" }
+                },
+                expectedQueryKeys: []
             },
-            "GET /2010-04-01/Accounts/{AccountSid}/Messages.json": {
-                endpoint: { method: "GET", path: "/2010-04-01/Accounts/{AccountSid}/Messages.json" },
-                pathParameters: { AccountSid: "AC123" },
-                queryParameters: { PageSize: 20 }
+            {
+                request: {
+                    endpoint: { method: "GET", path: "/2010-04-01/Accounts/{AccountSid}/Messages.json" },
+                    pathParameters: { AccountSid: "AC123" },
+                    queryParameters: { PageSize: 20 }
+                },
+                expectedQueryKeys: ["PageSize"]
             },
-            "POST /2010-04-01/Accounts/{AccountSid}/Calls.json": {
-                endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls.json" },
-                pathParameters: { AccountSid: "AC123" },
-                headers: { "X-Custom-Header": "hval" },
-                requestBody: { To: "+15558675310", json: "raw" }
+            {
+                request: {
+                    endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls.json" },
+                    pathParameters: { AccountSid: "AC123" },
+                    headers: { "X-Custom-Header": "hval" },
+                    requestBody: { To: "+15558675310", json: "raw" }
+                },
+                expectedQueryKeys: []
             },
-            "POST /2010-04-01/Accounts/{AccountSid}/Calls/Stream.json": {
-                endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls/Stream.json" },
-                pathParameters: { AccountSid: "AC123" },
-                requestBody: { To: "+15558675310", "Parameter1.Name": "foo" }
+            {
+                request: {
+                    endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Calls/Stream.json" },
+                    pathParameters: { AccountSid: "AC123" },
+                    requestBody: { To: "+15558675310", "Parameter1.Name": "foo" }
+                },
+                expectedQueryKeys: []
             },
-            "POST /2010-04-01/Accounts/{AccountSid}/Addresses.json": {
-                endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Addresses.json" },
-                pathParameters: { AccountSid: "AC123" },
-                requestBody: { CustomerName: "Ada", Address: { City: "SF", Zip: "94105" } }
+            {
+                request: {
+                    endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Addresses.json" },
+                    pathParameters: { AccountSid: "AC123" },
+                    requestBody: { CustomerName: "Ada", Address: { City: "SF", Zip: "94105" } }
+                },
+                expectedQueryKeys: []
             },
-            "POST /2010-04-01/Accounts/{AccountSid}/Media.json": {
-                endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Media.json" },
-                pathParameters: { AccountSid: "AC123" },
-                requestBody: { File: filePath, output: "meta" }
+            {
+                request: {
+                    endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Media.json" },
+                    pathParameters: { AccountSid: "AC123" },
+                    // `output` (reserved multipart) is omitted by the generator; only File is sent.
+                    requestBody: { File: filePath, output: "meta" }
+                },
+                expectedQueryKeys: []
             },
-            "POST /Chat/v1/Messages": {
-                endpoint: { method: "POST", path: "/Chat/v1/Messages" },
-                requestBody: { Body: "hi" }
+            {
+                request: {
+                    endpoint: { method: "POST", path: "/Chat/v1/Messages" },
+                    requestBody: { Body: "hi" }
+                },
+                expectedQueryKeys: []
             }
-        };
+        ];
     }
 
-    it("accepts every generated command", () => {
+    it("accepts every generated command and routes every value to the right place", () => {
         const generator = new DynamicSnippetsGenerator({ ir: dynamicIr, config: CONFIG });
-        const requests = requestsByEndpoint();
-        const commands: string[] = [];
-        for (const request of Object.values(requests)) {
-            const { snippet } = generator.generateSync(request);
-            commands.push(snippet);
-        }
-        expect(commands.length).toBe(Object.keys(requests).length);
-
         const failures: string[] = [];
-        for (const command of commands) {
-            // Replace the leading binary-name token with the built binary's path, then --dry-run.
+        for (const { request, expectedQueryKeys } of cases()) {
+            const { snippet } = generator.generateSync(request);
+            // Replace the leading binary-name token with the built binary's path, then --dry-run as JSON.
             // Run through a shell so the generator's POSIX quoting (--params '{…}') is parsed as emitted.
-            const withoutBinaryName = command.slice(command.indexOf(" ") + 1);
-            const shellCommand = `${JSON.stringify(binary)} ${withoutBinaryName} --dry-run`;
+            const withoutBinaryName = snippet.slice(snippet.indexOf(" ") + 1);
+            const shellCommand = `${JSON.stringify(binary)} ${withoutBinaryName} --dry-run --format json`;
+            let parsed: { query_params?: Array<[string, string]> };
             try {
-                execSync(shellCommand, { stdio: "pipe" });
+                parsed = JSON.parse(execSync(shellCommand, { stdio: "pipe" }).toString());
             } catch (error) {
                 const err = error as { stderr?: Buffer; stdout?: Buffer };
                 const detail = `${err.stderr?.toString() ?? ""}${err.stdout?.toString() ?? ""}`.split("\n")[0];
-                failures.push(`  ${command}\n    → ${detail}`);
+                failures.push(`  ${snippet}\n    → ${detail}`);
+                continue;
+            }
+            const queryKeys = (parsed.query_params ?? []).map(([key]) => key).sort();
+            if (JSON.stringify(queryKeys) !== JSON.stringify([...expectedQueryKeys].sort())) {
+                failures.push(
+                    `  ${snippet}\n    → query params ${JSON.stringify(queryKeys)} != expected ${JSON.stringify(expectedQueryKeys)}`
+                );
             }
         }
         if (failures.length > 0) {
-            throw new Error(`Runtime rejected ${failures.length} command(s):\n${failures.join("\n")}`);
+            throw new Error(`${failures.length} command(s) failed the runtime --dry-run:\n${failures.join("\n")}`);
         }
     });
 });

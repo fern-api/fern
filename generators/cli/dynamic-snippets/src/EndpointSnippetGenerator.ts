@@ -312,21 +312,17 @@ export class EndpointSnippetGenerator {
         // known gap: the dynamic IR does not distinguish it from the importer's automatic renames, so
         // it cannot be reproduced here without IR support. See the package README.
         //
-        // Multipart (file-upload) fields follow a different runtime rule: a reserved name gets NO flag
-        // (no `-param` suffix) and is reachable only via --params.
+        // Multipart (file-upload) fields follow the multipart flag rule: a reserved name gets NO flag.
         const flagName = multipart
             ? resolveMultipartFieldFlagName(wireValue)
             : resolveParamFlagName({ location }, wireValue);
         if (flagName == null) {
-            if (multipart) {
-                // A reserved multipart field has no dedicated flag but the runtime still accepts it
-                // through the --params catch-all (its wire name is a valid argument id).
-                builder.routeToParams([wireValue], value);
-            }
-            // A non-multipart parameter whose name can't be sanitized into a flag (non-ASCII /
-            // control characters) has NO registered argument at all, so the runtime can supply it via
-            // neither a flag nor --params — passing it in --params panics the CLI. Omit it rather than
-            // emit a command that fails. Rare; see the package README.
+            // The field has no flag the runtime will accept, and it can't be supplied through --params
+            // either: a non-multipart unsanitizable name (non-ASCII / control chars) has no registered
+            // argument at all (passing it in --params panics the CLI), and a reserved-name multipart
+            // field is mis-routed by the runtime into the query string instead of the form. In both
+            // cases the value can't be delivered correctly, so omit it rather than emit a wrong/failing
+            // command. Both are rare; see the package README.
             return;
         }
         // resolveParamFlagName returns the bare flag name (e.g. "account-sid"); the command uses the

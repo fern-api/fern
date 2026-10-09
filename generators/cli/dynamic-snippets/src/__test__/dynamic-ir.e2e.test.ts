@@ -123,16 +123,16 @@ describe("flag emission from the real dynamic IR", () => {
         expect(result.snippet).toBe("twilio-like chat v1 send --body hi");
     });
 
-    it("gives a reserved multipart field no flag and routes it to --params", () => {
+    it("emits a multipart file flag and omits a reserved multipart field", () => {
+        // A reserved multipart field (output) can't be delivered — the runtime mis-routes it into the
+        // query string rather than the form (confirmed by the dry-run e2e) — so it is omitted.
         const result = generator().generateSync({
             endpoint: { method: "POST", path: "/2010-04-01/Accounts/{AccountSid}/Media.json" },
             pathParameters: { AccountSid: "AC123" },
             requestBody: { File: "/tmp/image.png", output: "meta" }
         });
         expect(result.errors).toBeUndefined();
-        expect(result.snippet).toBe(
-            `twilio-like media upload-media --account-sid AC123 --file /tmp/image.png --params '{"output":"meta"}'`
-        );
+        expect(result.snippet).toBe("twilio-like media upload-media --account-sid AC123 --file /tmp/image.png");
     });
 
     it("sends a literal-dotted body through --json", () => {
