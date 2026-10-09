@@ -1,0 +1,5 @@
+- summary: |
+    `reference.md` is now generated for every output mode, matching the Go and Python generators. It was
+    previously skipped unless the CLI passed a snippet path (`local-file-system` output without
+    `snippets: path:` in generators.yml). `README.md` is unchanged and still requires snippets.
+  type: fix
