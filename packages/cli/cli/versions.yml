@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.151.5
+  changelogEntry:
+    - summary: |
+        Enrich the `fern generate` telemetry event with the generators selected to run (including SDK Config targets)
+        and whether `FERN_USE_SDK_GEN_API` was set to `true` alongside the effective sdk-gen-api state.
+      type: chore
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 5.151.4
   changelogEntry:
     - summary: |

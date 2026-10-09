@@ -2088,9 +2088,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
 
-                    // Create setters for custom properties
-                    for (OAuthCustomProperty customProp : customPropertyNames) {
-                        createSetter(customProp.name, Optional.empty(), Optional.empty(), Optional.of(customProp.type));
+                    // Under endpoint security the routing setup only passes clientId/clientSecret to the OAuth
+                    // provider, so custom token-request setters would be write-only there.
+                    boolean omitCustomPropertySetters = generatorContext.isEndpointSecurity()
+                            && clientGeneratorContext.getCustomConfig().omitUnusedOAuthSetters();
+                    if (!omitCustomPropertySetters) {
+                        for (OAuthCustomProperty customProp : customPropertyNames) {
+                            createSetter(
+                                    customProp.name, Optional.empty(), Optional.empty(), Optional.of(customProp.type));
+                        }
                     }
 
                     if (generatorContext.isEndpointSecurity()) {

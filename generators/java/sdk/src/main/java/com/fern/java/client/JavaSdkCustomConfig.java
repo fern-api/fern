@@ -188,6 +188,17 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * When true, clients with endpoint-level security skip builder setters for OAuth token-request properties other
+     * than clientId/clientSecret (e.g. code, redirectUri), which the client-credentials flow never sends there. Off by
+     * default, so existing builder methods are unchanged.
+     */
+    @Value.Default
+    @JsonProperty("omit-unused-oauth-setters")
+    default Boolean omitUnusedOAuthSetters() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
