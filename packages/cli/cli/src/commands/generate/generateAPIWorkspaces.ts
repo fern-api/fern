@@ -209,11 +209,12 @@ export async function generateAPIWorkspaces({
         validateUniqueLanguageOwnership({ generations, cliContext });
 
         // Start the flag request now so it overlaps login and the output-directory prompts. The result is
-        // memoized per process, so the remote runner reuses it. It never rejects (failures resolve to off).
-        // Local (Docker) generation never routes through sdk-gen-api, so it makes no flag request.
+        // memoized per process, so the remote runner reuses it. Local (Docker) generation never routes through
+        // sdk-gen-api, so it makes no flag request. The catch keeps the promise from ever rejecting unobserved if
+        // a prompt below throws first; flag failures already resolve to off inside the client.
         const sdkGenApiEnabled = useLocalDocker
             ? undefined
-            : isFernSdkGenApiEnabled({ organization: project.config.organization });
+            : isFernSdkGenApiEnabled({ organization: project.config.organization }).catch(() => false);
 
         if (!useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
