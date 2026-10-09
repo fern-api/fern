@@ -294,4 +294,39 @@ describe("injectCliSnippetsIntoApiDefinition", () => {
         expect(stats.matchedEndpoints).toBe(1);
         expect(example.codeSamples?.[0]?.code).toBe("twilio core messages create --account-sid AC123 --to +1");
     });
+
+    it("does not match a single candidate whose namespace differs from the mapping", () => {
+        // Only the `iam` /v1/token command exists, but the endpoint's namespace maps to oauth/v2.
+        // A single candidate must still respect the mapping rather than being matched blindly.
+        const catalog: CliCatalog = {
+            version: 1,
+            commands: [
+                {
+                    command: ["twilio", "iam", "token"],
+                    namespace: "iam",
+                    httpMethod: "POST",
+                    path: "/v1/token",
+                    inputs: []
+                }
+            ]
+        };
+        const example = makeExample();
+        const api = makeApiDefinition({
+            subpackages: {
+                sub_oauth: {
+                    name: "oauth",
+                    endpoints: [
+                        makeEndpoint({ method: "POST", parts: [part("/v1/token", "literal")], examples: [example] })
+                    ]
+                }
+            }
+        });
+        const stats = injectCliSnippetsIntoApiDefinition({
+            apiDefinition: api,
+            catalog,
+            namespaces: { oauth: "oauth/v2" }
+        });
+        expect(stats.matchedEndpoints).toBe(0);
+        expect(example.codeSamples ?? []).toHaveLength(0);
+    });
 });

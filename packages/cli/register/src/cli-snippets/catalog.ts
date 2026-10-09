@@ -105,9 +105,13 @@ function indexKey(method: string, path: string): string {
 
 export interface CliCatalogIndex {
     /**
-     * Resolve the single command for an endpoint. When method+path map to more than one command,
-     * `mappedNamespace` disambiguates; if it still resolves to zero or multiple, returns undefined
-     * (the ambiguity was logged once at build time).
+     * Resolve the single command for an endpoint, joined on method+path.
+     *
+     * When `mappedNamespace` is provided (the API's `namespaces` config maps this endpoint's
+     * namespace), the matched command MUST be in it — this prevents a quiet wrong match when the
+     * only command for a method+path belongs to a different namespace (e.g. `iam POST /v1/token`
+     * vs `core POST /v2/token`). Without a mapping, an unambiguous single command matches and
+     * cross-namespace collisions resolve to undefined. Unresolvable joins are logged once.
      */
     lookup(method: string, path: string, mappedNamespace?: string): CliCatalogCommand | undefined;
     /** Total number of commands in the catalog (coverage denominator help). */
@@ -146,6 +150,18 @@ export function buildCatalogIndex(catalog: CliCatalog, context?: TaskContext): C
     }
 
     const warnedKeys = new Set<string>();
+    const warnUnresolved = (key: string, candidates: CliCatalogCommand[], mappedNamespace?: string): void => {
+        if (warnedKeys.has(key)) {
+            return;
+        }
+        warnedKeys.add(key);
+        const namespaces = candidates.map((c) => c.namespace ?? "<none>").join(", ");
+        context?.logger.warn(
+            `CLI catalog could not resolve a single command for ${key} (namespaces: ${namespaces}); ` +
+                `${mappedNamespace != null ? `none matched namespace "${mappedNamespace}"` : "no namespace was provided to disambiguate"}. ` +
+                `Skipping CLI snippet for it.`
+        );
+    };
     return {
         size: catalog.commands.length,
         lookup(method, path, mappedNamespace) {
@@ -154,26 +170,20 @@ export function buildCatalogIndex(catalog: CliCatalog, context?: TaskContext): C
             if (candidates == null || candidates.length === 0) {
                 return undefined;
             }
-            if (candidates.length === 1) {
-                return candidates[0];
-            }
+            // A namespace mapping, when present, is authoritative: the command must be in it.
             if (mappedNamespace != null) {
                 const scoped = candidates.filter((c) => c.namespace === mappedNamespace);
                 if (scoped.length === 1) {
                     return scoped[0];
                 }
+                warnUnresolved(key, candidates, mappedNamespace);
+                return undefined;
             }
-            // Multiple commands share this method+path and no namespace resolved to exactly one.
-            // Refuse to guess, and log once so the skipped join is diagnosable rather than silent.
-            if (!warnedKeys.has(key)) {
-                warnedKeys.add(key);
-                const namespaces = candidates.map((c) => c.namespace ?? "<none>").join(", ");
-                context?.logger.warn(
-                    `CLI catalog has ${candidates.length} commands for ${key} (namespaces: ${namespaces}); ` +
-                        `${mappedNamespace != null ? `none matched namespace "${mappedNamespace}"` : "no namespace was provided"}. ` +
-                        `Skipping CLI snippet for it.`
-                );
+            // No mapping: an unambiguous single command wins; a collision can't be resolved.
+            if (candidates.length === 1) {
+                return candidates[0];
             }
+            warnUnresolved(key, candidates, undefined);
             return undefined;
         }
     };

@@ -87,7 +87,14 @@ export interface CliCatalog {
  * `cli-snippets` block the customer adds under their API entry (see PR 3). Default: disabled.
  */
 export interface CliSnippetsConfig {
-    /** Absolute path to the committed catalog JSON. */
+    /**
+     * Absolute path to the committed catalog JSON.
+     *
+     * The catalog's `path` values are raw OpenAPI paths. The join reconstructs each FDR endpoint's
+     * path from its parts, which include any Fern/base-path or server-path prefix — so an API that
+     * uses `x-fern-base-path` or a server base will not match a catalog keyed on unprefixed paths
+     * (the `matched/total` coverage log surfaces this as 0 matches).
+     */
     catalogAbsolutePath: AbsoluteFilePath;
     /**
      * Optional map from the API's own subpackage/namespace name to the catalog namespace it
