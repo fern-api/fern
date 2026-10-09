@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "sdk-config-ir/v1",
+  "source": {
+    "specs": [
+      {
+        "id": "main",
+        "namespace": "core",
+        "specUrl": "./openapi.yml",
+        "specType": "openapi"
+      }
+    ],
+    "apiImportSettings": {
+      "titleAsSchemaName": false
+    }
+  },
+  "target": {
+    "language": "cli",
+    "sourceOrigin": "fern",
+    "sdkName": "acme",
+    "apiName": "api",
+    "organizationName": "acme-org",
+    "sdkVersion": "1.2.3",
+    "apiVersion": "2024-01-01"
+  },
+  "api": {
+    "baseUrl": "",
+    "environments": [
+      {
+        "name": "prod",
+        "urls": [
+          {
+            "name": "api",
+            "url": "https://api.acme.test"
+          }
+        ]
+      }
+    ],
+    "environmentVariables": [],
+    "defaultEnvironment": "prod"
+  },
+  "client": {
+    "retry": {
+      "enabled": true,
+      "maxAttempts": 5,
+      "retryDelayMs": 150,
+      "maxDelayMs": 5000,
+      "jitterMs": 50,
+      "backoffFactor": 2,
+      "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "maxRetryAfterDelayMs": 60000
+    },
+    "responseHeaders": false,
+    "multiTenant": false,
+    "additionalConstructorParameters": [],
+    "timeoutMs": 1000
+  },
+  "package": {
+    "packageName": "acme-cli",
+    "description": "Root description",
+    "license": {
+      "type": "MIT"
+    },
+    "keywords": [
+      "cli"
+    ]
+  },
+  "output": {
+    "delivery": "zip",
+    "credentialResolution": "refs-only"
+  },
+  "docs": {
+    "readme": {
+      "apiName": "Acme CLI",
+      "introduction": "Root intro"
+    }
+  },
+  "generation": {
+    "includeWatermark": false,
+    "ai": false,
+    "buildAllModels": false,
+    "inferServiceNames": false,
+    "includeDeprecatedOperations": true,
+    "multipleResponses": false,
+    "generateFullProject": false,
+    "devContainer": false,
+    "allowMockClient": false,
+    "wireTests": {
+      "enabled": true
+    }
+  }
+}
