@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "MessageSid": {
+      "type": "string"
+    },
+    "From": {
+      "type": "string"
+    },
+    "To": {
+      "type": "string"
+    },
+    "Body": {
+      "type": "string"
+    },
+    "NumMedia": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "MessageSid",
+    "From",
+    "To",
+    "Body"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

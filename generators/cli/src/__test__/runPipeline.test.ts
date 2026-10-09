@@ -113,6 +113,8 @@ describe("runPipeline", () => {
         headers: overrides.headers ?? [],
         services: overrides.services ?? {},
         environments: overrides.environments,
+        webhookGroups: overrides.webhookGroups ?? {},
+        types: overrides.types ?? {},
         whiteLabel: overrides.whiteLabel ?? false
     });
 
