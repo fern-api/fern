@@ -385,6 +385,18 @@ describe("loadSdkConfigV1", () => {
         expect(() => assertNoSdkConfigDirectRubyGemsPublishing(loaded)).not.toThrow();
     });
 
+    it("allows RubyGems publishing through GitHub delivery during fern generate", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "github", github: { repository: "acme/acme-ruby" }, publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput?.type).toBe("github");
+        expect(loaded.payload.targets[0]?.publishCredential).toBeUndefined();
+    });
+
     it("strips unsupported top-level credential literals before validation errors", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "ruby",
