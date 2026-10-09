@@ -199,9 +199,10 @@ public class AsyncSeedJavaEndpointSecurityOauthTokenOverrideClientBuilder {
     protected void setAuthentication(ClientOptions.Builder builder) {
         RoutingAuthProvider.Builder routingBuilder = RoutingAuthProvider.builder();
         if (this.token != null) {
+            String oauthAccessToken = this.token;
             routingBuilder.addAuthProvider(
                     "OAuth",
-                    endpointMetadata -> Collections.singletonMap("Authorization", "Bearer " + this.token),
+                    endpointMetadata -> Collections.singletonMap("Authorization", "Bearer " + oauthAccessToken),
                     "Please provide clientId and clientSecret via .clientId()/.clientSecret() or set MY_CLIENT_ID and MY_CLIENT_SECRET environment variables");
         } else if (this.clientId != null && this.clientSecret != null) {
             // OAuth requires building an auth client for token fetching

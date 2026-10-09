@@ -3085,13 +3085,14 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     if (useTokenOverride) {
                         this.configureAuthMethod
                                 .beginControlFlow("if (this.$L != null)", info.tokenOverrideFieldName)
+                                // Capture the value so later builder changes don't affect clients already built.
+                                .addStatement("String oauthAccessToken = this.$L", info.tokenOverrideFieldName)
                                 .addStatement(
-                                        "routingBuilder.addAuthProvider($S, endpointMetadata -> $T.singletonMap($S, $S + this.$L), $S)",
+                                        "routingBuilder.addAuthProvider($S, endpointMetadata -> $T.singletonMap($S, $S + oauthAccessToken), $S)",
                                         info.schemeKey,
                                         Collections.class,
                                         info.tokenOverrideHeader,
                                         info.tokenOverridePrefix,
-                                        info.tokenOverrideFieldName,
                                         info.envVarHint)
                                 .nextControlFlow(
                                         "else if (this.$L != null && this.$L != null)",
