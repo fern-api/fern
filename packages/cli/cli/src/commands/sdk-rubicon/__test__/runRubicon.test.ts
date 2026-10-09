@@ -171,6 +171,35 @@ describe("runRubicon", () => {
         expect(JSON.parse(await read("out/fern.config.json"))).toEqual({ organization: "acme", version: "*" });
     });
 
+    it("ignores publish credentials of targets other than cli, even when their variables are unset", async () => {
+        delete process.env.RUBICON_TEST_UNSET_NPM_TOKEN;
+        const { path } = await setup({
+            "sdk-config.yml": sdkConfig({
+                targets: [
+                    {
+                        language: "typescript",
+                        package: { packageName: "@acme/sdk" },
+                        output: {
+                            delivery: "files",
+                            publish: { registry: "npm", token: "${RUBICON_TEST_UNSET_NPM_TOKEN}" }
+                        }
+                    },
+                    { language: "cli" }
+                ]
+            })
+        });
+        const result = await run(path, { dryRun: true });
+        expect(result.diagnostics).toEqual([]);
+        expect(result.changes).toBeDefined();
+    });
+
+    it("reports an invalid sdk-config.yml as RUBICON_SDK_CONFIG_INVALID instead of throwing", async () => {
+        const { path } = await setup({ "sdk-config.yml": sdkConfig({ unknownTopLevelKey: true }) });
+        const result = await run(path);
+        expect(result.diagnostics.map((diagnostic) => diagnostic.code)).toEqual(["RUBICON_SDK_CONFIG_INVALID"]);
+        expect(result.changes).toBeUndefined();
+    });
+
     it("rejects a sdk-config.yml with no cli target", async () => {
         const { path } = await setup({ "sdk-config.yml": sdkConfig({ targets: [{ language: "typescript" }] }) });
         const result = await run(path);

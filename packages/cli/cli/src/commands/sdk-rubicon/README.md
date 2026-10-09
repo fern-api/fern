@@ -125,6 +125,7 @@ Diagnostics print as `[severity] [CODE] path: message; action`. Paths are SDK Co
 | Code | Severity | Meaning |
 |---|---|---|
 | `RUBICON_NO_CLI_TARGET` | error | The SDK Config file has no `cli` target |
+| `RUBICON_SDK_CONFIG_INVALID` | error | The SDK Config file does not load or validate. Only the `cli` target's publish credentials are resolved |
 | `RUBICON_SEVERAL_CLI_TARGETS` | error | It has more than one |
 | `RUBICON_EXPANSION` | error | The `cli` target does not expand to a valid SDK Config IR |
 | `RUBICON_UNKNOWN_FIELD` | error | A field the treatment table does not know |
@@ -154,6 +155,7 @@ Diagnostics print as `[severity] [CODE] path: message; action`. Paths are SDK Co
 | `RUBICON_UNTESTED` | warning | Several overrides files, or GitHub output |
 | `RUBICON_ZIP_AS_FILES` | warning | Zip delivery; rubicon writes files |
 | `RUBICON_MULTI_SPEC_BINARY_NAME` | warning | Several specs and no `binaryName` |
+| `RUBICON_ROOT_SETTING_CONFLICT` | warning | A spec's `pathParameterOrder` differs from root's; Fern reads it only at root |
 | `RUBICON_GENERATOR_VERSION` | error | A generator version that is not an exact version, such as `latest` |
 | `RUBICON_UNPOOLED_VERSION` | warning | A generator version with no Fern pool; the sdk-gen-api route fails |
 | `RUBICON_GENERATORS_EXISTS` | error | A `generators.yml` rubicon did not write; pass `--force` to replace it |

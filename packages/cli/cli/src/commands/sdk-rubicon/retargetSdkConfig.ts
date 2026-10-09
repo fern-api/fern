@@ -115,6 +115,15 @@ export function planRetarget({
     };
 }
 
+/** Whether an SDK Config document lists a cli target (checked before loading, which would fail without one). */
+export function hasCliTarget(contents: string): boolean {
+    const parsed: unknown = YAML.parse(contents);
+    const targets = isRecord(parsed) ? parsed.targets : undefined;
+    return (
+        Array.isArray(targets) && targets.some((target: unknown) => isRecord(target) && target.language === LANGUAGE)
+    );
+}
+
 function targetsOf(document: YAML.Document.Parsed): YAML.YAMLSeq | undefined {
     const targets = isMap(document.contents) ? document.contents.get("targets") : undefined;
     return isSeq(targets) ? targets : undefined;

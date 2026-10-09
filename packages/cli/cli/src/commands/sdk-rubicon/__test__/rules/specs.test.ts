@@ -107,6 +107,42 @@ describe("specs rule", () => {
         expect(api(result).settings).toBeUndefined();
     });
 
+    it("warns when specs set path-parameter-order differently, because Fern reads it only at root", () => {
+        const result = map({
+            specs: [
+                spec({ specUrl: "./a.yml", apiImportSettings: { pathParameterOrder: "spec-order" } }),
+                spec({ specUrl: "./b.yml", apiImportSettings: { pathParameterOrder: "url-order" } })
+            ]
+        });
+        expect(api(result).settings).toBeUndefined();
+        expect(codes(result.diagnostics)).toEqual([
+            "warning RUBICON_ROOT_SETTING_CONFLICT source.specs[0].apiImportSettings.pathParameterOrder",
+            "warning RUBICON_ROOT_SETTING_CONFLICT source.specs[1].apiImportSettings.pathParameterOrder"
+        ]);
+    });
+
+    it("warns when a spec overrides a root path-parameter-order that stays at root", () => {
+        const result = map({
+            specs: [
+                spec({ specUrl: "./a.yml", apiImportSettings: { pathParameterOrder: "spec-order" } }),
+                spec({ specUrl: "./b.yml" })
+            ],
+            apiImportSettings: { pathParameterOrder: "url-order" }
+        });
+        expect(api(result).settings).toEqual({ "path-parameter-order": "url-order" });
+        expect(codes(result.diagnostics)).toEqual([
+            "warning RUBICON_ROOT_SETTING_CONFLICT source.specs[0].apiImportSettings.pathParameterOrder"
+        ]);
+    });
+
+    it("does not warn when every spec agrees with root on path-parameter-order", () => {
+        const result = map({
+            specs: [spec({ specUrl: "./a.yml" }), spec({ specUrl: "./b.yml" })],
+            apiImportSettings: { pathParameterOrder: "spec-order" }
+        });
+        expect(result.diagnostics).toEqual([]);
+    });
+
     it("maps undiscriminatedUnionsWithLiterals to prefer-undiscriminated-unions-with-literals", () => {
         const result = map({ specs: [spec()], apiImportSettings: { undiscriminatedUnionsWithLiterals: true } });
         expect(api(result).settings).toEqual({ "prefer-undiscriminated-unions-with-literals": true });

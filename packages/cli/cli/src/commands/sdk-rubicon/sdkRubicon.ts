@@ -9,10 +9,8 @@ import {
 import { AbsoluteFilePath, cwd, doesPathExist } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
-import YAML from "yaml";
-
 import type { CliContext } from "../../cli-context/CliContext.js";
-import { RENAMED_SDK_CONFIG } from "./retargetSdkConfig.js";
+import { hasCliTarget, RENAMED_SDK_CONFIG } from "./retargetSdkConfig.js";
 import { formatDiagnostic, formatReport, runRubicon } from "./runRubicon.js";
 
 export interface SdkRubiconArgs {
@@ -120,12 +118,6 @@ export async function chooseConfigPath(workspace: string): Promise<string | unde
     }
     const rerun = join(workspace, RENAMED_SDK_CONFIG);
     return (await doesPathExist(AbsoluteFilePath.of(rerun))) ? rerun : undefined;
-}
-
-function hasCliTarget(contents: string): boolean {
-    const parsed: unknown = YAML.parse(contents);
-    const targets = isRecord(parsed) ? parsed.targets : undefined;
-    return Array.isArray(targets) && targets.some((target: unknown) => isRecord(target) && target.language === "cli");
 }
 
 /** The first fern.config.json found, and its organization. Rubicon never overwrites an existing one. */

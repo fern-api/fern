@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import type { TaskContext } from "@fern-api/task-context";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
@@ -10,7 +10,7 @@ import { carryOver } from "./carryOver.js";
 import { expandCliTarget } from "./expandCliTarget.js";
 import { mapSdkConfigToGeneratorsYml } from "./mapSdkConfigToGeneratorsYml.js";
 import { planGeneratorsSlot } from "./planGeneratorsSlot.js";
-import { planRetarget, type RetargetPlan } from "./retargetSdkConfig.js";
+import { hasCliTarget, planRetarget, type RetargetPlan } from "./retargetSdkConfig.js";
 import { resolveFromConfigDir } from "./rules/output.js";
 import { loadSpecFacts } from "./specFacts.js";
 import type { RubiconDiagnostic, SpecFacts } from "./types.js";
@@ -76,7 +76,29 @@ export async function runRubicon(options: RubiconOptions): Promise<RubiconResult
         rollback: []
     };
 
-    const loaded = await loadSdkConfigV1(options.configPath);
+    const contents = await readFile(options.configPath, "utf8");
+    if (!hasCliTarget(contents)) {
+        return { ...result, diagnostics: [NO_CLI_TARGET] };
+    }
+    // Select only the cli target: the loader resolves publish credentials (and their environment
+    // variables) for every selected target, and rubicon never publishes the others.
+    let loaded: Awaited<ReturnType<typeof loadSdkConfigV1>>;
+    try {
+        loaded = await loadSdkConfigV1(options.configPath, false, { targetNames: ["cli"] });
+    } catch (error) {
+        return {
+            ...result,
+            diagnostics: [
+                {
+                    severity: "error",
+                    path: basename(options.configPath),
+                    code: "RUBICON_SDK_CONFIG_INVALID",
+                    message: error instanceof Error ? error.message : String(error),
+                    action: "Fix the SDK Config file so that `fern generate --target cli` would accept it."
+                }
+            ]
+        };
+    }
     const expanded = expandCliTarget(loaded.config, {
         apiName: options.apiName,
         organizationName: options.organization
@@ -98,7 +120,7 @@ export async function runRubicon(options: RubiconOptions): Promise<RubiconResult
     const carried = carryOver(slot.slot?.previous, mapped.generatorsYml);
     const retarget = planRetarget({
         configPath: options.configPath,
-        contents: await readFile(options.configPath, "utf8"),
+        contents,
         generatorsPath,
         exists: existsSync
     });
@@ -152,6 +174,14 @@ export async function runRubicon(options: RubiconOptions): Promise<RubiconResult
     await applyFileChanges(changes);
     return { ...planned, written: true };
 }
+
+const NO_CLI_TARGET: RubiconDiagnostic = {
+    severity: "error",
+    path: "targets",
+    code: "RUBICON_NO_CLI_TARGET",
+    message: "The SDK Config file has no 'cli' target.",
+    action: "Add a cli target."
+};
 
 const NO_AUTH_NOTE =
     "sdk-config.yml has no api.auth. If it came from `fern sdk migrate`, migrate may have dropped the auth block; add auth-schemes and api.auth to generators.yml by hand if the CLI needs them.";

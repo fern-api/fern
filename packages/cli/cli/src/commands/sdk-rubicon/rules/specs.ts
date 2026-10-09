@@ -53,7 +53,7 @@ export const specsRule: MapperRule = {
     apply(context) {
         const rootSettings = context.ir.source.apiImportSettings ?? {};
         const specs: Record<string, unknown>[] = [];
-        const specSettings: Record<string, unknown>[] = [];
+        const specSettings: Array<{ index: number; settings: Record<string, unknown> }> = [];
         context.ir.source.specs.forEach((spec, index) => {
             const path = `source.specs[${index}]`;
             if (/^https?:\/\//.test(spec.specUrl)) {
@@ -75,7 +75,7 @@ export const specsRule: MapperRule = {
                 return;
             }
             const settings = kebabSettings({ ...rootSettings, ...spec.apiImportSettings });
-            specSettings.push(settings);
+            specSettings.push({ index, settings });
             specs.push({
                 openapi: relativeToOutput(context, spec.specUrl),
                 ...(spec.namespace != null ? { namespace: spec.namespace } : {}),
@@ -84,7 +84,11 @@ export const specsRule: MapperRule = {
                 ...(Object.keys(settings).length > 0 ? { settings } : {})
             });
         });
-        const settings = { ...kebabSettings(rootSettings), ...commonSettings(specSettings) };
+        const settings = {
+            ...kebabSettings(rootSettings),
+            ...commonSettings(specSettings.map((entry) => entry.settings))
+        };
+        warnRootOnlyConflicts(context, specSettings, settings);
         const api = apiSection(context);
         api.specs = specs;
         if (Object.keys(settings).length > 0) {
@@ -141,7 +145,39 @@ function settingKey(name: string): string | undefined {
     return Object.entries(SETTINGS_KEYS).find(([setting]) => setting === name)?.[1];
 }
 
-/** Settings every spec agrees on, so root `api.settings` never contradicts a spec. */
+/** Settings Fern reads only from root `api.settings`; a different value on a spec has no effect. */
+const ROOT_ONLY_SETTINGS: Array<keyof ApiImportSettings> = ["pathParameterOrder"];
+
+/** Warns for each spec whose value of a root-only setting differs from what root gets. */
+function warnRootOnlyConflicts(
+    context: RuleContext,
+    specSettings: Array<{ index: number; settings: Record<string, unknown> }>,
+    rootSettings: Record<string, unknown>
+): void {
+    for (const name of ROOT_ONLY_SETTINGS) {
+        const key = SETTINGS_KEYS[name];
+        if (key == null) {
+            continue;
+        }
+        for (const { index, settings } of specSettings) {
+            if (settings[key] !== undefined && settings[key] !== rootSettings[key]) {
+                context.warn(
+                    `source.specs[${index}].apiImportSettings.${name}`,
+                    "RUBICON_ROOT_SETTING_CONFLICT",
+                    `Fern reads ${key} only from root api.settings, so this spec's value has no effect (root ${
+                        rootSettings[key] === undefined ? "leaves it unset" : `uses ${String(rootSettings[key])}`
+                    }).`,
+                    `Set ${name} once, in source.apiImportSettings, or give every spec the same value.`
+                );
+            }
+        }
+    }
+}
+
+/**
+ * Settings every spec agrees on. Root also keeps the root import settings, so a spec override of a
+ * setting the specs disagree on stays per spec (warned for root-only settings above).
+ */
 function commonSettings(perSpec: Record<string, unknown>[]): Record<string, unknown> {
     const [first, ...rest] = perSpec;
     if (first == null) {
