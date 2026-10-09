@@ -7,12 +7,16 @@ import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import {
     type AutomationRunOptions,
+    FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR,
     type FernSdkConfigV1Payload,
     getFernSdkGenApiLanguage,
-    selectGeneratorConfigRoute
+    isSdkConfigSupported,
+    selectGeneratorConfigRoute,
+    shouldSkipFernSdkGenApiSdkConfigSupportCheck
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
@@ -401,12 +405,16 @@ async function prepareSdkConfigGenerations({
                 preview,
                 targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
             );
+            // `loaded.config.targets` is already narrowed by --target; --generator only narrows an explicit --sdk-config.
+            const selectedTargetIndexes =
+                targetNames != null || sdkConfigPath == null
+                    ? new Set(loaded.config.targets.map((_, index) => index))
+                    : getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex });
+            const selectedTargets = loaded.config.targets.filter((_, index) => selectedTargetIndexes.has(index));
+            if (!useLocalDocker) {
+                validateRemoteSdkConfigSupport({ targets: selectedTargets, cliContext });
+            }
             if (sdkConfigPath != null) {
-                const selectedTargetIndexes =
-                    targetNames != null
-                        ? new Set(loaded.config.targets.map((_, index) => index))
-                        : getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex });
-                const selectedTargets = loaded.config.targets.filter((_, index) => selectedTargetIndexes.has(index));
                 for (const target of selectedTargets) {
                     if (target.generatorVersion == null) {
                         continue;
@@ -465,6 +473,36 @@ async function prepareSdkConfigGenerations({
     } catch (error) {
         await Promise.all(prepared.map(({ cleanup }) => cleanup()));
         return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
+    }
+}
+
+/**
+ * Rejects selected remote SDK Config targets whose generator has no published SDK Config generator,
+ * before login, source bundling, or upload. sdk-gen-api would otherwise reject the build after upload.
+ */
+function validateRemoteSdkConfigSupport({
+    targets,
+    cliContext
+}: {
+    targets: SdkConfigV1["targets"];
+    cliContext: CliContext;
+}): void {
+    for (const target of targets) {
+        const generatorId = getSdkConfigGeneratorName(target.language);
+        if (generatorId == null || isSdkConfigSupported(generatorId)) {
+            continue;
+        }
+        if (shouldSkipFernSdkGenApiSdkConfigSupportCheck()) {
+            cliContext.logger.warn(
+                `Skipping the SDK Config support check for target '${target.language}' (${generatorId}) because ${FERN_SDK_GEN_API_SKIP_SDK_CONFIG_SUPPORT_CHECK_ENV_VAR}=true; sdk-gen-api may reject it.`
+            );
+            continue;
+        }
+        cliContext.failAndThrow(
+            `SDK Config target '${target.language}' cannot be generated: ${generatorId} does not support SDK Config yet. Generate it from generators.yml instead.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
 }
 

@@ -21,6 +21,12 @@ Versions below a generator's cutover require `legacy-fern` and route to a Fern
 runtime bundle. Versions at or above cutover require `sdk-config-v1` and route to
 SDK Config v1. sdk-gen-api adds source and operational metadata and constructs SDK Config IR v1 downstream.
 
+Some aliases have no published SDK Config generator yet (currently the CLI
+generator), so every version runs only on the Fern runtime. Route selection stays
+version-based; callers that submit SDK Config v1 call `isSdkConfigSupported()` or
+`assertSdkConfigSupported()`, which throws `SDK_CONFIG_UNSUPPORTED` with the
+`USE_GENERATORS_YML` recommended action.
+
 Failures throw `GeneratorConfigCompatibilityError`, which carries stable input,
 expected-value, retryability, and recommended-action fields. Product-specific
 CLI guidance belongs at the call site.

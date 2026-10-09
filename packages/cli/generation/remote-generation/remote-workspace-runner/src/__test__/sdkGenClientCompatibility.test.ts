@@ -1,11 +1,13 @@
 // cspell:ignore kotlin
 import { describe, expect, it } from "vitest";
 import {
+    assertSdkConfigSupported,
     type GenerationConfigKind,
     type GenerationConfigRoute,
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
+    isSdkConfigSupported,
     selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute,
     validateGeneratorConfigCompatibility
@@ -230,6 +232,21 @@ describe("validateGeneratorConfigCompatibility", () => {
         });
     });
 
+    it.each([
+        "fernapi/fern-cli",
+        "fernapi/fern-cli-generator"
+    ])("keeps version-based route selection for %s", (generatorId) => {
+        expect(
+            validateGeneratorConfigCompatibility({
+                generatorId,
+                language: "cli",
+                requestedVersion: "0.999.999",
+                configKind: "legacy-fern"
+            }).payloadKind
+        ).toBe("fern-runtime-bundle");
+        expect(selectUnpinnedSdkConfigRoute({ generatorId, language: "cli" }).payloadKind).toBe("sdk-config-v1");
+    });
+
     it("rejects an SDK Config omission source on a legacy Fern route", () => {
         expect(() =>
             selectUnpinnedGeneratorConfigRoute({
@@ -239,6 +256,56 @@ describe("validateGeneratorConfigCompatibility", () => {
                 versionSource: "sdk-config-omitted"
             })
         ).toThrow("Legacy Fern unpinned routes must use fern-latest");
+    });
+});
+
+describe("SDK Config support", () => {
+    const UNSUPPORTED_ALIASES = new Set(["fernapi/fern-cli", "fernapi/fern-cli-generator"]);
+
+    it.each(GENERATOR_ALIASES)("reports SDK Config support for %s", (generatorId, language) => {
+        const supported = !UNSUPPORTED_ALIASES.has(generatorId);
+        expect(isSdkConfigSupported(generatorId)).toBe(supported);
+        if (supported) {
+            expect(() => assertSdkConfigSupported({ generatorId, language })).not.toThrow();
+        }
+    });
+
+    it("keeps the hosted MCP server supported", () => {
+        expect(isSdkConfigSupported("fernapi/fern-mcp-server")).toBe(true);
+        expect(() =>
+            assertSdkConfigSupported({
+                generatorId: "fernapi/fern-mcp-server",
+                language: "mcp",
+                requestedVersion: "0.1.0"
+            })
+        ).not.toThrow();
+    });
+
+    it.each([
+        { generatorId: "fernapi/fern-cli-generator", requestedVersion: "1.0.0" },
+        { generatorId: "fernapi/fern-cli", requestedVersion: undefined }
+    ])("rejects SDK Config for $generatorId ($requestedVersion)", ({ generatorId, requestedVersion }) => {
+        const error = captureError(() => assertSdkConfigSupported({ generatorId, language: "cli", requestedVersion }));
+        expect(error).toMatchObject({
+            code: "SDK_CONFIG_UNSUPPORTED",
+            message: `Generator ${generatorId} does not support SDK Config yet: no SDK Config generator is published for language cli`,
+            generatorId,
+            language: "cli",
+            requestedVersion: requestedVersion ?? "unpinned",
+            cutoverVersion: "1.0.0",
+            receivedConfigKind: "sdk-config-v1",
+            expectedConfigKind: "legacy-fern",
+            expectedLanguage: "cli",
+            retryable: false,
+            recommendedAction: "USE_GENERATORS_YML"
+        });
+    });
+
+    it("rejects an unknown generator", () => {
+        expect(isSdkConfigSupported("acme/custom-generator")).toBe(true);
+        expect(
+            captureError(() => assertSdkConfigSupported({ generatorId: "acme/custom-generator", language: "cli" }))
+        ).toMatchObject({ code: "UNKNOWN_GENERATOR", recommendedAction: "USE_KNOWN_GENERATOR_ID" });
     });
 });
 

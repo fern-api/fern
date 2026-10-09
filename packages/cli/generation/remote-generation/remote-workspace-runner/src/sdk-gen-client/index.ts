@@ -9,8 +9,10 @@ export type {
     ValidateGeneratorConfigCompatibilityInput
 } from "./generatorConfigCompatibility.js";
 export {
+    assertSdkConfigSupported,
     GeneratorConfigCompatibilityError,
     getGeneratorLanguage,
+    isSdkConfigSupported,
     selectGeneratorConfigRoute,
     selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute,
