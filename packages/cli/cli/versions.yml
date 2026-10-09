@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.150.0
+  changelogEntry:
+    - summary: |
+        Add an optional `type` to inferred bearer auth schemes (`api-key` | `refresh-token`). With
+        `type: refresh-token`, the IR records the get-token endpoint's `grant_type` request property
+        (`InferredAuthSchemeTokenEndpoint.grantType`) so SDKs always send `grant_type=refresh_token`
+        and do not expose `grant_type` as a client option.
+        ```yaml
+        auth-schemes:
+          Bearer:
+            scheme: bearer
+            get-token: POST /authorize
+            type: refresh-token
+        ```
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 5.149.0
   changelogEntry:
     - summary: |
