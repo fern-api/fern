@@ -1,0 +1,6 @@
+- summary: |
+    Remote `fern generate` for `local-file-system` outputs now always requests snippets, so the
+    TypeScript, Java, C#, PHP and Ruby generators emit `README.md` and `reference.md` without a
+    `snippets: path:` entry in generators.yml (matching `--local`). The snippet JSON is still only
+    written to disk when `snippets.path` is configured.
+  type: fix

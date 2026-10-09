@@ -33,6 +33,34 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
     });
 
+    it("local-file-system always requests snippets so generators emit README.md/reference.md", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name: "generator-name",
+                                version: "0.0.1",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+        const invocation = converted.groups[0]?.generators[0];
+        expect(invocation?.outputMode.type).toEqual("downloadFiles");
+        expect(invocation?.outputMode.type === "downloadFiles" && invocation.outputMode.downloadSnippets).toBe(true);
+        expect(invocation?.absolutePathToLocalSnippets).toBeUndefined();
+    });
+
     it("local-file-system resolves relative download path", async () => {
         const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({

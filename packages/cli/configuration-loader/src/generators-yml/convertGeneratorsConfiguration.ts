@@ -1036,8 +1036,11 @@ async function convertOutputMode({
     switch (generator.output.location) {
         case "local-file-system":
         case "fern-hosted":
+            // Always request snippets for filesystem output: generators only emit README.md/reference.md
+            // when given a snippet path (as `--local` always does). The snippet JSON is only written to
+            // disk when `snippets.path` is configured.
             return FernFiddle.OutputMode.downloadFiles({
-                downloadSnippets
+                downloadSnippets: true
             });
         case "npm":
             return FernFiddle.OutputMode.publishV2(
