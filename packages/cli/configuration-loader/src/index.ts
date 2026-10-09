@@ -9,3 +9,4 @@ export * from "./fern-config-json/index.js";
 export { GeneratorName } from "./generators-yml/GeneratorName.js";
 export * from "./generators-yml/index.js";
 export * from "./getFernDirectory.js";
+export { isSdkConfigOnlyWorkspace } from "./isSdkConfigOnlyWorkspace.js";

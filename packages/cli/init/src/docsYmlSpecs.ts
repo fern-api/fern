@@ -6,6 +6,8 @@ type YamlObject = Record<string, unknown>;
 /** The keys under which a navigation item holds more navigation items: sections, tabs and their variants. */
 const NESTED_NAVIGATION_KEYS = ["contents", "layout", "variants"];
 
+const API_REFERENCE_TITLE = "API Reference";
+
 /** A `docs.yml` whose `navigation` is a flat list, the only layout a new `api` entry fits into. */
 export type DocsConfigWithFlatNavigation = YamlObject & { navigation: unknown[] };
 
@@ -26,26 +28,41 @@ export function getSpecPaths(docsConfig: unknown): string[] {
 }
 
 /**
- * Declares the spec on the first `api` entry of `navigation`, wherever it is nested in sections, or on a new `api`
- * entry at the end of `navigation` when there is none.
+ * Declares the specs of one API on a new `api` entry at the end of `navigation`, so that every API gets its own API
+ * reference. An API with no specs is one the docs read from its workspace. An API that an `api` entry already lists a
+ * spec of is not added again.
  */
-export function addSpec({
+export function addApiReference({
     docsConfig,
-    specPath
+    specPaths
 }: {
     docsConfig: DocsConfigWithFlatNavigation;
-    specPath: string;
+    specPaths: string[];
 }): DocsConfigWithFlatNavigation {
-    const [firstApiReference] = findApiReferences(docsConfig.navigation);
+    const apiReferences = findApiReferences(docsConfig.navigation);
+    if (apiReferences.some((apiReference) => specPaths.some((specPath) => listsSpec(apiReference, specPath)))) {
+        return docsConfig;
+    }
     return {
         ...docsConfig,
-        navigation:
-            firstApiReference == null
-                ? [...docsConfig.navigation, createApiReference(specPath)]
-                : mapNavigation(docsConfig.navigation, (item) =>
-                      item === firstApiReference ? withSpec(firstApiReference, specPath) : item
-                  )
+        navigation: [
+            ...docsConfig.navigation,
+            {
+                api: getUniqueApiReferenceTitle(apiReferences.map((apiReference) => apiReference.api)),
+                paginated: true,
+                ...(specPaths.length > 0 ? { specs: specPaths.map(createSpec) } : {})
+            }
+        ]
     };
+}
+
+/** `API Reference`, or `API Reference 2`, `API Reference 3`, ... when `usedTitles` has the ones before it. */
+function getUniqueApiReferenceTitle(usedTitles: unknown[]): string {
+    let title = API_REFERENCE_TITLE;
+    for (let number = 2; usedTitles.includes(title); number++) {
+        title = `${API_REFERENCE_TITLE} ${number}`;
+    }
+    return title;
 }
 
 /** Replaces the path of every spec that `renames` has a new path for. A path in `renames` is normalized, like `a/b.yml`. */
@@ -120,16 +137,8 @@ function createSpec(specPath: string): YamlObject {
     return { type: "openapi", path: specPath };
 }
 
-function createApiReference(specPath: string): YamlObject {
-    return { api: "API Reference", paginated: true, specs: [createSpec(specPath)] };
-}
-
-function withSpec(apiReference: YamlObject, specPath: string): YamlObject {
-    const specs: unknown[] = Array.isArray(apiReference.specs) ? apiReference.specs : [];
-    const isAlreadyListed = getSpecPathsOf(apiReference).some(
-        (listedPath) => path.normalize(listedPath) === path.normalize(specPath)
-    );
-    return isAlreadyListed ? apiReference : { ...apiReference, specs: [...specs, createSpec(specPath)] };
+function listsSpec(apiReference: YamlObject, specPath: string): boolean {
+    return getSpecPathsOf(apiReference).some((listedPath) => path.normalize(listedPath) === path.normalize(specPath));
 }
 
 function renameSpec({ spec, renames }: { spec: unknown; renames: ReadonlyMap<string, string> }): unknown {

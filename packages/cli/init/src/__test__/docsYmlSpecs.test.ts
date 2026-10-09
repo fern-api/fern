@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { addSpec, getSpecPaths, hasFlatNavigation, renameSpecs } from "../docsYmlSpecs.js";
+import { addApiReference, getSpecPaths, hasFlatNavigation, renameSpecs } from "../docsYmlSpecs.js";
 
 const SPEC = { type: "openapi", path: "./openapi.yml" };
 const OTHER_SPEC = { type: "openapi", path: "./other.yml" };
@@ -21,11 +21,11 @@ describe("hasFlatNavigation", () => {
     });
 });
 
-describe("addSpec", () => {
+describe("addApiReference", () => {
     it("adds a new api entry when there is none", () => {
         const docsConfig = { title: "Docs", navigation: [{ page: "Welcome", path: "w.mdx" }] };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" })).toEqual({
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] })).toEqual({
             title: "Docs",
             navigation: [
                 { page: "Welcome", path: "w.mdx" },
@@ -34,32 +34,43 @@ describe("addSpec", () => {
         });
     });
 
-    it("appends to the specs of the first api entry only", () => {
-        const docsConfig = {
-            navigation: [
-                { api: "First", specs: [OTHER_SPEC] },
-                { api: "Second", specs: [OTHER_SPEC] }
-            ]
-        };
+    it("adds a new api entry instead of appending to an existing one", () => {
+        const docsConfig = { navigation: [{ api: "API Reference", paginated: true, specs: [OTHER_SPEC] }] };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" }).navigation).toEqual([
-            { api: "First", specs: [OTHER_SPEC, SPEC] },
-            { api: "Second", specs: [OTHER_SPEC] }
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] }).navigation).toEqual([
+            { api: "API Reference", paginated: true, specs: [OTHER_SPEC] },
+            { api: "API Reference 2", paginated: true, specs: [SPEC] }
         ]);
     });
 
-    it("gives an api entry built from the API workspace its first spec", () => {
+    it("numbers the new api entry after the ones it follows", () => {
+        const docsConfig = {
+            navigation: [
+                { api: "API Reference", specs: [OTHER_SPEC] },
+                { api: "API Reference 2", specs: [OTHER_SPEC] }
+            ]
+        };
+
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] }).navigation).toEqual([
+            { api: "API Reference", specs: [OTHER_SPEC] },
+            { api: "API Reference 2", specs: [OTHER_SPEC] },
+            { api: "API Reference 3", paginated: true, specs: [SPEC] }
+        ]);
+    });
+
+    it("keeps the specless api entry of an API workspace as it is", () => {
         const docsConfig = { navigation: [{ api: "API Reference" }] };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" }).navigation).toEqual([
-            { api: "API Reference", specs: [SPEC] }
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] }).navigation).toEqual([
+            { api: "API Reference" },
+            { api: "API Reference 2", paginated: true, specs: [SPEC] }
         ]);
     });
 
     it("does not list the same spec twice", () => {
         const docsConfig = { navigation: [{ api: "API Reference", specs: [SPEC] }] };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" })).toEqual(docsConfig);
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] })).toEqual(docsConfig);
     });
 
     it("does not list the same spec twice when the paths are written differently", () => {
@@ -67,10 +78,10 @@ describe("addSpec", () => {
             navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "openapi.yml" }] }]
         };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" })).toEqual(docsConfig);
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] })).toEqual(docsConfig);
     });
 
-    it("adds to an api entry nested in a section instead of adding a new one", () => {
+    it("counts the api entries nested in sections when it picks the title, and adds at the end", () => {
         const docsConfig = {
             navigation: [
                 { page: "Welcome", path: "w.mdx" },
@@ -78,30 +89,62 @@ describe("addSpec", () => {
             ]
         };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" }).navigation).toEqual([
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] }).navigation).toEqual([
             { page: "Welcome", path: "w.mdx" },
-            {
-                section: "Guides",
-                contents: [{ section: "Deeper", contents: [{ api: "API Reference", specs: [SPEC] }] }]
-            }
+            { section: "Guides", contents: [{ section: "Deeper", contents: [{ api: "API Reference" }] }] },
+            { api: "API Reference 2", paginated: true, specs: [SPEC] }
         ]);
     });
 
-    it("picks the first api entry in document order, nested or not", () => {
+    it("does not list a spec again that an api entry nested in a section lists", () => {
         const docsConfig = {
-            navigation: [{ section: "Guides", contents: [{ api: "Nested" }] }, { api: "Root" }]
+            navigation: [{ section: "Guides", contents: [{ api: "API Reference", specs: [SPEC] }] }]
         };
 
-        expect(addSpec({ docsConfig, specPath: "./openapi.yml" }).navigation).toEqual([
-            { section: "Guides", contents: [{ api: "Nested", specs: [SPEC] }] },
-            { api: "Root" }
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] })).toEqual(docsConfig);
+    });
+
+    it("fills a gap in the numbering of the api entries", () => {
+        const docsConfig = {
+            navigation: [
+                { api: "API Reference", specs: [OTHER_SPEC] },
+                { api: "API Reference 3", specs: [OTHER_SPEC] }
+            ]
+        };
+
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml"] }).navigation).toContainEqual({
+            api: "API Reference 2",
+            paginated: true,
+            specs: [SPEC]
+        });
+    });
+
+    it("puts all the specs of one API on one api entry", () => {
+        const docsConfig = { navigation: [] };
+
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml", "./other.yml"] }).navigation).toEqual([
+            { api: "API Reference", paginated: true, specs: [SPEC, OTHER_SPEC] }
+        ]);
+    });
+
+    it("does not add an API again when any of its specs is already listed", () => {
+        const docsConfig = { navigation: [{ api: "API Reference", specs: [OTHER_SPEC] }] };
+
+        expect(addApiReference({ docsConfig, specPaths: ["./openapi.yml", "./other.yml"] })).toEqual(docsConfig);
+    });
+
+    it("adds an api entry without specs for an API the docs read from its workspace", () => {
+        const docsConfig = { navigation: [] };
+
+        expect(addApiReference({ docsConfig, specPaths: [] }).navigation).toEqual([
+            { api: "API Reference", paginated: true }
         ]);
     });
 
     it("leaves the given docs.yml untouched", () => {
         const docsConfig = { navigation: [{ api: "API Reference", specs: [OTHER_SPEC] }] };
 
-        addSpec({ docsConfig, specPath: "./openapi.yml" });
+        addApiReference({ docsConfig, specPaths: ["./openapi.yml"] });
 
         expect(docsConfig).toEqual({ navigation: [{ api: "API Reference", specs: [OTHER_SPEC] }] });
     });

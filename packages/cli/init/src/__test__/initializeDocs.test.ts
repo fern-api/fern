@@ -232,7 +232,7 @@ describe("initializeDocs", () => {
         expect(await existsInProject("fern", "pages", "welcome.mdx")).toBe(true);
     });
 
-    it("adds the spec to an existing docs.yml, appending to its api entry when it has one", async () => {
+    it("adds each spec to an existing docs.yml as an api entry of its own", async () => {
         await initialize();
 
         await initialize(await writeSpec());
@@ -241,14 +241,8 @@ describe("initializeDocs", () => {
         expect(await readDocsYml()).toMatchObject({
             navigation: [
                 { page: "Welcome", path: "pages/welcome.mdx" },
-                {
-                    api: "API Reference",
-                    paginated: true,
-                    specs: [
-                        { type: "openapi", path: "./openapi.json" },
-                        { type: "openapi", path: "./openapi-1.json" }
-                    ]
-                }
+                { api: "API Reference", paginated: true, specs: [{ type: "openapi", path: "./openapi.json" }] },
+                { api: "API Reference 2", paginated: true, specs: [{ type: "openapi", path: "./openapi-1.json" }] }
             ]
         });
     });
@@ -297,5 +291,183 @@ describe("initializeDocs", () => {
         expect(await readFile(docsYmlPath, "utf8")).toBe(docsYmlWithTabs);
         expect(await existsInProject("fern", "openapi.json")).toBe(false);
         expect(warnings.join("\n")).toContain("The OpenAPI spec was not added");
+    });
+
+    async function createSdkConfigApi({
+        directory,
+        specs = [{ path: "./openapi.json" }]
+    }: {
+        directory: string;
+        specs?: Array<{ path?: string; url?: string; type?: string }>;
+    }): Promise<void> {
+        await mkdir(directory, { recursive: true });
+        await writeFile(path.join(directory, "openapi.json"), JSON.stringify(MINIMAL_OPENAPI));
+        await writeFile(
+            path.join(directory, "sdk-config.yml"),
+            yaml.dump({
+                schemaVersion: "sdk-config/v1",
+                sdkName: path.basename(directory),
+                source: { specs: specs.map((spec, index) => ({ id: `spec${index}`, type: "openapi", ...spec })) }
+            })
+        );
+    }
+
+    describe("existing SDK Config APIs", () => {
+        it("gives each API in fern/apis an api entry that declares its spec", async () => {
+            const fernDirectory = await createFernDirectory();
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api") });
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api1") });
+
+            await initialize();
+
+            expect(await readDocsYml()).toMatchObject({
+                navigation: [
+                    {
+                        api: "API Reference",
+                        paginated: true,
+                        specs: [{ type: "openapi", path: "./apis/api/openapi.json" }]
+                    },
+                    {
+                        api: "API Reference 2",
+                        paginated: true,
+                        specs: [{ type: "openapi", path: "./apis/api1/openapi.json" }]
+                    }
+                ]
+            });
+            expect(await existsInProject("fern", "pages", "welcome.mdx")).toBe(false);
+        });
+
+        it("orders the apis by number, not as text", async () => {
+            const fernDirectory = await createFernDirectory();
+            for (const name of ["api", "api1", "api2", "api10"]) {
+                await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", name) });
+            }
+
+            await initialize();
+
+            const docsConfig = (await readDocsYml()) as { navigation: Array<{ specs: Array<{ path: string }> }> };
+            expect(docsConfig.navigation.map((item) => item.specs[0]?.path)).toEqual([
+                "./apis/api/openapi.json",
+                "./apis/api1/openapi.json",
+                "./apis/api2/openapi.json",
+                "./apis/api10/openapi.json"
+            ]);
+        });
+
+        it("does not warn that the API definition is empty", async () => {
+            const fernDirectory = await createFernDirectory();
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api") });
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api1") });
+            const warnings: string[] = [];
+            const logger = createLogger((level, ...args) => {
+                if (level === LogLevel.Warn) {
+                    warnings.push(args.join(" "));
+                }
+            });
+
+            await initialize(undefined, createMockTaskContext({ logger }));
+
+            expect(warnings).toEqual([]);
+        });
+
+        it("finds the API of a fern directory that has no apis folder", async () => {
+            const fernDirectory = await createFernDirectory();
+            await createSdkConfigApi({ directory: fernDirectory });
+
+            await initialize();
+
+            expect(await readDocsYml()).toMatchObject({
+                navigation: [{ api: "API Reference", specs: [{ type: "openapi", path: "./openapi.json" }] }]
+            });
+        });
+
+        it("puts the specs of one API on one api entry", async () => {
+            const fernDirectory = await createFernDirectory();
+            const directory = path.join(fernDirectory, "apis", "api");
+            await createSdkConfigApi({ directory, specs: [{ path: "./openapi.json" }, { path: "./second.json" }] });
+            await writeFile(path.join(directory, "second.json"), JSON.stringify(MINIMAL_OPENAPI));
+
+            await initialize();
+
+            expect(await readDocsYml()).toMatchObject({
+                navigation: [
+                    {
+                        api: "API Reference",
+                        specs: [
+                            { type: "openapi", path: "./apis/api/openapi.json" },
+                            { type: "openapi", path: "./apis/api/second.json" }
+                        ]
+                    }
+                ]
+            });
+        });
+
+        it("leaves out a spec that is a URL or a missing file, and falls back to the welcome page when none is left", async () => {
+            const fernDirectory = await createFernDirectory();
+            await createSdkConfigApi({
+                directory: path.join(fernDirectory, "apis", "api"),
+                specs: [{ url: "https://example.com/openapi.json" }]
+            });
+            await createSdkConfigApi({
+                directory: path.join(fernDirectory, "apis", "api1"),
+                specs: [{ path: "./missing.json" }]
+            });
+
+            await initialize();
+
+            expect(await readDocsYml()).toMatchObject({ navigation: [{ page: "Welcome", path: "pages/welcome.mdx" }] });
+        });
+
+        it("is not stopped by an sdk-config.yml that cannot be parsed", async () => {
+            const fernDirectory = await createFernDirectory();
+            await mkdir(path.join(fernDirectory, "apis", "api"), { recursive: true });
+            await writeFile(path.join(fernDirectory, "apis", "api", "sdk-config.yml"), "source: [unclosed");
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api1") });
+
+            await initialize();
+
+            expect(await readDocsYml()).toMatchObject({
+                navigation: [{ api: "API Reference", specs: [{ path: "./apis/api1/openapi.json" }] }]
+            });
+        });
+
+        it("does not list the spec of an API that was just created twice", async () => {
+            const fernDirectory = await createFernDirectory();
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api") });
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api1") });
+
+            await initialize(path.join(fernDirectory, "apis", "api1", "openapi.json"));
+
+            expect(await readDocsYml()).toMatchObject({
+                navigation: [
+                    { api: "API Reference", specs: [{ path: "./apis/api/openapi.json" }] },
+                    { api: "API Reference 2", specs: [{ path: "./apis/api1/openapi.json" }] }
+                ]
+            });
+        });
+
+        it("adds the spec of a newly created API as its own api entry to an existing docs.yml", async () => {
+            const fernDirectory = await createFernDirectory();
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api") });
+            await initialize();
+            await createSdkConfigApi({ directory: path.join(fernDirectory, "apis", "api1") });
+
+            await initialize(path.join(fernDirectory, "apis", "api1", "openapi.json"));
+
+            expect(await readDocsYml()).toMatchObject({
+                navigation: [
+                    {
+                        api: "API Reference",
+                        paginated: true,
+                        specs: [{ type: "openapi", path: "./apis/api/openapi.json" }]
+                    },
+                    {
+                        api: "API Reference 2",
+                        paginated: true,
+                        specs: [{ type: "openapi", path: "./apis/api1/openapi.json" }]
+                    }
+                ]
+            });
+        });
     });
 });

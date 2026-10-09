@@ -1,0 +1,9 @@
+- summary: |
+    With SDK Config init enabled (`FERN_USE_SDK_CONFIG=true`), `fern init --docs` now finds the APIs that `fern init`
+    created (`sdk-config.yml` in `apis/<name>/`, or in the fern directory) and gives each one an `api` entry in
+    `docs.yml` that declares its spec, instead of warning "Detected empty API definition" for every API and falling back
+    to the welcome page. When `docs.yml` already exists, `fern init --openapi` now adds the new API's spec as an `api`
+    entry of its own, titled `API Reference 2`, `API Reference 3`, and so on, instead of appending it to the specs of
+    the first `api` entry, which merged separate APIs into one API reference. A spec that an `api` entry already lists
+    is still not added twice. Without the flag, behavior is unchanged.
+  type: fix

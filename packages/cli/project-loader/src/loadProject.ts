@@ -9,6 +9,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     generatorsYml,
     getFernDirectory,
+    isSdkConfigOnlyWorkspace,
     LEGACY_GENERATORS_CONFIGURATION_FILENAME,
     loadProjectConfig,
     OPENAPI_DIRECTORY,
@@ -299,16 +300,4 @@ export async function loadApis({
         handleFailedWorkspaceParserResult(workspace, context.logger);
         return [];
     }
-}
-
-async function isSdkConfigOnlyWorkspace(absolutePathToWorkspace: AbsoluteFilePath): Promise<boolean> {
-    const [sdkConfigExists, generatorsYmlExists, generatorsYamlExists, legacyGeneratorsExists] = await Promise.all([
-        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(SDK_CONFIG_FILENAME))),
-        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
-        doesPathExist(
-            join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
-        ),
-        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME)))
-    ]);
-    return sdkConfigExists && !generatorsYmlExists && !generatorsYamlExists && !legacyGeneratorsExists;
 }
