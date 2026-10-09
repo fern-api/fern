@@ -137,10 +137,24 @@ interface FernBuildStatus {
                       type: "github" | "npm" | "maven" | "pypi" | "crates" | "unsupported";
                       identifier: string;
                   };
-                  error: { code: string; message: string };
+                  error: FernPublicationError;
               };
     }>;
 }
+
+interface FernPublicationError {
+    code: string;
+    message: string;
+    /**
+     * Optional machine-readable failure category (e.g. `package_name_mismatch`). Older sdk-gen-api
+     * servers omit it; values that don't match {@link PUBLICATION_ERROR_REASON_PATTERN} are dropped.
+     */
+    reason?: string;
+    /** Optional human-readable explanation (<= 512 chars). Older sdk-gen-api servers omit it. */
+    detail?: string;
+}
+
+const PUBLICATION_ERROR_REASON_PATTERN = /^[a-z][a-z0-9_]{0,63}$/;
 
 class FernSdkGenApiSubmissionError extends Error {
     public readonly status: number | undefined;
@@ -1501,14 +1515,47 @@ function sanitizeFernBuildStatus(status: FernBuildStatus, sensitiveValues: strin
                                     sensitiveValues
                                 )
                             },
-                            error: {
-                                ...target.publication.error,
-                                message: redactSensitiveValues(target.publication.error.message, sensitiveValues)
-                            }
+                            error: sanitizePublicationError(target.publication.error, sensitiveValues)
                         }
                     })
         }))
     };
+}
+
+/**
+ * Redacts the publication error's free-text fields. The build status response is not schema-validated,
+ * so the optional `reason`/`detail` fields are type-checked here: anything malformed is dropped rather
+ * than failing the build, keeping older and newer sdk-gen-api servers compatible.
+ */
+function sanitizePublicationError(error: FernPublicationError, sensitiveValues: string[]): FernPublicationError {
+    const { reason, detail, ...rest } = error;
+    const redactedDetail =
+        typeof detail === "string" ? redactSensitiveValues(detail, sensitiveValues).trim() : undefined;
+    // A reason is a fixed identifier; drop it entirely if it would need redaction.
+    const safeReason =
+        typeof reason === "string" &&
+        PUBLICATION_ERROR_REASON_PATTERN.test(reason) &&
+        redactSensitiveValues(reason, sensitiveValues) === reason
+            ? reason
+            : undefined;
+    return {
+        ...rest,
+        message: redactSensitiveValues(error.message, sensitiveValues),
+        ...(safeReason != null ? { reason: safeReason } : {}),
+        ...(redactedDetail != null && redactedDetail.length > 0 ? { detail: redactedDetail } : {})
+    };
+}
+
+/**
+ * `sdk-gen-api publication failed (<code>): <message>`, followed by `: <detail> [<reason>]` when the
+ * server supplied a detail. Expects an error that has already passed through {@link sanitizePublicationError}.
+ */
+function formatFernSdkGenApiPublicationFailure(error: FernPublicationError): string {
+    const summary = `sdk-gen-api publication failed (${error.code}): ${error.message}`;
+    if (error.detail == null || error.detail === error.message) {
+        return summary;
+    }
+    return error.reason != null ? `${summary}: ${error.detail} [${error.reason}]` : `${summary}: ${error.detail}`;
 }
 
 function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildParameters[]): void {
@@ -1814,7 +1861,7 @@ async function finishFernSdkGenApiTarget(
     if (target.status === "failed") {
         if (target.publication?.status === "failure") {
             return participant.context.failAndThrow(
-                `sdk-gen-api publication failed (${target.publication.error.code}): ${target.publication.error.message}`,
+                formatFernSdkGenApiPublicationFailure(target.publication.error),
                 undefined,
                 { code: CliError.Code.ContainerError }
             );

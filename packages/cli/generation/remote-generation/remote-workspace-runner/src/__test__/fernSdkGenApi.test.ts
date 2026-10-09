@@ -2602,6 +2602,104 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(contextLogger.error).toHaveBeenCalledWith("Publisher exposed [REDACTED]");
     });
 
+    it.each([
+        [
+            "appends a redacted detail and its reason",
+            {
+                reason: "package_name_mismatch",
+                detail: 'Built package name "default_package_name" does not match configured package name "@acme/sdk" (using npm_secret)'
+            },
+            'sdk-gen-api publication failed (publish_failed): SDK publish failed: Built package name "default_package_name" does not match configured package name "@acme/sdk" (using [REDACTED]) [package_name_mismatch]'
+        ],
+        [
+            "appends a detail without a reason",
+            { detail: "Registry returned HTTP 403 for @acme/sdk" },
+            "sdk-gen-api publication failed (publish_failed): SDK publish failed: Registry returned HTTP 403 for @acme/sdk"
+        ],
+        [
+            "drops a malformed reason but keeps the detail",
+            { reason: "Not A Valid Reason!", detail: "Version 1.2.3 already exists" },
+            "sdk-gen-api publication failed (publish_failed): SDK publish failed: Version 1.2.3 already exists"
+        ],
+        [
+            "drops a reason that contains a credential",
+            { reason: "npm_secret", detail: "Rejected" },
+            "sdk-gen-api publication failed (publish_failed): SDK publish failed: Rejected"
+        ],
+        [
+            "leaves the message unchanged with only a reason",
+            { reason: "registry_unavailable" },
+            "sdk-gen-api publication failed (publish_failed): SDK publish failed"
+        ],
+        [
+            "ignores non-string and blank details",
+            { reason: "registry_rejected", detail: { nested: true }, extra: "ignored" },
+            "sdk-gen-api publication failed (publish_failed): SDK publish failed"
+        ],
+        [
+            "does not repeat a detail identical to the message",
+            { detail: "SDK publish failed" },
+            "sdk-gen-api publication failed (publish_failed): SDK publish failed"
+        ]
+    ] as const)("publication failure %s", async (_name, errorFields, expectedMessage) => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.npmOverride({
+                    registryUrl: "https://registry.example.com",
+                    packageName: "@acme/sdk",
+                    token: "npm_secret"
+                })
+            )
+        });
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        });
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [
+                    {
+                        targetId: request.targets[0]?.targetId,
+                        status: "failed",
+                        logs: [],
+                        publication: {
+                            status: "failure",
+                            publishTarget: { type: "npm", identifier: "@acme/sdk" },
+                            error: { code: "publish_failed", message: "SDK publish failed", ...errorFields }
+                        }
+                    }
+                ]
+            }
+        } as never);
+
+        const failure = runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        });
+
+        await expect(failure).rejects.toThrow(expectedMessage);
+        const error = await failure.catch((thrown: unknown) => thrown);
+        expect(error instanceof Error ? error.message : String(error)).toBe(expectedMessage);
+        expect(String(error)).not.toContain("npm_secret");
+    });
+
     it("stops polling when the build fails before a target reaches a terminal state", async () => {
         process.env.FERN_SDK_GEN_API_ORIGIN = "https://sdk-gen-api.test";
         const specsTarGzBuffer = validSourceArchive;

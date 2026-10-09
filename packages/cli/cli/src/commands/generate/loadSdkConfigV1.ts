@@ -7,7 +7,10 @@ import type {
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "@fern-api/remote-workspace-runner";
-import { validateFernSdkGenApiPublishTargets } from "@fern-api/remote-workspace-runner/direct-publish-credentials";
+import {
+    SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE,
+    validateFernSdkGenApiPublishTargets
+} from "@fern-api/remote-workspace-runner/direct-publish-credentials";
 import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 
@@ -149,6 +152,22 @@ export async function loadSdkConfigV1(
             { cause: error }
         );
     }
+}
+
+/**
+ * `fern check` loads SDK Config in preview mode (no credentials are resolved), which skips the publish-target
+ * validation `fern generate` runs. Flag direct RubyGems publishing explicitly so the check fails before a
+ * generation run would.
+ */
+export function assertNoSdkConfigDirectRubyGemsPublishing({ absolutePath, config }: LoadedSdkConfigV1): void {
+    config.targets.forEach((target, index) => {
+        const output = target.output ?? config.output;
+        if (output != null && output.delivery !== "github" && output.publish?.registry === "rubygems") {
+            throw new Error(
+                `SDK Config v1 at ${absolutePath} failed validation: target ${index} (${target.language}): ${SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE}`
+            );
+        }
+    });
 }
 
 export function getGeneratorSelectedTargetIndexes(

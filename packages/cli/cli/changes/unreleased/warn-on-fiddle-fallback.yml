@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Log a warning, instead of a debug message, when `FERN_USE_SDK_GEN_API=true` is set but a generator falls back to
+    legacy Fiddle generation because sdk-gen-api cannot handle its output (for example, direct NuGet publishing).
+  type: fix
