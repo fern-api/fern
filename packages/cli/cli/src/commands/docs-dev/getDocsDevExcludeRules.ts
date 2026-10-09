@@ -2,7 +2,7 @@
 const RULES_REQUIRING_API_WORKSPACES = ["api-section-has-definition"];
 
 // These rules resolve the whole docs site a second time (API references included), which defeats `--skip-api`.
-const RULES_THAT_REBUILD_API_REFERENCES = ["missing-redirects"];
+const RULES_THAT_REBUILD_API_REFERENCES = ["missing-redirects", "valid-markdown-links"];
 
 export function getDocsDevExcludeRules({
     brokenLinks,
@@ -13,9 +13,10 @@ export function getDocsDevExcludeRules({
     apiWorkspacesLoaded: boolean;
     skipApi?: boolean;
 }): string[] {
-    return [
+    const rules = [
         ...(brokenLinks ? [] : ["valid-markdown-links"]),
         ...(apiWorkspacesLoaded ? [] : RULES_REQUIRING_API_WORKSPACES),
         ...(skipApi ? RULES_THAT_REBUILD_API_REFERENCES : [])
     ];
+    return [...new Set(rules)];
 }

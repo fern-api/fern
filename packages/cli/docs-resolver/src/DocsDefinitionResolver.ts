@@ -27,7 +27,7 @@ import {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, APIV1Write, DocsV1Write, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { GraphQLConverter, type GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -432,6 +432,14 @@ export class DocsDefinitionResolver {
      * Returns per-locale translated API definitions, keyed by locale then by the base
      * `apiDefinitionId`. Must be called after `resolve()`.
      */
+    /**
+     * Empty API definitions backing the API reference nodes built with `skipApiReferences`.
+     * Preview callers add these to the docs definition so every `apiDefinitionId` resolves.
+     */
+    public getSkippedApiDefinitions(): Record<string, APIV1Read.ApiDefinition> {
+        return this.skippedApiDefinitions;
+    }
+
     public getTranslatedApiSpecs(): Map<string, Map<string, TranslatedApiSpec>> {
         return this.translatedApiSpecs;
     }
@@ -489,6 +497,7 @@ export class DocsDefinitionResolver {
         translatedIrsByLocale?: Map<string, IntermediateRepresentation>;
     }> = [];
     private pendingApiCounter = 0;
+    private skippedApiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};
     /**
      * Per-locale translated API definitions, keyed by locale then by the base
      * `apiDefinitionId`. Populated during {@link resolve} when an API section has
@@ -529,7 +538,8 @@ export class DocsDefinitionResolver {
         // track all changelog markdown files in parsedDocsConfig.pages
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV1Parser = openapiParserV3 != null && !openapiParserV3;
-        if (this.docsWorkspace.config.navigation != null && useV1Parser) {
+        // `--skip-api` previews never read API changelogs, so skip converting every API workspace.
+        if (this.docsWorkspace.config.navigation != null && useV1Parser && !this.skipApiReferences) {
             this.taskContext.logger.debug("Visiting navigation AST for changelog files...");
             const navStart = performance.now();
             await visitNavigationAst({
@@ -2081,7 +2091,7 @@ export class DocsDefinitionResolver {
         contentSource?: docsYml.VersionContentSource;
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
         if (this.skipApiReferences) {
-            return this.toPlaceholderApiSectionNode({ item, parentSlug, hideChildren });
+            return this.toPlaceholderApiSectionNode({ item, parentSlug, hideChildren, parentAvailability });
         }
 
         // For git-ref-backed versions the api section's definition is loaded from the ref's
@@ -2298,51 +2308,64 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Builds an empty API reference node without parsing the API definition. Used by
-     * `fern docs dev --skip-api` so large API specs don't slow down the preview.
+     * Builds an API reference node without parsing the API definition. Used by
+     * `fern docs dev --skip-api` so large API specs don't slow down the preview. The section's
+     * overview page and any markdown pages or links in its `layout` are kept; endpoints,
+     * schemas and other generated nodes are left out.
      */
     private toPlaceholderApiSectionNode({
         item,
         parentSlug,
-        hideChildren
+        hideChildren,
+        parentAvailability
     }: {
         item: docsYml.DocsNavigationItem.ApiSection;
         parentSlug: FernNavigation.V1.SlugGenerator;
         hideChildren?: boolean;
+        parentAvailability?: docsYml.RawSchemas.Availability;
     }): FernNavigation.V1.ApiReferenceNode {
         this.taskContext.logger.warn(`Skipping API reference "${item.title}" (--skip-api)`);
 
-        const apiDefinitionId = FernNavigation.V1.ApiDefinitionId(`__skipped_api_${this.pendingApiCounter++}__`);
-        const slug = parentSlug.apply({
-            skipUrlSlug: item.skipUrlSlug,
-            urlSlug: item.slug ?? kebabCase(item.title)
-        });
-
-        return {
-            id: this.#idgen.get(apiDefinitionId),
-            type: "apiReference",
-            title: item.title,
-            apiDefinitionId,
-            slug: slug.get(),
-            children: [],
-            hidden: hideChildren || item.hidden,
-            icon: this.resolveIconFileId(item.icon),
-            viewers: item.viewers,
-            orphaned: item.orphaned,
-            featureFlags: item.featureFlags,
-            paginated: undefined,
-            showErrors: undefined,
-            hideTitle: undefined,
-            changelog: undefined,
-            playground: undefined,
-            postmanCollectionUrl: undefined,
-            authed: undefined,
-            collapsed: undefined,
-            overviewPageId: undefined,
-            noindex: undefined,
-            availability: undefined,
-            pointsTo: undefined
+        const apiDefinitionId = FdrAPI.ApiDefinitionId(`__skipped_api_${this.pendingApiCounter++}__`);
+        const emptyApi: APIV1Read.ApiDefinition = {
+            id: apiDefinitionId,
+            rootPackage: {
+                endpoints: [],
+                websockets: [],
+                webhooks: [],
+                types: [],
+                subpackages: [],
+                pointsTo: undefined,
+                graphqlOperations: []
+            },
+            types: {},
+            subpackages: {},
+            auth: undefined,
+            authSchemes: undefined,
+            globalHeaders: undefined,
+            snippetsConfiguration: undefined,
+            navigation: undefined
         };
+        this.skippedApiDefinitions[apiDefinitionId] = emptyApi;
+
+        return new ApiReferenceNodeConverter(
+            {
+                ...item,
+                navigation: keepMarkdownLayoutItems(item.navigation)
+            },
+            emptyApi,
+            parentSlug,
+            this.docsWorkspace,
+            this.taskContext,
+            this.markdownFilesToFullSlugs,
+            this.markdownFilesToNoIndex,
+            this.markdownFilesToTags,
+            this.#idgen,
+            this.collectedFileIds,
+            undefined,
+            hideChildren,
+            parentAvailability ?? item.availability
+        ).get();
     }
 
     private async toChangelogNode(
@@ -3421,4 +3444,54 @@ function convertAvailability(
         default:
             assertNever(availability);
     }
+}
+
+/**
+ * Keeps only the markdown pages, links and the sections/packages that contain them, so an API
+ * layout can be converted without the API definition (`fern docs dev --skip-api`).
+ */
+function keepMarkdownLayoutItems(
+    items: docsYml.ParsedApiReferenceLayoutItem[]
+): docsYml.ParsedApiReferenceLayoutItem[] {
+    return items.flatMap((item): docsYml.ParsedApiReferenceLayoutItem[] => {
+        switch (item.type) {
+            case "page":
+            case "link":
+                return [item];
+            case "section":
+            case "package": {
+                const contents = keepMarkdownLayoutItems(item.contents);
+                if (contents.length === 0 && item.overviewAbsolutePath == null) {
+                    return [];
+                }
+                return [
+                    {
+                        type: "section",
+                        title: item.title ?? (item.type === "package" ? item.package : ""),
+                        referencedSubpackages: [],
+                        overviewAbsolutePath: item.overviewAbsolutePath,
+                        contents,
+                        slug: item.slug ?? (item.type === "package" ? kebabCase(item.package) : undefined),
+                        hidden: item.hidden,
+                        icon: item.icon,
+                        skipUrlSlug: item.skipUrlSlug,
+                        collapsed: item.type === "section" ? item.collapsed : undefined,
+                        collapsible: item.type === "section" ? item.collapsible : undefined,
+                        collapsedByDefault: item.type === "section" ? item.collapsedByDefault : undefined,
+                        availability: item.availability,
+                        playground: undefined,
+                        viewers: item.viewers,
+                        orphaned: item.orphaned,
+                        featureFlags: item.featureFlags
+                    }
+                ];
+            }
+            case "item":
+            case "endpoint":
+            case "operation":
+                return [];
+            default:
+                assertNever(item);
+        }
+    });
 }

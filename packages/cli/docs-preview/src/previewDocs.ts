@@ -435,7 +435,7 @@ export async function getPreviewDocsDefinition({
     }
 
     let docsDefinition: DocsV1Read.DocsDefinition = {
-        apis: apiCollector.getAPIsForDefinition(),
+        apis: { ...resolver.getSkippedApiDefinitions(), ...apiCollector.getAPIsForDefinition() },
         apisV2: apiCollectorV2.getAPIsForDefinition(),
         config: readDocsConfig,
         files: {},

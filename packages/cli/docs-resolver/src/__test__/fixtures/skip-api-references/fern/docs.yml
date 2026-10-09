@@ -1,0 +1,20 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+navigation:
+  - page: Home
+    path: ./home.mdx
+  - api: API Reference
+    summary: ./api-overview.mdx
+    layout:
+      - page: Getting started
+        path: ./getting-started.mdx
+      - link: Status page
+        href: https://status.example.com
+      - section: Guides
+        contents:
+          - page: Authentication
+            path: ./authentication.mdx
+          - POST /users
+      - section: Endpoints only
+        contents:
+          - GET /users

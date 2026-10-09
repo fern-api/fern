@@ -2434,7 +2434,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     boolean: true,
                     default: false,
                     description:
-                        "Skip building API reference sections for a much faster preview. API reference pages will be empty."
+                        "Skip building API reference sections for a much faster preview. Endpoint and schema pages are left out; overview and hand-written pages in API sections are kept."
                 })
                 .option("skip-validation", {
                     boolean: true,

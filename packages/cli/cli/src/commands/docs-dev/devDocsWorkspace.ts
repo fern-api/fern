@@ -67,7 +67,8 @@ export async function previewDocsWorkspace({
             logSummary: false,
             apiWorkspaces: useV3Parser ? [] : project.apiWorkspaces,
             ossWorkspaces: await filterOssWorkspaces(project),
-            excludeRules
+            excludeRules,
+            skipApiReferences: skipApi
         });
     };
 
@@ -88,7 +89,8 @@ export async function previewDocsWorkspace({
                 port,
                 bundlePath,
                 backendPort,
-                forceDownload
+                forceDownload,
+                skipApi
             });
         });
         return;
@@ -110,7 +112,8 @@ export async function previewDocsWorkspace({
                 context,
                 port,
                 bundlePath,
-                includePrivate
+                includePrivate,
+                skipApi
             });
         });
     }
