@@ -186,7 +186,8 @@ export async function getPreviewDocsDefinition({
     previousDocsDefinition,
     editedAbsoluteFilepaths,
     previousPreviewResult,
-    includePrivate = false
+    includePrivate = false,
+    skipApi = false
 }: {
     domain: string;
     project: Project;
@@ -195,6 +196,8 @@ export async function getPreviewDocsDefinition({
     editedAbsoluteFilepaths?: AbsoluteFilePath[];
     /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
     includePrivate?: boolean;
+    /** Skip building API reference sections (much faster; API reference pages are empty). */
+    skipApi?: boolean;
     /**
      * Previous preview result (for incremental updates).
      * This is used to preserve translation data during incremental page updates.
@@ -400,6 +403,7 @@ export async function getPreviewDocsDefinition({
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
         targetAudiences: undefined,
         docsVisibility: includePrivate ? "private" : "public",
+        skipApiReferences: skipApi,
         buildTranslatedApiDefinitions: true,
         // `fern docs dev` previews the working-tree version only; git-ref-backed
         // versions are materialized on the publish path.
@@ -431,7 +435,7 @@ export async function getPreviewDocsDefinition({
     }
 
     let docsDefinition: DocsV1Read.DocsDefinition = {
-        apis: apiCollector.getAPIsForDefinition(),
+        apis: { ...resolver.getSkippedApiDefinitions(), ...apiCollector.getAPIsForDefinition() },
         apisV2: apiCollectorV2.getAPIsForDefinition(),
         config: readDocsConfig,
         files: {},
@@ -495,7 +499,10 @@ export async function getPreviewDocsDefinition({
         translatedApiDefinitions,
         ledgerSource: {
             writeDocsDefinition,
-            writeApiDefinitions: apiCollector.getWriteAPIsForDefinition(),
+            writeApiDefinitions: withSkippedWriteApis(
+                apiCollector.getWriteAPIsForDefinition(),
+                Object.keys(resolver.getSkippedApiDefinitions())
+            ),
             resolver,
             uploadedFiles
         }
@@ -558,6 +565,25 @@ async function applyGlobalThemeIfNeeded(
     const fdrOrigin =
         process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
+}
+
+/** Adds an empty write-format API for each `--skip-api` placeholder so the Astro ledger can resolve it. */
+function withSkippedWriteApis(
+    writeApis: Map<string, APIV1Write.ApiDefinition>,
+    skippedApiDefinitionIds: string[]
+): Map<string, APIV1Write.ApiDefinition> {
+    if (skippedApiDefinitionIds.length === 0) {
+        return writeApis;
+    }
+    const result = new Map(writeApis);
+    for (const id of skippedApiDefinitionIds) {
+        result.set(id, {
+            rootPackage: { endpoints: [], websockets: [], webhooks: [], types: [], subpackages: [] },
+            types: {},
+            subpackages: {}
+        });
+    }
+    return result;
 }
 
 type APIDefinitionID = string;
