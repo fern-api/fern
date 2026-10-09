@@ -770,6 +770,31 @@ types:
       - name: Legacy
         value: legacy
 
+  SortByAvailabilityValue:
+    docs: |
+      An availability to sort by, or `unset` for items without an availability.
+    enum:
+      - name: Unset
+        value: unset
+      - name: Stable
+        value: stable
+      - name: GenerallyAvailable
+        value: generally-available
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - name: Deprecated
+        value: deprecated
+      - name: Beta
+        value: beta
+      - name: Alpha
+        value: alpha
+      - name: Preview
+        value: preview
+      - name: Legacy
+        value: legacy
+
   VersionAvailability:
     enum:
       - deprecated
@@ -1718,6 +1743,15 @@ types:
         type: optional<boolean>
         docs: |
           If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object.
+      sort-by-availability:
+        type: optional<list<SortByAvailabilityValue>>
+        docs: |
+          Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.
+          Listed availabilities come first, in the order provided. Use `unset` for items without an availability.
+          Unlisted availabilities follow in the default order:
+          `unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.
+          `stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.
+          Items with the same availability keep their existing order (alphabetical when `alphabetized` is true).
       flattened:
         type: optional<boolean>
         docs: |
