@@ -16,7 +16,8 @@ buildCli({
         VENUS_AUDIENCE: "venus-prod",
         FERN_DASHBOARD_URL_DEFAULT: "https://sdk-gen-fern-dashboard.postman.co",
         LOCAL_STORAGE_FOLDER: ".fern-pre-prod",
-        POSTHOG_API_KEY: null,
+        // Usage events are tagged `cliReleaseEnvironment` so they can be told apart from prod.
+        POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
         // Feature flags are evaluated independently of event telemetry; an empty key turns every flag off.
         POSTHOG_FEATURE_FLAGS_API_KEY: process.env.POSTHOG_API_KEY ?? "",
         FERN_CLI_RELEASE_ENVIRONMENT: "pre-prod",
