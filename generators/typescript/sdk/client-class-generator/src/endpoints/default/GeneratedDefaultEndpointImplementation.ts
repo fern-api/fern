@@ -874,6 +874,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.queryString = requestArgs.queryString;
         }
 
+        if (requestArgs.authRefresh != null) {
+            fetcherArgs.authRefresh = requestArgs.authRefresh;
+        }
+
         return ts.factory.createObjectLiteralExpression(
             Object.entries(fetcherArgs).map(([key, value]) =>
                 ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value)

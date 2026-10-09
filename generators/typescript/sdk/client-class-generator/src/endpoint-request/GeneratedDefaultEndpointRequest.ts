@@ -13,7 +13,7 @@ import {
 import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
-import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { generateHeaders, getAuthRefreshFetcherArg, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
 import { getPathParameterExampleFallback } from "../endpoints/utils/getPathParameterExampleFallback.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
 import {
@@ -209,10 +209,15 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     public getFetcherRequestArgs(
         context: FileContext
-    ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "queryString"> {
+    ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "queryString" | "authRefresh"> {
         const queryParams = this.getQueryParams(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
+            authRefresh: getAuthRefreshFetcherArg({
+                context,
+                generatedSdkClientClass: this.generatedSdkClientClass,
+                endpoint: this.endpoint
+            }),
             queryString: queryParams.getQueryStringExpression(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
             contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),

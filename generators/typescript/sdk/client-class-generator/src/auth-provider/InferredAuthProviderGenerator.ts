@@ -21,6 +21,11 @@ import {
 } from "ts-morph";
 
 import { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import {
+    FAILED_AUTH_HEADERS_ARG_NAME,
+    FORCE_REFRESH_ARG_NAME,
+    getDestructuredAuthRequestParameter
+} from "./getAuthRequestParameter.js";
 
 export declare namespace InferredAuthProviderGenerator {
     export interface Init {
@@ -28,6 +33,7 @@ export declare namespace InferredAuthProviderGenerator {
         authScheme: FernIr.InferredAuthScheme;
         neverThrowErrors: boolean;
         shouldUseWrapper: boolean;
+        refreshAuthOnFailedPermissions?: boolean;
     }
 }
 const CLASS_NAME = "InferredAuthProvider";
@@ -60,6 +66,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     private readonly packageId: PackageId;
     private readonly endpoint: FernIr.HttpEndpoint;
     private readonly shouldUseWrapper: boolean;
+    private readonly refreshAuthOnFailedPermissions: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: InferredAuthProviderGenerator.Init) {
@@ -67,6 +74,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.shouldUseWrapper = init.shouldUseWrapper ?? false;
+        this.refreshAuthOnFailedPermissions = init.refreshAuthOnFailedPermissions ?? false;
         this.keepIfWrapper = this.shouldUseWrapper ? (str: string) => str : () => "";
         this.packageId = init.authScheme.tokenEndpoint.endpoint.subpackageId
             ? {
@@ -376,20 +384,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     name: GET_AUTH_REQUEST_METHOD_NAME,
                     isAsync: true,
                     parameters: [
-                        {
-                            name: "{ endpointMetadata }",
-                            type: getTextOfTsNode(
-                                ts.factory.createTypeLiteralNode([
-                                    ts.factory.createPropertySignature(
-                                        undefined,
-                                        "endpointMetadata",
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-                                    )
-                                ])
-                            ),
-                            initializer: "{}"
-                        }
+                        getDestructuredAuthRequestParameter(context, {
+                            includeForceRefresh: this.refreshAuthOnFailedPermissions
+                        })
                     ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
@@ -397,7 +394,24 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                         ])
                     ),
                     statements: this.authScheme.tokenEndpoint.expiryProperty
-                        ? `
+                        ? `${
+                              this.refreshAuthOnFailedPermissions
+                                  ? `
+        if (${FORCE_REFRESH_ARG_NAME}) {
+            // Let an in-flight token request settle first so concurrent refreshes share one new request,
+            // and keep a cached auth request that differs from the failed one: another request already refreshed it.
+            const cachedAuthRequestPromise = this.${AUTH_REQUEST_PROMISE_FIELD_NAME};
+            const cachedAuthRequest = await cachedAuthRequestPromise?.catch(() => undefined);
+            const cachedAuthRequestFailed =
+                ${FAILED_AUTH_HEADERS_ARG_NAME} == null ||
+                cachedAuthRequest == null ||
+                Object.entries(cachedAuthRequest.headers).every(([key, value]) => ${FAILED_AUTH_HEADERS_ARG_NAME}[key] === value);
+            if (this.${AUTH_REQUEST_PROMISE_FIELD_NAME} === cachedAuthRequestPromise && cachedAuthRequestFailed) {
+                this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
+            }
+        }`
+                                  : ""
+                          }
         try {
             const authRequest = await this.${GET_CACHED_AUTH_REQUEST_METHOD_NAME}();
             return authRequest;

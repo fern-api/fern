@@ -7,6 +7,10 @@ function isRetryableStatusCode(statusCode: number): boolean {
     return [408, 429].includes(statusCode) || statusCode >= 500;
 }
 
+function isAuthFailureStatusCode(statusCode: number): boolean {
+    return statusCode === 401 || statusCode === 403;
+}
+
 function addPositiveJitter(delay: number): number {
     const jitterMultiplier = 1 + Math.random() * JITTER_FACTOR;
     return delay * jitterMultiplier;
@@ -70,18 +74,27 @@ function sleep(ms: number, abortSignal: AbortSignal | undefined): Promise<void> 
     });
 }
 
+/**
+ * @param refreshAuth When provided, 401 and 403 responses are retried like any other retryable
+ * status code, and `refreshAuth` is awaited before each of those retries.
+ */
 export async function requestWithRetries(
     requestFn: () => Promise<Response>,
     maxRetries: number = DEFAULT_MAX_RETRIES,
     abortSignal?: AbortSignal,
+    refreshAuth?: () => Promise<void>,
 ): Promise<Response> {
     let response: Response = await requestFn();
 
     for (let i = 0; i < maxRetries; ++i) {
-        if (isRetryableStatusCode(response.status)) {
+        const shouldRefreshAuth = refreshAuth != null && isAuthFailureStatusCode(response.status);
+        if (isRetryableStatusCode(response.status) || shouldRefreshAuth) {
             const delay = getRetryDelayFromHeaders(response, i);
 
             await sleep(delay, abortSignal);
+            if (shouldRefreshAuth) {
+                await refreshAuth();
+            }
             response = await requestFn();
         } else {
             break;
