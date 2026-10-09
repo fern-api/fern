@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
@@ -25,6 +25,8 @@ export declare namespace PersistedTypescriptProject {
         packageManager: "pnpm" | "yarn";
     }
 }
+
+const ROOT_DOC_FILENAMES = ["README.md", "reference.md", "CONTRIBUTING.md"];
 
 export class PersistedTypescriptProject {
     private directory: AbsoluteFilePath;
@@ -360,8 +362,20 @@ export class PersistedTypescriptProject {
             logger,
             destinationPath,
             zipFilename,
-            unzipOutput
+            unzipOutput,
+            additionalRootFiles: await this.getRootDocFiles()
         });
+    }
+
+    private async getRootDocFiles(): Promise<AbsoluteFilePath[]> {
+        const rootDocFiles: AbsoluteFilePath[] = [];
+        for (const filename of ROOT_DOC_FILENAMES) {
+            const filepath = join(this.directory, RelativeFilePath.of(filename));
+            if (await doesPathExist(filepath)) {
+                rootDocFiles.push(filepath);
+            }
+        }
+        return rootDocFiles;
     }
 
     public async copySrcContentsTo({
@@ -431,8 +445,15 @@ export class PersistedTypescriptProject {
             destinationPath,
             zipFilename,
             logger,
-            unzipOutput
-        }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
+            unzipOutput,
+            additionalRootFiles = []
+        }: {
+            destinationPath: AbsoluteFilePath;
+            zipFilename: string;
+            logger: Logger;
+            unzipOutput?: boolean;
+            additionalRootFiles?: AbsoluteFilePath[];
+        }
     ) {
         const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
@@ -444,6 +465,10 @@ export class PersistedTypescriptProject {
 
         const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
         await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))]);
+        if (additionalRootFiles.length > 0) {
+            // -j drops the directory part so these land at the root of the zip
+            await zip(["-j", tmpZipLocation, ...additionalRootFiles]);
+        }
         await cp(tmpZipLocation, destinationZip);
 
         if (unzipOutput) {

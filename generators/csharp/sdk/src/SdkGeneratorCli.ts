@@ -435,12 +435,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
+        }
 
-            try {
-                await this.generateReference({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
+        try {
+            await this.generateReference({ context });
+        } catch (e) {
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
 
         if (!context.config.whitelabel) {
