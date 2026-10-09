@@ -394,7 +394,8 @@ export class PersistedTypescriptProject {
             logger,
             destinationPath,
             zipFilename,
-            unzipOutput
+            unzipOutput,
+            additionalRootFiles: await this.getRootDocFiles()
         });
     }
 
