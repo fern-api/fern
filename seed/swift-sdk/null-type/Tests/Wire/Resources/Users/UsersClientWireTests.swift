@@ -33,42 +33,7 @@ import Api
         )
         let response = try await client.users.get(
             id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func get2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "id": "id",
-                  "name": "name",
-                  "deleted_at": {
-                    "key": "value"
-                  }
-                }
-                """#.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = User(
-            id: "id",
-            name: "name",
-            deletedAt: Nullable<JSONValue>.value(JSONValue.object(
-                [
-                    "key": JSONValue.string("value")
-                ]
-            ))
-        )
-        let response = try await client.users.get(
-            id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

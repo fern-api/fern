@@ -17,7 +17,7 @@ import PlainText
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getText(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.service.getText(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -35,7 +35,7 @@ import PlainText
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getCsv(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.service.getCsv(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -53,7 +53,7 @@ import PlainText
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getXml(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.service.getXml(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

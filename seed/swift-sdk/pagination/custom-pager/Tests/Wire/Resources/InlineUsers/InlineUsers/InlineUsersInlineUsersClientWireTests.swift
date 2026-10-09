@@ -71,7 +71,7 @@ import Pagination
             perPage: 1,
             order: .asc,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -121,7 +121,7 @@ import Pagination
         )
         let response = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination(
             cursor: "cursor",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -193,7 +193,7 @@ import Pagination
             request: .init(pagination: WithCursor(
                 cursor: "cursor"
             )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -266,7 +266,7 @@ import Pagination
             perPage: 1,
             order: .asc,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -339,7 +339,7 @@ import Pagination
             perPage: 1.1,
             order: .asc,
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -411,7 +411,7 @@ import Pagination
             request: .init(pagination: WithPage(
                 page: 1
             )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -483,7 +483,7 @@ import Pagination
             page: 1,
             limit: 1,
             order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -555,7 +555,7 @@ import Pagination
             page: 1,
             limit: 1,
             order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -607,7 +607,7 @@ import Pagination
         )
         let response = try await client.inlineUsers.inlineUsers.listWithExtendedResults(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -659,7 +659,7 @@ import Pagination
         )
         let response = try await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -697,7 +697,7 @@ import Pagination
         )
         let response = try await client.inlineUsers.inlineUsers.listUsernames(
             startingAfter: "starting_after",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -729,7 +729,7 @@ import Pagination
         )
         let response = try await client.inlineUsers.inlineUsers.listWithGlobalConfig(
             offset: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

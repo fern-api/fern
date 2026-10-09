@@ -64,61 +64,7 @@ import Examples
         )
         let response = try await client.service.getMovie(
             movieId: "movie-c06a4ad7",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getMovie2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "id": "id",
-                  "prequel": "prequel",
-                  "title": "title",
-                  "from": "from",
-                  "rating": 1.1,
-                  "type": "movie",
-                  "tag": "tag",
-                  "book": "book",
-                  "metadata": {
-                    "metadata": {
-                      "key": "value"
-                    }
-                  },
-                  "revenue": 1000000
-                }
-                """#.utf8
-            )
-        )
-        let client = ExamplesClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Movie(
-            id: "id",
-            prequel: Optional("prequel"),
-            title: "title",
-            from: "from",
-            rating: 1.1,
-            type: .movie,
-            tag: "tag",
-            book: Optional("book"),
-            metadata: [
-                "metadata": JSONValue.object(
-                    [
-                        "key": JSONValue.string("value")
-                    ]
-                )
-            ],
-            revenue: 1000000
-        )
-        let response = try await client.service.getMovie(
-            movieId: "movieId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -161,44 +107,7 @@ import Examples
                 ],
                 revenue: 1000000
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func createMovie2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                string
-                """#.utf8
-            )
-        )
-        let client = ExamplesClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.service.createMovie(
-            request: Movie(
-                id: "id",
-                prequel: "prequel",
-                title: "title",
-                from: "from",
-                rating: 1.1,
-                type: .movie,
-                tag: "tag",
-                book: "book",
-                metadata: [
-                    "metadata": .object([
-                        "key": .string("value")
-                    ])
-                ],
-                revenue: 1000000
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -235,42 +144,7 @@ import Examples
             tag: [
                 "development"
             ],
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getMetadata2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "type": "html",
-                  "value": "string",
-                  "extra": {
-                    "extra": "extra"
-                  },
-                  "tags": [
-                    "tags"
-                  ]
-                }
-                """#.utf8
-            )
-        )
-        let client = ExamplesClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = MetadataType.html("string")
-        let response = try await client.service.getMetadata(
-            xApiVersion: "X-API-Version",
-            shallow: true,
-            tag: [
-                "tag"
-            ],
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -534,8 +408,39 @@ import Examples
                     datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func refreshToken1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ExamplesClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.service.refreshToken(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+    }
+
+    @Test func refreshToken2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ExamplesClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.service.refreshToken(
+            request: RefreshTokenRequest(
+                ttl: 420
+            ),
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
     }
 }

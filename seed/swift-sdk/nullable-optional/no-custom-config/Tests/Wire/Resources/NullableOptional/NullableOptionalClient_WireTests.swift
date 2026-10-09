@@ -51,7 +51,7 @@ import NullableOptional
         )
         let response = try await client.nullableOptional.getUser(
             userId: "userId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -117,7 +117,7 @@ import NullableOptional
                     tenantId: "tenantId"
                 ))
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -184,7 +184,7 @@ import NullableOptional
                     tenantId: "tenantId"
                 ))
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -278,7 +278,7 @@ import NullableOptional
             offset: 1,
             includeDeleted: true,
             sortBy: .value("sortBy"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -372,7 +372,7 @@ import NullableOptional
             department: .value("department"),
             role: "role",
             isActive: .value(true),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -746,7 +746,7 @@ import NullableOptional
                     "optionalMapOfEnums": .admin
                 ]
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1007,7 +1007,7 @@ import NullableOptional
         )
         let response = try await client.nullableOptional.getComplexProfile(
             profileId: "profileId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1302,7 +1302,7 @@ import NullableOptional
                     "nullableArray"
                 ])
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1502,7 +1502,7 @@ import NullableOptional
                     employeeCount: 1
                 )
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1595,7 +1595,7 @@ import NullableOptional
             role: .value(.admin),
             status: .active,
             secondaryRole: .value(.admin),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1630,7 +1630,7 @@ import NullableOptional
         ))
         let response = try await client.nullableOptional.getNotificationSettings(
             userId: "userId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1671,7 +1671,7 @@ import NullableOptional
                     "labels"
                 ])
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1783,7 +1783,7 @@ import NullableOptional
                     "includeTypes"
                 ])
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

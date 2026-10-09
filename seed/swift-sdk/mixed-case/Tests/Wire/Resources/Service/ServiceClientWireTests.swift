@@ -47,54 +47,7 @@ import MixedCase
         )
         let response = try await client.service.getResource(
             resourceId: "rsc-xyz",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getResource2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "resource_type": "user",
-                  "userName": "userName",
-                  "metadata_tags": [
-                    "metadata_tags",
-                    "metadata_tags"
-                  ],
-                  "EXTRA_PROPERTIES": {
-                    "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
-                  },
-                  "status": "ACTIVE"
-                }
-                """#.utf8
-            )
-        )
-        let client = MixedCaseClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Resource.user(
-            .init(
-                userName: "userName",
-                metadataTags: [
-                    "metadata_tags",
-                    "metadata_tags"
-                ],
-                extraProperties: [
-                    "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
-                ],
-                additionalProperties: [
-                    "resource_type": JSONValue.string("user"), 
-                    "status": JSONValue.string("ACTIVE")
-                ]
-            )
-        )
-        let response = try await client.service.getResource(
-            resourceId: "ResourceID",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -148,87 +101,7 @@ import MixedCase
         let response = try await client.service.listResources(
             pageLimit: 10,
             beforeDate: CalendarDate("2023-01-01")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listResources2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                [
-                  {
-                    "resource_type": "user",
-                    "userName": "userName",
-                    "metadata_tags": [
-                      "metadata_tags",
-                      "metadata_tags"
-                    ],
-                    "EXTRA_PROPERTIES": {
-                      "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
-                    },
-                    "status": "ACTIVE"
-                  },
-                  {
-                    "resource_type": "user",
-                    "userName": "userName",
-                    "metadata_tags": [
-                      "metadata_tags",
-                      "metadata_tags"
-                    ],
-                    "EXTRA_PROPERTIES": {
-                      "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
-                    },
-                    "status": "ACTIVE"
-                  }
-                ]
-                """#.utf8
-            )
-        )
-        let client = MixedCaseClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            Resource.user(
-                .init(
-                    userName: "userName",
-                    metadataTags: [
-                        "metadata_tags",
-                        "metadata_tags"
-                    ],
-                    extraProperties: [
-                        "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
-                    ],
-                    additionalProperties: [
-                        "resource_type": JSONValue.string("user"), 
-                        "status": JSONValue.string("ACTIVE")
-                    ]
-                )
-            ),
-            Resource.user(
-                .init(
-                    userName: "userName",
-                    metadataTags: [
-                        "metadata_tags",
-                        "metadata_tags"
-                    ],
-                    extraProperties: [
-                        "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
-                    ],
-                    additionalProperties: [
-                        "resource_type": JSONValue.string("user"), 
-                        "status": JSONValue.string("ACTIVE")
-                    ]
-                )
-            )
-        ]
-        let response = try await client.service.listResources(
-            pageLimit: 1,
-            beforeDate: CalendarDate("2023-01-15")!,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

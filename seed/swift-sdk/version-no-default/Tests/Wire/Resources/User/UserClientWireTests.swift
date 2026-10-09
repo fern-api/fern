@@ -25,7 +25,7 @@ import Version
         )
         let response = try await client.user.getUser(
             userId: "userId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

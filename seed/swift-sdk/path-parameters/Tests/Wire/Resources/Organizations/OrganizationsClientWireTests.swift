@@ -32,7 +32,7 @@ import PathParameters
         let response = try await client.organizations.getOrganization(
             tenantId: "tenant_id",
             organizationId: "organization_id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -67,7 +67,7 @@ import PathParameters
             tenantId: "tenant_id",
             organizationId: "organization_id",
             userId: "user_id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -120,7 +120,7 @@ import PathParameters
             tenantId: "tenant_id",
             organizationId: "organization_id",
             limit: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

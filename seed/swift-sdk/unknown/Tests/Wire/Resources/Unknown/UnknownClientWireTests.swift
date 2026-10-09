@@ -39,7 +39,7 @@ import UnknownAsAny
             request: .object([
                 "key": .string("value")
             ]),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -82,7 +82,7 @@ import UnknownAsAny
                     "key": .string("value")
                 ])
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

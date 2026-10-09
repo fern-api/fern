@@ -99,7 +99,7 @@ import Trace
                 ],
                 methodName: "methodName"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -202,9 +202,25 @@ import Trace
                 ],
                 methodName: "methodName"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func deleteProblem1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = TraceClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.problem.deleteProblem(
+            problemId: "problemId",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
     }
 
     @Test func getDefaultStarterFiles1() async throws -> Void {
@@ -275,7 +291,7 @@ import Trace
                 outputType: VariableType.integerType,
                 methodName: "methodName"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

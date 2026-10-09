@@ -35,7 +35,7 @@ import NoRetries
                 name: "name"
             )
         ]
-        let response = try await client.retries.getUsers(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.retries.getUsers(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

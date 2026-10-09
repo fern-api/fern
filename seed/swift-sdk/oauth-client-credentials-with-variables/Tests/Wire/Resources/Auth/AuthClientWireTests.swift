@@ -33,7 +33,7 @@ import OauthClientCredentialsWithVariables
                 grantType: .clientCredentials,
                 scope: "scope"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -69,7 +69,7 @@ import OauthClientCredentialsWithVariables
                 grantType: .refreshToken,
                 scope: "scope"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

@@ -33,36 +33,7 @@ import ExtraProperties
                 version: .v1,
                 name: "Alice"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func createUser2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "name": "name"
-                }
-                """#.utf8
-            )
-        )
-        let client = ExtraPropertiesClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = User(
-            name: "name"
-        )
-        let response = try await client.user.createUser(
-            request: .init(
-                type: .createUserRequest,
-                version: .v1,
-                name: "name"
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

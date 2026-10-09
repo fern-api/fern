@@ -42,7 +42,7 @@ import PaginationUriPath
             ],
             next: Optional("next")
         )
-        let response = try await client.users.listWithUriPagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.users.listWithUriPagination(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -85,50 +85,7 @@ import PaginationUriPath
             ],
             next: Optional("")
         )
-        let response = try await client.users.listWithUriPagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listWithUriPagination3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ],
-                  "next": "next"
-                }
-                """#.utf8
-            )
-        )
-        let client = PaginationUriPathClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersUriPaginationResponse(
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                ),
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ],
-            next: Optional("next")
-        )
-        let response = try await client.users.listWithUriPagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.users.listWithUriPagination(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -171,7 +128,7 @@ import PaginationUriPath
             ],
             next: Optional("next")
         )
-        let response = try await client.users.listWithPathPagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.users.listWithPathPagination(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
@@ -214,50 +171,7 @@ import PaginationUriPath
             ],
             next: Optional("")
         )
-        let response = try await client.users.listWithPathPagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listWithPathPagination3() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ],
-                  "next": "next"
-                }
-                """#.utf8
-            )
-        )
-        let client = PaginationUriPathClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPathPaginationResponse(
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                ),
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ],
-            next: Optional("next")
-        )
-        let response = try await client.users.listWithPathPagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.users.listWithPathPagination(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

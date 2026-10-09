@@ -31,7 +31,7 @@ import MixedFileDirectory
         )
         let response = try await client.user.events.metadata.getMetadata(
             id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

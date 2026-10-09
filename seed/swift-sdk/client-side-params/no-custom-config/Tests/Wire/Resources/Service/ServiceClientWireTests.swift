@@ -80,7 +80,7 @@ import ClientSideParams
             includeTotals: true,
             fields: "fields",
             search: "search",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -128,7 +128,7 @@ import ClientSideParams
             resourceId: "resourceId",
             includeMetadata: true,
             format: "json",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -221,7 +221,7 @@ import ClientSideParams
                     ])
                 ]
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -476,7 +476,7 @@ import ClientSideParams
             q: "q",
             searchEngine: "search_engine",
             fields: "fields",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -604,7 +604,7 @@ import ClientSideParams
             userId: "userId",
             fields: "fields",
             includeFields: true,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -748,7 +748,7 @@ import ClientSideParams
                 ],
                 connection: "connection"
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -893,9 +893,25 @@ import ClientSideParams
                 password: "password",
                 blocked: true
             ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
+    }
+
+    @Test func deleteUser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data()
+        )
+        let client = ClientSideParamsClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        try await client.service.deleteUser(
+            userId: "userId",
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+        )
     }
 
     @Test func listConnections1() async throws -> Void {
@@ -1027,7 +1043,7 @@ import ClientSideParams
             strategy: "strategy",
             name: "name",
             fields: "fields",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1102,7 +1118,7 @@ import ClientSideParams
         let response = try await client.service.getConnection(
             connectionId: "connectionId",
             fields: "fields",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1476,7 +1492,7 @@ import ClientSideParams
                 "app_type",
                 "app_type"
             ],
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
@@ -1662,7 +1678,7 @@ import ClientSideParams
             clientId: "clientId",
             fields: "fields",
             includeFields: true,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }

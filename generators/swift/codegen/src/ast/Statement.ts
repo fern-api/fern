@@ -107,6 +107,15 @@ type If = {
     else?: Statement[];
 };
 
+type DoCatch = {
+    type: "do-catch";
+    body: Statement[];
+    catches: {
+        pattern?: Expression | Pattern;
+        body: Statement[];
+    }[];
+};
+
 type Raw = {
     type: "raw";
     content: string;
@@ -127,6 +136,7 @@ type InternalStatement =
     | ImportStatement
     | Switch
     | If
+    | DoCatch
     | Raw;
 
 export class Statement extends AstNode {
@@ -297,6 +307,19 @@ export class Statement extends AstNode {
                 writer.newLine();
                 break;
             }
+            case "do-catch":
+                writer.write("do ");
+                CodeBlock.withStatements(this.internalStatement.body).write(writer);
+                for (const catchClause of this.internalStatement.catches) {
+                    writer.write(" catch ");
+                    if (catchClause.pattern != null) {
+                        catchClause.pattern.write(writer);
+                        writer.write(" ");
+                    }
+                    CodeBlock.withStatements(catchClause.body).write(writer);
+                }
+                writer.newLine();
+                break;
             case "raw":
                 writer.write(this.internalStatement.content);
                 writer.newLine();
@@ -360,6 +383,10 @@ export class Statement extends AstNode {
 
     public static if(params: Omit<If, "type">): Statement {
         return new this({ type: "if", ...params });
+    }
+
+    public static doCatch(params: Omit<DoCatch, "type">): Statement {
+        return new this({ type: "do-catch", ...params });
     }
 
     /**
