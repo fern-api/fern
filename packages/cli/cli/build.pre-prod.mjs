@@ -8,6 +8,7 @@ buildCli({
         AUTH0_CLIENT_ID: "syaWnk6SjNoo5xBf1omfvziU3q7085lh",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator.buildwithfern.com",
         DEFAULT_SDK_GEN_API_ORIGIN: "https://sdk-gen.postman.co",
+        DEFAULT_USE_SDK_CONFIG: "true",
         DEFAULT_USE_SDK_GEN_API: "true",
         DEFAULT_VENUS_ORIGIN: "https://sdk-gen-venus.postman.co",
         DEFAULT_FDR_ORIGIN: "https://sdk-gen-fern-definition-registry.postman.co",
@@ -23,6 +24,7 @@ buildCli({
         DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle2.s3.amazonaws.com/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://prod-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle3.s3.amazonaws.com/",
+        APP_DOCS_ASTRO_PREVIEW_BUCKET: "https://prod-local-preview-astro-bundle.s3.amazonaws.com/",
         CLI_NAME: "fern-pre-prod",
         CLI_PACKAGE_NAME: "@fern-api/fern-api-pre-prod",
         FERN_NO_VERSION_REDIRECTION: "true"

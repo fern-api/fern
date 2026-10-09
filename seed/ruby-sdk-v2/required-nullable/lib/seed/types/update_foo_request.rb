@@ -9,7 +9,7 @@ module Seed
 
       field :nullable_text, -> { String }, optional: true, nullable: true
 
-      field :nullable_number, -> { Integer }, optional: true, nullable: true
+      field :nullable_number, -> { Float }, optional: true, nullable: true
 
       field :non_nullable_text, -> { String }, optional: true, nullable: false
 

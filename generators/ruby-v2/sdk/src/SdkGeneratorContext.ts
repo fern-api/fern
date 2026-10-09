@@ -356,6 +356,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.ResponseError,
             AsIsFiles.ServerError,
             AsIsFiles.TimeoutError,
+            AsIsFiles.ConnectionError,
 
             // Internal errors
             AsIsFiles.ErrorsConstraint,

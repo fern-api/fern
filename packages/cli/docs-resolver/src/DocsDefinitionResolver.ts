@@ -125,6 +125,13 @@ export type RegisterApiFn = (opts: {
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
 
+/** Called as each API's IR is built during navigation, before its deferred registration. */
+export type OnApiRegistrationQueuedFn = (opts: {
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    apiName?: string;
+    workspace?: FernWorkspace;
+}) => void;
+
 /**
  * A translated API definition for a single locale, produced from an OpenAPI
  * spec under `translations/<locale>/apis/<apiName>/`. The `ir` is structurally
@@ -153,7 +160,7 @@ type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AIChatConfig | undef
 const DEFAULT_API_REGISTRATION_CONCURRENCY = 4;
 
 /** Max APIs registered with FDR at once; override with `FERN_DOCS_API_REGISTRATION_CONCURRENCY` (1 = serial). */
-function getApiRegistrationConcurrency(): number {
+export function getApiRegistrationConcurrency(): number {
     const value = process.env.FERN_DOCS_API_REGISTRATION_CONCURRENCY?.trim();
     return value != null && /^[1-9]\d*$/.test(value) ? Number(value) : DEFAULT_API_REGISTRATION_CONCURRENCY;
 }
@@ -179,6 +186,10 @@ export interface DocsDefinitionResolverArgs {
     editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
+    /** Lets the caller start per-API registration prep while the rest of the navigation is built. */
+    onApiRegistrationQueued?: OnApiRegistrationQueuedFn;
+    /** Called once the navigation tree (and with it every API's IR) has been built. */
+    onNavigationTreeBuilt?: () => void;
     targetAudiences?: string[];
     /**
      * Which `x-twilio.docsVisibility` tiers of OpenAPI specs to include in API references.
@@ -216,6 +227,8 @@ export class DocsDefinitionResolver {
     private editThisPage?: docsYml.RawSchemas.EditThisPageConfig;
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
+    private onApiRegistrationQueued: OnApiRegistrationQueuedFn | undefined;
+    private onNavigationTreeBuilt: (() => void) | undefined;
     private targetAudiences?: string[];
     private docsVisibility: VisibilityFilter;
     private buildTranslatedApiDefinitions: boolean;
@@ -241,6 +254,8 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
+        onApiRegistrationQueued,
+        onNavigationTreeBuilt,
         targetAudiences,
         docsVisibility = "public",
         buildTranslatedApiDefinitions = false,
@@ -256,6 +271,8 @@ export class DocsDefinitionResolver {
         this.editThisPage = editThisPage;
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
+        this.onApiRegistrationQueued = onApiRegistrationQueued;
+        this.onNavigationTreeBuilt = onNavigationTreeBuilt;
         this.targetAudiences = targetAudiences;
         this.docsVisibility = docsVisibility;
         this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
@@ -678,6 +695,7 @@ export class DocsDefinitionResolver {
         const root = await this.toRootNode();
         const rootTime = performance.now() - rootStart;
         this.taskContext.logger.debug(`Built navigation tree in ${rootTime.toFixed(0)}ms`);
+        this.onNavigationTreeBuilt?.();
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 
@@ -2098,25 +2116,17 @@ export class DocsDefinitionResolver {
                     openapiWorkspace ??
                     directApiWorkspace ??
                     this.getOpenApiWorkspaceForApiSection(item, ossWorkspaces);
-                const openApiIr = await workspaceForTags.getOpenAPIIr({
-                    context: this.taskContext,
-                    loadAiExamples: true
-                });
-                if (openApiIr.tags.tagsById) {
-                    // Tag keys must be normalized to camelCase because subpackage names are derived
-                    // from OpenAPI tags using camelCase conversion. The lookup in
-                    // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
-                    // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
-                    // tags are converted to camelCase when generating file/subpackage names.
-                    openApiTags = Object.fromEntries(
-                        Object.entries(openApiIr.tags.tagsById)
-                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
-                            .map(([tagId, tag]) => [
-                                camelCase(tagId),
-                                { id: String(tag.id), description: tag.description }
-                            ])
-                    );
-                }
+                const tagsById = await workspaceForTags.getOpenAPITags({ context: this.taskContext });
+                // Tag keys must be normalized to camelCase because subpackage names are derived
+                // from OpenAPI tags using camelCase conversion. The lookup in
+                // ApiReferenceNodeConverter.createTagDescriptionPageId uses subpackage.name,
+                // which is camelCased. See getEndpointLocation.ts lines 40, 101, 184 for where
+                // tags are converted to camelCase when generating file/subpackage names.
+                openApiTags = Object.fromEntries(
+                    Object.entries(tagsById)
+                        .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                        .map(([tagId, tag]) => [camelCase(tagId), { id: String(tag.id), description: tag.description }])
+                );
             } catch (error) {
                 this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
             }
@@ -2269,6 +2279,7 @@ export class DocsDefinitionResolver {
             apiReferenceNode,
             translatedIrsByLocale
         });
+        this.onApiRegistrationQueued?.({ snippetsConfig, apiName: apiNameForRegistration, workspace });
 
         return apiReferenceNode;
     }

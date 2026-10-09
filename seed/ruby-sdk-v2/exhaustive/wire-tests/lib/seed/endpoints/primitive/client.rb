@@ -127,7 +127,7 @@ module Seed
         # @example
         #   client.endpoints.primitive.get_and_return_double(request: 1.1)
         #
-        # @return [Integer]
+        # @return [Float]
         def get_and_return_double(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(

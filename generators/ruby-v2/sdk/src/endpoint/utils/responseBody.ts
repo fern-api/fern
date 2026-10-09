@@ -104,9 +104,9 @@ function unwrapOptionalNamed({
  * The decision is made on the *resolved* Ruby key type rather than the IR primitive so
  * that aliases (`map<MyIntAlias, T>`) follow the same rule as the primitive they resolve
  * to, and so it stays in lockstep with what `Internal::Types::Hash#coerce` receives.
- * `Utils.coerce` converts a `String` key to `Symbol`/`String`/`Integer` alike, but has no
- * `Symbol -> Integer` path, so `Integer` keys are the only ones that cannot round-trip
- * from `symbolize_names: true`.
+ * `Utils.coerce` converts a `String` key to `Symbol`/`String`/`Integer`/`Float` alike, but has
+ * no `Symbol -> Integer` or `Symbol -> Float` path, so numeric keys are the only ones that
+ * cannot round-trip from `symbolize_names: true`.
  */
 function mapKeysMustStayStrings({
     context,
@@ -119,5 +119,6 @@ function mapKeysMustStayStrings({
         return false;
     }
     const keyType = context.typeMapper.convert({ reference: container.keyType });
-    return keyType.internalType?.type === "integer";
+    const keyKind = keyType.internalType?.type;
+    return keyKind === "integer" || keyKind === "float";
 }

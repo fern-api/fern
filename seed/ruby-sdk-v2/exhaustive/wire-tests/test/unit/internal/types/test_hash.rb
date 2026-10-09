@@ -5,6 +5,8 @@ require "test_helper"
 describe Seed::Internal::Types::Hash do
   module TestHash
     SymbolStringHash = Seed::Internal::Types::Hash[Symbol, String]
+    IntegerStringHash = Seed::Internal::Types::Hash[Integer, String]
+    FloatIntegerHash = Seed::Internal::Types::Hash[Float, Integer]
   end
 
   describe ".[]" do
@@ -17,6 +19,11 @@ describe Seed::Internal::Types::Hash do
   describe "#coerce" do
     it "coerces the keys" do
       assert_equal %i[foo bar], TestHash::SymbolStringHash.coerce({ "foo" => "1", :bar => "2" }).keys
+    end
+
+    it "coerces numeric keys parsed as symbols from JSON" do
+      assert_equal [1, 20], TestHash::IntegerStringHash.coerce(JSON.parse('{"1":"a","20":"b"}', symbolize_names: true)).keys
+      assert_equal [1.5, 0.0425], TestHash::FloatIntegerHash.coerce(JSON.parse('{"1.5":1,"0.0425":2}', symbolize_names: true)).keys
     end
 
     it "coerces the values" do

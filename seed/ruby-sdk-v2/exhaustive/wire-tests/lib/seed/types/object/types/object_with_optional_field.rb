@@ -11,7 +11,7 @@ module Seed
 
           field :long, -> { Integer }, optional: true, nullable: false
 
-          field :double, -> { Integer }, optional: true, nullable: false
+          field :double, -> { Float }, optional: true, nullable: false
 
           field :bool, -> { Internal::Types::Boolean }, optional: true, nullable: false
 

@@ -8,6 +8,7 @@ buildCli({
         AUTH0_CLIENT_ID: "fern",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
         DEFAULT_SDK_GEN_API_ORIGIN: "http://localhost:3001",
+        DEFAULT_USE_SDK_CONFIG: "false",
         DEFAULT_USE_SDK_GEN_API: "false",
         DEFAULT_VENUS_ORIGIN: "http://localhost:8089",
         DEFAULT_FDR_ORIGIN: "http://localhost:8080",
@@ -23,6 +24,7 @@ buildCli({
         DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
+        APP_DOCS_ASTRO_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         CLI_NAME: "fern-local",
         CLI_PACKAGE_NAME: "fern-api"
     },

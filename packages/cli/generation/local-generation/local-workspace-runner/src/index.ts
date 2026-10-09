@@ -1,6 +1,11 @@
 export * from "./ContainerExecutionEnvironment.js";
 export { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
-export { generatorWantsSpecs, SPECS_MANIFEST_FILENAME } from "./constants.js";
+export {
+    generatorWantsSpecs,
+    getOnPremAdapterForLanguage,
+    isOnPremAdapter,
+    SPECS_MANIFEST_FILENAME
+} from "./constants.js";
 export * from "./DockerExecutionEnvironment.js";
 export { DockerExecutionEnvironment } from "./DockerExecutionEnvironment.js";
 export * from "./ExecutionEnvironment.js";

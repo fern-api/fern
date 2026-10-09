@@ -41,6 +41,11 @@ describe Seed::Internal::Types::Model do
     field :child, ExampleChild
   end
 
+  class ExampleWithNumericKeyMaps < Seed::Internal::Types::Model
+    field :rates, Seed::Internal::Types::Hash[Float, Integer]
+    field :counts, Seed::Internal::Types::Hash[Integer, String]
+  end
+
   describe ".field" do
     before do
       @example = ExampleModel.new(name: "Inception", rating: 4)
@@ -105,6 +110,13 @@ describe Seed::Internal::Types::Model do
       example_without_defaults = ExampleWithDefaults.new(type: "not example")
 
       assert_equal "not example", example_without_defaults.type
+    end
+
+    it "coerces numeric map keys when loading JSON" do
+      model = ExampleWithNumericKeyMaps.load('{"rates":{"1.5":10},"counts":{"2":"two"}}')
+
+      assert_equal({ 1.5 => 10 }, model.rates)
+      assert_equal({ 2 => "two" }, model.counts)
     end
 
     it "coerces child models" do

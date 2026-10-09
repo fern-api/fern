@@ -1,4 +1,157 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.149.0
+  changelogEntry:
+    - summary: |
+        Add an optional `type` to inferred bearer auth schemes (`api-key` | `refresh-token`). With
+        `type: refresh-token`, the IR records the get-token endpoint's `grant_type` request property
+        (`InferredAuthSchemeTokenEndpoint.grantType`) so SDKs always send `grant_type=refresh_token`
+        and do not expose `grant_type` as a client option.
+        ```yaml
+        auth-schemes:
+          Bearer:
+            scheme: bearer
+            get-token: POST /authorize
+            type: refresh-token
+        ```
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.5
+  changelogEntry:
+    - summary: |
+        Fix audience filtering dropping the variants of an inline `anyOf`/`oneOf` on a request body
+        property when importing OpenAPI. The variants were removed from the IR, so the property and
+        each variant rendered as `any` in audience-filtered API references.
+      type: fix
+    - summary: |
+        Upgrade `posthog-node` from 5.35.1 to 5.55.0. PostHog clients are created with `isServer: false` so
+        CLI events keep their existing shape and are not tagged `$is_server: true` by the newer SDK.
+      type: chore
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.4
+  changelogEntry:
+    - summary: |
+        `fern generate` with `--version AUTO` no longer rewrites the placeholder version inside
+        files protected by `.fernignore` or inside longer version strings such as
+        `0.0.0-fern-placeholder.7`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.3
+  changelogEntry:
+    - summary: |
+        When SDK Config init is enabled (`FERN_USE_SDK_CONFIG=true`), `fern init --docs --openapi <path-or-url>`
+        now copies the OpenAPI spec into the fern directory and declares it under the `- api: API Reference`
+        entry's `specs` in `docs.yml`, so the docs build a full API reference without a `generators.yml` or
+        `sdk-config.yml`. Previously `--openapi` was silently ignored when combined with `--docs`, and the
+        welcome page pointed to `fern init --openapi`, which does not produce an API the docs can read in this
+        mode. If `fern/openapi.json|yml` already exists, the copy is written as `openapi-1.json|yml` (and so on),
+        so an existing API's spec is never overwritten. If `docs.yml` already exists, the command now warns that
+        the spec was not added. Without the flag, behavior is unchanged.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 5.148.2
+  changelogEntry:
+    - summary: |
+        Decouple SDK Config initialization from SDK Gen API generation routing so each can be rolled out independently.
+      type: fix
+    - summary: |
+        `fern docs md generate` now prefixes generated Python library page slugs with the slug of the
+        navigation tab the pages are listed under in `docs.yml`. Generated pages previously skipped the tab
+        (e.g. `/prismo/prismo/floorplan_editor_signals` instead of
+        `/api-reference/prismo/prismo/floorplan_editor_signals`). File paths and page IDs are unchanged.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.148.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` no longer re-parses every OpenAPI spec of an API reference that sets
+        `tag-description-pages: true`. Tag descriptions are now read straight from the specs' `tags`,
+        which saves about 0.4s per spec on a large (4.8 MB) spec.
+      type: fix
+    - summary: |
+        OpenAPI specs with external `$ref`s to remote files convert faster. Each remote file is now
+        fetched once per conversion instead of once per `$ref` (for example 114 fetches down to 2 on a
+        large spec), and a failed fetch is retried by the next `$ref` instead of being remembered.
+      type: fix
+    - summary: |
+        The OpenAPI parser no longer rebuilds a throwaway parser context for every endpoint with a
+        request body. It reuses the one it already has, which cuts about 9% off parsing a large spec.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.148.0
+  changelogEntry:
+    - summary: |
+        Add an experimental `fern docs dev --astro` flag that renders the docs to the ledger read model, serves it from a
+        local mirror, and runs the prebuilt Astro docs preview server (downloaded and cached like the Next bundle) against
+        it with live reload. Next.js remains the default.
+      type: feat
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.9
+  changelogEntry:
+    - summary: |
+        `fern generate --local` now generates SDK Config targets after `fern sdk migrate`, instead of
+        failing with "SDK Config v1 generation is only supported with remote sdk-gen-api generation"
+        (`--target`) or silently generating nothing (no selectors). Each target runs on the on-prem
+        generator for its language, at its `generatorVersion` or, when unpinned, the SDK Config cutover
+        release. Targets with `zip` or `github` delivery generate into `generated/<language>` beside
+        `sdk-config.yml`. Targets with no on-prem generator, a pre-cutover `generatorVersion`, or a
+        repeated language, and an `--sdk-config` file other than the one the local runner reads
+        (`sdk-config.yml`, else `sdk-config.yaml`), are rejected with an explanation.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.8
+  changelogEntry:
+    - summary: |
+        `fern check` now reads and validates each markdown page once, even when several
+        navigation items or version files reference it. A page shared by 36 versions is no longer
+        parsed and link-checked 36 times, and its errors are reported once instead of once per reference.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.7
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` uses less memory on large multi-version API references. Worker threads
+        return their dynamic snippet IRs gzipped, the IRs cached for validation are released once the
+        docs navigation is built, and each worker's heap is capped at 1.5 GB (a job that runs out of
+        memory is regenerated in-process). Machines with less than about 9.5 GB of RAM, such as the
+        2-core / 7 GB GitHub Actions runner, keep generating dynamic snippet IRs in-process.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.6
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` is faster on large multi-version API references. OpenAPI parsing
+        no longer rescans the whole spec for every operation's request body, type resolution no
+        longer rebuilds the map of definition files on every lookup while generating dynamic snippet
+        IRs, and external `$ref` resolution no longer re-shifts its work queue. Dynamic snippet IRs
+        are now generated on worker threads (bounded by CPU cores, available memory and
+        `FERN_DOCS_API_REGISTRATION_CONCURRENCY`; runners with less than about 10 GB of RAM, such as
+        the 2-core GitHub Actions runner, stay in-process), starting as soon as each API's IR is built so they
+        overlap the navigation build. Set `FERN_DOCS_API_REGISTRATION_CONCURRENCY=1` to generate them
+        serially in-process.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
+- version: 5.147.5
+  changelogEntry:
+    - summary: |
+        Fix translated navigation labels getting out of order after a top-level page, link, or
+        `collapsed` section. The CLI wraps those items in an internal sidebar group, and the
+        translation overlay now matches the group's items as siblings of the items around it, so
+        labels like API reference sections and endpoint titles no longer stay in English or pick up
+        another item's translation.
+      type: fix
+  createdAt: "2026-10-07"
+  irVersion: 67
 - version: 5.147.4
   changelogEntry:
     - summary: |

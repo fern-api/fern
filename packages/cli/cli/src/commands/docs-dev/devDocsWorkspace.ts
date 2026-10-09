@@ -1,7 +1,7 @@
-import { runAppPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
+import { runAppPreviewServer, runAstroPreviewServer, runPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
-import { CliError } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
@@ -14,6 +14,7 @@ export async function previewDocsWorkspace({
     bundlePath,
     brokenLinks,
     legacyPreview,
+    astro,
     backendPort,
     forceDownload,
     includePrivate = false
@@ -24,6 +25,7 @@ export async function previewDocsWorkspace({
     bundlePath?: string;
     brokenLinks: boolean;
     legacyPreview?: boolean;
+    astro?: boolean;
     backendPort: number;
     forceDownload?: boolean;
     /** Include `x-twilio.docsVisibility: private` elements in the previewed API reference. */
@@ -40,6 +42,48 @@ export async function previewDocsWorkspace({
         return;
     }
 
+    const validateProject = async (project: Project, context: TaskContext): Promise<void> => {
+        const docsWorkspace = project.docsWorkspaces;
+        if (docsWorkspace == null) {
+            return;
+        }
+        const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
+        const useV3Parser = openapiParserV3 == null || openapiParserV3;
+        const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
+        await validateDocsWorkspaceWithoutExiting({
+            workspace: docsWorkspace,
+            context,
+            logWarnings: true,
+            logSummary: false,
+            apiWorkspaces: useV3Parser ? [] : project.apiWorkspaces,
+            ossWorkspaces: await filterOssWorkspaces(project),
+            excludeRules
+        });
+    };
+
+    if (astro) {
+        cliContext.instrumentPostHogEvent({
+            orgId: project.config.organization,
+            command: "fern docs dev --astro"
+        });
+
+        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            context.logger.info("Bootstrapping Astro docs preview (this may take a few seconds)...");
+
+            await runAstroPreviewServer({
+                initialProject: project,
+                reloadProject: loadProject,
+                validateProject: (project) => validateProject(project, context),
+                context,
+                port,
+                bundlePath,
+                backendPort,
+                forceDownload
+            });
+        });
+        return;
+    }
+
     if (legacyPreview) {
         cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
@@ -52,36 +96,7 @@ export async function previewDocsWorkspace({
             await runPreviewServer({
                 initialProject: project,
                 reloadProject: loadProject,
-                validateProject: async (project) => {
-                    const docsWorkspace = project.docsWorkspaces;
-                    if (docsWorkspace == null) {
-                        return;
-                    }
-                    const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
-                    const useV3Parser = openapiParserV3 == null || openapiParserV3;
-                    const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
-                    if (useV3Parser) {
-                        await validateDocsWorkspaceWithoutExiting({
-                            workspace: docsWorkspace,
-                            context,
-                            logWarnings: true,
-                            logSummary: false,
-                            apiWorkspaces: [],
-                            ossWorkspaces: await filterOssWorkspaces(project),
-                            excludeRules
-                        });
-                    } else {
-                        await validateDocsWorkspaceWithoutExiting({
-                            workspace: docsWorkspace,
-                            context,
-                            logWarnings: true,
-                            logSummary: false,
-                            apiWorkspaces: project.apiWorkspaces,
-                            ossWorkspaces: await filterOssWorkspaces(project),
-                            excludeRules
-                        });
-                    }
-                },
+                validateProject: (project) => validateProject(project, context),
                 context,
                 port,
                 bundlePath,
@@ -101,36 +116,7 @@ export async function previewDocsWorkspace({
         await runAppPreviewServer({
             initialProject: project,
             reloadProject: loadProject,
-            validateProject: async (project) => {
-                const docsWorkspace = project.docsWorkspaces;
-                if (docsWorkspace == null) {
-                    return;
-                }
-                const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
-                const useV3Parser = openapiParserV3 == null || openapiParserV3;
-                const excludeRules = getDocsDevExcludeRules({ brokenLinks, apiWorkspacesLoaded: !useV3Parser });
-                if (useV3Parser) {
-                    await validateDocsWorkspaceWithoutExiting({
-                        workspace: docsWorkspace,
-                        context,
-                        logWarnings: true,
-                        logSummary: false,
-                        apiWorkspaces: [],
-                        ossWorkspaces: await filterOssWorkspaces(project),
-                        excludeRules
-                    });
-                } else {
-                    await validateDocsWorkspaceWithoutExiting({
-                        workspace: docsWorkspace,
-                        context,
-                        logWarnings: true,
-                        logSummary: false,
-                        apiWorkspaces: project.apiWorkspaces,
-                        ossWorkspaces: await filterOssWorkspaces(project),
-                        excludeRules
-                    });
-                }
-            },
+            validateProject: (project) => validateProject(project, context),
             context,
             port,
             bundlePath,

@@ -147,16 +147,18 @@ export async function createDefaultOpenAPIWorkspace({
     });
 }
 
-async function materializeOpenAPI({
+export async function materializeOpenAPI({
     directoryOfWorkspace,
     openAPIFilePath,
-    context
+    context,
+    openAPIFileName = getOpenAPIFileName(openAPIFilePath)
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
     context: TaskContext;
+    /** Name of the written copy. Defaults to `openapi.json` or `openapi.yml`. An existing file of that name is replaced. */
+    openAPIFileName?: string;
 }): Promise<string> {
-    const openAPIFileName = getOpenAPIFileName(openAPIFilePath);
     const bundled = await loadOpenAPI({
         context,
         absolutePathToOpenAPI: openAPIFilePath,
@@ -165,14 +167,14 @@ async function materializeOpenAPI({
     });
     delete (bundled as Record<string, unknown>)["x-fern-overrides-filepath"];
     const contents =
-        openAPIFileName === "openapi.json"
+        path.extname(openAPIFileName).toLowerCase() === ".json"
             ? `${JSON.stringify(bundled, null, 2)}\n`
             : yaml.dump(bundled, { lineWidth: -1 });
     await writeFile(join(directoryOfWorkspace, RelativeFilePath.of(openAPIFileName)), contents);
     return `./${openAPIFileName}`;
 }
 
-function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
+export function getOpenAPIFileName(openAPIFilePath: AbsoluteFilePath): "openapi.json" | "openapi.yml" {
     return path.extname(openAPIFilePath).toLowerCase() === ".json" ? "openapi.json" : "openapi.yml";
 }
 

@@ -968,6 +968,68 @@ describe("AutoVersioningService", () => {
         }
     });
 
+    it("testReplaceMagicVersion_leavesLongerVersionsUntouched", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const testFile = path.join(tempDir, "changelog.md");
+            await fs.writeFile(
+                testFile,
+                "## [0.0.0-fern-placeholder] - new\n## [0.0.0-fern-placeholder.7] - old\n" +
+                    "Pinned to 0.0.0-fern-placeholder-rc, 0.0.0-fern-placeholder2 and 10.0.0-fern-placeholder.\n" +
+                    "Current: 0.0.0-fern-placeholder.\n"
+            );
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0-dev.10"
+            );
+
+            expect(await fs.readFile(testFile, "utf-8")).toBe(
+                "## [1.0.0-dev.10] - new\n## [0.0.0-fern-placeholder.7] - old\n" +
+                    "Pinned to 0.0.0-fern-placeholder-rc, 0.0.0-fern-placeholder2 and 10.0.0-fern-placeholder.\n" +
+                    "Current: 1.0.0-dev.10.\n"
+            );
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_skipsFernignoredFiles", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            await fs.mkdir(path.join(tempDir, "docs", "ADRs"), { recursive: true });
+            await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
+            const fernignoreContent =
+                "# Keep 0.0.0-fern-placeholder in these files\nAGENTS.md\ndocs\n.fern/replay.lock\n";
+            await fs.writeFile(path.join(tempDir, ".fernignore"), fernignoreContent);
+            const packageJson = path.join(tempDir, "package.json");
+            await fs.writeFile(packageJson, '{"version": "0.0.0-fern-placeholder"}');
+            const protectedFiles = [
+                path.join(tempDir, "AGENTS.md"),
+                path.join(tempDir, "docs", "ADRs", "adr.md"),
+                path.join(tempDir, ".fern", "replay.lock")
+            ];
+            for (const file of protectedFiles) {
+                await fs.writeFile(file, "version: 0.0.0-fern-placeholder\n");
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0-dev.10"
+            );
+
+            expect(await fs.readFile(packageJson, "utf-8")).toBe('{"version": "1.0.0-dev.10"}');
+            for (const file of protectedFiles) {
+                expect(await fs.readFile(file, "utf-8")).toBe("version: 0.0.0-fern-placeholder\n");
+            }
+            expect(await fs.readFile(path.join(tempDir, ".fernignore"), "utf-8")).toBe(fernignoreContent);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
     it("testReplaceMagicVersion_nestedDirectories", async () => {
         const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
         try {
