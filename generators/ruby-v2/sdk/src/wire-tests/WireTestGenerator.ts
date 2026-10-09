@@ -8,14 +8,15 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
+import { WireTestExample, WireTestExampleSelector } from "./WireTestExampleSelector.js";
+import { getTestIdMatcher, WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
     snippetAst: ruby.AstNode;
     endpoint: FernIr.HttpEndpoint;
-    service: FernIr.HttpService;
-    exampleIndex: number;
-    testId: string;
+    testExample: WireTestExample;
+    dynamicExample: FernIr.dynamic.EndpointSnippetRequest;
+    testName: string;
 }
 
 /**
@@ -55,7 +56,9 @@ export class WireTestGenerator {
     private readonly case: CaseConverter;
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+    private readonly exampleSelector: WireTestExampleSelector;
     private wireMockConfigContent: Record<string, WireMockMapping>;
+    private wireMockMappingsByTestId: Record<string, WireMockMapping>;
 
     constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
@@ -69,7 +72,10 @@ export class WireTestGenerator {
             ir: convertIr(dynamicIr),
             config: this.context.config
         });
-        this.wireMockConfigContent = this.getWireMockConfigContent();
+        this.exampleSelector = new WireTestExampleSelector(context);
+        const { defaultMappings, mappingsByTestId } = this.getWireMockConfigContent();
+        this.wireMockConfigContent = defaultMappings;
+        this.wireMockMappingsByTestId = mappingsByTestId;
     }
 
     public async generate(): Promise<void> {
@@ -90,42 +96,53 @@ export class WireTestGenerator {
         }
 
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
-        new WireTestSetupGenerator(this.context, this.context.ir).generate();
+        new WireTestSetupGenerator(this.context, this.context.ir, this.exampleSelector).generate();
     }
 
     private async generateServiceTestFile(serviceName: string, endpoints: FernIr.HttpEndpoint[]): Promise<File> {
-        const endpointTestCases = new Map<string, EndpointTestCase>();
+        const endpointTestCases: EndpointTestCase[] = [];
+        // Each endpoint's first example keeps the plain test name, so reserve those first.
+        const usedTestNames = new Set(endpoints.map((endpoint) => this.getTestMethodName(endpoint, serviceName)));
 
         for (const endpoint of endpoints) {
-            const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-            if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = this.getDynamicEndpointExample(endpoint);
-                if (!firstExample) {
+            const dynamicExamples = this.dynamicIr.endpoints[endpoint.id]?.examples ?? [];
+            if (dynamicExamples.length === 0) {
+                continue;
+            }
+
+            for (const [index, testExample] of this.exampleSelector.getExamples(endpoint).entries()) {
+                const isFirstExample = index === 0;
+                // The first example falls back to the first dynamic example, as before multi-example support.
+                const dynamicExample =
+                    (testExample.dynamicExampleId != null
+                        ? dynamicExamples.find((example) => example.id === testExample.dynamicExampleId)
+                        : undefined) ?? (isFirstExample ? dynamicExamples[0] : undefined);
+                if (dynamicExample == null) {
+                    this.context.logger.debug(
+                        `Skipping wire test for example ${testExample.testId} of endpoint ${endpoint.id}: no dynamic example`
+                    );
                     continue;
                 }
-
-                // Find the service for this endpoint
-                const service = Object.values(this.context.ir.services).find((s) =>
-                    s.endpoints.some((e) => e.id === endpoint.id)
-                );
-                if (!service) {
-                    this.context.logger.warn(`No service found for endpoint ${endpoint.id}`);
-                    continue;
-                }
-
-                const exampleIndex = 0; // We only use the first example today
-                const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
                 try {
                     const snippetAst = await this.generateSnippetAstForExample({
-                        example: firstExample,
+                        example: dynamicExample,
                         endpoint,
-                        testId
+                        testId: testExample.testId
                     });
-                    endpointTestCases.set(endpoint.id, { snippetAst, endpoint, service, exampleIndex, testId });
+                    endpointTestCases.push({
+                        snippetAst,
+                        endpoint,
+                        testExample,
+                        dynamicExample,
+                        testName: isFirstExample
+                            ? this.getTestMethodName(endpoint, serviceName)
+                            : this.getUniqueTestMethodName(endpoint, serviceName, testExample, usedTestNames)
+                    });
                 } catch (error) {
-                    this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                    continue;
+                    this.context.logger.warn(
+                        `Failed to generate snippet for example ${testExample.testId} of endpoint ${endpoint.id}: ${error}`
+                    );
                 }
             }
         }
@@ -135,28 +152,7 @@ export class WireTestGenerator {
         return new File(`${serviceName}_test.rb`, RelativeFilePath.of("test/wire"), testFileContent);
     }
 
-    private buildDeterministicTestId(
-        service: FernIr.HttpService,
-        endpoint: FernIr.HttpEndpoint,
-        exampleIndex: number
-    ): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
-        const endpointName = this.case.snakeSafe(endpoint.name);
-
-        const segments: string[] = [];
-        if (servicePathParts.length > 0) {
-            segments.push(servicePathParts.join("."));
-        }
-        segments.push(endpointName);
-        segments.push(String(exampleIndex));
-
-        return segments.join(".");
-    }
-
-    private async buildTestFileContent(
-        serviceName: string,
-        endpointTestCases: Map<string, EndpointTestCase>
-    ): Promise<string> {
+    private async buildTestFileContent(serviceName: string, endpointTestCases: EndpointTestCase[]): Promise<string> {
         const lines: string[] = [];
 
         // File header
@@ -173,8 +169,8 @@ export class WireTestGenerator {
 
         // Test methods
         const testMethods: string[][] = [];
-        for (const { snippetAst, endpoint, testId } of endpointTestCases.values()) {
-            const testMethod = await this.generateEndpointTestMethod(endpoint, snippetAst, serviceName, testId);
+        for (const testCase of endpointTestCases) {
+            const testMethod = await this.generateEndpointTestMethod(testCase);
             if (testMethod) {
                 testMethods.push(testMethod);
             }
@@ -214,10 +210,12 @@ export class WireTestGenerator {
             for (const param of authParams) {
                 lines.push(`      ${param},`);
             }
-            lines.push("      base_url: WIREMOCK_BASE_URL");
+            lines.push("      base_url: WIREMOCK_BASE_URL,");
+            lines.push("      max_retries: 0");
             lines.push("    )");
         } else {
-            lines.push(`    @client = ${clientClassName}.new(base_url: WIREMOCK_BASE_URL)`);
+            // Retries are disabled so error examples (e.g. 429/5xx) are requested exactly once.
+            lines.push(`    @client = ${clientClassName}.new(base_url: WIREMOCK_BASE_URL, max_retries: 0)`);
         }
 
         lines.push("  end");
@@ -339,16 +337,17 @@ export class WireTestGenerator {
         return undefined;
     }
 
-    private async generateEndpointTestMethod(
-        endpoint: FernIr.HttpEndpoint,
-        snippetAst: ruby.AstNode,
-        serviceName: string,
-        testId: string
-    ): Promise<string[] | null> {
+    private async generateEndpointTestMethod({
+        endpoint,
+        snippetAst,
+        testExample,
+        dynamicExample,
+        testName
+    }: EndpointTestCase): Promise<string[] | null> {
         try {
-            const testName = this.getTestMethodName(endpoint, serviceName);
-            const basePath = this.buildBasePath(endpoint);
-            const queryParamsCode = this.buildQueryParamsCode(endpoint);
+            const { testId, expectedError } = testExample;
+            const basePath = this.buildBasePath(endpoint, testId, dynamicExample);
+            const queryParamsCode = this.buildQueryParamsCode(endpoint, dynamicExample);
 
             const lines: string[] = [];
 
@@ -365,31 +364,46 @@ export class WireTestGenerator {
             // These return iterators that don't make HTTP requests until iterated
             const isLazyPagination = endpoint.pagination?.type === "cursor" || endpoint.pagination?.type === "offset";
 
+            const callLines: string[] = [];
+            const snippetLines = snippetCode.split("\n");
             if (isLazyPagination) {
                 // For lazy paginated endpoints, we need to trigger the first HTTP request
                 // by calling .pages.next_page on the returned iterator
-                const snippetLines = snippetCode.split("\n");
                 for (let i = 0; i < snippetLines.length; i++) {
                     const line = snippetLines[i] ?? "";
                     if (line.trim()) {
                         // Continuation lines keep the snippet's own 2-space indent and get
-                        // the same 4-space test-method prefix as the `result =` line, so
-                        // multi-line method calls indent one step past the method start
-                        // (matching rubocop's Layout/FirstArgumentIndentation).
-                        if (i === 0) {
-                            lines.push(`    result = ${line}`);
-                        } else {
-                            lines.push(`    ${line}`);
-                        }
+                        // the same prefix as the `result =` line, so multi-line method calls
+                        // indent one step past the method start (matching rubocop's
+                        // Layout/FirstArgumentIndentation).
+                        callLines.push(i === 0 ? `result = ${line}` : line);
                     }
                 }
-                lines.push(`    result.pages.next_page`);
+                callLines.push("result.pages.next_page");
             } else {
-                const snippetLines = snippetCode.split("\n");
                 for (const line of snippetLines) {
                     if (line.trim()) {
-                        lines.push(`    ${line}`);
+                        callLines.push(line);
                     }
+                }
+            }
+
+            if (expectedError != null) {
+                lines.push(`    error = assert_raises(${expectedError.errorClassReference}) do`);
+                for (const line of callLines) {
+                    lines.push(`      ${line}`);
+                }
+                lines.push("    end");
+                lines.push("");
+                lines.push(`    assert_equal ${expectedError.statusCode}, error.code`);
+                if (expectedError.body !== undefined) {
+                    lines.push(
+                        `    assert_equal JSON.parse(${toRubyStringLiteral(JSON.stringify(expectedError.body))}), JSON.parse(error.message)`
+                    );
+                }
+            } else {
+                for (const line of callLines) {
+                    lines.push(`    ${line}`);
                 }
             }
             lines.push("");
@@ -435,7 +449,11 @@ export class WireTestGenerator {
         }
     }
 
-    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
+    private buildBasePath(
+        endpoint: FernIr.HttpEndpoint,
+        testId: string,
+        dynamicExample: FernIr.dynamic.EndpointSnippetRequest
+    ): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -449,7 +467,7 @@ export class WireTestGenerator {
             requestUrlPathTemplate: basePath
         });
 
-        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+        const wiremockMapping = this.wireMockMappingsByTestId[testId] ?? this.wireMockConfigContent[mappingKey];
         if (!wiremockMapping) {
             this.context.logger.warn(
                 `No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}"`
@@ -465,8 +483,7 @@ export class WireTestGenerator {
             });
         } else {
             // Fallback: Get path parameters from FernIr.dynamic endpoint example
-            const dynamicExample = this.getDynamicEndpointExample(endpoint);
-            if (dynamicExample?.pathParameters) {
+            if (dynamicExample.pathParameters) {
                 Object.entries(dynamicExample.pathParameters).forEach(([paramName, paramValue]) => {
                     if (paramValue != null) {
                         basePath = basePath.replace(`{${paramName}}`, String(paramValue));
@@ -483,10 +500,11 @@ export class WireTestGenerator {
      * Only includes REQUIRED query params to avoid mismatches with optional params
      * that may not be included in the generated snippet.
      */
-    private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
-
-        if (!dynamicEndpointExample?.queryParameters) {
+    private buildQueryParamsCode(
+        endpoint: FernIr.HttpEndpoint,
+        dynamicEndpointExample: FernIr.dynamic.EndpointSnippetRequest
+    ): string {
+        if (!dynamicEndpointExample.queryParameters) {
             return "nil";
         }
 
@@ -529,12 +547,33 @@ export class WireTestGenerator {
         return `test_${serviceName}_${endpointName}_with_wiremock`;
     }
 
-    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointSnippetRequest | null {
-        const example = this.dynamicIr.endpoints[endpoint.id];
-        if (!example) {
-            return null;
+    /**
+     * Names tests for additional examples after the endpoint, e.g.
+     * `test_<service>_<endpoint>_throws_<error>_with_wiremock` for error examples and
+     * `test_<service>_<endpoint>_<example>_with_wiremock` for named success examples.
+     */
+    private getUniqueTestMethodName(
+        endpoint: FernIr.HttpEndpoint,
+        serviceName: string,
+        testExample: WireTestExample,
+        usedTestNames: Set<string>
+    ): string {
+        const endpointName = this.case.snakeSafe(endpoint.name);
+        const suffix =
+            testExample.expectedError != null
+                ? `throws_${testExample.expectedError.errorName}`
+                : testExample.example.name != null
+                  ? this.case.snakeSafe(testExample.example.name).replace(/[^a-z0-9_]/g, "")
+                  : "";
+        const stem =
+            suffix.length > 0 ? `test_${serviceName}_${endpointName}_${suffix}` : `test_${serviceName}_${endpointName}`;
+        let testName = `${stem}_with_wiremock`;
+        let counter = 2;
+        while (usedTestNames.has(testName)) {
+            testName = `${stem}_${counter++}_with_wiremock`;
         }
-        return example.examples?.[0] ?? null;
+        usedTestNames.add(testName);
+        return testName;
     }
 
     /**
@@ -609,17 +648,29 @@ export class WireTestGenerator {
         return `${requestMethod} - ${requestUrlPathTemplate}`;
     }
 
-    private getWireMockConfigContent(): Record<string, WireMockMapping> {
-        const out: Record<string, WireMockMapping> = {};
-        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
+    private getWireMockConfigContent(): {
+        defaultMappings: Record<string, WireMockMapping>;
+        mappingsByTestId: Record<string, WireMockMapping>;
+    } {
+        const defaultMappings: Record<string, WireMockMapping> = {};
+        const mappingsByTestId: Record<string, WireMockMapping> = {};
+        const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(
+            this.context.ir,
+            this.exampleSelector
+        );
         for (const mapping of wiremockStubMapping.mappings) {
+            const testId = getTestIdMatcher(mapping);
+            if (testId != null) {
+                mappingsByTestId[testId] = mapping;
+                continue;
+            }
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
                 requestUrlPathTemplate: mapping.request.urlPathTemplate
             });
-            out[key] = mapping;
+            defaultMappings[key] = mapping;
         }
-        return out;
+        return { defaultMappings, mappingsByTestId };
     }
 
     /**
@@ -803,4 +854,15 @@ export class WireTestGenerator {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
             .join("");
     }
+}
+
+/**
+ * Renders a Ruby string literal, single-quoted when the value contains double quotes (as rubocop's
+ * Style/StringLiterals allows) to avoid escaping JSON.
+ */
+function toRubyStringLiteral(value: string): string {
+    if (value.includes('"')) {
+        return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
+    }
+    return JSON.stringify(value).replace(/#(?=[{$@])/g, "\\#");
 }

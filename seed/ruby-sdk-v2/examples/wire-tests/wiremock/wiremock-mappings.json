@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "f2f45b9a-2267-4137-a9b4-da6a7343bf46",
+      "name": "echo - default - echo.0",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "echo.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f2f45b9a-2267-4137-a9b4-da6a7343bf46",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "84443a97-a042-44d9-b597-c9c4943af730",
       "name": "createType - default",
       "request": {
@@ -43,6 +74,37 @@
       "uuid": "84443a97-a042-44d9-b597-c9c4943af730",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "cadf088e-3cba-4d18-8f76-ba5da923672a",
+      "name": "createType - default - create_type.0",
+      "request": {
+        "urlPathTemplate": "/",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "create_type.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"primitive\",\n  \"value\": \"value\",\n  \"label\": \"label\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "cadf088e-3cba-4d18-8f76-ba5da923672a",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -89,6 +151,45 @@
       }
     },
     {
+      "id": "2ee11853-dbd7-46c6-a8ec-91b412c801bf",
+      "name": "getException - default - file.notification.service.get_exception.0",
+      "request": {
+        "urlPathTemplate": "/file/notification/{notificationId}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "file.notification.service.get_exception.0"
+          }
+        },
+        "pathParameters": {
+          "notificationId": {
+            "equalTo": "notification-hsy129x"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"generic\",\n  \"exceptionType\": \"Unavailable\",\n  \"exceptionMessage\": \"This component is unavailable!\",\n  \"exceptionStacktrace\": \"<logs>\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2ee11853-dbd7-46c6-a8ec-91b412c801bf",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "a430abe8-03a0-48c9-97d3-345f8f18e526",
       "name": "getFile - default",
       "request": {
@@ -115,6 +216,45 @@
       "uuid": "a430abe8-03a0-48c9-97d3-345f8f18e526",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "76257998-5242-4322-996a-981a70dc71ca",
+      "name": "getFile - default - file.service.get_file.0",
+      "request": {
+        "urlPathTemplate": "/file/{filename}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "file.service.get_file.0"
+          }
+        },
+        "pathParameters": {
+          "filename": {
+            "equalTo": "file.txt"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": "\"A file with that name was not found!\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "76257998-5242-4322-996a-981a70dc71ca",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -161,6 +301,84 @@
       }
     },
     {
+      "id": "1572cc2b-6b99-4162-9ad3-bfa213e2d0d4",
+      "name": "check - Example0 - health.service.check.0",
+      "request": {
+        "urlPathTemplate": "/check/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "health.service.check.0"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id-2sdx82h"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "1572cc2b-6b99-4162-9ad3-bfa213e2d0d4",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "a661f58a-5a2f-4712-90f2-77e3c3560392",
+      "name": "check - Example2 - health.service.check.1",
+      "request": {
+        "urlPathTemplate": "/check/{id}",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "health.service.check.1"
+          }
+        },
+        "pathParameters": {
+          "id": {
+            "equalTo": "id-3tey93i"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a661f58a-5a2f-4712-90f2-77e3c3560392",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "693eae56-0081-4c61-9b8b-1bacf7598867",
       "name": "ping - Example0",
       "request": {
@@ -182,6 +400,41 @@
       "uuid": "693eae56-0081-4c61-9b8b-1bacf7598867",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "79d74c2a-3acd-49f2-a281-49f8b3aec6e4",
+      "name": "ping - Example0 - health.service.ping.0",
+      "request": {
+        "urlPathTemplate": "/ping",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          },
+          "X-Test-Id": {
+            "equalTo": "health.service.ping.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "true",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "79d74c2a-3acd-49f2-a281-49f8b3aec6e4",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -224,6 +477,42 @@
       }
     },
     {
+      "id": "77d3c1b5-08d0-44d8-8d5c-a6350ec7cdf2",
+      "name": "getMovie - default - service.get_movie.0",
+      "request": {
+        "urlPathTemplate": "/movie/{movieId}",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "service.get_movie.0"
+          }
+        },
+        "pathParameters": {
+          "movieId": {
+            "equalTo": "movie-c06a4ad7"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"id\": \"movie-c06a4ad7\",\n  \"prequel\": \"movie-cv9b914f\",\n  \"title\": \"The Boy and the Heron\",\n  \"from\": \"Hayao Miyazaki\",\n  \"rating\": 8,\n  \"type\": \"movie\",\n  \"tag\": \"tag-wf9as23d\",\n  \"metadata\": {\n    \"actors\": [\n      \"Christian Bale\",\n      \"Florence Pugh\",\n      \"Willem Dafoe\"\n    ],\n    \"releaseDate\": \"2023-12-08\",\n    \"ratings\": {\n      \"rottenTomatoes\": 97,\n      \"imdb\": 7.6\n    }\n  },\n  \"revenue\": 1000000\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "77d3c1b5-08d0-44d8-8d5c-a6350ec7cdf2",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "d6fce3a2-5f5b-4d72-93c8-bc46ea0e4b75",
       "name": "createMovie - default",
       "request": {
@@ -240,6 +529,37 @@
       "uuid": "d6fce3a2-5f5b-4d72-93c8-bc46ea0e4b75",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "4df47f1d-7210-41d5-a3ce-e1324ff9f1ee",
+      "name": "createMovie - default - service.create_movie.0",
+      "request": {
+        "urlPathTemplate": "/movie",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "service.create_movie.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"movie-c06a4ad7\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4df47f1d-7210-41d5-a3ce-e1324ff9f1ee",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -285,6 +605,46 @@
       "postServeActions": []
     },
     {
+      "id": "2f35cf0a-91eb-4382-b862-8b56f94fd61f",
+      "name": "getMetadata - default - service.get_metadata.0",
+      "request": {
+        "urlPathTemplate": "/metadata",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "service.get_metadata.0"
+          }
+        },
+        "queryParameters": {
+          "shallow": {
+            "equalTo": "false"
+          },
+          "tag": {
+            "equalTo": "development"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"type\": \"html\",\n  \"extra\": {\n    \"version\": \"0.0.1\",\n    \"tenancy\": \"test\"\n  },\n  \"tags\": [\n    \"development\",\n    \"public\"\n  ],\n  \"value\": \"<head>...</head>\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2f35cf0a-91eb-4382-b862-8b56f94fd61f",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "b527ed65-aa21-448e-8e5a-409ba88bd508",
       "name": "createBigEntity - default",
       "request": {
@@ -301,6 +661,37 @@
       "uuid": "b527ed65-aa21-448e-8e5a-409ba88bd508",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "62420afc-0cd6-49d8-9122-a7247ca67bf7",
+      "name": "createBigEntity - default - service.create_big_entity.0",
+      "request": {
+        "urlPathTemplate": "/big-entity",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "service.create_big_entity.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"response\": {\n    \"key\": \"value\"\n  },\n  \"identifiers\": [\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    },\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    }\n  ]\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "62420afc-0cd6-49d8-9122-a7247ca67bf7",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -335,9 +726,71 @@
           }
         }
       }
+    },
+    {
+      "id": "76444464-b1ff-4839-95c8-d5f2191a6a76",
+      "name": "refreshToken - default - service.refresh_token.0",
+      "request": {
+        "urlPathTemplate": "/refresh-token",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "service.refresh_token.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "76444464-b1ff-4839-95c8-d5f2191a6a76",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "2a4b90f4-2fa6-4147-a618-a815c727dcc8",
+      "name": "refreshToken - default - service.refresh_token.1",
+      "request": {
+        "urlPathTemplate": "/refresh-token",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "service.refresh_token.1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "\"\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2a4b90f4-2fa6-4147-a618-a815c727dcc8",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 11
+    "total": 24
   }
 }

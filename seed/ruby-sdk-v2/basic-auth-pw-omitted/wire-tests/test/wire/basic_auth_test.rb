@@ -8,7 +8,8 @@ class BasicAuthWireTest < WireMockTestCase
 
     @client = Seed::Client.new(
       username: "test-username",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -20,6 +21,36 @@ class BasicAuthWireTest < WireMockTestCase
         "X-Test-Id" => "basic_auth.get_with_basic_auth.0"
       }
     })
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/basic-auth",
+      query_params: nil,
+      expected: 1
+    )
+
+    verify_authorization_header(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/basic-auth",
+      expected_value: "Basic dGVzdC11c2VybmFtZTo="
+    )
+  end
+
+  def test_basic_auth_get_with_basic_auth_throws_unauthorized_request_with_wiremock
+    test_id = "basic_auth.get_with_basic_auth.1"
+
+    error = assert_raises(Seed::Errors::UnauthorizedError) do
+      @client.basic_auth.get_with_basic_auth(request_options: {
+        additional_headers: {
+          "X-Test-Id" => "basic_auth.get_with_basic_auth.1"
+        }
+      })
+    end
+
+    assert_equal 401, error.code
+    assert_equal JSON.parse('{"message":"message"}'), JSON.parse(error.message)
 
     verify_request_count(
       test_id: test_id,
@@ -50,6 +81,75 @@ class BasicAuthWireTest < WireMockTestCase
         }
       }
     )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/basic-auth",
+      query_params: nil,
+      expected: 1
+    )
+
+    verify_authorization_header(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/basic-auth",
+      expected_value: "Basic dGVzdC11c2VybmFtZTo="
+    )
+  end
+
+  def test_basic_auth_post_with_basic_auth_throws_unauthorized_request_with_wiremock
+    test_id = "basic_auth.post_with_basic_auth.1"
+
+    error = assert_raises(Seed::Errors::UnauthorizedError) do
+      @client.basic_auth.post_with_basic_auth(
+        request: {
+          key: "value"
+        },
+        request_options: {
+          additional_headers: {
+            "X-Test-Id" => "basic_auth.post_with_basic_auth.1"
+          }
+        }
+      )
+    end
+
+    assert_equal 401, error.code
+    assert_equal JSON.parse('{"message":"message"}'), JSON.parse(error.message)
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/basic-auth",
+      query_params: nil,
+      expected: 1
+    )
+
+    verify_authorization_header(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/basic-auth",
+      expected_value: "Basic dGVzdC11c2VybmFtZTo="
+    )
+  end
+
+  def test_basic_auth_post_with_basic_auth_throws_bad_request_with_wiremock
+    test_id = "basic_auth.post_with_basic_auth.2"
+
+    error = assert_raises(Seed::Errors::ClientError) do
+      @client.basic_auth.post_with_basic_auth(
+        request: {
+          key: "value"
+        },
+        request_options: {
+          additional_headers: {
+            "X-Test-Id" => "basic_auth.post_with_basic_auth.2"
+          }
+        }
+      )
+    end
+
+    assert_equal 400, error.code
 
     verify_request_count(
       test_id: test_id,

@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-ruby-sdk-v2",
   "generatorVersion": "local",
   "generatorConfig": {
-    "rubocopSeverity": "error"
+    "rubocopSeverity": "error",
+    "enableWireTests": true
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "ci",
