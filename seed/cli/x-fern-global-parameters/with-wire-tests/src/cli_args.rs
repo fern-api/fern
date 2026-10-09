@@ -97,20 +97,6 @@ pub fn is_version_flag(arg: &str) -> bool {
     matches!(arg, "--version" | "-V" | "version")
 }
 
-/// [`resolve_base_url_override`] without an `ArgMatches`.
-///
-/// For callers outside clap dispatch — `Binding::invoke_operation` — where
-/// there is no `--base-url` flag to read. Consults the selected profile and
-/// the env var, in the same order.
-pub fn resolve_base_url_override_for(app_name: &str) -> Result<Option<String>, CliError> {
-    let env_var_name = format!("{}_BASE_URL", app_name.to_uppercase().replace('-', "_"));
-    let from_env = std::env::var(env_var_name).ok();
-    if crate::profiles::outranks_env() {
-        return Ok(crate::profiles::base_url().or(from_env));
-    }
-    Ok(from_env.or_else(crate::profiles::base_url))
-}
-
 /// Resolve the API base URL override from the `--base-url` flag, the
 /// selected profile's `base_url`, and the `{NAME}_BASE_URL` env var, in that
 /// order. Validates the flag value for dangerous characters; the env var is

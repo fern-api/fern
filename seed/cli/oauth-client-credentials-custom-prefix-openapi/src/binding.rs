@@ -163,7 +163,14 @@ pub trait Binding: Send + Sync {
     /// created — and they have no `ArgMatches` for the target operation to
     /// hand to [`dispatch`](Self::dispatch). Everything downstream (auth,
     /// retries, TLS, base-URL resolution) is the same stack a normal
-    /// invocation uses; only the argument source differs.
+    /// invocation uses; only the argument source differs. `root_matches`
+    /// is the parsed root command line, so global flags such as
+    /// `--base-url` and the server-variable flags apply exactly as they
+    /// would on a direct invocation. `profile` is the profile the call is
+    /// made on behalf of — the one being created or removed. The `profiles`
+    /// group itself runs unprofiled, so its stored server variables and
+    /// base URL would otherwise never reach the request; they rank exactly
+    /// where a selected profile's would (below flags, above env).
     ///
     /// Returns `Ok(None)` from the default implementation, meaning "this
     /// binding does not own that path" — the caller should try the next.
@@ -171,6 +178,8 @@ pub trait Binding: Send + Sync {
         &'a self,
         _op_path: &'a [String],
         _params: &'a serde_json::Value,
+        _root_matches: &'a clap::ArgMatches,
+        _profile: Option<&'a crate::profiles::ResolvedProfile>,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async { Ok(None) })
     }
