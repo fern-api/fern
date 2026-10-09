@@ -41,6 +41,103 @@ pub fn graft_subcommand(
     }
 }
 
+/// One segment of a command path as the spellings argv may use for it:
+/// the canonical name first, then every alias.
+pub type PathSegment = Vec<String>;
+
+/// Full paths (as [`PathSegment`]s) of every command in `cmd`'s tree that
+/// declares an argument with short flag `short`, prefixed with `parent_path`.
+///
+/// Used by `CliApp` to let a custom command own a short flag the root
+/// otherwise reserves globally (`-p` for `--profile`): the pre-clap profile
+/// scanner stops recognising the short form once argv has named one of
+/// these commands.
+pub fn paths_owning_short(
+    parent_path: &[String],
+    cmd: &clap::Command,
+    short: char,
+) -> Vec<Vec<PathSegment>> {
+    let mut prefix: Vec<PathSegment> = parent_path.iter().map(|s| vec![s.clone()]).collect();
+    let mut found = Vec::new();
+    collect_paths_owning_short(&mut prefix, cmd, short, &mut found);
+    found
+}
+
+fn collect_paths_owning_short(
+    prefix: &mut Vec<PathSegment>,
+    cmd: &clap::Command,
+    short: char,
+    found: &mut Vec<Vec<PathSegment>>,
+) {
+    let mut segment = vec![cmd.get_name().to_string()];
+    segment.extend(cmd.get_all_aliases().map(str::to_string));
+    prefix.push(segment);
+    if cmd.get_arguments().any(|a| a.get_short() == Some(short)) {
+        found.push(prefix.clone());
+    }
+    for sub in cmd.get_subcommands() {
+        collect_paths_owning_short(prefix, sub, short, found);
+    }
+    prefix.pop();
+}
+
+/// Index just past the last segment of `path` as it appears in `argv`, or
+/// `None` when argv does not name that command.
+///
+/// Segments must appear in order; tokens between them are skipped so that
+/// globals placed mid-path (`cli serverless --debug start`) still match.
+/// Scanning stops at a bare `--`.
+pub fn path_end_in_argv(argv: &[String], path: &[PathSegment]) -> Option<usize> {
+    let mut depth = 0;
+    for (index, token) in argv.iter().enumerate().skip(1) {
+        if token == "--" {
+            return None;
+        }
+        if path[depth].iter().any(|spelling| spelling == token) {
+            depth += 1;
+            if depth == path.len() {
+                return Some(index + 1);
+            }
+        }
+    }
+    None
+}
+
+/// Give every command in `cmd`'s tree that declares short flag `short` a
+/// long-only stand-in for the root's global `--<flag>` arg.
+///
+/// Clap propagates a `global(true)` arg into a subcommand only when that
+/// subcommand has no arg with the same id, so the stand-in keeps `--<flag>`
+/// accepted there while leaving `-<short>` to the command's own argument.
+/// Without it clap refuses to build the tree at all ("short option names
+/// must be unique").
+pub fn shadow_global_short(
+    mut cmd: clap::Command,
+    flag: &'static str,
+    short: char,
+    value_name: &str,
+    help: &str,
+) -> clap::Command {
+    let owns_short = cmd.get_arguments().any(|a| a.get_short() == Some(short));
+    let has_flag = cmd.get_arguments().any(|a| a.get_id() == flag);
+    if owns_short && !has_flag {
+        cmd = cmd.arg(
+            clap::Arg::new(flag)
+                .long(flag)
+                .value_name(value_name.to_string())
+                .help(help.to_string())
+                .global(true),
+        );
+    }
+    let subs: Vec<clap::Command> = cmd.get_subcommands().cloned().collect();
+    for sub in subs {
+        let name = sub.get_name().to_string();
+        let shadowed = shadow_global_short(sub, flag, short, value_name, help);
+        cmd = cmd.mut_subcommand(name, move |_| shadowed);
+    }
+    cmd
+}
+
 /// Walk a parsed `ArgMatches` tree along `parent_path` and return the leaf
 /// matches if the final subcommand equals `leaf_name`. Returns `None` if
 /// any segment along the path doesn't match.

@@ -70,6 +70,14 @@ enum DeferredOp {
         path: Vec<String>,
         stability: Stability,
     },
+    Describe {
+        path: Vec<String>,
+        about: String,
+    },
+    HideGlobalFlags {
+        path: Vec<String>,
+        flags: Vec<String>,
+    },
 }
 
 // ── Root CliApp ─────────────────────────────────────────────────────
@@ -532,6 +540,35 @@ impl CliApp {
         self
     }
 
+    /// Set the one-line description of the command at `path`.
+    ///
+    /// Intended for the intermediate groups `command_under` creates on the
+    /// way to a nested custom command (`command_under(&["serverless",
+    /// "env"], …)` grows an `env` group with no description); works on any
+    /// command in the tree.
+    pub fn describe(mut self, path: &[&str], about: &str) -> Self {
+        self.deferred_ops.push(DeferredOp::Describe {
+            path: path.iter().map(|s| s.to_string()).collect(),
+            about: about.to_string(),
+        });
+        self
+    }
+
+    /// Hide the named root-level global flags from `--help` of the command
+    /// at `path` and everything beneath it.
+    ///
+    /// The flags are still accepted there — scripts that pass `--format`
+    /// everywhere keep working — they just stop cluttering the help of a
+    /// custom subtree they do not apply to (`--dry-run`, `--query`, `--spec`
+    /// on a command that never calls the API). Unknown names are ignored.
+    pub fn hide_global_flags(mut self, path: &[&str], flags: &[&str]) -> Self {
+        self.deferred_ops.push(DeferredOp::HideGlobalFlags {
+            path: path.iter().map(|s| s.to_string()).collect(),
+            flags: flags.iter().map(|s| s.to_string()).collect(),
+        });
+        self
+    }
+
     /// Hide a command from `--help` output.
     pub fn hide(mut self, path: &[&str]) -> Self {
         self.deferred_ops.push(DeferredOp::Hide {
@@ -711,7 +748,8 @@ impl CliApp {
             return Ok(());
         }
 
-        match crate::profiles::resolve_selection(&self.name, &str_args) {
+        let short_cutoff = self.profile_short_cutoff(&str_args);
+        match crate::profiles::resolve_selection_until(&self.name, &str_args, short_cutoff) {
             Ok(selection) => {
                 crate::profiles::selection::install(selection);
                 Ok(())
@@ -724,6 +762,38 @@ impl CliApp {
                 Err(error)
             }
         }
+    }
+
+    /// Argv index past which `-p` no longer means `--profile`, because argv
+    /// has named a custom command that declares its own `-p`. `usize::MAX`
+    /// when no such command is named (or none exists).
+    ///
+    /// Mirrors `shadow_global_short` in the clap tree: clap gives `-p` to
+    /// the command's own arg there, so the pre-clap scanner must stop
+    /// claiming it at the same point.
+    fn profile_flag_help(&self, config: &crate::profiles::ProfilesConfig) -> String {
+        format!(
+            "Run this command under a named profile (see `{} {}`). \
+             Overrides {} and the active profile.",
+            self.name,
+            config.command_name,
+            crate::profiles::selection::profile_env_var(&self.name),
+        )
+    }
+
+    fn profile_short_cutoff(&self, str_args: &[String]) -> usize {
+        self.cli_commands
+            .iter()
+            .flat_map(|cc| {
+                crate::custom_commands::paths_owning_short(
+                    &cc.path,
+                    &cc.cmd,
+                    crate::profiles::selection::PROFILE_SHORT,
+                )
+            })
+            .filter_map(|path| crate::custom_commands::path_end_in_argv(str_args, &path))
+            .min()
+            .unwrap_or(usize::MAX)
     }
 
     /// The parameter and server-variable names `profiles create` will accept,
@@ -1135,13 +1205,7 @@ impl CliApp {
                     .long(crate::profiles::selection::PROFILE_FLAG)
                     .short(crate::profiles::selection::PROFILE_SHORT)
                     .value_name("NAME")
-                    .help(format!(
-                        "Run this command under a named profile (see `{} {}`). \
-                         Overrides {} and the active profile.",
-                        self.name,
-                        config.command_name,
-                        crate::profiles::selection::profile_env_var(&self.name),
-                    ))
+                    .help(self.profile_flag_help(config))
                     .global(true),
             );
         }
@@ -1173,9 +1237,22 @@ impl CliApp {
         // the per-binding commands already built above.
         cli = graft_merged_subtree(cli, &binding_cmds, merged_subtree, self.title.is_some());
 
-        // 1b. Register CLI-level custom commands (may be nested).
+        // 1b. Register CLI-level custom commands (may be nested). With
+        // profiles on, a custom command that declares its own `-p` keeps it:
+        // it gets a long-only `--profile` stand-in so the global's short does
+        // not collide (see `shadow_global_short` / `profile_short_cutoff`).
         for cc in &self.cli_commands {
-            cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cc.cmd.clone());
+            let mut cmd = cc.cmd.clone();
+            if let Some(ref config) = self.profiles {
+                cmd = crate::custom_commands::shadow_global_short(
+                    cmd,
+                    crate::profiles::selection::PROFILE_FLAG,
+                    crate::profiles::selection::PROFILE_SHORT,
+                    "NAME",
+                    &self.profile_flag_help(config),
+                );
+            }
+            cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cmd);
         }
 
         // 1c. Register `completion`, `man`, and `auth` subcommands.
@@ -1213,6 +1290,12 @@ impl CliApp {
                 }
                 DeferredOp::Stability { path, stability } => {
                     cli = apply_stability(cli, path, stability);
+                }
+                DeferredOp::Describe { path, about } => {
+                    cli = apply_describe(cli, path, about);
+                }
+                DeferredOp::HideGlobalFlags { path, flags } => {
+                    cli = apply_hide_global_flags(cli, path, flags);
                 }
             }
         }
@@ -1840,6 +1923,39 @@ fn apply_alias(cli: clap::Command, path: &[String], alias: &str) -> clap::Comman
 /// Apply `hide(true)` to the command at `path`.
 fn apply_hide(cli: clap::Command, path: &[String]) -> clap::Command {
     modify_at_path(cli, path, &|c| c.hide(true))
+}
+
+/// Set the `about` of the command at `path`.
+fn apply_describe(cli: clap::Command, path: &[String], about: &str) -> clap::Command {
+    let about = about.to_string();
+    modify_at_path(cli, path, &|c| c.about(about.clone()))
+}
+
+/// Hide the root globals named in `flags` from the subtree at `path`.
+///
+/// Clap only propagates a `global(true)` arg into a subcommand that has no
+/// arg of the same id, so planting a hidden clone at `path` stops the
+/// visible one there; the clone is itself global, so it carries the hidden
+/// state down the rest of the subtree while still parsing identically.
+fn apply_hide_global_flags(cli: clap::Command, path: &[String], flags: &[String]) -> clap::Command {
+    let hidden: Vec<clap::Arg> = cli
+        .get_arguments()
+        .filter(|a| a.is_global_set() && flags.iter().any(|f| f == a.get_id().as_str()))
+        .map(|a| a.clone().hide(true))
+        .collect();
+    if hidden.is_empty() || path.is_empty() {
+        return cli;
+    }
+    modify_at_path(cli, path, &|mut c| {
+        for arg in &hidden {
+            if c.get_arguments()
+                .all(|existing| existing.get_id() != arg.get_id())
+            {
+                c = c.arg(arg.clone());
+            }
+        }
+        c
+    })
 }
 
 /// Apply a stability badge to the command at `path`.
