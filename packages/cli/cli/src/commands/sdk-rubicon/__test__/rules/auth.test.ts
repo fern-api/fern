@@ -70,11 +70,13 @@ describe("auth rule", () => {
         ]);
     });
 
-    it("returns an error for a custom auth scheme type", () => {
+    it("rejects a custom auth scheme through the treatment table", () => {
         const result = map({
             schemes: [{ id: "c", type: "custom", parameters: [{ name: "X-C", location: "header" }] }]
         });
-        expect(errorCodes(result.diagnostics)).toEqual(["RUBICON_AUTH_TYPE"]);
+        expect(codes(result.diagnostics)).toContain(
+            "error RUBICON_UNSUPPORTED_FIELD api.auth.schemes[0].parameters[0].name"
+        );
     });
 
     it("maps one requirement to a single id", () => {

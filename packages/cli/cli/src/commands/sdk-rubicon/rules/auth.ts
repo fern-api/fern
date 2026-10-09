@@ -59,12 +59,7 @@ function schemeEntry(context: RuleContext, scheme: AuthScheme, path: string): Re
         case "api-key":
             return apiKeyEntry(context, scheme, path);
         case "custom":
-            context.error(
-                `${path}.type`,
-                "RUBICON_AUTH_TYPE",
-                "Custom auth schemes have no generators.yml equivalent.",
-                "Model the scheme as an API key header, or remove it."
-            );
+            // The treatment table rejects custom schemes (their parameters) before any rule runs.
             return undefined;
         case "oauth2":
             // The OAuth rule writes these.

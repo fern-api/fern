@@ -1,5 +1,6 @@
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
+import { classifyFields } from "./fieldTreatments.js";
 import { authRule } from "./rules/auth.js";
 import { environmentsRule } from "./rules/environments.js";
 import { generatorRule } from "./rules/generator.js";
@@ -37,6 +38,10 @@ export function mapSdkConfigToGeneratorsYml(
         warn: (path, code, message, action) =>
             output.diagnostics.push({ severity: "warning", path, code, message, ...(action != null ? { action } : {}) })
     };
+    output.diagnostics.push(...classifyFields(ir, new Set(rules.flatMap((rule) => rule.paths))));
+    if (output.diagnostics.some((diagnostic) => diagnostic.severity === "error")) {
+        return output;
+    }
     for (const rule of rules) {
         rule.apply(context);
     }
