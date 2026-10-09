@@ -399,6 +399,11 @@ fixtures:
     - customConfig:
         respect-optional-request-body: true
       outputFolder: respect-optional-request-body
+  java-endpoint-security-token-subpackage:
+    - outputFolder: no-custom-config
+    - customConfig:
+        omit-unused-oauth-setters: true
+      outputFolder: omit-unused-oauth-setters
   java-optional-nullable-query-params:
     - customConfig:
         use-default-request-parameter-values: true
