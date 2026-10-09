@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` now generates the `cli` target of `sdk-config.yml`. No generator takes SDK Config for it, so the
+    CLI translates the target into a temporary `generators.yml` for `fernapi/fern-cli-generator` and generates it
+    like a `generators.yml` group, locally with `--local` or remotely. No file in the project changes.
+  type: feat

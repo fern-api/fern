@@ -1,0 +1,10 @@
+paths:
+  /token:
+    post:
+      operationId: getToken
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { type: object, properties: { access_token: { type: string } } }

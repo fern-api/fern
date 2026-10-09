@@ -1,0 +1,14 @@
+api:
+  specs:
+    - openapi: ./users-api.yml
+    - openapi: ./billing-api.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out
+        config:
+          binaryName: acme-cli

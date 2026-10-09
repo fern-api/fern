@@ -1,0 +1,48 @@
+# Multi-target document for the expansion parity test (step 2).
+schemaVersion: sdk-config/v1
+sdkName: acme
+sdkVersion: 1.2.3
+apiVersion: "2024-01-01"
+source:
+  specs:
+    - id: main
+      type: openapi
+      path: ./openapi.yml
+      namespace: core
+  apiImportSettings:
+    titleAsSchemaName: false
+api:
+  environments:
+    - name: prod
+      urls: [{ name: api, url: https://api.acme.test }]
+  defaultEnvironment: prod
+package:
+  description: Root description
+  keywords: [root]
+  license: { type: MIT }
+client:
+  timeoutMs: 1000
+  retry: { maxAttempts: 2 }
+docs:
+  readme: { introduction: Root intro }
+generation:
+  wireTests: { enabled: false }
+output:
+  delivery: files
+  path: ./generated/root
+targets:
+  - language: typescript
+    package: { packageName: "@acme/sdk" }
+  - language: cli
+    package:
+      packageName: acme-cli
+      keywords: [cli]
+    client:
+      retry: { maxAttempts: 5 }
+    docs:
+      readme: { apiName: Acme CLI }
+    generation:
+      wireTests: { enabled: true }
+    output:
+      delivery: files
+      path: ./generated/cli

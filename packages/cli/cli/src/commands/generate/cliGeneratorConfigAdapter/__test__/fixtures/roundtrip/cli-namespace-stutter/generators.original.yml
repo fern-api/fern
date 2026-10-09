@@ -1,0 +1,14 @@
+api:
+  specs:
+    - openapi: ./openapi.yml
+      namespace: v1
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out
+        config:
+          generateWireTests: true
