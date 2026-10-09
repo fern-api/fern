@@ -1,0 +1,65 @@
+{
+  "commands": [
+    {
+      "operation": "messages.create-message",
+      "command": [
+        "messages",
+        "create-message"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "Body",
+          "location": "body",
+          "flag": "--body",
+          "type": "string"
+        },
+        {
+          "wireName": "From",
+          "location": "body",
+          "flag": "--from",
+          "type": "string"
+        },
+        {
+          "wireName": "To",
+          "location": "body",
+          "flag": "--to",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "operation": "messages.list-messages",
+      "command": [
+        "messages",
+        "list-messages"
+      ],
+      "httpMethod": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "PageSize",
+          "location": "query",
+          "flag": "--page-size",
+          "type": "integer"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+openapi: 3.0.1
+info:
+  title: Twilio-like Fixture API
+  version: 1.0.0
+  description: Minimal Twilio-shaped spec for exercising CLI-snippet injection (path params, .json suffix, form body, query).
+paths:
+  /2010-04-01/Accounts/{AccountSid}/Messages.json:
+    post:
+      operationId: createMessage
+      tags: [messages]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [To]
+              properties:
+                To: { type: string, example: "+15558675310" }
+                From: { type: string, example: "+15017122661" }
+                Body: { type: string, example: "Hello from Fern" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid: { type: string }
+    get:
+      operationId: listMessages
+      tags: [messages]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+        - name: PageSize
+          in: query
+          required: false
+          schema: { type: integer }
+          example: 20
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages: { type: array, items: { type: object } }
