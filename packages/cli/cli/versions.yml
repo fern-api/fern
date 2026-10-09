@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.151.1
+  changelogEntry:
+    - summary: |
+        `fern generate --package-only` now copies the generated `README.md` and `reference.md`
+        into `fern-dist/` before removing the SDK source, so they are kept for every language
+        instead of only those whose package format bundles root files (e.g. Ruby gems, Go source zips).
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
 - version: 5.151.0
   changelogEntry:
     - summary: |
