@@ -21,6 +21,7 @@ const JSON_BODY_FLAG = "--json";
 export class CliCommandBuilder {
     private readonly tokens: string[];
     private readonly paramsPayload: Record<string, unknown> = {};
+    private readonly seenFlags = new Set<string>();
     private hasParamsPayload = false;
     private jsonBody: unknown = undefined;
 
@@ -28,13 +29,25 @@ export class CliCommandBuilder {
         this.tokens = [...prefix];
     }
 
-    /** Emit a scalar flag: `--flag value` (value shell-quoted). */
+    /**
+     * Emit a scalar flag: `--flag value` (value shell-quoted). If two parameters resolve to the same
+     * flag, the runtime keeps the first and drops the rest (commands.rs collision handling); mirror
+     * that by ignoring a flag already emitted, so the command never carries a duplicate `--flag`.
+     */
     public pushFlag(flag: string, value: unknown): void {
+        if (this.seenFlags.has(flag)) {
+            return;
+        }
+        this.seenFlags.add(flag);
         this.tokens.push(flag, shellQuote(formatScalar(value)));
     }
 
-    /** Emit a repeated flag, once per array element: `--flag a --flag b`. */
+    /** Emit a repeated flag, once per array element: `--flag a --flag b`. Skipped on flag collision. */
     public pushRepeatedFlag(flag: string, values: unknown[]): void {
+        if (this.seenFlags.has(flag)) {
+            return;
+        }
+        this.seenFlags.add(flag);
         for (const element of values) {
             if (element !== undefined && element !== null) {
                 this.tokens.push(flag, shellQuote(formatScalar(element)));

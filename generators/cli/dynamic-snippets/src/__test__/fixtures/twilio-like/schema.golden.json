@@ -1,6 +1,79 @@
 {
   "commands": [
     {
+      "operation": "calls.create-call",
+      "command": [
+        "calls",
+        "create-call"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "json",
+          "location": "body",
+          "flag": "--json-param",
+          "type": "string"
+        },
+        {
+          "wireName": "To",
+          "location": "body",
+          "flag": "--to",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "X-Custom-Header",
+          "location": "header",
+          "flag": "--x-custom-header",
+          "type": "string"
+        },
+        {
+          "wireName": "日本語",
+          "location": "query",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "operation": "calls.create-call-stream",
+      "command": [
+        "calls",
+        "create-call-stream"
+      ],
+      "httpMethod": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/Stream.json",
+      "inputs": [
+        {
+          "wireName": "AccountSid",
+          "location": "path",
+          "flag": "--account-sid",
+          "type": "string",
+          "required": true
+        },
+        {
+          "wireName": "Parameter1.Name",
+          "location": "body",
+          "flag": "--parameter1.-name",
+          "type": "string"
+        },
+        {
+          "wireName": "To",
+          "location": "body",
+          "flag": "--to",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
       "operation": "messages.create-message",
       "command": [
         "messages",

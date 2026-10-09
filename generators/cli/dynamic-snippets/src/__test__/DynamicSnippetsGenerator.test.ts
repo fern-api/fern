@@ -35,10 +35,11 @@ function nm(originalName: string): FernIr.dynamic.Name {
 
 function param(
     wireValue: string,
-    opts: { variable?: string; typeReference?: FernIr.dynamic.TypeReference } = {}
+    opts: { variable?: string; typeReference?: FernIr.dynamic.TypeReference; sdkName?: string } = {}
 ): FernIr.dynamic.NamedParameter {
+    // sdkName models an x-fern-parameter-name rename: the SDK-facing identifier differs from the wire name.
     return {
-        name: { wireValue, name: nm(wireValue) },
+        name: { wireValue, name: nm(opts.sdkName ?? wireValue) },
         typeReference: opts.typeReference ?? STRING,
         variable: opts.variable
     };
@@ -179,6 +180,42 @@ describe("DynamicSnippetsGenerator", () => {
         });
         expect(result.errors).toBeUndefined();
         expect(result.snippet).toBe("twilio messages create --json-param raw");
+    });
+
+    it("derives the flag from the renamed SDK name (x-fern-parameter-name)", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "create",
+                location: { method: "POST", path: "/Messages" },
+                // wire name PageSize, but renamed to "limit" in the SDK surface
+                queryParameters: [param("PageSize", { sdkName: "limit" })]
+            })
+        );
+        const result = generate(ir, {
+            endpoint: { method: "POST", path: "/Messages" },
+            queryParameters: { PageSize: 20 }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe("twilio messages create --limit 20");
+    });
+
+    it("drops the second parameter when two resolve to the same flag (keep-first)", () => {
+        const ir = buildIr(
+            inlinedEndpoint({
+                group: ["messages"],
+                method: "create",
+                location: { method: "POST", path: "/Messages" },
+                // Both wire names kebab to the same flag `--page-size`; the runtime keeps the first.
+                queryParameters: [param("PageSize"), param("page_size")]
+            })
+        );
+        const result = generate(ir, {
+            endpoint: { method: "POST", path: "/Messages" },
+            queryParameters: { PageSize: 20, page_size: 50 }
+        });
+        expect(result.errors).toBeUndefined();
+        expect(result.snippet).toBe("twilio messages create --page-size 20");
     });
 
     it("honors a binaryName custom config override", () => {

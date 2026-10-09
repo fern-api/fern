@@ -57,3 +57,73 @@ paths:
                 type: object
                 properties:
                   messages: { type: array, items: { type: object } }
+  /2010-04-01/Accounts/{AccountSid}/Calls.json:
+    post:
+      operationId: createCall
+      tags: [calls]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+        - name: X-Custom-Header
+          in: header
+          required: false
+          schema: { type: string }
+          example: custom-value
+        - name: "日本語"
+          in: query
+          required: false
+          schema: { type: string }
+          example: unicode-value
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [To]
+              properties:
+                To: { type: string, example: "+15558675310" }
+                # Collides with the built-in --json flag; the runtime mangles it to --json-param.
+                json: { type: string, example: "raw" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid: { type: string }
+  /2010-04-01/Accounts/{AccountSid}/Calls/Stream.json:
+    post:
+      operationId: createCallStream
+      tags: [calls]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [To]
+              properties:
+                To: { type: string, example: "+15558675310" }
+                # Literal dotted wire name: the runtime mis-nests the dot, so the whole body goes via --json.
+                "Parameter1.Name": { type: string, example: "foo" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid: { type: string }

@@ -1,8 +1,8 @@
 /**
  * Faithful TypeScript port of the Fern CLI SDK (Rust) naming and flag rules.
  *
- * The CLI dynamic-snippets generator renders commands in the browser from the same
- * language-agnostic dynamic IR every SDK generator consumes. Because there is no committed
+ * The CLI dynamic-snippets generator renders commands in the browser from a dynamic IR (one is
+ * built per generation language, so the CLI gets its own `cli` IR). Because there is no committed
  * catalog to lift flag names from, this module reproduces the Rust runtime's naming so the
  * generated commands match what `fern-cli-generator` actually builds. The parity test
  * (`__test__/parity`) asserts these functions against the runtime's `--schema` output so the

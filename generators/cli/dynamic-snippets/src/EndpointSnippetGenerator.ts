@@ -167,7 +167,7 @@ export class EndpointSnippetGenerator {
             ignoreMissingParameters: true
         });
         for (const instance of associated) {
-            this.emitValue({ builder, location, wireValue: instance.name.wireValue, value: instance.value });
+            this.emitValue({ builder, location, name: instance.name, value: instance.value });
         }
         this.context.errors.unscope();
     }
@@ -259,7 +259,7 @@ export class EndpointSnippetGenerator {
         }
         const associated = this.context.associateByWireValue({ parameters: properties, values: record });
         for (const instance of associated) {
-            this.emitValue({ builder, location: "body", wireValue: instance.name.wireValue, value: instance.value });
+            this.emitValue({ builder, location: "body", name: instance.name, value: instance.value });
         }
     }
 
@@ -287,18 +287,22 @@ export class EndpointSnippetGenerator {
     private emitValue({
         builder,
         location,
-        wireValue,
+        name,
         value
     }: {
         builder: CliCommandBuilder;
         location: ParameterLocation;
-        wireValue: string;
+        name: FernIr.dynamic.NameAndWireValue;
         value: unknown;
     }): void {
         if (value === undefined || value === null) {
             return;
         }
-        const flagName = resolveParamFlagName({ location }, wireValue);
+        const wireValue = name.wireValue;
+        // The runtime derives the flag from the SDK-facing identifier, which already folds in any
+        // `x-fern-parameter-name` rename (the Rust `flag_name_override`). Use that name as the source so
+        // a renamed parameter gets the renamed flag; it collapses to the wire name when no rename exists.
+        const flagName = resolveParamFlagName({ location, displayName: name.name.originalName }, wireValue);
         if (flagName == null) {
             builder.routeToParams([wireValue], value);
             return;
