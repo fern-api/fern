@@ -252,6 +252,10 @@ export class LegacyGeneratorInvocationAdapter {
         });
     }
 
+    /**
+     * Without `url` this uploads to the Central Portal staging service. Maven Central only releases signed
+     * artifacts, so SdkChecker.validateMavenPublishSignatures warns when neither `signature` nor `url` is set.
+     */
     private buildMavenPublishInfo(maven: schemas.MavenPublishSchema): FernFiddle.GithubPublishInfo {
         return FernFiddle.GithubPublishInfo.maven({
             registryUrl: maven.url ?? DEFAULT_MAVEN_REGISTRY_URL,

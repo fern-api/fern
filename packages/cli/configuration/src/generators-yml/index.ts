@@ -28,4 +28,8 @@ export {
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema.js";
 export { resolveAutomationConfig } from "./resolveAutomationConfig.js";
 export * from "./schemas/index.js";
+export {
+    getUnsignedMavenPublishingWithoutUrlMessage,
+    isUnsignedMavenPublishingWithoutUrl
+} from "./unsignedMavenPublishing.js";
 export * from "./utils/index.js";

@@ -1277,7 +1277,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
  * Portal's OSSRH Staging API compatibility endpoint, which accepts Maven-style uploads authenticated with a Central
  * Portal user token. Uploads must then be handed to the Portal (`POST /manual/upload/defaultRepository/<namespace>`),
  * which the sdk-gen-api publisher does automatically for this host. Releases to Maven Central also require signed
- * artifacts, so the same default is used whether or not a signature is configured.
+ * artifacts, so the same default is used whether or not a signature is configured. An unsigned upload with no `url`
+ * stays staged and never reaches Central; `generatorsYml.isUnsignedMavenPublishingWithoutUrl` detects that shape so
+ * `fern check` and `fern generate` warn about it.
  */
 export const DEFAULT_MAVEN_REGISTRY_URL =
     "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/";

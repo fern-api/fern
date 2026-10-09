@@ -37,7 +37,11 @@ export async function validateWorkspaces({
      */
     commandLineApiWorkspace?: string;
 }): Promise<void> {
-    const preparedSdkConfigWorkspaces = await prepareSdkConfigWorkspacesForValidation({ project, cliContext });
+    const preparedSdkConfigWorkspaces = await prepareSdkConfigWorkspacesForValidation({
+        project,
+        cliContext,
+        commandLineApiWorkspace
+    });
     const projectForValidation: Project = {
         ...project,
         apiWorkspaces: [...project.apiWorkspaces, ...preparedSdkConfigWorkspaces.map(({ workspace }) => workspace)]
@@ -205,13 +209,38 @@ export async function validateWorkspaces({
     }
 }
 
+/**
+ * `loadProject` classifies a directory that has both generators.yml and sdk-config.yml as an API workspace rather
+ * than an SDK Config workspace, so it never reaches {@link prepareSdkConfigWorkspacesForValidation}. `fern generate`
+ * still reads that sdk-config.yml (see `prepareSdkConfigGenerations` in generateAPIWorkspaces.ts) and rejects direct
+ * RubyGems publishing in it, so check those files through the same loader. The generators.yml side is covered by the
+ * `no-direct-rubygems-publishing` rule.
+ */
+async function assertNoDirectRubyGemsPublishingInApiWorkspaceSdkConfigs(
+    apiWorkspaces: Project["apiWorkspaces"]
+): Promise<void> {
+    for (const workspace of apiWorkspaces) {
+        const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
+        if (await doesPathExist(absolutePathToConfig)) {
+            assertNoSdkConfigDirectRubyGemsPublishing(await loadSdkConfigV1(absolutePathToConfig, true));
+        }
+    }
+}
+
 async function prepareSdkConfigWorkspacesForValidation({
     project,
-    cliContext
+    cliContext,
+    commandLineApiWorkspace
 }: {
     project: Project;
     cliContext: CliContext;
+    commandLineApiWorkspace: string | undefined;
 }): Promise<CreatedSdkConfigWorkspace[]> {
+    await assertNoDirectRubyGemsPublishingInApiWorkspaceSdkConfigs(
+        commandLineApiWorkspace != null
+            ? project.apiWorkspaces.filter((workspace) => workspace.workspaceName === commandLineApiWorkspace)
+            : project.apiWorkspaces
+    );
     const prepared: CreatedSdkConfigWorkspace[] = [];
     try {
         for (const workspace of project.sdkConfigWorkspaces ?? []) {

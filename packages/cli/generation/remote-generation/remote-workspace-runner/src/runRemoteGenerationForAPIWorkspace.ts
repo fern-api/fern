@@ -600,6 +600,12 @@ export function prepareFernSdkGenApiRoutes({
  * generators.yml `output.location: rubygems` without a `github` block converts to a direct RubyGems publish
  * (see `convertGeneratorsConfiguration`). Neither Fiddle (the Ruby generator's direct publish is not
  * implemented) nor sdk-gen-api can publish it, so it is rejected before any remote work starts.
+ *
+ * Keep in sync with `generatorsYml.isDirectRubyGemsPublishing` (configuration/src/generators-yml/
+ * directRubyGemsPublishing.ts), which backs the `fern check` rule. That helper reads the raw schema; this check
+ * reads the converted output mode on purpose, because `--lfs-override` rewrites the output mode to `downloadFiles`
+ * without touching the raw schema, and that run must not be rejected. The configuration-loader test
+ * "direct RubyGems detection agrees with the converted output mode" pins the two together.
  */
 function isDirectRubyGemsOutputMode(outputMode: FernFiddle.OutputMode): boolean {
     return outputMode.type === "publishV2" && outputMode.publishV2.type === "rubyGemsOverride";
