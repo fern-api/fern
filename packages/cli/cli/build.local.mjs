@@ -9,7 +9,6 @@ buildCli({
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
         DEFAULT_SDK_GEN_API_ORIGIN: "http://localhost:3001",
         DEFAULT_USE_SDK_CONFIG: "false",
-        DEFAULT_USE_SDK_GEN_API: "false",
         DEFAULT_VENUS_ORIGIN: "http://localhost:8089",
         DEFAULT_FDR_ORIGIN: "http://localhost:8080",
         FERN_FDR_ORIGIN: "http://localhost:8080",
@@ -18,6 +17,9 @@ buildCli({
         FERN_DASHBOARD_URL_DEFAULT: "http://localhost:3000",
         LOCAL_STORAGE_FOLDER: ".fern-local",
         POSTHOG_API_KEY: null,
+        // Local builds never call PostHog, so every feature flag is off. Use a dev/beta build to test flags.
+        POSTHOG_FEATURE_FLAGS_API_KEY: "",
+        FERN_CLI_RELEASE_ENVIRONMENT: "local",
         SENTRY_DSN: null,
         SENTRY_ENVIRONMENT: "local",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",

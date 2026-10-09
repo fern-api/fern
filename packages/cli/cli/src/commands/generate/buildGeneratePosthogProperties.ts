@@ -27,6 +27,11 @@ export interface RequestedGeneratorTelemetry {
     name: string;
     version: string;
     outputMode: string;
+    /**
+     * The `use-sdk-gen-api` flag value for this generator in this org. Undefined for local (Docker)
+     * generation, which never routes through sdk-gen-api, so no flag request is made.
+     */
+    sdkGenApiEnabled: boolean | undefined;
 }
 
 export interface GeneratePosthogProperties {
@@ -34,10 +39,11 @@ export interface GeneratePosthogProperties {
     workspaces: ReturnType<typeof buildPosthogWorkspaces>;
     /** Every generator selected to run, after group, alias, `--generator`, and SDK Config resolution. */
     requestedGenerators: RequestedGeneratorTelemetry[];
-    /** Whether the `FERN_USE_SDK_GEN_API` environment variable was explicitly set to `true`. */
-    fernUseSdkGenApiEnv: boolean;
-    /** Whether sdk-gen-api routing is enabled after applying the env var and the build default. */
-    sdkGenApiEnabled: boolean;
+    /**
+     * True when the `use-sdk-gen-api` flag is on for at least one requested generator; see each
+     * `requestedGenerators` entry for the per-generator value. Undefined for local (Docker) generation.
+     */
+    sdkGenApiEnabled: boolean | undefined;
 }
 
 export function buildGeneratePosthogProperties({
@@ -46,8 +52,7 @@ export function buildGeneratePosthogProperties({
     isAutomation,
     groupNames,
     generatorName,
-    fernUseSdkGenApiEnv,
-    sdkGenApiEnabled
+    sdkGenApiEnabledByGenerator
 }: {
     project: Project;
     generations: GenerationTelemetryInput[];
@@ -55,21 +60,39 @@ export function buildGeneratePosthogProperties({
     isAutomation: boolean;
     groupNames: string[] | undefined;
     generatorName: string | undefined;
-    fernUseSdkGenApiEnv: string | undefined;
-    sdkGenApiEnabled: boolean;
+    /** `use-sdk-gen-api` values by generator name; undefined when no flag was evaluated (local generation). */
+    sdkGenApiEnabledByGenerator: ReadonlyMap<string, boolean> | undefined;
 }): GeneratePosthogProperties {
+    const requestedGenerators = listRequestedGenerators({ generations, isAutomation }).map((generator) => ({
+        ...generator,
+        sdkGenApiEnabled:
+            sdkGenApiEnabledByGenerator == null ? undefined : sdkGenApiEnabledByGenerator.get(generator.name) === true
+    }));
     return {
         workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName }),
-        requestedGenerators: generations.flatMap((generation) => getRequestedGenerators(generation, isAutomation)),
-        fernUseSdkGenApiEnv: isTrueEnvValue(fernUseSdkGenApiEnv),
-        sdkGenApiEnabled
+        requestedGenerators,
+        sdkGenApiEnabled:
+            sdkGenApiEnabledByGenerator == null
+                ? undefined
+                : requestedGenerators.some(({ sdkGenApiEnabled }) => sdkGenApiEnabled === true)
     };
 }
 
-function getRequestedGenerators(
+/** Every generator a planned `fern generate` run will execute, in workspace, group, and declaration order. */
+export function listRequestedGenerators({
+    generations,
+    isAutomation
+}: {
+    generations: GenerationTelemetryInput[];
+    isAutomation: boolean;
+}): Array<Omit<RequestedGeneratorTelemetry, "sdkGenApiEnabled">> {
+    return generations.flatMap((generation) => listRequestedGeneratorsForGeneration(generation, isAutomation));
+}
+
+function listRequestedGeneratorsForGeneration(
     generation: GenerationTelemetryInput,
     isAutomation: boolean
-): RequestedGeneratorTelemetry[] {
+): Array<Omit<RequestedGeneratorTelemetry, "sdkGenApiEnabled">> {
     const groups =
         generation.workspace.generatorsConfiguration?.groups.filter((group) =>
             generation.resolvedGroupNames.includes(group.groupName)
@@ -130,10 +153,6 @@ function getOutputMode(generation: GenerationTelemetryInput, generator: generato
         return generator.outputMode.type;
     }
     return generation.sdkConfigV1?.targets[generator.sdkConfigTargetIndex]?.requestedOutput?.type ?? "download";
-}
-
-function isTrueEnvValue(value: string | undefined): boolean {
-    return value?.trim().toLowerCase() === "true";
 }
 
 /** Builds the legacy `workspaces` array for the posthog event, honoring `--group` / `--generator` filters. */

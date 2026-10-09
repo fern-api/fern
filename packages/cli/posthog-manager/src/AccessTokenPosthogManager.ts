@@ -2,6 +2,7 @@ import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
+import { getCliReleaseEnvironment } from "./feature-flags/CliReleaseEnvironment.js";
 import { PosthogManager } from "./PosthogManager.js";
 
 export class AccessTokenPosthogManager implements PosthogManager {
@@ -26,6 +27,7 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     ...event.properties,
                     version: process.env.CLI_VERSION,
                     usingAccessToken: true,
+                    cliReleaseEnvironment: getCliReleaseEnvironment(),
                     ...getRunIdProperties()
                 }
             });

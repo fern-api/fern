@@ -18,10 +18,12 @@ import {
     type FernSdkGenApiRequestedOutput,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getResolvedFernSdkGenApiEnabled,
     isEligibleForFernSdkGenApi,
     isFernSdkGenApiEnabled,
     mapFernSdkGenApiOutput,
     preflightFernSdkGenApiBuild,
+    resolveFernSdkGenApiEnabledByGenerator,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
     selectFernSdkGenApiRoute,
@@ -47,6 +49,21 @@ const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
     migrateForGenerator: vi.fn(),
     migrateToVersionForGenerator: vi.fn()
+}));
+
+interface FlagContext {
+    org: string;
+    generator?: string;
+    language?: string;
+}
+
+const featureFlags = vi.hoisted(() => ({
+    isEnabled: vi.fn(async (_flag: string, _context: FlagContext) => false),
+    getCachedValue: vi.fn((_flag: string, _context: FlagContext): boolean | undefined => undefined)
+}));
+
+vi.mock("@fern-api/posthog-manager", () => ({
+    getFeatureFlagClient: () => featureFlags
 }));
 
 vi.mock("@fern-api/core", async (importOriginal) => ({
@@ -242,7 +259,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("routes an explicit SDK Config target and uses its generator version", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "3.86.0" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1(),
             requireEnvVars: true,
             isPreview: false
@@ -277,7 +294,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("routes an unpinned SDK Config target directly to SDK Config v1", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false
@@ -312,7 +329,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects an unpinned route paired with a Fern runtime bundle", async () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false
@@ -335,7 +352,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects unpinned wire serialization without the internal marker", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false
@@ -363,7 +380,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("retains migration guidance for a pinned pre-cutover SDK Config target", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript", generatorVersion: "3.999.999" }),
             requireEnvVars: true,
             isPreview: false
@@ -377,7 +394,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("does not treat an explicit SDK Config generatorVersion latest as omission", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript", generatorVersion: "latest" }),
             requireEnvVars: true,
             isPreview: false
@@ -390,7 +407,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects SDK Config omission when the invocation lacks the unpinned marker", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false
@@ -406,7 +423,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects the unpinned marker outside SDK Config instead of falling back", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: false,
+            isSdkGenApiEnabled: () => false,
             requireEnvVars: true,
             isPreview: false
         });
@@ -418,10 +435,46 @@ describe("isEligibleForFernSdkGenApi", () => {
         );
     });
 
+    it("routes only the generators the flag enables, leaving siblings on Fiddle", () => {
+        const isSdkGenApiEnabled = vi.fn((generatorName: string) => generatorName === "fernapi/fern-typescript-sdk");
+        const [typescript, python] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({ version: "3.86.0" }),
+                invocation({ name: "fernapi/fern-python-sdk", language: "python", version: "5.0.0" })
+            ],
+            isSdkGenApiEnabled,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(typescript?.route).toMatchObject({ payloadKind: "fern-runtime-bundle" });
+        expect(python?.route).toBeUndefined();
+        expect(python?.error).toBeUndefined();
+        expect(isSdkGenApiEnabled.mock.calls).toEqual([["fernapi/fern-typescript-sdk"], ["fernapi/fern-python-sdk"]]);
+    });
+
+    it("rejects an sdk-gen-api-only generator whose flag is off even when siblings are routed", () => {
+        const [typescript, mcp] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({ version: "3.86.0" }),
+                invocation({ name: "fernapi/fern-mcp-server", language: "mcp", version: "0.1.0" })
+            ],
+            isSdkGenApiEnabled: (generatorName) => generatorName === "fernapi/fern-typescript-sdk",
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(typescript?.route).toBeDefined();
+        expect(mcp?.error).toHaveProperty(
+            "message",
+            expect.stringContaining("not enabled for this generator in this organization")
+        );
+    });
+
     it("rejects an SDK Config that does not contain the selected language", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({
                 language: "python",
                 generatorVersion: "6.0.0"
@@ -440,7 +493,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects non-SDK generators instead of falling back to Fiddle", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ name: "fernapi/fern-postman" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1(),
             requireEnvVars: true,
             isPreview: false
@@ -456,7 +509,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects explicit SDK Config generation when the backend is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
-            enabled: false,
+            isSdkGenApiEnabled: () => false,
             sdkConfigV1: sdkConfigV1(),
             requireEnvVars: true,
             isPreview: false
@@ -474,7 +527,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         for (const version of ["4.0.0", "4.0.1"]) {
             const [result] = prepareFernSdkGenApiRoutes({
                 generators: [invocation({ version })],
-                enabled: true,
+                isSdkGenApiEnabled: () => true,
                 requireEnvVars: true,
                 isPreview: false
             });
@@ -486,7 +539,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("routes generators.yml latest as an unpinned Fern runtime bundle", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "latest" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -524,7 +577,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("reports the invocation version and config kind for an unpinned Fern mismatch", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "latest" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -551,7 +604,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("keeps invalid non-semver generators.yml versions invalid", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "not-semver" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -565,7 +618,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         // CLI synthesizes their SDK Config instead of asking for `fern sdk migrate`.
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ name: "fernapi/fern-mcp-server", version: "0.1.0", language: "mcp" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -577,7 +630,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("routes MCP latest through synthesized unpinned SDK Config", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ name: "fernapi/fern-mcp-server", version: "latest", language: "mcp" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -615,7 +668,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("preserves Fiddle generation at cutover when sdk-gen-api routing is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
-            enabled: false,
+            isSdkGenApiEnabled: () => false,
             requireEnvVars: true,
             isPreview: false
         });
@@ -628,7 +681,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("preserves non-exact legacy versions when sdk-gen-api routing is disabled", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "latest" })],
-            enabled: false,
+            isSdkGenApiEnabled: () => false,
             requireEnvVars: true,
             isPreview: false
         });
@@ -646,7 +699,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     config: { literal: "\\$\\{FERN_LITERAL_TOKEN\\}" }
                 })
             ],
-            enabled: false,
+            isSdkGenApiEnabled: () => false,
             requireEnvVars: true,
             isPreview: false
         });
@@ -661,7 +714,7 @@ describe("isEligibleForFernSdkGenApi", () => {
 
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "${FERN_TEST_GENERATOR_VERSION}" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -689,7 +742,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     )
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -701,7 +754,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("keeps non-GitHub verification on Fiddle for legacy targets", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "3.999.999" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false,
             verify: true
@@ -714,7 +767,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("allows SDK Config GitHub verification through sdk-gen-api", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({
                 language: "typescript",
                 generatorVersion: "4.0.0",
@@ -736,7 +789,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("renders an omitted SDK Config generator version as unpinned in diagnostics", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false,
@@ -771,7 +824,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     ...("outputMode" in options ? { outputMode: options.outputMode } : {})
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false,
             verify: "verify" in options ? options.verify : undefined,
@@ -787,7 +840,7 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("settles route failures per target while retaining successful siblings", async () => {
         const results = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "3.999.999" }), invocation({ version: "not-semver" })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -1085,7 +1138,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     outputMode: FernFiddle.OutputMode.publishV2(publishV2)
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -1127,7 +1180,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     outputMode: FernFiddle.OutputMode.publishV2(publishV2)
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             requireEnvVars: true,
             isPreview: false
         });
@@ -1155,7 +1208,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     )
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({
                 language: "typescript",
                 generatorVersion: "4.0.0",
@@ -1188,7 +1241,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     )
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1(),
             requireEnvVars: true,
             isPreview: false
@@ -1214,7 +1267,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                     )
                 })
             ],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "mcp", generatorVersion: "0.1.0" }),
             requireEnvVars: true,
             isPreview: false
@@ -3098,25 +3151,77 @@ describe("isEligibleForFernSdkGenApi", () => {
 });
 
 describe("sdk-gen-api environment configuration", () => {
-    it("is disabled by default", () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", undefined);
-        vi.stubEnv("DEFAULT_USE_SDK_GEN_API", undefined);
-
-        expect(isFernSdkGenApiEnabled()).toBe(false);
+    beforeEach(() => {
+        featureFlags.isEnabled.mockClear();
+        featureFlags.getCachedValue.mockClear();
     });
 
-    it("uses the baked default when no runtime override is present", () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", undefined);
-        vi.stubEnv("DEFAULT_USE_SDK_GEN_API", " true ");
+    it("is off when the use-sdk-gen-api feature flag has not been evaluated as on", async () => {
+        featureFlags.isEnabled.mockResolvedValueOnce(false);
 
-        expect(isFernSdkGenApiEnabled()).toBe(true);
+        await expect(
+            isFernSdkGenApiEnabled({ organization: "acme", generatorName: "fernapi/fern-python-sdk" })
+        ).resolves.toBe(false);
     });
 
-    it("lets the runtime flag override the baked default", () => {
-        vi.stubEnv("FERN_USE_SDK_GEN_API", "false");
-        vi.stubEnv("DEFAULT_USE_SDK_GEN_API", "true");
+    it("evaluates the flag for the organization, generator, and generator language", async () => {
+        featureFlags.isEnabled.mockResolvedValueOnce(true);
 
-        expect(isFernSdkGenApiEnabled()).toBe(false);
+        await expect(
+            isFernSdkGenApiEnabled({ organization: "acme", generatorName: "fernapi/fern-typescript-node-sdk" })
+        ).resolves.toBe(true);
+        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", {
+            org: "acme",
+            generator: "fernapi/fern-typescript-node-sdk",
+            language: "typescript"
+        });
+    });
+
+    it("omits the language for generators sdk-gen-api does not know", async () => {
+        featureFlags.isEnabled.mockResolvedValueOnce(false);
+
+        await isFernSdkGenApiEnabled({ organization: "acme", generatorName: "fernapi/fern-postman" });
+        expect(featureFlags.isEnabled).toHaveBeenCalledWith("use-sdk-gen-api", {
+            org: "acme",
+            generator: "fernapi/fern-postman"
+        });
+    });
+
+    it("resolves each distinct generator once and treats a flag failure as off", async () => {
+        featureFlags.isEnabled.mockImplementation(async (_flag: string, context: FlagContext) => {
+            if (context.generator === "fernapi/fern-go-sdk") {
+                throw new Error("flag service down");
+            }
+            return context.generator === "fernapi/fern-python-sdk";
+        });
+        try {
+            const enabled = await resolveFernSdkGenApiEnabledByGenerator({
+                organization: "acme",
+                generatorNames: ["fernapi/fern-python-sdk", "fernapi/fern-go-sdk", "fernapi/fern-python-sdk"]
+            });
+
+            expect([...enabled]).toEqual([
+                ["fernapi/fern-python-sdk", true],
+                ["fernapi/fern-go-sdk", false]
+            ]);
+            expect(featureFlags.isEnabled).toHaveBeenCalledTimes(2);
+        } finally {
+            featureFlags.isEnabled.mockImplementation(async () => false);
+        }
+    });
+
+    it("exposes the already-resolved flag value without a request", () => {
+        featureFlags.getCachedValue.mockReturnValueOnce(true);
+
+        expect(
+            getResolvedFernSdkGenApiEnabled({ organization: "acme", generatorName: "fernapi/fern-python-sdk" })
+        ).toBe(true);
+        expect(featureFlags.getCachedValue).toHaveBeenCalledWith("use-sdk-gen-api", {
+            org: "acme",
+            generator: "fernapi/fern-python-sdk",
+            language: "python"
+        });
+        expect(featureFlags.isEnabled).not.toHaveBeenCalled();
     });
 
     it("prefers the runtime origin and removes its trailing slash", () => {
@@ -3221,7 +3326,7 @@ describe("fernapi/fern-mcp-server target", () => {
     it("omits an unpinned SDK Config generator version from the wire request", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [mcpInvocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
-            enabled: true,
+            isSdkGenApiEnabled: () => true,
             sdkConfigV1: sdkConfigV1({ language: "mcp" }),
             requireEnvVars: true,
             isPreview: false

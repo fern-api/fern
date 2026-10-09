@@ -84,8 +84,7 @@ function build(
         isAutomation: false,
         groupNames: ["sdks"],
         generatorName: undefined,
-        fernUseSdkGenApiEnv: undefined,
-        sdkGenApiEnabled: false,
+        sdkGenApiEnabledByGenerator: new Map(),
         ...overrides
     });
 }
@@ -105,7 +104,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdks",
                 name: "fernapi/fern-python-sdk",
                 version: "4.0.0",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             },
             {
                 workspace: "payments",
@@ -113,7 +113,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdks",
                 name: "fernapi/fern-typescript-sdk",
                 version: "4.1.0",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             }
         ]);
     });
@@ -163,7 +164,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdk-config",
                 name: "fernapi/fern-go-sdk",
                 version: "1.2.3",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             },
             {
                 workspace: "payments",
@@ -171,7 +173,8 @@ describe("buildGeneratePosthogProperties", () => {
                 group: "sdk-config",
                 name: "fernapi/fern-python-sdk",
                 version: "6.0.0",
-                outputMode: "downloadFiles"
+                outputMode: "downloadFiles",
+                sdkGenApiEnabled: false
             }
         ]);
         expect(requestedGeneratorNames(properties)).toEqual([
@@ -269,10 +272,35 @@ describe("buildGeneratePosthogProperties", () => {
         ]);
     });
 
-    it("reports the effective sdk-gen-api state separately from the env var", () => {
-        expect(build({ fernUseSdkGenApiEnv: undefined, sdkGenApiEnabled: true })).toMatchObject({
-            fernUseSdkGenApiEnv: false,
-            sdkGenApiEnabled: true
+    it("reports the sdk-gen-api flag per generator and whether any generator is routed", () => {
+        const properties = build({
+            sdkGenApiEnabledByGenerator: new Map([
+                ["fernapi/fern-python-sdk", true],
+                ["fernapi/fern-typescript-sdk", false]
+            ])
         });
+
+        expect(
+            properties.requestedGenerators.map(({ name, sdkGenApiEnabled }) => ({ name, sdkGenApiEnabled }))
+        ).toEqual([
+            { name: "fernapi/fern-python-sdk", sdkGenApiEnabled: true },
+            { name: "fernapi/fern-typescript-sdk", sdkGenApiEnabled: false }
+        ]);
+        expect(properties.sdkGenApiEnabled).toBe(true);
+    });
+
+    it.each([
+        { sdkGenApiEnabledByGenerator: new Map([["fernapi/fern-go-sdk", true]]), expected: false },
+        { sdkGenApiEnabledByGenerator: undefined, expected: undefined }
+    ])("reports sdkGenApiEnabled=$expected when no requested generator is routed", ({
+        sdkGenApiEnabledByGenerator,
+        expected
+    }) => {
+        const properties = build({ sdkGenApiEnabledByGenerator });
+
+        expect(properties.sdkGenApiEnabled).toBe(expected);
+        expect(properties.requestedGenerators.every(({ sdkGenApiEnabled }) => sdkGenApiEnabled === expected)).toBe(
+            true
+        );
     });
 });

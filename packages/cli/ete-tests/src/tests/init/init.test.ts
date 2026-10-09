@@ -25,14 +25,6 @@ describe("fern init", () => {
         ).toMatchSnapshot();
     }, 180_000);
 
-    it.concurrent("does not use the SDK Gen API flag for SDK Config initialization", async ({ expect, signal }) => {
-        const pathOfDirectory = await init({ env: { FERN_USE_SDK_GEN_API: "true" }, signal });
-        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
-
-        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("generators.yml")))).toBe(true);
-        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("sdk-config.yml")))).toBe(false);
-    }, 180_000);
-
     it.concurrent("no existing fern directory with fern definition", async ({ expect, signal }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }],
@@ -576,7 +568,6 @@ describe("fern init", () => {
 
         await runFernCli(["check"], {
             cwd: pathOfDirectory,
-            env: { FERN_USE_SDK_GEN_API: "false" },
             signal
         });
 
@@ -630,7 +621,6 @@ describe("fern init", () => {
         });
         await runFernCli(["check"], {
             cwd: pathOfDirectory,
-            env: { FERN_USE_SDK_GEN_API: "false" },
             signal
         });
 

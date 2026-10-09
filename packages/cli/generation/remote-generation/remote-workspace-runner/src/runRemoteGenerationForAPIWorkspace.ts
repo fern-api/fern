@@ -23,9 +23,9 @@ import {
     type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
-    isFernSdkGenApiEnabled,
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
+    resolveFernSdkGenApiEnabledByGenerator,
     selectFernSdkGenApiRoute,
     synthesizesSdkConfig,
     validateFernSdkGenApiDirectPublishCredentials,
@@ -214,11 +214,17 @@ export async function runRemoteGenerationForAPIWorkspace({
     }
     const generatorsYmlAbsolutePath = workspace.generatorsConfiguration?.absolutePathToConfiguration;
     const isSdkPreview = isPreview ?? absolutePathToPreview != null;
+    // The flag is evaluated per generator, so an org, a language, or one generator in one org can be
+    // routed (or kept off sdk-gen-api) independently. Values are memoized per process.
+    const sdkGenApiEnabledByGenerator = await resolveFernSdkGenApiEnabledByGenerator({
+        organization,
+        generatorNames: generatorGroup.generators.map((generator) => generator.name)
+    });
     // Select every target route before starting any per-target work. A bad target therefore cannot
     // race a sibling into remote registration or generation.
     const routePreparation = prepareFernSdkGenApiRoutes({
         generators: generatorGroup.generators,
-        enabled: isFernSdkGenApiEnabled(),
+        isSdkGenApiEnabled: (generatorName) => sdkGenApiEnabledByGenerator.get(generatorName) === true,
         sdkConfigV1,
         requireEnvVars,
         isPreview: isSdkPreview,
@@ -418,7 +424,7 @@ function resolveSuppliedConfigKind({
 
 export function prepareFernSdkGenApiRoutes({
     generators,
-    enabled,
+    isSdkGenApiEnabled,
     sdkConfigV1,
     requireEnvVars,
     isPreview,
@@ -427,7 +433,8 @@ export function prepareFernSdkGenApiRoutes({
     autoMerge
 }: {
     generators: generatorsYml.GeneratorInvocation[];
-    enabled: boolean;
+    /** Whether the `use-sdk-gen-api` flag routes this generator, keyed by its configured name. */
+    isSdkGenApiEnabled: (generatorName: string) => boolean;
     sdkConfigV1?: FernSdkConfigV1Payload;
     requireEnvVars: boolean;
     isPreview: boolean;
@@ -490,7 +497,7 @@ export function prepareFernSdkGenApiRoutes({
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };
             }
-            if (!enabled) {
+            if (!isSdkGenApiEnabled(generatorInvocation.name)) {
                 if (sdkConfigV1 != null) {
                     throw new Error("SDK Config v1 generation requires the sdk-gen-api generation backend");
                 }
@@ -498,7 +505,7 @@ export function prepareFernSdkGenApiRoutes({
                 // generation, where they would fail opaquely.
                 if (isSdkGenApiOnly(resolved.name)) {
                     throw new CliError({
-                        message: `${resolved.name} requires the environment variable FERN_USE_SDK_GEN_API=true.`,
+                        message: `${resolved.name} requires sdk-gen-api generation, which is not enabled for this generator in this organization (or the feature flag service could not be reached). Retry, or contact Fern support to enable it.`,
                         code: CliError.Code.ConfigError
                     });
                 }

@@ -9,14 +9,14 @@ import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
     getFernSdkGenApiLanguage,
-    isFernSdkGenApiEnabled,
+    resolveFernSdkGenApiEnabledByGenerator,
     selectGeneratorConfigRoute
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
-import { buildGeneratePosthogProperties } from "./buildGeneratePosthogProperties.js";
+import { buildGeneratePosthogProperties, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { createSdkConfigWorkspace } from "./createSdkConfigWorkspace.js";
 import { filterGenerators } from "./filterGenerators.js";
@@ -207,6 +207,18 @@ export async function generateAPIWorkspaces({
 
         validateUniqueLanguageOwnership({ generations, cliContext });
 
+        // Start the per-generator flag requests now so they overlap login and the output-directory prompts.
+        // Values are memoized per process, so the remote runner reuses them. Local (Docker) generation never
+        // routes through sdk-gen-api, so it makes no flag request. The helper never rejects, so the promise
+        // cannot go unobserved if a prompt below throws first.
+        const isAutomation = automation != null;
+        const sdkGenApiEnabledByGenerator = useLocalDocker
+            ? undefined
+            : resolveFernSdkGenApiEnabledByGenerator({
+                  organization: project.config.organization,
+                  generatorNames: listRequestedGenerators({ generations, isAutomation }).map(({ name }) => name)
+              });
+
         if (!useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
                 return askToLogin(context);
@@ -242,11 +254,10 @@ export async function generateAPIWorkspaces({
                 ...buildGeneratePosthogProperties({
                     project,
                     generations,
-                    isAutomation: automation != null,
+                    isAutomation,
                     groupNames,
                     generatorName,
-                    fernUseSdkGenApiEnv: process.env.FERN_USE_SDK_GEN_API,
-                    sdkGenApiEnabled: isFernSdkGenApiEnabled()
+                    sdkGenApiEnabledByGenerator: await sdkGenApiEnabledByGenerator
                 })
             }
         });
